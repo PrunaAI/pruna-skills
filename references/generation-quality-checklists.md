@@ -11,9 +11,11 @@ Maintenance rule: keep tool/guide mapping only in this file to avoid link drift.
 |------------|-----------|---------------|
 | `p-image` | [`p-image-quality-checklist.md`](./p-image-quality-checklist.md) | [`single-scene-ai-video`](../guides/workflows/single-scene-ai-video/SKILL.md), [`multi-scene-ai-video`](../guides/workflows/multi-scene-ai-video/SKILL.md), [`pruna-generative-pipeline`](../guides/workflows/pruna-generative-pipeline/SKILL.md) |
 | `p-image-edit` | [`p-image-edit-quality-checklist.md`](./p-image-edit-quality-checklist.md) | [`single-scene-avatar-video`](../guides/workflows/single-scene-avatar-video/SKILL.md), [`multi-scene-avatar-video`](../guides/workflows/multi-scene-avatar-video/SKILL.md), [`pruna-generative-pipeline`](../guides/workflows/pruna-generative-pipeline/SKILL.md) |
-| `p-image-upscale` | [`p-image-upscale-quality-checklist.md`](./p-image-upscale-quality-checklist.md) | [`single-scene-ai-video`](../guides/workflows/single-scene-ai-video/SKILL.md), [`multi-scene-ai-video`](../guides/workflows/multi-scene-ai-video/SKILL.md), [`pruna-generative-pipeline`](../guides/workflows/pruna-generative-pipeline/SKILL.md) |
+| `p-image-upscale` | [`p-image-upscale-quality-checklist.md`](./p-image-upscale-quality-checklist.md) | [`single-scene-ai-video`](../guides/workflows/single-scene-ai-video/SKILL.md), [`multi-scene-ai-video`](../guides/workflows/multi-scene-ai-video/SKILL.md), [`pruna-generative-pipeline`](../guides/workflows/pruna-generative-pipeline/SKILL.md), [`p-image-upscale-comparison`](../guides/workflows/p-image-upscale-comparison/SKILL.md) |
 | `p-video` | [`p-video-quality-checklist.md`](./p-video-quality-checklist.md) | [`single-scene-ai-video`](../guides/workflows/single-scene-ai-video/SKILL.md), [`multi-scene-ai-video`](../guides/workflows/multi-scene-ai-video/SKILL.md), [`pruna-generative-pipeline`](../guides/workflows/pruna-generative-pipeline/SKILL.md) |
 | `p-video-avatar` | [`p-video-avatar-quality-checklist.md`](./p-video-avatar-quality-checklist.md) | [`single-scene-avatar-video`](../guides/workflows/single-scene-avatar-video/SKILL.md), [`multi-scene-avatar-video`](../guides/workflows/multi-scene-avatar-video/SKILL.md), [`pruna-generative-pipeline`](../guides/workflows/pruna-generative-pipeline/SKILL.md) |
+| `p-video-animate` | [`p-video-animate-quality-checklist.md`](./p-video-animate-quality-checklist.md) | [`multi-scene-avatar-video`](../guides/workflows/multi-scene-avatar-video/SKILL.md), [`pruna-generative-pipeline`](../guides/workflows/pruna-generative-pipeline/SKILL.md) |
+| `p-video-replace` | [`p-video-replace-quality-checklist.md`](./p-video-replace-quality-checklist.md) | [`p-video-replace`](../tools/video/p-video-replace/SKILL.md), [`p-video-replace-comparison`](../guides/workflows/p-video-replace-comparison/SKILL.md) |
 
 ## Core checklist (all models)
 
@@ -31,6 +33,14 @@ Maintenance rule: keep tool/guide mapping only in this file to avoid link drift.
 - [`p-image-upscale-quality-checklist.md`](./p-image-upscale-quality-checklist.md)
 - [`p-video-quality-checklist.md`](./p-video-quality-checklist.md)
 - [`p-video-avatar-quality-checklist.md`](./p-video-avatar-quality-checklist.md)
+- [`p-video-animate-quality-checklist.md`](./p-video-animate-quality-checklist.md)
+- [`p-video-replace-quality-checklist.md`](./p-video-replace-quality-checklist.md)
+
+## Visual variety (showcase reels)
+
+Before generation on comparison or launch reels, run [visual-variety-bible.md](./visual-variety-bible.md) **Variety checklist** — cast diversity, distinct backgrounds, camera angles, lighting, and style tags.
+
+For phased human review before expensive video jobs, see [staged-generation-gate.md](./staged-generation-gate.md).
 
 ## Workflow note
 

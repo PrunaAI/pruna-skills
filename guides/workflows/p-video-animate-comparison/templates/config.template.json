@@ -1,0 +1,19 @@
+{
+  "source": "path/to/motion-template.mp4",
+  "output": "path/to/animated-output.mp4",
+  "render": "path/to/scene-compare.mp4",
+  "title": "P-Video-Animate",
+  "source_label": "Motion template",
+  "output_label": "Animated subject",
+  "include_audio": true,
+  "full_bleed": true,
+  "fps": 24,
+  "width": 1920,
+  "height": 1080,
+  "timing": {
+    "hook_seconds": 1.5,
+    "slider_seconds": 2.5,
+    "hold_output_seconds": 1.5,
+    "outro_seconds": 1.5
+  }
+}

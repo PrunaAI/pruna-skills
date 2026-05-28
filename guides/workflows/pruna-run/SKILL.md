@@ -2,6 +2,8 @@
 name: pruna-run
 description: Fast prompt-to-generation entrypoint for Pruna. Classifies incoming prompts, runs direct image/video/avatar chains, and can dispatch scenario routes I-L. Use when the user says "just run this prompt" or wants minimal setup.
 license: MIT
+metadata:
+  version: "0.0.1"
 ---
 
 # pruna-run (fast entrypoint)
@@ -45,4 +47,4 @@ python3 scripts/pruna_run.py --route I --prompt "ugc hooks for trial campaign"
 
 - Set `PRUNA_API_KEY` before running.
 - Prefer async for video/avatar routes; the script already polls until `succeeded`.
-- For deeper scene planning, use the dedicated workflow skills in `guides/workflows/`.
+- Multi-scene work: use dedicated workflow skills—they require **parallel async batches** and **subagents per scene lane** where possible ([parallel-execution.md](../../../references/parallel-execution.md)).

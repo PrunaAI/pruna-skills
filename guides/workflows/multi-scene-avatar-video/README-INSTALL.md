@@ -1,6 +1,6 @@
 # Multi-scene avatar video (Pruna only)
 
-This Cursor skill describes a **Pruna P-API–only** workflow: uploads, **`p-image` / `p-image-edit`** (and optional **`p-image-upscale`**) for style-consistent stills, **`p-video-avatar`** per scene, and your own assembly step. It does **not** depend on Scenario MCP or third-party image, TTS, or music APIs.
+This Cursor skill describes a **Pruna P-API–only** workflow: uploads, **`p-image` / `p-image-edit`** for style-consistent stills, **`p-video-avatar`** per scene, and your own assembly step. It does **not** depend on Scenario MCP or third-party image, TTS, or music APIs.
 
 ## Install
 

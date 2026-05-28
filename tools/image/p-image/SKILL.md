@@ -3,6 +3,7 @@ name: p-image
 description: Generates images with Pruna P-API model p-image (text-to-image, aspect ratios, optional LoRA and seed). Use when the user asks for Pruna images, p-image, fast premium T2I, or API calls to the Pruna image model.
 license: MIT
 metadata:
+  version: "0.0.1"
   pruna_model: p-image
 ---
 
@@ -10,11 +11,42 @@ metadata:
 
 Ultra-fast text-to-image via Pruna. Full parameters: [p-image model docs](https://docs.api.pruna.ai/guides/models/p-image).
 
-Shared HTTP patterns: [references/pruna-api.md](../../references/pruna-api.md)
+Shared HTTP patterns: [references/pruna-api.md](../../references/pruna-api.md) (upload, [poll](#poll), [download](#download))
+
+## HTTP (curl)
+
+### Create (async — recommended)
+
+```bash
+curl -X POST 'https://api.pruna.ai/v1/predictions' \
+  -H 'Content-Type: application/json' \
+  -H "apikey: ${PRUNA_API_KEY}" \
+  -H 'Model: p-image' \
+  -d '{
+    "input": {
+      "prompt": "Product hero shot, minimal studio lighting, 4k",
+      "aspect_ratio": "9:16",
+      "seed": 482901
+    }
+  }'
+```
+
+Poll and download: [pruna-api.md](../../references/pruna-api.md#poll).
+
+### Create (sync — quick test only)
+
+```bash
+curl -X POST 'https://api.pruna.ai/v1/predictions' \
+  -H 'Content-Type: application/json' \
+  -H "apikey: ${PRUNA_API_KEY}" \
+  -H 'Model: p-image' \
+  -H 'Try-Sync: true' \
+  -d '{"input":{"prompt":"Product hero shot","aspect_ratio":"9:16"}}'
+```
 
 ## Before generating
 
-Confirm **`prompt`**, **`aspect_ratio`** (or `width`/`height` if `custom`), and optional **`seed`** / safety flags with the user. Run [p-image-quality-checklist.md](../../../references/p-image-quality-checklist.md) on outputs before downstream steps. If this still is for a scripted video, capture intent via [single-scene-ai-video](../../../guides/workflows/single-scene-ai-video/SKILL.md) or [multi-scene-ai-video](../../../guides/workflows/multi-scene-ai-video/SKILL.md) intake before burning credits.
+Confirm **`prompt`**, **`aspect_ratio`**, and **`seed`** with the user. Run [p-image-quality-checklist.md](../../../references/p-image-quality-checklist.md) on outputs before downstream steps.
 
 ## Required input
 
@@ -27,23 +59,11 @@ Confirm **`prompt`**, **`aspect_ratio`** (or `width`/`height` if `custom`), and 
 
 ## Example: synchronous
 
-```bash
-curl -X POST 'https://api.pruna.ai/v1/predictions' \
-  -H 'Content-Type: application/json' \
-  -H "apikey: ${PRUNA_API_KEY}" \
-  -H 'Model: p-image' \
-  -H 'Try-Sync: true' \
-  -d '{
-    "input": {
-      "prompt": "Product hero shot, minimal studio lighting, 4k",
-      "aspect_ratio": "9:16"
-    }
-  }'
-```
+(See **Create (sync)** above.)
 
-## Example: asynchronous
+## Example: asynchronous (batch / multi-panel)
 
-Omit `Try-Sync`, then poll `get_url` until `status` is `succeeded`, then download from `generation_url`.
+Omit `Try-Sync`. For N panels with no shared dependency, **POST all jobs in parallel**, then poll every `get_url`. See [parallel-execution.md](../../../references/parallel-execution.md).
 
 ## Typical next steps
 
@@ -52,3 +72,7 @@ Omit `Try-Sync`, then poll `get_url` until `status` is `succeeded`, then downloa
 - Animate still: [p-video](../../video/p-video/SKILL.md) or talking head [p-video-avatar](../../video/p-video-avatar/SKILL.md)
 - Scripted workflows (intake first): [single-scene-avatar-video](../../../guides/workflows/single-scene-avatar-video/SKILL.md), [multi-scene-avatar-video](../../../guides/workflows/multi-scene-avatar-video/SKILL.md)
 - Full pipeline: [pruna-generative-pipeline](../../../guides/workflows/pruna-generative-pipeline/SKILL.md)
+
+## Related workflow
+
+Replace / comparison reels: [p-video-replace-comparison](../../../guides/workflows/p-video-replace-comparison/SKILL.md) · avatar + animate reels: [multi-scene-avatar-video](../../../guides/workflows/multi-scene-avatar-video/SKILL.md) — bundled scripts live in workflow skills, not here.

@@ -10,7 +10,7 @@ See the canonical mapping in [`generation-quality-checklists.md`](./generation-q
 
 - Effective detail increased versus source (not just larger dimensions).
 - Important features remain sharp (eyes, logos, product edges, text if intentionally present).
-- Chosen `target` MP is appropriate for destination (social, video plate, print).
+- Chosen `target` MP is appropriate for destination (avatar plate ~4 MP; print up to 128 MP).
 
 ## Fidelity to source
 

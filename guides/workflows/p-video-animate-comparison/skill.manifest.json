@@ -1,0 +1,27 @@
+{
+  "scripts": {
+    "core": ["run_from_plan.py"],
+    "shared": ["pruna_paths.py", "pruna_api.py", "generate_video_comparison.py", "requirements.txt"],
+    "optional": [],
+    "repo_only": []
+  },
+  "tool_skills": ["p-image", "p-image-edit", "p-video-avatar", "p-video-animate"],
+  "references": [
+    "pruna-api.md",
+    "staged-generation-gate.md",
+    "p-video-animate-quality-checklist.md",
+    "parallel-execution.md",
+    "generation-quality-checklists.md"
+  ],
+  "templates": [
+    "config.template.json",
+    "batch.template.json",
+    "curl-phase-a.template.sh",
+    "curl-phase-b.template.sh"
+  ],
+  "generation_phases": {
+    "default": "stills",
+    "requires_user_approval_before": ["p-video-avatar", "p-video-animate"]
+  },
+  "generation_package": ["curl", "script"]
+}

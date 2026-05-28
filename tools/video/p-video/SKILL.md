@@ -3,6 +3,7 @@ name: p-video
 description: Generates video with Pruna P-API model p-video (text-to-video, image-to-video, audio-conditioned, duration, resolution, draft). Use when the user asks for Pruna video, p-video, cinematic motion, or API usage for Pruna premium video.
 license: MIT
 metadata:
+  version: "0.0.1"
   pruna_model: p-video
 ---
 
@@ -10,7 +11,23 @@ metadata:
 
 Premium video from text, optional image, or optional audio. Full parameters: [p-video model docs](https://docs.api.pruna.ai/guides/models/p-video).
 
-Shared HTTP patterns: [references/pruna-api.md](../../references/pruna-api.md)
+Shared HTTP patterns: [references/pruna-api.md](../../references/pruna-api.md) (upload, [poll](#poll), [download](#download))
+
+## HTTP (curl)
+
+### Create (async — recommended)
+
+See **Example: async text-to-video** below. Poll and download: [pruna-api.md](../../references/pruna-api.md#poll).
+
+### Upload for image-to-video
+
+```bash
+curl -X POST "https://api.pruna.ai/v1/files" \
+  -H "apikey: ${PRUNA_API_KEY}" \
+  -F "content=@/path/to/first-frame.png"
+```
+
+Pass `urls.get` as `input.image`, then create async as above with `"image": "https://api.pruna.ai/v1/files/FILE_ID"`.
 
 ## Before generating
 
@@ -47,7 +64,9 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-Poll `get_url` until `succeeded`, then download `generation_url`.
+Poll and download: [pruna-api.md](../../references/pruna-api.md#poll).
+
+**Multi-scene:** fire **all** scene predictions in one parallel async batch after shared uploads; batch-poll. See [parallel-execution.md](../../../references/parallel-execution.md).
 
 ## Example: image-to-video
 
@@ -59,3 +78,7 @@ Upload image to `/v1/files`, pass its `urls.get` as `input.image`.
 - Multi-scene `p-video` workflow: [multi-scene-ai-video](../../../guides/workflows/multi-scene-ai-video/SKILL.md)
 - Talking portrait: [p-video-avatar](../p-video-avatar/SKILL.md)
 - Pipeline: [pruna-generative-pipeline](../../../guides/workflows/pruna-generative-pipeline/SKILL.md)
+
+## Related workflow
+
+Multi-scene AI video: [multi-scene-ai-video](../../../guides/workflows/multi-scene-ai-video/SKILL.md) — phased curl (not in this tool skill).

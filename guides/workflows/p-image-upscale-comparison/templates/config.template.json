@@ -1,0 +1,41 @@
+{
+  "before": "path/to/before.jpg",
+  "after": "path/to/after.jpg",
+  "output": "path/to/upscale-comparison.mp4",
+  "title": "P-Image-Upscale",
+  "preset": "generic",
+  "fps": 24,
+  "width": 1920,
+  "height": 1080,
+  "timing": {
+    "hook_seconds": 2.0,
+    "outro_seconds": 2.0,
+    "zoom_seconds": 0.8,
+    "slider_seconds": 1.2,
+    "hold_after_seconds": 0.5,
+    "transition_seconds": 0.6
+  },
+  "regions": [
+    {
+      "label": "Center detail",
+      "x": 0.35,
+      "y": 0.30,
+      "w": 0.30,
+      "h": 0.35
+    },
+    {
+      "label": "Left detail",
+      "x": 0.05,
+      "y": 0.35,
+      "w": 0.28,
+      "h": 0.35
+    },
+    {
+      "label": "Right detail",
+      "x": 0.62,
+      "y": 0.30,
+      "w": 0.30,
+      "h": 0.35
+    }
+  ]
+}

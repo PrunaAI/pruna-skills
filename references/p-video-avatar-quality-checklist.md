@@ -18,6 +18,7 @@ See the canonical mapping in [`generation-quality-checklists.md`](./generation-q
 - Spoken output matches intended script/audio content.
 - Voice choice is consistent for recurring characters.
 - Delivery tone matches brief; `voice_prompt` is short and does not leak unintended text.
+- **Motion templates:** when the clip is a source for `p-video-animate`, verify audible speech and visible lip sync — reject smile/wave-only outputs with no dialogue motion.
 
 ## Lip-sync and visual stability
 

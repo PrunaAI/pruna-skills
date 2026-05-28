@@ -1,6 +1,8 @@
 ---
 name: multi-scene-ai-video
-description: Produces multiple Pruna p-video clips from a scene list defined by intake Q&A—per-scene prompts and durations (or I2V/audio per scene), async jobs, then assembly outside Pruna. Use when the user wants episodic B-roll, chaptered promos, or story beats without talking-avatar (no p-video-avatar).
+description: Produces multiple Pruna p-video clips from a scene list defined by intake Q&A—per-scene prompts and durations (or I2V/audio per scene), async parallel jobs with optional subagents per scene, then assembly outside Pruna. Use when the user wants episodic B-roll, chaptered promos, or story beats without talking-avatar (no p-video-avatar).
+metadata:
+  version: "0.0.1"
 ---
 
 # Multi-scene AI video (Pruna `p-video` only)
@@ -35,7 +37,7 @@ Ask follow-ups until every scene row has enough to build `input` without guessin
 ## Workflow (after intake)
 
 1. **Shared uploads** — Upload any reuse images or audio to `/v1/files`; note URLs per scene.
-2. **Generate in order** — For each row, `POST /v1/predictions` with `Model: p-video` and that row’s `input`. Use **async**; poll each job to `succeeded`; download each `generation_url`.
+2. **Generate in parallel** — After uploads, **`POST /v1/predictions`** for **every scene row at once** (`Model: p-video`, each row’s `input`). Use **async** (no `Try-Sync`); poll **all** `get_url` until every job is `succeeded` or `failed`; retry failed scenes only. Download each `generation_url`. Prefer **one subagent per scene** for create + poll + download when 2+ scenes ([parallel-execution.md](../../../references/parallel-execution.md)).
 3. **Review** — If a scene fails intent, adjust prompt and re-run **that** scene only.
 4. **Assembly** — Join clips in scene order; handle audio crossfades in your toolchain.
 5. **Manifest** — Intake table + every prediction id, prompts, outputs, retries.

@@ -216,3 +216,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Generated media and local run artifacts (recreate via skills + PRUNA_API_KEY)
+output/

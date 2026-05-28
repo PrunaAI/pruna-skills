@@ -1,5 +1,75 @@
 # Examples
 
+## Dynamic multi-scene avatar (partnership / founder social)
+
+Proven pattern from production runs:
+
+1. **Character sheet** — photoreal founder, early 30s, locked **`seed`**, one **`voice`** preset.
+2. **Hero** — `p-image` (documentary photoreal) → slop gate → approve identity anchor.
+3. **Per scene** — `p-image-edit` (from hero anchor; change **only** angle + background) → slop gate → `p-video-avatar`. **Run edits and avatar jobs in parallel batches** per phase once dependencies are met ([parallel-execution.md](../../../references/parallel-execution.md)); use **one subagent per scene lane** when the host supports it.
+4. **Vary every scene** — e.g. dark close-up → mountain overlook → ISS cupola → desk window light → studio CTA. Never repeat the same office framing twice.
+5. **Natural voice** — contractions, conversational hooks; **`voice_prompt`** describes human delivery, not product copy.
+
+Example dialogue (single spokesperson, natural):
+
+```text
+Scene 1: "Hey — quick question. When you're making video with AI, how long do you actually wait between ideas?"
+Scene 2: "And that's the real problem, right? It's not just slow — you lose momentum. The whole creative loop just breaks."
+Scene 3: "So we teamed up with Tellers — our whole model family is live inside their editor now."
+Scene 4: "What's actually cool is the speed — cheap enough that you can genuinely explore without worrying about every credit."
+Scene 5: "Anyway — check out Tellers. Link's in the post. I'd love to see what you build."
+```
+
+Store scenes in JSON (`v2_avatar_only_scripts.json` pattern in `prompt-templates.md`) with **`project_seed`**, per-scene **`video_prompt`**, and **`still_prompt`** deltas.
+
+## Mixed announcement (avatar + animate slider beats)
+
+Pattern for product launches that interleave speaking scenes with motion-transfer demos:
+
+| # | Type | Beat |
+|---|------|------|
+| 1 | avatar | Hook — spokesperson intro |
+| 2 | animate | Slider — same UGC motion, new persona still |
+| 3 | avatar | Reveal — partnership / feature detail |
+| 4 | animate | Slider — second motion template, repose hero to match |
+| 5 | avatar | CTA |
+
+**Pipeline:** shared hero anchor → per-row still prep (edit for avatars; optional repose for animate) → parallel **`p-video-avatar`** + parallel **`p-video-animate`** → parallel slider renders for animate rows → ffmpeg concat in scene order.
+
+Model roles and alignment: [animate-beats.md](./animate-beats.md).
+
+**Alignment reminder:** animate rows fail when a meme/mascot still meets human full-body dance motion—pick bust-only templates or repose first (see SKILL **Alignment prep**).
+
+**Style ladder reminder:** each persona still in an animate slider row should use a different **`visual_style_tag`** (photoreal, anime, claymation, Disney 3D, cyberpunk, game cinematic) with its own background, camera angle, and lighting — [visual-variety-bible.md](../../../references/visual-variety-bible.md).
+
+## Motion-transfer-only reel (animate rows)
+
+All-slider showcase (UGC variations, recasting demo):
+
+1. Scene table with only **`animate`** rows.
+2. Upload motion templates + reference stills in parallel.
+3. Parallel **`p-video-animate`** → batch slider render via [`batch.template.json`](../../../examples/workflows/p-video-animate-comparison/batch.template.json).
+4. Concat comparison MP4s:
+
+```bash
+# concat_list.txt
+file 'output/scene01_compare.mp4'
+file 'output/scene02_compare.mp4'
+
+ffmpeg -f concat -safe 0 -i concat_list.txt -c copy output/recast_reel.mp4
+```
+
+**End with avatar CTA** when the piece is a product launch — return the hero spokesperson in a clean studio close-up.
+
+**Slider-only** (animate outputs already exist):
+
+```bash
+python3 guides/workflows/_shared/scripts/generate_video_comparison.py \
+  --source assets/motion/scene2_template.mp4 \
+  --output output/scene2_animated.mp4 \
+  --render output/scene2_compare.mp4
+```
+
 ## Multi-scene rhythm (generic cast)
 
 Pattern:
@@ -34,31 +104,44 @@ Reject:
 
 ## Voice_prompt hygiene
 
-Use:
+Use (realistic human):
 
 ```text
-Warm, confident, slightly amused; brisk trailer pacing.
+Natural conversational tone — like a founder on LinkedIn, not a TV announcer.
+Relaxed pacing, real pauses, slight smile when excited, honest not salesy.
 ```
 
-Avoid stuffing script or brand slogans into **`voice_prompt`**—those belong in **`voice_script`** only.
+Avoid stuffing script, product names, or brand slogans into **`voice_prompt`**—those belong in **`voice_script`** only.
 
 ## Manifest skeleton (Pruna-only)
 
 ```markdown
 # [Project] — multi-scene avatar (Pruna)
 
+## project_seed
+- seed: 482901 (hero p-image + all p-video-avatar)
+
+## Character sheet
+- role, age, hair, realism, wardrobe baseline, personality
+
 ## Style bible
 - Text: ...
 
+## Scene table
+| # | type | setting/angle or motion template | deliverable |
+
 ## Files (POST /v1/files)
 - ref_hero: url, id, expires
-- scene_02_still: url, id
+- scene_02_motion_template: url, id  (animate rows)
 
-## Image predictions (p-image / p-image-edit / p-image-upscale)
+## Image predictions (p-image / p-image-edit)
 - job id, model, input summary, output url, slop pass y/n
 
 ## Avatar predictions (p-video-avatar)
-- scene id, job id, image url, voice, voice_script excerpt, output url
+- scene id, job id, seed, image url, voice, voice_script excerpt, video_prompt, output url
+
+## Animate predictions (p-video-animate)
+- scene id, job id, motion url, image url, instruction_prompt, animated mp4, slider compare mp4, alignment notes
 
 ## Assembly
 - ordered clip list, tool used to join (editor name / internal script), final export path

@@ -1,0 +1,165 @@
+{
+  "project": "p-video-replace-announcement",
+  "resolution": "720p",
+  "target_fps": "original",
+  "style_bible": "Documentary commercial, crisp product labels, no on-screen text. Per-scene visual_style_tag overrides look — do not force one lighting style on every row.",
+  "visual_variety_notes": "Record visual_style_tag, setting_tag, camera_tag, lighting_tag, cast_descriptor per scene. Run references/visual-variety-bible.md checklist before API calls.",
+  "background_music": {
+    "enabled": false,
+    "prompt": "Instrumental chill lo-fi ambient bed, soft piano and warm pads, relaxed modern tech atmosphere, no vocals, understated background music, 85 BPM",
+    "volume": 0.12,
+    "output_name": "announcement_with_music.mp4"
+  },
+  "cast": {
+    "voice": "Zephyr (Female)",
+    "voice_language": "English (US)",
+    "voice_prompt": "Talk like a real person sharing something they built — warm, informal, natural pauses. Not announcer voice."
+  },
+  "scenes": [
+    {
+      "id": 1,
+      "type": "replace",
+      "persona_gender": "female",
+      "visual_style_tag": "photoreal_commercial",
+      "setting_tag": "minimal_studio_desk",
+      "camera_tag": "medium_cu_dolly_in",
+      "lighting_tag": "soft_studio_key",
+      "cast_descriptor": "woman tech presenter, South Asian, early 30s",
+      "replace_mode": "multi_job",
+      "replace_target": "mixed",
+      "use_case": "Hook — face, outfit, desk product",
+      "source": {
+        "subject_in_video": "the spokesperson's face, charcoal blazer, and white mug on desk at frame left",
+        "voice": "Zephyr (Female)",
+        "still_edit": "Hero woman spokesperson, medium close-up at minimal desk, charcoal blazer, white mug frame left, mouth visible ready to speak.",
+        "voice_script": "Hey — P-Video-Replace is live. Same clip — new presenter, new jacket, or a new product on the desk.",
+        "voice_prompt": "Warm founder tone, clear lip sync, conversational.",
+        "video_prompt": "Gentle dolly push-in, speaks to camera with clear lip movement, brief glance toward mug, mouth centered."
+      },
+      "references": [
+        {
+          "prompt": "Photoreal woman tech presenter, South Asian, charcoal blazer, medium close-up warm studio desk, mouth visible.",
+          "seed": 110401,
+          "output_label": "New presenter",
+          "instruction_prompt": "Replace only the spokesperson's face and identity with the woman from the reference. Keep blazer, mug on desk, lips, camera, and audio unchanged."
+        },
+        {
+          "prompt": "Photoreal same woman spokesperson wearing forest green wool blazer over cream blouse, medium close-up studio desk.",
+          "seed": 110502,
+          "output_label": "Green blazer",
+          "instruction_prompt": "Replace only the charcoal blazer with the forest green blazer from the reference. Do not change face, lips, mug, or audio — clothing only."
+        },
+        {
+          "prompt": "Single rose gold supplement bottle on wooden desk surface, one object centered, shallow depth of field.",
+          "seed": 110603,
+          "output_label": "Desk SKU",
+          "instruction_prompt": "Replace only the white mug on the desk with the rose gold bottle from the reference. Preserve face, blazer, lips, and audio."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "replace",
+      "persona_gender": "male",
+      "visual_style_tag": "photoreal_ugc",
+      "setting_tag": "neutral_grey_wall",
+      "camera_tag": "medium_cu_handheld",
+      "lighting_tag": "ring_light_soft",
+      "cast_descriptor": "man UGC creator, East Asian, late 20s",
+      "replace_mode": "multi_job",
+      "replace_target": "mixed",
+      "use_case": "UGC — creator, tee, tube in hand",
+      "source": {
+        "subject_in_video": "the creator's face, white crewneck, and matte white tube in right hand at chest",
+        "voice": "Puck (Male)",
+        "still_edit": "Photoreal man late twenties, white crewneck, neutral grey wall, holding matte white tube at chest height, mouth visible.",
+        "voice_script": "One take — swap who I am, swap the shirt, or swap the tube in my hand.",
+        "voice_prompt": "Casual creator, clear lip sync, friendly not shouty.",
+        "video_prompt": "Subtle handheld sway, speaks to camera with clear lip movement, tube steady at chest, mouth in frame."
+      },
+      "references": [
+        {
+          "prompt": "Photoreal East Asian man creator, white crewneck, neutral wall, tube at chest, mouth visible.",
+          "seed": 222401,
+          "instruction_prompt": "Replace only the creator's face and identity with the man from the reference. Keep crewneck, tube position, lips, and audio."
+        },
+        {
+          "prompt": "Photoreal same face man in dusty blue crewneck, neutral wall, tube at chest.",
+          "seed": 222502,
+          "instruction_prompt": "Replace only the white crewneck with the dusty blue crewneck from the reference. Preserve face, lips, tube pose, and audio — clothing only."
+        },
+        {
+          "prompt": "Single rose gold skincare tube held at chest height against neutral backdrop, hand-scale, one object in frame.",
+          "seed": 222603,
+          "instruction_prompt": "Replace only the white tube in hand with the rose gold tube from the reference. Do not alter face, lips, or audio."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "replace",
+      "replace_mode": "multi_job",
+      "replace_target": "clothing",
+      "use_case": "Wardrobe on talking head",
+      "source": {
+        "subject_in_video": "the stylist's cream sweater and open denim jacket",
+        "voice": "Zephyr (Female)",
+        "still_edit": "Photoreal woman early thirties, cream sweater, denim jacket open, boutique soft light, mouth visible.",
+        "voice_script": "Same framing — I only change the outfit, not the performance.",
+        "voice_prompt": "Friendly stylist, clear lip sync.",
+        "video_prompt": "Gentle handheld sway, speaks to camera with clear lip movement, hands at waist, no walking."
+      },
+      "references": [
+        {
+          "prompt": "Photoreal same face woman in black turtleneck, boutique soft light, mouth visible.",
+          "seed": 333101,
+          "instruction_prompt": "Replace only the cream sweater and denim jacket with the black turtleneck from the reference. Preserve face, lips, and audio — clothing only."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "replace",
+      "replace_mode": "multi_job",
+      "replace_target": "object",
+      "use_case": "SKU in hand",
+      "source": {
+        "subject_in_video": "the plain white skincare tube in her right hand at chest height",
+        "voice": "Zephyr (Female)",
+        "still_edit": "Photoreal woman beauty creator, beige blouse, vanity background blur, white tube at chest, mouth visible.",
+        "voice_script": "Same hero clip — three different tubes, same hand, same motion.",
+        "voice_prompt": "Calm beauty demo, clear lip sync.",
+        "video_prompt": "Subtle push-in, speaks with clear lip movement, tube steady at chest."
+      },
+      "references": [
+        {
+          "prompt": "Single matte white skincare tube with gold cap held at chest height, hand-scale, one object in frame.",
+          "seed": 444101,
+          "instruction_prompt": "Replace only the white tube in hand with the gold-cap tube from the reference. Preserve face, lips, and audio."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "replace",
+      "replace_mode": "multi_job",
+      "replace_target": "mixed",
+      "use_case": "Solo cafe — face, jacket, bag",
+      "source": {
+        "subject_in_video": "her face, sand linen blazer, and yellow crossbody bag on the chair to her right",
+        "voice": "Zephyr (Female)",
+        "still_edit": "Photoreal woman, sand linen blazer, outdoor cafe, yellow bag on empty chair frame right, coffee cup, mouth visible, calm expression.",
+        "voice_script": "You keep the take — swap my face, my jacket, or the bag on the chair. That's how we demo P-Video-Replace.",
+        "voice_prompt": "Calm explainer, clear lip sync, zero laugh energy.",
+        "video_prompt": "Slow gentle arc, speaks to camera with clear lip movement, brief glance at bag, no laughter."
+      },
+      "references": [
+        {
+          "prompt": "Photoreal woman auburn hair cream knit, outdoor cafe, mouth visible.",
+          "seed": 555101,
+          "instruction_prompt": "Replace only her face and identity with the woman from the reference. Keep blazer, bag on chair, lips, and audio."
+        }
+      ]
+    }
+  ]
+}

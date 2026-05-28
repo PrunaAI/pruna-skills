@@ -1,6 +1,8 @@
 ---
 name: single-scene-avatar-video
-description: One Pruna talking-head clip after intake—natural spoken voice_script, one locked voice choice per character, source portrait reused when iterating styles or stills via p-image-edit, explicit user confirmation before any POST /v1/predictions, then a runnable script or curl sequence to execute generation. Uses slop checklist and optional p-image / p-image-edit / upscale.
+description: One Pruna talking-head clip after intake—character sheet, locked seed, natural human voice_script and voice_prompt, source portrait via p-image or p-image-edit, explicit user confirmation before any POST /v1/predictions, then a runnable script or curl sequence to execute generation.
+metadata:
+  version: "0.0.1"
 ---
 
 # Single-scene avatar video (Pruna only)
@@ -13,7 +15,9 @@ Atomic APIs: [p-video-avatar](../../../tools/video/p-video-avatar/SKILL.md), [p-
 
 ## Natural language script
 
-Write **`voice_script`** as **real dialogue**: natural rhythm, clear sentences, contractions when they sound right for the brand. Avoid robotic bullet lists unless the client wants that tone.
+Write **`voice_script`** as **real dialogue**: contractions, natural rhythm, short sentences—how a person talks on camera, not a press release. See [multi-scene-avatar-video/prompt-templates.md](../multi-scene-avatar-video/prompt-templates.md) for good/bad examples.
+
+**`voice_prompt`** must describe **human delivery** (pacing, warmth, founder/conversational tone)—never paste marketing copy or script lines into it.
 
 ## Voice and image continuity
 
@@ -31,7 +35,9 @@ Write **`voice_script`** as **real dialogue**: natural rhythm, clear sentences, 
 | **Voice** | Which Pruna **`voice`** and **`voice_language`**? Keep **`voice_prompt`** short (performance vibe only). |
 | **Look** | `9:16` / `16:9` still? Avatar **`resolution`** `720p` or `1080p`? |
 | **Image source** | Upload-only reference, or generate/refine with **`p-image`** / **`p-image-edit`** first? |
-| **Motion** | Desired energy for **`video_prompt`** (positive wording only—no “no subtitles” style negations)? |
+| **Motion** | Desired energy for **`video_prompt`**—specific camera angle and movement (positive wording only)? |
+| **Character** | Age, look, realism level (photoreal vs stylized)—see character sheet in [multi-scene-avatar-video](../multi-scene-avatar-video/SKILL.md) |
+| **Seed** | Lock **`seed`** at hero generation; pass same value to **`p-video-avatar`** |
 | **Output** | Filename / delivery channel; async vs sync tolerance? |
 
 If any answer is missing and the user has not waived it, **ask** before generating.
@@ -48,15 +54,15 @@ After intake:
 
 When the user confirms:
 
-1. **Emit** a **runnable generation package**: ordered **`curl`** calls or a small script (shell/Python) that uploads if needed, builds the still, runs **`p-video-avatar`**, polls async jobs, and downloads **`generation_url`**—matching the approved script **exactly**.
+1. **Emit** a **runnable generation package**: phased **`curl`** calls or a small script (shell/Python) that uploads if needed, builds the still, runs **`p-video-avatar`** async, polls, and downloads **`generation_url`**—matching the approved script **exactly**. For multi-step prep (edit + avatar), use async and parallel phases per [parallel-execution.md](../../../references/parallel-execution.md).
 2. **Run** it when the environment allows (**`PRUNA_API_KEY`**, network). Otherwise deliver the same artifact so the user can execute locally.
 
 ## Workflow (after confirmation)
 
 1. **References** — Upload assets with `POST /v1/files`; collect Pruna file URLs.
-2. **Still (if needed)** — Build one talking-head frame with **`p-image`** and/or **`p-image-edit`** from the **locked source**; optional **`p-image-upscale`**.
+2. **Still (if needed)** — Build one talking-head frame with **`p-image`** (photoreal prompt + locked **`seed`**) and/or **`p-image-edit`** from a locked source. Run the slop gate before avatar.
 3. **Slop gate** — Run the checklist in [generation-quality-checklists.md](../../../references/generation-quality-checklists.md); fix with image models until pass.
-4. **Avatar** — Call **`p-video-avatar`** with snake_case `input` (`image`, `voice_script`, `voice`, `voice_language`, `voice_prompt`, `video_prompt`, `resolution`). Prefer **async**; poll to `succeeded`; download `generation_url`.
+4. **Avatar** — Call **`p-video-avatar`** with snake_case `input` (`image`, `voice_script`, `voice`, `voice_language`, **`voice_prompt`** human delivery, **`video_prompt`** specific camera/motion, `resolution`, **`seed`**). **Async only** (omit `Try-Sync`); poll to `succeeded`; download `generation_url`.
 5. **Manifest** — Store intake answers, URLs, prediction ids, prompts, retries, confirmed script snapshot.
 
 ## Related

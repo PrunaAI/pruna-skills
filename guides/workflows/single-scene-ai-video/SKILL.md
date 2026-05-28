@@ -1,6 +1,8 @@
 ---
 name: single-scene-ai-video
 description: Produces one Pruna cinematic clip (p-video) after an intake Q&A—text-to-video, image-to-video, or optional audio-conditioned—then async poll and download. Use when the user wants a single B-roll, product shot in motion, one hero video beat, or any one-off p-video without a multi-scene storyboard.
+metadata:
+  version: "0.0.1"
 ---
 
 # Single-scene AI video (Pruna `p-video`)
@@ -19,14 +21,14 @@ One **`p-video`** prediction. See [p-video](../../../tools/video/p-video/SKILL.m
 | **Draft** | Use `draft: true` for cheaper preview or `false` for final quality? |
 | **Safety / upsampling** | Client defaults for `disable_safety_filter` and `prompt_upsampling`? |
 | **Repro** | Need a fixed `seed`? |
-| **Delivery** | Async (recommended) or risk `Try-Sync: true` for a quick test? |
+| **Delivery** | Async (required for production); `Try-Sync: true` only for a one-off quick test |
 
 If the user has not chosen mode and duration (or audio path), **ask** before submitting.
 
 ## Workflow (after intake)
 
 1. **Inputs** — If I2V or audio: `POST /v1/files`, use returned URLs in `input.image` or `input.audio`.
-2. **Submit** — `Model: p-video`, JSON `input` per [model docs](https://docs.api.pruna.ai/guides/models/p-video). Prefer **async**; poll `get_url` until `succeeded`.
+2. **Submit** — `Model: p-video`, JSON `input` per [model docs](https://docs.api.pruna.ai/guides/models/p-video). **Async only** (omit `Try-Sync`); poll `get_url` until `succeeded`.
 3. **Download** — Fetch `generation_url` with `apikey` header.
 4. **Manifest** — Intake sheet + prediction id + final URL.
 

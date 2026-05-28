@@ -1,0 +1,19 @@
+{
+  "source": "path/to/original-footage.mp4",
+  "output": "path/to/replaced-output.mp4",
+  "render": "path/to/scene-compare.mp4",
+  "title": "P-Video-Replace",
+  "source_label": "Original footage",
+  "output_label": "Replaced",
+  "include_audio": true,
+  "full_bleed": true,
+  "fps": 24,
+  "width": 1920,
+  "height": 1080,
+  "timing": {
+    "hook_seconds": 1.5,
+    "slider_seconds": 2.5,
+    "hold_output_seconds": 1.5,
+    "outro_seconds": 1.5
+  }
+}

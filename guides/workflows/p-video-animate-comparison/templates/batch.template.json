@@ -1,0 +1,26 @@
+{
+  "scenes": [
+    {
+      "source": "path/to/scene01_motion.mp4",
+      "output": "path/to/scene01_animated.mp4",
+      "render": "path/to/scene01_compare.mp4",
+      "title": "P-Video-Animate · Scene 1",
+      "source_label": "Motion template",
+      "output_label": "Animated subject",
+      "timing": {
+        "hook_seconds": 1.5,
+        "slider_seconds": 2.5,
+        "hold_output_seconds": 1.5,
+        "outro_seconds": 1.5
+      }
+    },
+    {
+      "source": "path/to/scene02_motion.mp4",
+      "output": "path/to/scene02_animated.mp4",
+      "render": "path/to/scene02_compare.mp4",
+      "title": "P-Video-Animate · Scene 2",
+      "source_label": "Original clip",
+      "output_label": "Recast"
+    }
+  ]
+}

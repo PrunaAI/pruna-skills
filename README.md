@@ -9,6 +9,7 @@ Skills follow the [Agent Skills](https://agentskills.io/specification) layout so
 ```text
 references/
   pruna-api.md          # Auth, endpoints, sync/async, uploads
+  parallel-execution.md # Async parallel batches, phased deps, subagent splits
   pruna-models.md       # Index of models and skill paths
   generation-quality-checklists.md # QA hub (core gate + links to per-model checklists)
   avatar-still-quality-checklist.md # Compatibility alias to QA hub
@@ -19,19 +20,33 @@ tools/image/
 tools/video/
   p-video/              # Text / image / audio video
   p-video-avatar/       # Talking head from portrait + script or audio
+  p-video-animate/      # Animate reference image from source video motion
+  p-video-replace/      # Replace people in source video (1–4 identity images per call)
+tools/audio/
+  stable-audio-2.5/     # Replicate instrumental bed for launch reels (mix under VO)
 guides/workflows/
   pruna-run/                     # Fast prompt -> generation entrypoint
   pruna-generative-pipeline/   # Scenario hub (mood board, I2V, packs…) + intake
   single-scene-avatar-video/   # Intake → one p-video-avatar
-  multi-scene-avatar-video/    # Intake → stills + p-video-avatar per scene + assembly
+  multi-scene-avatar-video/    # Intake → stills + p-video-avatar and/or p-video-animate slider beats + assembly
   single-scene-ai-video/        # Intake → one p-video
   multi-scene-ai-video/        # Intake scene table → p-video per scene + assembly
+  p-image-upscale-comparison/  # Before/after zoom + slider demo from any still pair
+  p-video-animate-comparison/  # Redirect stub → use multi-scene-avatar-video animate rows
+  p-video-replace-comparison/  # Multi-scene replace sliders (p-image + avatar + replace)
 examples/workflows/
   */example-prompt.md          # copy/paste prompt starters by workflow
+  p-image-upscale-comparison/scripts/  # repo-only gallery batch (not portable)
+guides/workflows/
+  _shared/scripts/             # Shared renderers + pruna_paths + pruna_api
+  */scripts/                   # Portable runners bundled per workflow skill
 scripts/
-  pruna_run.py                 # Unified prompt -> run entrypoint
-  run_pruna_generative_pipeline_examples.py # Route I-L runner
-  run_workflow_examples.py     # Workflow executors used by route runner
+  install_skill.sh             # Assemble portable skill bundle to ~/.cursor/skills/
+  generate_upscale_comparison.py       # Backward-compat wrapper → _shared
+  generate_video_animate_comparison.py   # Backward-compat wrapper → _shared
+  run_p_video_replace_announcement.py  # Backward-compat wrapper → replace run_from_plan
+  run_p_video_animate_announcement.py  # Backward-compat wrapper → animate run_from_plan
+  requirements-comparison.txt  # Legacy; prefer guides/workflows/*/scripts/requirements.txt
 .claude-plugin/
   plugin.json           # Claude Code plugin skill list (optional)
 ```
@@ -44,42 +59,53 @@ Atomic skills link to `references/` instead of duplicating long API tables.
 |-----------------|------|
 | `p-image` | `Model: p-image` — T2I, aspect ratios, optional LoRA |
 | `p-image-edit` | `Model: p-image-edit` — prompt + 1–5 image URLs |
-| `p-image-upscale` | `Model: p-image-upscale` — target MP, enhance flags |
+| `p-image-upscale` | `Model: p-image-upscale` — target MP (1–128), enhance flags |
 | `p-video` | `Model: p-video` — T2V, I2V, optional audio |
 | `p-video-avatar` | `Model: p-video-avatar` — portrait + `voice_script` or `audio` |
+| `p-video-animate` | `Model: p-video-animate` — *animate this picture with motion* — one `image` + motion-template `video` |
+| `p-video-replace` | `Model: p-video-replace` — *replace this person in this video* — source `video` + 1–4 identity `images` in one call |
+| `stable-audio-2.5` | Replicate — instrumental background bed for launch reels (mix under VO via `launch_background_music.py`) |
 | `pruna-generative-pipeline` | Scenario hub: mood board, hero+variants, I2V, audio-led video, draft→final, links to full scene workflows |
 | `single-scene-avatar-video` | Workflow: intake → one still + slop + one `p-video-avatar` |
-| `multi-scene-avatar-video` | Workflow: intake → Pruna stills + `p-video-avatar` per scene + assembly |
+| `multi-scene-avatar-video` | Workflow: character sheet + scene table (`avatar` and/or `animate` rows) + locked seeds + natural voice + hero → edit → parallel async `p-video-avatar` / `p-video-animate` + slider renders + assembly |
 | `single-scene-ai-video` | Workflow: intake → one `p-video` |
-| `multi-scene-ai-video` | Workflow: intake scene table → one `p-video` per scene + assembly |
+| `multi-scene-ai-video` | Workflow: intake scene table → parallel async `p-video` per scene + optional subagents + assembly |
+| `p-image-upscale-comparison` | Workflow: any pre/post upscale still pair → zoom stops + slider sweeps MP4 |
+| `p-video-animate-comparison` | Redirect stub — use `multi-scene-avatar-video` for animate slider beats |
+| `p-video-replace-comparison` | Workflow: character/clothing/object/mixed swaps with prompt-guided mapping, dynamic sources, natural VO, slider compare MP4s |
 | `pruna-run` | Fast entrypoint: auto-route prompt to image/i2v/avatar/I-L |
 
-## Fast path: prompt -> generation
+## Portable workflow install
 
-Use this when you want direct execution with minimal ceremony.
+```bash
+./scripts/install_skill.sh p-video-replace-comparison
+./scripts/install_skill.sh p-video-animate-comparison
+./scripts/install_skill.sh p-image-upscale-comparison
+./scripts/install_skill.sh multi-scene-avatar-video
+```
+
+See each workflow's `README-INSTALL.md` for run commands. Default plan runners use **`--phase stills`** (human-in-the-loop gate).
+
+## Fast path: agent workflows
+
+Use workflow skills with phased curl (see each `tools/*/SKILL.md`) or portable runners:
 
 ```bash
 export PRUNA_API_KEY="your_key"
 
-# Auto route from one incoming prompt
-python3 scripts/pruna_run.py --prompt "cinematic launch teaser for our product"
+# Replace comparison reel — stills first, then video after approval
+python3 guides/workflows/p-video-replace-comparison/scripts/run_from_plan.py \
+  --plan output/p-video-replace-announcement/announcement_plan.json \
+  --out-dir output/p-video-replace-announcement \
+  --phase stills
 
-# Force a chained path
-python3 scripts/pruna_run.py --route i2v --prompt "hand-drawn mascot reveal clip"
-
-# Talking avatar (requires script line)
-python3 scripts/pruna_run.py \
-  --route avatar \
-  --prompt "friendly spokesperson portrait" \
-  --voice-script "Hi, here is your one-line launch message."
+# Upscale before/after slider from any still pair
+python3 guides/workflows/p-image-upscale-comparison/scripts/generate_upscale_comparison.py \
+  --before assets/before.jpg --after assets/after.jpg \
+  --output output/upscale-demo.mp4 --preset portrait
 ```
 
-For scenario-hub routes I-L:
-
-```bash
-python3 scripts/run_pruna_generative_pipeline_examples.py --route I
-python3 scripts/run_pruna_generative_pipeline_examples.py --route all
-```
+For scenario routing, use the [pruna-run](guides/workflows/pruna-run/SKILL.md) and [pruna-generative-pipeline](guides/workflows/pruna-generative-pipeline/SKILL.md) workflow skills in Cursor.
 
 ## Skill format (required for installability)
 
