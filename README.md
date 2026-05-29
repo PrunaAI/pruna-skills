@@ -76,7 +76,7 @@ Atomic skills link to `references/` instead of duplicating long API tables.
 | `p-image-upscale-comparison` | Workflow: any pre/post upscale still pair → zoom stops + slider sweeps MP4 |
 | `p-video-animate-comparison` | Redirect stub — use `multi-scene-avatar-video` for animate slider beats |
 | `p-video-replace-comparison` | Workflow: character/clothing/object/mixed swaps with prompt-guided mapping, dynamic sources, natural VO, slider compare MP4s |
-| `ai-music-video` | Workflow: lyrics → Music 2.5 song → cut-safe line map → `p-video-avatar` performance + `p-video` B-roll → ffmpeg assembly |
+| `ai-music-video` | Workflow: lyrics → Music 2.5 song → cut-safe line map → `p-video-avatar` performance + `p-video` B-roll → ffmpeg assembly; hero + `p-image-edit` + locked seed when one singer throughout |
 | `pruna-run` | Fast entrypoint: auto-route prompt to image/i2v/avatar/I-L |
 
 ## Portable workflow install

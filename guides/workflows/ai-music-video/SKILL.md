@@ -1,6 +1,6 @@
 ---
 name: ai-music-video
-description: Builds AI music videos — write lyrics with Music 2.5 section tags, generate the song on Replicate, map cut-safe line boundaries, alternate p-video-avatar performance clips and p-video B-roll synced to audio slices, then assemble with ffmpeg. Use when the user wants a music video, lyric video, sung promo, or MiniMax song + Pruna video.
+description: Builds AI music videos — write lyrics with Music 2.5 section tags, generate the song on Replicate, map cut-safe line boundaries, alternate p-video-avatar performance clips and p-video B-roll synced to audio slices, then assemble with ffmpeg. When the user wants one singer throughout, lock a hero still and branch performance frames with p-image-edit plus project_seed — not fresh identity pulls per line. Use when the user wants a music video, lyric video, sung promo, or MiniMax song + Pruna video.
 license: MIT
 metadata:
   version: "0.0.1"
@@ -25,12 +25,26 @@ End-to-end **music video** production:
 | **Genre / mood** | Indie pop, R&B, electronic, acoustic ballad? Energy arc? |
 | **Vocal** | Gender, timbre, tempo (BPM), key instruments — becomes `music.prompt` |
 | **Story** | What should the video *show* during verse vs chorus vs instrumental? |
-| **Cast** | One singer throughout or stylistic recasts on B-roll only? |
+| **Cast** | One singer throughout or stylistic recasts on B-roll only? If **same singer**, confirm before stills — see **Character continuity** below. |
+| **Continuity** | Same face/wardrobe baseline across performance cuts, or deliberate variety (location changes OK; identity drift is not)? |
 | **Format** | `16:9` / `9:16`, `720p` / `1080p` |
 | **Length** | Short hook (~60s) or full song (~3 min)? Fewer cuts = lower cost |
 | **Beat mix** | Performance-heavy vs B-roll-heavy? Default: alternate on verses, performance on chorus |
 
 Do **not** call Music 2.5 or Pruna video until lyrics are approved.
+
+## Character continuity (when intended)
+
+Ask whether performance beats should read as **one singer** or whether **recasts** are deliberate. Default assumption when the user names a single artist: **same person on every performance cut**.
+
+| Intent | Stills | Video | Anti-pattern |
+|--------|--------|-------|--------------|
+| **Same singer throughout** | One approved **hero** via `p-image` (locked `project_seed`) → every performance still via **`p-image-edit`** off that URL — change only angle, setting, expression, wardrobe *delta* | Pass **`seed`: `project_seed`** on all **`p-video-avatar`** jobs; reuse `cast_descriptor` in edit prompts | Fresh unrelated **`p-image`** text prompt per line — faces drift |
+| **Same singer, new locations** | Hero + edits per beat — vary **`setting_tag`**, **`camera_tag`**, **`lighting_tag`**; keep identity anchors (age, hair, face, baseline outfit) in the character sheet | Same seed lock; distinct **`video_prompt`** per cut | Grey-wall repeat or identical framing on consecutive performance lines |
+| **Deliberate recasts** | Only on **broll** beats, labeled guest rows, or when the user explicitly asks — never silent identity swaps on back-to-back performance lines | N/A for lip-sync rows | Random new face mid-chorus without user approval |
+| **Mascot / stylized host** | One approved mascot still → **`p-image-edit`** for pose/setting; use **`p-video`** + audio (not avatar) | Lock **`project_seed`** when the API accepts it | **`p-video-avatar`** on non-human stills — humanizes the character |
+
+Record in the plan: `project_seed`, `cast` / `character_sheet`, approved **`hero_still`** URL, and `continuity: same_singer | recasts_ok`. Full cast-ledger patterns: [multi-scene-avatar-video](../multi-scene-avatar-video/SKILL.md) **Character sheet** and **Source portrait / hero**.
 
 ## Pipeline phases
 
@@ -100,15 +114,24 @@ Each cut entry includes:
 | `start_sec` / `end_sec` | Trim window in the master song — **adjust by ear** |
 | `clip` | Filename in `clips/` (set when clips are rendered) |
 
-## Step 4 — Stills (`p-image`)
+## Step 4 — Stills (`p-image` / `p-image-edit`)
 
-One approved still per segment. Performance stills:
+One approved still per segment.
+
+**When continuity is intended (default for one singer):**
+
+1. Generate and gate **one hero** performance still with **`p-image`** + locked **`project_seed`**.
+2. Store the approved URL as **`hero_still`** in the plan.
+3. Every later performance still = **`p-image-edit`** from **`hero_still`** — *"Using attached reference as identity; change only: [angle], [setting], [expression]."*
+4. Run the slop gate on hero and each edit before Phase D.
+
+Performance still rules (hero and edits):
 
 - **Entire face visible**, mouth open mid-word
 - **Slight angle from the side** — not “facing camera” in still prompts ([p-video-replace trigger patterns](../../../guides/workflows/p-video-replace-comparison/SKILL.md) apply to portrait stills)
-- Vary **`setting_tag`** per chorus pass — loft, rooftop, neon corridor
+- Vary **`setting_tag`** per chorus pass — loft, rooftop, neon corridor — without reinventing the face
 
-B-roll stills: environment, hands, product, abstract motion plate for I2V.
+B-roll stills: environment, hands, product, abstract motion plate for I2V — no identity requirement unless the B-roll shows the singer.
 
 Run [music-video-quality-checklist.md](../../../references/music-video-quality-checklist.md) before Phase D.
 
@@ -174,6 +197,7 @@ Output: `music_video.mp4` — video track from trimmed clips, **full song** on a
 | Layer | Guidance |
 |-------|----------|
 | **Color** | Match `music.prompt` palette — warm ballad → golden hour; electronic → split gel neon |
+| **Identity** | When `continuity: same_singer`, performance cuts should match hero face/outfit baseline — location and camera may change |
 | **Rhythm** | Alternate performance and B-roll on verses; hold singer through chorus hooks |
 | **Camera** | No duplicate `video_prompt` on back-to-back cuts |
 | **Instrumental breaks** | Go cinematic — wide landscapes, abstract motion, detail macros |
@@ -198,6 +222,8 @@ Requires **`ffmpeg`** and **`ffprobe`**.
 - `voice_script` on performance beats when the real song slice should drive lip sync
 - Cutting mid-word to hit a beat — always trim on line boundaries
 - Same grey-wall performance still for every line
+- Fresh **`p-image`** identity pull per performance line when the user wanted one singer
+- Skipping **`hero_still`** + edit chain — biggest cause of face drift across a music video
 - Skipping the listen pass on `start_sec` / `end_sec` after proportional allocation
 
 ## Related

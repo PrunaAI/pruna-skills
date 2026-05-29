@@ -39,9 +39,18 @@ python3 guides/workflows/ai-music-video/scripts/assemble_music_video.py \
 | Song section | Typical ratio | Visual idea |
 |--------------|---------------|-------------|
 | Verse | 50% performance / 50% B-roll | Singer + detail inserts |
-| Chorus | 80% performance | Hero framing, push-in |
+| Chorus | 80% performance | Hero framing, push-in — reuse hero + edit for same face |
 | Inst / Solo | 100% B-roll | City night, nature, abstract motion |
-| Bridge | New location performance | Wardrobe or setting change |
+| Bridge | New location performance | Wardrobe or setting change via **`p-image-edit`** off hero |
+
+## Same-singer continuity (typical)
+
+1. Approve one performance **hero** still → set `hero_still` URL in plan.
+2. Every performance segment: **`p-image-edit`** from hero — vary setting/camera, not identity.
+3. All **`p-video-avatar`** calls: `"seed": project_seed` from plan.
+4. B-roll may show hands, city, product — no face required.
+
+See [SKILL.md](./SKILL.md) **Character continuity**.
 
 ## Lyric tips for this repo
 

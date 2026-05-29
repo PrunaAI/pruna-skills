@@ -1,6 +1,8 @@
 {
   "title": "Example indie pop music video",
   "project_seed": 880001,
+  "continuity": "same_singer",
+  "hero_still": null,
   "aspect_ratio": "16:9",
   "resolution": "1080p",
   "style_bible": "Indie pop music video, warm golden-hour palette, shallow depth of field, photoreal singer, cinematic B-roll inserts. 16:9 single subject one frame on performance stills.",

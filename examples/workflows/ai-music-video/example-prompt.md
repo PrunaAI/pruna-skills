@@ -4,7 +4,7 @@ Build a lyric-synced music video: **lyrics → MiniMax Music 2.5 song → cut ma
 
 ## Quick start prompt
 
-> Use the **ai-music-video** workflow. Genre: indie pop, warm female vocal, 92 BPM, uplifting skills-library theme. Write lyrics with `[Verse]` / `[Chorus]` / `[Inst]` tags — one phrase per line so we never cut mid-word. After I approve lyrics, generate the song with music-2.5, build a cut manifest, then alternate performance avatar clips (audio slices) and cinematic B-roll. 16:9, 1080p.
+> Use the **ai-music-video** workflow. Genre: indie pop, warm female vocal, 92 BPM, uplifting skills-library theme. Write lyrics with `[Verse]` / `[Chorus]` / `[Inst]` tags — one phrase per line so we never cut mid-word. **Same singer throughout** — lock one hero still, branch performance frames with `p-image-edit`, reuse `project_seed` on avatar clips. After I approve lyrics, generate the song with music-2.5, build a cut manifest, then alternate performance avatar clips (audio slices) and cinematic B-roll. 16:9, 1080p.
 
 ## Copy plan template
 

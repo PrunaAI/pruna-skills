@@ -85,7 +85,7 @@ Proportional allocation by character count is a **first pass only**. After gener
 | **performance** (mascot / stylized) | `p-video` | Song slice → `input.audio` — **not** avatar (humanizes non-human stills) |
 | **broll** | `p-video` | Same slice or `duration` from cut map |
 
-**Performance stills:** hero portrait via `p-image` / `p-image-edit` — mouth visible, statement wardrobe, varied `setting_tag` per chorus pass.
+**Performance stills:** when the user wants one singer throughout, land **one hero** with `p-image` + locked `project_seed`, then **`p-image-edit`** every performance frame off that URL — mouth visible, statement wardrobe, varied `setting_tag` per chorus pass. Only mint a fresh identity with unrelated `p-image` prompts when recasts are deliberate (usually B-roll only).
 
 **B-roll prompts:** match **mood + palette** of the music prompt — golden hour for warm ballads, neon for electronic, etc. See [visual-variety-bible.md](../../../references/visual-variety-bible.md).
 
@@ -105,6 +105,7 @@ Intro (broll, wide) → Verse line (performance, medium) → Verse line (broll, 
 
 - **`voice_script`** on performance beats when you have the real song — use **`audio`** slice so lip sync matches the track.
 - One grey-wall performance clip for every line — rotate settings per [visual-variety-bible.md](../../../references/visual-variety-bible.md).
+- New **`p-image`** identity per performance line when continuity was intended — use hero + **`p-image-edit`** instead.
 - Cutting on beat without checking **syllable endings** — proportional timing can drift; always listen once.
 - Lyrics that don't match section tags — model may blur section boundaries and break your cut map.
 

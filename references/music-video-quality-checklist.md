@@ -27,6 +27,8 @@ Run at lyrics approval, after song generation, on stills, and on final assembly.
 
 ## Stills gate (before `p-video-*`)
 
+- [ ] **Continuity intent captured** — `continuity: same_singer` vs deliberate recasts documented in plan
+- [ ] **Hero anchor** approved for same-singer runs; performance stills derived via **`p-image-edit`** off `hero_still` (not unrelated fresh identity pulls)
 - [ ] Performance: face + mouth visible, slight angle from the side
 - [ ] Distinct `setting_tag` across consecutive performance clips
 - [ ] B-roll stills match music mood (palette, lighting)
@@ -34,6 +36,7 @@ Run at lyrics approval, after song generation, on stills, and on final assembly.
 
 ## Clip gate
 
+- [ ] **`project_seed`** passed on all **`p-video-avatar`** performance jobs when same-singer continuity is intended
 - [ ] Performance uses **`input.audio`** slice — not mismatched `voice_script`
 - [ ] Lip sync acceptable for performance segments
 - [ ] B-roll motion matches audio energy

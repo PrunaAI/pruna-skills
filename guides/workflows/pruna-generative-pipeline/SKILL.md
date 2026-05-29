@@ -56,7 +56,7 @@ Deep avatar workflows already spell out cast ledgers, hero reuse, and read-throu
 | L — **Character IP engine** | Episodic continuity for mascot/cast | `p-image` / `p-image-edit` + `p-video` / `p-video-avatar` | [character-ip-content-engine](../character-ip-content-engine/SKILL.md) |
 | M — **Motion-transfer showcase** | Same motion, new subject + slider before/after | motion `.mp4` + still → `p-video-animate` → slider compare MP4 | [multi-scene-avatar-video](../multi-scene-avatar-video/SKILL.md) (`animate` rows) |
 | N — **In-video replacement showcase** | Swap people/products in footage + slider before/after | dynamic `p-image` refs → optional `p-video-avatar` source → `p-video-replace` → slider compare MP4 | [p-video-replace-comparison](../p-video-replace-comparison/SKILL.md) |
-| O — **AI music video** | Full song + lyric-synced video | lyrics → [music-2.5](../../../tools/audio/music-2.5/SKILL.md) → cut map → `p-video-avatar` + `p-video` → assembly | [ai-music-video](../ai-music-video/SKILL.md) |
+| O — **AI music video** | Full song + lyric-synced video | lyrics → [music-2.5](../../../tools/audio/music-2.5/SKILL.md) → cut map → `p-video-avatar` + `p-video` → assembly; hero + `p-image-edit` when one singer throughout | [ai-music-video](../ai-music-video/SKILL.md) |
 
 ## Handoff rules (all recipes)
 
