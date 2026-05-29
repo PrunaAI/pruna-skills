@@ -21,6 +21,18 @@ See the canonical mapping in [`generation-quality-checklists.md`](./generation-q
 - **`multi_job`** rows: each reference has its own mapped `instruction_prompt`; prefer over `single_call` for mixed/UGC/cafe/SKU ladders.
 - VO rows: plate shows garments/props named in `voice_script`; `video_prompt` keeps mouth in frame; clothing/object prompts preserve lips.
 
+## Showcase reel gates (skills-library)
+
+Run [visual-variety-bible.md](./visual-variety-bible.md) checklist **before** Phase B. Additional gates for 7-scene showcase reels:
+
+- [ ] **Cast ledger:** when `plate_mode: p-image`, source host ≠ hero and ≠ slider ref faces — unique people per scene row
+- [ ] **Thumbnail read:** each reference still readable at **256px** width — bold silhouette, accent color, shallow DOF
+- [ ] **Adjacent variety:** neighboring refs differ in **medium + palette + setting**, not just hair or wardrobe tint
+- [ ] **Instruction color match:** `instruction_prompt` garment colors match ref prompt (lime crew ≠ forest green)
+- [ ] **No screens:** no laptops, keyboards, monitors, or readable UI in plate or refs — notebook / tumbler / mug only
+- [ ] **`multi_image_beat`:** hybrid slider indices (2–4) mapped in dedicated `instruction_prompt`; per-ref jobs still have individual prompts
+- [ ] **Spoken copy:** no API jargon (*replace jobs*, *multi_job*) in `voice_script` — human documentary tone
+
 ## Replacement fidelity
 
 - Output preserves source motion, timing, and scene structure.

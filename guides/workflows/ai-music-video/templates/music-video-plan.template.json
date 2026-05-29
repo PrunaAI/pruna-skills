@@ -1,0 +1,50 @@
+{
+  "title": "Example indie pop music video",
+  "project_seed": 880001,
+  "aspect_ratio": "16:9",
+  "resolution": "1080p",
+  "style_bible": "Indie pop music video, warm golden-hour palette, shallow depth of field, photoreal singer, cinematic B-roll inserts. 16:9 single subject one frame on performance stills.",
+  "cast": {
+    "name": "Maya",
+    "voice": "Zephyr (Female)",
+    "voice_language": "English (US)",
+    "cast_descriptor": "woman indie singer, South Asian, mid 20s, warm expressive eyes"
+  },
+  "music": {
+    "prompt": "Indie pop, uplifting, warm female vocal, 92 BPM, acoustic guitar and soft synth pads, wide soundstage, crisp modern production, anthemic chorus",
+    "sample_rate": 44100,
+    "bitrate": 256000,
+    "audio_format": "mp3"
+  },
+  "lyrics": "[Intro]\n(Soft piano, building slowly)\n\n[Verse]\nWe built the skills library line by line\nEvery workflow ready when you need it\nFrom stills to motion, all in one place\n\n[Pre Chorus]\nAnd when the chorus hits you'll know\n\n[Chorus]\nRun the pipeline, watch it grow\nPruna models, let them flow\n\n[Inst]\n(Guitar and pads — instrumental break)\n\n[Verse]\nCopy paste curl and poll until it's done\nSlider renders when the pairs are ready\n\n[Chorus]\nRun the pipeline, watch it grow\nPruna models, let them flow\n\n[Outro]\n(Fading)\nLike the northern lights",
+  "cuts": [],
+  "segments": [
+    {
+      "id": "01_1",
+      "beat_type": "broll",
+      "section_tag": "Intro",
+      "lines": ["(Soft piano, building slowly)"],
+      "still_prompt": "Empty indie rehearsal room at golden hour, warm sunlight through tall windows, piano silhouette, shallow depth of field, cinematic wide shot",
+      "video_prompt": "Slow dolly push-in toward window light, dust motes in sun beams, no people",
+      "notes": "Fill start_sec/end_sec after parse_lyric_cuts.py --song"
+    },
+    {
+      "id": "01_2",
+      "beat_type": "performance",
+      "section_tag": "Verse",
+      "lines": ["We built the skills library line by line"],
+      "still_prompt": "Photoreal woman indie singer mid twenties South Asian, cream linen blouse, entire face visible, slight angle from the side in cozy loft with teal window bokeh, shallow depth of field, mouth open mid-word, single person one frame",
+      "video_prompt": "Gentle handheld sway with slow push-in, clear lip movement, mouth centered",
+      "notes": "Use slice_audio.py segment as p-video-avatar input.audio"
+    },
+    {
+      "id": "01_3",
+      "beat_type": "broll",
+      "section_tag": "Verse",
+      "lines": ["Every workflow ready when you need it"],
+      "still_prompt": "Close detail of hands scrolling code on laptop closed lid matte surface, warm desk lamp, shallow depth of field, cinematic product moment",
+      "video_prompt": "Slow arc right across desk, soft bokeh, no readable screen text",
+      "notes": "p-video I2V or T2V with audio slice"
+    }
+  ]
+}

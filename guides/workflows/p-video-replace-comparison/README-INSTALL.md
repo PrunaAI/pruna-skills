@@ -17,7 +17,7 @@ Restart Cursor or start a new chat.
 pip install -r scripts/requirements.txt   # inside installed skill, or repo skill path
 # ffmpeg must be on PATH
 export PRUNA_API_KEY=your_key
-# optional — chill background bed after concat:
+# optional — light background bed after concat:
 export REPLICATE_API_TOKEN=r8_...
 ```
 
@@ -37,7 +37,7 @@ python3 ./scripts/run_from_plan.py \
   --approve-stills \
   --phase video
 
-# After slider MP4s exist — concat + optional chill bed (plan background_music.enabled or flag):
+# After slider MP4s exist — concat + optional light bed (plan background_music.enabled or flag):
 python3 ./scripts/run_from_plan.py \
   --plan ./output/my-replace-reel/plan.json \
   --out-dir ./output/my-replace-reel \

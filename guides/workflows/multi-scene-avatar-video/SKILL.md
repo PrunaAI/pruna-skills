@@ -315,7 +315,7 @@ Tune `timing` in JSON: `hook_seconds`, `slider_seconds`, `hold_output_seconds`, 
 
 11. **Assembly (outside Pruna)**
    - Order clips to match the scene table (`avatar` MP4s and `animate` comparison MP4s interleaved as planned). Join in **your** editor or ffmpeg concat; level audio for continuity.
-   - Optional **chill instrumental bed** under VO: [`launch_background_music.py`](../_shared/scripts/launch_background_music.py) + [stable-audio-2.5](../../../tools/audio/stable-audio-2.5/SKILL.md) (`REPLICATE_API_TOKEN`, ~0.12 volume).
+   - Optional **light instrumental bed** under VO: [`launch_background_music.py`](../_shared/scripts/launch_background_music.py) + [stable-audio-2.5](../../../tools/audio/stable-audio-2.5/SKILL.md) (`REPLICATE_API_TOKEN`, ~0.12 volume).
 
 12. **Manifest**
    - For every asset: type (`avatar` | `animate`), source path, Pruna file id/URL, prediction `id`, final clip path, prompts, slop pass/fail, alignment notes (animate), **cast ledger** snapshot.

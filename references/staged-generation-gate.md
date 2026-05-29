@@ -47,3 +47,17 @@ python3 ./scripts/run_from_plan.py --plan ./my-plan.json --out-dir ./output/reel
 - Full `--fresh` end-to-end without still review
 - Batch `p-video-replace` before reference QA
 - Same-turn plan approval + video generation
+- **Scoped still regen without delete/`--fresh`** — `--from-scene N --phase stills` reuses existing JPEGs; prompt edits silently have no effect until files are removed or `--fresh` is passed
+- **`--phase all` on partial regen** when other scenes' compare clips are missing — assembly fails; regen the target scene then use **`--assemble-only`**
+- **VO change without deleting `sources/`** — avatar keeps old dialogue; delete `sources/scene0N_*` + `clips/0N_*` before regen
+
+## Partial regen (decision tree)
+
+| Goal | Delete | Then run |
+|------|--------|----------|
+| Reference prompt / seed only | `references/scene0N_*.jpeg` | `--from-scene N --through-scene N --phase stills` → approve → `--phase video` |
+| Source plate / `still_edit` | above + `stills/scene0N_source_plate.jpeg` | same |
+| `voice_script` change | above + `sources/scene0N_*` + `clips/0N_*` | `--from-scene N --through-scene N --approve-stills --phase all` |
+| Reconcat only (clips exist) | nothing | `--assemble-only` (+ `--background-music` if bed needed) |
+
+See [replace-beats.md](../guides/workflows/p-video-replace-comparison/replace-beats.md) **Partial scene regen** for copy-paste commands.

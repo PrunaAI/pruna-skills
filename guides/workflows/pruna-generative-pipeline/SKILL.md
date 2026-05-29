@@ -56,6 +56,7 @@ Deep avatar workflows already spell out cast ledgers, hero reuse, and read-throu
 | L — **Character IP engine** | Episodic continuity for mascot/cast | `p-image` / `p-image-edit` + `p-video` / `p-video-avatar` | [character-ip-content-engine](../character-ip-content-engine/SKILL.md) |
 | M — **Motion-transfer showcase** | Same motion, new subject + slider before/after | motion `.mp4` + still → `p-video-animate` → slider compare MP4 | [multi-scene-avatar-video](../multi-scene-avatar-video/SKILL.md) (`animate` rows) |
 | N — **In-video replacement showcase** | Swap people/products in footage + slider before/after | dynamic `p-image` refs → optional `p-video-avatar` source → `p-video-replace` → slider compare MP4 | [p-video-replace-comparison](../p-video-replace-comparison/SKILL.md) |
+| O — **AI music video** | Full song + lyric-synced video | lyrics → [music-2.5](../../../tools/audio/music-2.5/SKILL.md) → cut map → `p-video-avatar` + `p-video` → assembly | [ai-music-video](../ai-music-video/SKILL.md) |
 
 ## Handoff rules (all recipes)
 
@@ -189,7 +190,7 @@ Deep avatar workflows already spell out cast ledgers, hero reuse, and read-throu
 3. Source: **`p-video-avatar`** default (speaking, lip-safe camera); upload when licensed; avoid I2V shelf/walk/two-shot cafe for launch reels.
 4. **`p-video-replace`**: **`multi_job`** (one ref + mapped prompt per slider step); `single_call` only for simple silent multi-slot clips.
 5. Sliders via [`generate_video_comparison.py`](../_shared/scripts/generate_video_comparison.py); concat final reel.
-6. Optional **chill background music** — plan `background_music` or [`launch_background_music.py`](../_shared/scripts/launch_background_music.py) + [stable-audio-2.5](../../../tools/audio/stable-audio-2.5/SKILL.md) (requires `REPLICATE_API_TOKEN`).
+6. Optional **light background music** — plan `background_music` or [`launch_background_music.py`](../_shared/scripts/launch_background_music.py) + [stable-audio-2.5](../../../tools/audio/stable-audio-2.5/SKILL.md) (requires `REPLICATE_API_TOKEN`).
 
 ## Atomic tool index
 

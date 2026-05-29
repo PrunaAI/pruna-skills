@@ -24,10 +24,10 @@ Every still prompt should feel **art-directed and thumb-stopping**, not generic 
 1. **Style + subject** — who they are + one statement wardrobe piece  
 2. **World** — 2–3 concrete environment cues (city bokeh, mirror panels, miniature teal lamp, twin moons)  
 3. **Lighting name** — in **`p-image` / reference stills**: bright environment (sunny window, cheerful daylight, golden afternoon). **Avoid** ring light, studio lighting, key/rim/gel light **wording** in still prompts — those belong in plan `lighting_tag` + `video_prompt`, not `p-image`.  
-4. **Shot framing** — in still prompts: three-quarter from the side, wide shot, slight high angle — **not** “facing camera” or “medium close-up facing camera”. Record angle in plan `camera_tag`.  
+4. **Shot framing** — in still prompts: slight angle from the side, wide shot, slight high angle — **not** “facing camera”, “three-quarter”, or “3/4”. Record angle in plan `camera_tag`.  
 5. **`swap_visual_bible`** (plan) — amplify contrast on persona-ladder refs  
 
-**Anti-pattern:** flat “neutral wall, soft natural light” on **every row in a scene** — especially UGC/install beats with three grey-wall refs. **Fix:** distinct location family per ref (loft · rooftop · cafe · LED studio) + named gel rim + varied **`camera_tag`** (low three-quarter, three-quarter, slight high angle).
+**Anti-pattern:** flat “neutral wall, soft natural light” on **every row in a scene** — especially UGC/install beats with three grey-wall refs. **Fix:** distinct location family per ref (loft · rooftop · cafe · LED studio) + named gel rim + varied **`camera_tag`** (low angle, side angle, slight high angle).
 
 See [p-video-replace-comparison/SKILL.md](../guides/workflows/p-video-replace-comparison/SKILL.md) **Dynamic eye-catching prompts** and **Prompt trigger words** — flash without text/collage artifacts.
 
@@ -46,7 +46,7 @@ Assign a **`palette_tag`** per scene or ref so sliders do not all read as teal-a
 | **Split gel** | rose-gold key + cyan-magenta rim (editorial) |
 | **Monochrome pop** | charcoal + single vivid accent (lime crew, orange sculpture) |
 | **Earth luxe** | walnut desk + copper prop + tungsten accent |
-| **Neon rain** | violet hair + cherry-blossom bokeh + magenta-teal key |
+| **Neon editorial** | violet hair + cherry-blossom bokeh + magenta-teal ambient |
 
 **Rule:** one **dominant accent color** per ref at thumbnail scale — avoid muddy mid-tones everywhere.
 
@@ -60,8 +60,8 @@ Scene 3 already stacks texture beats (fur, holo, pearl/gold); reuse that pattern
 
 ### Composition & depth
 
-- **Shallow DOF** + mirror bokeh (boutique) or city window bokeh (studio) — separates subject from background  
-- **Foreground anchor** — mug, laptop lid, desk prop at frame edge gives replace sliders a readable swap target  
+- **Shallow DOF** + gel reflections (single-subject neon boutique) or city window bokeh (studio) — separates subject from background  
+- **Foreground anchor** — mug, **closed hardcover notebook**, tumbler at chest gives replace sliders a readable swap target  
 - **Single subject one frame** — always; negative space on one side reads cleaner in inset thumbnails  
 
 ### Age & profession spread
@@ -78,8 +78,8 @@ Current plan anti-pattern to avoid: every scene `medium_cu_dolly_in`. Spread:
 | Scene role | Suggested `camera_tag` | `video_prompt` grammar |
 |------------|------------------------|-------------------------|
 | Hook ladder | medium_cu_dolly_in + quarter-orbit | dolly + orbit |
-| UGC install | low_three_quarter_handheld | handheld sway + arc left + push |
-| UGC ref ladder | low angle · three-quarter · slight high angle | vary per ref within one scene row |
+| UGC install | low_angle_handheld | handheld sway + arc left + push |
+| UGC ref ladder | low angle · side angle · slight high angle | vary per ref within one scene row |
 | Editorial gate | medium_cu_handheld | slow arc right |
 | Desk props | medium_cu_slow_arc | arc + push |
 | CTA | medium_cu_crane_settle | dolly + crane-down |
@@ -99,10 +99,12 @@ Long persona ladders (7–9 refs) need tighter **`slider_seconds`** (1.25–1.5)
 
 ## Cast diversity
 
-Plan a **cast ledger** before generation. For showcase reels (not single-spokesperson arcs):
+Plan a **cast ledger** before generation. For **skills-library / showcase reels** (not single-spokesperson arcs):
 
-| Dimension | Guidance |
-|-----------|----------|
+| Rule | Guidance |
+|------|----------|
+| **Source host** | **Different person per scene row** — `plate_mode: p-image` + unique `cast_descriptor`. Do not hero-edit one female presenter into every male/advocacy row. |
+| **Reference beats** | Prefer **full recasts** (different ethnicity, age, archetype per ref) over three wardrobe tweaks on one face when proving library range. |
 | **Gender** | Alternate **`persona_gender`** and matching Pruna **`voice`** (`Zephyr (Female)` / `Puck (Male)`) across scenes when lip-sync VO matters. Face-swap refs must stay **same gender** as the source subject on talking-head beats. |
 | **Ethnicity / region** | Name specific, respectful descriptors in prompts (South Asian, East Asian, Black, Latina, Middle Eastern, Nordic, Mediterranean, etc.) — spread representation across the reel, not one token face. |
 | **Age** | Mix early 20s creator energy, mid-30s founder, 40s+ expert — match wardrobe and setting to age. |
@@ -122,7 +124,7 @@ No two consecutive scene rows should share the **same location type + shot size*
 | **Domestic / UGC** | bedroom ring light, **creative loft brick**, rooftop dusk, cozy cafe corner, moody LED studio — use **one per ref**, not grey wall ×3 |
 | **Commercial** | boutique, gym floor, outdoor cafe, rooftop at dusk |
 | **Institutional** | classroom whiteboard, news desk, museum gallery |
-| **Fantasy / sci-fi** | stone temple courtyard, alien canyon twin moons, neon rain alley, enchanted garden |
+| **Fantasy / sci-fi** | stone temple courtyard, alien canyon twin moons, neon arcade corridor, enchanted garden |
 | **Stylized miniature** | clay living room set, diorama street, stop-motion bookshelf nook |
 | **Urban / editorial** | cherry-blossom night street, brutalist plaza, subway platform bokeh |
 
@@ -140,7 +142,7 @@ Vary **shot size**, **angle**, and **movement** per scene. Never default every r
 | Low angle (heroic) | Game knight, blockbuster reveal |
 | High angle (vulnerable / editorial) | Documentary, stylized anime |
 | Over-shoulder turning in | Explainer, product demo |
-| Profile three-quarter | Stylized refs when motion allows |
+| Profile side angle | Stylized refs when motion allows |
 
 **Movement grammar** (prefix `video_prompt` with continuous camera):
 
@@ -157,7 +159,7 @@ Name lighting in every **`p-image` prompt**, **`still_edit`**, and reference sti
 | Soft overcast documentary | even skin, neutral shadows |
 | Golden hour warm | rim light, amber fill, long shadows |
 | Neon / cyberpunk | magenta-cyan edge light, wet reflections |
-| Anime film dramatic | strong key, colored bounce, bokeh rain |
+| Anime film dramatic | strong key, colored bounce, neon bokeh |
 | Stop-motion practical | warm desk lamp, miniature set glow |
 | Blockbuster / game cinematic | motivated sun shafts, volumetric haze |
 | Clean educational | bright even key, soft classroom fill |
@@ -179,7 +181,7 @@ For **showcase / launch** reels, plan at least **4 distinct visual styles** acro
 | **Flat vector 2D** | bold shapes, limited palette, motion-graphics friendly |
 | **Disney / Pixar 3D (CG film)** | rounded forms, storybook warmth, enchanted environments |
 | **Claymation / stop-motion 3D** | visible clay texture, miniature sets, practical lighting |
-| **Cyberpunk** | chrome, neon, rain, HUD-free (no readable UI text) |
+| **Cyberpunk** | chrome, neon arcade corridor, HUD-free (no readable UI text) |
 | **Blockbuster movie** | anamorphic cues, epic scale, costume drama |
 | **Editorial fashion** | bold wardrobe, shallow DOF, magazine angles |
 | **Documentary** | handheld honesty, available light |
@@ -200,7 +202,7 @@ Add to scene plans and manifests:
 |-------|---------|
 | `visual_style_tag` | e.g. `anime_cinematic`, `clay_stop_motion`, `pencil_sketch`, `hand_drawn_2d` |
 | `render_medium_tag` | optional: `photoreal` · `pencil_sketch` · `hand_drawn_2d` · `cel_anime_2d` · `stop_motion_3d` · `cg_3d_film` |
-| `palette_tag` | optional dominant accent pairing: `warm_punch` · `cool_contrast` · `split_gel` · `monochrome_pop` · `neon_rain` |
+| `palette_tag` | optional dominant accent pairing: `warm_punch` · `cool_contrast` · `split_gel` · `monochrome_pop` · `neon_editorial` |
 | `setting_tag` | unique environment label per row |
 | `camera_tag` | e.g. `low_angle_mc`, `extreme_cu`, `over_shoulder` |
 | `lighting_tag` | e.g. `golden_hour`, `neon_night`, `practical_clay` |
@@ -218,45 +220,44 @@ Add to scene plans and manifests:
 
 ```text
 Documentary street portrait, woman mid-30s, South Asian, curly auburn hair, emerald coat,
-low three-quarter angle, wet pavement bokeh background, soft overcast key light,
+low angle from below, city bokeh background, bright open-sky daylight,
 entire face visible including eyes and mouth, walking stride frozen mid-step, one person one frame.
 ```
 
 ### UGC install row (source + per-ref worlds)
 
-**Source plate:** creative loft, exposed brick, teal window bokeh, low three-quarter handheld, amber key + magenta rim.
+**Source plate:** creative loft, exposed brick, teal window bokeh, low angle handheld, amber key + magenta rim.
 
-**Ref A — rooftop recast:** low angle chest-up, cobalt hoodie, city lights bokeh, golden hour rim, closed laptop at chest.
+**Ref A — rooftop recast:** low angle chest-up, cobalt hoodie, city lights bokeh, golden hour rim, **closed hardcover notebook** at chest.
 
-**Ref B — cafe recast:** three-quarter chest-up, orange hoodie, warm wood panels, teal edge light, closed laptop at chest.
+**Ref B — cafe recast:** side angle chest-up, orange hoodie, warm wood panels, teal edge light, **closed hardcover notebook** at chest.
 
-**Ref C — wardrobe:** slight high angle, lime crewneck, magenta-cyan LED studio wash, ring light on face, closed laptop at chest.
+**Ref C — wardrobe:** slight high angle, lime crewneck, magenta-cyan LED studio wash, ring light on face, **closed hardcover notebook** at chest.
 
 Never reuse `neutral grey wall` on source and all three refs.
 
 ### Pencil sketch persona
 
 ```text
-Greyscale cinematic portrait of woman presenter, soft graphite tones, seamless neutral grey background,
-medium close-up facing camera, mouth visible mid-speech, one woman one frame.
+Stylized muted-tone woman presenter, soft grey tones, north-facing art studio with soft skylight,
+wide shot slight high angle, mouth open mid-word turning from profile, sole subject one frame.
 ```
 
-Avoid: charcoal, pencil, paper, crosshatching, drawing, illustration, **cinematic portrait**, **greyscale cinematic** — they trigger contact-sheet and split-screen collages.
+Avoid in **`p-image` still prompts:** charcoal, pencil, paper, crosshatching, drawing, illustration, **cinematic portrait**, **greyscale cinematic**, **graphite portrait** — they trigger contact-sheet and split-screen collages. **`style_bible`** negations (e.g. no laptops) are fine at plan root — see [SKILL.md](../guides/workflows/p-video-replace-comparison/SKILL.md) **Prompt wording scope**.
 
 ### Hand-drawn 2D animation frame
 
 ```text
-Classic hand-drawn 2D animation frame, fluid ink outlines and soft watercolor wash background,
-woman presenter medium close-up facing camera, mouth visible mid-speech, warm golden afternoon key light,
-golden-age animation film color palette, single subject one frame.
+Hand-painted cel illustration of woman presenter, fluid ink outlines and soft peach watercolor wash background,
+slight angle from the side, mouth visible mid-speech, warm golden afternoon atmosphere, single subject one frame.
 ```
 
 ### Anime persona (animate / replace ladder)
 
 ```text
-Premium anime cinematic young woman hero, cel-shaded film look, violet hair, sailor-style collar jacket,
-cherry-blossom night street with neon color bokeh, medium close-up facing camera,
-mouth visible mid-speech, dramatic anime key light with colored bounce.
+Premium anime cinematic young woman hero, cel-shaded film look, violet hair, iridescent jacket,
+cherry-blossom rooftop at dusk with neon color bokeh, low heroic angle from the side,
+mouth visible mid-speech, bright clear evening atmosphere, single character one frame.
 ```
 
 ### Claymation persona
@@ -278,15 +279,15 @@ mouth visible, storybook blockbuster film lighting.
 ### Cyberpunk
 
 ```text
-Cyberpunk netrunner woman, chrome undercut, iridescent jacket, rain-slick alley with neon color wash,
-magenta-cyan edge light, medium close-up, mouth visible, blade-runner mood, single subject one frame.
+Cyberpunk netrunner woman, chrome undercut, iridescent jacket, neon arcade corridor with magenta-cyan edge light,
+low angle from below, mouth visible mid-speech, bright electric atmosphere, single subject one frame.
 ```
 
 ## Workflow-specific notes
 
 | Workflow | Variety emphasis |
 |----------|-------------------|
-| [p-video-replace-comparison](../guides/workflows/p-video-replace-comparison/SKILL.md) | Scene 1 **persona ladder** + per-scene distinct `still_edit` backgrounds; optional **chill bed** after concat |
+| [p-video-replace-comparison](../guides/workflows/p-video-replace-comparison/SKILL.md) | Scene 1 **persona ladder** + per-scene distinct `still_edit` backgrounds; optional **light bed** after concat |
 | [p-video-animate-comparison](../guides/workflows/p-video-animate-comparison/SKILL.md) | 3–4 **style tags** per animate slider row |
 | [multi-scene-avatar-video](../guides/workflows/multi-scene-avatar-video/SKILL.md) | Every avatar row: new `setting_tag` + `camera_tag` via `p-image-edit` |
 | [pruna-generative-pipeline](../guides/workflows/pruna-generative-pipeline/SKILL.md) | Intake must capture variety plan before recipe execution |
@@ -306,7 +307,7 @@ magenta-cyan edge light, medium close-up, mouth visible, blade-runner mood, sing
 - [ ] **Persona ladder:** hook or animate row includes 6+ visually distinct refs if showcasing range
 - [ ] **Local consistency:** refs within one scene row share one style; across rows, styles diverge
 - [ ] **Lip sync:** VO rows still use speaking sources + preserve-lips `instruction_prompt` language
-- [ ] **Delivery:** if the reel ships with avatar VO, confirm whether to add a **chill instrumental bed** under dialogue ([stable-audio-2.5](../tools/audio/stable-audio-2.5/SKILL.md), ~0.12 volume, no vocals)
+- [ ] **Delivery:** if the reel ships with avatar VO, confirm whether to add an **light instrumental bed** under dialogue ([stable-audio-2.5](../tools/audio/stable-audio-2.5/SKILL.md), ~0.12 volume, no vocals)
 
 ## Related
 

@@ -100,7 +100,7 @@ export REPLICATE_API_TOKEN=r8_...
 
 python3 guides/workflows/_shared/scripts/launch_background_music.py \
   --video output/my-reel/final.mp4 \
-  --prompt "Instrumental chill lo-fi ambient bed, soft piano, no vocals, 85 BPM" \
+  --prompt "Instrumental light electronic pop bed, soft groove and mellow synth pads, calm positive tech atmosphere, understated background music, no vocals, 94 BPM" \
   --volume 0.12 \
   --out output/my-reel/final_with_music.mp4
 ```

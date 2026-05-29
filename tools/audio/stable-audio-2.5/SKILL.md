@@ -1,6 +1,6 @@
 ---
 name: stable-audio-2.5
-description: Generates instrumental background music via Replicate stability-ai/stable-audio-2.5 for launch reels and mixes it under video with ffmpeg. Use when the user wants chill background music, ambient bed, or Stable Audio on a concat launch video.
+description: Generates instrumental background music via Replicate stability-ai/stable-audio-2.5 for launch reels and mixes it under video with ffmpeg. Use when the user wants light background music, ambient bed, or Stable Audio on a concat launch video.
 license: MIT
 metadata:
   version: "0.0.1"
@@ -18,7 +18,7 @@ Text-to-music for **instrumental background beds** on launch reels. Not a Pruna 
 
 | Goal | Use this |
 |------|----------|
-| Chill instrumental under a concat launch reel | Yes — after final assembly |
+| Light instrumental under a concat launch reel | Yes — after final assembly |
 | Replace avatar VO | No — bed mixes **under** existing dialogue |
 | Pruna-native audio | No — use [`p-video`](../../video/p-video/SKILL.md) audio input instead |
 
@@ -34,7 +34,7 @@ Requires **`ffmpeg`** and **`ffprobe`** on PATH for mix step.
 
 | Field | Notes |
 |-------|-------|
-| `prompt` | **Required.** Style tags work well — e.g. *Instrumental chill lo-fi ambient, soft piano, no vocals, 85 BPM* |
+| `prompt` | **Required.** Style tags work well — e.g. *Instrumental light electronic pop, soft groove, mellow synth pads, no vocals, 94 BPM* |
 | `duration` | Seconds, 1–190 (match or slightly exceed reel length) |
 | `steps` | 4–8 (default 8) |
 | `cfg_scale` | 1–25 (default 1) |
@@ -52,7 +52,7 @@ curl -s -X POST \
   -H "Content-Type: application/json" \
   -d '{
     "input": {
-      "prompt": "Instrumental chill lo-fi ambient bed, soft piano and warm pads, no vocals, relaxed modern tech atmosphere, 85 BPM",
+      "prompt": "Instrumental light electronic pop bed, soft groove and mellow synth pads, calm positive tech atmosphere, understated background music, no vocals, 94 BPM",
       "duration": 90,
       "steps": 8,
       "cfg_scale": 1
@@ -70,7 +70,7 @@ Poll `urls.get` until `status` is `succeeded`; download `output` MP3.
 ```json
 "background_music": {
   "enabled": true,
-  "prompt": "Instrumental chill lo-fi ambient bed, soft piano and warm pads, no vocals, 85 BPM",
+  "prompt": "Instrumental light electronic pop bed, soft groove and mellow synth pads, calm positive tech atmosphere, understated background music, no vocals, 94 BPM",
   "volume": 0.12,
   "output_name": "skills_library_announcement_with_music.mp4"
 }
@@ -96,9 +96,11 @@ python3 guides/workflows/_shared/scripts/launch_background_music.py \
 ## Prompt tips (launch beds)
 
 - Lead with **Instrumental** and **no vocals**
-- Name mood: chill, lo-fi, ambient, understated, warm pads
-- Optional BPM (80–95 for tech launch reels)
+- Name mood: light, calm, positive, soft groove, mellow — keep *understated* and *background music* so beds sit under VO
+- Optional BPM (**88–98** for tech launch reels; default script uses **94**)
+- Avoid *energetic*, *driving*, or very high BPM — beds should support dialogue, not compete with it
 - Avoid lyrics, song title, or artist name triggers
+- Scene-specific beds (restaurant, jungle, boutique): name the setting but keep groove soft and BPM in the high 80s–mid 90s
 
 ## Related
 

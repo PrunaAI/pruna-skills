@@ -21,6 +21,7 @@ Pricing and limits change; confirm on the official page: [Available models](http
 | Tool | Type | Skill folder | Notes |
 |------|------|--------------|-------|
 | `stable-audio-2.5` | Text-to-music bed | `tools/audio/stable-audio-2.5` | Requires `REPLICATE_API_TOKEN`; mix via `launch_background_music.py` |
+| `music-2.5` | Full song with vocals (lyrics + style) | `tools/audio/music-2.5` | Requires `REPLICATE_API_TOKEN`; [ai-music-video](../guides/workflows/ai-music-video/SKILL.md) workflow |
 
 ## Related models (not duplicated as skills here)
 
@@ -38,6 +39,7 @@ Documented on the same models page: `p-image-lora`, trainers, `flux-*`, `wan-*`,
 | Multi-scene cinematic (`p-video` per scene, intake first) | `guides/workflows/multi-scene-ai-video` |
 | Motion-transfer showcase (`p-video-animate` + slider comparisons) | `guides/workflows/multi-scene-avatar-video` (animate rows) |
 | In-video replacement showcase (`p-video-replace` + slider comparisons) | `guides/workflows/p-video-replace-comparison` |
+| AI music video (lyrics → Music 2.5 → avatar + B-roll) | `guides/workflows/ai-music-video` |
 | Route I: UGC ad factory | `guides/workflows/ugc-ad-factory` |
 | Route J: Product-to-story reel builder | `guides/workflows/product-to-story-reel-builder` |
 | Route K: Ecommerce creative pack generator | `guides/workflows/ecommerce-creative-pack-generator` |

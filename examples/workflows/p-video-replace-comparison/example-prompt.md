@@ -16,7 +16,7 @@ Use **[p-video-replace-comparison](../../../guides/workflows/p-video-replace-com
 >
 > Models: dynamic **`p-image`** refs → **`p-video-avatar`** source → **`p-video-replace`** (`multi_job`) → slider MP4. Concat for final reel.
 >
-> **Optional delivery:** after concat, add chill **instrumental background music** under VO — Replicate [Stable Audio 2.5](https://replicate.com/stability-ai/stable-audio-2.5) via plan `background_music` or `--background-music` on the runner (~0.12 volume; no vocals).
+> **Optional delivery:** after concat, add light **instrumental background music** under VO — Replicate [Stable Audio 2.5](https://replicate.com/stability-ai/stable-audio-2.5) via plan `background_music` or `--background-music` on the runner (~0.12 volume; no vocals).
 
 ## Example scene table (production-tested)
 
@@ -57,7 +57,7 @@ python3 guides/workflows/p-video-replace-comparison/scripts/run_from_plan.py \
 - Plan: [`output/p-video-replace-announcement/announcement_plan.json`](../../../output/p-video-replace-announcement/announcement_plan.json)
 - Resume: add `--from-scene 3 --approve-stills --phase video`
 - Assemble only: `--phase render`
-- Assemble + chill bed: `--assemble-only --background-music` (requires `REPLICATE_API_TOKEN`)
+- Assemble + light bed: `--assemble-only --background-music` (requires `REPLICATE_API_TOKEN`)
 - Fresh stills: `--fresh --phase stills`
 
 Plan root may include:
@@ -65,7 +65,7 @@ Plan root may include:
 ```json
 "background_music": {
   "enabled": true,
-  "prompt": "Instrumental chill lo-fi ambient bed, soft piano and warm pads, no vocals, 85 BPM",
+  "prompt": "Instrumental light electronic pop bed, soft groove and mellow synth pads, calm positive tech atmosphere, understated background music, no vocals, 94 BPM",
   "volume": 0.12,
   "output_name": "announcement_with_music.mp4"
 }

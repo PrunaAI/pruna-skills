@@ -24,6 +24,7 @@ tools/video/
   p-video-replace/      # Replace people in source video (1–4 identity images per call)
 tools/audio/
   stable-audio-2.5/     # Replicate instrumental bed for launch reels (mix under VO)
+  music-2.5/            # Replicate full songs with vocals (MiniMax Music 2.5)
 guides/workflows/
   pruna-run/                     # Fast prompt -> generation entrypoint
   pruna-generative-pipeline/   # Scenario hub (mood board, I2V, packs…) + intake
@@ -34,6 +35,7 @@ guides/workflows/
   p-image-upscale-comparison/  # Before/after zoom + slider demo from any still pair
   p-video-animate-comparison/  # Redirect stub → use multi-scene-avatar-video animate rows
   p-video-replace-comparison/  # Multi-scene replace sliders (p-image + avatar + replace)
+  ai-music-video/              # Lyrics → Music 2.5 song → avatar + B-roll music video
 examples/workflows/
   */example-prompt.md          # copy/paste prompt starters by workflow
   p-image-upscale-comparison/scripts/  # repo-only gallery batch (not portable)
@@ -65,6 +67,7 @@ Atomic skills link to `references/` instead of duplicating long API tables.
 | `p-video-animate` | `Model: p-video-animate` — *animate this picture with motion* — one `image` + motion-template `video` |
 | `p-video-replace` | `Model: p-video-replace` — *replace this person in this video* — source `video` + 1–4 identity `images` in one call |
 | `stable-audio-2.5` | Replicate — instrumental background bed for launch reels (mix under VO via `launch_background_music.py`) |
+| `music-2.5` | Replicate — full songs with vocals from lyrics + style prompt ([MiniMax Music 2.5](https://replicate.com/minimax/music-2.5)) |
 | `pruna-generative-pipeline` | Scenario hub: mood board, hero+variants, I2V, audio-led video, draft→final, links to full scene workflows |
 | `single-scene-avatar-video` | Workflow: intake → one still + slop + one `p-video-avatar` |
 | `multi-scene-avatar-video` | Workflow: character sheet + scene table (`avatar` and/or `animate` rows) + locked seeds + natural voice + hero → edit → parallel async `p-video-avatar` / `p-video-animate` + slider renders + assembly |
@@ -73,6 +76,7 @@ Atomic skills link to `references/` instead of duplicating long API tables.
 | `p-image-upscale-comparison` | Workflow: any pre/post upscale still pair → zoom stops + slider sweeps MP4 |
 | `p-video-animate-comparison` | Redirect stub — use `multi-scene-avatar-video` for animate slider beats |
 | `p-video-replace-comparison` | Workflow: character/clothing/object/mixed swaps with prompt-guided mapping, dynamic sources, natural VO, slider compare MP4s |
+| `ai-music-video` | Workflow: lyrics → Music 2.5 song → cut-safe line map → `p-video-avatar` performance + `p-video` B-roll → ffmpeg assembly |
 | `pruna-run` | Fast entrypoint: auto-route prompt to image/i2v/avatar/I-L |
 
 ## Portable workflow install

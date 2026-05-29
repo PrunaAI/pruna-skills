@@ -1,0 +1,42 @@
+{
+  "scripts": {
+    "core": [
+      "parse_lyric_cuts.py",
+      "generate_song.py",
+      "slice_audio.py",
+      "assemble_music_video.py"
+    ],
+    "shared": [
+      "replicate_api.py",
+      "pruna_api.py",
+      "pruna_paths.py",
+      "requirements.txt"
+    ],
+    "optional": [],
+    "repo_only": []
+  },
+  "tool_skills": [
+    "music-2.5",
+    "p-image",
+    "p-image-edit",
+    "p-video",
+    "p-video-avatar"
+  ],
+  "references": [
+    "replicate-api.md",
+    "pruna-api.md",
+    "staged-generation-gate.md",
+    "parallel-execution.md",
+    "visual-variety-bible.md",
+    "music-video-quality-checklist.md",
+    "generation-quality-checklists.md"
+  ],
+  "templates": [
+    "music-video-plan.template.json"
+  ],
+  "generation_phases": {
+    "default": "lyrics",
+    "requires_user_approval_before": ["music-2.5", "p-video-avatar", "p-video"]
+  },
+  "generation_package": ["script"]
+}

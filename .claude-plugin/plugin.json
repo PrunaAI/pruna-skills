@@ -12,6 +12,7 @@
     "./tools/video/p-video-animate/SKILL.md",
     "./tools/video/p-video-replace/SKILL.md",
     "./tools/audio/stable-audio-2.5/SKILL.md",
+    "./tools/audio/music-2.5/SKILL.md",
     "./guides/workflows/pruna-run/SKILL.md",
     "./guides/workflows/pruna-generative-pipeline/SKILL.md",
     "./guides/workflows/single-scene-avatar-video/SKILL.md",
@@ -20,6 +21,7 @@
     "./guides/workflows/multi-scene-ai-video/SKILL.md",
     "./guides/workflows/p-image-upscale-comparison/SKILL.md",
     "./guides/workflows/p-video-animate-comparison/SKILL.md",
-    "./guides/workflows/p-video-replace-comparison/SKILL.md"
+    "./guides/workflows/p-video-replace-comparison/SKILL.md",
+    "./guides/workflows/ai-music-video/SKILL.md"
   ]
 }

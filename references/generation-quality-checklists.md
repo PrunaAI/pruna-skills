@@ -16,6 +16,7 @@ Maintenance rule: keep tool/guide mapping only in this file to avoid link drift.
 | `p-video-avatar` | [`p-video-avatar-quality-checklist.md`](./p-video-avatar-quality-checklist.md) | [`single-scene-avatar-video`](../guides/workflows/single-scene-avatar-video/SKILL.md), [`multi-scene-avatar-video`](../guides/workflows/multi-scene-avatar-video/SKILL.md), [`pruna-generative-pipeline`](../guides/workflows/pruna-generative-pipeline/SKILL.md) |
 | `p-video-animate` | [`p-video-animate-quality-checklist.md`](./p-video-animate-quality-checklist.md) | [`multi-scene-avatar-video`](../guides/workflows/multi-scene-avatar-video/SKILL.md), [`pruna-generative-pipeline`](../guides/workflows/pruna-generative-pipeline/SKILL.md) |
 | `p-video-replace` | [`p-video-replace-quality-checklist.md`](./p-video-replace-quality-checklist.md) | [`p-video-replace`](../tools/video/p-video-replace/SKILL.md), [`p-video-replace-comparison`](../guides/workflows/p-video-replace-comparison/SKILL.md) |
+| `music-2.5` + music video assembly | [`music-video-quality-checklist.md`](./music-video-quality-checklist.md) | [`ai-music-video`](../guides/workflows/ai-music-video/SKILL.md), [`music-2.5`](../tools/audio/music-2.5/SKILL.md) |
 
 ## Core checklist (all models)
 
@@ -35,6 +36,7 @@ Maintenance rule: keep tool/guide mapping only in this file to avoid link drift.
 - [`p-video-avatar-quality-checklist.md`](./p-video-avatar-quality-checklist.md)
 - [`p-video-animate-quality-checklist.md`](./p-video-animate-quality-checklist.md)
 - [`p-video-replace-quality-checklist.md`](./p-video-replace-quality-checklist.md)
+- [`music-video-quality-checklist.md`](./music-video-quality-checklist.md)
 
 ## Visual variety (showcase reels)
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate chill background bed (Stable Audio 2.5) and mix under a launch reel."""
+"""Generate light instrumental bed (Stable Audio 2.5) and mix under a launch reel."""
 
 from __future__ import annotations
 
@@ -15,8 +15,8 @@ from replicate_api import download_url, require_replicate_token, run_model_predi
 
 DEFAULT_MODEL = "stability-ai/stable-audio-2.5"
 DEFAULT_PROMPT = (
-    "Instrumental chill lo-fi ambient bed, soft piano and warm pads, relaxed modern tech "
-    "atmosphere, no vocals, understated background music, 85 BPM"
+    "Instrumental light electronic pop bed, soft groove and mellow synth pads, calm positive tech "
+    "atmosphere, understated background music, no vocals, 94 BPM"
 )
 DEFAULT_VOLUME = 0.12
 MAX_DURATION_SECONDS = 190

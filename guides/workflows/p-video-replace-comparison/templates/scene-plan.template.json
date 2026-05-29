@@ -1,162 +1,219 @@
 {
-  "project": "p-video-replace-announcement",
-  "resolution": "720p",
-  "target_fps": "original",
-  "style_bible": "Documentary commercial, crisp product labels, no on-screen text. Per-scene visual_style_tag overrides look — do not force one lighting style on every row.",
-  "visual_variety_notes": "Record visual_style_tag, setting_tag, camera_tag, lighting_tag, cast_descriptor per scene AND per reference on UGC/install rows. Never grey-wall every still in a row. Run references/visual-variety-bible.md checklist before API calls.",
+  "title": "Skills library showcase excerpt",
+  "project_seed": 774001,
+  "style_bible": "Cinematic launch still, bold art-directed color, shallow depth of field, rich environment bokeh. 16:9 single subject one frame. No laptops, computers, screens, or keyboards.",
+  "swap_visual_bible": "High saturation statement wardrobe, strong silhouette, punchy accent color readable at thumbnail size, dramatic shallow depth of field, dynamic body language mid-gesture.",
+  "lip_sync_policy": "Every p-video-replace beat must preserve exact lip sync from the source clip: mouth shape, lip movement, jaw timing, and audio.",
+  "reel_narrative": "portable install → staged gate → curl + in-hand props",
+  "compare_timing": {
+    "slider_seconds": 2.0,
+    "hook_seconds": 0,
+    "hold_output_seconds": 0,
+    "outro_seconds": 0,
+    "transition_seconds": 0
+  },
+  "background_music": {
+    "enabled": false,
+    "prompt": "Instrumental light electronic pop bed, soft groove and mellow synth pads, calm positive tech atmosphere, understated background music, no vocals, 94 BPM",
+    "volume": 0.12,
+    "output_name": "showcase_with_music.mp4"
+  },
   "cast": {
     "voice": "Zephyr (Female)",
     "voice_language": "English (US)",
-    "voice_prompt": "Talk like a real person sharing something they built — warm, informal, natural pauses. Not announcer voice."
+    "voice_prompt": "One continuous story — each line continues the previous thought. Natural US English, warm founder energy, clear lip sync."
   },
+  "avatar_resolution": "1080p",
+  "replace_resolution": "720p",
   "scenes": [
-    {
-      "id": 1,
-      "type": "replace",
-      "persona_gender": "female",
-      "visual_style_tag": "photoreal_commercial",
-      "setting_tag": "minimal_studio_desk",
-      "camera_tag": "medium_cu_dolly_in",
-      "lighting_tag": "soft_studio_key",
-      "cast_descriptor": "woman tech presenter, South Asian, early 30s",
-      "replace_mode": "multi_job",
-      "replace_target": "mixed",
-      "use_case": "Hook — face, outfit, desk product",
-      "source": {
-        "subject_in_video": "the spokesperson's face, charcoal blazer, and white mug on desk at frame left",
-        "voice": "Zephyr (Female)",
-        "still_edit": "Hero woman spokesperson, medium close-up at minimal desk, charcoal blazer, white mug frame left, mouth visible ready to speak.",
-        "voice_script": "Hey — P-Video-Replace is live. Same clip — new presenter, new jacket, or a new product on the desk.",
-        "voice_prompt": "Warm founder tone, clear lip sync, conversational.",
-        "video_prompt": "Gentle dolly push-in, speaks to camera with clear lip movement, brief glance toward mug, mouth centered."
-      },
-      "references": [
-        {
-          "prompt": "Photoreal woman tech presenter, South Asian, charcoal blazer, medium close-up warm studio desk, mouth visible.",
-          "seed": 110401,
-          "output_label": "New presenter",
-          "instruction_prompt": "Replace only the spokesperson's face and identity with the woman from the reference. Keep blazer, mug on desk, lips, camera, and audio unchanged."
-        },
-        {
-          "prompt": "Photoreal same woman spokesperson wearing forest green wool blazer over cream blouse, medium close-up studio desk.",
-          "seed": 110502,
-          "output_label": "Green blazer",
-          "instruction_prompt": "Replace only the charcoal blazer with the forest green blazer from the reference. Do not change face, lips, mug, or audio — clothing only."
-        },
-        {
-          "prompt": "Single rose gold supplement bottle on wooden desk surface, one object centered, shallow depth of field.",
-          "seed": 110603,
-          "output_label": "Desk SKU",
-          "instruction_prompt": "Replace only the white mug on the desk with the rose gold bottle from the reference. Preserve face, blazer, lips, and audio."
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "type": "replace",
-      "persona_gender": "male",
-      "visual_style_tag": "photoreal_ugc",
-      "setting_tag": "creative_loft_window",
-      "camera_tag": "low_three_quarter_handheld",
-      "lighting_tag": "amber_window_magenta_rim",
-      "cast_descriptor": "man UGC creator, East Asian, late 20s",
-      "replace_mode": "multi_job",
-      "replace_target": "mixed",
-      "use_case": "UGC install — creator, tee, closed laptop",
-      "source": {
-        "subject_in_video": "the creator's face, grey hoodie, and closed silver laptop lid at chest height",
-        "voice": "Puck (Male)",
-        "still_edit": "Photoreal man late twenties, grey hoodie, entire face visible, low three-quarter chest-up in creative loft with exposed brick and teal window bokeh, closed silver laptop lid at chest height, amber window key and magenta rim, mouth visible, clearly male.",
-        "voice_script": "One take — swap who I am, swap the shirt, or swap the prop in my hands.",
-        "voice_prompt": "Casual creator, clear lip sync, friendly not shouty.",
-        "video_prompt": "Handheld sway with slow arc left and push-in, speaks to camera with clear lip movement, closed laptop steady at chest, mouth in frame."
-      },
-      "references": [
-        {
-          "prompt": "Photoreal East Asian man creator, cobalt zip hoodie, entire face visible, low angle chest-up on urban rooftop at dusk with city bokeh, closed matte laptop lid at chest height, golden hour rim light, mouth visible mid-speech, one person one frame, clearly male.",
-          "seed": 222401,
-          "beat_label": "Recast A",
-          "instruction_prompt": "Replace only the creator's face and identity with the man from the reference. Keep hoodie, closed laptop, lips, and audio."
-        },
-        {
-          "prompt": "Photoreal Latino man creator, sunset orange hoodie, entire face visible, three-quarter chest-up in cozy cafe corner with warm wood panels, closed matte laptop lid at chest height, teal edge light, mouth visible mid-speech, one person one frame, clearly male.",
-          "seed": 222502,
-          "beat_label": "Recast B",
-          "instruction_prompt": "Replace only the creator's face and identity with the man from the reference. Preserve closed laptop, lips, and audio."
-        },
-        {
-          "prompt": "Photoreal Black man creator, neon lime green crewneck, entire face visible, slight high angle chest-up in moody home studio with magenta-cyan LED wash, closed matte laptop lid at chest height, ring light on face, mouth visible mid-speech, one person one frame, clearly male.",
-          "seed": 222603,
-          "beat_label": "Wardrobe",
-          "instruction_prompt": "Replace only the grey hoodie with the lime green crewneck from the reference. Preserve face, closed laptop, lips, and audio — clothing only."
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "type": "replace",
-      "replace_mode": "multi_job",
-      "replace_target": "clothing",
-      "use_case": "Wardrobe on talking head",
-      "source": {
-        "subject_in_video": "the stylist's cream sweater and open denim jacket",
-        "voice": "Zephyr (Female)",
-        "still_edit": "Photoreal woman early thirties, cream sweater, denim jacket open, boutique soft light, mouth visible.",
-        "voice_script": "Same framing — I only change the outfit, not the performance.",
-        "voice_prompt": "Friendly stylist, clear lip sync.",
-        "video_prompt": "Gentle handheld sway, speaks to camera with clear lip movement, hands at waist, no walking."
-      },
-      "references": [
-        {
-          "prompt": "Photoreal same face woman in black turtleneck, boutique soft light, mouth visible.",
-          "seed": 333101,
-          "instruction_prompt": "Replace only the cream sweater and denim jacket with the black turtleneck from the reference. Preserve face, lips, and audio — clothing only."
-        }
-      ]
-    },
     {
       "id": 4,
       "type": "replace",
+      "persona_gender": "male",
+      "visual_style_tag": "photoreal_ugc",
+      "setting_tag": "subway_platform_bokeh",
+      "camera_tag": "handheld_low_side",
+      "lighting_tag": "teal_magenta_split",
+      "cast_descriptor": "man developer advocate, Middle Eastern, late 20s",
       "replace_mode": "multi_job",
-      "replace_target": "object",
-      "use_case": "SKU in hand",
+      "replace_target": "mixed",
+      "use_case": "Portable install — recast, wardrobe, distinct worlds",
       "source": {
-        "subject_in_video": "the plain white skincare tube in her right hand at chest height",
-        "voice": "Zephyr (Female)",
-        "still_edit": "Photoreal woman beauty creator, beige blouse, vanity background blur, white tube at chest, mouth visible.",
-        "voice_script": "Same hero clip — three different tubes, same hand, same motion.",
-        "voice_prompt": "Calm beauty demo, clear lip sync.",
-        "video_prompt": "Subtle push-in, speaks with clear lip movement, tube steady at chest."
+        "plate_mode": "p-image",
+        "plate_seed": 774401,
+        "subject_in_video": "the man's face, grey hoodie, and closed hardcover notebook with warm orange spine held at chest height",
+        "voice": "Puck (Male)",
+        "still_edit": "Photorealistic adult man late twenties Middle Eastern male developer advocate, plain grey hoodie, entire face visible, handheld low angle from below on vivid subway platform with teal-magenta bokeh, holding closed hardcover notebook with vivid orange spine at chest height, shallow depth of field, leaning in mid-gesture mouth open mid-word, single person one frame, clearly male.",
+        "voice_script": "From there — install any workflow skill in one command. Scripts, references, and templates land in your Cursor skills folder, ready to run.",
+        "voice_prompt": "Chapter 4 — casual male Puck, clear lip sync.",
+        "video_prompt": "Camera moves continuously with energetic handheld sway, gentle arc left, and push-in. He speaks to camera, closed notebook steady at chest, mouth centered."
       },
       "references": [
         {
-          "prompt": "Single matte white skincare tube with gold cap held at chest height, hand-scale, one object in frame.",
-          "seed": 444101,
-          "instruction_prompt": "Replace only the white tube in hand with the gold-cap tube from the reference. Preserve face, lips, and audio."
+          "prompt": "Photorealistic adult man early thirties East Asian male, platinum undercut, electric cobalt zip hoodie, entire face visible, low angle from below on urban rooftop at dusk with city lights bokeh, holding closed hardcover notebook at chest height, shallow depth of field, confident lean mouth open mid-speech, single person one frame, clearly male.",
+          "seed": 774351,
+          "output_label": "Install · Recast A",
+          "beat_label": "Recast A",
+          "render_medium_tag": "photoreal",
+          "setting_tag": "rooftop_dusk",
+          "palette_tag": "cool_contrast",
+          "camera_tag": "low_angle_mc",
+          "instruction_prompt": "Replace the advocate with the man from the reference — face, cobalt hoodie, rooftop dusk environment, and notebook prop. Preserve lip sync, camera, and audio."
+        },
+        {
+          "prompt": "Photorealistic adult man late forties white male with red beard, vivid sunset orange hoodie, side angle chest-up in cozy cafe corner with warm walnut wood panels, closed hardcover notebook at chest height, shallow depth of field, animated storyteller gesture mouth open mid-speech, single person one frame, clearly male.",
+          "seed": 774352,
+          "output_label": "Install · Recast B",
+          "beat_label": "Recast B",
+          "render_medium_tag": "photoreal",
+          "setting_tag": "cafe_corner_day",
+          "palette_tag": "warm_punch",
+          "camera_tag": "side_angle",
+          "instruction_prompt": "Replace the advocate with the man from the reference — face, orange hoodie, cafe environment, and notebook prop. Preserve lip sync, camera, and audio."
+        },
+        {
+          "prompt": "Photorealistic adult man mid twenties South Asian male, neon lime green crewneck, slight high angle in vivid LED studio with magenta-cyan ambient wash, closed hardcover notebook at chest height, shallow depth of field, energetic pointing gesture mouth open mid-speech, single person one frame, clearly male.",
+          "seed": 774353,
+          "output_label": "Install · Wardrobe",
+          "beat_label": "Wardrobe",
+          "render_medium_tag": "photoreal",
+          "setting_tag": "led_studio_magenta_cyan",
+          "palette_tag": "split_gel",
+          "camera_tag": "high_angle_side",
+          "instruction_prompt": "Replace with the lime crewneck look and LED studio environment from the reference — same face, notebook at chest. Preserve lip sync, camera, and audio."
         }
-      ]
+      ],
+      "multi_image_beat": {
+        "reference_indices": [1, 3],
+        "instruction_prompt": "Reference image 1: replace the advocate's face and identity with the East Asian man from reference 1, including cobalt hoodie and rooftop dusk environment. Reference image 2: replace only the grey hoodie with the neon lime crewneck from reference 2 and apply the LED studio magenta-cyan environment. Keep the closed hardcover notebook at chest height. Preserve lip sync, camera movement, and audio.",
+        "output_label": "Install · Multi-image",
+        "beat_label": "Multi-image"
+      },
+      "slider_title": "Skills library · Portable install",
+      "source_label": "Original advocate"
     },
     {
       "id": 5,
       "type": "replace",
+      "persona_gender": "female",
+      "visual_style_tag": "photoreal_editorial",
+      "setting_tag": "colorful_mural_alley",
+      "camera_tag": "medium_wide_handheld",
+      "lighting_tag": "golden_afternoon_sun",
+      "cast_descriptor": "woman stylist, Nordic, early 30s",
       "replace_mode": "multi_job",
-      "replace_target": "mixed",
-      "use_case": "Solo cafe — face, jacket, bag",
+      "replace_target": "character",
+      "use_case": "Human-in-the-loop — full recasts across distinct locations",
       "source": {
-        "subject_in_video": "her face, sand linen blazer, and yellow crossbody bag on the chair to her right",
+        "plate_mode": "p-image",
+        "plate_seed": 775891,
+        "subject_in_video": "the stylist's outfit and on-camera appearance",
         "voice": "Zephyr (Female)",
-        "still_edit": "Photoreal woman, sand linen blazer, outdoor cafe, yellow bag on empty chair frame right, coffee cup, mouth visible, calm expression.",
-        "voice_script": "You keep the take — swap my face, my jacket, or the bag on the chair. That's how we demo P-Video-Replace.",
-        "voice_prompt": "Calm explainer, clear lip sync, zero laugh energy.",
-        "video_prompt": "Slow gentle arc, speaks to camera with clear lip movement, brief glance at bag, no laughter."
+        "still_edit": "Photorealistic woman early thirties Nordic stylist, cream cable-knit sweater with light wash denim jacket open, entire face visible, medium wide handheld shot in colorful mural alley with bold paint strokes and golden afternoon sun, shallow depth of field, arms spread mid-gesture mouth open mid-word, single person one frame.",
+        "voice_script": "Human in the loop by default — Phase A stills first. You approve every reference plate before we spend a single credit on video.",
+        "voice_prompt": "Chapter 5 — calm Zephyr, clear lip sync, educational not salesy.",
+        "video_prompt": "Camera moves continuously with slow arc right and gentle push-in. She speaks to camera, hands animated, mouth centered."
       },
       "references": [
         {
-          "prompt": "Photoreal woman auburn hair cream knit, outdoor cafe, mouth visible.",
-          "seed": 555101,
-          "instruction_prompt": "Replace only her face and identity with the woman from the reference. Keep blazer, bag on chair, lips, and audio."
+          "prompt": "Photorealistic woman early twenties East Asian, electric hot-pink faux-fur cropped bolero over black top, low angle from below, slight side angle on sunlit rooftop terrace with planter boxes and skyline bokeh, shallow depth of field, confident pose mouth open mid-speech, single person one frame.",
+          "seed": 775861,
+          "output_label": "Phase A · Rooftop",
+          "beat_label": "Look A",
+          "render_medium_tag": "photoreal",
+          "setting_tag": "rooftop_terrace_day",
+          "palette_tag": "warm_punch",
+          "camera_tag": "low_angle_side",
+          "instruction_prompt": "Replace with the East Asian woman, hot-pink bolero look, and rooftop terrace environment from the reference. Preserve lip sync, camera, and audio."
+        },
+        {
+          "prompt": "Photorealistic woman mid forties Black, metallic violet holographic puffer vest, wide shot slight high angle in bright white art gallery cube with soft skylight and minimal sculpture blur, shallow depth of field, curator stance mouth open mid-speech, single person one frame.",
+          "seed": 775872,
+          "output_label": "Phase A · Gallery",
+          "beat_label": "Look B",
+          "render_medium_tag": "photoreal",
+          "setting_tag": "white_cube_gallery",
+          "palette_tag": "cool_contrast",
+          "camera_tag": "wide_high_angle",
+          "instruction_prompt": "Replace with the Black woman, holographic vest look, and white-cube gallery environment from the reference. Preserve lip sync, camera, and audio."
+        },
+        {
+          "prompt": "Photorealistic woman late twenties Latina, emerald satin wrap blouse, pearl choker and gold hoop earring, slight angle from the side before colorful street mural wall with bold paint strokes and golden afternoon sun, shallow depth of field, turning toward lens mouth open mid-speech, single person one frame.",
+          "seed": 775883,
+          "output_label": "Phase A · Mural wall",
+          "beat_label": "Accessories",
+          "render_medium_tag": "photoreal",
+          "setting_tag": "colorful_mural_wall",
+          "palette_tag": "earth_luxe",
+          "camera_tag": "side_angle",
+          "instruction_prompt": "Replace with the Latina woman, emerald blouse, pearl choker, and colorful mural-wall environment from the reference. Preserve lip sync, camera, and audio."
         }
-      ]
+      ],
+      "multi_image_beat": {
+        "reference_indices": [1, 3],
+        "instruction_prompt": "Reference image 1: replace with the East Asian woman and hot-pink bolero outfit from reference 1. Reference image 2: replace with the Latina woman, emerald blouse, pearl choker, and colorful mural-wall environment from reference 2. Preserve lip sync, camera movement, and audio.",
+        "output_label": "Phase A · Multi-image",
+        "beat_label": "Multi-image"
+      },
+      "slider_title": "Skills library · Staged gate",
+      "source_label": "Original stylist"
+    },
+    {
+      "id": 6,
+      "type": "replace",
+      "persona_gender": "male",
+      "replace_mode": "multi_job",
+      "replace_target": "object",
+      "visual_style_tag": "photoreal_commercial",
+      "setting_tag": "coastal_boardwalk_golden_hour",
+      "camera_tag": "medium_cu_slow_arc",
+      "lighting_tag": "open_sky_daylight",
+      "cast_descriptor": "man gym creator, Black, early 40s",
+      "use_case": "Curl-first — in-hand prop swap across locations",
+      "source": {
+        "plate_mode": "p-image",
+        "plate_seed": 775991,
+        "subject_in_video": "the plain white ceramic tumbler in his right hand at chest height",
+        "voice": "Puck (Male)",
+        "still_edit": "Photorealistic man early forties Black gym creator, vivid orange compression top, side angle chest-up on bright coastal boardwalk with ocean sky bokeh, holding plain white ceramic tumbler at chest height in right hand, shallow depth of field, animated trainer gesture mouth open mid-word, single person one frame, clearly male.",
+        "voice_script": "Every model skill ships copy-paste curl — upload, async create, poll, download — plus local slider renderers when you already have asset pairs.",
+        "voice_prompt": "Chapter 6 — developer tone, conversational, clear lip sync.",
+        "video_prompt": "Camera moves continuously with slow arc right and gentle push-in. He speaks to camera, white tumbler steady at chest, mouth centered."
+      },
+      "references": [
+        {
+          "prompt": "Male hand holding single matte cobalt blue rounded pebble form at chest height, vivid cobalt accent, soft cafe interior blur with warm walnut wood tones, shallow depth of field, bright sunny daylight, hand-scale product hero, single object one frame.",
+          "seed": 775931,
+          "output_label": "Cobalt puck",
+          "beat_label": "object",
+          "render_medium_tag": "photoreal",
+          "setting_tag": "cafe_interior_warm",
+          "palette_tag": "cool_contrast",
+          "instruction_prompt": "Replace the white tumbler in his right hand with the cobalt puck from the reference and shift the background to the warm cafe environment from the reference. Preserve face, lips, camera, and audio."
+        },
+        {
+          "prompt": "Male hand holding small matte copper cylindrical form at chest height, copper accent gleam, bright coastal boardwalk blur with ocean sky, shallow depth of field, golden afternoon light, hand-scale product hero, single object one frame.",
+          "seed": 775942,
+          "output_label": "Copper cylinder",
+          "beat_label": "object",
+          "render_medium_tag": "photoreal",
+          "setting_tag": "coastal_boardwalk",
+          "palette_tag": "earth_luxe",
+          "instruction_prompt": "Replace the white tumbler with the copper cylinder and coastal boardwalk environment from the reference. Preserve face, lips, camera, and audio."
+        },
+        {
+          "prompt": "Male hand holding single vivid emerald succulent in matte white pot at chest height, emerald green pop, bright greenhouse interior with glass panels and plant blur, shallow depth of field, golden afternoon light, hand-scale product hero, single object one frame.",
+          "seed": 775953,
+          "output_label": "Succulent",
+          "beat_label": "object",
+          "render_medium_tag": "photoreal",
+          "setting_tag": "greenhouse_interior",
+          "palette_tag": "monochrome_pop",
+          "instruction_prompt": "Replace the white tumbler with the succulent pot and greenhouse environment from the reference. Preserve face, lips, camera, and audio."
+        }
+      ],
+      "slider_title": "Skills library · Curl + renderers",
+      "source_label": "Original prop"
     }
   ]
 }

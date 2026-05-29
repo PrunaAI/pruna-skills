@@ -86,7 +86,10 @@ def is_object_only_reference(reference: dict) -> bool:
 def skip_swap_visual_bible(reference: dict) -> bool:
     """Stylized ladder refs and wardrobe rows carry their own look — loud swap bible causes collages."""
     beat = str(reference.get("beat_label", "")).lower()
-    if beat.startswith("style ") or beat in {
+    if beat.startswith("style ") or any(
+        beat.startswith(prefix)
+        for prefix in ("image ·", "motion ·", "video ·", "replace ·", "phase a ·")
+    ) or beat in {
         "anthropomorphic",
         "fictional 3d",
         "workflow ugc",
@@ -396,20 +399,95 @@ def render_source_video(scene: dict, ctx: dict, api_key: str) -> Path:
     return source_trim
 
 
-def instruction_for_reference(scene: dict, reference: dict, *, index: int) -> str:
+def instruction_for_reference(
+    scene: dict, reference: dict, *, index: int, lip_sync_policy: str = ""
+) -> str:
     if reference.get("instruction_prompt"):
-        return reference["instruction_prompt"]
-    if scene.get("replace_mode") == "single_call":
-        return scene["instruction_prompt"]
-    source = scene.get("source", {})
-    subject = source.get("subject_in_video", "the person on camera")
-    cues = reference.get("identity_cues", "").strip()
-    base = (
-        f"Replace {subject} with the identity shown in the reference image. "
-        f"{cues + ' ' if cues else ''}"
-        "Preserve exact motion, timing, camera movement, background, and audio."
+        prompt = reference["instruction_prompt"]
+    elif scene.get("replace_mode") == "single_call":
+        prompt = scene["instruction_prompt"]
+    else:
+        source = scene.get("source", {})
+        subject = source.get("subject_in_video", "the person on camera")
+        cues = reference.get("identity_cues", "").strip()
+        prompt = (
+            f"Replace {subject} with the identity shown in the reference image. "
+            f"{cues + ' ' if cues else ''}"
+            "Preserve exact motion, timing, camera movement, background, and audio."
+        )
+    policy = lip_sync_policy.strip()
+    if policy and "lip sync" not in prompt.lower():
+        prompt = f"{prompt.strip()} {policy}"
+    return prompt.strip()
+
+
+def instruction_for_multi_image_beat(scene: dict, beat: dict, *, lip_sync_policy: str = "") -> str:
+    prompt = beat.get("instruction_prompt") or scene.get("instruction_prompt")
+    if not prompt:
+        raise ValueError("multi_image_beat requires instruction_prompt")
+    policy = lip_sync_policy.strip()
+    if policy and "lip sync" not in prompt.lower():
+        prompt = f"{prompt.strip()} {policy}"
+    return prompt.strip()
+
+
+def append_multi_image_beat(
+    *,
+    scene: dict,
+    scene_id: int,
+    references: list,
+    reference_urls: list[str],
+    video_url: str,
+    ctx: dict,
+    api_key: str,
+    out_dir: Path,
+    plan: dict,
+    replaced_paths: list[Path],
+    sample_specs: list[dict],
+) -> None:
+    """Optional extra slider beat: one p-video-replace call with 2–4 reference images."""
+    beat = scene.get("multi_image_beat")
+    if not beat:
+        return
+    if ctx.get("only_ref") is not None:
+        print(f"Skipping multi_image_beat for scene {scene_id} (--only-ref {ctx['only_ref']})")
+        return
+
+    indices = beat.get("reference_indices") or []
+    if len(indices) < 2:
+        raise ValueError(f"Scene {scene_id}: multi_image_beat needs at least 2 reference_indices")
+    if len(indices) > 4:
+        raise ValueError(f"Scene {scene_id}: multi_image_beat supports at most 4 reference_indices")
+    for index in indices:
+        if index < 1 or index > len(references):
+            raise ValueError(
+                f"Scene {scene_id}: multi_image_beat reference_indices must be 1..{len(references)}, got {index}"
+            )
+
+    image_urls = [reference_urls[index - 1] for index in indices]
+    replaced_path = out_dir / "clips" / f"{scene_id:02d}_replaced_multi.mp4"
+    if replaced_path.exists() and replaced_path.stat().st_size > 0:
+        print(f"Reusing {replaced_path}")
+    else:
+        result = run_replace_job(
+            video_url=video_url,
+            image_urls=image_urls,
+            instruction_prompt=instruction_for_multi_image_beat(
+                scene, beat, lip_sync_policy=plan.get("lip_sync_policy", "")
+            ),
+            resolution=ctx["replace_resolution"],
+            api_key=api_key,
+            label=f"scene {scene_id} replace multi-image ({len(indices)} refs)",
+        )
+        download_file(result["generation_url"], replaced_path, api_key)
+    replaced_paths.append(replaced_path)
+    sample_specs.append(
+        {
+            "output": str(replaced_path.relative_to(out_dir)),
+            "output_label": beat.get("output_label", "Multi-image"),
+            "beat_label": beat.get("beat_label", "Multi-image"),
+        }
     )
-    return base.strip()
 
 
 def run_replace_job(
@@ -486,8 +564,9 @@ def resolve_python_for_compare() -> str:
 def render_slider(compare_config_path: Path, out_dir: Path, compare_path: Path) -> None:
     slider_script = sibling_script("generate_video_comparison.py")
     python = resolve_python_for_compare()
+    config_arg = compare_config_path.resolve()
     subprocess.run(
-        [python, str(slider_script), "--config", str(compare_config_path)],
+        [python, str(slider_script), "--config", str(config_arg)],
         check=True,
         cwd=str(out_dir),
     )
@@ -552,7 +631,12 @@ def render_replace_scene(
             reference_urls.append(upload_file(ref_path, api_key))
 
     still_path = out_dir / "stills" / f"scene{scene_id:02d}_source_plate.jpeg"
-    if not still_path.exists() or run_phase == "stills":
+    source_trim = out_dir / "sources" / f"scene{scene_id:02d}_original.mp4"
+    if (
+        not still_path.exists()
+        or run_phase == "stills"
+        or (run_phase in ("video", "all") and not source_trim.exists())
+    ):
         render_source_plate(scene, ctx, api_key)
 
     if run_phase == "stills":
@@ -600,8 +684,23 @@ def render_replace_scene(
         if ref_images:
             compare_config["reference_images"] = ref_images
     else:
+        only_ref = ctx.get("only_ref")
         for index, reference in enumerate(references, start=1):
             replaced_path = out_dir / "clips" / f"{scene_id:02d}_replaced_{index:02d}.mp4"
+            if only_ref is not None and index != only_ref:
+                if replaced_path.exists() and replaced_path.stat().st_size > 0:
+                    print(f"Skipping replace {index} (--only-ref {only_ref})")
+                    replaced_paths.append(replaced_path)
+                    sample_specs.append(
+                        {
+                            "output": str(replaced_path.relative_to(out_dir)),
+                            "output_label": reference.get("output_label", "Replaced"),
+                            "beat_label": reference.get("beat_label", f"Variant {index}"),
+                        }
+                    )
+                else:
+                    print(f"Warning: missing {replaced_path} (skipped by --only-ref {only_ref})")
+                continue
             if replaced_path.exists() and replaced_path.stat().st_size > 0:
                 print(f"Reusing {replaced_path}")
             else:
@@ -609,7 +708,7 @@ def render_replace_scene(
                     video_url=video_url,
                     image_urls=[reference_urls[index - 1]],
                     instruction_prompt=instruction_for_reference(
-                        scene, reference, index=index
+                        scene, reference, index=index, lip_sync_policy=plan.get("lip_sync_policy", "")
                     ),
                     resolution=ctx["replace_resolution"],
                     api_key=api_key,
@@ -624,6 +723,19 @@ def render_replace_scene(
                     "beat_label": reference.get("beat_label", f"Variant {index}"),
                 }
             )
+        append_multi_image_beat(
+            scene=scene,
+            scene_id=scene_id,
+            references=references,
+            reference_urls=reference_urls,
+            video_url=video_url,
+            ctx=ctx,
+            api_key=api_key,
+            out_dir=out_dir,
+            plan=plan,
+            replaced_paths=replaced_paths,
+            sample_specs=sample_specs,
+        )
         ref_images = reference_images_for_compare(
             scene, references, reference_paths, out_dir=out_dir
         )
@@ -845,6 +957,20 @@ def main() -> int:
     parser.add_argument("--from-scene", type=int, default=1, help="Start at this scene id")
     parser.add_argument("--through-scene", type=int, default=None, help="Stop after this scene id")
     parser.add_argument(
+        "--only-ref",
+        type=int,
+        default=None,
+        metavar="N",
+        help="multi_job: only call p-video-replace for reference index N (reuse other clips)",
+    )
+    parser.add_argument(
+        "--force-ref",
+        type=int,
+        default=None,
+        metavar="N",
+        help="multi_job: delete clips/NN_replaced_NN.mp4 before replace (pair with --only-ref)",
+    )
+    parser.add_argument(
         "--assemble-only",
         action="store_true",
         help="Concat existing scene clips and write manifest (no API calls)",
@@ -947,6 +1073,7 @@ def main() -> int:
         "avatar_resolution": plan["avatar_resolution"],
         "replace_resolution": plan["replace_resolution"],
         "from_scene": args.from_scene,
+        "only_ref": args.only_ref,
     }
 
     status_doc = load_generation_status(out_dir)
@@ -962,6 +1089,15 @@ def main() -> int:
     print(f"Scenes — phase={run_phase} (sequential; resume supported)")
     sys.stdout.flush()
     effective_phase = run_phase if run_phase != "all" else "all"
+    if args.force_ref is not None:
+        for scene in plan["scenes"]:
+            if scene.get("replace_mode", "multi_job") != "multi_job":
+                continue
+            forced = out_dir / "clips" / f"{scene['id']:02d}_replaced_{args.force_ref:02d}.mp4"
+            if forced.exists():
+                forced.unlink()
+                print(f"Removed {forced} (--force-ref {args.force_ref})")
+
     for scene in plan["scenes"]:
         if scene["id"] < args.from_scene:
             print(f"Skipping scene {scene['id']} (before --from-scene {args.from_scene})")
