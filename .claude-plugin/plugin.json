@@ -13,6 +13,7 @@
     "./tools/video/p-video-replace/SKILL.md",
     "./tools/audio/stable-audio-2.5/SKILL.md",
     "./tools/audio/music-2.5/SKILL.md",
+    "./tools/audio/gemini-3.1-flash-tts/SKILL.md",
     "./guides/workflows/pruna-run/SKILL.md",
     "./guides/workflows/pruna-generative-pipeline/SKILL.md",
     "./guides/workflows/single-scene-avatar-video/SKILL.md",

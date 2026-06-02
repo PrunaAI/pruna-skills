@@ -1,5 +1,7 @@
 # multi-scene-ai-video
 
+Narrated multi-scene films use the [scene anchor triple](../../references/scene-anchor-triple.md): **`image`** + **`last_frame_image`** + **`audio`** per `p-video` scene.
+
 ## Install
 
 From a clone of this repository:

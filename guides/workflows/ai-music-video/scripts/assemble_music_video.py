@@ -10,6 +10,12 @@ import sys
 import tempfile
 from pathlib import Path
 
+SCRIPT_DIR = Path(__file__).resolve().parent
+SHARED = SCRIPT_DIR.parent.parent / "_shared" / "scripts"
+sys.path.insert(0, str(SHARED))
+
+from concat_clips import probe_duration  # noqa: E402
+
 
 def run(cmd: list[str]) -> None:
     subprocess.run(cmd, check=True)
@@ -79,7 +85,16 @@ def main() -> None:
             raise SystemExit(f"Cut {cut_id} needs duration_sec or start/end")
 
         dest = work / f"{cut_id}_trim.mp4"
-        trim_clip(src, duration, dest)
+        actual = probe_duration(src)
+        # Audio-led p-video clips: never trim shorter than the rendered file (full vocal line)
+        if actual > duration + 0.05:
+            print(
+                f"  {cut_id}: clip {actual:.2f}s > cut map {duration:.2f}s — keeping full clip (audio-led)"
+            )
+            trim_to = actual
+        else:
+            trim_to = min(duration, actual)
+        trim_clip(src, trim_to, dest)
         trimmed.append(dest)
 
     concat_list = work / "concat.txt"

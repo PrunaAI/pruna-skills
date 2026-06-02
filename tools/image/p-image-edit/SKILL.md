@@ -47,7 +47,9 @@ Poll and download: [pruna-api.md](../../references/pruna-api.md#poll).
 
 Confirm **`prompt`**, which **reference files** to upload (1–5), **`aspect_ratio`**, and **`turbo`** on/off with the user. Run [p-image-edit-quality-checklist.md](../../../references/p-image-edit-quality-checklist.md) on outputs.
 
-**Avatar pipelines:** edit from the locked **upscaled** hero URL. Chain: **`p-image-edit` → `p-image-upscale` → slop gate → `p-video-avatar`**. Never pass raw edit URLs to video models. **Multi-scene:** run all scene edits **in parallel** after the hero anchor exists ([parallel-execution.md](../../../references/parallel-execution.md)). See [multi-scene-avatar-video](../../../guides/workflows/multi-scene-avatar-video/SKILL.md).
+**Avatar pipelines:** edit from the locked **upscaled** hero URL. Chain: **`p-image-edit` → `p-image-upscale` → slop gate → `p-video-avatar`**. Never pass raw edit URLs to video models. See [multi-scene-avatar-video](../../../guides/workflows/multi-scene-avatar-video/SKILL.md).
+
+**Multi-scene narrated films:** generate **start still** (`edit_prompt`) and **end still** (`last_frame_edit_prompt`) per scene for the [scene anchor triple](../../../references/scene-anchor-triple.md). Run all scene edits **in parallel** after the hero anchor exists ([parallel-execution.md](../../../references/parallel-execution.md)). See [multi-scene-ai-video](../../../guides/workflows/multi-scene-ai-video/SKILL.md).
 
 ## Prerequisites
 
@@ -84,7 +86,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 ## Typical next steps
 
 - Upscale for delivery: [p-image-upscale](../p-image-upscale/SKILL.md)
-- Motion: [p-video](../../video/p-video/SKILL.md) or [p-video-avatar](../../video/p-video-avatar/SKILL.md)
+- Motion: [p-video](../../video/p-video/SKILL.md) with [scene anchor triple](../../../references/scene-anchor-triple.md) or [p-video-avatar](../../video/p-video-avatar/SKILL.md)
 - Pipeline: [pruna-generative-pipeline](../../../guides/workflows/pruna-generative-pipeline/SKILL.md)
 
 ## Related workflow

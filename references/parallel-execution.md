@@ -27,7 +27,11 @@ Phase 4 — p-video-avatar × N                                  (parallel; all 
 Phase 5 — download + assembly                                 (sequential ordering only)
 ```
 
-**Multi-scene `p-video` (B-roll):** after shared uploads, **all scene predictions in one parallel batch** (Phase 2 only).
+**Multi-scene `p-video` (B-roll):** after shared uploads, **all scene predictions in one parallel batch** when every scene’s `image` / `last_frame_image` URL is known upfront.
+
+**Multi-scene `p-video` (frame chain):** when scene *i+1* **`image`** must equal scene *i* **`last_frame_image`** and end stills are **not** pre-planned, run **phased** — finish scene *i*, extract or approve end still, upload, then start scene *i+1*. When **`p-image-edit`** produces both start and end stills for all scenes before any video job, revert to **parallel** video batch. See [p-video](../tools/video/p-video/SKILL.md) and [multi-scene-ai-video](../guides/workflows/multi-scene-ai-video/SKILL.md).
+
+**Multi-scene narration:** [Gemini TTS](../tools/audio/gemini-3.1-flash-tts/SKILL.md) per scene can run **in parallel** after scripts are approved. Upload all audio URLs, then **`p-video`** with **`image` + `last_frame_image` + `audio`** per scene ([scene-anchor-triple.md](./scene-anchor-triple.md)). Post-mux is fallback only. Optional [Stable Audio](../tools/audio/stable-audio-2.5/SKILL.md) bed after concat — [audio-post-production.md](./audio-post-production.md).
 
 **Multi-scene `p-video-animate` (motion transfer):** see [multi-scene-avatar-video](../guides/workflows/multi-scene-avatar-video/SKILL.md) **`animate`** rows. After confirmation: parallel uploads → optional parallel `p-image-edit` per lane → **`p-video-animate` × N in one batch** → parallel slider renders → sequential concat.
 

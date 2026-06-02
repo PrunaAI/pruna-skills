@@ -42,10 +42,16 @@ When several predictions **do not depend on each other's outputs**, create them 
 
 Full patterns, phase diagrams, subagent splits, and script shapes: [parallel-execution.md](./parallel-execution.md).
 
+## Scene anchor triple (multi-scene `p-video`)
+
+Narrated story films pass three uploads per scene — **`image`**, **`last_frame_image`**, **`audio`** — in one prediction. Omit `duration` when `audio` is set.
+
+Full spec: [scene-anchor-triple.md](./scene-anchor-triple.md).
+
 ## File uploads
 
 1. `POST /v1/files` with `-F "content=@/path/to/file.jpg"` and `apikey` header.
-2. Use `urls.get` from the response (or construct `https://api.pruna.ai/v1/files/{id}`) as the **`image`**, **`images[]`**, **`audio`**, etc. value in `input`.
+2. Use `urls.get` from the response (or construct `https://api.pruna.ai/v1/files/{id}`) as the **`image`**, **`last_frame_image`**, **`images[]`**, **`audio`**, etc. value in `input`.
 
 Uploaded files expire (see upload response `expires_at`).
 

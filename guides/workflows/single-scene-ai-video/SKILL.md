@@ -1,13 +1,13 @@
 ---
 name: single-scene-ai-video
-description: Produces one Pruna cinematic clip (p-video) after an intake Q&A—text-to-video, image-to-video, or optional audio-conditioned—then async poll and download. Use when the user wants a single B-roll, product shot in motion, one hero video beat, or any one-off p-video without a multi-scene storyboard.
+description: Produces one Pruna p-video clip after intake—scene anchor triple (image + last_frame_image + audio), or T2V/I2V-only modes. Use for one B-roll beat, product shot in motion, or a single narrated story beat.
 metadata:
-  version: "0.0.1"
+  version: "0.0.3"
 ---
 
 # Single-scene AI video (Pruna `p-video`)
 
-One **`p-video`** prediction. See [p-video](../../../tools/video/p-video/SKILL.md) and [references/pruna-api.md](../../../references/pruna-api.md).
+One **`p-video`** prediction. See [p-video](../../../tools/video/p-video/SKILL.md), [scene-anchor-triple.md](../../../references/scene-anchor-triple.md), and [references/pruna-api.md](../../../references/pruna-api.md).
 
 ## Intake: ask before generating
 
@@ -15,25 +15,35 @@ One **`p-video`** prediction. See [p-video](../../../tools/video/p-video/SKILL.m
 
 | Topic | Questions |
 |-------|-----------|
-| **Mode** | Text-only (`prompt` only), **image-to-video** (need upload first?), or **audio-driven** (upload duration sets clip length)? |
-| **Creative** | What should happen in-frame (subject, camera, lighting, mood)? One paragraph max for `prompt`. |
-| **Format** | `duration` (1–20s, ignored if audio), `resolution` (`720p` / `1080p`), `fps` (24 / 48), `aspect_ratio` if text-only (ignored when `image` is set)? |
-| **Draft** | Use `draft: true` for cheaper preview or `false` for final quality? |
-| **Safety / upsampling** | Client defaults for `disable_safety_filter` and `prompt_upsampling`? |
-| **Repro** | Need a fixed `seed`? |
-| **Delivery** | Async (required for production); `Try-Sync: true` only for a one-off quick test |
-
-If the user has not chosen mode and duration (or audio path), **ask** before submitting.
+| **Mode** | **`triple`** (`image` + `last_frame_image` + `audio` — preferred for narrated beats) · T2V · I2V · I2V+last · audio-only (no frames) |
+| **Creative** | Motion `prompt` only — what happens between first and last frame? One paragraph max. |
+| **Frames** | Start still (upload or `p-image-edit`)? End still (`last_frame_edit_prompt`)? Part of a longer **`frame_chain`**? |
+| **Audio** | [Gemini TTS](../../../tools/audio/gemini-3.1-flash-tts/SKILL.md) → upload → **`input.audio`** (preferred). Optional [Stable Audio](../../../tools/audio/stable-audio-2.5/SKILL.md) bed **after** render. Post-mux is fallback only — [audio-post-production.md](../../../references/audio-post-production.md). |
+| **Format** | `duration` only when **no** `audio`; `resolution` (`720p` / `1080p`); `fps` (24 / 48); `aspect_ratio` if text-only |
+| **Draft** | `draft: true` for preview or `false` for final? |
+| **Repro** | Fixed `seed`? |
+| **Delivery** | Async (production); `Try-Sync: true` only for quick tests |
 
 ## Workflow (after intake)
 
-1. **Inputs** — If I2V or audio: `POST /v1/files`, use returned URLs in `input.image` or `input.audio`.
-2. **Submit** — `Model: p-video`, JSON `input` per [model docs](https://docs.api.pruna.ai/guides/models/p-video). **Async only** (omit `Try-Sync`); poll `get_url` until `succeeded`.
-3. **Download** — Fetch `generation_url` with `apikey` header.
-4. **Manifest** — Intake sheet + prediction id + final URL.
+### Preferred — scene anchor triple
+
+1. **Start still** — upload or **`p-image`** / **`p-image-edit`**
+2. **End still** — **`p-image-edit`** from start still + `last_frame_edit_prompt`
+3. **Narration** — [Gemini TTS](../../../tools/audio/gemini-3.1-flash-tts/SKILL.md) → upload to `/v1/files`
+4. **`p-video`** — `image` + `last_frame_image` + `audio` + motion `prompt`; omit `duration`; async poll
+5. **Optional bed** — mix under embedded narration in post
+
+Full spec: [scene-anchor-triple.md](../../../references/scene-anchor-triple.md).
+
+### Other modes
+
+- **I2V only:** `image` + `duration` + `prompt`
+- **I2V + last:** add `last_frame_image`
+- **T2V:** `prompt` + `duration` + `aspect_ratio`
 
 ## Related
 
-- Multi-scene `p-video` arcs: [multi-scene-ai-video](../multi-scene-ai-video/SKILL.md)
-- Talking head instead: [single-scene-avatar-video](../single-scene-avatar-video/SKILL.md)
-- Chain with stills/upscale: [pruna-generative-pipeline](../pruna-generative-pipeline/SKILL.md)
+- Multi-scene triple + frame chain: [multi-scene-ai-video](../multi-scene-ai-video/SKILL.md)
+- Talking head: [single-scene-avatar-video](../single-scene-avatar-video/SKILL.md)
+- Pipeline hub: [pruna-generative-pipeline](../pruna-generative-pipeline/SKILL.md)

@@ -20,6 +20,7 @@ from pruna_api import (  # noqa: E402
     run_prediction,
     upload_file,
 )
+from p_video_payload import build_p_video_payload  # noqa: E402
 
 
 def run_script(name: str, args: list[str]) -> None:
@@ -72,32 +73,76 @@ def phase_cuts(plan_path: Path, out_dir: Path, target_sec: float | None) -> Path
     return cuts_path
 
 
-def phase_stills(plan_path: Path, out_dir: Path, cuts_path: Path) -> None:
+def phase_stills(
+    plan_path: Path,
+    out_dir: Path,
+    cuts_path: Path,
+    *,
+    only: list[str] | None = None,
+) -> None:
     api_key = require_api_key()
     plan = json.loads(plan_path.read_text())
     data = json.loads(cuts_path.read_text())
     stills_dir = out_dir / "stills"
     stills_dir.mkdir(parents=True, exist_ok=True)
     seed = plan.get("project_seed", 991001)
+    cast = plan.get("cast", {})
+    cast_descriptor = cast.get("cast_descriptor", "character")
+
+    hero_url: str | None = None
+    hero_rel = plan.get("hero_still")
+    if hero_rel:
+        hero_path = Path(hero_rel)
+        if not hero_path.is_absolute():
+            hero_path = out_dir / hero_path
+        if hero_path.exists():
+            hero_url = upload_file(hero_path, api_key)
+            print(f"Hero still: {hero_path.name}")
+        else:
+            print(f"Warning: hero_still missing at {hero_path} — falling back to p-image")
 
     for cut in data["cuts"]:
+        if only and cut["id"] not in only:
+            continue
         still_path = stills_dir / f"{cut['id']}.jpeg"
-        if still_path.exists():
+        if still_path.exists() and not only:
             print(f"Skip still {still_path.name} (exists)")
             continue
+
         prompt = cut.get("still_prompt") or "Cinematic abstract purple light, single frame"
         style = plan.get("style_bible", "")
-        full_prompt = f"{prompt}. {style}" if style else prompt
-        result = run_prediction(
-            "p-image",
-            {
-                "prompt": full_prompt,
-                "aspect_ratio": plan.get("aspect_ratio", "16:9"),
-                "seed": seed + hash(cut["id"]) % 10000,
-            },
-            api_key,
-            label=f"still {cut['id']}",
-        )
+        beat = cut.get("beat_type", "broll")
+
+        if beat == "performance" and hero_url:
+            edit_prompt = (
+                f"Using attached reference as exact identity — same {cast_descriptor}, "
+                f"same purple knit texture, same golden crown, same face and body proportions. "
+                f"Change only: {prompt}"
+            )
+            if style:
+                edit_prompt = f"{edit_prompt}. {style}"
+            result = run_prediction(
+                "p-image-edit",
+                {
+                    "prompt": edit_prompt,
+                    "images": [hero_url],
+                    "aspect_ratio": plan.get("aspect_ratio", "16:9"),
+                },
+                api_key,
+                label=f"still {cut['id']} (edit)",
+            )
+        else:
+            full_prompt = f"{prompt}. {style}" if style else prompt
+            result = run_prediction(
+                "p-image",
+                {
+                    "prompt": full_prompt,
+                    "aspect_ratio": plan.get("aspect_ratio", "16:9"),
+                    "seed": seed + hash(cut["id"]) % 10000,
+                },
+                api_key,
+                label=f"still {cut['id']}",
+            )
         url = result.get("generation_url") or result.get("output")
         if not url:
             raise RuntimeError(f"No image URL for {cut['id']}")
@@ -105,7 +150,13 @@ def phase_stills(plan_path: Path, out_dir: Path, cuts_path: Path) -> None:
         print(f"Wrote {still_path}")
 
 
-def phase_video(plan_path: Path, out_dir: Path, cuts_path: Path) -> None:
+def phase_video(
+    plan_path: Path,
+    out_dir: Path,
+    cuts_path: Path,
+    *,
+    only: list[str] | None = None,
+) -> None:
     api_key = require_api_key()
     plan = json.loads(plan_path.read_text())
     data = json.loads(cuts_path.read_text())
@@ -119,9 +170,11 @@ def phase_video(plan_path: Path, out_dir: Path, cuts_path: Path) -> None:
     seed = plan.get("project_seed", 991001)
 
     for cut in data["cuts"]:
+        if only and cut["id"] not in only:
+            continue
         clip_name = cut.get("clip") or f"{cut['id']}.mp4"
         clip_path = clips_dir / clip_name
-        if clip_path.exists():
+        if clip_path.exists() and not only:
             print(f"Skip clip {clip_path.name} (exists)")
             continue
 
@@ -185,14 +238,15 @@ def phase_video(plan_path: Path, out_dir: Path, cuts_path: Path) -> None:
                 prompt = f"{sync_prompt}. {base_motion}"
             else:
                 prompt = base_motion
-            payload = {
-                "prompt": prompt,
-                "image": image_url,
-                "audio": audio_url,
-                "resolution": resolution,
-                "save_audio": True,
-                "seed": seed + abs(hash(cut["id"])) % 10000,
-            }
+            payload = build_p_video_payload(
+                prompt=prompt,
+                image_url=image_url,
+                audio_url=audio_url,
+                resolution=resolution,
+                fps=24,
+                save_audio=True,
+                seed=seed + abs(hash(cut["id"])) % 10000,
+            )
 
         result = run_prediction(
             model,
@@ -246,6 +300,12 @@ def main() -> None:
         choices=("song", "cuts", "stills", "video", "assemble", "all"),
         default="all",
     )
+    parser.add_argument(
+        "--only",
+        nargs="+",
+        metavar="CUT_ID",
+        help="Regenerate only these cut ids (overwrites existing stills/clips)",
+    )
     args = parser.parse_args()
     args.out_dir.mkdir(parents=True, exist_ok=True)
     plan = json.loads(args.plan.read_text())
@@ -260,9 +320,9 @@ def main() -> None:
     elif not cuts_path.exists():
         raise SystemExit("Missing cut_manifest.json — run --phase cuts")
     if args.phase in ("stills", "all"):
-        phase_stills(args.plan, args.out_dir, cuts_path)
+        phase_stills(args.plan, args.out_dir, cuts_path, only=args.only)
     if args.phase in ("video", "all"):
-        phase_video(args.plan, args.out_dir, cuts_path)
+        phase_video(args.plan, args.out_dir, cuts_path, only=args.only)
     if args.phase in ("assemble", "all"):
         phase_assemble(args.plan, args.out_dir, cuts_path)
 

@@ -1,6 +1,6 @@
 ---
 name: pruna-generative-pipeline
-description: Scenario hub for Pruna P-API chains—character sheets, dynamic per-scene angles/settings, locked seeds, natural human avatar voice, hero/source reuse via p-image-edit, explicit user confirmation before any POST /v1/predictions, then emit and run a concrete generation script with async parallel fan-out and subagents per independent scene lane where possible.
+description: Scenario hub for Pruna P-API chains—including scene anchor triple narrated films (Recipe P), character sheets, hero/source reuse via p-image-edit, explicit user confirmation before any POST /v1/predictions, then async parallel fan-out.
 license: MIT
 metadata:
   version: "0.0.1"
@@ -57,6 +57,7 @@ Deep avatar workflows already spell out cast ledgers, hero reuse, and read-throu
 | M — **Motion-transfer showcase** | Same motion, new subject + slider before/after | motion `.mp4` + still → `p-video-animate` → slider compare MP4 | [multi-scene-avatar-video](../multi-scene-avatar-video/SKILL.md) (`animate` rows) |
 | N — **In-video replacement showcase** | Swap people/products in footage + slider before/after | dynamic `p-image` refs → optional `p-video-avatar` source → `p-video-replace` → slider compare MP4 | [p-video-replace-comparison](../p-video-replace-comparison/SKILL.md) |
 | O — **AI music video** | Full song + lyric-synced video | lyrics → [music-2.5](../../../tools/audio/music-2.5/SKILL.md) → cut map → `p-video-avatar` + `p-video` → assembly; hero + `p-image-edit` when one singer throughout | [ai-music-video](../ai-music-video/SKILL.md) |
+| P — **Narrated story film** | Multi-scene B-roll + VO (+ optional bed) | hero → `p-image-edit` start/end stills → `p-video` with `image` + `last_frame_image` chain → [gemini-3.1-flash-tts](../../../tools/audio/gemini-3.1-flash-tts/SKILL.md) → concat + mux ± [stable-audio-2.5](../../../tools/audio/stable-audio-2.5/SKILL.md) | [multi-scene-ai-video](../multi-scene-ai-video/SKILL.md) · [audio-post-production.md](../../../references/audio-post-production.md) |
 
 ## Handoff rules (all recipes)
 
@@ -112,25 +113,28 @@ Deep avatar workflows already spell out cast ledgers, hero reuse, and read-throu
 
 ## Recipe D — Still → cinematic motion (I2V)
 
-**Shine:** Short camera grammar (“slow push-in”, “orbit left”, “hand lifts product”) matches what **p-video** does well from a single plate.
+**Shine:** Short camera grammar (“slow push-in”, “orbit left”, “hand lifts product”) matches what **p-video** does well from a single plate. Add **`last_frame_image`** when the beat has a known end composition (handoff to the next scene).
 
-**Intake:** Camera move, duration, `draft` for storyboard pass?
+**Intake:** Camera move, duration, `draft` for storyboard pass? End still for frame chain?
 
 **Steps**
 
 1. Ensure still exists (upload or **`p-image`**).
-2. **`p-video`** with `image` URL + motion-only `prompt`. Follow [single-scene-ai-video](../single-scene-ai-video/SKILL.md) for full intake.
+2. Optional **`p-image-edit`** for end still when chaining scenes.
+3. **`p-video`** with `image` + motion `prompt`; add `last_frame_image` for controlled arc. Follow [single-scene-ai-video](../single-scene-ai-video/SKILL.md) for full intake.
 
-## Recipe E — Audio-conditioned `p-video`
+## Recipe E — Audio-conditioned `p-video` (single anchor)
 
 **Shine:** Duration tracks audio automatically—ideal for VO-first social cuts.
 
-**Intake:** Audio format (flac/mp3/wav)? Visual story that matches beats?
+**Intake:** Audio format? Visual story matching beats? Source: upload, [Gemini TTS](../../../tools/audio/gemini-3.1-flash-tts/SKILL.md), or [Music 2.5](../../../tools/audio/music-2.5/SKILL.md)?
 
 **Steps**
 
-1. Upload audio → `/v1/files`.
-2. **`p-video`** with `audio` + `prompt`; omit manual `duration` (ignored when audio is set per model docs).
+1. Generate or upload audio → `/v1/files`.
+2. **`p-video`** with `audio` + `prompt` (+ optional `image`, `last_frame_image`); omit `duration`.
+
+For **full narrated story films**, use Recipe **P** ([scene anchor triple](../../../references/scene-anchor-triple.md)) instead.
 
 ## Recipe F — Draft preview → locked final
 
@@ -192,6 +196,18 @@ Deep avatar workflows already spell out cast ledgers, hero reuse, and read-throu
 5. Sliders via [`generate_video_comparison.py`](../_shared/scripts/generate_video_comparison.py); concat final reel.
 6. Optional **light background music** — plan `background_music` or [`launch_background_music.py`](../_shared/scripts/launch_background_music.py) + [stable-audio-2.5](../../../tools/audio/stable-audio-2.5/SKILL.md) (requires `REPLICATE_API_TOKEN`).
 
+## Recipe P — Narrated story film (scene anchor triple)
+
+**Shine:** **`image`** + **`last_frame_image`** + **`audio`** per scene — visual continuity **and** full narration sync; optional [Stable Audio](https://replicate.com/stability-ai/stable-audio-2.5) bed in post.
+
+**Intake:** Scene table with start/end still prompts, narration lines, `frame_chain`, bed yes/no.
+
+**Steps**
+
+1. Full workflow: [multi-scene-ai-video](../multi-scene-ai-video/SKILL.md) — see [scene-anchor-triple.md](../../../references/scene-anchor-triple.md).
+2. Hero → parallel **`p-image-edit`** start + end stills → parallel [Gemini TTS](../../../tools/audio/gemini-3.1-flash-tts/SKILL.md) → upload all → parallel **`p-video`** triple payloads (`audio` drives duration; omit `duration`; `save_audio: true`).
+3. Concat embedded VO → optional bed — [audio-post-production.md](../../../references/audio-post-production.md).
+
 ## Atomic tool index
 
 | Model | Skill |
@@ -204,6 +220,10 @@ Deep avatar workflows already spell out cast ledgers, hero reuse, and read-throu
 | `p-video-animate` | [p-video-animate](../../../tools/video/p-video-animate/SKILL.md) |
 | `p-video-replace` | [p-video-replace](../../../tools/video/p-video-replace/SKILL.md) |
 | `stable-audio-2.5` (Replicate) | [stable-audio-2.5](../../../tools/audio/stable-audio-2.5/SKILL.md) — launch reel bed under VO |
+| `gemini-3.1-flash-tts` (Replicate) | [gemini-3.1-flash-tts](../../../tools/audio/gemini-3.1-flash-tts/SKILL.md) — narration / voiceover |
+| `music-2.5` (Replicate) | [music-2.5](../../../tools/audio/music-2.5/SKILL.md) — full songs with vocals |
+
+Audio layering guide: [audio-post-production.md](../../../references/audio-post-production.md) · Scene anchor triple: [scene-anchor-triple.md](../../../references/scene-anchor-triple.md)
 
 ## More ideas (map to recipes)
 
@@ -221,5 +241,6 @@ Deep avatar workflows already spell out cast ledgers, hero reuse, and read-throu
 | Episodic mascot channel | **L** |
 | Motion swap / recast demo reel | **M** |
 | Replace cast or products in existing footage | **N** |
+| Narrated multi-scene story (scene anchor triple) | **P** |
 
 If a use case is not covered, define a new row: **intake → ordered models → handoff URLs**—same pattern as above.

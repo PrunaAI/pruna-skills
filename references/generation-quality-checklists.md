@@ -48,3 +48,5 @@ For phased human review before expensive video jobs, see [staged-generation-gate
 
 For multi-scene projects, run these checks per scene and add a final continuity pass
 (style, character identity, voice, and pacing consistency across scenes).
+
+**Narrated cinematic B-roll:** validate [scene anchor triple](./scene-anchor-triple.md) inputs before `p-video` — start still, end still, uploaded narration URL per row.

@@ -10,6 +10,8 @@ Skills follow the [Agent Skills](https://agentskills.io/specification) layout so
 references/
   pruna-api.md          # Auth, endpoints, sync/async, uploads
   parallel-execution.md # Async parallel batches, phased deps, subagent splits
+  audio-post-production.md # Narration + beds; links scene-anchor-triple.md
+  scene-anchor-triple.md   # image + last_frame_image + audio per scene (canonical)
   pruna-models.md       # Index of models and skill paths
   generation-quality-checklists.md # QA hub (core gate + links to per-model checklists)
   avatar-still-quality-checklist.md # Compatibility alias to QA hub
@@ -25,13 +27,14 @@ tools/video/
 tools/audio/
   stable-audio-2.5/     # Replicate instrumental bed for launch reels (mix under VO)
   music-2.5/            # Replicate full songs with vocals (MiniMax Music 2.5)
+  gemini-3.1-flash-tts/ # Replicate narration / voiceover (style prompts + tags)
 guides/workflows/
   pruna-run/                     # Fast prompt -> generation entrypoint
   pruna-generative-pipeline/   # Scenario hub (mood board, I2V, packs…) + intake
   single-scene-avatar-video/   # Intake → one p-video-avatar
   multi-scene-avatar-video/    # Intake → stills + p-video-avatar and/or p-video-animate slider beats + assembly
   single-scene-ai-video/        # Intake → one p-video
-  multi-scene-ai-video/        # Intake scene table → p-video per scene + assembly
+  multi-scene-ai-video/        # Scene anchor triple → p-video per scene + assembly
   p-image-upscale-comparison/  # Before/after zoom + slider demo from any still pair
   p-video-animate-comparison/  # Redirect stub → use multi-scene-avatar-video animate rows
   p-video-replace-comparison/  # Multi-scene replace sliders (p-image + avatar + replace)
@@ -62,17 +65,18 @@ Atomic skills link to `references/` instead of duplicating long API tables.
 | `p-image` | `Model: p-image` — T2I, aspect ratios, optional LoRA |
 | `p-image-edit` | `Model: p-image-edit` — prompt + 1–5 image URLs |
 | `p-image-upscale` | `Model: p-image-upscale` — target MP (1–128), enhance flags |
-| `p-video` | `Model: p-video` — T2V, I2V, optional audio |
+| `p-video` | `Model: p-video` — T2V, I2V, first+last frame chaining, optional audio |
 | `p-video-avatar` | `Model: p-video-avatar` — portrait + `voice_script` or `audio` |
 | `p-video-animate` | `Model: p-video-animate` — *animate this picture with motion* — one `image` + motion-template `video` |
 | `p-video-replace` | `Model: p-video-replace` — *replace this person in this video* — source `video` + 1–4 identity `images` in one call |
 | `stable-audio-2.5` | Replicate — instrumental background bed for launch reels (mix under VO via `launch_background_music.py`) |
 | `music-2.5` | Replicate — full songs with vocals from lyrics + style prompt ([MiniMax Music 2.5](https://replicate.com/minimax/music-2.5)) |
+| `gemini-3.1-flash-tts` | Replicate — narration / voiceover with style prompts ([Gemini 3.1 Flash TTS](https://replicate.com/google/gemini-3.1-flash-tts)) |
 | `pruna-generative-pipeline` | Scenario hub: mood board, hero+variants, I2V, audio-led video, draft→final, links to full scene workflows |
 | `single-scene-avatar-video` | Workflow: intake → one still + slop + one `p-video-avatar` |
 | `multi-scene-avatar-video` | Workflow: character sheet + scene table (`avatar` and/or `animate` rows) + locked seeds + natural voice + hero → edit → parallel async `p-video-avatar` / `p-video-animate` + slider renders + assembly |
-| `single-scene-ai-video` | Workflow: intake → one `p-video` |
-| `multi-scene-ai-video` | Workflow: intake scene table → parallel async `p-video` per scene + optional subagents + assembly |
+| `single-scene-ai-video` | Workflow: one `p-video` beat — scene anchor triple or I2V/T2V |
+| `multi-scene-ai-video` | Workflow: scene anchor triple (`image` + `last_frame_image` + `audio`) → parallel `p-video` + assembly |
 | `p-image-upscale-comparison` | Workflow: any pre/post upscale still pair → zoom stops + slider sweeps MP4 |
 | `p-video-animate-comparison` | Redirect stub — use `multi-scene-avatar-video` for animate slider beats |
 | `p-video-replace-comparison` | Workflow: character/clothing/object/mixed swaps with prompt-guided mapping, dynamic sources, natural VO, slider compare MP4s |

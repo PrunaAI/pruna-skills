@@ -19,8 +19,9 @@ Full-length **songs with natural vocals** from lyrics + style description. Not a
 | Goal | Use this |
 |------|----------|
 | Sung track for a music video | Yes — write lyrics with section tags first |
+| Drive **`p-video`** clip length | Yes — export MP3 → upload to Pruna → `audio` input |
+| Documentary narration | No — use [gemini-3.1-flash-tts](../gemini-3.1-flash-tts/SKILL.md) |
 | Instrumental bed under VO | No — use [stable-audio-2.5](../stable-audio-2.5/SKILL.md) |
-| Pruna-native audio-conditioned video | Use [`p-video`](../../video/p-video/SKILL.md) with uploaded audio after song export |
 
 ## Environment
 
@@ -103,6 +104,8 @@ python3 guides/workflows/ai-music-video/scripts/generate_song.py \
 
 ## Related
 
+- [audio-post-production.md](../../../references/audio-post-production.md) — when to use songs vs narration vs beds
 - [ai-music-video workflow](../../../guides/workflows/ai-music-video/SKILL.md)
+- [gemini-3.1-flash-tts](../gemini-3.1-flash-tts/SKILL.md) — spoken narration (not song)
 - [stable-audio-2.5](../stable-audio-2.5/SKILL.md) — instrumental beds only
 - [replicate-api.md](../../../references/replicate-api.md)

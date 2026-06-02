@@ -1,15 +1,17 @@
 ---
 name: p-video
-description: Generates video with Pruna P-API model p-video (text-to-video, image-to-video, audio-conditioned, duration, resolution, draft). Use when the user asks for Pruna video, p-video, cinematic motion, or API usage for Pruna premium video.
+description: Generates video with Pruna P-API model p-video (scene anchor triple—image + last_frame_image + audio, text-to-video, image-to-video, draft). Use when the user asks for Pruna video, p-video, narrated story films, scene chaining, or API usage for Pruna premium video.
 license: MIT
 metadata:
-  version: "0.0.1"
+  version: "0.0.3"
   pruna_model: p-video
 ---
 
 # p-video (Pruna)
 
-Premium video from text, optional image, or optional audio. Full parameters: [p-video model docs](https://docs.api.pruna.ai/guides/models/p-video).
+Premium video from text, optional **first-frame** / **last-frame** images, or optional audio. Same model on [Replicate](https://replicate.com/prunaai/p-video) — see **First / last frame chaining** for multi-scene handoffs.
+
+Full P-API parameters: [p-video model docs](https://docs.api.pruna.ai/guides/models/p-video).
 
 Shared HTTP patterns: [references/pruna-api.md](../../references/pruna-api.md) (upload, [poll](#poll), [download](#download))
 
@@ -19,7 +21,7 @@ Shared HTTP patterns: [references/pruna-api.md](../../references/pruna-api.md) (
 
 See **Example: async text-to-video** below. Poll and download: [pruna-api.md](../../references/pruna-api.md#poll).
 
-### Upload for image-to-video
+### Upload for image-to-video / frame anchors
 
 ```bash
 curl -X POST "https://api.pruna.ai/v1/files" \
@@ -27,11 +29,15 @@ curl -X POST "https://api.pruna.ai/v1/files" \
   -F "content=@/path/to/first-frame.png"
 ```
 
-Pass `urls.get` as `input.image`, then create async as above with `"image": "https://api.pruna.ai/v1/files/FILE_ID"`.
+Pass `urls.get` as `input.image` (first frame) and/or `input.last_frame_image` (last frame).
 
 ## Before generating
 
-Confirm **mode** (T2V / I2V / audio), **`duration`** (unless audio-driven), **`resolution`**, **`fps`**, **`draft`**, and **`prompt`** with the user—or run their documented intake from [single-scene-ai-video](../../../guides/workflows/single-scene-ai-video/SKILL.md) / [multi-scene-ai-video](../../../guides/workflows/multi-scene-ai-video/SKILL.md) before submitting. Validate renders with [p-video-quality-checklist.md](../../../references/p-video-quality-checklist.md).
+Confirm **mode** (T2V / I2V / first+last frame / audio), **`duration`** (unless audio-driven), **`resolution`**, **`fps`**, **`draft`**, and **`prompt`** with the user—or run intake from [single-scene-ai-video](../../../guides/workflows/single-scene-ai-video/SKILL.md) / [multi-scene-ai-video](../../../guides/workflows/multi-scene-ai-video/SKILL.md).
+
+For **narration or music**, see [audio-post-production.md](../../../references/audio-post-production.md) — Gemini TTS, Stable Audio beds, or upload audio for audio-conditioned mode.
+
+Validate renders with [p-video-quality-checklist.md](../../../references/p-video-quality-checklist.md).
 
 ## Required input
 
@@ -39,13 +45,124 @@ Confirm **mode** (T2V / I2V / audio), **`duration`** (unless audio-driven), **`r
 
 ## Common optional fields
 
-- `image` (URL): image-to-video; when set, `aspect_ratio` is ignored
-- `audio` (URL): audio-conditioned; duration follows audio; formats flac, mp3, wav
-- `duration`: 1–20 seconds (ignored if `audio` set)
-- `resolution`: `720p` or `1080p`
-- `fps`: 24 or 48
-- `aspect_ratio` when no input image: `16:9`, `9:16`, etc.
-- `draft`, `seed`, `save_audio`, `last_frame_image`, `prompt_upsampling`, `disable_safety_filter`
+| Field | Role |
+|-------|------|
+| `image` | **First frame** — image-to-video anchor; when set, `aspect_ratio` is ignored |
+| `last_frame_image` | **Last frame** — optional end-state still the clip should move toward |
+| `audio` | Audio-conditioned; duration follows audio; formats flac, mp3, wav |
+| `duration` | 1–20 seconds on P-API (ignored if `audio` set). Replicate playground caps at 10s — confirm on your endpoint |
+| `resolution` | `720p` or `1080p` |
+| `fps` | 24 or 48 |
+| `aspect_ratio` | When no `image`: `16:9`, `9:16`, `4:3`, `3:4`, `3:2`, `2:3`, `1:1` |
+| `draft` | `true` = ~4× faster/cheaper preview ([pricing](https://replicate.com/prunaai/p-video)); `false` = final |
+| `save_audio` | Keep model-generated dialogue/SFX on output (native audio) |
+| `seed` | Reproducibility |
+| `prompt_upsampling` | Auto prompt enhancement (default on Replicate) |
+| `disable_safety_filter` | Client policy |
+
+## First / last frame chaining
+
+Use **`image`** + **`last_frame_image`** to steer motion between two known compositions — the model interpolates from start plate to end plate. This is the primary tool for **smoother multi-scene stories** when hard cuts between unrelated T2V clips feel disjointed.
+
+### Single scene (controlled arc)
+
+1. Upload or generate **start still** → `input.image`
+2. Upload or **`p-image-edit`** an **end still** (same subject, new pose/background beat) → `input.last_frame_image`
+3. **`p-video`** with a motion-only `prompt` describing camera + action between the two plates
+
+```bash
+curl -X POST 'https://api.pruna.ai/v1/predictions' \
+  -H 'Content-Type: application/json' \
+  -H "apikey: ${PRUNA_API_KEY}" \
+  -H 'Model: p-video' \
+  -d '{
+    "input": {
+      "prompt": "Dog turns head toward flying toy, grass sways, gentle push-in, warm afternoon light",
+      "image": "https://api.pruna.ai/v1/files/START_ID",
+      "last_frame_image": "https://api.pruna.ai/v1/files/END_ID",
+      "duration": 5,
+      "resolution": "720p",
+      "fps": 24
+    }
+  }'
+```
+
+### Multi-scene handoff (scene *i* → *i+1*)
+
+| Strategy | How | Parallel? |
+|----------|-----|-----------|
+| **Planned anchor chain** (recommended) | `p-image-edit` produces `start_i` and `end_i` per scene. Scene *i* uses `image=start_i`, `last_frame_image=end_i`. Scene *i+1* uses `image=end_i` (same URL). | Stills: parallel. Video: **phased** if each scene's `end_i` must be approved before the next scene's render — or parallel once all stills exist. |
+| **Extract last frame** | After scene *i* renders, ffmpeg-grab last frame → upload → `image` for scene *i+1* | **Sequential** — scene *i+1* cannot start until scene *i* finishes |
+
+**Continuity tips**
+
+- Keep **`resolution`**, **`fps`**, and lighting language consistent across chained scenes.
+- End still of scene *N* should match the **intended first composition** of scene *N+1* (same framing when possible).
+- Use **`draft: true`** on the full chain for cheap motion approval, then rerun finals with locked `seed`/prompts.
+- [P-Video limitations](https://replicate.com/prunaai/p-video): not built for extreme camera motion or very complex arcs — prefer short beats (4–5s) and clear start/end plates.
+
+See [multi-scene-ai-video](../../../guides/workflows/multi-scene-ai-video/SKILL.md) for scene-table columns and [parallel-execution.md](../../../references/parallel-execution.md) for phased vs parallel batches.
+
+Canonical multi-scene spec: [scene-anchor-triple.md](../../../references/scene-anchor-triple.md).
+
+## Scene anchor triple (`image` + `last_frame_image` + `audio`)
+
+For narrated multi-scene films, treat each scene as **three uploaded anchors** — the same way first/last frames bracket visual motion, **`audio`** brackets timing and performance:
+
+| Anchor | Field | Role |
+|--------|-------|------|
+| **First frame** | `image` | Opening composition (hero or `p-image-edit` start still) |
+| **Last frame** | `last_frame_image` | Closing composition (end still; becomes next scene's `image` when chaining) |
+| **Narration / VO** | `audio` | Uploaded TTS or music — **sets clip duration**; model syncs motion to speech |
+
+All three are Pruna file URLs from `POST /v1/files`. Pass them together in one `p-video` prediction; **omit `duration`** when `audio` is set.
+
+### Per-scene payload (recommended story mode)
+
+```bash
+curl -X POST 'https://api.pruna.ai/v1/predictions' \
+  -H 'Content-Type: application/json' \
+  -H "apikey: ${PRUNA_API_KEY}" \
+  -H 'Model: p-video' \
+  -d '{
+    "input": {
+      "prompt": "Dog tosses plush upward, tail wagging, motion matches narrator, warm light",
+      "image": "https://api.pruna.ai/v1/files/SCENE_START",
+      "last_frame_image": "https://api.pruna.ai/v1/files/SCENE_END",
+      "audio": "https://api.pruna.ai/v1/files/SCENE_NARRATION",
+      "resolution": "720p",
+      "fps": 24,
+      "save_audio": true
+    }
+  }'
+```
+
+### Multi-scene chain (visual + audio)
+
+```text
+Scene 1: image=start_1,  last_frame_image=end_1,  audio=vo_1
+Scene 2: image=end_1,    last_frame_image=end_2,  audio=vo_2   ← same URL as scene 1 end
+Scene 3: image=end_2,    last_frame_image=end_3,  audio=vo_3
+```
+
+**Stills phase:** `p-image-edit` start still from hero; end still from start still (parallel per scene after starts exist).  
+**Audio phase:** [Gemini TTS](../../audio/gemini-3.1-flash-tts/SKILL.md) per scene (parallel) → upload each.  
+**Video phase:** parallel `p-video` when all six URLs per scene row are ready.
+
+Same triple pattern on **`p-video-avatar`**: portrait `image` + optional `last_frame_image` + uploaded `audio` for lip-sync narration.
+
+## Audio modes
+
+| Mode | Input | Duration | When |
+|------|-------|----------|------|
+| **Silent / native SFX** | `prompt` only (optional `save_audio`) | `duration` | Ambient clips, model-generated sound |
+| **Uploaded audio (preferred)** | `audio` URL + `prompt` (+ optional `image`, `last_frame_image`) | Follows audio — **omit `duration`** | VO, TTS, song slices — upload to `/v1/files` first; set **`save_audio`: true** for narrated concat |
+| **External narration** | [gemini-3.1-flash-tts](../../audio/gemini-3.1-flash-tts/SKILL.md) → upload → `audio` | Follows audio | Documentary narrator — same as uploaded audio; **never** post-mux over silent clips |
+| **Post mux (fallback only)** | Silent `p-video` renders | `duration` | Only when re-render is impossible — truncates long TTS |
+
+Shared helper: [`p_video_payload.py`](../../../guides/workflows/_shared/scripts/p_video_payload.py) — enforces omitting `duration` when `audio` is set.
+
+Full layering guide: [audio-post-production.md](../../../references/audio-post-production.md).
 
 ## Example: async text-to-video (recommended)
 
@@ -66,19 +183,60 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 
 Poll and download: [pruna-api.md](../../references/pruna-api.md#poll).
 
-**Multi-scene:** fire **all** scene predictions in one parallel async batch after shared uploads; batch-poll. See [parallel-execution.md](../../../references/parallel-execution.md).
+**Multi-scene:** after shared uploads, fire predictions in **parallel** when scenes do not share frame dependencies; use **phased** batches when `last_frame_image` of scene *N* is the `image` of scene *N+1* and stills are not pre-planned. See [parallel-execution.md](../../../references/parallel-execution.md).
 
-## Example: image-to-video
+## Example: image-to-video (first frame only)
 
 Upload image to `/v1/files`, pass its `urls.get` as `input.image`.
 
+## Example: audio-conditioned with frame anchors (narrated story beat)
+
+```bash
+curl -X POST 'https://api.pruna.ai/v1/predictions' \
+  -H 'Content-Type: application/json' \
+  -H "apikey: ${PRUNA_API_KEY}" \
+  -H 'Model: p-video' \
+  -d '{
+    "input": {
+      "prompt": "Dog searches through tall grass, cinematic, motion matches narrator mood",
+      "image": "https://api.pruna.ai/v1/files/START_ID",
+      "last_frame_image": "https://api.pruna.ai/v1/files/END_ID",
+      "audio": "https://api.pruna.ai/v1/files/NARRATION_ID",
+      "resolution": "720p",
+      "fps": 24,
+      "save_audio": true
+    }
+  }'
+```
+
+Omit `duration` when `audio` is set. See **Scene anchor triple** above.
+
+## Example: audio-conditioned (narration only, no last frame)
+
+```bash
+curl -X POST 'https://api.pruna.ai/v1/predictions' \
+  -H 'Content-Type: application/json' \
+  -H "apikey: ${PRUNA_API_KEY}" \
+  -H 'Model: p-video' \
+  -d '{
+    "input": {
+      "prompt": "Dog searches through tall grass, cinematic, matches narrator mood",
+      "image": "https://api.pruna.ai/v1/files/START_ID",
+      "audio": "https://api.pruna.ai/v1/files/NARRATION_ID",
+      "resolution": "720p",
+      "fps": 24
+    }
+  }'
+```
+
 ## Typical next steps
 
-- One-scene `p-video` workflow: [single-scene-ai-video](../../../guides/workflows/single-scene-ai-video/SKILL.md)
-- Multi-scene `p-video` workflow: [multi-scene-ai-video](../../../guides/workflows/multi-scene-ai-video/SKILL.md)
+- One-scene workflow: [single-scene-ai-video](../../../guides/workflows/single-scene-ai-video/SKILL.md)
+- Multi-scene + frame chain + narration: [multi-scene-ai-video](../../../guides/workflows/multi-scene-ai-video/SKILL.md)
 - Talking portrait: [p-video-avatar](../p-video-avatar/SKILL.md)
-- Pipeline: [pruna-generative-pipeline](../../../guides/workflows/pruna-generative-pipeline/SKILL.md)
+- Narration TTS: [gemini-3.1-flash-tts](../../audio/gemini-3.1-flash-tts/SKILL.md)
+- Pipeline hub: [pruna-generative-pipeline](../../../guides/workflows/pruna-generative-pipeline/SKILL.md)
 
 ## Related workflow
 
-Multi-scene AI video: [multi-scene-ai-video](../../../guides/workflows/multi-scene-ai-video/SKILL.md) — phased curl (not in this tool skill).
+Multi-scene AI video: [multi-scene-ai-video](../../../guides/workflows/multi-scene-ai-video/SKILL.md) — scene table, frame columns, audio phases.

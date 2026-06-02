@@ -19,6 +19,7 @@ Text-to-music for **instrumental background beds** on launch reels. Not a Pruna 
 | Goal | Use this |
 |------|----------|
 | Light instrumental under a concat launch reel | Yes — after final assembly |
+| Under **embedded narration** from scene anchor triple | Yes — mix quiet bed after concat — [audio-post-production.md](../../../references/audio-post-production.md) |
 | Replace avatar VO | No — bed mixes **under** existing dialogue |
 | Pruna-native audio | No — use [`p-video`](../../video/p-video/SKILL.md) audio input instead |
 
@@ -104,5 +105,7 @@ python3 guides/workflows/_shared/scripts/launch_background_music.py \
 
 ## Related
 
+- [audio-post-production.md](../../../references/audio-post-production.md) — narration + bed layering
+- [gemini-3.1-flash-tts](../gemini-3.1-flash-tts/SKILL.md) — narration voiceover
 - [p-video-replace-comparison](../../../guides/workflows/p-video-replace-comparison/SKILL.md) — final assembly phase
 - [replicate-api.md](../../../references/replicate-api.md) — shared Replicate patterns

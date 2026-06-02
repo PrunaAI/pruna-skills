@@ -116,9 +116,27 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-## Example: uploaded narration
+## Example: uploaded narration (scene anchor triple — avatar variant)
 
-Upload audio to `/v1/files`, pass URL as `input.audio` (omit or ignore `voice_script`).
+Generate [Gemini TTS](../../audio/gemini-3.1-flash-tts/SKILL.md) → upload to `/v1/files`. Pass as `input.audio` with portrait `image` (and optional `last_frame_image` when the beat has a known end pose). Duration follows audio. See [scene-anchor-triple.md](../../../references/scene-anchor-triple.md).
+
+```bash
+curl -X POST 'https://api.pruna.ai/v1/predictions' \
+  -H 'Content-Type: application/json' \
+  -H "apikey: ${PRUNA_API_KEY}" \
+  -H 'Model: p-video-avatar' \
+  -d '{
+    "input": {
+      "image": "https://api.pruna.ai/v1/files/PORTRAIT_START",
+      "last_frame_image": "https://api.pruna.ai/v1/files/PORTRAIT_END",
+      "audio": "https://api.pruna.ai/v1/files/NARRATION_ID",
+      "resolution": "1080p",
+      "video_prompt": "Medium close-up, natural head motion matching narration"
+    }
+  }'
+```
+
+If both `audio` and `voice_script` are set, **audio wins**.
 
 ## Typical next steps
 

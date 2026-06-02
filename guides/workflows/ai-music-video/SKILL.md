@@ -13,7 +13,7 @@ End-to-end **music video** production:
 1. **Lyrics** with [Music 2.5 structure tags](https://replicate.com/minimax/music-2.5) — cut on **line boundaries**, never mid-word ([lyrics-and-cuts.md](./lyrics-and-cuts.md))
 2. **Song** — [music-2.5](../../../tools/audio/music-2.5/SKILL.md) on Replicate (`REPLICATE_API_TOKEN`)
 3. **Cut map** — `parse_lyric_cuts.py` → per-line/per-section timings (refine by ear)
-4. **Visual beats** — **`p-video-avatar`** (performance, lip sync to **audio slice**) + **`p-video`** (B-roll, audio-conditioned or timed)
+4. **Visual beats** — **`p-video-avatar`** (performance, lip sync to **audio slice**) + **`p-video`** B-roll via **scene anchor triple variant** (`image` + optional `last_frame_image` + **`audio`** slice) — [scene-anchor-triple.md](../../../references/scene-anchor-triple.md)
 5. **Assembly** — trim clips to cut durations, concat, mux full song
 
 **Staged generation:** [staged-generation-gate.md](../../../references/staged-generation-gate.md) — approve lyrics and stills before paid video jobs.
@@ -42,7 +42,7 @@ Ask whether performance beats should read as **one singer** or whether **recasts
 | **Same singer throughout** | One approved **hero** via `p-image` (locked `project_seed`) → every performance still via **`p-image-edit`** off that URL — change only angle, setting, expression, wardrobe *delta* | Pass **`seed`: `project_seed`** on all **`p-video-avatar`** jobs; reuse `cast_descriptor` in edit prompts | Fresh unrelated **`p-image`** text prompt per line — faces drift |
 | **Same singer, new locations** | Hero + edits per beat — vary **`setting_tag`**, **`camera_tag`**, **`lighting_tag`**; keep identity anchors (age, hair, face, baseline outfit) in the character sheet | Same seed lock; distinct **`video_prompt`** per cut | Grey-wall repeat or identical framing on consecutive performance lines |
 | **Deliberate recasts** | Only on **broll** beats, labeled guest rows, or when the user explicitly asks — never silent identity swaps on back-to-back performance lines | N/A for lip-sync rows | Random new face mid-chorus without user approval |
-| **Mascot / stylized host** | One approved mascot still → **`p-image-edit`** for pose/setting; use **`p-video`** + audio (not avatar) | Lock **`project_seed`** when the API accepts it | **`p-video-avatar`** on non-human stills — humanizes the character |
+| **Mascot / stylized host** | One approved mascot still → **`p-image-edit`** for pose/setting | **`p-video`** scene anchor triple: `image` + optional `last_frame_image` + song **`audio`** slice | **`p-video-avatar`** on non-human stills |
 
 Record in the plan: `project_seed`, `cast` / `character_sheet`, approved **`hero_still`** URL, and `continuity: same_singer | recasts_ok`. Full cast-ledger patterns: [multi-scene-avatar-video](../multi-scene-avatar-video/SKILL.md) **Character sheet** and **Source portrait / hero**.
 
@@ -155,7 +155,8 @@ python3 guides/workflows/ai-music-video/scripts/slice_audio.py \
 | Field | Guidance |
 |-------|----------|
 | `image` | Approved performance still |
-| `audio` | Sliced line/section from master song |
+| `audio` | Sliced line/section from master song — **omit `duration`** |
+| `save_audio` | **`true`** — embed vocal in clip (required for audio-led cuts) |
 | `video_prompt` | Unique motion per cut — push-in, arc, handheld sway |
 | `resolution` | Match plan (`1080p` for final) |
 | `seed` | Lock for same singer across performance clips |
@@ -167,11 +168,14 @@ Prefer **audio-conditioned** mode — upload the same slice, motion follows leng
 ```json
 {
   "prompt": "Slow dolly through neon city street at dusk, rain reflections, cinematic",
+  "image": "https://api.pruna.ai/v1/files/STILL_ID",
   "audio": "https://api.pruna.ai/v1/files/SLICE_ID",
   "resolution": "1080p",
-  "aspect_ratio": "16:9"
+  "save_audio": true
 }
 ```
+
+Omit `duration` when `audio` is set. Runner: [`run_from_plan.py`](./scripts/run_from_plan.py) uses [`p_video_payload.py`](../_shared/scripts/p_video_payload.py).
 
 For `[Inst]` / `[Solo]` with no vocals, use `duration` from cut map instead of audio.
 

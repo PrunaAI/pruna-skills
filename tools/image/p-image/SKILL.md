@@ -69,7 +69,7 @@ Omit `Try-Sync`. For N panels with no shared dependency, **POST all jobs in para
 
 - Refine or composite: [p-image-edit](../p-image-edit/SKILL.md)
 - Upscale output: [p-image-upscale](../p-image-upscale/SKILL.md)
-- Animate still: [p-video](../../video/p-video/SKILL.md) or talking head [p-video-avatar](../../video/p-video-avatar/SKILL.md)
+- Animate still: [p-video](../../video/p-video/SKILL.md) — prefer [scene anchor triple](../../../references/scene-anchor-triple.md) (`image` + `last_frame_image` + `audio`) for narrated beats; or [p-video-avatar](../../video/p-video-avatar/SKILL.md) for talking head
 - Scripted workflows (intake first): [single-scene-avatar-video](../../../guides/workflows/single-scene-avatar-video/SKILL.md), [multi-scene-avatar-video](../../../guides/workflows/multi-scene-avatar-video/SKILL.md)
 - Full pipeline: [pruna-generative-pipeline](../../../guides/workflows/pruna-generative-pipeline/SKILL.md)
 

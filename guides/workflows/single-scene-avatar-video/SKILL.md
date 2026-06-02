@@ -38,7 +38,7 @@ Write **`voice_script`** as **real dialogue**: contractions, natural rhythm, sho
 | **Motion** | Desired energy for **`video_prompt`**—specific camera angle and movement (positive wording only)? |
 | **Character** | Age, look, realism level (photoreal vs stylized)—see character sheet in [multi-scene-avatar-video](../multi-scene-avatar-video/SKILL.md) |
 | **Seed** | Lock **`seed`** at hero generation; pass same value to **`p-video-avatar`** |
-| **Output** | Filename / delivery channel; async vs sync tolerance? |
+| **Audio (optional)** | Upload [Gemini TTS](../../../tools/audio/gemini-3.1-flash-tts/SKILL.md) for lip-sync via **`input.audio`** (preferred over post-mux) — see [scene-anchor-triple.md](../../../references/scene-anchor-triple.md) avatar variant. Or use native **`voice_script`**. |
 
 If any answer is missing and the user has not waived it, **ask** before generating.
 
@@ -62,7 +62,7 @@ When the user confirms:
 1. **References** — Upload assets with `POST /v1/files`; collect Pruna file URLs.
 2. **Still (if needed)** — Build one talking-head frame with **`p-image`** (photoreal prompt + locked **`seed`**) and/or **`p-image-edit`** from a locked source. Run the slop gate before avatar.
 3. **Slop gate** — Run the checklist in [generation-quality-checklists.md](../../../references/generation-quality-checklists.md); fix with image models until pass.
-4. **Avatar** — Call **`p-video-avatar`** with snake_case `input` (`image`, `voice_script`, `voice`, `voice_language`, **`voice_prompt`** human delivery, **`video_prompt`** specific camera/motion, `resolution`, **`seed`**). **Async only** (omit `Try-Sync`); poll to `succeeded`; download `generation_url`.
+4. **Avatar** — Call **`p-video-avatar`** with snake_case `input` (`image`, optional `last_frame_image`, **`voice_script`** *or* uploaded **`audio`**, `voice`, `voice_language`, **`voice_prompt`**, **`video_prompt`**, `resolution`, **`seed`**). Prefer uploaded **`audio`** from [Gemini TTS](../../../tools/audio/gemini-3.1-flash-tts/SKILL.md) when external narration quality matters. **Async only** (omit `Try-Sync`); poll to `succeeded`; download `generation_url`.
 5. **Manifest** — Store intake answers, URLs, prediction ids, prompts, retries, confirmed script snapshot.
 
 ## Related

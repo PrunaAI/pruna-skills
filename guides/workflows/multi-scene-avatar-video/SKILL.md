@@ -39,6 +39,7 @@ Follow this skill in **plain language** when talking to the person requesting th
 | **Seeds** | Pick and **lock** a project **`seed`** at hero `p-image` (or user-supplied). Record in manifest; reuse when regenerating the same hero; pass the same **`seed`** to every **`p-video-avatar`** call unless A/B testing motion. |
 | **References** | Which files to upload; rights cleared? |
 | **Beat mix** | Which scenes are **`avatar`** vs **`animate`**? All avatar, all animate, or mixed announcement? |
+| **Narrated B-roll cutaways** | Optional **`p-video`** beats using [scene anchor triple](../../../references/scene-anchor-triple.md) alongside avatar rows |
 | **Motion templates** (animate beats) | Source `.mp4` per animate row—owned/licensed? Match pose/framing to reference still? |
 | **Slider delivery** (animate beats) | Comparison MP4 only, animated-only strip, or both? Canvas default 1920×1080. |
 | **Assembly** | How clips will be joined and leveled (tool-agnostic plan)? |
