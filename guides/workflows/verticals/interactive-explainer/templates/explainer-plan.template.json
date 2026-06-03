@@ -1,0 +1,89 @@
+{
+  "title": "How Volcanoes Erupt — Educational Explainer",
+  "hero_prompt": "Cinematic educational documentary still, active volcano with glowing magma chamber visible through rock, photoreal science visualization, soft atmospheric haze, 16:9 single frame",
+  "project_seed": 100001,
+  "frame_chain_mode": "parallel_vignettes",
+  "assembly": {
+    "chain_crossfade_seconds": 0.1,
+    "hard_cut_crossfade_seconds": 0
+  },
+  "defaults": {
+    "resolution": "1080p",
+    "fps": 48,
+    "aspect_ratio": "16:9"
+  },
+  "style_bible": "Cinematic science documentary, photoreal natural environments, clear focal subject, soft 35mm grain, educational not sensational, 16:9, no text overlays, no cartoon",
+  "narration": {
+    "enabled": true,
+    "voice": "Charon",
+    "max_seconds_per_scene": 19,
+    "style_prompt": "AUDIO PROFILE: Engaging science documentary host.\n\nDIRECTOR'S NOTES:\n- Clear, curious, accessible to general audience.\n- Keep lines under nineteen seconds.\n- End with a question when handing off to a character beat.",
+    "scene_lines": {
+      "01_hook": "[curious] Beneath every quiet mountain, molten rock waits under immense pressure. What finally breaks the surface?",
+      "03_mechanism": "[informative] Magma rises through cracks in the crust — but the eruption style depends on what's trapped inside. So what did she see in the field?",
+      "05_takeaway": "[warmly] Volcanoes destroy — and they also build the land we walk on. The earth is never finished making itself."
+    }
+  },
+  "cast": {
+    "geologist": {
+      "name": "Dr. Elena Reyes",
+      "persona_gender": "female",
+      "voice": "Zephyr (Female)",
+      "voice_language": "English (US)",
+      "voice_prompt": "Enthusiastic field geologist, first-person expert, clear lip sync, accessible not academic",
+      "character_descriptor": "woman, Latina geologist, 40s, field gear, documentary realism"
+    }
+  },
+  "voice_scripts": {
+    "02_geologist_intro": "I've stood on active vents where the ground was warm under my boots. You learn fast — pressure doesn't announce itself until it's too late to ignore.",
+    "04_geologist_reply": "When gas can't escape, the magma explodes outward. It's not anger — it's physics. And it's breathtaking when you're far enough away."
+  },
+  "background_music": {
+    "enabled": true,
+    "model": "stability-ai/stable-audio-2.5",
+    "volume": 0.08,
+    "prompt": "Documentary science score, sparse piano and low strings, 70 BPM, no vocals, restrained wonder"
+  },
+  "scenes": [
+    {
+      "id": "01_hook",
+      "type": "narrator",
+      "chain_from_previous": false,
+      "edit_prompt": "OPENING: Wide aerial of dormant volcanic peak at dawn, educational documentary still, serene but ominous",
+      "last_frame_edit_prompt": "CLOSING: Same peak, closer on steam vent wisps, golden light, educational end frame",
+      "video_prompt": "OPEN: hold wide aerial. MID: slow drift toward steam vents, dawn light brightens on ridge. CLOSE: settle on rising vapor."
+    },
+    {
+      "id": "02_geologist_intro",
+      "type": "character",
+      "cast": "geologist",
+      "follows": "01_hook",
+      "edit_prompt": "Same documentary style, head-and-shoulders at volcanic site, slight angle from the side, lips in frame, ash-gray landscape",
+      "video_prompt": "Medium close-up, speaks directly to camera, subtle push-in, field expert tone"
+    },
+    {
+      "id": "03_mechanism",
+      "type": "narrator",
+      "chain_from_previous": false,
+      "edit_prompt": "OPENING: Cross-section cutaway of volcano interior, magma chamber glowing, educational documentary visualization",
+      "last_frame_edit_prompt": "CLOSING: Same cross-section, pressure lines implied, chamber brighter, educational end frame",
+      "video_prompt": "OPEN: hold cross-section. MID: gentle push into chamber glow, heat shimmer in air. CLOSE: hold bright core."
+    },
+    {
+      "id": "04_geologist_reply",
+      "type": "character",
+      "cast": "geologist",
+      "follows": "03_mechanism",
+      "edit_prompt": "Same style, head-and-shoulders with sample rock in hand, slight angle from the side, lips in frame, field light",
+      "video_prompt": "Medium close-up, speaks directly to camera, subtle push-in, field light shifts on face"
+    },
+    {
+      "id": "05_takeaway",
+      "type": "narrator",
+      "chain_from_previous": false,
+      "edit_prompt": "OPENING: Lush green slopes on old volcanic caldera, educational documentary wide, life after eruption",
+      "last_frame_edit_prompt": "CLOSING: Same landscape, sun breaking through clouds, hopeful end frame",
+      "video_prompt": "OPEN: slow pan across green caldera. MID: light breaks through clouds. CLOSE: hold hopeful wide."
+    }
+  ]
+}

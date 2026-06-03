@@ -14,15 +14,17 @@
     "./tools/audio/stable-audio-2.5/SKILL.md",
     "./tools/audio/music-2.5/SKILL.md",
     "./tools/audio/gemini-3.1-flash-tts/SKILL.md",
-    "./guides/workflows/pruna-run/SKILL.md",
-    "./guides/workflows/pruna-generative-pipeline/SKILL.md",
-    "./guides/workflows/single-scene-avatar-video/SKILL.md",
-    "./guides/workflows/multi-scene-avatar-video/SKILL.md",
-    "./guides/workflows/single-scene-ai-video/SKILL.md",
-    "./guides/workflows/multi-scene-ai-video/SKILL.md",
-    "./guides/workflows/p-image-upscale-comparison/SKILL.md",
-    "./guides/workflows/p-video-animate-comparison/SKILL.md",
-    "./guides/workflows/p-video-replace-comparison/SKILL.md",
-    "./guides/workflows/ai-music-video/SKILL.md"
+    "./guides/workflows/router/pruna-run/SKILL.md",
+    "./guides/workflows/router/pruna-generative-pipeline/SKILL.md",
+    "./guides/workflows/core/avatar-single-scene/SKILL.md",
+    "./guides/workflows/core/avatar-multi-scene/SKILL.md",
+    "./guides/workflows/core/image-to-video/SKILL.md",
+    "./guides/workflows/core/narrated-multi-scene/SKILL.md",
+    "./guides/workflows/core/visual-transition-reel/SKILL.md",
+    "./guides/workflows/verticals/interactive-explainer/SKILL.md",
+    "./guides/workflows/launches/p-image-upscale-comparison/SKILL.md",
+    "./guides/workflows/launches/p-video-animate-comparison/SKILL.md",
+    "./guides/workflows/launches/p-video-replace-comparison/SKILL.md",
+    "./guides/workflows/verticals/music-video/SKILL.md"
   ]
 }

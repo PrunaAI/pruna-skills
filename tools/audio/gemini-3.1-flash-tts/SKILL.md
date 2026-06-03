@@ -12,9 +12,9 @@ metadata:
 
 Natural **text-to-speech** with style control via a director **`prompt`** and inline **`[tags]`** in the spoken text. Not a Pruna P-model — runs on [Replicate](https://replicate.com/google/gemini-3.1-flash-tts).
 
-**Typical downstream (preferred):** upload MP3/WAV to Pruna `/v1/files` → pass as **`input.audio`** with **`input.image`** and **`input.last_frame_image`** on [`p-video`](../../video/p-video/SKILL.md) ([scene anchor triple](../../../references/scene-anchor-triple.md)). Same upload pattern on [`p-video-avatar`](../../video/p-video-avatar/SKILL.md) for lip-sync narration.
+**Typical downstream (preferred):** upload MP3/WAV to Pruna `/v1/files` → pass as **`input.audio`** with **`input.image`** and **`input.last_frame_image`** on [`p-video`](../../video/p-video/SKILL.md) ([scene anchor triple](../../../references/video/scene-anchor-triple.md)). Same upload pattern on [`p-video-avatar`](../../video/p-video-avatar/SKILL.md) for lip-sync narration.
 
-For **narration + instrumental bed**, render video with embedded VO first, then mix bed in post — [audio-post-production.md](../../../references/audio-post-production.md).
+For **narration + instrumental bed**, render video with embedded VO first, then mix bed in post — [audio-post-production.md](../../../references/audio/audio-post-production.md).
 
 ## When to use
 
@@ -118,13 +118,25 @@ Shared client: [`replicate_api.py`](../../../guides/workflows/_shared/scripts/re
 
 | Pattern | When | Steps |
 |---------|------|-------|
-| **Per-scene VO → scene anchor triple** (**preferred**) | Story B-roll | TTS → upload → `p-video` with `image` + `last_frame_image` + `audio` — [scene-anchor-triple.md](../../../references/scene-anchor-triple.md) |
+| **Per-scene VO → scene anchor triple** (**preferred**) | Story B-roll | TTS → upload → `p-video` with `image` + `last_frame_image` + `audio` — [scene-anchor-triple.md](../../../references/video/scene-anchor-triple.md) |
 | **Per-scene VO → `p-video-avatar`** | Talking-head narration | TTS or script → upload → `p-video-avatar` with portrait + `audio` |
 | **Per-scene VO → post mux** | Fallback: silent clips already rendered | TTS per scene → concat → ffmpeg mux (may truncate long lines) |
 | **One continuous narrator track** | Single voice-over bed for whole reel | TTS full script once → mux under concat with [`launch_background_music.py`](../../../guides/workflows/_shared/scripts/launch_background_music.py)-style `amix` (narration = primary stream) |
-| **Narration + instrumental bed** | Story film with music | TTS + [stable-audio-2.5](../stable-audio-2.5/SKILL.md) bed → mix narration loud, bed quiet (~0.08–0.15) — see [audio-post-production.md](../../../references/audio-post-production.md) |
+| **Narration + instrumental bed** | Story film with music | TTS + [stable-audio-2.5](../stable-audio-2.5/SKILL.md) bed → mix narration loud, bed quiet (~0.08–0.15) — see [audio-post-production.md](../../../references/audio/audio-post-production.md) |
 
 Record **`voice`**, **`prompt`**, and **`language_code`** in the project manifest for consistency across scene regens.
+
+## Duration limit (scene anchor triple)
+
+When TTS feeds **`p-video`** as `input.audio`, clip length follows the MP3 but **cannot exceed 20 seconds** on P-API. After each scene file is downloaded:
+
+1. Run `ffprobe` (or [`probe_media_duration_seconds`](../../../guides/workflows/_shared/scripts/p_video_payload.py)) on the MP3.
+2. Keep each line **≤ ~19 seconds** — shorten copy or split into two scenes if over.
+3. Upload to Pruna and pass as `input.audio` with `image` + `last_frame_image`; omit `duration`.
+
+Truncated narration mid-sentence usually means the line exceeded the cap, not that audio was omitted from the prediction.
+
+**If `ffprobe` > ~19s:** shorten the `text` first; if still long, add *brisk pace, ~2.3 words per second, no filler* to `style_prompt` and regenerate; if two beats remain, split into two scenes in the plan (separate TTS files).
 
 ## Plan JSON (`narration`)
 
@@ -150,9 +162,9 @@ Record **`voice`**, **`prompt`**, and **`language_code`** in the project manifes
 
 ## Related
 
-- [scene-anchor-triple.md](../../../references/scene-anchor-triple.md) — **`image` + `last_frame_image` + `audio`** per scene
-- [audio-post-production.md](../../../references/audio-post-production.md) — narration + bed layering
-- [multi-scene-ai-video](../../../guides/workflows/multi-scene-ai-video/SKILL.md) — scene table + assembly
+- [scene-anchor-triple.md](../../../references/video/scene-anchor-triple.md) — **`image` + `last_frame_image` + `audio`** per scene
+- [audio-post-production.md](../../../references/audio/audio-post-production.md) — narration + bed layering
+- [multi-scene-ai-video](../../../guides/workflows/core/narrated-multi-scene/SKILL.md) — scene table + assembly
 - [stable-audio-2.5](../stable-audio-2.5/SKILL.md) — instrumental beds
 - [music-2.5](../music-2.5/SKILL.md) — full songs with vocals
-- [replicate-api.md](../../../references/replicate-api.md)
+- [replicate-api.md](../../../references/shared/replicate-api.md)

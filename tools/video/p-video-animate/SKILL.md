@@ -17,7 +17,7 @@ Given a reference input image and video, the model generates a new video using *
 
 Also on Replicate: [prunaai/p-video-animate](https://replicate.com/prunaai/p-video-animate). Full P-API parameters: [p-video-animate model docs](https://docs.api.pruna.ai/guides/models/p-video-animate).
 
-Shared HTTP patterns: [references/pruna-api.md](../../../references/pruna-api.md)
+Shared HTTP patterns: [references/shared/pruna-api.md](../../../references/shared/pruna-api.md)
 
 ## p-video-animate vs p-video-replace
 
@@ -54,9 +54,9 @@ Confirm with the user:
 - Optional **`instruction_prompt`** — how the reference subject should follow the source motion
 - Optional **`save_audio`**, **`seed`**, **`disable_safety_checker`**
 
-Run [p-video-animate-quality-checklist.md](../../../references/p-video-animate-quality-checklist.md) on inputs and outputs.
+Run [p-video-animate-quality-checklist.md](../../../references/video/p-video-animate-quality-checklist.md) on inputs and outputs.
 
-**Batch runs:** when several image+video pairs are independent, create **all** predictions in one parallel async batch, then batch-poll. See [parallel-execution.md](../../../references/parallel-execution.md).
+**Batch runs:** when several image+video pairs are independent, create **all** predictions in one parallel async batch, then batch-poll. See [parallel-execution.md](../../../references/shared/parallel-execution.md).
 
 ## Making motion transfer work
 
@@ -80,7 +80,7 @@ Animate the reference subject using the exact motion, timing, and camera movemen
 
 **Style variety:** photoreal, 3D, claymation, and anime/game personas can share one motion template when framing aligns — useful for slider demos showing range.
 
-Mixed-reel context (motion templates, sliders, avatar CTA): [animate-beats.md](../../../guides/workflows/multi-scene-avatar-video/animate-beats.md).
+Mixed-reel context (motion templates, sliders, avatar CTA): [animate-beats.md](../../../guides/workflows/core/avatar-multi-scene/animate-beats.md).
 
 ## Required input
 
@@ -130,7 +130,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-Poll and download: [pruna-api.md](../../../references/pruna-api.md#poll).
+Poll and download: [pruna-api.md](../../../references/shared/pruna-api.md#poll).
 
 ## Example: sync (single quick test only)
 
@@ -153,9 +153,9 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 - Generate or edit reference subjects: [p-image](../../image/p-image/SKILL.md), [p-image-edit](../../image/p-image-edit/SKILL.md)
 - Replace people in existing footage (not motion transfer): [p-video-replace](../p-video-replace/SKILL.md)
 - Talking-head clips (script-driven, not motion transfer): [p-video-avatar](../p-video-avatar/SKILL.md)
-- Pipeline hub: [pruna-generative-pipeline](../../../guides/workflows/pruna-generative-pipeline/SKILL.md)
-- Multi-scene motion transfer + slider demos: [multi-scene-avatar-video](../../../guides/workflows/multi-scene-avatar-video/SKILL.md) (`animate` rows)
+- Pipeline hub: [pruna-generative-pipeline](../../../guides/workflows/router/pruna-generative-pipeline/SKILL.md)
+- Multi-scene motion transfer + slider demos: [multi-scene-avatar-video](../../../guides/workflows/core/avatar-multi-scene/SKILL.md) (`animate` rows)
 
 ## Related workflow
 
-Animate slider reels: [p-video-animate-comparison](../../../guides/workflows/p-video-animate-comparison/SKILL.md) — bundled `run_from_plan.py` and `generate_video_comparison.py` (not in this tool skill).
+Animate slider reels: [p-video-animate-comparison](../../../guides/workflows/launches/p-video-animate-comparison/SKILL.md) — bundled `run_from_plan.py` and `generate_video_comparison.py` (not in this tool skill).

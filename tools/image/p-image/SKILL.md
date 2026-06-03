@@ -11,7 +11,7 @@ metadata:
 
 Ultra-fast text-to-image via Pruna. Full parameters: [p-image model docs](https://docs.api.pruna.ai/guides/models/p-image).
 
-Shared HTTP patterns: [references/pruna-api.md](../../references/pruna-api.md) (upload, [poll](#poll), [download](#download))
+Shared HTTP patterns: [references/shared/pruna-api.md](../../references/shared/pruna-api.md) (upload, [poll](#poll), [download](#download))
 
 ## HTTP (curl)
 
@@ -31,7 +31,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-Poll and download: [pruna-api.md](../../references/pruna-api.md#poll).
+Poll and download: [pruna-api.md](../../references/shared/pruna-api.md#poll).
 
 ### Create (sync — quick test only)
 
@@ -46,7 +46,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 
 ## Before generating
 
-Confirm **`prompt`**, **`aspect_ratio`**, and **`seed`** with the user. Run [p-image-quality-checklist.md](../../../references/p-image-quality-checklist.md) on outputs before downstream steps.
+Confirm **`prompt`**, **`aspect_ratio`**, and **`seed`** with the user. Run [p-image-quality-checklist.md](../../../references/image/p-image-quality-checklist.md) on outputs before downstream steps.
 
 ## Required input
 
@@ -63,16 +63,16 @@ Confirm **`prompt`**, **`aspect_ratio`**, and **`seed`** with the user. Run [p-i
 
 ## Example: asynchronous (batch / multi-panel)
 
-Omit `Try-Sync`. For N panels with no shared dependency, **POST all jobs in parallel**, then poll every `get_url`. See [parallel-execution.md](../../../references/parallel-execution.md).
+Omit `Try-Sync`. For N panels with no shared dependency, **POST all jobs in parallel**, then poll every `get_url`. See [parallel-execution.md](../../../references/shared/parallel-execution.md).
 
 ## Typical next steps
 
 - Refine or composite: [p-image-edit](../p-image-edit/SKILL.md)
 - Upscale output: [p-image-upscale](../p-image-upscale/SKILL.md)
-- Animate still: [p-video](../../video/p-video/SKILL.md) — prefer [scene anchor triple](../../../references/scene-anchor-triple.md) (`image` + `last_frame_image` + `audio`) for narrated beats; or [p-video-avatar](../../video/p-video-avatar/SKILL.md) for talking head
-- Scripted workflows (intake first): [single-scene-avatar-video](../../../guides/workflows/single-scene-avatar-video/SKILL.md), [multi-scene-avatar-video](../../../guides/workflows/multi-scene-avatar-video/SKILL.md)
-- Full pipeline: [pruna-generative-pipeline](../../../guides/workflows/pruna-generative-pipeline/SKILL.md)
+- Animate still: [p-video](../../video/p-video/SKILL.md) — prefer [scene anchor triple](../../../references/video/scene-anchor-triple.md) (`image` + `last_frame_image` + `audio`) for narrated beats; or [p-video-avatar](../../video/p-video-avatar/SKILL.md) for talking head
+- Scripted workflows (intake first): [single-scene-avatar-video](../../../guides/workflows/core/avatar-single-scene/SKILL.md), [multi-scene-avatar-video](../../../guides/workflows/core/avatar-multi-scene/SKILL.md)
+- Full pipeline: [pruna-generative-pipeline](../../../guides/workflows/router/pruna-generative-pipeline/SKILL.md)
 
 ## Related workflow
 
-Replace / comparison reels: [p-video-replace-comparison](../../../guides/workflows/p-video-replace-comparison/SKILL.md) · avatar + animate reels: [multi-scene-avatar-video](../../../guides/workflows/multi-scene-avatar-video/SKILL.md) — bundled scripts live in workflow skills, not here.
+Replace / comparison reels: [p-video-replace-comparison](../../../guides/workflows/launches/p-video-replace-comparison/SKILL.md) · avatar + animate reels: [multi-scene-avatar-video](../../../guides/workflows/core/avatar-multi-scene/SKILL.md) — bundled scripts live in workflow skills, not here.

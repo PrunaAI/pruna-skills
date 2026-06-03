@@ -11,7 +11,7 @@ metadata:
 
 Premium edit and multi-image composition. Full parameters: [p-image-edit model docs](https://docs.api.pruna.ai/guides/models/p-image-edit).
 
-Shared HTTP patterns: [references/pruna-api.md](../../references/pruna-api.md) (upload, [poll](#poll), [download](#download))
+Shared HTTP patterns: [references/shared/pruna-api.md](../../references/shared/pruna-api.md) (upload, [poll](#poll), [download](#download))
 
 ## HTTP (curl)
 
@@ -41,15 +41,17 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-Poll and download: [pruna-api.md](../../references/pruna-api.md#poll).
+Poll and download: [pruna-api.md](../../references/shared/pruna-api.md#poll).
 
 ## Before generating
 
-Confirm **`prompt`**, which **reference files** to upload (1–5), **`aspect_ratio`**, and **`turbo`** on/off with the user. Run [p-image-edit-quality-checklist.md](../../../references/p-image-edit-quality-checklist.md) on outputs.
+Confirm **`prompt`**, which **reference files** to upload (1–5), **`aspect_ratio`**, and **`turbo`** on/off with the user. Run [p-image-edit-quality-checklist.md](../../../references/image/p-image-edit-quality-checklist.md) on outputs.
 
-**Avatar pipelines:** edit from the locked **upscaled** hero URL. Chain: **`p-image-edit` → `p-image-upscale` → slop gate → `p-video-avatar`**. Never pass raw edit URLs to video models. See [multi-scene-avatar-video](../../../guides/workflows/multi-scene-avatar-video/SKILL.md).
+**Avatar pipelines:** edit from the locked **upscaled** hero URL. Chain: **`p-image-edit` → `p-image-upscale` → slop gate → `p-video-avatar`**. Never pass raw edit URLs to video models. See [multi-scene-avatar-video](../../../guides/workflows/core/avatar-multi-scene/SKILL.md).
 
-**Multi-scene narrated films:** generate **start still** (`edit_prompt`) and **end still** (`last_frame_edit_prompt`) per scene for the [scene anchor triple](../../../references/scene-anchor-triple.md). Run all scene edits **in parallel** after the hero anchor exists ([parallel-execution.md](../../../references/parallel-execution.md)). See [multi-scene-ai-video](../../../guides/workflows/multi-scene-ai-video/SKILL.md).
+**Multi-scene narrated films:** generate **start still** (`edit_prompt`) and **end still** (`last_frame_edit_prompt`) per scene for the [scene anchor triple](../../../references/video/scene-anchor-triple.md). Run all scene edits **in parallel** after the hero anchor exists ([parallel-execution.md](../../../references/shared/parallel-execution.md)). See [multi-scene-ai-video](../../../guides/workflows/core/narrated-multi-scene/SKILL.md).
+
+**Visual transition reels:** same start/end still pattern for the [scene anchor pair](../../../references/video/scene-anchor-pair.md) — see [scene-transition-video](../../../guides/workflows/core/visual-transition-reel/SKILL.md).
 
 ## Prerequisites
 
@@ -86,9 +88,9 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 ## Typical next steps
 
 - Upscale for delivery: [p-image-upscale](../p-image-upscale/SKILL.md)
-- Motion: [p-video](../../video/p-video/SKILL.md) with [scene anchor triple](../../../references/scene-anchor-triple.md) or [p-video-avatar](../../video/p-video-avatar/SKILL.md)
-- Pipeline: [pruna-generative-pipeline](../../../guides/workflows/pruna-generative-pipeline/SKILL.md)
+- Motion: [p-video](../../video/p-video/SKILL.md) with [scene anchor pair](../../../references/video/scene-anchor-pair.md), [scene anchor triple](../../../references/video/scene-anchor-triple.md), or [p-video-avatar](../../video/p-video-avatar/SKILL.md)
+- Pipeline: [pruna-generative-pipeline](../../../guides/workflows/router/pruna-generative-pipeline/SKILL.md)
 
 ## Related workflow
 
-Multi-scene avatar + animate reels: [multi-scene-avatar-video](../../../guides/workflows/multi-scene-avatar-video/SKILL.md) — phased curl or local slider script (not in this tool skill).
+Multi-scene avatar + animate reels: [multi-scene-avatar-video](../../../guides/workflows/core/avatar-multi-scene/SKILL.md) — phased curl or local slider script (not in this tool skill).

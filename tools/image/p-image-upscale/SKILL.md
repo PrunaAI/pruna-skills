@@ -11,7 +11,7 @@ metadata:
 
 AI upscaling with configurable target resolution. Full parameters: [p-image-upscale model docs](https://docs.api.pruna.ai/guides/models/p-image-upscale).
 
-Shared HTTP patterns: [references/pruna-api.md](../../references/pruna-api.md) (upload, [poll](#poll), [download](#download))
+Shared HTTP patterns: [references/shared/pruna-api.md](../../references/shared/pruna-api.md) (upload, [poll](#poll), [download](#download))
 
 ## HTTP (curl)
 
@@ -42,21 +42,21 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-Poll and download: [pruna-api.md](../../references/pruna-api.md#poll).
+Poll and download: [pruna-api.md](../../references/shared/pruna-api.md#poll).
 
 ## Before generating
 
-Confirm **`target`** MP (1–**128**), **`enhance_details`** / **`enhance_realism`**, and **`output_format`** with the user so upscale matches destination. Validate outputs with [p-image-upscale-quality-checklist.md](../../../references/p-image-upscale-quality-checklist.md).
+Confirm **`target`** MP (1–**128**), **`enhance_details`** / **`enhance_realism`**, and **`output_format`** with the user so upscale matches destination. Validate outputs with [p-image-upscale-quality-checklist.md](../../../references/image/p-image-upscale-quality-checklist.md).
 
 ## When to upscale
 
 | Use case | Typical `target` MP | Notes |
 |----------|---------------------|--------|
 | Print / billboard / extreme crop | **8–128** | Confirm cost/latency with user |
-| Mood board / packshot enlargement | **4–16** | Optional in [pruna-generative-pipeline](../../../guides/workflows/pruna-generative-pipeline/SKILL.md) recipes A/B/C |
-| Before/after marketing reel | pair with [p-image-upscale-comparison](../../../guides/workflows/p-image-upscale-comparison/SKILL.md) | Not used in avatar or motion-transfer pipelines |
+| Mood board / packshot enlargement | **4–16** | Optional in [pruna-generative-pipeline](../../../guides/workflows/router/pruna-generative-pipeline/SKILL.md) recipes A/B/C |
+| Before/after marketing reel | pair with [p-image-upscale-comparison](../../../guides/workflows/launches/p-image-upscale-comparison/SKILL.md) | Not used in avatar or motion-transfer pipelines |
 
-**Video workflows** ([multi-scene-avatar-video](../../../guides/workflows/multi-scene-avatar-video/SKILL.md), [p-video-animate](../../../tools/video/p-video-animate/SKILL.md), [p-video-replace](../../../tools/video/p-video-replace/SKILL.md)) feed **`p-image`** / **`p-image-edit`** outputs directly into video models after the slop gate—do **not** add an upscale step unless the user explicitly asks for print-scale stills.
+**Video workflows** ([multi-scene-avatar-video](../../../guides/workflows/core/avatar-multi-scene/SKILL.md), [p-video-animate](../../../tools/video/p-video-animate/SKILL.md), [p-video-replace](../../../tools/video/p-video-replace/SKILL.md)) feed **`p-image`** / **`p-image-edit`** outputs directly into video models after the slop gate—do **not** add an upscale step unless the user explicitly asks for print-scale stills.
 
 Recommended defaults: `enhance_details: true`, `enhance_realism: false`. Use `enhance_realism: true` only when the source is already photoreal and you need extra skin texture—it can add waxy artifacts on synthetic edits.
 
@@ -98,9 +98,9 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 ## Typical next steps
 
 - Further edit: upscaled URL → [p-image-edit](../p-image-edit/SKILL.md) for layout or copy-safe tweaks.
-- **Marketing demo:** before/after zoom + slider video from any still pair → [p-image-upscale-comparison](../../../guides/workflows/p-image-upscale-comparison/SKILL.md) + [`generate_upscale_comparison.py`](../../../guides/workflows/_shared/scripts/generate_upscale_comparison.py).
-- Avatar / motion video (no upscale): [multi-scene-avatar-video](../../../guides/workflows/multi-scene-avatar-video/SKILL.md).
+- **Marketing demo:** before/after zoom + slider video from any still pair → [p-image-upscale-comparison](../../../guides/workflows/launches/p-image-upscale-comparison/SKILL.md) + [`generate_upscale_comparison.py`](../../../guides/workflows/_shared/scripts/generate_upscale_comparison.py).
+- Avatar / motion video (no upscale): [multi-scene-avatar-video](../../../guides/workflows/core/avatar-multi-scene/SKILL.md).
 
 ## Related workflow
 
-Upscale comparison reels: [p-image-upscale-comparison](../../../guides/workflows/p-image-upscale-comparison/SKILL.md) — bundled `generate_upscale_comparison.py` (not in this tool skill).
+Upscale comparison reels: [p-image-upscale-comparison](../../../guides/workflows/launches/p-image-upscale-comparison/SKILL.md) — bundled `generate_upscale_comparison.py` (not in this tool skill).

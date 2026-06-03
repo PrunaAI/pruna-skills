@@ -2,7 +2,7 @@
 
 Premium video: text-to-video, image-to-video, **scene anchor triple** (`image` + `last_frame_image` + `audio`), optional draft mode.
 
-See [scene-anchor-triple.md](../../references/scene-anchor-triple.md) for narrated multi-scene films.
+See [scene-anchor-triple.md](../../references/video/scene-anchor-triple.md) for narrated multi-scene films.
 
 ## Install
 

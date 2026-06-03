@@ -15,7 +15,7 @@ Given a source video and reference images plus a clear **`instruction_prompt`**,
 
 Full P-API parameters: [p-video-replace model docs](https://docs.api.pruna.ai/guides/models/p-video-replace).
 
-Shared HTTP patterns: [references/pruna-api.md](../../../references/pruna-api.md)
+Shared HTTP patterns: [references/shared/pruna-api.md](../../../references/shared/pruna-api.md)
 
 ## p-video-replace vs p-video-animate
 
@@ -51,7 +51,7 @@ Pick the model from what the user is trying to do — these are different jobs.
 
 **Anti-pattern:** Generic lines like *"Replace the person in the video"* without naming **what** in the source and **what** from each reference. Identity comes from **`images`**; correct **slot mapping** comes from **`instruction_prompt`**.
 
-**Launch / showcase reels:** Prefer **`multi_job`** (one image per API call) with per-reference prompts; default **`p-video-avatar`** sources (product in hand, desk prop, solo talking head). See [p-video-replace-comparison](../../../guides/workflows/p-video-replace-comparison/SKILL.md) and [replace-beats.md](../../../guides/workflows/p-video-replace-comparison/replace-beats.md) for production-tested scene patterns and anti-patterns (I2V shelf, two-shot cafe, flat-lay-only clothing refs).
+**Launch / launch reels:** Prefer **`multi_job`** (one image per API call) with per-reference prompts; default **`p-video-avatar`** sources (product in hand, desk prop, solo talking head). See [p-video-replace-comparison](../../../guides/workflows/launches/p-video-replace-comparison/SKILL.md) and [replace-beats.md](../../../guides/workflows/launches/p-video-replace-comparison/replace-beats.md) for production-tested scene patterns and anti-patterns (I2V shelf, two-shot cafe, flat-lay-only clothing refs).
 
 ## Before generating
 
@@ -65,9 +65,9 @@ Confirm with the user:
 - **Swap intent** — character vs clothing-only vs object vs mixed (decide before writing the prompt)
 - Optional **`save_audio`**, **`seed`**, **`disable_safety_checker`**
 
-Run [p-video-replace-quality-checklist.md](../../../references/p-video-replace-quality-checklist.md) on inputs and outputs.
+Run [p-video-replace-quality-checklist.md](../../../references/video/p-video-replace-quality-checklist.md) on inputs and outputs.
 
-**Batch runs:** when several independent source videos each need replacement, create **all** predictions in one parallel async batch, then batch-poll. See [parallel-execution.md](../../../references/parallel-execution.md).
+**Batch runs:** when several independent source videos each need replacement, create **all** predictions in one parallel async batch, then batch-poll. See [parallel-execution.md](../../../references/shared/parallel-execution.md).
 
 ## Making replacement work
 
@@ -166,7 +166,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-Poll and download: [pruna-api.md](../../../references/pruna-api.md#poll).
+Poll and download: [pruna-api.md](../../../references/shared/pruna-api.md#poll).
 
 ## Example: sync (single quick test only)
 
@@ -191,9 +191,9 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 - Motion-transfer from a still (different model): [p-video-animate](../p-video-animate/SKILL.md)
 - Generate or edit reference portraits: [p-image](../../image/p-image/SKILL.md), [p-image-edit](../../image/p-image-edit/SKILL.md)
 - New talking-head clip from script (not in-place replacement): [p-video-avatar](../p-video-avatar/SKILL.md)
-- Multi-scene slider demos: [p-video-replace-comparison](../../../guides/workflows/p-video-replace-comparison/SKILL.md)
-- Pipeline hub: [pruna-generative-pipeline](../../../guides/workflows/pruna-generative-pipeline/SKILL.md)
+- Multi-scene slider demos: [p-video-replace-comparison](../../../guides/workflows/launches/p-video-replace-comparison/SKILL.md)
+- Pipeline hub: [pruna-generative-pipeline](../../../guides/workflows/router/pruna-generative-pipeline/SKILL.md)
 
 ## Related workflow
 
-Slider reels and plan runners: [p-video-replace-comparison](../../../guides/workflows/p-video-replace-comparison/SKILL.md) — bundled `run_from_plan.py` and `generate_video_comparison.py` (not in this tool skill).
+Slider reels and plan runners: [p-video-replace-comparison](../../../guides/workflows/launches/p-video-replace-comparison/SKILL.md) — bundled `run_from_plan.py` and `generate_video_comparison.py` (not in this tool skill).

@@ -7,6 +7,17 @@ SKILL="${1:?Usage: install_skill.sh <skill-name> [--target DIR] [--with-examples
 TARGET="${HOME}/.cursor/skills"
 WITH_EXAMPLES=0
 
+# Legacy folder names → new paths under core/ or verticals/
+case "${SKILL}" in
+  single-scene-ai-video) SKILL=image-to-video ;;
+  multi-scene-ai-video) SKILL=narrated-multi-scene ;;
+  scene-transition-video) SKILL=visual-transition-reel ;;
+  single-scene-avatar-video) SKILL=avatar-single-scene ;;
+  multi-scene-avatar-video) SKILL=avatar-multi-scene ;;
+  educational-explainer|documentary-explainer) SKILL=interactive-explainer ;;
+  ai-music-video) SKILL=music-video ;;
+esac
+
 shift
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -16,10 +27,20 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-SKILL_SRC="${REPO_ROOT}/guides/workflows/${SKILL}"
+SKILL_SRC=""
+for base in \
+  "${REPO_ROOT}/guides/workflows/router" \
+  "${REPO_ROOT}/guides/workflows/core" \
+  "${REPO_ROOT}/guides/workflows/verticals" \
+  "${REPO_ROOT}/guides/workflows/launches"; do
+  if [[ -f "${base}/${SKILL}/SKILL.md" ]]; then
+    SKILL_SRC="${base}/${SKILL}"
+    break
+  fi
+done
 MANIFEST="${SKILL_SRC}/skill.manifest.json"
-if [[ ! -f "${SKILL_SRC}/SKILL.md" ]]; then
-  echo "Skill not found: ${SKILL_SRC}/SKILL.md" >&2
+if [[ -z "${SKILL_SRC}" || ! -f "${SKILL_SRC}/SKILL.md" ]]; then
+  echo "Skill not found: ${SKILL} (searched router/, core/, verticals/, launches/)" >&2
   exit 1
 fi
 if [[ ! -f "${MANIFEST}" ]]; then
@@ -40,8 +61,17 @@ done
 if [[ -d "${SKILL_SRC}/templates" ]]; then
   cp -R "${SKILL_SRC}/templates/." "${DEST}/templates/"
 fi
-EXAMPLES="${REPO_ROOT}/examples/workflows/${SKILL}"
-if [[ -d "${EXAMPLES}" ]]; then
+EXAMPLES=""
+for ex_base in \
+  "${REPO_ROOT}/examples/workflows/core" \
+  "${REPO_ROOT}/examples/workflows/verticals" \
+  "${REPO_ROOT}/examples/workflows/launches"; do
+  if [[ -d "${ex_base}/${SKILL}" ]]; then
+    EXAMPLES="${ex_base}/${SKILL}"
+    break
+  fi
+done
+if [[ -n "${EXAMPLES}" ]]; then
   for f in "${EXAMPLES}"/*.json "${EXAMPLES}"/*.md; do
     [[ -f "$f" ]] || continue
     case "$(basename "$f")" in
@@ -51,19 +81,25 @@ if [[ -d "${EXAMPLES}" ]]; then
   done
 fi
 
-# References from manifest
+# References from manifest (search references/{shared,image,video,audio,workflows}/)
 python3 - <<PY
 import json, shutil
 from pathlib import Path
 repo = Path("${REPO_ROOT}")
 dest = Path("${DEST}")
+refs_root = repo / "references"
 manifest = json.loads(Path("${MANIFEST}").read_text())
 for name in manifest.get("references", []):
-    src = repo / "references" / name
-    if src.exists():
-        shutil.copy2(src, dest / "references" / name)
+    src = refs_root / name
+    if not src.exists():
+        matches = [p for p in refs_root.rglob(Path(name).name) if p.is_file()]
+        src = matches[0] if matches else None
+    if src and src.is_file():
+        out = dest / "references" / src.name
+        out.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src, out)
     else:
-        print(f"warn: missing reference {src}")
+        print(f"warn: missing reference {name}")
 PY
 
 # Scripts: skill scripts/ + shared from manifest

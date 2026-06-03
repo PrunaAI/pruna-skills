@@ -19,7 +19,7 @@ Text-to-music for **instrumental background beds** on launch reels. Not a Pruna 
 | Goal | Use this |
 |------|----------|
 | Light instrumental under a concat launch reel | Yes — after final assembly |
-| Under **embedded narration** from scene anchor triple | Yes — mix quiet bed after concat — [audio-post-production.md](../../../references/audio-post-production.md) |
+| Under **embedded narration** from scene anchor triple | Yes — mix quiet bed after concat — [audio-post-production.md](../../../references/audio/audio-post-production.md) |
 | Replace avatar VO | No — bed mixes **under** existing dialogue |
 | Pruna-native audio | No — use [`p-video`](../../video/p-video/SKILL.md) audio input instead |
 
@@ -80,9 +80,9 @@ Poll `urls.get` until `status` is `succeeded`; download `output` MP3.
 ### Replace workflow runner (after concat)
 
 ```bash
-python3 guides/workflows/p-video-replace-comparison/scripts/run_from_plan.py \
-  --plan output/skills-library-announcement/announcement_plan.json \
-  --out-dir output/skills-library-announcement \
+python3 guides/workflows/launches/p-video-replace-comparison/scripts/run_from_plan.py \
+  --plan output/launches/skills-library-announcement/announcement_plan.json \
+  --out-dir output/launches/skills-library-announcement \
   --phase all --background-music
 ```
 
@@ -90,7 +90,7 @@ Or standalone on any MP4:
 
 ```bash
 python3 guides/workflows/_shared/scripts/launch_background_music.py \
-  --video output/skills-library-announcement/p_video_replace_announcement.mp4 \
+  --video output/launches/skills-library-announcement/p_video_replace_announcement.mp4 \
   --volume 0.12
 ```
 
@@ -105,7 +105,7 @@ python3 guides/workflows/_shared/scripts/launch_background_music.py \
 
 ## Related
 
-- [audio-post-production.md](../../../references/audio-post-production.md) — narration + bed layering
+- [audio-post-production.md](../../../references/audio/audio-post-production.md) — narration + bed layering
 - [gemini-3.1-flash-tts](../gemini-3.1-flash-tts/SKILL.md) — narration voiceover
-- [p-video-replace-comparison](../../../guides/workflows/p-video-replace-comparison/SKILL.md) — final assembly phase
-- [replicate-api.md](../../../references/replicate-api.md) — shared Replicate patterns
+- [p-video-replace-comparison](../../../guides/workflows/launches/p-video-replace-comparison/SKILL.md) — final assembly phase
+- [replicate-api.md](../../../references/shared/replicate-api.md) — shared Replicate patterns
