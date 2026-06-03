@@ -1,4 +1,4 @@
-"""Minimal Pruna P-API client helpers (stdlib only)."""
+"""Pruna P-API client helpers backed by the official pruna_client SDK."""
 
 from __future__ import annotations
 
@@ -6,27 +6,29 @@ import json
 import os
 import sys
 import time
-import urllib.error
-import urllib.request
 from pathlib import Path
+from typing import Any
+
+_REPO_ROOT = Path(__file__).resolve().parents[4]
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
+
+from pruna_client import PrunaClient
+from pruna_client.models import PredictionStatus, Response
 
 
-def api_request(
-    method: str,
-    url: str,
-    *,
-    headers: dict[str, str] | None = None,
-    data: bytes | None = None,
-) -> tuple[int, str]:
-    request = urllib.request.Request(url, data=data, method=method)
-    for key, value in (headers or {}).items():
-        request.add_header(key, value)
-    try:
-        with urllib.request.urlopen(request, timeout=300) as response:
-            return response.status, response.read().decode("utf-8")
-    except urllib.error.HTTPError as error:
-        body = error.read().decode("utf-8", errors="replace")
-        raise RuntimeError(f"{method} {url} failed ({error.code}): {body}") from error
+def _client(api_key: str) -> PrunaClient:
+    return PrunaClient(api_key=api_key)
+
+
+def _response_to_dict(response: Response) -> dict[str, Any]:
+    data: dict[str, Any] = (
+        dict(response.response) if isinstance(response.response, dict) else {}
+    )
+    data.setdefault("status", response.status.value)
+    if response.id:
+        data.setdefault("id", response.id)
+    return data
 
 
 def require_api_key() -> str:
@@ -37,73 +39,52 @@ def require_api_key() -> str:
 
 
 def upload_file(path: Path, api_key: str) -> str:
-    boundary = f"----pruna-{int(time.time() * 1000)}"
-    body = (
-        f"--{boundary}\r\n"
-        f'Content-Disposition: form-data; name="content"; filename="{path.name}"\r\n'
-        f"Content-Type: application/octet-stream\r\n\r\n"
-    ).encode("utf-8")
-    body += path.read_bytes()
-    body += f"\r\n--{boundary}--\r\n".encode("utf-8")
-    status, payload = api_request(
-        "POST",
-        "https://api.pruna.ai/v1/files",
-        headers={
-            "apikey": api_key,
-            "Content-Type": f"multipart/form-data; boundary={boundary}",
-        },
-        data=body,
-    )
-    if status >= 400:
-        raise RuntimeError(f"Upload failed ({status}): {payload}")
-    return json.loads(payload)["urls"]["get"]
+    client = _client(api_key)
+    try:
+        url = client.upload_file(path)
+        if not url:
+            raise RuntimeError(f"Upload failed for {path}")
+        return url
+    finally:
+        client.close()
 
 
 def create_prediction(model: str, input_payload: dict, api_key: str) -> dict:
-    status, payload = api_request(
-        "POST",
-        "https://api.pruna.ai/v1/predictions",
-        headers={
-            "Content-Type": "application/json",
-            "apikey": api_key,
-            "Model": model,
-        },
-        data=json.dumps({"input": input_payload}).encode("utf-8"),
-    )
-    if status >= 400:
-        raise RuntimeError(f"{model} create failed ({status}): {payload}")
-    return json.loads(payload)
+    client = _client(api_key)
+    try:
+        response = client.generate(model=model, input=input_payload, sync=False)
+        if response.status == PredictionStatus.FAILED:
+            raise RuntimeError(
+                f"{model} create failed: {json.dumps(_response_to_dict(response))}"
+            )
+        return _response_to_dict(response)
+    finally:
+        client.close()
 
 
 def poll_prediction(get_url: str, api_key: str, *, label: str, timeout_seconds: int = 3600) -> dict:
-    deadline = time.time() + timeout_seconds
-    last_state = ""
-    while time.time() < deadline:
-        status, payload = api_request("GET", get_url, headers={"apikey": api_key})
-        if status >= 400:
-            raise RuntimeError(f"Poll failed ({status}): {payload}")
-        data = json.loads(payload)
-        state = data.get("status", "unknown")
-        if state != last_state:
-            print(f"{label}: {state}...")
-            sys.stdout.flush()
-            last_state = state
-        if state == "succeeded":
-            return data
-        if state == "failed":
-            raise RuntimeError(f"{label} failed: {payload}")
-        time.sleep(8)
-    raise TimeoutError(f"{label} timed out after {timeout_seconds}s")
+    client = _client(api_key)
+    try:
+        os.environ.setdefault("DEFAULT_PRUNA_MAX_WAIT", str(timeout_seconds))
+        response = client.poll_status(status_url=get_url)
+        if response.status == PredictionStatus.FAILED:
+            raise RuntimeError(f"{label} failed: {json.dumps(_response_to_dict(response))}")
+        if response.status != PredictionStatus.SUCCEEDED:
+            raise TimeoutError(f"{label} timed out or ended in {response.status.value}")
+        return _response_to_dict(response)
+    finally:
+        client.close()
 
 
 def download_file(url: str, destination: Path, api_key: str) -> None:
     if not url.startswith("http"):
         url = f"https://api.pruna.ai{url}"
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    request = urllib.request.Request(url, method="GET")
-    request.add_header("apikey", api_key)
-    with urllib.request.urlopen(request, timeout=600) as response:
-        destination.write_bytes(response.read())
+    client = _client(api_key)
+    try:
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_bytes(client.download_content(url))
+    finally:
+        client.close()
 
 
 def run_prediction(

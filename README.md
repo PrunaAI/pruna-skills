@@ -7,6 +7,13 @@ Skills follow the [Agent Skills](https://agentskills.io/specification) layout so
 ## Layout (as implemented)
 
 ```text
+pyproject.toml          # uv project — dependency: pruna-client (PyPI)
+uv.lock                 # Lockfile (uv sync)
+scripts/
+  pruna.py              # CLI: image, edit, upscale, video, avatar, animate, replace
+  pruna_run.py          # Fast auto-route entrypoint
+  pruna_batch.py        # Parallel batch from JSON
+  pruna_sdk/            # Helpers + model registry
 references/
   pruna-api.md          # Auth, endpoints, sync/async, uploads
   parallel-execution.md # Async parallel batches, phased deps, subagent splits
@@ -110,6 +117,38 @@ python3 guides/workflows/p-image-upscale-comparison/scripts/generate_upscale_com
 ```
 
 For scenario routing, use the [pruna-run](guides/workflows/pruna-run/SKILL.md) and [pruna-generative-pipeline](guides/workflows/pruna-generative-pipeline/SKILL.md) workflow skills in Cursor.
+
+## Python SDK (`pruna_client`)
+
+This repo vendors the official **[pruna-client](https://pypi.org/project/pruna-client/)** package (same API as `https://github.com/PrunaAI/pruna_client`). Requires **Python 3.11+**.
+
+```bash
+cd pruna-ai-content-generation-skills
+export PRUNA_API_KEY="your_key"
+
+# Recommended (Python 3.11+ via uv)
+uv add pruna-client   # already in pyproject.toml — use: uv sync
+uv run python scripts/pruna.py list
+
+# Text-to-image
+python3 scripts/pruna.py image --prompt "Product hero, studio lighting" --out output/hero.jpg
+
+# Talking avatar chain (still → p-video-avatar)
+python3 scripts/pruna_run.py --route avatar \
+  --prompt "Friendly founder portrait, soft key light" \
+  --voice-script "Hi — quick look at our launch."
+
+# Any model from JSON input
+python3 scripts/pruna.py generate --model p-video-replace \
+  --input-json my_input.json --out output/replace.mp4 --async
+
+# Parallel batch (async)
+python3 scripts/pruna_batch.py --batch examples/sdk/batch.example.json --out-dir output/batch
+```
+
+Workflow runners under `guides/workflows/*/scripts/` use the same SDK via `guides/workflows/_shared/scripts/pruna_api.py` (backward-compatible `upload_file`, `run_prediction`, etc.).
+
+See [PRUNA_CLIENT_README.md](PRUNA_CLIENT_README.md) for full SDK docs and [examples/sdk/quickstart.py](examples/sdk/quickstart.py).
 
 ## Skill format (required for installability)
 

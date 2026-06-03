@@ -24,6 +24,7 @@ Use this when the user wants immediate execution from one incoming prompt.
 
 ```bash
 export PRUNA_API_KEY="your_key"
+# From repo root (requires Python 3.11+ and pip install -e .)
 python3 scripts/pruna_run.py --prompt "launch teaser for our new product"
 ```
 

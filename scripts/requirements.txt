@@ -1,0 +1,5 @@
+# Official Pruna SDK (vendored in-repo as pruna_client/) + CLI helpers
+cachetools>=5.3.0
+httpx[http2]>=0.27.0
+pillow>=10.0.0
+rich>=13.0.0

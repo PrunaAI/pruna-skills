@@ -1,0 +1,12 @@
+[project]
+name = "pruna-ai-content-generation-skills"
+version = "0.1.0"
+description = "Agent skills and CLIs for Pruna P-API content generation"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "pruna-client>=0.0.9",
+]
+
+[tool.uv]
+package = false

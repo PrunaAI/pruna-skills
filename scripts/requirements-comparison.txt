@@ -1,1 +1,2 @@
-Pillow>=10.0.0
+# Legacy alias — use scripts/requirements.txt for full SDK deps
+-r requirements.txt
