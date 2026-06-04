@@ -1,6 +1,6 @@
 ---
-name: single-scene-ai-video
-description: Produces one Pruna p-video clip after intake—scene anchor triple (image + last_frame_image + audio), or T2V/I2V-only modes. Use for one B-roll beat, product shot in motion, or a single narrated story beat.
+name: image-to-video
+description: Use when the user needs one p-video clip, a single B-roll beat, one narrated story beat, or one scene-anchor-triple shot—not a multi-scene film or talking-head-only piece.
 metadata:
   version: "0.0.3"
 ---

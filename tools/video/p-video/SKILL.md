@@ -1,6 +1,6 @@
 ---
 name: p-video
-description: Generates video with Pruna P-API model p-video (scene anchor pair/triple—image + last_frame_image + optional audio, visual transitions, text-to-video, draft). Use when the user asks for Pruna video, p-video, smooth scene transitions between two stills, narrated story films, scene chaining, or API usage for Pruna premium video.
+description: Use when the user asks for Pruna video, p-video, transitions between two stills, narrated films, scene chaining, or scene-anchor pair/triple usage.
 license: MIT
 metadata:
   version: "0.0.3"

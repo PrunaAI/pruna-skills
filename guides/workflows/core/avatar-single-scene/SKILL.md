@@ -1,6 +1,6 @@
 ---
-name: single-scene-avatar-video
-description: One Pruna talking-head clip after intake—character sheet, locked seed, natural human voice_script and voice_prompt, source portrait via p-image or p-image-edit, explicit user confirmation before any POST /v1/predictions, then a runnable script or curl sequence to execute generation.
+name: avatar-single-scene
+description: Use when the user needs one Pruna talking-head clip, a single lip-sync portrait, one p-video-avatar beat, or one host line with approval before API calls.
 metadata:
   version: "0.0.1"
 ---

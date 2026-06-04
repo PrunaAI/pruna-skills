@@ -1,6 +1,6 @@
 ---
 name: p-video-replace
-description: Replaces people, clothing, products, or mixed slots in source video using 1–4 reference images and prompt-guided mapping with Pruna p-video-replace (preserves motion, audio, camera). Use for in-video recast, wardrobe swap, shelf SKU swap, prop/handheld product replace, or p-video-replace — NOT for animating a still from a motion template (use p-video-animate).
+description: Use when the user wants in-footage recast, wardrobe or product swap, or p-video-replace—not animating a still from a motion template.
 license: MIT
 metadata:
   version: "0.0.1"

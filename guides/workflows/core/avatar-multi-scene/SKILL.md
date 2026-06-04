@@ -1,6 +1,6 @@
 ---
-name: multi-scene-avatar-video
-description: Builds multi-scene Pruna video pieces—talking-avatar clips (p-video-avatar), motion-transfer slider beats (p-video-animate + comparison render), or mixed announcement reels—with character sheets, locked seeds, natural human voice, hero reuse via p-image-edit, alignment-aware animate prep, explicit user confirmation before any API calls, then async parallel generation per phase with subagents per scene lane where possible.
+name: avatar-multi-scene
+description: Use when the user needs multiple talking-head beats, motion-transfer slider segments, mixed avatar and animate announcement reels, or multi-scene host/UGC videos with character continuity.
 metadata:
   version: "0.0.1"
 ---
@@ -23,6 +23,16 @@ Visual continuity comes from **Pruna `p-image` / `p-image-edit`** on uploaded re
 Follow this skill in **plain language** when talking to the person requesting the video: explain cast, voices, motion templates, and scene order the way you would in a production meeting. Use **natural, speakable copy** in every `voice_script`.
 
 **Staged generation:** [staged-generation-gate.md](../../../../../references/shared/staged-generation-gate.md) · [workflow-feedback-gates.md](../../../../../references/workflows/workflow-feedback-gates.md)
+
+## Quick reference
+
+| Resource | Path |
+|----------|------|
+| Cast ledger, character sheet, voice/video prompts | [prompt-templates.md](./prompt-templates.md) |
+| Animate rows, sliders, alignment | [animate-beats.md](./animate-beats.md) |
+| Examples | [examples.md](./examples.md) |
+| Feedback discipline | [requesting-generation-feedback](../../router/requesting-generation-feedback/SKILL.md) |
+| Slider script | [`generate_video_comparison.py`](../../_shared/scripts/generate_video_comparison.py) |
 
 ## Feedback gates (required)
 
@@ -57,50 +67,17 @@ Follow this skill in **plain language** when talking to the person requesting th
 
 If anything material is unknown, **ask** before the first upload or prediction.
 
-## Cast ledger (voice lock)
+## Cast ledger & character sheet
 
-Maintain a small **cast table** in the manifest or brief:
+Maintain a **cast table** in the manifest: one Pruna **`voice`** + **`voice_language`** per recurring character — **never** swap presets mid-story unless the user requests a recast.
 
-| Character | Pruna `voice` | `voice_language` | Notes |
-|-----------|----------------|------------------|--------|
-| (example) | `Zephyr (Female)` | `English (US)` | Same voice every time this character speaks. |
+Before hero generation, fill a **character sheet** per speaker (age, face, realism, wardrobe baseline, personality, locked **`project_seed`**). Templates and manifest JSON: **[prompt-templates.md](./prompt-templates.md)**.
 
-**Rule:** A recurring character **never** changes voice between scenes unless the user explicitly asks for a recast. Optional per-character **`voice_prompt`** tweaks are fine; the **`voice`** preset stays fixed.
-
-## Character sheet (identity + traits)
-
-Before the hero still, write a **character sheet** per speaking role and keep it in the manifest. Agents use it in every image prompt and when drafting dialogue tone.
-
-| Field | Example | Used in |
-|-------|---------|---------|
-| Name / role | Alex, founder spokesperson | Brief, manifest |
-| Age & build | early 30s, athletic | `p-image`, `p-image-edit` |
-| Face & hair | short dark hair, light stubble, brown eyes | identity anchors in image prompts |
-| Realism | photorealistic documentary, not CGI | `p-image` hero prompt |
-| Wardrobe baseline | black crew-neck, minimal | style bible; scene edits change setting not outfit unless scripted |
-| Personality | warm, direct, founder-energy | `voice_prompt`, `voice_script` tone |
-| Locked `seed` | e.g. `482901` | hero `p-image`, all `p-video-avatar` calls |
-
-**Rule:** Scene-to-scene **style** changes (office → mountain → ISS → desk → studio) come from **`p-image-edit`** off the approved hero—never a fresh unrelated **`p-image`** that reinvents the face.
+**Rule:** New locations and styles = **`p-image-edit`** off the approved hero URL — not unrelated fresh **`p-image`** identity pulls.
 
 ## Scene plan (dynamic beats)
 
-Every multi-scene piece needs a **scene table** before generation. Each row has a **`type`**: `avatar` or `animate`.
-
-### Avatar rows
-
-| # | Type | Setting & angle | Emotion | `voice_script` (natural) | `video_prompt` (camera/motion) |
-|---|------|-----------------|---------|--------------------------|--------------------------------|
-| 1 | avatar | extreme close-up, dark cinematic | hook, curious | "Hey — quick question. When you're…" | slow push-in, direct eye contact |
-| 3 | avatar | medium, ISS cupola | excited reveal | "So we teamed up with…" | gentle float, earth in window |
-| … | avatar | **must differ from prior avatar row** | | speakable, contractions OK | positive camera grammar only |
-
-### Animate rows
-
-| # | Type | Motion template | Reference still | Alignment plan | `instruction_prompt` (optional) | Slider output |
-|---|------|-----------------|-----------------|----------------|----------------------------------|---------------|
-| 2 | animate | `ugc_hook.mp4` | hero still | match MC close-up, facing lens | "Match gestures; keep outfit from reference." | `scene02_compare.mp4` |
-| 4 | animate | `dance_trend.mp4` | mascot still | **risk:** human legs on short mascot | "Upper-body motion only." | `scene04_compare.mp4` |
+Every piece needs a **scene table** — each row **`avatar`** or **`animate`**. Example columns and manifest JSON: **[prompt-templates.md](./prompt-templates.md)** · **[animate-beats.md](./animate-beats.md)**.
 
 ### Motion-transfer alignment (animate beats)
 
@@ -158,20 +135,9 @@ End product launches with a speakable **`avatar`** CTA unless the user opts out.
 
 ## Natural voice (mandatory for avatar social / founder content)
 
-**`voice_script`** — write how a **real person talks**, not a press release:
+**`voice_script`** = speakable dialogue (contractions, short breaths). **`voice_prompt`** = performance direction only — never marketing copy or script text.
 
-- Use contractions (*it's*, *we're*, *you've*), light fillers where natural (*"Hey —"*, *"right?"*, *"Anyway —"*).
-- Short sentences; one idea per breath.
-- Product names spoken cleanly; acronyms spelled out or simplified unless the brand always says them as letters.
-
-**`voice_prompt`** — performance direction for **human delivery** (never duplicate script text):
-
-```text
-Natural conversational tone — like a founder on LinkedIn, not a TV announcer.
-Relaxed pacing, real pauses, slight smile when excited, honest not salesy.
-```
-
-See **`prompt-templates.md`** for good/bad pairs and per-scene **`video_prompt`** patterns.
+Good/bad pairs, per-scene **`video_prompt`** patterns, and shared cast voice line: **[prompt-templates.md](./prompt-templates.md)**.
 
 ## Source portrait / hero (same character across styles and scenes)
 
@@ -244,100 +210,25 @@ After the **confirmation gate** and **hero anchor** are locked:
 
 ## Workflow
 
-1. **Intake** — Confirm the **Intake** table above is complete; expand into a written brief (cast order, **cast ledger** with one voice per character, style bible, per-scene line ownership).
+| Step | Action |
+|------|--------|
+| 1–3 | Intake → speakable script → **confirmation gate** (no API until approve) |
+| 4–5 | Upload refs → **`p-image` hero** per character (locked `seed`) → slop gate |
+| 6–7 | Parallel **`p-image-edit`** scene stills → slop gate each |
+| 8 | Parallel **`p-video-avatar`** (cast ledger voices, unique `video_prompt` per scene) |
+| 9 | Parallel **`p-video-animate`** + slider renders — [animate-beats.md](./animate-beats.md) |
+| 10 | ffmpeg concat ± optional bed — [stable-audio-2.5](../../../../tools/audio/stable-audio-2.5/SKILL.md) |
+| 11 | Manifest: paths, prediction ids, slop notes, cast snapshot |
 
-2. **Draft script (natural language)** — Write the full multi-scene script as **speakable** copy: one **`voice_script`** string per **`p-video-avatar`** call (per scene or per line—your choice, but one prediction = one clip). Keep the final CTA or legal line **verbatim** if the client supplied exact wording.
-
-3. **Confirmation** — Share the read-through package and **wait for explicit user approval** (see **Confirmation gate**). No API calls before that.
-
-4. **Ingest references**
-   - Collect licenced or owned reference stills (concept art, turnaround, prior approved renders).
-   - Upload each with `POST https://api.pruna.ai/v1/files`; store each **`urls.get`** (or `https://api.pruna.ai/v1/files/{id}`) in a manifest. These URLs are the only inputs to **`p-image-edit`**; do not rely on hotlinked third-party URLs.
-
-5. **Lock source / hero frames (per character)** — See **Source portrait / hero**. One approved hero anchor URL per speaking character; all later looks derive from **`p-image-edit`** off that anchor unless the user resets.
-
-6. **Per-scene reference stills (edit → gate)**
-   - For each scene row: **`p-image-edit`** from the hero anchor URL — **change only:** angle, background, emotion, props.
-   - **Run all scene edits in parallel** once the hero anchor URL exists.
-   - Upload approved stills to `/v1/files`; record URLs as `scene_N_still` in manifest.
-
-7. **Slop gate (every still)**
-   - Run [`references/shared/generation-quality-checklists.md`](../../../../../references/shared/generation-quality-checklists.md) on each hero and scene still. Regenerate until pass **before** any avatar job.
-
-8. **Per-scene avatar generation (avatar rows only)**
-   - **Create all `p-video-avatar` jobs in parallel** (async, no `Try-Sync`) once every scene still for avatar rows passes slop. Poll all jobs together; download when complete.
-   - Call **`p-video-avatar`** with JSON **`input`** using **snake_case** keys (see `prompt-templates.md` and [p-video-avatar](../../../../tools/video/p-video-avatar/SKILL.md)). **`input.image`** must be the approved scene still URL from `/v1/files`.
-   - Fields: `image`, `voice_script`, **`voice`** (from the **cast ledger**), `voice_language`, **`voice_prompt`**, **`video_prompt`**, `resolution`, **`seed`** (project lock).
-   - **`video_prompt` must vary by scene** (close-up push-in vs 3/4 handheld vs over-shoulder vs medium studio). Match the scene table.
-   - Keep **`voice_prompt`** short and non-spoken; if the model leaks it as dialogue, shorten or omit and rely on `voice` + `voice_script` only.
-   - Do **not** use negations like “no subtitles / no logos” in **`video_prompt`**; keep prompts positive and shot-focused.
-
-9. **Per-scene motion transfer (animate rows only)**
-   - Upload each motion template `.mp4` and reference still to `/v1/files`.
-   - Optional **`p-image-edit`** to align pose (see **Alignment prep**).
-   - **Create all `p-video-animate` jobs in parallel** once each row's URLs are ready. Poll all `get_url`; download each `generation_url`.
-   - Example payload:
-
-   ```bash
-   curl -X POST 'https://api.pruna.ai/v1/predictions' \
-     -H 'Content-Type: application/json' \
-     -H "apikey: ${PRUNA_API_KEY}" \
-     -H 'Model: p-video-animate' \
-     -d '{
-       "input": {
-         "video": "https://api.pruna.ai/v1/files/MOTION_ID",
-         "image": "https://api.pruna.ai/v1/files/SUBJECT_ID",
-         "resolution": "720p",
-         "target_fps": "original",
-         "save_audio": true,
-         "instruction_prompt": "Animate the reference subject using the motion from the source video."
-       }
-     }'
-   ```
-
-10. **Slider comparison render (animate rows only)**
-
-Requires `ffmpeg` and Pillow (`pip install -r guides/workflows/_shared/scripts/requirements.txt`). After portable install, use `./scripts/requirements.txt` inside the skill folder.
-
-**Single animate row:**
-
-```bash
-python3 guides/workflows/_shared/scripts/generate_video_comparison.py \
-  --source path/to/motion-template.mp4 \
-  --output path/to/animated-output.mp4 \
-  --render output/scene02_compare.mp4 \
-  --title "P-Video-Animate · Scene 2"
-```
-
-**Multi animate row batch** — use [`batch.template.json`](../../../../examples/workflows/launches/p-video-animate-comparison/batch.template.json):
-
-```bash
-python3 guides/workflows/_shared/scripts/generate_video_comparison.py --config output/project.batch.json
-```
-
-Default slider structure:
-
-| Beat | ~Duration | Content |
-|------|-----------|---------|
-| Hook | 1.5s | Full **motion template** (slider left) |
-| Synced play | min(source, output) | Slider sweeps **left → right** over ~2.5s while both play |
-| Hold / outro | 1.5s each | Full **animated output** |
-
-Tune `timing` in JSON: `hook_seconds`, `slider_seconds`, `hold_output_seconds`, `outro_seconds`.
-
-11. **Assembly (outside Pruna)**
-   - Order clips to match the scene table (`avatar` MP4s and `animate` comparison MP4s interleaved as planned). Join in **your** editor or ffmpeg concat; level audio for continuity.
-   - Optional **light instrumental bed** under VO: [`launch_background_music.py`](../_shared/scripts/launch_background_music.py) + [stable-audio-2.5](../../../../tools/audio/stable-audio-2.5/SKILL.md) (`REPLICATE_API_TOKEN`, ~0.12 volume).
-
-12. **Manifest**
-   - For every asset: type (`avatar` | `animate`), source path, Pruna file id/URL, prediction `id`, final clip path, prompts, slop pass/fail, alignment notes (animate), **cast ledger** snapshot.
+Field names and curl shapes: **[prompt-templates.md](./prompt-templates.md)** · [p-video-avatar](../../../../tools/video/p-video-avatar/SKILL.md).
 
 ## References
 
 - [generation-quality-checklists.md](../../../../../references/shared/generation-quality-checklists.md)
-- [animate-beats.md](./animate-beats.md) — `p-video-animate` in mixed reels, motion templates, alignment, sliders
-- `prompt-templates.md`
-- `examples.md`
+- [prompt-templates.md](./prompt-templates.md) — cast ledger, character sheet, voice/video templates
+- [animate-beats.md](./animate-beats.md) — `p-video-animate`, motion templates, sliders
+- [requesting-generation-feedback](../../router/requesting-generation-feedback/SKILL.md)
+- [examples.md](./examples.md)
 
 ## Related
 

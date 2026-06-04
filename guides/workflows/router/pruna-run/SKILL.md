@@ -1,6 +1,6 @@
 ---
 name: pruna-run
-description: Fast prompt-to-generation entrypoint for Pruna. Classifies incoming prompts, runs direct image/video/avatar chains, and can dispatch scenario routes I-L. Use when the user says "just run this prompt" or wants minimal setup.
+description: Use when the user says to run a prompt immediately, wants minimal intake, or needs fast routing to a single Pruna image, video, or avatar call.
 license: MIT
 metadata:
   version: "0.0.1"

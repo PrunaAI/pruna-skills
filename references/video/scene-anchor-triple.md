@@ -24,7 +24,7 @@ When audio is provided, **always** upload and pass it to `p-video` at render tim
 
 **Visual style for explainers:** keep a single `style_bible` on every `p-image` / `p-image-edit` / `p-video` prompt — premium painterly illustration or specific period stills, **one clear focal subject per frame**, no off-brand motifs (cosmic nebula, host parody, etc.) unless requested.
 
-**Explainer interaction (preferred):** alternate **narrator** triple beats with **character** `p-video-avatar` dialogue — see [educational-explainer-scenes.md](./educational-explainer-scenes.md) and [educational-explainer](../guides/workflows/verticals/interactive-explainer/SKILL.md). Do not default to all-narrator tables.
+**Explainer interaction (preferred):** alternate **narrator** triple beats with **character** `p-video-avatar` dialogue — see [interactive-explainer-scenes.md](../workflows/interactive-explainer-scenes.md) and [interactive-explainer](../guides/workflows/verticals/interactive-explainer/SKILL.md). Do not default to all-narrator tables.
 
 **Explainer motion & format:** dynamic `OPEN:` / `MID:` / `CLOSE:` `video_prompt` per scene (camera/light — avoid physics); default **`720p`** + **`24` fps** — see [interactive-explainer-motion.md](../workflows/interactive-explainer-motion.md).
 

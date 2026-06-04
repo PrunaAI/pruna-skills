@@ -1,6 +1,6 @@
 ---
 name: p-video-animate
-description: Animates a reference image using motion, timing, and camera movement from a source video with Pruna P-API model p-video-animate (motion transfer, resolution, target_fps, instruction_prompt). Use when the user asks how to animate a picture with motion, Pruna motion transfer, animate image from video, p-video-animate, UGC ad variations from motion templates, or meme remixes — NOT when they want to replace a person inside existing footage (use p-video-replace).
+description: Use when the user wants motion transfer onto a still from a reference video, UGC variations from motion templates, or p-video-animate—not replacing a person inside existing footage.
 license: MIT
 metadata:
   version: "0.0.1"

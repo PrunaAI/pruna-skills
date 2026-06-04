@@ -21,9 +21,9 @@ tools/
 
 guides/workflows/                  # see “Workflow organization” below
   _shared/scripts/
-  router/        pruna-run, pruna-generative-pipeline
+  router/        pruna-run, pruna-generative-pipeline, requesting-generation-feedback
   core/          image-to-video, narrated-multi-scene, visual-transition-reel, avatar-*
-  verticals/     interactive-explainer, music-video
+  verticals/     interactive-explainer, music-video, illustrated-story-reel
   launches/      p-image-upscale-comparison, p-video-animate-comparison, p-video-replace-comparison
 
 examples/workflows/              # mirrors core/ + verticals/ + launches (see examples/README.md)
@@ -67,6 +67,7 @@ Atomic **tool** skills link to `references/` instead of duplicating API tables. 
 |--------|-------------|---------|
 | [interactive-explainer](guides/workflows/verticals/interactive-explainer/SKILL.md) | `educational-explainer` | Learning explainers (history, science, biography): narrator + character dialogue |
 | [music-video](guides/workflows/verticals/music-video/SKILL.md) | `ai-music-video` | Song-led video (Music 2.5 + cut map + avatar/B-roll) |
+| [illustrated-story-reel](guides/workflows/verticals/illustrated-story-reel/SKILL.md) | — | Stills-only story + narration or music (no p-video) |
 
 Explainer specs: [interactive-explainer-scenes.md](references/workflows/interactive-explainer-scenes.md). Full model index: [pruna-models.md](references/shared/pruna-models.md).
 
@@ -97,10 +98,12 @@ Explainer specs: [interactive-explainer-scenes.md](references/workflows/interact
 | **Verticals** | |
 | `interactive-explainer` | Learning explainers: narrator triple + character `p-video-avatar` |
 | `music-video` | Lyrics → Music 2.5 → avatar + B-roll → assembly |
+| `illustrated-story-reel` | p-image/edit stills → Ken Burns slideshow + VO or music |
 | **Launches** | |
 | `p-image-upscale-comparison` | Before/after upscale slider MP4 |
-| `p-video-animate-comparison` | Redirect stub — use `avatar-multi-scene` animate rows |
+| `p-video-animate-comparison` | Motion-transfer slider comparison reel |
 | `p-video-replace-comparison` | In-video replace slider demos |
+| `requesting-generation-feedback` | Discipline skill — pause before paid generation |
 
 ## Portable workflow install
 

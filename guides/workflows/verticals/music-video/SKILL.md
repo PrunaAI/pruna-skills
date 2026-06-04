@@ -1,6 +1,6 @@
 ---
-name: ai-music-video
-description: Builds AI music videos — write lyrics with Music 2.5 section tags, generate the song on Replicate, align cut timings with WhisperX word timestamps, alternate p-video-avatar performance clips and p-video B-roll synced to audio slices, then assemble with ffmpeg. When the user wants one singer throughout, lock a hero still and branch performance frames with p-image-edit plus project_seed — not fresh identity pulls per line. Use when the user wants a music video, lyric video, sung promo, or MiniMax song + Pruna video.
+name: music-video
+description: Use when the user wants a music video, lyric video, sung promo, or MiniMax-sourced song paired with Pruna performance and B-roll clips.
 license: MIT
 metadata:
   version: "0.0.1"
@@ -18,6 +18,16 @@ End-to-end **music video** production:
 6. **Assembly** — trim clips to cut durations, concat, mux full song
 
 **Staged generation:** [staged-generation-gate.md](../../../../../references/shared/staged-generation-gate.md) — approve lyrics and stills before paid video jobs.
+
+## Quick reference
+
+| Resource | Path |
+|----------|------|
+| Lyrics, cuts, align pipeline | [lyrics-and-cuts.md](./lyrics-and-cuts.md) |
+| Runner | [`run_from_plan.py`](./scripts/run_from_plan.py) · `--phase song\|align\|stills\|video\|assemble` |
+| Plan template | [`music-video-plan.template.json`](./templates/music-video-plan.template.json) |
+| Feedback | [requesting-generation-feedback](../../router/requesting-generation-feedback/SKILL.md) |
+| QA | [music-video-quality-checklist.md](../../../../../references/workflows/music-video-quality-checklist.md) |
 
 ## Model routing (performance vs B-roll)
 
@@ -86,110 +96,10 @@ python3 ... --approve-clips --phase assemble
 Index: [workflow-feedback-gates.md](../../../../../references/workflows/workflow-feedback-gates.md)
 
 ```text
-Lyrics + music.prompt
-  → music-2.5 (song.mp3)
-  → parse_lyric_cuts.py (cut structure)
-  → transcribe_song.py + align_lyric_cuts.py (word-level timings)
-  → p-image stills per segment
-  → slice_audio.py per cut → upload → p-video-avatar (performance) / p-video (broll)
-  → assemble_music_video.py → music_video.mp4
+Lyrics + music.prompt → song → align → stills → video clips → assemble_music_video.mp4
 ```
 
-Do **not** generate video until **B2 align** completes — proportional character-count timings drift badly on rap and paraphrased vocals.
-
-## Step 1 — Write lyrics
-
-Use section tags and **one phrase per line**. See [lyrics-and-cuts.md](./lyrics-and-cuts.md).
-
-Store in plan JSON:
-
-```json
-{
-  "music": {
-    "prompt": "Indie pop, uplifting, warm female vocal, 92 BPM, acoustic guitar and soft synth pads"
-  },
-  "lyrics": "[Verse]\nFirst line here\nSecond line here\n\n[Chorus]\nHook line one\nHook line two"
-}
-```
-
-**Cut rule:** every `\n` in sung text is a candidate cut point. Blank lines between sections = scene breaks.
-
-## Step 2 — Generate song
-
-```bash
-python3 guides/workflows/verticals/music-video/scripts/generate_song.py \
-  --plan output/my-mv/music_video_plan.json \
-  --out-dir output/my-mv
-```
-
-Or curl via [music-2.5 SKILL.md](../../../../tools/audio/music-2.5/SKILL.md).
-
-## Step 3 — Build cut map (structure + timings)
-
-### 3a — Structure (one clip per line)
-
-```bash
-python3 guides/workflows/verticals/music-video/scripts/parse_lyric_cuts.py \
-  --plan output/my-mv/music_video_plan.json \
-  --song output/my-mv/song.mp3 \
-  --out output/my-mv/cut_manifest.json
-```
-
-`parse_lyric_cuts.py` assigns **what** to cut (line boundaries, beat types). With `--song`, it also writes a **proportional** first-pass timing — treat that as a fallback only.
-
-### 3b — Timings (WhisperX word alignment) — required before video
-
-Transcribe the **rendered** MP3 with word-level timestamps, then align each planned lyric line to the matching spoken span:
-
-```bash
-python3 guides/workflows/verticals/music-video/scripts/run_from_plan.py \
-  --plan output/my-mv/music_video_plan.json \
-  --out-dir output/my-mv \
-  --phase align
-```
-
-Or step-by-step:
-
-```bash
-python3 guides/workflows/verticals/music-video/scripts/transcribe_song.py \
-  --song output/my-mv/song.mp3 \
-  --out output/my-mv/whisperx_transcript.json \
-  --initial-prompt "First few lyric lines from the plan"
-
-python3 guides/workflows/verticals/music-video/scripts/align_lyric_cuts.py \
-  --cuts output/my-mv/cut_manifest.json \
-  --transcript output/my-mv/whisperx_transcript.json \
-  --song output/my-mv/song.mp3
-```
-
-**How alignment works:**
-
-| Step | Behavior |
-|------|----------|
-| Match | Fuzzy-match each cut's lyric line to the **first** matching word span after the previous line |
-| Partition | **One timeline** — `start_sec`/`end_sec`/`audio_slice_*` all derive from matched word `start`/`end` + padding |
-| Words | Store `alignment.words[]` — per-word timestamps used for the clip |
-| Instrumental | Intro / `[Inst]` fill gaps between vocal spans; intros &lt; 1s get `skip_clip: true` |
-| Meta | `clips_meta.json` copies timing + words from the cut manifest after each clip renders |
-
-Review `alignment_stats` in `cut_manifest.json` (`matched`, `gap_filled`, `failed`). Re-listen and hand-edit any low-confidence or `failed` rows before Phase D.
-
-Each cut entry includes:
-
-| Field | Purpose |
-|-------|---------|
-| `beat_type` | `performance` → lip-sync clip · `broll` → cinematic |
-| `cast.host_type` | `human` → performance uses **`p-video-avatar`** + audio slice · `mascot` → performance uses **`p-video`** + audio (preserves character; avatar model humanizes non-human stills) |
-| `cast.performance_model` | Optional override: `p-video-avatar` or `p-video` for all performance beats |
-| `lines` | Lyric lines in this clip — **never split a line across clips** |
-| `start_sec` / `end_sec` | Song window for this clip — **same as** `alignment.audio_slice_*` (single timeline) |
-| `alignment.words` | Matched WhisperX words with per-word `start_sec` / `end_sec` |
-| `alignment.matched_text` | What WhisperX heard for this cut |
-| `alignment.confidence` | Token match score — review rows below ~0.85 |
-| `skip_clip` | When true (e.g. intro &lt; 1s), skip video gen — too short for `p-video` |
-| `clip` | Filename in `clips/` (set when clips are rendered) |
-
-After Phase D, `clips_meta.json` mirrors the same `start_sec`, `end_sec`, `words`, and `matched_text` per rendered clip.
+Full lyric format, cut rules, align commands, and cut-manifest fields: **[lyrics-and-cuts.md](./lyrics-and-cuts.md)**.
 
 ## Step 4 — Stills (`p-image` / `p-image-edit`)
 
@@ -315,9 +225,10 @@ Requires **`ffmpeg`** and **`ffprobe`**.
 
 | Resource | Path |
 |----------|------|
+| Lyrics + cuts + align (steps 1–3) | [lyrics-and-cuts.md](./lyrics-and-cuts.md) |
+| Feedback discipline | [requesting-generation-feedback](../../router/requesting-generation-feedback/SKILL.md) |
 | Music 2.5 tool | [music-2.5](../../../../tools/audio/music-2.5/SKILL.md) |
 | WhisperX STT | [whisperx](../../../../tools/audio/whisperx/SKILL.md) |
-| Lyric + cut rules | [lyrics-and-cuts.md](./lyrics-and-cuts.md) |
 | Avatar API | [p-video-avatar](../../../../tools/video/p-video-avatar/SKILL.md) |
 | Cinematic API | [p-video](../../../../tools/video/p-video/SKILL.md) |
 | Scenario hub | [pruna-generative-pipeline](../pruna-generative-pipeline/SKILL.md) recipe **O** |

@@ -1,6 +1,24 @@
 # Lyrics and cut-safe editing
 
-How to write lyrics for [Music 2.5](https://replicate.com/minimax/music-2.5) and map them to video clips **without cutting mid-word**.
+How to write lyrics for [Music 2.5](https://replicate.com/minimax/music-2.5) and map them to video clips **without cutting mid-word**. Workflow skill: [ai-music-video/SKILL.md](./SKILL.md).
+
+## Pipeline (lyrics → align)
+
+| Step | Script / phase | Output |
+|------|----------------|--------|
+| 1 — Lyrics | Plan JSON `music` + `lyrics` | User approves lyric sheet |
+| 2 — Song | `generate_song.py` or `--phase song` | `song.mp3` — **approve song** |
+| 3a — Structure | `parse_lyric_cuts.py` | `cut_manifest.json` (line boundaries) |
+| 3b — Timings | `--phase align` (WhisperX + `align_lyric_cuts.py`) | Word-level `start_sec` / `end_sec` — **required before video** |
+
+Do **not** generate video until **3b** completes — proportional timings drift on rap and paraphrased vocals.
+
+```bash
+python3 guides/workflows/verticals/music-video/scripts/run_from_plan.py --plan PLAN --out-dir OUT --phase song
+python3 ... --approve-song --phase align
+```
+
+Step-by-step curl/alternatives: [music-2.5 SKILL.md](../../../../tools/audio/music-2.5/SKILL.md) · [whisperx](../../../../tools/audio/whisperx/SKILL.md).
 
 ## Golden rule
 

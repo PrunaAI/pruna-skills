@@ -1,6 +1,6 @@
 ---
 name: whisperx
-description: Transcribes songs with word-level timestamps via Replicate victor-upmeet/whisperx. Use after Music 2.5 song generation to align music-video cut boundaries to actual vocals — never cut mid-line.
+description: Use when music-video or lyric edits need word-level timestamps after song generation so cuts avoid mid-line splits.
 license: MIT
 metadata:
   version: "0.0.1"

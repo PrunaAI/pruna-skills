@@ -1,6 +1,6 @@
 ---
 name: p-image-upscale
-description: Upscales images with Pruna P-API model p-image-upscale (target megapixels, detail and realism enhancement, output format). Use when improving resolution for print, large crops, or upscale comparison demos—not as a required step in avatar or video workflows.
+description: Use when the user needs higher-resolution stills for print, large crops, or upscale demos—not as a default step in avatar or video workflows.
 license: MIT
 metadata:
   version: "0.0.1"

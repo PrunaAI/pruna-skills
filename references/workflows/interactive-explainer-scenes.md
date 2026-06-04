@@ -98,7 +98,7 @@ Talking-head beat — **`p-video-avatar`**:
 
 **Gender ↔ voice:** set `persona_gender` to `female` or `male`; runner maps to `Zephyr (Female)` or `Puck (Male)`. `character_descriptor` must name the same gender so the still matches the voice.
 
-**Still prompts:** **positive only** in `style_bible`, still lines, and `video_prompt` — never `no …`, `avoid …`, or `not …` in creative fields (spoken dialogue may use natural negation). Block **substring triggers** (markets, labels, packaging, meta words like `educational end frame`, collage language). Character stills: slight angle, lips visible; on-camera delivery in `video_prompt` only. Full tables + runner enforcement: [interactive-explainer/SKILL.md](../guides/workflows/verticals/interactive-explainer/SKILL.md) **Positive prompts only**.
+**Still prompts:** **positive only** in `style_bible`, still lines, and `video_prompt` — never `no …`, `avoid …`, or `not …` in creative fields (spoken dialogue may use natural negation). Full blocked-phrase tables: [interactive-explainer-prompts.md](./interactive-explainer-prompts.md).
 
 Use **Pruna avatar voices** (`Zephyr (Female)`, `Puck (Male)`, etc.) — not Gemini TTS voice names.
 
@@ -166,15 +166,51 @@ Every explainer must answer **yes** to all five before render:
 **Bad character line:** motivational poster copy, unrelated to the question.  
 **Good character line:** procedural or sensory detail tied to the prior narrator beat.
 
-## Causal chain, visual alignment, ending
+## Causal chain (event explainers)
 
-For **event** explainers (protests, battles, policy crises), do not open on the climax. Script **prerequisites → trigger → act → punishment → aftermath** before render. Each still must match **that row's** audio (location, props, era); put **events** on narrator B-roll, witnesses **in** the setting they describe.
+Do not open on the climax. Map beats before render:
 
-**Ending:** **aftermath narrator** (punishment + collective response + next escalation, ≥ 3 facts) → **final character witness** → **`NN_wrap` narrator recap** that answers the hook (bookend B-roll when the opening was a place). Science films may end narrator-only after the expert (`07_conclusion` pattern). See SKILL.md **Ending closure bar**.
+| Beat (minimum) | Narrator carries |
+|----------------|------------------|
+| **Stakes / hook** | Why anyone cared |
+| **Mechanism** | Law, policy, or force that caused the crisis |
+| **Local complication** | Why *this* place or group differed |
+| **Deadline / trigger** | Clock or last chance before the act |
+| **Act** | What people did (narrator B-roll) |
+| **Response** | Authority's punishment or counter-move |
+| **Aftermath** | How the story continued |
 
-**Visual mode:** pick **photoreal period** *or* **painterly / storybook illustration** (or children's illustrated) for the whole film — lock vocabulary in `style_bible` and every still line. Do not mix modes.
+## Visual–audio alignment
 
-Full rules: [interactive-explainer/SKILL.md](../guides/workflows/verticals/interactive-explainer/SKILL.md). Example plans: `output/verticals/interactive-explainer/<project-slug>/plan.json`.
+| Rule | Good | Bad |
+|------|------|-----|
+| **Narrator B-roll** matches VO | Meeting hall while VO describes the meeting | Generic exterior for a named interior action |
+| **Character still** matches witness setting | Witness at the wharf while discussing ships | Unrelated interior while VO discusses the wharf |
+| **Events on narrator rows** | Destruction / trial on `type: narrator` | Event in VO but only talking head on screen |
+
+## Visual mode (lock one look)
+
+| Mode | `style_bible` vocabulary |
+|------|--------------------------|
+| **Photoreal period** | `photoreal period drama film still`, natural skin, period wardrobe |
+| **Painterly / storybook** | `premium painterly historical illustration`, soft ink outlines |
+| **Children's illustrated** | warm illustrated or soft 3D, friendly proportions |
+
+Do not mix photoreal and painterly vocabulary in the same film.
+
+## Ending closure bar
+
+**Three-beat close** (history / biography / causal-chain):
+
+| Order | Row | Job |
+|-------|-----|-----|
+| 1 | **Narrator aftermath** | Punishment, collective response, dated next step (≥ 3 facts) |
+| 2 | **Character witness** | First-person line tied to aftermath — not a slogan |
+| 3 | **`NN_wrap` narrator** | Recap: cause → act → consequence → legacy; answer the hook; no question to character |
+
+Science / how-it-works may end **narrator-only** after the expert (`07_conclusion` pattern).
+
+Example plans: `output/verticals/interactive-explainer/<project-slug>/plan.json`.
 
 ## Visual continuity
 

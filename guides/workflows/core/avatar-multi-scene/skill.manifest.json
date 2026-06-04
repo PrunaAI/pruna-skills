@@ -14,6 +14,7 @@
   "references": [
     "pruna-api.md",
     "staged-generation-gate.md",
+    "workflow-feedback-gates.md",
     "visual-variety-bible.md",
     "parallel-execution.md",
     "generation-quality-checklists.md",
@@ -23,6 +24,7 @@
   "templates": [],
   "generation_phases": {
     "default": "stills",
+    "phases": ["stills", "video", "render"],
     "requires_user_approval_before": ["p-video-avatar", "p-video-animate"]
   },
   "generation_package": ["curl", "script"]

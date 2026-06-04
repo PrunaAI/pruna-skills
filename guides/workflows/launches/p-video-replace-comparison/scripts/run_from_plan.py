@@ -21,9 +21,22 @@ import sys
 from pathlib import Path
 
 _SCRIPT_DIR = Path(__file__).resolve().parent
+_workflows = _SCRIPT_DIR.parent
+while _workflows.name != "workflows" and _workflows.parent != _workflows:
+    _workflows = _workflows.parent
+_SHARED = _workflows / "_shared" / "scripts"
+if str(_SHARED) not in sys.path:
+    sys.path.insert(0, str(_SHARED))
 if str(_SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(_SCRIPT_DIR))
 
+from generation_gate import (  # noqa: E402
+    apply_approve_flags,
+    ensure_phase_a_allowed,
+    ensure_phase_b_allowed,
+    load_generation_status,
+    write_generation_status,
+)
 from pruna_api import (  # noqa: E402
     download_file,
     require_api_key,
@@ -902,50 +915,6 @@ def write_manifest(out_dir: Path, plan: dict, final_path: Path, *, music_path: P
     return manifest_path
 
 
-def load_generation_status(out_dir: Path) -> dict:
-    status_path = out_dir / "generation_status.json"
-    if not status_path.exists():
-        return {"phase_a_approved": False, "phase_b_approved": False, "scenes": []}
-    try:
-        data = json.loads(status_path.read_text(encoding="utf-8"))
-    except json.JSONDecodeError:
-        return {"phase_a_approved": False, "phase_b_approved": False, "scenes": []}
-    if isinstance(data, list):
-        return {"phase_a_approved": False, "phase_b_approved": False, "scenes": data}
-    data.setdefault("phase_b_approved", False)
-    return data
-
-
-def write_generation_status(out_dir: Path, status: dict) -> None:
-    (out_dir / "generation_status.json").write_text(
-        json.dumps(status, indent=2) + "\n", encoding="utf-8"
-    )
-
-
-def ensure_phase_a_allowed(out_dir: Path, *, approve_flag: bool, skip_gate: bool) -> None:
-    if skip_gate or approve_flag:
-        return
-    status = load_generation_status(out_dir)
-    if status.get("phase_a_approved"):
-        return
-    raise SystemExit(
-        "Phase B blocked: review stills in references/ and stills/, then re-run with "
-        "--approve-stills or set phase_a_approved in generation_status.json"
-    )
-
-
-def ensure_phase_b_allowed(out_dir: Path, *, approve_flag: bool, skip_gate: bool) -> None:
-    if skip_gate or approve_flag:
-        return
-    status = load_generation_status(out_dir)
-    if status.get("phase_b_approved"):
-        return
-    raise SystemExit(
-        "Phase C blocked: review clips under clips/, then re-run with "
-        "--approve-clips or set phase_b_approved in generation_status.json"
-    )
-
-
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--plan", type=Path, default=None, help="Scene plan JSON path")
@@ -1069,30 +1038,27 @@ def main() -> int:
     for sub in ("clips", "stills", "references", "sources"):
         (out_dir / sub).mkdir(exist_ok=True)
 
-    if args.approve_stills:
-        status = load_generation_status(out_dir)
-        status["phase_a_approved"] = True
-        write_generation_status(out_dir, status)
-        print("Marked phase_a_approved=true in generation_status.json")
-        if args.phase == "stills" and not args.fresh:
+    if args.approve_stills or args.approve_clips:
+        apply_approve_flags(args, out_dir)
+        if args.approve_stills and args.phase == "stills" and not args.fresh:
             return 0
-
-    if args.approve_clips:
-        status = load_generation_status(out_dir)
-        status["phase_b_approved"] = True
-        write_generation_status(out_dir, status)
-        print("Marked phase_b_approved=true in generation_status.json")
-        if args.phase == "video" and not args.fresh:
+        if args.approve_clips and args.phase == "video" and not args.fresh:
             return 0
 
     run_phase = args.phase
     if run_phase in ("video", "all"):
         ensure_phase_a_allowed(
-            out_dir, approve_flag=args.approve_stills, skip_gate=args.yes_skip_stills_gate
+            out_dir,
+            approve_flag=args.approve_stills,
+            skip_gate=args.yes_skip_stills_gate,
+            label="Video generation",
         )
     if run_phase in ("render", "all") or args.assemble_only:
         ensure_phase_b_allowed(
-            out_dir, approve_flag=args.approve_clips, skip_gate=args.yes_skip_clips_gate
+            out_dir,
+            approve_flag=args.approve_clips,
+            skip_gate=args.yes_skip_clips_gate,
+            label="Final render",
         )
 
     needs_api = run_phase in ("stills", "video", "all")

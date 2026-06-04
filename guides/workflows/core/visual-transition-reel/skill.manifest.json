@@ -2,47 +2,46 @@
   "scripts": {
     "core": ["run_from_plan.py"],
     "shared": [
+      "concat_clips.py",
       "generation_gate.py",
+      "launch_background_music.py",
+      "p_video_payload.py",
       "plan_runner.py",
-      "pruna_paths.py",
       "pruna_api.py",
-      "generate_video_comparison.py",
+      "replicate_api.py",
+      "stills_pipeline.py",
       "requirements.txt"
     ],
     "optional": [],
     "repo_only": []
   },
-  "tool_skills": ["p-image", "p-image-edit", "p-video-avatar", "p-video-animate"],
+  "tool_skills": ["p-image", "p-image-edit", "p-video", "stable-audio-2.5"],
   "references": [
+    "scene-anchor-pair.md",
     "pruna-api.md",
     "staged-generation-gate.md",
     "workflow-feedback-gates.md",
-    "p-video-animate-quality-checklist.md",
     "parallel-execution.md",
-    "generation-quality-checklists.md"
+    "generation-quality-checklists.md",
+    "p-video-quality-checklist.md"
   ],
-  "templates": [
-    "config.template.json",
-    "batch.template.json",
-    "curl-phase-a.template.sh",
-    "curl-phase-b.template.sh"
-  ],
+  "templates": ["transition-plan.template.json"],
   "generation_phases": {
     "default": "stills",
-    "phases": ["stills", "video", "render"],
+    "phases": ["stills", "video", "assemble"],
     "gates": {
       "video": {
         "requires": "phase_a_approved",
         "approve_flag": "--approve-stills",
         "skip_flag": "--yes-skip-stills-gate"
       },
-      "render": {
+      "assemble": {
         "requires": "phase_b_approved",
         "approve_flag": "--approve-clips",
         "skip_flag": "--yes-skip-clips-gate"
       }
     },
-    "requires_user_approval_before": ["p-video-avatar", "p-video-animate"]
+    "requires_user_approval_before": ["p-video"]
   },
-  "generation_package": ["curl", "script"]
+  "generation_package": ["script"]
 }

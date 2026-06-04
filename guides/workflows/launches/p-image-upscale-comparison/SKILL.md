@@ -1,6 +1,6 @@
 ---
 name: p-image-upscale-comparison
-description: Builds a before/after marketing demo video for p-image-upscale—full-frame hook, multiple zoom stops, and vertical slider sweeps— from any pre/post upscale still pair. Use when showcasing upscale quality for portraits, products, landscapes, or pipeline stills.
+description: Use when showcasing p-image-upscale before/after quality for portraits, products, landscapes, or pipeline stills in a comparison reel.
 metadata:
   version: "0.0.1"
 ---

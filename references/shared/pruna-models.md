@@ -41,7 +41,7 @@ Documented on the same models page: `p-image-lora`, trainers, `flux-*`, `wan-*`,
 | Multi-scene visual transitions (`p-image`/`p-image-edit` stills → `p-video` pair) | `guides/workflows/core/visual-transition-reel` |
 | Educational explainer (narrator + character interaction) | `guides/workflows/verticals/interactive-explainer` |
 | Upscale comparison demo | `guides/workflows/launches/p-image-upscale-comparison` |
-| Motion-transfer showcase (`p-video-animate` + slider comparisons) | `guides/workflows/core/avatar-multi-scene` (animate rows); stub: `guides/workflows/launches/p-video-animate-comparison` |
+| Motion-transfer showcase (`p-video-animate` + slider comparisons) | `guides/workflows/core/avatar-multi-scene` (animate rows); launch reel: `guides/workflows/launches/p-video-animate-comparison` |
 | In-video replacement showcase (`p-video-replace` + slider comparisons) | `guides/workflows/launches/p-video-replace-comparison` |
 | AI music video (lyrics → Music 2.5 → avatar + B-roll) | `guides/workflows/verticals/music-video` |
 | Route I: UGC ad factory | `guides/workflows/ugc-ad-factory` |

@@ -2,6 +2,8 @@
   "scripts": {
     "core": ["run_from_plan.py"],
     "shared": [
+      "generation_gate.py",
+      "plan_runner.py",
       "pruna_paths.py",
       "pruna_api.py",
       "replicate_api.py",
@@ -23,6 +25,7 @@
     "pruna-api.md",
     "replicate-api.md",
     "staged-generation-gate.md",
+    "workflow-feedback-gates.md",
     "visual-variety-bible.md",
     "p-video-replace-quality-checklist.md",
     "parallel-execution.md",
@@ -38,6 +41,19 @@
   ],
   "generation_phases": {
     "default": "stills",
+    "phases": ["stills", "video", "render"],
+    "gates": {
+      "video": {
+        "requires": "phase_a_approved",
+        "approve_flag": "--approve-stills",
+        "skip_flag": "--yes-skip-stills-gate"
+      },
+      "render": {
+        "requires": "phase_b_approved",
+        "approve_flag": "--approve-clips",
+        "skip_flag": "--yes-skip-clips-gate"
+      }
+    },
     "requires_user_approval_before": ["p-video-avatar", "p-video-replace"]
   },
   "generation_package": ["curl", "script"]

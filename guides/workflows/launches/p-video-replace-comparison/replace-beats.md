@@ -416,6 +416,136 @@ After confirmation:
 - Sequential ffmpeg concat for final reel
 - Optional **background bed** — [stable-audio-2.5](../../../tools/audio/stable-audio-2.5/SKILL.md) at low volume under VO ([SKILL.md](./SKILL.md) **Background music**)
 
+## Production learnings (encode in every plan)
+
+1. **References alone are not enough** — map source slot → reference in **per-reference `instruction_prompt`**.
+2. **Default `multi_job` + variant slider** — one `p-video-replace` call per reference.
+3. **Prefer `p-video-avatar` sources** — single subject, mouth visible, product in hand or on desk.
+4. **Clothing references** — same person **wearing** the target outfit when source is a talking head.
+5. **Object / clothing on VO clips** — *do not change face, lips, jaw, or speech timing*.
+6. **Dynamic sources** — continuous camera; static locked-off plates weaken sliders.
+7. **Human avatar copy** — short `voice_script`; conversational `voice_prompt`.
+8. **Vary swap types** — face, wardrobe-only, and object-only in the same reel.
+9. **No competitor names** in launch copy unless user supplies them.
+10. **Reference inset** on compare MP4s — `reference_images[]` in compare config.
+11. **Eye-catching variety** — `visual_style_tag`, `setting_tag`, `camera_tag`, `lighting_tag` per scene and ref.
+12. **Full face on talking-head refs** — entire face including eyes and mouth.
+13. **`plate_mode: p-image`** when source host ≠ plan hero.
+14. **Cast ledger** — different source host per scene + different people on recast refs.
+15. **Dynamic still body language** — mid-gesture, shallow DOF, palette accent per ref.
+16. **In-hand props** — closed hardcover notebook, tumbler at chest; no laptops/keyboards/screens.
+17. **`multi_image_beat`** — hybrid finale after per-ref `multi_job` steps.
+18. **Phase A regen** — delete JPEGs or `--fresh` after prompt edits.
+19. **Weather wording** — bright open-sky only; no rain/wet/puddle triggers (including negations).
+
+## Dynamic eye-catching prompts
+
+Stack in every `p-image`, `still_edit`, and reference `prompt`:
+
+| Layer | What to write |
+|-------|----------------|
+| **Style anchor** | photoreal UGC · premium anime · clay stop-motion · cyberpunk · blockbuster adventure film |
+| **Bold subject** | statement wardrobe, distinct hair, strong silhouette |
+| **Distinct world** | loft brick, rooftop dusk, cafe wood — **not** neutral grey wall on every ref |
+| **Named lighting** | sunny window, golden afternoon in stills; use **`lighting_tag`** on plan rows |
+| **Palette punch** | one accent per ref — [visual-variety-bible.md](../../../references/shared/visual-variety-bible.md) |
+| **Camera / depth** | side angle, low angle, wide shot; shallow depth of field; **single subject one frame** |
+| **`swap_visual_bible`** | max contrast identity at thumbnail size — skip on stylized `beat_label` rows |
+
+**`video_prompt`:** continuous motion with variety — dolly, arc, crane — vary grammar across scenes.
+
+**Persona ladder:** each reference = different subject family + render medium + style + setting + lighting.
+
+## Persona & subject diversity
+
+| Subject type | When to use | Prompt cues |
+|--------------|-------------|-------------|
+| **Photoreal human** | UGC, founder, stylist | ethnicity, age, **entire face visible**, dynamic setting |
+| **Line art / sketch** | Persona ladder | stylized muted-tone presenter, mouth visible, single frame |
+| **2D animation frame** | Persona ladder | cel / vector — **single frame**, not storyboard grid |
+| **3D animation** | Persona ladder | clay stop-motion or CG film royal |
+| **Fictional character** | Fantasy beats | adventure film wording, not game/HUD |
+| **Anthropomorphic** | Ladder hooks | humanoid torso, mouth visible, chest-up |
+| **Wardrobe-only** | Same talent, new outfit | instruction maps **clothing only** |
+| **Accessories-only** | Jewelry/scarf/hat | accessory worn on person for talking-head sources |
+| **Object / prop** | Desk, in-hand | one vivid object, one frame |
+
+**`render_medium_tag`:** `photoreal` · `pencil_sketch` · `cel_anime_2d` · `stop_motion_3d` · `cg_3d_film` — one per ladder step.
+
+## `beat_label` and `swap_visual_bible` (runner)
+
+[`run_from_plan.py`](./scripts/run_from_plan.py) prepends **`swap_visual_bible`** except when `skip_swap_visual_bible()` matches:
+
+| `beat_label` prefix / value | Skip swap bible? |
+|-----------------------------|------------------|
+| `Image ·`, `Motion ·`, `Video ·`, `Replace ·`, `Phase A ·` | yes |
+| `Look A`, `Look B`, `Accessories`, `Recast`, `Wardrobe` | yes |
+| `anthropomorphic`, `fictional 3d`, `object` | yes |
+| Generic `Variant N` or unset | no |
+
+## UGC & install rows (dynamic worlds)
+
+| Slot | Source plate | Ref A | Ref B | Ref C |
+|------|--------------|-------|-------|-------|
+| **Setting** | creative loft | rooftop dusk | cafe corner | LED studio |
+| **Camera** | low angle handheld | low angle chest-up | side angle chest-up | slight high angle |
+| **Light** | amber window + magenta rim | golden hour rim | teal edge + daylight | magenta-cyan wash |
+
+Canonical: [`announcement_plan.json`](../../../output/launches/skills-library-announcement/announcement_plan.json).
+
+## Prompt trigger words (`p-image` / `p-image-edit` stills only)
+
+Use **positive single-frame wording**. Do not rely on negations like “no text” in still prompts.
+
+### Text artifacts
+
+| Avoid | Use instead |
+|-------|-------------|
+| `graphic tee`, printed shirt | plain solid-color tee |
+| `neon signs`, storefront signage | neon **color bokeh**, color wash |
+| `ring light`, `studio lighting`, `key light` in **stills** | sunny window, golden afternoon |
+| `facing camera`, `three-quarter` in **stills** | side angle chest-up, head-and-shoulders |
+| `game`, `HUD`, `visor`, `UI` | fantasy/adventure film portrait |
+| readable monitors, code on screen | soft defocused monitor glow |
+| keyboard key legends | **closed hardcover notebook** in hand |
+| open laptop, laptop screen | notebook or tumbler at chest (new plans) |
+| `decal`, `sticker`, `label` on props | solid accent on matte prop |
+
+### Collage / multi-panel artifacts
+
+| Avoid | Use instead |
+|-------|-------------|
+| `packshot`, `product still`, `flat lay` | single object on desk, one frame |
+| `comparison`, `before and after`, `side by side` | omit — slider is post-render |
+| `collage`, `montage`, `grid`, `dual`, `split` | one subject, one camera angle |
+| `same`, `matching`, `identical` | describe one frame directly |
+| `neutral grey wall` on source + all refs | distinct location per ref |
+| `mirror`, fitting-room grids | plain colored wall — exception: single-subject neon boutique |
+| `rain`, `wet pavement`, `no rain`, `dry neon` | bright open-sky, sunny window |
+
+### Prompt wording scope
+
+| Layer | Negations OK? |
+|-------|---------------|
+| **`references[].prompt` / `still_edit`** | **No** — positive only |
+| **`style_bible` (plan root)** | **Yes** — agent metadata |
+| **`video_prompt`** | **Yes** for motion |
+| **Weather / rain** | **Never** in still prompts |
+
+## Skills-library scene table (7 scenes)
+
+| # | Type | `replace_target` | Beat |
+|---|------|------------------|------|
+| 1 | replace | character | p-image ladder — UGC · sketch · 2D cel |
+| 2 | replace | character | animate-adjacent personas (still replace workflow) |
+| 3 | replace | character | photoreal → fictional ladder |
+| 4 | replace | mixed | portable install + `multi_image_beat` |
+| 5 | replace | character | staged gate — three full recasts |
+| 6 | replace | object | in-hand prop ladder |
+| 7 | replace | mixed | CTA + `multi_image_beat` |
+
+Legacy 8-scene product launch: [`announcement_plan.json`](../../../output/launches/p-video-replace-announcement/announcement_plan.json).
+
 ## Related
 
 - Workflow skill: [SKILL.md](./SKILL.md)

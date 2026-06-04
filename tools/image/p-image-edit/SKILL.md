@@ -1,6 +1,6 @@
 ---
 name: p-image-edit
-description: Edits or composes 1–5 reference images with Pruna P-API model p-image-edit (prompt + images array, aspect ratio, turbo). Use when the user asks for Pruna image editing, inpainting-style edits, multi-image compose, or p-image-edit API usage.
+description: Use when the user asks for Pruna image editing, inpainting-style edits, multi-reference compose, or p-image-edit API usage.
 license: MIT
 metadata:
   version: "0.0.1"

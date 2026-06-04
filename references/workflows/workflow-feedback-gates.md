@@ -2,10 +2,13 @@
 
 Every workflow skill uses [staged-generation-gate.md](../shared/staged-generation-gate.md). **Agents must pause** at each gate and **ask** when art direction is unclear.
 
+**Discipline skill (read before any paid generation):** [requesting-generation-feedback](../../guides/workflows/router/requesting-generation-feedback/SKILL.md) — red flags, pause workflow, common mistakes when about to call `POST /v1/predictions`, mix final audio, or skip user review.
+
 | Workflow skill | Runner | Default `--phase` | Gates |
 |----------------|--------|-------------------|-------|
 | [interactive-explainer](../../guides/workflows/verticals/interactive-explainer/SKILL.md) | `verticals/interactive-explainer/scripts/run_from_plan.py` | `stills` | plan → stills → TTS → video → assemble+bed |
 | [music-video](../../guides/workflows/verticals/music-video/SKILL.md) | `verticals/music-video/scripts/run_from_plan.py` | `song` | plan/lyrics → song → align → stills → video → assemble |
+| [illustrated-story-reel](../../guides/workflows/verticals/illustrated-story-reel/SKILL.md) | `verticals/illustrated-story-reel/scripts/run_from_plan.py` | `stills` | plan → stills → tts **or** music → assemble (no p-video) |
 | [narrated-multi-scene](../../guides/workflows/core/narrated-multi-scene/SKILL.md) | manual / phased curl | — | plan → stills → TTS → video → bed |
 | [visual-transition-reel](../../guides/workflows/core/visual-transition-reel/SKILL.md) | `core/visual-transition-reel/scripts/run_from_plan.py` | `stills` | plan → stills → video → assemble+bed |
 | [avatar-single-scene](../../guides/workflows/core/avatar-single-scene/SKILL.md) | manual / curl | — | plan → still → avatar |
@@ -33,6 +36,7 @@ Every workflow skill uses [staged-generation-gate.md](../shared/staged-generatio
 | `--approve-song` | `phase_song_approved` | music-video stills+ after song |
 | `--approve-stills` | `phase_a_approved` | TTS, video, replace, animate |
 | `--approve-clips` | `phase_b_approved` | assemble, bed, final mux |
+| `--approve-audio` | `phase_b_approved` | illustrated-story-reel assemble (alias: `--approve-clips`) |
 | `--yes-skip-stills-gate` | — | automation bypass (Phase A) |
 | `--yes-skip-clips-gate` | — | automation bypass (Phase B) |
 | `--yes-skip-song-gate` | — | automation bypass (song) |
@@ -75,6 +79,15 @@ python3 ... --approve-clips --phase assemble
 python3 .../p-video-replace-comparison/scripts/run_from_plan.py --plan PLAN --out-dir OUT --phase stills
 python3 ... --approve-stills --phase video
 python3 ... --approve-clips --phase render --background-music
+```
+
+### Illustrated story reel
+
+```bash
+python3 .../illustrated-story-reel/scripts/run_from_plan.py --plan PLAN --out-dir OUT --phase stills
+python3 ... --approve-stills --phase tts      # narration mode (audio_mode: narration)
+python3 ... --approve-stills --phase music    # music mode (audio_mode: music)
+python3 ... --approve-audio --phase assemble
 ```
 
 ### Narrated multi-scene / avatar (no runner)

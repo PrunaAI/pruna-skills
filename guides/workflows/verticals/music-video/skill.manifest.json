@@ -11,6 +11,9 @@
       "run_from_plan.py"
     ],
     "shared": [
+      "generation_gate.py",
+      "plan_runner.py",
+      "p_video_payload.py",
       "replicate_api.py",
       "pruna_api.py",
       "pruna_paths.py",
@@ -31,16 +34,43 @@
     "replicate-api.md",
     "pruna-api.md",
     "staged-generation-gate.md",
+    "workflow-feedback-gates.md",
     "parallel-execution.md",
     "visual-variety-bible.md",
     "music-video-quality-checklist.md",
     "generation-quality-checklists.md"
   ],
-  "templates": [
-    "music-video-plan.template.json"
-  ],
+  "templates": ["music-video-plan.template.json"],
   "generation_phases": {
-    "default": "lyrics",
+    "default": "song",
+    "phases": ["song", "cuts", "align", "stills", "video", "assemble"],
+    "gates": {
+      "cuts": {
+        "requires": "phase_song_approved",
+        "approve_flag": "--approve-song",
+        "skip_flag": "--yes-skip-song-gate"
+      },
+      "align": {
+        "requires": "phase_song_approved",
+        "approve_flag": "--approve-song",
+        "skip_flag": "--yes-skip-song-gate"
+      },
+      "stills": {
+        "requires": "phase_song_approved",
+        "approve_flag": "--approve-song",
+        "skip_flag": "--yes-skip-song-gate"
+      },
+      "video": {
+        "requires": "phase_a_approved",
+        "approve_flag": "--approve-stills",
+        "skip_flag": "--yes-skip-stills-gate"
+      },
+      "assemble": {
+        "requires": "phase_b_approved",
+        "approve_flag": "--approve-clips",
+        "skip_flag": "--yes-skip-clips-gate"
+      }
+    },
     "requires_user_approval_before": ["music-2.5", "whisperx", "p-video-avatar", "p-video"]
   },
   "generation_package": ["script"]

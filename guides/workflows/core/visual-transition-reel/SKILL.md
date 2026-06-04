@@ -1,6 +1,6 @@
 ---
-name: scene-transition-video
-description: Builds smooth multi-scene p-video reels from scene anchor pairs—p-image hero, p-image-edit start/end stills, transition prompts between image and last_frame_image, selective frame chaining, concat with crossfades. Use for visual montages, action sequences, or any film where motion between two photos matters and narration is optional.
+name: visual-transition-reel
+description: Use when the user needs visual montages, motion between two stills, action sequences, or multi-scene reels where narration is optional or absent.
 metadata:
   version: "0.0.1"
 ---

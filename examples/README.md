@@ -9,6 +9,7 @@ examples/workflows/
   verticals/
     interactive-explainer/
     music-video/
+    illustrated-story-reel/   # add example-prompt.md when needed
   launches/
     p-image-upscale-comparison/
     p-video-animate-comparison/

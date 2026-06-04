@@ -1,8 +1,8 @@
-# interactive-explainer
+# visual-transition-reel
 
-Educational shorts (history, science, nature, how-it-works, children's) with **narrator + character interaction** — not pure voice-over.
+Visual montages and motion between stills — narration optional.
 
-Spec: [educational-explainer-scenes.md](../../../../references/workflows/interactive-explainer-scenes.md)
+Spec: [interactive-explainer-scenes.md](../../../../references/workflows/interactive-explainer-scenes.md) (scene patterns) · [staged-generation-gate.md](../../../../references/shared/staged-generation-gate.md)
 
 ## Install
 

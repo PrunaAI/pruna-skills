@@ -1,22 +1,26 @@
-# scene-transition-video
+# visual-transition-reel
 
 Smooth multi-scene reels use the [scene anchor pair](../../../../references/video/scene-anchor-pair.md): **`image`** + **`last_frame_image`** + transition **`prompt`** + **`duration`** per `p-video` scene. Stills from **`p-image`** hero + **`p-image-edit`**.
 
+Legacy install name: `scene-transition-video` (same bundle).
+
 ## Install
 
-From a clone of this repository:
+```bash
+./scripts/install_skill.sh visual-transition-reel
+```
+
+Or copy manually:
 
 ```bash
 mkdir -p ~/.cursor/skills
 cp -R /path/to/pruna-ai-content-generation-skills/guides/workflows/core/visual-transition-reel ~/.cursor/skills/
 ```
 
-Or install the whole repository with `npx skills add` (see repository root `README.md`). Restart Cursor or start a new chat.
-
 ## Expected path
 
 ```text
-~/.cursor/skills/scene-transition-video/SKILL.md
+~/.cursor/skills/visual-transition-reel/SKILL.md
 ```
 
 ## Run

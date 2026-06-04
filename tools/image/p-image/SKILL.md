@@ -1,6 +1,6 @@
 ---
 name: p-image
-description: Generates images with Pruna P-API model p-image (text-to-image, aspect ratios, optional LoRA and seed). Use when the user asks for Pruna images, p-image, fast premium T2I, or API calls to the Pruna image model.
+description: Use when the user asks for Pruna images, p-image, fast premium text-to-image, or direct calls to the Pruna image model.
 license: MIT
 metadata:
   version: "0.0.1"

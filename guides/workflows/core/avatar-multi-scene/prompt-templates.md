@@ -1,5 +1,15 @@
 # Prompt templates (Pruna only)
 
+Companion to [multi-scene-avatar-video/SKILL.md](./SKILL.md) — cast ledger, character sheet, still edits, and per-scene voice/video fields.
+
+## Cast ledger (voice lock)
+
+| Character | Pruna `voice` | `voice_language` | Notes |
+|-----------|----------------|------------------|--------|
+| (example) | `Zephyr (Female)` | `English (US)` | Same preset every scene this character speaks |
+
+**Rule:** recurring characters **never** change `voice` between scenes unless the user requests a recast. Tweak delivery with **`voice_prompt`** only.
+
 ## Reference gathering (research assistant prompt)
 
 ```text

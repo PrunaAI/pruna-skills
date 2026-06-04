@@ -2,7 +2,7 @@
 
 Human-in-the-loop phases for workflow skills and plan runners. **Video and replace jobs are expensive** — gate on approved stills before any `p-video-*` call. **Final audio** (bed mix, full-song mux) runs only after clip review.
 
-See also: [parallel-execution.md](./parallel-execution.md) Phase 0, [generation-quality-checklists.md](./generation-quality-checklists.md), [workflow-feedback-gates.md](../workflows/workflow-feedback-gates.md) (per-skill index).
+See also: [parallel-execution.md](./parallel-execution.md) Phase 0, [generation-quality-checklists.md](./generation-quality-checklists.md), [workflow-feedback-gates.md](../workflows/workflow-feedback-gates.md) (per-skill index), [requesting-generation-feedback](../../guides/workflows/router/requesting-generation-feedback/SKILL.md) (red flags before paid generation).
 
 ## Phases
 

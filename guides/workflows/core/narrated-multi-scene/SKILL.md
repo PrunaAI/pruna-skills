@@ -1,6 +1,6 @@
 ---
-name: multi-scene-ai-video
-description: Produces multiple Pruna p-video clips using the scene anchor triple (image + last_frame_image + audio per scene), first/last frame chaining, Gemini TTS, optional Stable Audio beds, async parallel jobs, then assembly. Use for narrated story films, episodic B-roll, or chaptered promos.
+name: narrated-multi-scene
+description: Use when the user needs a narrated multi-scene p-video film, episodic B-roll, or chaptered promo with scene-anchor triples and no in-story avatar dialogue.
 metadata:
   version: "0.0.3"
 ---
@@ -11,9 +11,9 @@ Each scene = one **`p-video`** job (same model, separate predictions). Assembly 
 
 See [p-video](../../../../tools/video/p-video/SKILL.md) (first/last frame chaining), [scene-anchor-triple.md](../../../../../references/video/scene-anchor-triple.md), [scene-anchor-pair.md](../../../../../references/video/scene-anchor-pair.md) (visual-only alternative), [audio-post-production.md](../../../../../references/audio/audio-post-production.md), and [references/shared/pruna-api.md](../../../../../references/shared/pruna-api.md).
 
-For **visual transitions without narration**, use [scene-transition-video](../visual-transition-reel/SKILL.md) instead.
+For **visual transitions without narration**, use [visual-transition-reel](../visual-transition-reel/SKILL.md) instead.
 
-For **educational explainers** (history, science, nature, how-it-works) with narrator + in-story character dialogue, use [educational-explainer](../verticals/interactive-explainer/SKILL.md) instead of narrator-only tables.
+For **educational explainers** (history, science, nature, how-it-works) with narrator + in-story character dialogue, use [interactive-explainer](../verticals/interactive-explainer/SKILL.md) instead of narrator-only tables.
 
 **Staged generation:** [staged-generation-gate.md](../../../../../references/shared/staged-generation-gate.md) · [workflow-feedback-gates.md](../../../../../references/workflows/workflow-feedback-gates.md)
 

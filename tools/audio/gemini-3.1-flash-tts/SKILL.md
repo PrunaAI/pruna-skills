@@ -1,6 +1,6 @@
 ---
 name: gemini-3.1-flash-tts
-description: Generates narration and voiceover via Replicate google/gemini-3.1-flash-tts (30 voices, style prompts, inline tags). Upload to Pruna as input.audio in the scene anchor triple (image + last_frame_image + audio) on p-video or p-video-avatar.
+description: Use when the user needs narration or voiceover audio for scene-anchor-triple p-video or p-video-avatar jobs via Gemini Flash TTS.
 license: MIT
 metadata:
   version: "0.0.1"

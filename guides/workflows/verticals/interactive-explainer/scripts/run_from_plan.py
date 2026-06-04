@@ -28,6 +28,13 @@ SHARED = _workflows / "_shared" / "scripts"
 sys.path.insert(0, str(SHARED))
 
 from concat_clips import concat_clips, extract_last_frame  # noqa: E402
+from generation_gate import (  # noqa: E402
+    apply_approve_flags,
+    ensure_phase_a_allowed,
+    ensure_phase_b_allowed,
+    load_generation_status,
+    write_generation_status,
+)
 from launch_background_music import generate_bed, mix_bed_under_video, probe_duration_seconds  # noqa: E402
 from p_video_avatar_payload import apply_avatar_negative_prompt  # noqa: E402
 from p_video_payload import (  # noqa: E402
@@ -38,6 +45,7 @@ from p_video_payload import (  # noqa: E402
 )
 from pruna_api import create_prediction, download_file, require_api_key, upload_file  # noqa: E402
 from replicate_api import download_url, require_replicate_token, run_model_prediction  # noqa: E402
+from stills_pipeline import create_all, order_scenes_for_still_deps  # noqa: E402
 
 NARRATION_MODEL = "google/gemini-3.1-flash-tts"
 BED_MODEL = "stability-ai/stable-audio-2.5"
@@ -228,58 +236,6 @@ CHARACTER_STILL_TRIGGERS = (
     "speaks to camera",
     "ready to speak",
 )
-
-
-def poll_all(jobs: list[dict], api_key: str) -> list[dict]:
-    from pruna_api import api_request
-
-    results: list[dict | None] = [None] * len(jobs)
-    pending = {i: job for i, job in enumerate(jobs)}
-    while pending:
-        for i, job in list(pending.items()):
-            status, payload = api_request("GET", job["get_url"], headers={"apikey": api_key})
-            if status >= 400:
-                raise RuntimeError(f"{job['label']} poll failed ({status}): {payload}")
-            data = json.loads(payload)
-            state = data.get("status", "unknown")
-            if state == "succeeded":
-                results[i] = data
-                del pending[i]
-                print(f"{job['label']}: succeeded")
-            elif state == "failed":
-                raise RuntimeError(f"{job['label']} failed: {payload}")
-            else:
-                print(f"{job['label']}: {state}...")
-        if pending:
-            time.sleep(8)
-    return results  # type: ignore[return-value]
-
-
-def create_all(model: str, payloads: list[tuple[str, dict]], api_key: str) -> list[dict]:
-    def submit(label: str, payload: dict) -> dict:
-        create = create_prediction(model, payload, api_key)
-        if create.get("status") == "succeeded":
-            return {"label": label, "get_url": None, "result": create}
-        get_url = create.get("get_url")
-        if not get_url:
-            raise RuntimeError(f"{label} missing get_url: {json.dumps(create)}")
-        return {"label": label, "get_url": get_url, "result": None}
-
-    with ThreadPoolExecutor(max_workers=min(8, len(payloads))) as pool:
-        futures = {pool.submit(submit, label, p): i for i, (label, p) in enumerate(payloads)}
-        ordered: list[dict | None] = [None] * len(payloads)
-        for future in as_completed(futures):
-            ordered[futures[future]] = future.result()
-    jobs = ordered  # type: ignore[assignment]
-    to_poll = [j for j in jobs if j["get_url"]]
-    if to_poll:
-        polled = poll_all(to_poll, api_key)
-        idx = 0
-        for j in jobs:
-            if j["get_url"]:
-                j["result"] = polled[idx]
-                idx += 1
-    return jobs
 
 
 _STILL_META_PREFIX = re.compile(r"^(opening|closing)\s*:\s*", re.IGNORECASE)
@@ -491,32 +447,6 @@ def start_still_base_path(scene: dict, stills: Path, hero: Path) -> Path:
             return ref_path
         print(f"Warning: {scene['id']}: still_from {ref!r} missing — falling back to hero")
     return hero
-
-
-def order_scenes_for_still_deps(scenes: list[dict]) -> list[dict]:
-    """Topological sort so still_from / cast anchors exist before dependents."""
-    by_id = {s["id"]: s for s in scenes}
-    ordered: list[dict] = []
-    visiting: set[str] = set()
-    visited: set[str] = set()
-
-    def visit(s: dict) -> None:
-        sid = s["id"]
-        if sid in visited:
-            return
-        if sid in visiting:
-            return
-        visiting.add(sid)
-        ref = s.get("still_from")
-        if ref and ref in by_id:
-            visit(by_id[ref])
-        visiting.remove(sid)
-        visited.add(sid)
-        ordered.append(s)
-
-    for s in scenes:
-        visit(s)
-    return ordered
 
 
 def ensure_cast_anchor_stills(plan: dict, stills: Path, hero_path: Path, api_key: str) -> None:
@@ -1007,53 +937,6 @@ def validate_plan(plan: dict, scenes: list[dict]) -> None:
             )
 
 
-def load_generation_status(out_dir: Path) -> dict:
-    status_path = out_dir / "generation_status.json"
-    if not status_path.exists():
-        return {"phase_a_approved": False, "phase_b_approved": False}
-    try:
-        data = json.loads(status_path.read_text(encoding="utf-8"))
-    except json.JSONDecodeError:
-        return {"phase_a_approved": False, "phase_b_approved": False}
-    if isinstance(data, list):
-        return {"phase_a_approved": False, "phase_b_approved": False, "scenes": data}
-    data.setdefault("phase_a_approved", False)
-    data.setdefault("phase_b_approved", False)
-    return data
-
-
-def write_generation_status(out_dir: Path, status: dict) -> None:
-    (out_dir / "generation_status.json").write_text(
-        json.dumps(status, indent=2) + "\n", encoding="utf-8"
-    )
-
-
-def ensure_phase_a_allowed(
-    out_dir: Path, *, approve_flag: bool, skip_gate: bool, label: str
-) -> None:
-    if skip_gate or approve_flag:
-        return
-    status = load_generation_status(out_dir)
-    if status.get("phase_a_approved"):
-        return
-    raise SystemExit(
-        f"{label} blocked: review stills in {out_dir / 'stills'}, then re-run with "
-        "--approve-stills or set phase_a_approved in generation_status.json"
-    )
-
-
-def ensure_phase_b_allowed(
-    out_dir: Path, *, approve_flag: bool, skip_gate: bool, label: str
-) -> None:
-    if skip_gate or approve_flag:
-        return
-    status = load_generation_status(out_dir)
-    if status.get("phase_b_approved"):
-        return
-    raise SystemExit(
-        f"{label} blocked: review clips in {out_dir / 'clips'}, then re-run with "
-        "--approve-clips or set phase_b_approved in generation_status.json"
-    )
 
 
 def phase_stills(scenes: list[dict], plan: dict, stills: Path, api_key: str) -> None:

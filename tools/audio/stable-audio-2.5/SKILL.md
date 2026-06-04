@@ -1,6 +1,6 @@
 ---
 name: stable-audio-2.5
-description: Generates instrumental background music via Replicate stability-ai/stable-audio-2.5 for launch reels and mixes it under video with ffmpeg. Use when the user wants light background music, ambient bed, or Stable Audio on a concat launch video.
+description: Use when the user wants light instrumental background music, an ambient bed under a reel, or Stable Audio 2.5 via Replicate.
 license: MIT
 metadata:
   version: "0.0.1"

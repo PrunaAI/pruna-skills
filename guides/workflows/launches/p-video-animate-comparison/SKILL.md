@@ -1,6 +1,6 @@
 ---
 name: p-video-animate-comparison
-description: Motion-transfer slider renders and mixed avatar+animate announcement workflows. Use for p-video-animate slider demos, comparison MP4s, or multi-scene reels with animate beats; canonical workflow is multi-scene-avatar-video.
+description: Use when the user needs p-video-animate slider comparison MP4s, motion-transfer launch demos, or announcement reels with animate beats.
 license: MIT
 metadata:
   version: "0.0.1"

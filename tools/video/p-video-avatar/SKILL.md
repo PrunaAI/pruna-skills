@@ -1,6 +1,6 @@
 ---
 name: p-video-avatar
-description: Generates talking-head video with Pruna P-API model p-video-avatar from a portrait plus voice_script or uploaded audio (voice, resolution, video_prompt, voice_prompt). Use when the user asks for Pruna avatar, lip-sync style video, talking head, or p-video-avatar API usage.
+description: Use when the user asks for Pruna avatar, talking-head, lip-sync-style video, or p-video-avatar API usage.
 license: MIT
 metadata:
   version: "0.0.2"

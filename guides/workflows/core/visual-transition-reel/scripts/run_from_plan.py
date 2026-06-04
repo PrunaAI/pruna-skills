@@ -32,67 +32,17 @@ from generation_gate import (  # noqa: E402
 )
 from launch_background_music import generate_bed, mix_bed_under_video, probe_duration_seconds  # noqa: E402
 from p_video_payload import build_p_video_payload  # noqa: E402
-from pruna_api import create_prediction, download_file, require_api_key, upload_file  # noqa: E402
+from pruna_api import download_file, require_api_key, upload_file  # noqa: E402
 from replicate_api import require_replicate_token  # noqa: E402
+from stills_pipeline import (  # noqa: E402
+    create_all,
+    ensure_end_stills,
+    ensure_hero,
+    ensure_start_stills,
+    style_wrap,
+)
 
 BED_MODEL = "stability-ai/stable-audio-2.5"
-
-
-def poll_all(jobs: list[dict], api_key: str) -> list[dict]:
-    from pruna_api import api_request
-
-    results: list[dict | None] = [None] * len(jobs)
-    pending = {i: job for i, job in enumerate(jobs)}
-    while pending:
-        for i, job in list(pending.items()):
-            status, payload = api_request("GET", job["get_url"], headers={"apikey": api_key})
-            if status >= 400:
-                raise RuntimeError(f"{job['label']} poll failed ({status}): {payload}")
-            data = json.loads(payload)
-            state = data.get("status", "unknown")
-            if state == "succeeded":
-                results[i] = data
-                del pending[i]
-                print(f"{job['label']}: succeeded")
-            elif state == "failed":
-                raise RuntimeError(f"{job['label']} failed: {payload}")
-            else:
-                print(f"{job['label']}: {state}...")
-        if pending:
-            time.sleep(8)
-    return results  # type: ignore[return-value]
-
-
-def create_all(model: str, payloads: list[tuple[str, dict]], api_key: str) -> list[dict]:
-    def submit(label: str, payload: dict) -> dict:
-        create = create_prediction(model, payload, api_key)
-        if create.get("status") == "succeeded":
-            return {"label": label, "get_url": None, "result": create}
-        get_url = create.get("get_url")
-        if not get_url:
-            raise RuntimeError(f"{label} missing get_url: {json.dumps(create)}")
-        return {"label": label, "get_url": get_url, "result": None}
-
-    with ThreadPoolExecutor(max_workers=min(8, len(payloads))) as pool:
-        futures = {pool.submit(submit, label, p): i for i, (label, p) in enumerate(payloads)}
-        ordered: list[dict | None] = [None] * len(payloads)
-        for future in as_completed(futures):
-            ordered[futures[future]] = future.result()
-    jobs = ordered  # type: ignore[assignment]
-    to_poll = [j for j in jobs if j["get_url"]]
-    if to_poll:
-        polled = poll_all(to_poll, api_key)
-        idx = 0
-        for j in jobs:
-            if j["get_url"]:
-                j["result"] = polled[idx]
-                idx += 1
-    return jobs
-
-
-def style_wrap(plan: dict, prompt: str) -> str:
-    bible = plan.get("style_bible", "")
-    return f"{prompt}. {bible}" if bible else prompt
 
 
 def chain_from_previous(scene: dict, index: int) -> bool:
@@ -112,86 +62,6 @@ def scene_duration(scene: dict, plan: dict) -> float:
     if scene.get("duration_seconds") is not None:
         return float(scene["duration_seconds"])
     return float(plan.get("defaults", {}).get("duration_seconds", 5))
-
-
-def ensure_hero(plan: dict, stills: Path, api_key: str) -> Path:
-    hero = stills / "hero.png"
-    if hero.exists():
-        print(f"Reusing hero: {hero}")
-        return hero
-    print("=== Phase 0: p-image hero ===")
-    defaults = plan["defaults"]
-    payload: dict = {
-        "prompt": style_wrap(plan, plan["hero_prompt"]),
-        "aspect_ratio": defaults["aspect_ratio"],
-    }
-    if plan.get("project_seed") is not None:
-        payload["seed"] = plan["project_seed"]
-    job = create_all("p-image", [("hero", payload)], api_key)[0]
-    url = job["result"].get("generation_url")
-    if not url:
-        raise RuntimeError("Hero generation failed")
-    download_file(url, hero, api_key)
-    print(f"Saved hero: {hero}")
-    return hero
-
-
-def ensure_start_stills(scenes: list[dict], plan: dict, stills: Path, api_key: str) -> None:
-    missing = [s for s in scenes if not (stills / f"{s['id']}.png").exists()]
-    if not missing:
-        return
-    hero_url = upload_file(ensure_hero(plan, stills, api_key), api_key)
-    print(f"=== Phase 1: start stills ({len(missing)}) ===")
-    defaults = plan["defaults"]
-    payloads = [
-        (
-            s["id"],
-            {
-                "prompt": style_wrap(plan, s["edit_prompt"]),
-                "images": [hero_url],
-                "aspect_ratio": defaults["aspect_ratio"],
-            },
-        )
-        for s in missing
-    ]
-    jobs = create_all("p-image-edit", payloads, api_key)
-    for scene, job in zip(missing, jobs):
-        url = job["result"].get("generation_url")
-        if not url:
-            raise RuntimeError(f"No start still for {scene['id']}")
-        download_file(url, stills / f"{scene['id']}.png", api_key)
-        print(f"  start: {stills / f'{scene['id']}.png'}")
-
-
-def ensure_end_stills(scenes: list[dict], plan: dict, stills: Path, api_key: str) -> None:
-    missing = [
-        s
-        for s in scenes
-        if s.get("last_frame_edit_prompt") and not (stills / f"{s['id']}_last.png").exists()
-    ]
-    if not missing:
-        return
-    print(f"=== Phase 2: end stills ({len(missing)}) ===")
-    defaults = plan["defaults"]
-    start_urls = {s["id"]: upload_file(stills / f"{s['id']}.png", api_key) for s in missing}
-    payloads = [
-        (
-            f"{s['id']}_last",
-            {
-                "prompt": style_wrap(plan, s["last_frame_edit_prompt"]),
-                "images": [start_urls[s["id"]]],
-                "aspect_ratio": defaults["aspect_ratio"],
-            },
-        )
-        for s in missing
-    ]
-    jobs = create_all("p-image-edit", payloads, api_key)
-    for scene, job in zip(missing, jobs):
-        url = job["result"].get("generation_url")
-        if not url:
-            raise RuntimeError(f"No end still for {scene['id']}")
-        download_file(url, stills / f"{scene['id']}_last.png", api_key)
-        print(f"  end: {stills / f'{scene['id']}_last.png'}")
 
 
 def normalize_clip_for_concat(src: Path, dst: Path) -> Path:

@@ -1,6 +1,6 @@
 ---
 name: music-2.5
-description: Generates full songs with vocals via Replicate minimax/music-2.5 from lyrics and a style prompt. Use when the user wants AI song generation, sung lyrics, music video source audio, or MiniMax Music 2.5.
+description: Use when the user wants AI song generation, sung lyrics, music-video source audio, or MiniMax Music 2.5 on Replicate.
 license: MIT
 metadata:
   version: "0.0.1"
