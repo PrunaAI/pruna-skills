@@ -7,10 +7,10 @@ Works for history, science, nature, how-it-works, children's topics, and more.
 ## Quick start prompts
 
 **Science / nature:**
-> Use the **interactive-explainer** workflow for [topic]. Alternate **narrator** beats (`p-video` + Gemini TTS, scene anchor triple, lines ≤19s) with **character** beats (`p-video-avatar`, expert `voice_script`, lips-in-frame stills). **1080p, 48 fps.** Every `video_prompt`: `OPEN:` / `MID:` (dynamic camera or light — no physics) / `CLOSE:`. Target ~40% character scenes. Pass the [stand-alone test](../../../../references/workflows/interactive-explainer-scenes.md). Hero via **p-image**, stills via **p-image-edit**.
+> Use the **interactive-explainer** workflow for [topic]. Alternate **narrator** beats (`p-video` + Gemini TTS, scene anchor triple, lines ≤19s) with **character** beats (`p-video-avatar`, expert `voice_script`, lips-in-frame stills). **720p, 24 fps** (unless user wants higher delivery). Narrator `video_prompt`: `OPEN:` / `MID:` (camera or light — physics-safe) / `CLOSE:`. Character `video_prompt`: **one continuous take** (slow push-in). **Still prompts: positive only** — plain surfaces, unprinted props, one camera angle; never `no …` or `avoid …` in creative fields (see skill **Positive prompts only**). Use **`still_from`** on character rows after object/B-roll heroes. Target ~40% character scenes. Pass the [stand-alone test](../../../../references/workflows/interactive-explainer-scenes.md).
 
 **History / biography:**
-> Same workflow — one through-line (not a life survey), witness-style `voice_scripts`, Ancaster-quality dialogue. **1080p, 48 fps**, physics-safe motion per [interactive-explainer-motion.md](../../../../references/workflows/interactive-explainer-motion.md).
+> Same workflow — one through-line (not a life survey), witness-style `voice_scripts`, causal chain for events (mechanism → act → response → aftermath). Pick one **visual mode** for the whole film and lock it in `style_bible` and all stills. Close with **three beats**: narrator aftermath (≥3 concrete facts) → final character witness → **`NN_wrap` narrator recap** that answers the hook (bookend stills when possible). **720p, 24 fps**, physics-safe motion per [interactive-explainer-motion.md](../../../../references/workflows/interactive-explainer-motion.md).
 
 **Children's educational:**
 > Same workflow — warm illustrated `style_bible`, friendly guide or kid character, simpler vocabulary, shorter lines.

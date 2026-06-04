@@ -8,15 +8,17 @@ Related: [scene-anchor-triple.md](./scene-anchor-triple.md) · [scene-transition
 
 | Field | Default |
 |-------|---------|
-| `defaults.resolution` | **`1080p`** |
-| `defaults.fps` | **`48`** (narrator `p-video` only; avatar uses `resolution`) |
+| `defaults.resolution` | **`720p`** |
+| `defaults.fps` | **`24`** (narrator `p-video` only; avatar uses `resolution`) |
 | `defaults.aspect_ratio` | `16:9` |
 
 ## Goal
 
 Every scene should **move** — camera, light, atmosphere, or subject — so the viewer stays engaged. Motion must **bridge start still → end still** without relying on **physics-heavy** actions that `p-video` handles poorly.
 
-## Prompt shape (required)
+## Prompt shape
+
+### Narrator (`p-video`) — OPEN / MID / CLOSE required
 
 Write **`video_prompt`** as three beats:
 
@@ -26,8 +28,17 @@ MID: [camera + safe motion developing — the attention hook]
 CLOSE: [settle into end still]
 ```
 
-**Narrator scenes:** camera-led motion (dolly, pan, tilt, push-in, rack-focus feel).  
-**Character scenes:** speaking + subtle push-in, expression shift, light flicker — mouth already moving via avatar.
+Camera-led motion (dolly, pan, tilt, push-in, rack-focus feel).
+
+### Character (`p-video-avatar`) — single continuous take
+
+**Do not** use OPEN/MID/CLOSE on avatar rows — the model treats each beat as a transition and the clip feels cutty.
+
+```text
+Single continuous medium close-up, one very slow push-in over the full clip, speaks directly to camera, steady expression, no cuts, no glances away, minimal head motion
+```
+
+One camera move, steady light. Mouth motion comes from the avatar model.
 
 ## Safe motion (use these)
 
@@ -65,40 +76,43 @@ If the story needs action, **imply it** in the stills and use **camera move + re
 - Start/end stills define composition; **`video_prompt` sells the transition**
 - Prefer **one dominant camera move** in MID — not three unrelated motions
 - Match narration energy: tense scenes → tighter push-in; legacy → slow tilt up
-- At **48 fps**, motion reads smoother — keep moves **slow and deliberate**, not whip pans
+- Keep moves **slow and deliberate**, not whip pans (bump to `48` fps only for final delivery if needed)
 
 ### Character (`p-video-avatar`)
 
-- **`video_prompt`** = camera + performance framing, not plot action
-- Safe: `medium close-up, subtle push-in, speaks directly to camera, soft expression shift`
+- **`video_prompt`** = one continuous shot — camera + framing only, not plot action
+- Safe: `single continuous medium close-up, one very slow push-in, speaks directly to camera, no cuts`
+- Avoid: OPEN/MID/CLOSE beats, `candle flicker`, `expression shift`, `light shifts` (read as transitions)
 - Avoid: `gestures wildly`, `walks across room while talking`, `holds up document`
+- Clip length follows **`voice_script`** — no ~19s TTS cap (that limit is narrator `p-video` only)
 
 ## Examples
 
-### History (Ancaster-style)
+### Narrator (history / science)
 
 ```json
-"video_prompt": "OPEN: hold desk and map. MID: slow push-in as candle flickers, shadow crosses ledger. CLOSE: finger rests on Ancaster — hold end frame."
+"video_prompt": "OPEN: hold wide establishing frame. MID: slow push-in toward key detail in steady light. CLOSE: settle on end composition."
 ```
 
-### Science
+### Narrator (diagram / mechanism)
 
 ```json
-"video_prompt": "OPEN: hold cross-section wide. MID: gentle drift toward glowing magma chamber, heat shimmer in air. CLOSE: settle on bright core — no eruption, no splashing."
+"video_prompt": "OPEN: hold wide subject. MID: gentle drift toward focal detail, subtle atmosphere. CLOSE: hold end frame — no physics action."
 ```
 
-### Character witness
+### Character (any flavor)
 
 ```json
-"video_prompt": "Medium close-up, speaks directly to camera, subtle push-in, moonlight shifts on face, grave witness tone — no hand gestures."
+"video_prompt": "Single continuous medium close-up, one very slow push-in, speaks directly to camera, steady light, full color, no gestures, no cuts."
 ```
 
 ## Plan checklist (before render)
 
-- [ ] Every scene has **OPEN / MID / CLOSE** in `video_prompt`
-- [ ] MID contains **visible motion** (not `OPEN: hold. CLOSE: hold.`)
+- [ ] Every **narrator** scene has **OPEN / MID / CLOSE** in `video_prompt`
+- [ ] **Character** scenes use **one continuous take** wording — no OPEN/MID/CLOSE
+- [ ] Narrator MID contains **visible motion** (not `OPEN: hold. CLOSE: hold.`)
 - [ ] No physics-trap verbs in `video_prompt`
-- [ ] `defaults.resolution` = `1080p`, `defaults.fps` = `48`
+- [ ] `defaults.resolution` = `720p`, `defaults.fps` = `24`
 - [ ] Start/end stills differ enough that camera move has somewhere to go
 
 Runner warns on missing MID beat or physics keywords — see [`run_from_plan.py`](../guides/workflows/verticals/interactive-explainer/scripts/run_from_plan.py) `validate_plan`.

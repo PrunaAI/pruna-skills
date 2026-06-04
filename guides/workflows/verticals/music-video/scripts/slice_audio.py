@@ -23,13 +23,14 @@ def main() -> None:
     args.out.parent.mkdir(parents=True, exist_ok=True)
     duration = args.end - args.start
 
+    # Decode first, then seek — accurate on MP3 (input -ss before -i can drift).
     cmd = [
         "ffmpeg",
         "-y",
-        "-ss",
-        str(args.start),
         "-i",
         str(args.song),
+        "-ss",
+        str(args.start),
         "-t",
         str(duration),
         "-vn",
@@ -37,6 +38,8 @@ def main() -> None:
         "libmp3lame",
         "-q:a",
         "2",
+        "-avoid_negative_ts",
+        "make_zero",
         str(args.out),
     ]
     subprocess.run(cmd, check=True, capture_output=True)

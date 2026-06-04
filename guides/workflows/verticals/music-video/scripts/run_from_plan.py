@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Run ai-music-video plan: song → cuts → stills → clips → assemble."""
+"""Run ai-music-video plan: song → cuts → align → stills → clips → assemble.
+
+Phased execution (default --phase song): see references/shared/staged-generation-gate.md
+"""
 
 from __future__ import annotations
 
@@ -17,6 +20,14 @@ SHARED = _workflows / "_shared" / "scripts"
 sys.path.insert(0, str(SCRIPT_DIR))
 sys.path.insert(0, str(SHARED))
 
+from generation_gate import (  # noqa: E402
+    apply_approve_flags,
+    ensure_phase_a_allowed,
+    ensure_phase_b_allowed,
+    ensure_phase_song_allowed,
+    load_generation_status,
+    write_generation_status,
+)
 from pruna_api import (  # noqa: E402
     download_file,
     require_api_key,
@@ -24,6 +35,7 @@ from pruna_api import (  # noqa: E402
     upload_file,
 )
 from p_video_payload import build_p_video_payload  # noqa: E402
+from cut_timing import build_clips_meta_entry  # noqa: E402
 
 
 def run_script(name: str, args: list[str]) -> None:
@@ -76,6 +88,35 @@ def phase_cuts(plan_path: Path, out_dir: Path, target_sec: float | None) -> Path
     return cuts_path
 
 
+def phase_align(plan_path: Path, out_dir: Path, cuts_path: Path) -> None:
+    song = out_dir / "song.mp3"
+    transcript_path = out_dir / "whisperx_transcript.json"
+    if not song.exists():
+        raise SystemExit(f"Missing {song} — run --phase song first")
+    if not cuts_path.exists():
+        raise SystemExit(f"Missing {cuts_path} — run --phase cuts first")
+
+    plan = json.loads(plan_path.read_text())
+    lyrics_hint = " ".join(plan.get("lyrics", "").split())[:400]
+
+    if not transcript_path.exists():
+        run_script(
+            "transcribe_song.py",
+            [
+                "--song",
+                str(song),
+                "--out",
+                str(transcript_path),
+                "--initial-prompt",
+                lyrics_hint,
+            ],
+        )
+    run_script(
+        "align_lyric_cuts.py",
+        ["--cuts", str(cuts_path), "--transcript", str(transcript_path), "--song", str(song)],
+    )
+
+
 def phase_stills(
     plan_path: Path,
     out_dir: Path,
@@ -106,6 +147,8 @@ def phase_stills(
 
     for cut in data["cuts"]:
         if only and cut["id"] not in only:
+            continue
+        if cut.get("skip_clip"):
             continue
         still_path = stills_dir / f"{cut['id']}.jpeg"
         if still_path.exists() and not only:
@@ -174,6 +217,8 @@ def phase_video(
 
     for cut in data["cuts"]:
         if only and cut["id"] not in only:
+            continue
+        if cut.get("skip_clip"):
             continue
         clip_name = cut.get("clip") or f"{cut['id']}.mp4"
         clip_path = clips_dir / clip_name
@@ -262,13 +307,13 @@ def phase_video(
         if not url:
             raise RuntimeError(f"No video URL for {cut['id']}")
         download_file(url, clip_path, api_key)
-        meta[cut["id"]] = {
-            "model": model,
-            "beat_type": beat,
-            "host_type": host_type,
-            "prediction_id": result.get("id"),
-            "clip": clip_name,
-        }
+        meta[cut["id"]] = build_clips_meta_entry(
+            cut,
+            model=model,
+            host_type=host_type,
+            prediction_id=result.get("id"),
+            clip=clip_name,
+        )
         meta_path.write_text(json.dumps(meta, indent=2) + "\n")
         print(f"Wrote {clip_path} ({model})")
 
@@ -289,7 +334,7 @@ def phase_assemble(plan_path: Path, out_dir: Path, cuts_path: Path) -> None:
             "--out-dir",
             str(out_dir),
             "--output-name",
-            "purple_pruna_rap.mp4",
+            "music_video.mp4",
         ],
     )
 
@@ -300,9 +345,28 @@ def main() -> None:
     parser.add_argument("--out-dir", type=Path, required=True)
     parser.add_argument(
         "--phase",
-        choices=("song", "cuts", "stills", "video", "assemble", "all"),
-        default="all",
+        choices=("song", "cuts", "align", "stills", "video", "assemble", "all"),
+        default="song",
+        help="Generation phase (default: song)",
     )
+    parser.add_argument(
+        "--approve-song",
+        action="store_true",
+        help="Mark song approved; allow stills/align after song phase",
+    )
+    parser.add_argument(
+        "--approve-stills",
+        action="store_true",
+        help="Mark Phase A approved; allow video",
+    )
+    parser.add_argument(
+        "--approve-clips",
+        action="store_true",
+        help="Mark Phase B approved; allow assemble",
+    )
+    parser.add_argument("--yes-skip-song-gate", action="store_true")
+    parser.add_argument("--yes-skip-stills-gate", action="store_true")
+    parser.add_argument("--yes-skip-clips-gate", action="store_true")
     parser.add_argument(
         "--only",
         nargs="+",
@@ -313,21 +377,85 @@ def main() -> None:
     args.out_dir.mkdir(parents=True, exist_ok=True)
     plan = json.loads(args.plan.read_text())
     target = plan.get("target_duration_sec")
+    run_phase = args.phase
+
+    apply_approve_flags(args, args.out_dir)
+    if run_phase == "song" and args.approve_song and not args.approve_stills and not args.approve_clips:
+        if not args.only:
+            return
 
     cuts_path = args.out_dir / "cut_manifest.json"
 
-    if args.phase in ("song", "all"):
+    if run_phase in ("stills", "video", "align", "all"):
+        ensure_phase_song_allowed(
+            args.out_dir,
+            approve_flag=args.approve_song,
+            skip_gate=args.yes_skip_song_gate,
+            label=f"Phase {run_phase}",
+        )
+    if run_phase in ("video", "assemble", "all"):
+        ensure_phase_a_allowed(
+            args.out_dir,
+            approve_flag=args.approve_stills,
+            skip_gate=args.yes_skip_stills_gate,
+            label=f"Phase {run_phase}",
+        )
+    if run_phase in ("assemble", "all"):
+        ensure_phase_b_allowed(
+            args.out_dir,
+            approve_flag=args.approve_clips,
+            skip_gate=args.yes_skip_clips_gate,
+            label="Assembly",
+        )
+
+    if run_phase in ("song", "all"):
         phase_song(args.plan, args.out_dir)
-    if args.phase in ("cuts", "all"):
+        status = load_generation_status(args.out_dir)
+        status["phase_song_approved"] = False
+        status["phase_a_approved"] = False
+        status["phase_b_approved"] = False
+        write_generation_status(args.out_dir, status)
+        if run_phase == "song":
+            print(f"Phase song complete — listen to {args.out_dir / 'song.mp3'}")
+            print("Reply with fixes or re-run with --approve-song --phase align")
+            return
+
+    if run_phase in ("cuts", "all"):
         cuts_path = phase_cuts(args.plan, args.out_dir, target)
-    elif not cuts_path.exists():
+    elif not cuts_path.exists() and run_phase not in ("song",):
         raise SystemExit("Missing cut_manifest.json — run --phase cuts")
-    if args.phase in ("stills", "all"):
+
+    if run_phase in ("align", "all"):
+        phase_align(args.plan, args.out_dir, cuts_path)
+        if run_phase == "align":
+            print(f"Phase align complete — review {cuts_path} alignment_stats")
+            print("Re-run with --approve-song --phase stills when ready")
+            return
+
+    if run_phase in ("stills", "all"):
         phase_stills(args.plan, args.out_dir, cuts_path, only=args.only)
-    if args.phase in ("video", "all"):
+        status = load_generation_status(args.out_dir)
+        status["phase_a_approved"] = False
+        status["phase_b_approved"] = False
+        write_generation_status(args.out_dir, status)
+        if run_phase == "stills":
+            print(f"Phase stills complete — review {args.out_dir / 'stills'}")
+            print("Reply with fixes or re-run with --approve-stills --phase video")
+            return
+
+    if run_phase in ("video", "all"):
         phase_video(args.plan, args.out_dir, cuts_path, only=args.only)
-    if args.phase in ("assemble", "all"):
+        status = load_generation_status(args.out_dir)
+        status["phase_b_approved"] = False
+        write_generation_status(args.out_dir, status)
+        if run_phase == "video":
+            print(f"Phase video complete — review {args.out_dir / 'clips'}")
+            print("Reply with fixes or re-run with --approve-clips --phase assemble")
+            return
+
+    if run_phase in ("assemble", "all"):
         phase_assemble(args.plan, args.out_dir, cuts_path)
+        print(f"Done! {args.out_dir / 'music_video.mp4'}")
 
 
 if __name__ == "__main__":

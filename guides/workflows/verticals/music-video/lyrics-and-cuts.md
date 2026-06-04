@@ -50,12 +50,20 @@ python3 guides/workflows/verticals/music-video/scripts/parse_lyric_cuts.py \
   --plan output/my-mv/music_video_plan.json \
   --out output/my-mv/cut_manifest.json
 
-# After song exists — proportional timing (refine by ear)
+# After song exists — proportional timing (fallback only)
 python3 guides/workflows/verticals/music-video/scripts/parse_lyric_cuts.py \
   --plan output/my-mv/music_video_plan.json \
   --song output/my-mv/song.mp3 \
   --out output/my-mv/cut_manifest.json
+
+# Preferred — WhisperX word-level alignment on the rendered song
+python3 guides/workflows/verticals/music-video/scripts/run_from_plan.py \
+  --plan output/my-mv/music_video_plan.json \
+  --out-dir output/my-mv \
+  --phase align
 ```
+
+See [whisperx](../../../../tools/audio/whisperx/SKILL.md) and `align_lyric_cuts.py`.
 
 ### Default beat assignment
 
@@ -68,9 +76,11 @@ python3 guides/workflows/verticals/music-video/scripts/parse_lyric_cuts.py \
 
 Override any cut in the plan with explicit `"beat_type": "performance" | "broll"`.
 
-## Refining timings (human-in-the-loop)
+## Refining timings
 
-Proportional allocation by character count is a **first pass only**. After generating the song:
+**Preferred:** run `--phase align` after the song exists. [WhisperX](https://replicate.com/victor-upmeet/whisperx) transcribes the rendered MP3 with word-level timestamps; `align_lyric_cuts.py` maps each planned lyric line to a measured span.
+
+**Fallback:** proportional allocation by character count is a rough first pass only. After generating the song:
 
 1. Listen with the cut manifest open.
 2. Adjust `start_sec` / `end_sec` on each cut so clips end **between** lines, not inside words.

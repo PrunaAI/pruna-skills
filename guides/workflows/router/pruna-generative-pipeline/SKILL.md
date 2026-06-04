@@ -22,7 +22,7 @@ Ask the user which **recipe** fits (or hybrid). Capture answers before any `POST
 |-------|-----------|
 | **Recipe** | Which row in the routing table below (or combination)? |
 | **Deliverable** | Stills only, video clip(s), avatars, or mixed? |
-| **Aspect / resolution** | e.g. `9:16` vs `16:9`; `720p`/`1080p` for video; draft vs final? |
+| **Aspect / resolution** | e.g. `9:16` vs `16:9`; video default **`720p`** + **`24` fps** unless user wants `1080p`/`48` or draft preview? |
 | **References** | Files to upload to `/v1/files` (URLs only in predictions)? |
 | **Style lock** | One **style bible** sentence for technical consistency (aspect, no text)? Per-scene **`visual_style_tag`** for deliberate variety (anime, clay, Disney 3D, cyberpunk, etc.) — [visual-variety-bible.md](../../../../references/shared/visual-variety-bible.md) |
 | **Character / scenes** | Character sheet (age, look, realism, personality)? Per-scene **angle, setting, emotion, lighting** deltas? Locked **`seed`**? Cast diversity on launch reels? |
@@ -33,8 +33,9 @@ Ask the user which **recipe** fits (or hybrid). Capture answers before any `POST
 
 1. **Draft** any scripts, beats, or prompts that the user must approve in **natural, human language** (spoken wording for VO; clear intent per scene otherwise).
 2. **Pause** and obtain **explicit confirmation** (“approve”, “go”, “run it”) before the first upload or **`POST /v1/predictions`**. If the user revises copy or cast, re-confirm when the change matters for cost or outcome.
-3. **Write** a **runnable generation package**—script or phased API steps—that matches the approved plan **exactly**. Use **async parallel fan-out** within each phase (see [parallel-execution.md](../../../../references/shared/parallel-execution.md)); avoid serial scene-by-scene execution when lanes are independent.
-4. **Execute** that package when possible (**`PRUNA_API_KEY`**, network). Prefer **subagents per scene lane** (still pipeline or avatar job) when the host supports parallel agents. If execution is not possible here, deliver the same artifact for local runs.
+3. **Staged execution** — after plan approval: stills only → user approves → audio prep (TTS / song) when applicable → user approves → video → user approves clips → assembly and final audio (bed). See [staged-generation-gate.md](../../../../references/shared/staged-generation-gate.md).
+4. **Write** a **runnable generation package**—script or phased API steps—that matches the approved plan **exactly**. Use **async parallel fan-out** within each phase (see [parallel-execution.md](../../../../references/shared/parallel-execution.md)); avoid serial scene-by-scene execution when lanes are independent.
+5. **Execute** that package when possible (**`PRUNA_API_KEY`**, network). Prefer **subagents per scene lane** (still pipeline or avatar job) when the host supports parallel agents. If execution is not possible here, deliver the same artifact for local runs.
 
 Deep avatar workflows already spell out cast ledgers, hero reuse, and read-throughs in [multi-scene-avatar-video](../core/avatar-multi-scene/SKILL.md) and [single-scene-avatar-video](../core/avatar-single-scene/SKILL.md); defer to those when recipe **G** or **H** involves **`p-video-avatar`**.
 

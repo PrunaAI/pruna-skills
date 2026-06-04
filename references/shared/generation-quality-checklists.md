@@ -22,7 +22,7 @@ Maintenance rule: keep tool/guide mapping only in this file to avoid link drift.
 
 - Goal and acceptance criteria are explicit (what "good" looks like is written down).
 - Input assets are valid and licensed (URL/file reachable, rights cleared).
-- Prompt and settings match the intended output format (`aspect_ratio`, duration, resolution, style lock).
+- Prompt and settings match the intended output format (`aspect_ratio`, duration, resolution, style lock). **Video default:** `720p`, `24` fps unless the brief asks for final `1080p` / `48`.
 - Output contains no accidental watermarks, UI overlays, or stray text unless requested.
 - Brand, legal, and safety constraints are satisfied before handoff.
 - Manifest/log captures model, input fields, prediction id, and output URL for reproducibility.
@@ -42,7 +42,7 @@ Maintenance rule: keep tool/guide mapping only in this file to avoid link drift.
 
 Before generation on comparison or launch reels, run [visual-variety-bible.md](./visual-variety-bible.md) **Variety checklist** — cast diversity, distinct backgrounds, camera angles, lighting, and style tags.
 
-For phased human review before expensive video jobs, see [staged-generation-gate.md](./staged-generation-gate.md).
+For phased human review before expensive video jobs, see [staged-generation-gate.md](./staged-generation-gate.md) and the per-skill index [workflow-feedback-gates.md](../workflows/workflow-feedback-gates.md).
 
 ## Workflow note
 

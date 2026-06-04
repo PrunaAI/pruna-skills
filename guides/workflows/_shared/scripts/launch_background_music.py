@@ -114,7 +114,7 @@ def mix_bed_under_video(
     if video_has_audio(video_path):
         filter_complex = (
             f"[1:a]volume={vol},aloop=loop=-1:size=2e+09[bed];"
-            f"[0:a][bed]amix=inputs=2:duration=first:dropout_transition=0[aout]"
+            f"[0:a][bed]amix=inputs=2:duration=first:dropout_transition=0:normalize=0[aout]"
         )
         cmd = [
             ffmpeg,
@@ -135,7 +135,6 @@ def mix_bed_under_video(
             "aac",
             "-b:a",
             "192k",
-            "-shortest",
             str(out_path),
         ]
     else:

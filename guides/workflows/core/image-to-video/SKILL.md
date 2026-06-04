@@ -9,6 +9,18 @@ metadata:
 
 One **`p-video`** prediction. See [p-video](../../../../tools/video/p-video/SKILL.md), [scene-anchor-triple.md](../../../../../references/video/scene-anchor-triple.md), and [references/shared/pruna-api.md](../../../../../references/shared/pruna-api.md).
 
+**Staged generation:** [staged-generation-gate.md](../../../../../references/shared/staged-generation-gate.md) · [workflow-feedback-gates.md](../../../../../references/workflows/workflow-feedback-gates.md)
+
+## Feedback gates (required)
+
+| Phase | What to show | Proceed when |
+|-------|--------------|--------------|
+| **0 — Plan** | Mode, motion prompt, frame plan | **approve plan** |
+| **A — Stills** | Start + end stills | **approve stills** |
+| **A2 — TTS** | Narration MP3 (triple mode) — listen | Line OK |
+| **B — Video** | `p-video` clip | User accepts |
+| **D — Bed** | Optional post-mux bed | User accepts |
+
 ## Intake: ask before generating
 
 **Do not** call `POST /v1/predictions` until these are answered and logged:
@@ -19,7 +31,7 @@ One **`p-video`** prediction. See [p-video](../../../../tools/video/p-video/SKIL
 | **Creative** | Motion `prompt` only — what happens between first and last frame? One paragraph max. |
 | **Frames** | Start still (upload or `p-image-edit`)? End still (`last_frame_edit_prompt`)? Part of a longer **`frame_chain`**? |
 | **Audio** | [Gemini TTS](../../../../tools/audio/gemini-3.1-flash-tts/SKILL.md) → upload → **`input.audio`** (preferred). Optional [Stable Audio](../../../../tools/audio/stable-audio-2.5/SKILL.md) bed **after** render. Post-mux is fallback only — [audio-post-production.md](../../../../../references/audio/audio-post-production.md). |
-| **Format** | `duration` only when **no** `audio`; `resolution` (`720p` / `1080p`); `fps` (24 / 48); `aspect_ratio` if text-only |
+| **Format** | Default **`720p`**, **`24` fps**; `duration` only when **no** `audio`; override `resolution` / `fps` / `aspect_ratio` when user wants final delivery |
 | **Draft** | `draft: true` for preview or `false` for final? |
 | **Repro** | Fixed `seed`? |
 | **Delivery** | Async (production); `Try-Sync: true` only for quick tests |

@@ -18,4 +18,6 @@ guides/workflows/
 
 **Do not delete the router skills** — they are the intake entrypoints, not duplicates of verticals. `documentary-explainer` was removed; use `interactive-explainer` with `flavor: history_biography`.
 
+**Human-in-the-loop:** Every workflow uses [staged-generation-gate.md](../../references/shared/staged-generation-gate.md). Per-skill commands: [workflow-feedback-gates.md](../../references/workflows/workflow-feedback-gates.md).
+
 Install: `./scripts/install_skill.sh <folder-name>` (searches `router/`, `core/`, `verticals/`, `launches/`).

@@ -3,13 +3,13 @@ name: p-video-avatar
 description: Generates talking-head video with Pruna P-API model p-video-avatar from a portrait plus voice_script or uploaded audio (voice, resolution, video_prompt, voice_prompt). Use when the user asks for Pruna avatar, lip-sync style video, talking head, or p-video-avatar API usage.
 license: MIT
 metadata:
-  version: "0.0.1"
+  version: "0.0.2"
   pruna_model: p-video-avatar
 ---
 
 # p-video-avatar (Pruna)
 
-Talking-head video from one image plus **either** `voice_script` **or** `audio` (if both, audio wins). Full parameters: [p-video-avatar model docs](https://docs.api.pruna.ai/guides/models/p-video-avatar).
+Talking-head video from one image plus **either** `voice_script` **or** `audio` (if both, audio wins). Full parameters: [P-Video-Avatar (Pruna docs)](https://docs.pruna.ai/en/stable/docs_pruna_endpoints/performance_models/p-video-avatar.html).
 
 Shared HTTP patterns: [references/shared/pruna-api.md](../../references/shared/pruna-api.md) (upload, [poll](#poll), [download](#download))
 
@@ -66,10 +66,41 @@ Plus **one of**:
 ## Common optional fields
 
 - `voice` (default `Zephyr (Female)`); see model doc for full voice list
-- `resolution`: `720p` or `1080p`
+- `resolution`: `720p` (default) or `1080p`
 - `video_prompt` (default `The person is talking.`)
 - `voice_prompt` (style / tone; keep short—can leak into performance if too verbose)
 - `seed`, `disable_safety_filter`, `disable_prompt_upsampling`
+- `negative_prompt` + `negative_prompt_strength` — **experimental** text/overlay suppression (see below)
+
+## Negative prompt (suppress on-screen text)
+
+Pruna exposes **experimental** negative prompting on `p-video-avatar` to reduce burned-in subtitles, captions, and other text artifacts — especially when the start frame came from a still that tempted the model toward labels or signage.
+
+| Field | Default | Rule |
+|-------|---------|------|
+| `negative_prompt` | `""` | Comma-separated elements to **suppress** — not things you want in frame |
+| `negative_prompt_strength` | `0` | **Both** must be set: non-empty prompt **and** strength **> 0**, or the API ignores them |
+
+**Starter `negative_prompt` (text triggers):**
+
+```text
+subtitles, captions, on-screen text, burned-in text, watermark, logo, typography, letters, words, readable signage, UI overlay, lower third, chyron, title card, price tag, packaging label, menu text
+```
+
+Start `negative_prompt_strength` around **0.3–0.4** and tune per asset. Higher values can drift identity, motion, or background — increase gradually.
+
+**Still-side prevention (primary):** positive-only still lines (`plain unmarked walls`, `unprinted props`) — never `no text` or `avoid signage` in creative prompts. `negative_prompt` on the API is a **suppression token list** (nouns), not creative wording. Use it as a safety net, not a substitute for clean stills.
+
+**Workflow plans:** interactive-explainer runner applies defaults from `plan.defaults.avatar_negative_prompt` / `avatar_negative_prompt_strength`, with optional per-scene overrides (`negative_prompt`, `negative_prompt_strength`). Helper: [`p_video_avatar_payload.py`](../../../guides/workflows/_shared/scripts/p_video_avatar_payload.py).
+
+**Disable for a scene:** set `"negative_prompt_strength": 0` on that scene row.
+
+```json
+"defaults": {
+  "avatar_negative_prompt": "subtitles, captions, on-screen text, watermark, logo, typography, letters, words",
+  "avatar_negative_prompt_strength": 0.35
+}
+```
 
 ## Example: async (recommended — use for all production)
 
@@ -87,9 +118,11 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
       "voice": "Puck (Male)",
       "voice_language": "English (US)",
       "voice_prompt": "Natural conversational tone — relaxed pacing, real pauses.",
-      "resolution": "1080p",
+      "resolution": "720p",
       "seed": 482901,
-      "video_prompt": "Medium close-up speaking directly to lens, subtle push-in"
+      "video_prompt": "Medium close-up speaking directly to lens, subtle push-in",
+      "negative_prompt": "subtitles, captions, on-screen text, watermark, logo, typography, letters, words",
+      "negative_prompt_strength": 0.35
     }
   }'
 ```
@@ -109,7 +142,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
       "voice": "Puck (Male)",
       "voice_language": "English (US)",
       "voice_prompt": "Natural conversational tone — like a founder on LinkedIn, relaxed pacing, real pauses, honest not salesy.",
-      "resolution": "1080p",
+      "resolution": "720p",
       "seed": 482901,
       "video_prompt": "Medium close-up speaking directly to lens, subtle push-in, natural head motion, warm confident energy"
     }
@@ -130,7 +163,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
       "image": "https://api.pruna.ai/v1/files/PORTRAIT_START",
       "last_frame_image": "https://api.pruna.ai/v1/files/PORTRAIT_END",
       "audio": "https://api.pruna.ai/v1/files/NARRATION_ID",
-      "resolution": "1080p",
+      "resolution": "720p",
       "video_prompt": "Medium close-up, natural head motion matching narration"
     }
   }'

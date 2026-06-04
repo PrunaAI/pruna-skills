@@ -156,6 +156,7 @@ def concat_clips(
             dur_a = probe_duration(current)
             fade = min(fade, dur_a * 0.15, probe_duration(nxt) * 0.15)
             offset = max(0.0, dur_a - fade)
+            # Audio must crossfade too — hard concat + xfade video desyncs dialogue and music.
             subprocess.run(
                 [
                     ffmpeg,
@@ -166,7 +167,7 @@ def concat_clips(
                     str(nxt),
                     "-filter_complex",
                     f"[0:v][1:v]xfade=transition=fade:duration={fade}:offset={offset}[v];"
-                    f"[0:a][1:a]concat=n=2:v=0:a=1[a]",
+                    f"[0:a][1:a]acrossfade=d={fade}:c1=tri:c2=tri[a]",
                     "-map",
                     "[v]",
                     "-map",

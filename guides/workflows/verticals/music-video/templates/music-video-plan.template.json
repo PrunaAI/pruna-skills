@@ -4,7 +4,7 @@
   "continuity": "same_singer",
   "hero_still": null,
   "aspect_ratio": "16:9",
-  "resolution": "1080p",
+  "resolution": "720p",
   "style_bible": "Indie pop music video, warm golden-hour palette, shallow depth of field, photoreal singer, cinematic B-roll inserts. 16:9 single subject one frame on performance stills.",
   "cast": {
     "name": "Maya",
@@ -28,7 +28,7 @@
       "lines": ["(Soft piano, building slowly)"],
       "still_prompt": "Empty indie rehearsal room at golden hour, warm sunlight through tall windows, piano silhouette, shallow depth of field, cinematic wide shot",
       "video_prompt": "Slow dolly push-in toward window light, dust motes in sun beams, no people",
-      "notes": "Fill start_sec/end_sec after parse_lyric_cuts.py --song"
+      "notes": "Fill start_sec/end_sec after --phase align (WhisperX)"
     },
     {
       "id": "01_2",

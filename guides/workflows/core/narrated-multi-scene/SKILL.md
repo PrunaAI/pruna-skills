@@ -15,6 +15,20 @@ For **visual transitions without narration**, use [scene-transition-video](../vi
 
 For **educational explainers** (history, science, nature, how-it-works) with narrator + in-story character dialogue, use [educational-explainer](../verticals/interactive-explainer/SKILL.md) instead of narrator-only tables.
 
+**Staged generation:** [staged-generation-gate.md](../../../../../references/shared/staged-generation-gate.md) · [workflow-feedback-gates.md](../../../../../references/workflows/workflow-feedback-gates.md)
+
+## Feedback gates (required)
+
+| Phase | What to show | Proceed when |
+|-------|--------------|--------------|
+| **0 — Plan** | Scene table, narration lines, `style_bible` | **approve plan** |
+| **A — Stills** | Hero + start/end stills per scene | **approve stills** |
+| **A2 — TTS** | `audio/narration_*.mp3` per scene — listen | Lines OK |
+| **B — Video** | `p-video` clips with embedded VO | **approve clips** |
+| **D — Bed** | Optional Stable Audio under concat | User accepts |
+
+Execute phases manually or with phased curl — no bundled runner. **Never** batch `p-video` before still and TTS review.
+
 ## Intake: ask before generating
 
 **Do not** start scene 1 until the **whole** scene plan exists in writing (manifest or table):

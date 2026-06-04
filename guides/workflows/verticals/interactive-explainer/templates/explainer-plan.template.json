@@ -1,6 +1,6 @@
 {
   "title": "How Volcanoes Erupt — Educational Explainer",
-  "hero_prompt": "Cinematic educational documentary still, active volcano with glowing magma chamber visible through rock, photoreal science visualization, soft atmospheric haze, 16:9 single frame",
+  "hero_prompt": "Cinematic photoreal volcano with glowing magma chamber visible through rock, science visualization, soft atmospheric haze, 16:9 one camera angle",
   "project_seed": 100001,
   "frame_chain_mode": "parallel_vignettes",
   "assembly": {
@@ -8,11 +8,13 @@
     "hard_cut_crossfade_seconds": 0
   },
   "defaults": {
-    "resolution": "1080p",
-    "fps": 48,
-    "aspect_ratio": "16:9"
+    "resolution": "720p",
+    "fps": 24,
+    "aspect_ratio": "16:9",
+    "avatar_negative_prompt": "subtitles, captions, on-screen text, burned-in text, watermark, logo, typography, letters, words, readable signage, UI overlay, lower third, chyron, title card",
+    "avatar_negative_prompt_strength": 0.35
   },
-  "style_bible": "Cinematic science documentary, photoreal natural environments, clear focal subject, soft 35mm grain, educational not sensational, 16:9, no text overlays, no cartoon",
+  "style_bible": "Cinematic science documentary, photoreal natural environments, clear focal subject, one camera angle, soft 35mm grain, warm saturated full color, 16:9, plain unmarked surfaces, matte unprinted props, natural daylight",
   "narration": {
     "enabled": true,
     "voice": "Charon",
@@ -30,7 +32,7 @@
       "persona_gender": "female",
       "voice": "Zephyr (Female)",
       "voice_language": "English (US)",
-      "voice_prompt": "Enthusiastic field geologist, first-person expert, clear lip sync, accessible not academic",
+      "voice_prompt": "Enthusiastic field geologist, first-person expert, clear lip sync, accessible plain-language delivery",
       "character_descriptor": "woman, Latina geologist, 40s, field gear, documentary realism"
     }
   },
@@ -42,15 +44,15 @@
     "enabled": true,
     "model": "stability-ai/stable-audio-2.5",
     "volume": 0.08,
-    "prompt": "Documentary science score, sparse piano and low strings, 70 BPM, no vocals, restrained wonder"
+    "prompt": "Documentary science score, sparse piano and low strings, 70 BPM, instrumental only, restrained wonder"
   },
   "scenes": [
     {
       "id": "01_hook",
       "type": "narrator",
       "chain_from_previous": false,
-      "edit_prompt": "OPENING: Wide aerial of dormant volcanic peak at dawn, educational documentary still, serene but ominous",
-      "last_frame_edit_prompt": "CLOSING: Same peak, closer on steam vent wisps, golden light, educational end frame",
+      "edit_prompt": "Wide aerial of dormant volcanic peak at dawn, photoreal science visualization, serene but ominous, one camera angle",
+      "last_frame_edit_prompt": "Volcanic peak closer on steam vent wisps, golden light, one camera angle",
       "video_prompt": "OPEN: hold wide aerial. MID: slow drift toward steam vents, dawn light brightens on ridge. CLOSE: settle on rising vapor."
     },
     {
@@ -65,8 +67,8 @@
       "id": "03_mechanism",
       "type": "narrator",
       "chain_from_previous": false,
-      "edit_prompt": "OPENING: Cross-section cutaway of volcano interior, magma chamber glowing, educational documentary visualization",
-      "last_frame_edit_prompt": "CLOSING: Same cross-section, pressure lines implied, chamber brighter, educational end frame",
+      "edit_prompt": "Volcano interior diagram with glowing magma chamber, photoreal science visualization, one camera angle",
+      "last_frame_edit_prompt": "Volcano interior diagram, chamber brighter, pressure implied, one camera angle",
       "video_prompt": "OPEN: hold cross-section. MID: gentle push into chamber glow, heat shimmer in air. CLOSE: hold bright core."
     },
     {
@@ -81,8 +83,8 @@
       "id": "05_takeaway",
       "type": "narrator",
       "chain_from_previous": false,
-      "edit_prompt": "OPENING: Lush green slopes on old volcanic caldera, educational documentary wide, life after eruption",
-      "last_frame_edit_prompt": "CLOSING: Same landscape, sun breaking through clouds, hopeful end frame",
+      "edit_prompt": "Lush green slopes on old volcanic caldera, photoreal wide landscape, life after eruption, one camera angle",
+      "last_frame_edit_prompt": "Volcanic caldera landscape, sun breaking through clouds, hopeful mood, one camera angle",
       "video_prompt": "OPEN: slow pan across green caldera. MID: light breaks through clouds. CLOSE: hold hopeful wide."
     }
   ]

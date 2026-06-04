@@ -89,3 +89,81 @@ def download_url(url: str, destination: Path) -> None:
     destination.parent.mkdir(parents=True, exist_ok=True)
     with urllib.request.urlopen(url, timeout=600) as response:
         destination.write_bytes(response.read())
+
+
+def upload_file(path: Path, token: str) -> str:
+    """Upload a local file to Replicate; return the file GET URL for model inputs."""
+    import mimetypes
+
+    content_type = mimetypes.guess_type(path.name)[0] or "application/octet-stream"
+    boundary = "----replicate-boundary"
+    body = (
+        f"--{boundary}\r\n"
+        f'Content-Disposition: form-data; name="content"; filename="{path.name}"\r\n'
+        f"Content-Type: {content_type}\r\n\r\n"
+    ).encode("utf-8") + path.read_bytes() + f"\r\n--{boundary}--\r\n".encode("utf-8")
+    status, payload = api_request(
+        "POST",
+        "https://api.replicate.com/v1/files",
+        headers={
+            "Authorization": f"Bearer {token}",
+            "Content-Type": f"multipart/form-data; boundary={boundary}",
+        },
+        data=body,
+        timeout=600,
+    )
+    if status >= 400:
+        raise RuntimeError(f"Replicate file upload failed ({status}): {payload}")
+    data = json.loads(payload)
+    url = data.get("urls", {}).get("get")
+    if not url:
+        raise RuntimeError(f"Replicate file upload missing URL: {payload}")
+    return url
+
+
+def run_version_prediction(
+    version: str,
+    input_payload: dict,
+    token: str,
+    *,
+    label: str,
+    timeout_seconds: int = 600,
+) -> dict:
+    """Create a prediction pinned to a model version hash."""
+    status, payload = api_request(
+        "POST",
+        "https://api.replicate.com/v1/predictions",
+        headers={
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/json",
+        },
+        data=json.dumps({"version": version, "input": input_payload}).encode("utf-8"),
+    )
+    if status >= 400:
+        raise RuntimeError(f"{label} create failed ({status}): {payload}")
+    data = json.loads(payload)
+    get_url = data.get("urls", {}).get("get")
+    if not get_url:
+        raise RuntimeError(f"{label} missing poll URL: {payload}")
+    deadline = time.time() + timeout_seconds
+    last_state = ""
+    while time.time() < deadline:
+        status, payload = api_request(
+            "GET",
+            get_url,
+            headers={"Authorization": f"Bearer {token}"},
+        )
+        if status >= 400:
+            raise RuntimeError(f"{label} poll failed ({status}): {payload}")
+        data = json.loads(payload)
+        state = data.get("status", "unknown")
+        if state != last_state:
+            print(f"{label}: {state}...")
+            sys.stdout.flush()
+            last_state = state
+        if state == "succeeded":
+            return data
+        if state in ("failed", "canceled"):
+            raise RuntimeError(f"{label} {state}: {payload}")
+        time.sleep(4)
+    raise TimeoutError(f"{label} timed out after {timeout_seconds}s")

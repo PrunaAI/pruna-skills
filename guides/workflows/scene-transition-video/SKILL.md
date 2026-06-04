@@ -9,22 +9,13 @@ metadata:
 
 Each scene = one **`p-video`** job steered by **two stills** and a **transition prompt**. Assembly is **outside** Pruna (ffmpeg concat). Narration is **optional** — default mode is visual-only (scene anchor **pair**).
 
-Canonical spec: [scene-anchor-pair.md](../../../../../references/video/scene-anchor-pair.md)
+Canonical spec: [scene-anchor-pair.md](../../../references/scene-anchor-pair.md)
 
-See [p-video](../../../../tools/video/p-video/SKILL.md), [p-image](../../../../tools/image/p-image/SKILL.md), [p-image-edit](../../../../tools/image/p-image-edit/SKILL.md), [parallel-execution.md](../../../../../references/shared/parallel-execution.md), and [references/shared/pruna-api.md](../../../../../references/shared/pruna-api.md).
+See [p-video](../../../tools/video/p-video/SKILL.md), [p-image](../../../tools/image/p-image/SKILL.md), [p-image-edit](../../../tools/image/p-image-edit/SKILL.md), [parallel-execution.md](../../../references/parallel-execution.md), and [references/pruna-api.md](../../../references/pruna-api.md).
 
-For narrated films (pair + TTS audio), use [multi-scene-ai-video](../narrated-multi-scene/SKILL.md) instead.
+> **Canonical skill:** [visual-transition-reel](../core/visual-transition-reel/SKILL.md) — phased runner with `--approve-stills` / `--approve-clips`.
 
-**Staged generation:** [staged-generation-gate.md](../../../../../references/shared/staged-generation-gate.md) · [workflow-feedback-gates.md](../../../../../references/workflows/workflow-feedback-gates.md). Default runner **`--phase stills`**.
-
-## Feedback gates (required)
-
-| Phase | What to show | Proceed when |
-|-------|--------------|--------------|
-| **0 — Plan** | Scene table, transition prompts, `style_bible` | **approve plan** |
-| **A — Stills** | Hero + start/end PNGs | **approve stills** |
-| **B — Video** | `clips/*.mp4` | **approve clips** |
-| **D — Bed** | Final after concat + optional bed | User accepts |
+For narrated films (pair + TTS audio), use [multi-scene-ai-video](../core/narrated-multi-scene/SKILL.md) instead.
 
 ## Intake: ask before generating
 
@@ -37,7 +28,7 @@ For narrated films (pair + TTS audio), use [multi-scene-ai-video](../narrated-mu
 | **Continuity** | Per scene: **`chain_from_previous`** only when motion continues. Otherwise composed OPENING still + hard cut. |
 | **Stills source** | Generate via **`p-image`** hero + **`p-image-edit`**, or user-supplied photo pairs? |
 | **Global** | `style_bible`? `aspect_ratio`? `project_seed`? `frame_chain_mode` (`extract_last_frame` vs `parallel_vignettes`)? |
-| **Audio** | Native SFX only (default), optional [stable-audio-2.5](../../../../tools/audio/stable-audio-2.5/SKILL.md) bed in post, or upgrade to triple + TTS? |
+| **Audio** | Native SFX only (default), optional [stable-audio-2.5](../../../tools/audio/stable-audio-2.5/SKILL.md) bed in post, or upgrade to triple + TTS? |
 | **Assembly** | Concat order; chain crossfade (~0.12–0.15s) vs hard cut (0)? Target total duration? |
 
 Ask follow-ups until every scene row has enough to build `input` without guessing.
@@ -113,7 +104,7 @@ Adjust transition prompt, stills, or duration; re-run **that scene only** (`--on
 
 1. **Normalize** clip audio (48 kHz stereo) if concat fails on mixed formats
 2. **Concat** via [`concat_clips.py`](../_shared/scripts/concat_clips.py) with per-join crossfades
-3. **Optional bed** — [stable-audio-2.5](../../../../tools/audio/stable-audio-2.5/SKILL.md) under native SFX
+3. **Optional bed** — [stable-audio-2.5](../../../tools/audio/stable-audio-2.5/SKILL.md) under native SFX
 
 ### Phase 6 — Manifest
 
@@ -133,22 +124,17 @@ CLOSE: [how motion settles into end frame]
 
 ## Portable runner
 
-Default **`--phase stills`**. Phased flow:
-
 ```bash
-mkdir -p output/core/visual-transition-reel/my-transitions/{stills,clips}
-cp guides/workflows/core/visual-transition-reel/templates/transition-plan.template.json \
-   output/core/visual-transition-reel/my-transitions/plan.json
+mkdir -p output/my-transitions/{stills,clips}
+cp guides/workflows/scene-transition-video/templates/transition-plan.template.json \
+   output/my-transitions/plan.json
 
-python3 guides/workflows/core/visual-transition-reel/scripts/run_from_plan.py \
-  --plan output/core/visual-transition-reel/my-transitions/plan.json \
-  --out-dir output/core/visual-transition-reel/my-transitions
-
-python3 .../run_from_plan.py --plan ... --out-dir ... --approve-stills --phase video
-python3 .../run_from_plan.py --plan ... --out-dir ... --approve-clips --phase assemble
+python3 guides/workflows/scene-transition-video/scripts/run_from_plan.py \
+  --plan output/my-transitions/plan.json \
+  --out-dir output/my-transitions
 ```
 
-Flags: `--phase hero|stills|video|assemble|all` · `--approve-stills` · `--approve-clips` · `--assemble-only` · `--only SCENE_ID …` · `--regen-stills` · `--regen-clips` · `--skip-assembly`
+Flags: `--phase hero|stills|video|assemble|all` · `--only SCENE_ID …` · `--regen-stills` · `--regen-clips` · `--skip-assembly`
 
 Requires `PRUNA_API_KEY`. Optional bed needs `REPLICATE_API_TOKEN`.
 
@@ -162,7 +148,7 @@ Requires `PRUNA_API_KEY`. Optional bed needs `REPLICATE_API_TOKEN`.
 
 ## Related
 
-- One beat: [single-scene-ai-video](../image-to-video/SKILL.md)
-- Narrated triple: [multi-scene-ai-video](../narrated-multi-scene/SKILL.md)
+- One beat: [single-scene-ai-video](../single-scene-ai-video/SKILL.md)
+- Narrated triple: [multi-scene-ai-video](../multi-scene-ai-video/SKILL.md)
 - Scenario hub: [pruna-generative-pipeline](../pruna-generative-pipeline/SKILL.md) (Recipe Q)
-- Example prompt: [examples/workflows/core/visual-transition-reel/example-prompt.md](../../../../examples/workflows/core/visual-transition-reel/example-prompt.md)
+- Example prompt: [examples/workflows/scene-transition-video/example-prompt.md](../../../examples/workflows/scene-transition-video/example-prompt.md)

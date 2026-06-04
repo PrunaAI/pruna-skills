@@ -19,6 +19,9 @@ sys.path.insert(0, str(SHARED))
 
 from concat_clips import probe_duration  # noqa: E402
 
+sys.path.insert(0, str(SCRIPT_DIR))
+from cut_timing import clip_duration_sec  # noqa: E402
+
 
 def run(cmd: list[str]) -> None:
     subprocess.run(cmd, check=True)
@@ -75,28 +78,23 @@ def main() -> None:
 
     trimmed: list[Path] = []
     for cut in cuts:
+        if cut.get("skip_clip"):
+            continue
         cut_id = cut["id"]
         clip_name = cut.get("clip") or f"{cut_id}.mp4"
         src = args.clips_dir / clip_name
         if not src.exists():
             raise SystemExit(f"Missing clip: {src}")
 
-        duration = cut.get("duration_sec")
-        if duration is None and "start_sec" in cut and "end_sec" in cut:
-            duration = cut["end_sec"] - cut["start_sec"]
-        if duration is None:
-            raise SystemExit(f"Cut {cut_id} needs duration_sec or start/end")
-
+        duration = clip_duration_sec(cut)
         dest = work / f"{cut_id}_trim.mp4"
         actual = probe_duration(src)
-        # Audio-led p-video clips: never trim shorter than the rendered file (full vocal line)
-        if actual > duration + 0.05:
+        trim_to = min(duration, actual)
+        if actual > duration + 0.08:
             print(
-                f"  {cut_id}: clip {actual:.2f}s > cut map {duration:.2f}s — keeping full clip (audio-led)"
+                f"  {cut_id}: trimming clip {actual:.2f}s → {trim_to:.2f}s "
+                f"(manifest {cut.get('start_sec')}–{cut.get('end_sec')}s)"
             )
-            trim_to = actual
-        else:
-            trim_to = min(duration, actual)
         trim_clip(src, trim_to, dest)
         trimmed.append(dest)
 

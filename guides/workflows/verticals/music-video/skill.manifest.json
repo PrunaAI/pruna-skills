@@ -2,9 +2,13 @@
   "scripts": {
     "core": [
       "parse_lyric_cuts.py",
+      "transcribe_song.py",
+      "align_lyric_cuts.py",
+      "cut_timing.py",
       "generate_song.py",
       "slice_audio.py",
-      "assemble_music_video.py"
+      "assemble_music_video.py",
+      "run_from_plan.py"
     ],
     "shared": [
       "replicate_api.py",
@@ -17,6 +21,7 @@
   },
   "tool_skills": [
     "music-2.5",
+    "whisperx",
     "p-image",
     "p-image-edit",
     "p-video",
@@ -36,7 +41,7 @@
   ],
   "generation_phases": {
     "default": "lyrics",
-    "requires_user_approval_before": ["music-2.5", "p-video-avatar", "p-video"]
+    "requires_user_approval_before": ["music-2.5", "whisperx", "p-video-avatar", "p-video"]
   },
   "generation_package": ["script"]
 }

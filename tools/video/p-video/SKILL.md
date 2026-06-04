@@ -51,8 +51,8 @@ Validate renders with [p-video-quality-checklist.md](../../../references/video/p
 | `last_frame_image` | **Last frame** — optional end-state still the clip should move toward |
 | `audio` | Audio-conditioned; duration follows audio (capped at **20s** on P-API); formats flac, mp3, wav |
 | `duration` | 1–20 seconds on P-API (ignored if `audio` set). With `audio`, clip length = min(audio length, **20s**) — keep TTS ≤ ~19s per scene |
-| `resolution` | `720p` or `1080p` |
-| `fps` | 24 or 48 |
+| `resolution` | `720p` (default) or `1080p` |
+| `fps` | `24` (default) or `48` |
 | `aspect_ratio` | When no `image`: `16:9`, `9:16`, `4:3`, `3:4`, `3:2`, `2:3`, `1:1` |
 | `draft` | `true` = ~4× faster/cheaper preview ([pricing](https://replicate.com/prunaai/p-video)); `false` = final |
 | `save_audio` | Keep model-generated dialogue/SFX on output (native audio) |

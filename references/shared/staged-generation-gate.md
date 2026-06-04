@@ -1,39 +1,73 @@
 # Staged generation gate
 
-Human-in-the-loop phases for workflow skills and plan runners. **Video and replace jobs are expensive** — gate on approved stills before any `p-video-*` call.
+Human-in-the-loop phases for workflow skills and plan runners. **Video and replace jobs are expensive** — gate on approved stills before any `p-video-*` call. **Final audio** (bed mix, full-song mux) runs only after clip review.
 
-See also: [parallel-execution.md](./parallel-execution.md) Phase 0, [generation-quality-checklists.md](./generation-quality-checklists.md).
+See also: [parallel-execution.md](./parallel-execution.md) Phase 0, [generation-quality-checklists.md](./generation-quality-checklists.md), [workflow-feedback-gates.md](../workflows/workflow-feedback-gates.md) (per-skill index).
 
 ## Phases
 
 | Phase | Models | Cost | User interaction |
 |-------|--------|------|------------------|
-| **0 — Plan** | none | free | Present scene table, cast, prompts; explicit **approve / go** |
-| **A — Stills** | `p-image`, `p-image-edit` | low | Show reference + source plates; run checklists |
-| **B — Video** | `p-video-avatar`, `p-video-animate`, `p-video-replace`, `p-video` | **high** | Only after Phase A approval |
-| **C — Render** | local ffmpeg / slider scripts | free | Compare MP4s; review before concat |
+| **0 — Plan** | none | free | Present scene table, cast, scripts, `style_bible`; explicit **approve plan / go** |
+| **A — Stills** | `p-image`, `p-image-edit` | low | Show hero + start/end plates; run checklists; **approve stills** |
+| **A2 — Audio prep** | Gemini TTS, Music 2.5, WhisperX align | low–medium | **Listen / read** narration or song; fix copy before video |
+| **B — Video** | `p-video`, `p-video-avatar`, `p-video-animate`, `p-video-replace` | **high** | Only after Phase A approval; **approve clips** before assembly |
+| **C — Assembly** | local ffmpeg concat / slider scripts | free | Review concat (embedded VO); compare MP4s before final mux |
+| **D — Final audio** | Stable Audio bed, bed mix, full-song mux | low | Only after Phase B clip approval |
 
 ## Agent rules
 
 1. **Never** run Phase B in the same turn as Phase A without showing stills and waiting for approval.
-2. **Parallelize within a phase**, not across phases.
-3. **Per-scene approval** for persona ladders and face recasts — show JPEG paths or thumbnails.
-4. **Regeneration loop** — reject → rerun only the still (`p-image` / edit), not video.
-5. Run model checklists on every still before Phase B.
+2. **Never** run Phase D (bed / final mux) until the user has reviewed Phase B clips (or concat with embedded VO).
+3. **Parallelize within a phase**, not across phases.
+4. **Per-scene approval** for persona ladders, face recasts, and performance identity — show JPEG/PNG paths or thumbnails.
+5. **Regeneration loop** — reject → rerun only the failed asset (still, TTS, or clip), not the whole pipeline.
+6. Run model checklists on every still before Phase B.
+7. **Ask when art direction is unclear** — visual mode, cast, continuity, motion energy, bed yes/no. Do not guess and burn video credits.
+
+## Art direction — ask the user when unclear
+
+| Decision | Why it matters |
+|----------|----------------|
+| **`style_bible` / visual mode** | Photoreal vs painterly vs illustrated changes every frame |
+| **Cast + voice** | Wrong gender/voice pairing; face drift without hero + edit chain |
+| **Narrator ↔ character mix** | Lecture vs conversation |
+| **Continuity** | Same singer/character vs deliberate recasts |
+| **Motion / `video_prompt`** | Static clips, physics traps, text burn-in |
+| **Background music** | Bed can clash with VO or mask bad narration |
+| **Draft vs final** | `720p/24` preview vs `1080p/48` delivery |
 
 ## Wording templates
 
-After Phase A:
+After Phase 0 (plan):
 
-> Here are the reference stills for scene N (`references/sceneNN_*.jpeg`, `stills/sceneNN_source_plate.jpeg`). Reply **approve stills** to run video jobs, or tell me what to fix.
+> Here is the scene plan: style, cast, and sample prompts. Reply **approve plan** to generate stills, or tell me what to change.
+
+After Phase A (stills):
+
+> Stills are in `stills/` (hero, start/end plates). Reply **approve stills** to run narration TTS and video jobs, or name scenes to fix.
+
+After Phase A2 (audio prep):
+
+> Narration MP3s are in `audio/narration_*.mp3`. Listen for pace and tone. Reply **approve audio** (or **approve stills** if you already did) to run video, or tell me lines to rewrite.
 
 Before Phase B (cost warning):
 
-> Phase B will call `p-video-avatar` / `p-video-replace` (paid). Confirm you have reviewed the stills.
+> Phase B will call `p-video` / `p-video-avatar` (paid). Confirm you have reviewed stills and narration.
+
+After Phase B (clips):
+
+> Clips are in `clips/`. Reply **approve clips** to concat and add background music, or name clips to regenerate.
+
+Before Phase D (final audio):
+
+> Assembly will mix the Stable Audio bed under the film. Confirm clip review is complete.
 
 ## Plan runners
 
-Default **`--phase stills`**. Phase B requires **`--approve-stills`** or `"phase_a_approved": true` in `generation_status.json`.
+Default **`--phase stills`**. Phase B requires **`--approve-stills`** or `"phase_a_approved": true` in `generation_status.json`. Assembly and bed mix require **`--approve-clips`** or `"phase_b_approved": true`.
+
+### Replace / animate comparison
 
 ```bash
 python3 ./scripts/run_from_plan.py --plan ./my-plan.json --out-dir ./output/reel --phase stills
@@ -42,22 +76,41 @@ python3 ./scripts/run_from_plan.py --plan ./my-plan.json --out-dir ./output/reel
 python3 ./scripts/run_from_plan.py --plan ./my-plan.json --out-dir ./output/reel --phase all --yes-skip-stills-gate
 ```
 
+### Interactive explainer
+
+```bash
+python3 guides/workflows/verticals/interactive-explainer/scripts/run_from_plan.py \
+  --plan ./output/.../plan.json --out-dir ./output/... --phase stills
+# review stills/
+python3 .../run_from_plan.py --plan ... --out-dir ... --approve-stills --phase tts
+# listen to audio/narration_*.mp3
+python3 .../run_from_plan.py --plan ... --out-dir ... --phase video
+# review clips/
+python3 .../run_from_plan.py --plan ... --out-dir ... --approve-clips --phase assemble --final-name my_explainer_final.mp4
+```
+
+Skip gates for automation only: **`--yes-skip-stills-gate`**, **`--yes-skip-clips-gate`**.
+
 ## Anti-patterns
 
-- Full `--fresh` end-to-end without still review
+- Full `--phase all` end-to-end without still or clip review
 - Batch `p-video-replace` before reference QA
 - Same-turn plan approval + video generation
-- **Scoped still regen without delete/`--fresh`** — `--from-scene N --phase stills` reuses existing JPEGs; prompt edits silently have no effect until files are removed or `--fresh` is passed
-- **`--phase all` on partial regen** when other scenes' compare clips are missing — assembly fails; regen the target scene then use **`--assemble-only`**
-- **VO change without deleting `sources/`** — avatar keeps old dialogue; delete `sources/scene0N_*` + `clips/0N_*` before regen
+- Running TTS or video before still approval
+- Mixing background music before clip review
+- **Scoped still regen without delete/`--fresh`** — prompt edits silently have no effect until still files are removed or `--regen-stills` is passed
+- **`--phase all` on partial regen** when other scenes' clips are missing — assembly fails; regen the target scene then use **`--assemble-only`**
+- **VO change without deleting `audio/narration_*.mp3` and `clips/`** — narrator keeps old dialogue; delete affected files before regen
 
 ## Partial regen (decision tree)
 
 | Goal | Delete | Then run |
 |------|--------|----------|
-| Reference prompt / seed only | `references/scene0N_*.jpeg` | `--from-scene N --through-scene N --phase stills` → approve → `--phase video` |
-| Source plate / `still_edit` | above + `stills/scene0N_source_plate.jpeg` | same |
-| `voice_script` change | above + `sources/scene0N_*` + `clips/0N_*` | `--from-scene N --through-scene N --approve-stills --phase all` |
-| Reconcat only (clips exist) | nothing | `--assemble-only` (+ `--background-music` if bed needed) |
+| Plan / prompt text only (no API yet) | nothing | edit `plan.json`; re-present Phase 0 |
+| Hero / still prompt / seed | `stills/hero.png`, scene PNGs | `--regen-stills --phase stills` → approve → continue |
+| TTS line change | `audio/narration_{id}.mp3` | `--approve-stills --phase tts` → `--phase video` for that scene (`--only ID`) |
+| `voice_script` change | scene still + `clips/{id}.mp4` | `--only ID --regen-clips --phase video` |
+| Reconcat only (clips exist) | nothing | `--assemble-only --approve-clips` |
+| Bed only | `{slug}.mp4` final (keep concat) | `--assemble-only --approve-clips` |
 
-See [replace-beats.md](../guides/workflows/launches/p-video-replace-comparison/replace-beats.md) **Partial scene regen** for copy-paste commands.
+See [replace-beats.md](../guides/workflows/launches/p-video-replace-comparison/replace-beats.md) **Partial scene regen** for replace-specific copy-paste commands.

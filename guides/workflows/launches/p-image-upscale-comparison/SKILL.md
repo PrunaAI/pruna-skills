@@ -32,6 +32,14 @@ Gallery batch scripts live under [`examples/workflows/launches/p-image-upscale-c
 
 If the user only has a **before** image, run **`p-image-upscale`** first, pass the upscaled output through the quality checklist, then render the comparison.
 
+## Feedback gates (required)
+
+| Phase | What to show | Proceed when |
+|-------|--------------|--------------|
+| **0 — Plan** | Before/after pair, zoom regions | **approve plan** |
+| **A — Upscale QA** | After still passes checklist | **approve still** |
+| **B — Render** | Comparison MP4 | User accepts |
+
 ## Asset rules (critical)
 
 - **Before** = delivery URL/file **before** upscale (or downscaled copy of the same generation).

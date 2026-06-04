@@ -22,6 +22,17 @@ Visual continuity comes from **Pruna `p-image` / `p-image-edit`** on uploaded re
 
 Follow this skill in **plain language** when talking to the person requesting the video: explain cast, voices, motion templates, and scene order the way you would in a production meeting. Use **natural, speakable copy** in every `voice_script`.
 
+**Staged generation:** [staged-generation-gate.md](../../../../../references/shared/staged-generation-gate.md) · [workflow-feedback-gates.md](../../../../../references/workflows/workflow-feedback-gates.md)
+
+## Feedback gates (required)
+
+| Phase | What to show | Proceed when |
+|-------|--------------|--------------|
+| **0 — Plan** | Scene table, read-through, cast ledger | **approve plan** |
+| **A — Stills** | Hero + per-scene plates | **approve stills** |
+| **B — Video** | Avatar / animate clips + sliders | **approve clips** |
+| **C — Assembly** | Concat reel + optional bed | User accepts |
+
 ## Intake: ask before generating
 
 **Do not** call `POST /v1/predictions` until the user has answered and you have recorded the answers (use defaults only if the user explicitly opts in):

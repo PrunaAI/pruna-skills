@@ -30,4 +30,6 @@ See the canonical mapping in [`generation-quality-checklists.md`](./generation-q
 
 - `video_prompt` results in clean framing/motion without prompt side effects.
 - No accidental overlays, stray text, or watermark-like artifacts unless requested.
+- For explainers / any text-prone still: `negative_prompt` + `negative_prompt_strength` > 0 on `p-video-avatar` (runner default or plan `defaults.avatar_negative_*`). Tune strength up only if artifacts persist — high values can harm identity/motion.
+- Still lines stayed free of signage/label triggers; `style_bible` holds negations, not `edit_prompt`.
 - Clip is ready for assembly with consistent style/voice across adjacent scenes.

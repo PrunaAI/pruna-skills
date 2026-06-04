@@ -58,12 +58,66 @@ def parse_lyrics(text: str) -> list[dict]:
     return sections
 
 
-def build_cut_manifest(sections: list[dict], *, default_beat: str) -> list[dict]:
+def section_beat_type(tag: str, *, verse_index: int, default_beat: str) -> str:
+    if tag in ("Inst", "Solo", "Interlude", "Break", "Transition"):
+        return "broll"
+    if tag == "Intro":
+        return "broll"
+    if tag == "Outro":
+        return "broll"
+    if tag == "Bridge":
+        return "broll"
+    if tag in ("Chorus", "Hook", "Verse", "Pre Chorus", "Build Up"):
+        return "performance"
+    return default_beat
+
+
+def build_cut_manifest(
+    sections: list[dict],
+    *,
+    default_beat: str,
+    granularity: str = "line",
+) -> list[dict]:
     cuts: list[dict] = []
+    verse_index = 0
     for index, section in enumerate(sections, start=1):
         tag = section["section_tag"]
         lines: list[str] = section["lines"]
         instrumental = section["is_instrumental"]
+
+        if granularity == "section":
+            if instrumental or tag in ("Inst", "Solo", "Interlude", "Break", "Transition"):
+                cuts.append(
+                    {
+                        "id": f"{index:02d}",
+                        "section_tag": tag,
+                        "beat_type": "broll",
+                        "lines": lines,
+                        "cut_rule": "section",
+                        "notes": "Instrumental — one cinematic clip for whole section",
+                    }
+                )
+                continue
+
+            if tag == "Verse":
+                verse_index += 1
+                cast_id = "altman" if verse_index % 2 == 1 else "amodei"
+            else:
+                cast_id = None
+
+            beat = section_beat_type(tag, verse_index=verse_index, default_beat=default_beat)
+            entry = {
+                "id": f"{index:02d}",
+                "section_tag": tag,
+                "beat_type": beat,
+                "lines": lines,
+                "cut_rule": "section",
+                "notes": f"{tag} — one clip for whole section",
+            }
+            if cast_id:
+                entry["cast_id"] = cast_id
+            cuts.append(entry)
+            continue
 
         if instrumental or tag in ("Inst", "Solo", "Interlude", "Break", "Transition"):
             cuts.append(
@@ -91,24 +145,10 @@ def build_cut_manifest(sections: list[dict], *, default_beat: str) -> list[dict]
             )
             continue
 
-        if tag == "Chorus" and len(lines) >= 2:
-            # Keep chorus hooks on one performance clip when short
-            cuts.append(
-                {
-                    "id": f"{index:02d}",
-                    "section_tag": tag,
-                    "beat_type": "performance",
-                    "lines": lines,
-                    "cut_rule": "section",
-                    "notes": "Chorus — performance; cut only between sections, not mid-hook",
-                }
-            )
-            continue
-
-        # Default: one clip per lyric line (safest for word-aligned edits)
+        # Default (line granularity): one clip per lyric line
         for line_index, line in enumerate(lines, start=1):
             beat = default_beat
-            if tag in ("Verse", "Pre Chorus", "Bridge"):
+            if tag in ("Verse", "Pre Chorus", "Bridge", "Hook", "Chorus"):
                 beat = "performance" if line_index % 2 == 1 else "broll"
             cuts.append(
                 {
@@ -153,6 +193,12 @@ def main() -> None:
         help="Default beat type for ambiguous sections",
     )
     parser.add_argument(
+        "--granularity",
+        choices=("line", "section"),
+        default=None,
+        help="line = one clip per lyric line; section = one clip per [Verse]/[Hook]/etc. (plan cut_granularity if omitted)",
+    )
+    parser.add_argument(
         "--song",
         type=Path,
         help="Optional MP3/WAV — ffprobe duration for proportional cut allocation",
@@ -163,17 +209,20 @@ def main() -> None:
     if args.plan:
         plan = json.loads(args.plan.read_text())
         lyrics = plan.get("lyrics", "")
+        granularity = args.granularity or plan.get("cut_granularity", "line")
     elif args.lyrics:
         lyrics = args.lyrics.read_text()
+        granularity = args.granularity or "line"
     else:
         parser.error("Provide --lyrics or --plan")
 
     sections = parse_lyrics(lyrics)
-    cuts = build_cut_manifest(sections, default_beat=args.default_beat)
+    cuts = build_cut_manifest(sections, default_beat=args.default_beat, granularity=granularity)
 
     manifest = {
         "sections_parsed": len(sections),
         "cut_count": len(cuts),
+        "cut_granularity": granularity,
         "cut_rules": [
             "Cuts happen only at line boundaries — never split mid-word",
             "Section tags [Verse]/[Chorus] start new scene groups",

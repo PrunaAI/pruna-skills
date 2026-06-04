@@ -15,7 +15,7 @@ Pure narration over B-roll feels like a lecture. **Interaction** — host poses 
 
 Both use **`p-image`** hero + **`p-image-edit`** under one **`style_bible`**.
 
-**Format defaults:** `1080p`, `48` fps (narrator `p-video`); motion: [educational-explainer-motion.md](./interactive-explainer-motion.md) — dynamic OPEN/MID/CLOSE, physics-safe.
+**Format defaults:** `720p`, `24` fps (narrator `p-video`); motion: [interactive-explainer-motion.md](./interactive-explainer-motion.md) — dynamic OPEN/MID/CLOSE, physics-safe.
 
 ## Subject flavors
 
@@ -35,8 +35,8 @@ Pick **one** flavor per film. Swap examples in prompts — the scene machinery i
 |-----------|--------|
 | Character / narrator ratio | **≥ 1 character beat per 2 narrator beats** (roughly 35–50% character) |
 | Scene order | Alternate when possible: narrator → character → narrator → … |
-| Narrator line length | **≤ ~19s** TTS (P-API 20s audio-led cap) — see [scene-anchor-triple.md](../video/scene-anchor-triple.md) |
-| Character line length | Short reply (1–3 sentences); avatar clip follows script length |
+| Narrator line length | **≤ ~19s** TTS (P-API 20s **audio-led `p-video`** cap) — see [scene-anchor-triple.md](../video/scene-anchor-triple.md) |
+| Character line length | Reply length as needed (often 2–4 sentences); **`p-video-avatar` may exceed 20s** — clip follows `voice_script` |
 
 ## Narrator beat (`type: "narrator"`)
 
@@ -44,11 +44,11 @@ Scene anchor **triple** — same as [scene-anchor-triple.md](../video/scene-anch
 
 ```json
 {
-  "id": "02_how_it_works",
+  "id": "02_mechanism",
   "type": "narrator",
-  "edit_prompt": "OPENING: Wide cross-section diagram of a volcano, educational documentary still, clear focal subject…",
-  "last_frame_edit_prompt": "CLOSING: Same volcano, closer on magma chamber glow, educational end frame…",
-  "video_prompt": "OPEN: hold wide diagram. MID: slow push toward chamber glow, heat shimmer. CLOSE: settle on glowing core."
+  "edit_prompt": "OPENING: Wide view of subject in context, clear focal subject, single frame…",
+  "last_frame_edit_prompt": "CLOSING: Same subject, closer on key detail, closing composition…",
+  "video_prompt": "OPEN: hold wide. MID: slow push toward detail, steady daylight. CLOSE: settle on end frame."
 }
 ```
 
@@ -61,12 +61,13 @@ Talking-head beat — **`p-video-avatar`**:
 
 ```json
 {
-  "id": "03_geologist_speaks",
+  "id": "03_expert_reply",
   "type": "character",
-  "cast": "field_geologist",
-  "follows": "02_how_it_works",
-  "edit_prompt": "Same educational style, head-and-shoulders, slight angle from the side, lips in frame, volcanic landscape background",
-  "video_prompt": "Medium close-up, speaks directly to camera, subtle push-in, enthusiastic expert tone"
+  "cast": "expert",
+  "still_from": "02_prior_expert_scene",
+  "follows": "02_mechanism",
+  "edit_prompt": "Same cast member dominates head-and-shoulders frame, slight angle, lips in frame, topic-appropriate background",
+  "video_prompt": "Single continuous medium close-up, one very slow push-in, speaks directly to camera, steady light, no gestures."
 }
 ```
 
@@ -74,7 +75,7 @@ Talking-head beat — **`p-video-avatar`**:
 
 ```json
 "voice_scripts": {
-  "03_geologist_speaks": "I've stood on active vents where the ground was warm under my boots. Pressure builds for decades — then the earth reminds you who's in charge."
+  "03_expert_reply": "First-person reply that answers the narrator's exact question — concrete detail, not a slogan."
 }
 ```
 
@@ -84,20 +85,20 @@ Talking-head beat — **`p-video-avatar`**:
 
 ```json
 "cast": {
-  "field_geologist": {
-    "name": "Dr. Elena Reyes",
+  "expert": {
+    "name": "Dr. Example Name",
     "persona_gender": "female",
     "voice": "Zephyr (Female)",
     "voice_language": "English (US)",
-    "voice_prompt": "Enthusiastic field scientist, clear lip sync, first-person expert, accessible not academic",
-    "character_descriptor": "woman, Latina geologist, 40s, field gear, documentary realism"
+    "voice_prompt": "First-person expert, clear lip sync, accessible not academic",
+    "character_descriptor": "woman, role-appropriate look matching style_bible"
   }
 }
 ```
 
 **Gender ↔ voice:** set `persona_gender` to `female` or `male`; runner maps to `Zephyr (Female)` or `Puck (Male)`. `character_descriptor` must name the same gender so the still matches the voice.
 
-**Still prompts:** positive single-frame wording in `hero_prompt` / `edit_prompt` / `last_frame_edit_prompt` — no `split`, `labeled`, `side by side`, or `no text` in still lines (use `style_bible` for negations). Character stills: **slight angle**, lips in frame — not `facing camera` (save on-camera delivery for `video_prompt`). See [p-video-replace-comparison/SKILL.md](../guides/workflows/launches/p-video-replace-comparison/SKILL.md) trigger table.
+**Still prompts:** **positive only** in `style_bible`, still lines, and `video_prompt` — never `no …`, `avoid …`, or `not …` in creative fields (spoken dialogue may use natural negation). Block **substring triggers** (markets, labels, packaging, meta words like `educational end frame`, collage language). Character stills: slight angle, lips visible; on-camera delivery in `video_prompt` only. Full tables + runner enforcement: [interactive-explainer/SKILL.md](../guides/workflows/verticals/interactive-explainer/SKILL.md) **Positive prompts only**.
 
 Use **Pruna avatar voices** (`Zephyr (Female)`, `Puck (Male)`, etc.) — not Gemini TTS voice names.
 
@@ -114,59 +115,66 @@ Write the scene table as a **conversation arc**. Examples by flavor:
 | 3 | narrator | Context | "That collapse can outshine an entire galaxy." |
 | 4 | character | Wonder beat | "The first time I saw a supernova remnant, I stopped calculating — I just stared." |
 
-### History (Ancaster pattern — preferred)
+### History (single incident — preferred)
 
-Single incident, full arc. Narrator = facts; character = witness.
-
-| # | Type | Function | Example |
-|---|------|----------|---------|
-| 1 | narrator | Hook + stakes | "On June third, eighteen twenty-six, that somewhere was Ancaster. Who was George Rolph?" |
-| 2 | character | Witness identity | "I was clerk of the peace — close to the Tories, but I refused their galas." |
-| 3 | narrator | Escalation | "That night, men gathered at Dr. Hamilton's house. What happened when they reached his bed?" |
-| 4 | character | Event witness | "They dragged me from my bed into a field. I knew every man in that mob." |
-| 5 | narrator | Consequence + question | "The jury awarded twenty pounds. Was that justice?" |
-| 6 | character | Emotional / moral reply | "Witnesses looked at the floor and said nothing." |
-| 7 | narrator | Legacy turn | "In eighteen twenty-eight, Reformers broke the Tory majority." |
-| 8 | character | Closing witness | "No one went to prison. But the farmers remembered." |
-
-Reference plan: `output/verticals/interactive-explainer/ancaster-explainer/plan.json`
-
-### History (biography — narrow the through-line)
-
-Do **not** survey a whole life. Pick one question, e.g. *Why did France put her in the Panthéon before America ever fully claimed her?*
+One through-line, full arc. Narrator = facts; character = witness.
 
 | # | Type | Function |
 |---|------|----------|
-| 1 | narrator | Hook — one country, one wound |
+| 1 | narrator | Hook + stakes — date, place, named question |
+| 2 | character | Witness identity — first person, specific angle |
+| 3 | narrator | Escalation — what happened next, question for witness |
+| 4 | character | Event witness — sensory or procedural detail |
+| 5 | narrator | Consequence + question |
+| 6 | character | Moral or emotional reply |
+| 7+ | narrator / character | Legacy or aftermath as needed |
+
+### History (biography — narrow the through-line)
+
+Do **not** survey a whole life. Pick **one question** the film answers.
+
+| # | Type | Function |
+|---|------|----------|
+| 1 | narrator | Hook — one wound or paradox |
 | 2 | character | Witness — specific memory, not slogan |
 | … | alternate | Each beat = one chapter of **that** arc only |
 
-**Anti-pattern:** St. Louis → Harlem → Paris → Folies → spy → march → Rainbow Tribe → Panthéon in nine scenes.
+**Anti-pattern:** many life eras or locations in one short — each beat becomes a slogan.
 
 ## Stand-alone test
 
 Every explainer must answer **yes** to all five before render:
 
-| # | Question | Ancaster example |
-|---|----------|------------------|
-| 1 | **Stakes** — what could be lost? | Rolph's body, reputation, safety; rule of law |
-| 2 | **Conflict** — who opposed whom? | Family Compact vs reform-minded clerk |
-| 3 | **Turn** — what changed? | Mob violence → failed suit → 1828 reform victory |
-| 4 | **Nuance** — complication, not hagiography? | Rolph was Tory-adjacent; witnesses stayed silent; £20 verdict |
-| 5 | **Closure** — outcome clear without Wikipedia? | No prison, but farmers remembered and broke the majority |
+| # | Question |
+|---|----------|
+| 1 | **Stakes** — what could be lost? |
+| 2 | **Conflict** — who opposed whom? |
+| 3 | **Turn** — what changed after the key event? |
+| 4 | **Nuance** — at least one complication (not hagiography)? |
+| 5 | **Closure** — outcome clear without outside reading? |
 
-**Biography trap:** covering birth → fame → war → activism → death in one short. Each beat becomes a slogan; nothing lands. **Fix:** one through-line (e.g. *Why did France honor a woman America refused?*) with the same witness/fact split as Ancaster.
+**Biography trap:** covering birth → fame → war → activism → death in one short. **Fix:** one through-line with the same witness/fact split as a single-incident history film.
 
 ## Narrator vs character (labor split)
 
 | Narrator says | Character says |
 |---------------|----------------|
 | Dates, places, names, sequence | "I" witness, sensory detail, emotion |
-| "The jury awarded twenty pounds. Was that justice?" | "Witnesses looked at the floor. Twenty pounds — a slap on the wrist." |
-| Sets up **one** question per handoff | Answers **that** question — not a new topic |
+| Concrete fact, then one pointed question | Reply that answers **that** question only |
+| Sets up **one** question per handoff | Does not introduce a new topic or slogan |
 
-**Bad character line:** "I learned to dance toward my dreams."  
-**Good character line:** "They dragged me from my bed. Tar first — feathers from my own pillow."
+**Bad character line:** motivational poster copy, unrelated to the question.  
+**Good character line:** procedural or sensory detail tied to the prior narrator beat.
+
+## Causal chain, visual alignment, ending
+
+For **event** explainers (protests, battles, policy crises), do not open on the climax. Script **prerequisites → trigger → act → punishment → aftermath** before render. Each still must match **that row's** audio (location, props, era); put **events** on narrator B-roll, witnesses **in** the setting they describe.
+
+**Ending:** **aftermath narrator** (punishment + collective response + next escalation, ≥ 3 facts) → **final character witness** → **`NN_wrap` narrator recap** that answers the hook (bookend B-roll when the opening was a place). Science films may end narrator-only after the expert (`07_conclusion` pattern). See SKILL.md **Ending closure bar**.
+
+**Visual mode:** pick **photoreal period** *or* **painterly / storybook illustration** (or children's illustrated) for the whole film — lock vocabulary in `style_bible` and every still line. Do not mix modes.
+
+Full rules: [interactive-explainer/SKILL.md](../guides/workflows/verticals/interactive-explainer/SKILL.md). Example plans: `output/verticals/interactive-explainer/<project-slug>/plan.json`.
 
 ## Visual continuity
 

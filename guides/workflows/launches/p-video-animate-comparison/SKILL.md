@@ -26,10 +26,13 @@ Default runner behavior is **`--phase stills`** — reference plates and motion 
 
 | Step | Action |
 |------|--------|
-| 1 | Confirm scene table with user |
-| 2 | Phase A: parallel `p-image` curls or [`run_from_plan.py`](./scripts/run_from_plan.py) `--phase stills` |
+| 1 | Confirm scene table with user (**approve plan**) |
+| 2 | Phase A: `--phase stills` |
 | 3 | User reviews stills → `--approve-stills --phase video` |
-| 4 | Phase C: slider renders with [`generate_video_comparison.py`](./scripts/generate_video_comparison.py) |
+| 4 | User reviews clips/sliders → **`--approve-clips --phase render`** before concat |
+| 5 | Optional bed after final review |
+
+Index: [workflow-feedback-gates.md](../../../references/workflows/workflow-feedback-gates.md)
 
 ## When to use
 

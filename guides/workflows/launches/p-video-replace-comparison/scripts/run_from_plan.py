@@ -905,13 +905,14 @@ def write_manifest(out_dir: Path, plan: dict, final_path: Path, *, music_path: P
 def load_generation_status(out_dir: Path) -> dict:
     status_path = out_dir / "generation_status.json"
     if not status_path.exists():
-        return {"phase_a_approved": False, "scenes": []}
+        return {"phase_a_approved": False, "phase_b_approved": False, "scenes": []}
     try:
         data = json.loads(status_path.read_text(encoding="utf-8"))
     except json.JSONDecodeError:
-        return {"phase_a_approved": False, "scenes": []}
+        return {"phase_a_approved": False, "phase_b_approved": False, "scenes": []}
     if isinstance(data, list):
-        return {"phase_a_approved": False, "scenes": data}
+        return {"phase_a_approved": False, "phase_b_approved": False, "scenes": data}
+    data.setdefault("phase_b_approved", False)
     return data
 
 
@@ -921,7 +922,7 @@ def write_generation_status(out_dir: Path, status: dict) -> None:
     )
 
 
-def ensure_phase_b_allowed(out_dir: Path, *, approve_flag: bool, skip_gate: bool) -> None:
+def ensure_phase_a_allowed(out_dir: Path, *, approve_flag: bool, skip_gate: bool) -> None:
     if skip_gate or approve_flag:
         return
     status = load_generation_status(out_dir)
@@ -930,6 +931,18 @@ def ensure_phase_b_allowed(out_dir: Path, *, approve_flag: bool, skip_gate: bool
     raise SystemExit(
         "Phase B blocked: review stills in references/ and stills/, then re-run with "
         "--approve-stills or set phase_a_approved in generation_status.json"
+    )
+
+
+def ensure_phase_b_allowed(out_dir: Path, *, approve_flag: bool, skip_gate: bool) -> None:
+    if skip_gate or approve_flag:
+        return
+    status = load_generation_status(out_dir)
+    if status.get("phase_b_approved"):
+        return
+    raise SystemExit(
+        "Phase C blocked: review clips under clips/, then re-run with "
+        "--approve-clips or set phase_b_approved in generation_status.json"
     )
 
 
@@ -949,9 +962,19 @@ def main() -> int:
         help="Mark Phase A approved and allow --phase video",
     )
     parser.add_argument(
+        "--approve-clips",
+        action="store_true",
+        help="Mark Phase B approved and allow final render/assembly",
+    )
+    parser.add_argument(
         "--yes-skip-stills-gate",
         action="store_true",
         help="Allow --phase all without stills approval (use with care)",
+    )
+    parser.add_argument(
+        "--yes-skip-clips-gate",
+        action="store_true",
+        help="Allow final render without clip approval (use with care)",
     )
     parser.add_argument("--fresh", action="store_true", help="Delete generated assets before running")
     parser.add_argument("--from-scene", type=int, default=1, help="Start at this scene id")
@@ -1054,10 +1077,22 @@ def main() -> int:
         if args.phase == "stills" and not args.fresh:
             return 0
 
+    if args.approve_clips:
+        status = load_generation_status(out_dir)
+        status["phase_b_approved"] = True
+        write_generation_status(out_dir, status)
+        print("Marked phase_b_approved=true in generation_status.json")
+        if args.phase == "video" and not args.fresh:
+            return 0
+
     run_phase = args.phase
     if run_phase in ("video", "all"):
-        ensure_phase_b_allowed(
+        ensure_phase_a_allowed(
             out_dir, approve_flag=args.approve_stills, skip_gate=args.yes_skip_stills_gate
+        )
+    if run_phase in ("render", "all") or args.assemble_only:
+        ensure_phase_b_allowed(
+            out_dir, approve_flag=args.approve_clips, skip_gate=args.yes_skip_clips_gate
         )
 
     needs_api = run_phase in ("stills", "video", "all")
@@ -1122,6 +1157,9 @@ def main() -> int:
         status_doc["scenes"] = sorted(results, key=lambda x: x["id"])
         if run_phase == "stills":
             status_doc["phase_a_approved"] = False
+            status_doc["phase_b_approved"] = False
+        if run_phase == "video":
+            status_doc["phase_b_approved"] = False
         write_generation_status(out_dir, status_doc)
         sys.stdout.flush()
 
@@ -1129,6 +1167,8 @@ def main() -> int:
         print(f"Phase {run_phase} complete — review outputs under {out_dir}")
         if run_phase == "stills":
             print("Reply with fixes or re-run with --approve-stills --phase video")
+        if run_phase == "video":
+            print("Reply with fixes or re-run with --approve-clips --phase render")
         return 0
 
     print("Phase 3 — assembly")

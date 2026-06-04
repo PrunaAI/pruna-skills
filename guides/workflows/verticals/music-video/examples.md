@@ -1,5 +1,20 @@
 # AI music video examples
 
+## Purple Pruna rap (shipped reference)
+
+Mascot battle rapper — **`cast.host_type: mascot`** → all performance beats use **`p-video`** + song **`audio`** slices (not `p-video-avatar`).
+
+```bash
+OUT=output/verticals/music-video/purple-pruna-rap
+# Final: $OUT/purple_pruna_rap.mp4
+```
+
+See [`music_video_plan.json`](../../../../output/verticals/music-video/purple-pruna-rap/music_video_plan.json) for lyrics, `project_seed`, and segment prompts.
+
+## Human rapper (lip-sync performance)
+
+Set **`cast.host_type: human`** in the plan. Performance sections → **`p-video-avatar`** + `input.audio` slice. B-roll → **`p-video`**. Entire face visible in stills; slight angle from the side.
+
 ## Indie pop — skills library theme
 
 Plan template: [`templates/music-video-plan.template.json`](./templates/music-video-plan.template.json)
@@ -10,29 +25,29 @@ Plan template: [`templates/music-video-plan.template.json`](./templates/music-vi
 OUT=output/verticals/music-video/my-music-video
 mkdir -p "$OUT/clips" "$OUT/audio" "$OUT/stills"
 
-# 1. Approve lyrics in plan → parse cuts
-python3 guides/workflows/verticals/music-video/scripts/parse_lyric_cuts.py \
-  --plan "$OUT/music_video_plan.json" --out "$OUT/cut_manifest.json"
+# 1. Approve lyrics in plan → generate song → cut structure + WhisperX align
+python3 guides/workflows/verticals/music-video/scripts/run_from_plan.py \
+  --plan "$OUT/music_video_plan.json" --out-dir "$OUT" --phase song
 
-# 2. Generate song (Replicate music-2.5)
-python3 guides/workflows/verticals/music-video/scripts/generate_song.py \
-  --plan "$OUT/music_video_plan.json" --out-dir "$OUT"
+python3 guides/workflows/verticals/music-video/scripts/run_from_plan.py \
+  --plan "$OUT/music_video_plan.json" --out-dir "$OUT" --phase cuts
 
-# 3. Re-parse with song duration
-python3 guides/workflows/verticals/music-video/scripts/parse_lyric_cuts.py \
-  --plan "$OUT/music_video_plan.json" --song "$OUT/song.mp3" \
-  --out "$OUT/cut_manifest.json"
+python3 guides/workflows/verticals/music-video/scripts/run_from_plan.py \
+  --plan "$OUT/music_video_plan.json" --out-dir "$OUT" --phase align
 
-# 4. Per cut: slice audio → p-image still → p-video-avatar (performance) or p-video (broll)
-python3 guides/workflows/verticals/music-video/scripts/slice_audio.py \
-  --song "$OUT/song.mp3" --start 12.4 --end 16.8 \
-  --out "$OUT/audio/cut_01_2.mp3"
+# 2. Stills + clips (staged — approve stills before full --phase video)
+python3 guides/workflows/verticals/music-video/scripts/run_from_plan.py \
+  --plan "$OUT/music_video_plan.json" --out-dir "$OUT" --phase stills --only 01_2
 
-# 5. Assemble when all clips exist
-python3 guides/workflows/verticals/music-video/scripts/assemble_music_video.py \
-  --plan "$OUT/music_video_plan.json" --cuts "$OUT/cut_manifest.json" \
-  --clips-dir "$OUT/clips" --song "$OUT/song.mp3" --out-dir "$OUT"
+python3 guides/workflows/verticals/music-video/scripts/run_from_plan.py \
+  --plan "$OUT/music_video_plan.json" --out-dir "$OUT" --phase video --only 01_2
+
+# 3. Assemble when all clips exist
+python3 guides/workflows/verticals/music-video/scripts/run_from_plan.py \
+  --plan "$OUT/music_video_plan.json" --out-dir "$OUT" --phase assemble
 ```
+
+Or run `--phase all` after lyrics and still gates are approved. See [whisperx](../../../../tools/audio/whisperx/SKILL.md) for alignment details.
 
 ## Beat mix patterns
 

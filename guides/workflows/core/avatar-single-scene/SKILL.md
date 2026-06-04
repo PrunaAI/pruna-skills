@@ -13,6 +13,16 @@ Speak to the requester in **plain language**: explain what they will hear (full 
 
 Atomic APIs: [p-video-avatar](../../../../tools/video/p-video-avatar/SKILL.md), [p-image](../../../../tools/image/p-image/SKILL.md), [p-image-edit](../../../../tools/image/p-image-edit/SKILL.md), [references/shared/pruna-api.md](../../../../../references/shared/pruna-api.md).
 
+**Staged generation:** [staged-generation-gate.md](../../../../../references/shared/staged-generation-gate.md) · [workflow-feedback-gates.md](../../../../../references/workflows/workflow-feedback-gates.md)
+
+## Feedback gates (required)
+
+| Phase | What to show | Proceed when |
+|-------|--------------|--------------|
+| **0 — Plan** | Full `voice_script`, voice, still + motion plan | **approve plan** |
+| **A — Still** | Hero / portrait plate | **approve still** |
+| **B — Avatar** | Single `p-video-avatar` clip | User accepts |
+
 ## Natural language script
 
 Write **`voice_script`** as **real dialogue**: contractions, natural rhythm, short sentences—how a person talks on camera, not a press release. See [multi-scene-avatar-video/prompt-templates.md](../avatar-multi-scene/prompt-templates.md) for good/bad examples.

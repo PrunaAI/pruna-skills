@@ -1,10 +1,18 @@
 #!/usr/bin/env python3
-"""Educational explainer — narrator p-video + character p-video-avatar, p-image/edit stills."""
+"""Educational explainer — narrator p-video + character p-video-avatar, p-image/edit stills.
+
+Phased execution (default --phase stills): see references/shared/staged-generation-gate.md
+  stills  → hero + cast anchors + start/end PNGs
+  tts     → Gemini narration MP3s (after still approval)
+  video   → p-video + p-video-avatar clips (after still approval)
+  assemble → concat + optional bed (after clip approval)
+"""
 
 from __future__ import annotations
 
 import argparse
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -21,6 +29,7 @@ sys.path.insert(0, str(SHARED))
 
 from concat_clips import concat_clips, extract_last_frame  # noqa: E402
 from launch_background_music import generate_bed, mix_bed_under_video, probe_duration_seconds  # noqa: E402
+from p_video_avatar_payload import apply_avatar_negative_prompt  # noqa: E402
 from p_video_payload import (  # noqa: E402
     P_VIDEO_NARRATION_SAFE_MAX_SECONDS,
     build_p_video_payload,
@@ -32,8 +41,8 @@ from replicate_api import download_url, require_replicate_token, run_model_predi
 
 NARRATION_MODEL = "google/gemini-3.1-flash-tts"
 BED_MODEL = "stability-ai/stable-audio-2.5"
-DEFAULT_RESOLUTION = "1080p"
-DEFAULT_FPS = 48
+DEFAULT_RESOLUTION = "720p"
+DEFAULT_FPS = 24
 
 # Motion prompts — see references/workflows/interactive-explainer-motion.md
 PHYSICS_TRAP_WORDS = (
@@ -71,27 +80,34 @@ def apply_plan_defaults(plan: dict) -> None:
     if defaults.get("resolution", DEFAULT_RESOLUTION) != DEFAULT_RESOLUTION:
         print(
             f"Warning: defaults.resolution is {defaults.get('resolution')!r}; "
-            f"educational-explainer recommends {DEFAULT_RESOLUTION!r}."
+            f"interactive-explainer recommends {DEFAULT_RESOLUTION!r}."
         )
     defaults.setdefault("resolution", DEFAULT_RESOLUTION)
     if defaults.get("fps", DEFAULT_FPS) != DEFAULT_FPS:
         print(
             f"Warning: defaults.fps is {defaults.get('fps')!r}; "
-            f"educational-explainer recommends {DEFAULT_FPS}."
+            f"interactive-explainer recommends {DEFAULT_FPS}."
         )
     defaults.setdefault("fps", DEFAULT_FPS)
     defaults.setdefault("aspect_ratio", "16:9")
 
 
-def validate_video_prompt(scene_id: str, prompt: str) -> None:
+def validate_video_prompt(scene_id: str, prompt: str, *, is_character: bool = False) -> None:
     if not prompt.strip():
         print(f"Warning: {scene_id}: missing video_prompt")
         return
     lower = f" {prompt.lower()} "
+    if is_character:
+        if "open:" in lower or "mid:" in lower or "close:" in lower:
+            print(
+                f"Warning: {scene_id}: character video_prompt uses OPEN/MID/CLOSE — "
+                "prefer one continuous take (see interactive-explainer-motion.md)."
+            )
+        return
     if "mid:" not in lower:
         print(
             f"Warning: {scene_id}: video_prompt missing MID: beat — "
-            "add dynamic camera/light motion (see educational-explainer-motion.md)."
+            "add dynamic camera/light motion (see interactive-explainer-motion.md)."
         )
     for trap in PHYSICS_TRAP_WORDS:
         if trap in lower:
@@ -107,7 +123,7 @@ VOICE_BY_GENDER = {
     "male": "Puck (Male)",
 }
 
-# Substrings that often cause text overlays or multi-panel stills (see p-video-replace-comparison SKILL).
+# Keep in sync with interactive-explainer/SKILL.md "Positive prompts only".
 STILL_PROMPT_TRIGGERS = (
     "side by side",
     "before and after",
@@ -130,6 +146,80 @@ STILL_PROMPT_TRIGGERS = (
     "neon signs",
     "packshot",
     "flat lay",
+    "farmers market",
+    "market stall",
+    "price tag",
+    "signage",
+    "storefront",
+    "packaging",
+    "educational end",
+    "educational still",
+    "documentary still",
+    "food-science documentary",
+    " end frame",
+    "plated meal",
+    "restaurant",
+    "menu",
+    "napkin",
+    "utensil",
+    "fork ",
+    "knife ",
+    "greyscale",
+    "grayscale",
+    "graphite",
+    "muted-tone",
+    "desaturated",
+    "freezer mist",
+    "flicker",
+    "strobe",
+    " pulsate",
+    "pulse ",
+    "newspaper",
+    "broadside",
+    "placard",
+    "poster",
+    "headline",
+    "caption",
+    "inscription",
+    "lettering",
+    "typed text",
+    "printed page",
+    "open book",
+    "ledger",
+    "proclamation",
+    "banner with",
+    " maps ",
+    " map ",
+    "wall chart",
+    "hanging sign",
+    "congress",
+    "liberty",
+    "parliament",
+    "meeting house",
+    "constitution",
+    "declaration",
+    "ship name",
+    "hull lettering",
+    "opening:",
+    "closing:",
+    "frame by frame",
+    "storyboard",
+    "triptych",
+    "multi-panel",
+    "multi panel",
+    "multiple angles",
+    "two frames",
+    "sequence of frames",
+    "same harbor",
+    "same shop",
+    "same hall",
+    "same window",
+    "same painterly",
+    "same man",
+    "same three",
+    "as opening",
+    "educational end",
+    "cross-section",
 )
 
 CHARACTER_STILL_TRIGGERS = (
@@ -192,9 +282,80 @@ def create_all(model: str, payloads: list[tuple[str, dict]], api_key: str) -> li
     return jobs
 
 
+_STILL_META_PREFIX = re.compile(r"^(opening|closing)\s*:\s*", re.IGNORECASE)
+_STILL_SAME_PREFIX = re.compile(r"^same\s+", re.IGNORECASE)
+
+
+def sanitize_still_prompt(prompt: str) -> str:
+    """Strip meta labels and 'Same …' matching language before p-image / p-image-edit."""
+    text = prompt.strip()
+    text = _STILL_META_PREFIX.sub("", text)
+    text = _STILL_SAME_PREFIX.sub("", text)
+    return text.strip()
+
+
+_STYLE_BIBLE_CLAUSE_TRIGGERS = (
+    "identical",
+    "side by side",
+    "split panel",
+    "split ",
+    "collage",
+    "montage",
+    "contact sheet",
+    "grid",
+    "per frame",
+)
+
+# Creative prompts only — not spoken dialogue (scene_lines / voice_scripts).
+_POSITIVE_WORDING_PATTERNS: list[tuple[re.Pattern[str], str]] = [
+    (re.compile(r"\bno\s+", re.IGNORECASE), "no …"),
+    (re.compile(r"\bavoid\s+", re.IGNORECASE), "avoid …"),
+    (re.compile(r"\bwithout\s+", re.IGNORECASE), "without …"),
+    (re.compile(r"\bnever\s+", re.IGNORECASE), "never …"),
+    (re.compile(r"\bdon'?t\s+", re.IGNORECASE), "don't …"),
+    (re.compile(r"\bdo not\s+", re.IGNORECASE), "do not …"),
+    (re.compile(r"\bnot\s+", re.IGNORECASE), "not …"),
+]
+
+_SKIP_STYLE_CLAUSE_PREFIXES = ("no", "avoid", "without", "never", "don't", "do not", "not")
+
+
+def assert_positive_wording(text: str, label: str) -> None:
+    """Fail plan validation when creative prompts use negation or avoidance language."""
+    if not text.strip():
+        return
+    for pattern, name in _POSITIVE_WORDING_PATTERNS:
+        if pattern.search(text):
+            raise RuntimeError(
+                f"{label} uses {name} — describe what should appear, not what to exclude. "
+                "See interactive-explainer/SKILL.md Positive prompts only."
+            )
+
+
+def positive_style_bible(plan: dict) -> str:
+    """Style clauses sent to generative APIs — only positive comma-clauses."""
+    raw = (plan.get("style_bible_stills") or plan.get("style_bible") or "").strip()
+    if not raw:
+        return ""
+    parts = [p.strip() for p in re.split(r",\s*", raw) if p.strip()]
+    keep: list[str] = []
+    for p in parts:
+        lower = p.lower()
+        if any(lower.startswith(f"{prefix} ") or lower == prefix for prefix in _SKIP_STYLE_CLAUSE_PREFIXES):
+            continue
+        if any(t in lower for t in _STYLE_BIBLE_CLAUSE_TRIGGERS):
+            continue
+        keep.append(p)
+    return ", ".join(keep)
+
+
 def style_wrap(plan: dict, prompt: str) -> str:
-    bible = plan.get("style_bible", "")
+    bible = positive_style_bible(plan)
     return f"{prompt}. {bible}" if bible else prompt
+
+
+def still_style_wrap(plan: dict, prompt: str) -> str:
+    return style_wrap(plan, sanitize_still_prompt(prompt))
 
 
 def scene_type(scene: dict) -> str:
@@ -233,16 +394,18 @@ def cast_voice_for(scene: dict, cast: dict) -> str:
 
 
 def character_still_body(scene: dict, plan: dict) -> str:
+    """Scene still line; skip long cast descriptor when branching from _cast_* anchor."""
     cast = cast_for_scene(scene, plan)
     parts: list[str] = []
-    if cast.get("character_descriptor"):
+    ref = scene.get("still_from") or ""
+    if cast.get("character_descriptor") and not str(ref).startswith("_cast_"):
         parts.append(cast["character_descriptor"].strip())
     parts.append(scene["edit_prompt"].strip())
     return ", ".join(parts)
 
 
 def character_still_prompt(scene: dict, plan: dict) -> str:
-    return style_wrap(plan, character_still_body(scene, plan))
+    return still_style_wrap(plan, character_still_body(scene, plan))
 
 
 def still_prompt_fields(plan: dict, scenes: list[dict]) -> list[tuple[str, str]]:
@@ -283,7 +446,7 @@ def ensure_hero(plan: dict, stills: Path, api_key: str) -> Path:
     print("=== Phase 0: p-image hero ===")
     defaults = plan["defaults"]
     payload: dict = {
-        "prompt": style_wrap(plan, plan["hero_prompt"]),
+        "prompt": still_style_wrap(plan, plan["hero_prompt"]),
         "aspect_ratio": defaults["aspect_ratio"],
     }
     if plan.get("project_seed") is not None:
@@ -297,12 +460,115 @@ def ensure_hero(plan: dict, stills: Path, api_key: str) -> Path:
     return hero
 
 
-def ensure_start_stills(scenes: list[dict], plan: dict, stills: Path, api_key: str) -> None:
-    missing = [s for s in scenes if not (stills / f"{s['id']}.png").exists()]
-    if not missing:
+def cast_anchor_path(cast_key: str) -> str:
+    return f"_cast_{cast_key}"
+
+
+def resolve_still_ref(ref: str, stills: Path, *, use_end: bool = False) -> Path | None:
+    """Map still_from / cast anchor id to an on-disk PNG (scene start, scene end, or _cast_*)."""
+    if ref.startswith("_cast_"):
+        path = stills / f"{ref}.png"
+        return path if path.exists() else None
+    if use_end:
+        last = stills / f"{ref}_last.png"
+        if last.exists():
+            return last
+    start = stills / f"{ref}.png"
+    return start if start.exists() else None
+
+
+def start_still_base_path(scene: dict, stills: Path, hero: Path) -> Path:
+    """Optional still_from: prior scene or _cast_* anchor so character beats keep the same face."""
+    ref = scene.get("still_from")
+    if ref:
+        use_end = bool(scene.get("still_from_end"))
+        ref_path = resolve_still_ref(ref, stills, use_end=use_end)
+        if ref_path:
+            label = ref_path.name
+            if use_end:
+                label = f"{ref}_last.png"
+            print(f"  {scene['id']}: still_from {label}")
+            return ref_path
+        print(f"Warning: {scene['id']}: still_from {ref!r} missing — falling back to hero")
+    return hero
+
+
+def order_scenes_for_still_deps(scenes: list[dict]) -> list[dict]:
+    """Topological sort so still_from / cast anchors exist before dependents."""
+    by_id = {s["id"]: s for s in scenes}
+    ordered: list[dict] = []
+    visiting: set[str] = set()
+    visited: set[str] = set()
+
+    def visit(s: dict) -> None:
+        sid = s["id"]
+        if sid in visited:
+            return
+        if sid in visiting:
+            return
+        visiting.add(sid)
+        ref = s.get("still_from")
+        if ref and ref in by_id:
+            visit(by_id[ref])
+        visiting.remove(sid)
+        visited.add(sid)
+        ordered.append(s)
+
+    for s in scenes:
+        visit(s)
+    return ordered
+
+
+def ensure_cast_anchor_stills(plan: dict, stills: Path, hero_path: Path, api_key: str) -> None:
+    """Generate one portrait per cast entry with anchor_still_prompt (face lock for all character rows)."""
+    cast_cfg = plan.get("cast", {})
+    to_gen: list[tuple[str, str]] = []
+    for key, cast in cast_cfg.items():
+        prompt = (cast.get("anchor_still_prompt") or "").strip()
+        if not prompt:
+            continue
+        path = stills / f"{cast_anchor_path(key)}.png"
+        if path.exists():
+            continue
+        to_gen.append((key, prompt))
+    if not to_gen:
         return
-    hero_url = upload_file(ensure_hero(plan, stills, api_key), api_key)
-    print(f"=== Phase 1: start stills ({len(missing)}) ===")
+    print(f"=== Phase 0: cast anchors ({len(to_gen)}) ===")
+    defaults = plan["defaults"]
+    hero_url = upload_file(hero_path, api_key)
+    payloads = [
+        (
+            cast_anchor_path(key),
+            {
+                "prompt": still_style_wrap(plan, prompt),
+                "images": [hero_url],
+                "aspect_ratio": defaults["aspect_ratio"],
+            },
+        )
+        for key, prompt in to_gen
+    ]
+    jobs = create_all("p-image-edit", payloads, api_key)
+    for (key, _), job in zip(to_gen, jobs):
+        url = job["result"].get("generation_url")
+        if not url:
+            raise RuntimeError(f"No cast anchor for {key}")
+        dest = stills / f"{cast_anchor_path(key)}.png"
+        download_file(url, dest, api_key)
+        print(f"  cast anchor: {dest.name}")
+
+
+def generate_start_stills_batch(
+    batch: list[dict],
+    plan: dict,
+    stills: Path,
+    hero_path: Path,
+    api_key: str,
+    *,
+    phase_label: str,
+) -> None:
+    if not batch:
+        return
+    print(f"=== {phase_label}: start stills ({len(batch)}) ===")
     defaults = plan["defaults"]
     payloads = [
         (
@@ -310,15 +576,15 @@ def ensure_start_stills(scenes: list[dict], plan: dict, stills: Path, api_key: s
             {
                 "prompt": character_still_prompt(s, plan)
                 if is_character_scene(s)
-                else style_wrap(plan, s["edit_prompt"]),
-                "images": [hero_url],
+                else still_style_wrap(plan, s["edit_prompt"]),
+                "images": [upload_file(start_still_base_path(s, stills, hero_path), api_key)],
                 "aspect_ratio": defaults["aspect_ratio"],
             },
         )
-        for s in missing
+        for s in batch
     ]
     jobs = create_all("p-image-edit", payloads, api_key)
-    for scene, job in zip(missing, jobs):
+    for scene, job in zip(batch, jobs):
         url = job["result"].get("generation_url")
         if not url:
             raise RuntimeError(f"No start still for {scene['id']}")
@@ -326,12 +592,59 @@ def ensure_start_stills(scenes: list[dict], plan: dict, stills: Path, api_key: s
         print(f"  start: {stills / f'{scene['id']}.png'}")
 
 
+def ensure_start_stills(scenes: list[dict], plan: dict, stills: Path, api_key: str) -> None:
+    missing = [s for s in scenes if not (stills / f"{s['id']}.png").exists()]
+    if not missing:
+        return
+    hero_path = ensure_hero(plan, stills, api_key)
+    ensure_cast_anchor_stills(plan, stills, hero_path, api_key)
+    needs_end_ref = [s for s in missing if s.get("still_from_end")]
+    no_end_ref = [s for s in missing if not s.get("still_from_end")]
+    generate_start_stills_batch(
+        order_scenes_for_still_deps(no_end_ref),
+        plan,
+        stills,
+        hero_path,
+        api_key,
+        phase_label="Phase 1a",
+    )
+    if needs_end_ref:
+        print(
+            f"  deferring {len(needs_end_ref)} scene(s) with still_from_end "
+            "(run end stills first, then Phase 1b)"
+        )
+
+
+def ensure_start_stills_from_end_refs(scenes: list[dict], plan: dict, stills: Path, api_key: str) -> None:
+    missing = [
+        s
+        for s in scenes
+        if s.get("still_from_end")
+        and not (stills / f"{s['id']}.png").exists()
+    ]
+    if not missing:
+        return
+    hero_path = stills / "hero.png"
+    if not hero_path.exists():
+        hero_path = ensure_hero(plan, stills, api_key)
+    generate_start_stills_batch(
+        order_scenes_for_still_deps(missing),
+        plan,
+        stills,
+        hero_path,
+        api_key,
+        phase_label="Phase 1b",
+    )
+
+
 def ensure_end_stills(scenes: list[dict], plan: dict, stills: Path, api_key: str) -> None:
     narrator = [s for s in scenes if is_narrator_scene(s)]
     missing = [
         s
         for s in narrator
-        if s.get("last_frame_edit_prompt") and not (stills / f"{s['id']}_last.png").exists()
+        if s.get("last_frame_edit_prompt")
+        and (stills / f"{s['id']}.png").exists()
+        and not (stills / f"{s['id']}_last.png").exists()
     ]
     if not missing:
         return
@@ -342,7 +655,7 @@ def ensure_end_stills(scenes: list[dict], plan: dict, stills: Path, api_key: str
         (
             f"{s['id']}_last",
             {
-                "prompt": style_wrap(plan, s["last_frame_edit_prompt"]),
+                "prompt": still_style_wrap(plan, s["last_frame_edit_prompt"]),
                 "images": [start_urls[s["id"]]],
                 "aspect_ratio": defaults["aspect_ratio"],
             },
@@ -358,7 +671,42 @@ def ensure_end_stills(scenes: list[dict], plan: dict, stills: Path, api_key: str
         print(f"  end: {stills / f'{scene['id']}_last.png'}")
 
 
-def run_tts(scene_id: str, text: str, plan: dict, voice: str, token: str, audio_dir: Path) -> Path:
+def fit_narration_to_max(path: Path, max_seconds: float) -> None:
+    """Speed up TTS with ffmpeg atempo when Gemini reads slower than the p-video cap."""
+    dur = probe_media_duration_seconds(path)
+    if dur <= max_seconds:
+        return
+    target = max(max_seconds - 0.25, 1.0)
+    tempo = dur / target
+    parts: list[str] = []
+    remaining = tempo
+    while remaining > 2.0:
+        parts.append("atempo=2.0")
+        remaining /= 2.0
+    if remaining > 1.001:
+        parts.append(f"atempo={remaining:.4f}")
+    filter_chain = ",".join(parts) if parts else "atempo=2.0"
+    tmp = path.with_suffix(".tmp.mp3")
+    subprocess.run(
+        ["ffmpeg", "-y", "-i", str(path), "-filter:a", filter_chain, str(tmp)],
+        check=True,
+        capture_output=True,
+    )
+    tmp.replace(path)
+    new_dur = probe_media_duration_seconds(path)
+    print(f"  {path.name}: sped {dur:.1f}s -> {new_dur:.1f}s ({filter_chain})")
+
+
+def run_tts(
+    scene_id: str,
+    text: str,
+    plan: dict,
+    voice: str,
+    token: str,
+    audio_dir: Path,
+    *,
+    max_seconds: float = P_VIDEO_NARRATION_SAFE_MAX_SECONDS,
+) -> Path:
     dest = audio_dir / f"narration_{scene_id}.mp3"
     if dest.exists():
         print(f"Reusing TTS: {dest.name}")
@@ -374,6 +722,7 @@ def run_tts(scene_id: str, text: str, plan: dict, voice: str, token: str, audio_
     if not output:
         raise RuntimeError(f"No TTS for {scene_id}")
     download_url(str(output), dest)
+    fit_narration_to_max(dest, max_seconds)
     return dest
 
 
@@ -461,6 +810,7 @@ def render_scene(
         }
         if plan.get("project_seed") is not None:
             payload["seed"] = plan["project_seed"]
+        apply_avatar_negative_prompt(payload, plan, scene)
         model = "p-video-avatar"
     else:
         chain_mode_plan = plan.get("frame_chain_mode", chain_mode)
@@ -556,7 +906,16 @@ def render_videos(
         for fut in as_completed(futures):
             i, dest = fut.result()
             results[i] = dest
-    return [results[i] for i in range(len(scenes))]
+    clip_paths: list[Path] = []
+    for i, scene in enumerate(scenes):
+        if i in results:
+            clip_paths.append(results[i])
+        else:
+            p = clips / f"{scene['id']}.mp4"
+            if not p.exists():
+                raise FileNotFoundError(f"Missing clip for scene {scene['id']}: {p}")
+            clip_paths.append(p)
+    return clip_paths
 
 
 def validate_plan(plan: dict, scenes: list[dict]) -> None:
@@ -592,7 +951,32 @@ def validate_plan(plan: dict, scenes: list[dict]) -> None:
                 f"presenter to match persona_gender={gender!r}."
             )
 
+    for field in ("style_bible", "style_bible_stills"):
+        if plan.get(field):
+            assert_positive_wording(plan[field], field)
+    if plan.get("hero_prompt"):
+        assert_positive_wording(plan["hero_prompt"], "hero_prompt")
+    narration = plan.get("narration", {})
+    if narration.get("style_prompt"):
+        assert_positive_wording(narration["style_prompt"], "narration.style_prompt")
+    bed = plan.get("background_music", {})
+    if isinstance(bed, dict) and bed.get("prompt"):
+        assert_positive_wording(str(bed["prompt"]), "background_music.prompt")
+    for key, cast in plan.get("cast", {}).items():
+        for attr in ("character_descriptor", "anchor_still_prompt", "voice_prompt"):
+            if cast.get(attr):
+                assert_positive_wording(cast[attr], f"cast.{key}.{attr}")
+
+    bible_raw = (plan.get("style_bible_stills") or plan.get("style_bible") or "").lower()
+    for trig in STILL_PROMPT_TRIGGERS:
+        if trig in bible_raw:
+            raise RuntimeError(
+                f"style_bible contains blocked substring {trig!r} — use positive wording; "
+                "see interactive-explainer/SKILL.md"
+            )
+
     for label, text in still_prompt_fields(plan, scenes):
+        assert_positive_wording(text, label)
         lower = text.lower()
         for trig in STILL_PROMPT_TRIGGERS:
             if trig in lower:
@@ -612,7 +996,8 @@ def validate_plan(plan: dict, scenes: list[dict]) -> None:
     for scene in scenes:
         vp = scene.get("video_prompt", "")
         if vp:
-            validate_video_prompt(scene["id"], vp)
+            assert_positive_wording(vp, f"{scene['id']}.video_prompt")
+            validate_video_prompt(scene["id"], vp, is_character=is_character_scene(scene))
         if not is_character_scene(scene):
             continue
         ep = scene.get("edit_prompt", "").lower()
@@ -622,90 +1007,125 @@ def validate_plan(plan: dict, scenes: list[dict]) -> None:
             )
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--plan", type=Path, required=True)
-    parser.add_argument("--out-dir", type=Path, required=True)
-    parser.add_argument("--final-name", default="explainer_final.mp4")
-    parser.add_argument("--only", nargs="+", metavar="SCENE_ID")
-    parser.add_argument("--regen-stills", action="store_true")
-    parser.add_argument("--regen-tts", action="store_true")
-    parser.add_argument("--regen-clips", action="store_true")
-    parser.add_argument("--skip-assembly", action="store_true")
-    parser.add_argument("--skip-narration-check", action="store_true")
-    args = parser.parse_args()
+def load_generation_status(out_dir: Path) -> dict:
+    status_path = out_dir / "generation_status.json"
+    if not status_path.exists():
+        return {"phase_a_approved": False, "phase_b_approved": False}
+    try:
+        data = json.loads(status_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {"phase_a_approved": False, "phase_b_approved": False}
+    if isinstance(data, list):
+        return {"phase_a_approved": False, "phase_b_approved": False, "scenes": data}
+    data.setdefault("phase_a_approved", False)
+    data.setdefault("phase_b_approved", False)
+    return data
 
-    plan = json.loads(args.plan.read_text())
-    apply_plan_defaults(plan)
-    out_dir = args.out_dir
-    stills = out_dir / "stills"
-    clips = out_dir / "clips"
-    chain = out_dir / "chain_frames"
-    audio_dir = out_dir / "audio"
-    for d in (stills, clips, chain, audio_dir):
-        d.mkdir(parents=True, exist_ok=True)
 
-    if args.regen_stills:
-        shutil.rmtree(stills, ignore_errors=True)
-        shutil.rmtree(chain, ignore_errors=True)
-        stills.mkdir(parents=True, exist_ok=True)
-    if args.regen_tts and audio_dir.exists():
-        for f in audio_dir.glob("narration_*.mp3"):
-            f.unlink()
-    if args.regen_clips and clips.exists():
-        for f in clips.glob("*.mp4"):
-            f.unlink()
-
-    scenes = plan["scenes"]
-    validate_plan(plan, scenes)
-    narration_max = float(
-        plan.get("narration", {}).get("max_seconds_per_scene", P_VIDEO_NARRATION_SAFE_MAX_SECONDS)
+def write_generation_status(out_dir: Path, status: dict) -> None:
+    (out_dir / "generation_status.json").write_text(
+        json.dumps(status, indent=2) + "\n", encoding="utf-8"
     )
-    api_key = require_api_key()
-    replicate_token = require_replicate_token()
-    voice = plan.get("narration", {}).get("voice", "Charon")
 
+
+def ensure_phase_a_allowed(
+    out_dir: Path, *, approve_flag: bool, skip_gate: bool, label: str
+) -> None:
+    if skip_gate or approve_flag:
+        return
+    status = load_generation_status(out_dir)
+    if status.get("phase_a_approved"):
+        return
+    raise SystemExit(
+        f"{label} blocked: review stills in {out_dir / 'stills'}, then re-run with "
+        "--approve-stills or set phase_a_approved in generation_status.json"
+    )
+
+
+def ensure_phase_b_allowed(
+    out_dir: Path, *, approve_flag: bool, skip_gate: bool, label: str
+) -> None:
+    if skip_gate or approve_flag:
+        return
+    status = load_generation_status(out_dir)
+    if status.get("phase_b_approved"):
+        return
+    raise SystemExit(
+        f"{label} blocked: review clips in {out_dir / 'clips'}, then re-run with "
+        "--approve-clips or set phase_b_approved in generation_status.json"
+    )
+
+
+def phase_stills(scenes: list[dict], plan: dict, stills: Path, api_key: str) -> None:
     ensure_start_stills(scenes, plan, stills, api_key)
     ensure_end_stills(scenes, plan, stills, api_key)
+    ensure_start_stills_from_end_refs(scenes, plan, stills, api_key)
+    ensure_end_stills(scenes, plan, stills, api_key)
 
-    narrator_scenes = [s for s in scenes if is_narrator_scene(s)]
-    if narrator_scenes:
-        print(f"=== Phase 3: Gemini TTS ({len(narrator_scenes)} narrator scenes) ===")
-        tts_targets = [s for s in narrator_scenes if not args.only or s["id"] in args.only]
-        with ThreadPoolExecutor(max_workers=6) as pool:
-            futures = {
-                pool.submit(
-                    run_tts, s["id"], narration_for_scene(s, plan), plan, voice, replicate_token, audio_dir
-                ): s["id"]
-                for s in tts_targets
-            }
-            for fut in as_completed(futures):
-                path = fut.result()
-                if not args.skip_narration_check:
-                    validate_narration_duration(
-                        probe_media_duration_seconds(path),
-                        scene_id=futures[fut],
-                        max_seconds=narration_max,
-                    )
 
-    clip_paths = render_videos(
-        scenes, plan, stills, clips, chain, audio_dir, api_key, only=args.only
-    )
-
-    if args.skip_assembly:
-        print("Skipped assembly")
+def phase_tts(
+    narrator_scenes: list[dict],
+    plan: dict,
+    voice: str,
+    replicate_token: str,
+    audio_dir: Path,
+    *,
+    only: list[str] | None,
+    skip_narration_check: bool,
+    narration_max: float,
+) -> None:
+    if not narrator_scenes:
         return
+    print(f"=== Phase 3: Gemini TTS ({len(narrator_scenes)} narrator scenes) ===")
+    tts_targets = [s for s in narrator_scenes if not only or s["id"] in only]
+    with ThreadPoolExecutor(max_workers=6) as pool:
+        futures = {
+            pool.submit(
+                run_tts,
+                s["id"],
+                narration_for_scene(s, plan),
+                plan,
+                voice,
+                replicate_token,
+                audio_dir,
+                max_seconds=narration_max,
+            ): s["id"]
+            for s in tts_targets
+        }
+        for fut in as_completed(futures):
+            path = fut.result()
+            if not skip_narration_check:
+                validate_narration_duration(
+                    probe_media_duration_seconds(path),
+                    scene_id=futures[fut],
+                    max_seconds=narration_max,
+                )
 
-    slug = args.final_name.replace("_final.mp4", "").replace(".mp4", "")
+
+def all_clips_ready(scenes: list[dict], clips: Path) -> bool:
+    return all((clips / f"{s['id']}.mp4").exists() for s in scenes)
+
+
+def phase_assemble(
+    clip_paths: list[Path],
+    scenes: list[dict],
+    plan: dict,
+    out_dir: Path,
+    *,
+    final_name: str,
+    replicate_token: str,
+    with_bed: bool,
+) -> Path:
+    slug = final_name.replace("_final.mp4", "").replace(".mp4", "")
     movie = out_dir / f"{slug}.mp4"
-    final = out_dir / args.final_name
+    final = out_dir / final_name
     print("=== Phase 5: concat ===")
     assemble_movie(clip_paths, scenes, plan, out_dir, movie)
 
     bed_cfg = plan.get("background_music", {})
-    if bed_cfg.get("enabled"):
+    if with_bed and bed_cfg.get("enabled"):
         duration = int(probe_duration_seconds(movie) + 1)
-        bed_path = audio_dir / "bed.mp3"
+        bed_path = out_dir / "audio" / "bed.mp3"
         print(f"=== Phase 6: bed ({duration}s) ===")
         generate_bed(
             prompt=bed_cfg.get("prompt", "Documentary bed, no vocals"),
@@ -729,7 +1149,241 @@ def main() -> None:
         "scene_types": {s["id"]: scene_type(s) for s in scenes},
     }
     (out_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    print(f"Done! {final}")
+    return final
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--plan", type=Path, required=True)
+    parser.add_argument("--out-dir", type=Path, required=True)
+    parser.add_argument("--final-name", default="explainer_final.mp4")
+    parser.add_argument(
+        "--phase",
+        choices=("stills", "tts", "video", "assemble", "all"),
+        default="stills",
+        help="Generation phase (default: stills)",
+    )
+    parser.add_argument(
+        "--approve-stills",
+        action="store_true",
+        help="Mark Phase A approved and allow tts/video phases",
+    )
+    parser.add_argument(
+        "--approve-clips",
+        action="store_true",
+        help="Mark Phase B approved and allow assemble/bed",
+    )
+    parser.add_argument(
+        "--yes-skip-stills-gate",
+        action="store_true",
+        help="Allow tts/video/all without stills approval (use with care)",
+    )
+    parser.add_argument(
+        "--yes-skip-clips-gate",
+        action="store_true",
+        help="Allow assemble/all without clip approval (use with care)",
+    )
+    parser.add_argument(
+        "--assemble-only",
+        action="store_true",
+        help="Concat existing clips and optional bed (no generative API calls)",
+    )
+    parser.add_argument("--only", nargs="+", metavar="SCENE_ID")
+    parser.add_argument("--regen-stills", action="store_true")
+    parser.add_argument("--regen-tts", action="store_true")
+    parser.add_argument("--regen-clips", action="store_true")
+    parser.add_argument("--skip-assembly", action="store_true")
+    parser.add_argument("--skip-narration-check", action="store_true")
+    args = parser.parse_args()
+
+    plan = json.loads(args.plan.read_text())
+    apply_plan_defaults(plan)
+    out_dir = args.out_dir
+    stills = out_dir / "stills"
+    clips = out_dir / "clips"
+    chain = out_dir / "chain_frames"
+    audio_dir = out_dir / "audio"
+    for d in (stills, clips, chain, audio_dir):
+        d.mkdir(parents=True, exist_ok=True)
+
+    scenes = plan["scenes"]
+    validate_plan(plan, scenes)
+    narration_max = float(
+        plan.get("narration", {}).get("max_seconds_per_scene", P_VIDEO_NARRATION_SAFE_MAX_SECONDS)
+    )
+    narrator_scenes = [s for s in scenes if is_narrator_scene(s)]
+
+    if args.regen_stills:
+        shutil.rmtree(stills, ignore_errors=True)
+        shutil.rmtree(chain, ignore_errors=True)
+        stills.mkdir(parents=True, exist_ok=True)
+    if args.regen_tts and audio_dir.exists():
+        for f in audio_dir.glob("narration_*.mp3"):
+            f.unlink()
+    if args.regen_clips and clips.exists():
+        if args.only:
+            for sid in args.only:
+                p = clips / f"{sid}.mp4"
+                if p.exists():
+                    p.unlink()
+        else:
+            for f in clips.glob("*.mp4"):
+                f.unlink()
+
+    status = load_generation_status(out_dir)
+
+    if args.approve_stills:
+        status["phase_a_approved"] = True
+        write_generation_status(out_dir, status)
+        print("Marked phase_a_approved=true in generation_status.json")
+        if args.phase == "stills" and not args.regen_stills:
+            return
+
+    if args.approve_clips:
+        status["phase_b_approved"] = True
+        write_generation_status(out_dir, status)
+        print("Marked phase_b_approved=true in generation_status.json")
+
+    run_phase = args.phase
+
+    if args.assemble_only:
+        if not all_clips_ready(scenes, clips):
+            missing = [s["id"] for s in scenes if not (clips / f"{s['id']}.mp4").exists()]
+            raise SystemExit(f"Missing clips for scenes: {missing}")
+        ensure_phase_b_allowed(
+            out_dir,
+            approve_flag=args.approve_clips,
+            skip_gate=args.yes_skip_clips_gate,
+            label="Assembly",
+        )
+        replicate_token = require_replicate_token() if plan.get("background_music", {}).get("enabled") else ""
+        clip_paths = [clips / f"{s['id']}.mp4" for s in scenes]
+        final = phase_assemble(
+            clip_paths,
+            scenes,
+            plan,
+            out_dir,
+            final_name=args.final_name,
+            replicate_token=replicate_token,
+            with_bed=True,
+        )
+        print(f"Done! {final}")
+        return
+
+    needs_pruna = run_phase in ("stills", "video", "all")
+    missing_tts = [
+        s
+        for s in narrator_scenes
+        if not (audio_dir / f"narration_{s['id']}.mp3").exists()
+    ]
+    needs_replicate = (
+        (run_phase in ("tts", "all") and bool(narrator_scenes))
+        or (run_phase == "video" and bool(missing_tts))
+        or (
+            run_phase in ("assemble", "all")
+            and plan.get("background_music", {}).get("enabled")
+        )
+    )
+    api_key = require_api_key() if needs_pruna else ""
+    replicate_token = require_replicate_token() if needs_replicate else ""
+
+    if run_phase in ("tts", "video", "assemble", "all"):
+        ensure_phase_a_allowed(
+            out_dir,
+            approve_flag=args.approve_stills,
+            skip_gate=args.yes_skip_stills_gate,
+            label=f"Phase {run_phase}",
+        )
+
+    if run_phase in ("assemble", "all"):
+        ensure_phase_b_allowed(
+            out_dir,
+            approve_flag=args.approve_clips,
+            skip_gate=args.yes_skip_clips_gate,
+            label="Assembly",
+        )
+
+    if run_phase in ("stills", "all"):
+        phase_stills(scenes, plan, stills, api_key)
+        status = load_generation_status(out_dir)
+        status["phase_a_approved"] = False
+        status["phase_b_approved"] = False
+        write_generation_status(out_dir, status)
+        if run_phase == "stills":
+            print(f"Phase stills complete — review PNGs under {stills}")
+            print("Reply with fixes or re-run with --approve-stills --phase tts")
+            return
+
+    if run_phase in ("tts", "all"):
+        phase_tts(
+            narrator_scenes,
+            plan,
+            plan.get("narration", {}).get("voice", "Charon"),
+            replicate_token,
+            audio_dir,
+            only=args.only,
+            skip_narration_check=args.skip_narration_check,
+            narration_max=narration_max,
+        )
+        if run_phase == "tts":
+            print(f"Phase tts complete — listen to MP3s under {audio_dir}")
+            print("Reply with line edits or re-run with --phase video")
+            return
+
+    if run_phase in ("video", "all"):
+        if not narrator_scenes or all(
+            (audio_dir / f"narration_{s['id']}.mp3").exists() for s in narrator_scenes
+        ):
+            pass
+        elif run_phase == "video":
+            phase_tts(
+                narrator_scenes,
+                plan,
+                plan.get("narration", {}).get("voice", "Charon"),
+                replicate_token,
+                audio_dir,
+                only=args.only,
+                skip_narration_check=args.skip_narration_check,
+                narration_max=narration_max,
+            )
+        else:
+            raise SystemExit("Missing narration MP3s — run --approve-stills --phase tts first")
+
+        clip_paths = render_videos(
+            scenes, plan, stills, clips, chain, audio_dir, api_key, only=args.only
+        )
+        status = load_generation_status(out_dir)
+        status["phase_b_approved"] = False
+        write_generation_status(out_dir, status)
+        if args.skip_assembly or run_phase == "video":
+            print(f"Phase video complete — review clips under {clips}")
+            print("Reply with fixes or re-run with --approve-clips --phase assemble")
+            return
+        if not all_clips_ready(scenes, clips):
+            clip_paths = [clips / f"{s['id']}.mp4" for s in scenes]
+
+    if run_phase in ("assemble", "all"):
+        if run_phase == "assemble":
+            if not all_clips_ready(scenes, clips):
+                missing = [s["id"] for s in scenes if not (clips / f"{s['id']}.mp4").exists()]
+                raise SystemExit(f"Missing clips for scenes: {missing}")
+            clip_paths = [clips / f"{s['id']}.mp4" for s in scenes]
+        final = phase_assemble(
+            clip_paths,
+            scenes,
+            plan,
+            out_dir,
+            final_name=args.final_name,
+            replicate_token=(
+                replicate_token
+                if replicate_token
+                else require_replicate_token()
+                if plan.get("background_music", {}).get("enabled")
+                else ""
+            ),
+            with_bed=True,
+        )
+        print(f"Done! {final}")
 
 
 if __name__ == "__main__":

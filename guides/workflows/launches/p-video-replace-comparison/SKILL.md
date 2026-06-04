@@ -50,9 +50,10 @@ Follow [staged-generation-gate.md](../../../references/shared/staged-generation-
 
 1. **Plan approval** — scene table + prompts; user says **go**
 2. **Phase A stills** — `p-image` refs + source plates; user reviews JPEGs
-3. **Phase B video** — `p-video-avatar` sources + `p-video-replace` only after approval
-4. **Phase C render** — slider MP4s; user reviews before concat
-5. **Optional bed** — after concat, [Stable Audio 2.5](../../../tools/audio/stable-audio-2.5/SKILL.md) light instrumental under VO (`background_music` in plan or `--background-music`)
+3. **Phase B video** — `p-video-avatar` sources + `p-video-replace` only after still approval (`--approve-stills`)
+4. **Phase C clip review** — user reviews `clips/`; **`--approve-clips`** before render
+5. **Phase D render** — slider MP4s + concat
+6. **Optional bed** — after concat, only when clips approved ([Stable Audio 2.5](../../../tools/audio/stable-audio-2.5/SKILL.md))
 
 **Generation package (pick one or combine):**
 

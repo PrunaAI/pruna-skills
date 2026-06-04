@@ -26,7 +26,7 @@ When audio is provided, **always** upload and pass it to `p-video` at render tim
 
 **Explainer interaction (preferred):** alternate **narrator** triple beats with **character** `p-video-avatar` dialogue — see [educational-explainer-scenes.md](./educational-explainer-scenes.md) and [educational-explainer](../guides/workflows/verticals/interactive-explainer/SKILL.md). Do not default to all-narrator tables.
 
-**Explainer motion & format:** dynamic `OPEN:` / `MID:` / `CLOSE:` `video_prompt` per scene (camera/light — avoid physics); default **`1080p`** + **`48` fps** — see [educational-explainer-motion.md](./educational-explainer-motion.md).
+**Explainer motion & format:** dynamic `OPEN:` / `MID:` / `CLOSE:` `video_prompt` per scene (camera/light — avoid physics); default **`720p`** + **`24` fps** — see [interactive-explainer-motion.md](../workflows/interactive-explainer-motion.md).
 
 ```json
 {

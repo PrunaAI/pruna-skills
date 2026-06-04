@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Scene transition video — p-image hero, p-image-edit stills, p-video pair transitions, concat."""
+"""Scene transition video — p-image hero, p-image-edit stills, p-video pair transitions, concat.
+
+Phased execution (default --phase stills): see references/shared/staged-generation-gate.md
+"""
 
 from __future__ import annotations
 
@@ -20,6 +23,13 @@ SHARED = _workflows / "_shared" / "scripts"
 sys.path.insert(0, str(SHARED))
 
 from concat_clips import concat_clips, extract_last_frame  # noqa: E402
+from generation_gate import (  # noqa: E402
+    apply_approve_flags,
+    ensure_phase_a_allowed,
+    ensure_phase_b_allowed,
+    load_generation_status,
+    write_generation_status,
+)
 from launch_background_music import generate_bed, mix_bed_under_video, probe_duration_seconds  # noqa: E402
 from p_video_payload import build_p_video_payload  # noqa: E402
 from pruna_api import create_prediction, download_file, require_api_key, upload_file  # noqa: E402
@@ -357,7 +367,25 @@ def main() -> None:
     parser.add_argument(
         "--phase",
         choices=("hero", "stills", "video", "assemble", "all"),
-        default="all",
+        default="stills",
+        help="Generation phase (default: stills)",
+    )
+    parser.add_argument(
+        "--approve-stills",
+        action="store_true",
+        help="Mark Phase A approved; allow video",
+    )
+    parser.add_argument(
+        "--approve-clips",
+        action="store_true",
+        help="Mark Phase B approved; allow assemble/bed",
+    )
+    parser.add_argument("--yes-skip-stills-gate", action="store_true")
+    parser.add_argument("--yes-skip-clips-gate", action="store_true")
+    parser.add_argument(
+        "--assemble-only",
+        action="store_true",
+        help="Concat existing clips and optional bed (no generative API calls)",
     )
     parser.add_argument("--only", nargs="+", metavar="SCENE_ID")
     parser.add_argument("--regen-stills", action="store_true")
@@ -373,6 +401,49 @@ def main() -> None:
     for d in (stills, clips, chain):
         d.mkdir(parents=True, exist_ok=True)
 
+    scenes = plan["scenes"]
+    run_phase = args.phase
+
+    apply_approve_flags(args, out_dir)
+
+    if args.assemble_only:
+        ensure_phase_b_allowed(
+            out_dir,
+            approve_flag=args.approve_clips,
+            skip_gate=args.yes_skip_clips_gate,
+            label="Assembly",
+        )
+        clip_paths = [clips / f"{s['id']}.mp4" for s in scenes]
+        if not all(p.exists() for p in clip_paths):
+            missing = [s["id"] for s in scenes if not (clips / f"{s['id']}.mp4").exists()]
+            raise SystemExit(f"Missing clips for scenes: {missing}")
+        movie = out_dir / "transition_reel.mp4"
+        assemble_movie(clip_paths, scenes, plan, out_dir, movie)
+        bed_cfg = plan.get("background_music", {})
+        final = out_dir / "transition_reel_final.mp4"
+        if bed_cfg.get("enabled"):
+            token = require_replicate_token()
+            duration = int(probe_duration_seconds(movie) + 1)
+            bed_path = out_dir / "audio" / "bed.mp3"
+            bed_path.parent.mkdir(parents=True, exist_ok=True)
+            generate_bed(
+                prompt=bed_cfg.get("prompt", "Ambient instrumental bed, no vocals"),
+                duration_seconds=min(190, duration),
+                out_path=bed_path,
+                token=token,
+                model=bed_cfg.get("model", BED_MODEL),
+            )
+            mix_bed_under_video(
+                video_path=movie,
+                bed_path=bed_path,
+                out_path=final,
+                volume=float(bed_cfg.get("volume", 0.12)),
+            )
+        else:
+            shutil.copy(movie, final)
+        print(f"Done! {final}")
+        return
+
     if args.regen_stills:
         shutil.rmtree(stills, ignore_errors=True)
         shutil.rmtree(chain, ignore_errors=True)
@@ -381,63 +452,89 @@ def main() -> None:
         for f in clips.glob("*.mp4"):
             f.unlink()
 
-    api_key = require_api_key()
-    scenes = plan["scenes"]
-    phase = args.phase
+    needs_api = run_phase in ("hero", "stills", "video", "all")
+    if run_phase in ("video", "assemble", "all"):
+        ensure_phase_a_allowed(
+            out_dir,
+            approve_flag=args.approve_stills,
+            skip_gate=args.yes_skip_stills_gate,
+            label=f"Phase {run_phase}",
+        )
+    if run_phase in ("assemble", "all"):
+        ensure_phase_b_allowed(
+            out_dir,
+            approve_flag=args.approve_clips,
+            skip_gate=args.yes_skip_clips_gate,
+            label="Assembly",
+        )
+
+    api_key = require_api_key() if needs_api else ""
+    phase = run_phase
 
     if phase in ("hero", "stills", "video", "all"):
         ensure_start_stills(scenes, plan, stills, api_key)
         ensure_end_stills(scenes, plan, stills, api_key)
+        status = load_generation_status(out_dir)
+        status["phase_a_approved"] = False
+        status["phase_b_approved"] = False
+        write_generation_status(out_dir, status)
+        if phase in ("hero", "stills"):
+            print(f"Phase {phase} complete — review stills under {stills}")
+            print("Reply with fixes or re-run with --approve-stills --phase video")
+            return
 
     clip_paths: list[Path] = []
     if phase in ("video", "assemble", "all"):
         clip_paths = render_videos(
             scenes, plan, stills, clips, chain, api_key, only=args.only
         )
+        status = load_generation_status(out_dir)
+        status["phase_b_approved"] = False
+        write_generation_status(out_dir, status)
+        if args.skip_assembly or phase == "video":
+            print(f"Phase video complete — review clips under {clips}")
+            print("Reply with fixes or re-run with --approve-clips --phase assemble")
+            return
 
-    if args.skip_assembly or phase not in ("assemble", "all"):
-        if phase != "video":
-            print("Skipped assembly")
-        return
+    if phase in ("assemble", "all"):
+        if not clip_paths:
+            clip_paths = [clips / f"{s['id']}.mp4" for s in scenes]
+        movie = out_dir / "transition_reel.mp4"
+        print("=== Phase 4: concat ===")
+        assemble_movie(clip_paths, scenes, plan, out_dir, movie)
 
-    movie = out_dir / "transition_reel.mp4"
-    print("=== Phase 4: concat ===")
-    if not clip_paths:
-        clip_paths = [clips / f"{s['id']}.mp4" for s in scenes]
-    assemble_movie(clip_paths, scenes, plan, out_dir, movie)
+        bed_cfg = plan.get("background_music", {})
+        final = out_dir / "transition_reel_final.mp4"
+        if bed_cfg.get("enabled"):
+            token = require_replicate_token()
+            duration = int(probe_duration_seconds(movie) + 1)
+            bed_path = out_dir / "audio" / "bed.mp3"
+            bed_path.parent.mkdir(parents=True, exist_ok=True)
+            print(f"=== Phase 5: bed ({duration}s) ===")
+            generate_bed(
+                prompt=bed_cfg.get("prompt", "Ambient instrumental bed, no vocals"),
+                duration_seconds=min(190, duration),
+                out_path=bed_path,
+                token=token,
+                model=bed_cfg.get("model", BED_MODEL),
+            )
+            mix_bed_under_video(
+                video_path=movie,
+                bed_path=bed_path,
+                out_path=final,
+                volume=float(bed_cfg.get("volume", 0.12)),
+            )
+        else:
+            shutil.copy(movie, final)
 
-    bed_cfg = plan.get("background_music", {})
-    final = out_dir / "transition_reel_final.mp4"
-    if bed_cfg.get("enabled"):
-        token = require_replicate_token()
-        duration = int(probe_duration_seconds(movie) + 1)
-        bed_path = out_dir / "audio" / "bed.mp3"
-        bed_path.parent.mkdir(parents=True, exist_ok=True)
-        print(f"=== Phase 5: bed ({duration}s) ===")
-        generate_bed(
-            prompt=bed_cfg.get("prompt", "Ambient instrumental bed, no vocals"),
-            duration_seconds=min(190, duration),
-            out_path=bed_path,
-            token=token,
-            model=bed_cfg.get("model", BED_MODEL),
-        )
-        mix_bed_under_video(
-            video_path=movie,
-            bed_path=bed_path,
-            out_path=final,
-            volume=float(bed_cfg.get("volume", 0.12)),
-        )
-    else:
-        shutil.copy(movie, final)
-
-    manifest = {
-        "title": plan.get("title"),
-        "scene_count": len(scenes),
-        "final": str(final),
-        "crossfades": join_crossfades(scenes, plan),
-    }
-    (out_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    print(f"Done! {final}")
+        manifest = {
+            "title": plan.get("title"),
+            "scene_count": len(scenes),
+            "final": str(final),
+            "crossfades": join_crossfades(scenes, plan),
+        }
+        (out_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
+        print(f"Done! {final}")
 
 
 if __name__ == "__main__":
