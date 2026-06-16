@@ -62,7 +62,7 @@ Deep avatar workflows already spell out cast ledgers, hero reuse, and read-throu
 | H — **Social hook stack** | Short vertical beats | Several `p-video` and/or avatars | Multi-scene skills above |
 | I — **UGC ad factory** | Batch hook/offer/CTA avatar ads | `p-image` / `p-image-edit` → `p-video-avatar` | [ugc-ad-factory](../ugc-ad-factory/SKILL.md) |
 | J — **Product-to-story reel** | 4-6 beat narrative product reel | `p-image-edit` → `p-video` | [product-to-story-reel-builder](../product-to-story-reel-builder/SKILL.md) |
-| K — **Ecommerce creative pack** | Packshots + lifestyle + motion loop | `p-image-edit` → optional `p-image-upscale` / `p-video` | [ecommerce-creative-pack-generator](../ecommerce-creative-pack-generator/SKILL.md) |
+| K — **Ecommerce creative pack** | Packshots + lifestyle + motion loop; virtual try-on on model photos | `p-image-try-on` / `p-image-edit` → optional `p-image-upscale` / `p-video` | [ecommerce-creative-pack-generator](../ecommerce-creative-pack-generator/SKILL.md) · [p-image-try-on](../../../../tools/image/p-image-try-on/SKILL.md) |
 | L — **Character IP engine** | Episodic continuity for mascot/cast | `p-image` / `p-image-edit` + `p-video` / `p-video-avatar` | [character-ip-content-engine](../character-ip-content-engine/SKILL.md) |
 | M — **Motion-transfer showcase** | Same motion, new subject + slider before/after | motion `.mp4` + still → `p-video-animate` → slider compare MP4 | [multi-scene-avatar-video](../core/avatar-multi-scene/SKILL.md) (`animate` rows) |
 | N — **In-video replacement showcase** | Swap people/products in footage + slider before/after | dynamic `p-image` refs → optional `p-video-avatar` source → `p-video-replace` → slider compare MP4 | [p-video-replace-comparison](../launches/p-video-replace-comparison/SKILL.md) |
@@ -113,6 +113,7 @@ Full intake, steps, and shine lines for every letter: **[recipe-catalog.md](../.
 | `p-image` | [p-image](../../../../tools/image/p-image/SKILL.md) |
 | `p-image-edit` | [p-image-edit](../../../../tools/image/p-image-edit/SKILL.md) |
 | `p-image-upscale` | [p-image-upscale](../../../../tools/image/p-image-upscale/SKILL.md) |
+| `p-image-try-on` | [p-image-try-on](../../../../tools/image/p-image-try-on/SKILL.md) |
 | `p-video` | [p-video](../../../../tools/video/p-video/SKILL.md) |
 | `p-video-avatar` | [p-video-avatar](../../../../tools/video/p-video-avatar/SKILL.md) |
 | `p-video-animate` | [p-video-animate](../../../../tools/video/p-video-animate/SKILL.md) |
