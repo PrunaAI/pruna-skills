@@ -13,7 +13,9 @@ Speak to the requester in **plain language**: explain what they will hear (full 
 
 Atomic APIs: [p-video-avatar](../../../../tools/video/p-video-avatar/SKILL.md), [p-image](../../../../tools/image/p-image/SKILL.md), [p-image-edit](../../../../tools/image/p-image-edit/SKILL.md), [references/shared/pruna-api.md](../../../../../references/shared/pruna-api.md).
 
-**Staged generation:** [staged-generation-gate.md](../../../../../references/shared/staged-generation-gate.md) · [workflow-feedback-gates.md](../../../../../references/workflows/workflow-feedback-gates.md)
+**Photoreal dynamic personas:** [realistic-persona-showcase.md](../../../../../references/shared/realistic-persona-showcase.md)
+
+**Staged generation:** [staged-generation-gate.md](../../../../../references/shared/staged-generation-gate.md) · [random-seed-ritual.md](../../../../../references/shared/random-seed-ritual.md) · [workflow-feedback-gates.md](../../../../../references/workflows/workflow-feedback-gates.md)
 
 ## Feedback gates (required)
 
@@ -47,7 +49,7 @@ Write **`voice_script`** as **real dialogue**: contractions, natural rhythm, sho
 | **Image source** | Upload-only reference, or generate/refine with **`p-image`** / **`p-image-edit`** first? |
 | **Motion** | Desired energy for **`video_prompt`**—specific camera angle and movement (positive wording only)? |
 | **Character** | Age, look, realism level (photoreal vs stylized)—see character sheet in [multi-scene-avatar-video](../avatar-multi-scene/SKILL.md) |
-| **Seed** | Lock **`seed`** at hero generation; pass same value to **`p-video-avatar`** |
+| **Seed** | **[Random seed ritual](../../../../references/shared/random-seed-ritual.md)** at hero → **`project_seed`**; pass same value to **`p-video-avatar`** (or user-supplied seed) |
 | **Audio (optional)** | Upload [Gemini TTS](../../../../tools/audio/gemini-3.1-flash-tts/SKILL.md) for lip-sync via **`input.audio`** (preferred over post-mux) — see [scene-anchor-triple.md](../../../../../references/video/scene-anchor-triple.md) avatar variant. Or use native **`voice_script`**. |
 
 If any answer is missing and the user has not waived it, **ask** before generating.

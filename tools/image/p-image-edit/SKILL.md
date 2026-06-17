@@ -45,7 +45,8 @@ Poll and download: [pruna-api.md](../../references/shared/pruna-api.md#poll).
 
 ## Before generating
 
-Confirm **`prompt`**, which **reference files** to upload (1–5), **`aspect_ratio`**, and **`turbo`** on/off with the user. Run [p-image-edit-quality-checklist.md](../../../references/image/p-image-edit-quality-checklist.md) on outputs.
+1. **[Generation diversity](../../../references/shared/generation-diversity.md)** — ritual seed + axis rotation when the job accepts `seed` or you need a logged `run_id`.
+2. Confirm **`prompt`**, which **reference files** to upload (1–5), **`aspect_ratio`**, and **`turbo`** on/off with the user. Run [p-image-edit-quality-checklist.md](../../../references/image/p-image-edit-quality-checklist.md) on outputs.
 
 **Avatar pipelines:** edit from the locked **upscaled** hero URL. Chain: **`p-image-edit` → `p-image-upscale` → slop gate → `p-video-avatar`**. Never pass raw edit URLs to video models. See [multi-scene-avatar-video](../../../guides/workflows/core/avatar-multi-scene/SKILL.md).
 

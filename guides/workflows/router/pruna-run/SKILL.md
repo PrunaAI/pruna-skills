@@ -10,6 +10,8 @@ metadata:
 
 Use this when the user wants immediate execution from one incoming prompt.
 
+**Before any API call:** [generation-diversity.md](../../../references/shared/generation-diversity.md) (ritual seed + axis rotation).
+
 ## What it does
 
 - Accepts one prompt and optional overrides.

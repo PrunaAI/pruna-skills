@@ -55,7 +55,8 @@ Pick the model from what the user is trying to do — these are different jobs.
 
 ## Before generating
 
-Confirm with the user:
+1. **[Generation diversity](../../../references/shared/generation-diversity.md)** — ritual seed + axis rotation; pass as `seed` when set.
+2. Confirm with the user:
 
 - **`video`** URL — source RGB `.mp4` (motion + audio source; upload to `/v1/files` first)
 - **`images`** — **1–4** identity reference URLs (upload each image first)

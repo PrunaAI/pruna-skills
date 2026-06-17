@@ -45,7 +45,8 @@ Shared HTTP patterns: [references/shared/pruna-api.md](../../../references/share
 
 ## Before generating
 
-Confirm with the user:
+1. **[Generation diversity](../../../references/shared/generation-diversity.md)** — ritual seed + axis rotation; pass as `seed` when set.
+2. Confirm with the user:
 
 - **`video`** URL — motion/audio source (upload `.mp4` to `/v1/files` first)
 - **`image`** URL — subject to animate (upload jpg/jpeg/png/webp first)

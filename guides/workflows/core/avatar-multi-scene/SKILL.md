@@ -28,6 +28,7 @@ Follow this skill in **plain language** when talking to the person requesting th
 
 | Resource | Path |
 |----------|------|
+| Photoreal dynamic personas | [realistic-persona-showcase.md](../../../../../references/shared/realistic-persona-showcase.md) |
 | Cast ledger, character sheet, voice/video prompts | [prompt-templates.md](./prompt-templates.md) |
 | Animate rows, sliders, alignment | [animate-beats.md](./animate-beats.md) |
 | Examples | [examples.md](./examples.md) |
@@ -57,7 +58,7 @@ Follow this skill in **plain language** when talking to the person requesting th
 | **Style** | Agreed **style bible** line for all image prompts? |
 | **Character sheet** | Per speaker: age range, wardrobe baseline, hair, skin/realism level, personality adjectives—record before hero generation (see **Character sheet** below). |
 | **Scene variety** | Each scene must differ in **camera angle**, **background/setting**, and/or **energy**—no two consecutive scenes with the same framing and location unless the user asks. Plan **`visual_style_tag`**, **`setting_tag`**, **`camera_tag`**, **`lighting_tag`** per row; cast diversity (gender, age, ethnicity) on launch reels — [visual-variety-bible.md](../../../../../references/shared/visual-variety-bible.md). |
-| **Seeds** | Pick and **lock** a project **`seed`** at hero `p-image` (or user-supplied). Record in manifest; reuse when regenerating the same hero; pass the same **`seed`** to every **`p-video-avatar`** call unless A/B testing motion. |
+| **Seeds** | **[Random seed ritual](../../../../references/shared/random-seed-ritual.md)** at hero — pick and state a random integer; record as **`project_seed`**; reuse for hero regen and every **`p-video-avatar`** call unless A/B testing motion. |
 | **References** | Which files to upload; rights cleared? |
 | **Beat mix** | Which scenes are **`avatar`** vs **`animate`**? All avatar, all animate, or mixed announcement? |
 | **Narrated B-roll cutaways** | Optional **`p-video`** beats using [scene anchor triple](../../../../../references/video/scene-anchor-triple.md) alongside avatar rows |

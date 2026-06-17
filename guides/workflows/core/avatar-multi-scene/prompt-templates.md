@@ -51,15 +51,29 @@ Pair each row with its own **`voice_script`**, **`voice_prompt`**, and **`video_
 
 ```json
 {
-  "project_seed": 482901,
+  "project_seed": 518263,
   "seed_policy": {
-    "p_image_hero": 482901,
-    "p_video_avatar_all_scenes": 482901
+    "p_image_hero": 518263,
+    "p_video_avatar_all_scenes": 518263
   }
 }
 ```
 
-Pass `"seed": 482901` in hero **`p-image`** and every **`p-video-avatar`** `input` unless retrying one scene.
+Replace integers with your [ritual seed](../../../../../references/shared/random-seed-ritual.md) — do not copy from this template.
+
+Pass `"seed": <project_seed from ritual>` in hero **`p-image`** and every **`p-video-avatar`** `input` unless retrying one scene with a **new ritual number**.
+
+**Ritual:** [random-seed-ritual.md](../../../../../references/shared/random-seed-ritual.md) — pick a random integer before every generation; never copy `482901` from this doc.
+
+## Fashion / ecommerce try-on path
+
+When the deliverable is **dressed model stills** or **fashion UGC avatar**:
+
+1. **`p-image`** photoreal editorial plate → slop gate — [realistic-persona-showcase.md](../../../../../references/shared/realistic-persona-showcase.md)
+2. **`p-image-try-on`** with garment refs (normal mode for complex stacks) — [p-image-try-on-showcase.md](../../../../../references/image/p-image-try-on-showcase.md)
+3. Optional **`p-image-upscale`** → slop gate → **`p-video-avatar`** with **unique `video_prompt`** and natural **`voice_script`**
+
+Preserve **`project_seed`** from step 1 through step 3. Plan cast diversity for public example sets per [visual-variety-bible.md](../../../../../references/shared/visual-variety-bible.md).
 
 ## Style bible (paste into every image prompt)
 

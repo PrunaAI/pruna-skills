@@ -14,6 +14,10 @@ examples/workflows/
     p-image-upscale-comparison/
     p-video-animate-comparison/
     p-video-replace-comparison/
+  tools/
+    p-image-try-on/           # try-on scenario briefs
+  shared/
+    realistic-persona/        # p-image + p-video-avatar cross-model examples
 ```
 
-`install_skill.sh` copies from `core/`, `verticals/`, or `launches/`.
+`install_skill.sh` copies from `core/`, `verticals/`, or `launches/`. Tool and shared examples are repo reference only.

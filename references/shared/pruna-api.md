@@ -97,3 +97,5 @@ Download binary output with `GET` to `generation_url` and the same `apikey` head
 ## Environment variable
 
 Skills in this repo assume **`PRUNA_API_KEY`** is set in the shell when running `curl` examples.
+
+**Agent discipline:** [generation-diversity.md](./generation-diversity.md) before every `POST /v1/predictions`.
