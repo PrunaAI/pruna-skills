@@ -2,7 +2,7 @@
 
 Cross-model examples for **`p-image`** scenario plates → optional **`p-image-try-on`** → **`p-video-avatar`**.
 
-**Before every curl:** [random seed ritual](../../../references/shared/random-seed-ritual.md) — pick a random integer (e.g. 100000–999999), state it in your turn, use it as `"seed"`. **Do not copy** the illustrative numbers below.
+**Before every curl:** [random seed ritual](../../../references/shared/random-seed-ritual.md) + [generation diversity](../../../references/shared/generation-diversity.md) — pick seed and a **different `aspect_ratio`** per example in a batch (`1:1`, `16:9`, `9:16`, `4:3`, `3:4`, `3:2`, `2:3`).
 
 Full ladders and 8-slot matrix: [realistic-persona-showcase.md](../../../references/shared/realistic-persona-showcase.md).
 
@@ -14,8 +14,8 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   -H 'Model: p-image' \
   -d '{
     "input": {
-      "prompt": "Photorealistic documentary portrait photograph of a real person, not CGI. Man early 30s Black, short fade haircut, charcoal henley, creative loft exposed brick and teal window bokeh, slight low angle chest-up, soft overcast daylight, mouth clearly visible ready to speak, natural skin pores, 9:16 vertical, single subject one frame",
-      "aspect_ratio": "9:16",
+      "prompt": "Photorealistic documentary portrait photograph of a real person, not CGI. Man early 30s Black, short fade haircut, charcoal henley, creative loft exposed brick and teal window bokeh, slight low angle chest-up, soft overcast daylight, mouth clearly visible ready to speak, natural skin pores, horizontal wide framing, single subject one frame",
+      "aspect_ratio": "16:9",
       "seed": 518263
     }
   }'
@@ -31,8 +31,8 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   -H 'Model: p-image' \
   -d '{
     "input": {
-      "prompt": "Premium anime cinematic young woman hero, cel-shaded film look, violet hair, iridescent jacket, cherry-blossom rooftop at dusk with neon color bokeh, low heroic angle from the side, mouth visible mid-speech, bright clear evening atmosphere, single character one frame",
-      "aspect_ratio": "9:16",
+      "prompt": "Premium anime cinematic young woman hero, cel-shaded film look, violet hair, iridescent jacket, cherry-blossom rooftop at dusk with neon color bokeh, low heroic angle from the side, mouth visible mid-speech, bright clear evening atmosphere, classic portrait framing, single character one frame",
+      "aspect_ratio": "4:3",
       "seed": 771204
     }
   }'
@@ -122,19 +122,19 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 
 ## 9. Eight-slot scenario matrix (playground gallery)
 
-When publishing a public set, cover **medium × angle × setting** — not one look:
+When publishing a public set, cover **medium × angle × setting × aspect_ratio** — not one look:
 
-| Slot | Medium | Style | Camera | Setting |
-|------|--------|-------|--------|---------|
-| 1 | photoreal | documentary | low_angle_mc | loft_brick |
-| 2 | photoreal | editorial_fashion | high_angle_full | plaster_floor |
-| 3 | photoreal | street_ugc | side_angle | mirror_selfie_night |
-| 4 | cel_anime_2d | anime_cinematic | low_angle_hero | rooftop_dusk |
-| 5 | cel_anime_2d | cyberpunk_anime | side_angle | neon_alley |
-| 6 | stop_motion_3d | clay_stop_motion | medium_cu | clay_living_room |
-| 7 | cg_3d_film | fairy_tale_3d | medium_cu | enchanted_garden |
-| 8 | photoreal | cinematic_film | extreme_cu | golden_hour_field |
+| Slot | Medium | Style | Camera | Setting | `aspect_ratio` |
+|------|--------|-------|--------|---------|----------------|
+| 1 | photoreal | documentary | low_angle_mc | loft_brick | `2:3` |
+| 2 | photoreal | editorial_fashion | high_angle_full | plaster_floor | `16:9` |
+| 3 | photoreal | street_ugc | side_angle | mirror_selfie_night | `9:16` |
+| 4 | cel_anime_2d | anime_cinematic | low_angle_hero | rooftop_dusk | `4:3` |
+| 5 | cel_anime_2d | cyberpunk_anime | side_angle | neon_alley | `3:4` |
+| 6 | stop_motion_3d | clay_stop_motion | medium_cu | clay_living_room | `1:1` |
+| 7 | cg_3d_film | fairy_tale_3d | medium_cu | enchanted_garden | `3:2` |
+| 8 | photoreal | cinematic_film | extreme_cu | golden_hour_field | `2:3` |
 
-Each slot: distinct **`cast_descriptor`**. Avatar slots: unique **`video_prompt`**.
+Each slot: distinct **`cast_descriptor`** and **`aspect_ratio`**. Avatar slots: unique **`video_prompt`**.
 
 Full rules: [realistic-persona-showcase.md](../../../references/shared/realistic-persona-showcase.md) · [visual-variety-bible.md](../../../references/shared/visual-variety-bible.md).

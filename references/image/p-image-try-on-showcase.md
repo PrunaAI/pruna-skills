@@ -39,6 +39,8 @@ Try-on quality is capped by **`person_image`**. Generate plates with **`p-image`
 
 Run [p-image-quality-checklist.md](./p-image-quality-checklist.md) before try-on.
 
+**Multi-example batches:** rotate **`aspect_ratio`** on each person plate (`1:1`, `16:9`, `9:16`, `4:3`, `3:4`, `3:2`, `2:3`) — see [generation-diversity.md](../shared/generation-diversity.md#aspect-ratio-multi-example-sets). Try-on inherits plate dimensions when `preserve_input_size: true`.
+
 ### Example person plates (by showcase tier)
 
 **Editorial seated (→ sample 1 style):**
@@ -46,7 +48,7 @@ Run [p-image-quality-checklist.md](./p-image-quality-checklist.md) before try-on
 ```text
 Photoreal editorial fashion photograph, woman mid-20s Mediterranean, dark wavy hair,
 seated on weathered dark wood floor against textured grey plaster wall, relaxed pose
-hand near chin, bare feet visible, soft side window daylight, 3:4 vertical,
+hand near chin, bare feet visible, soft side window daylight, editorial portrait framing,
 natural skin texture, not CGI, single subject one frame.
 ```
 
@@ -64,7 +66,7 @@ even soft studio light, full body head to shoes visible, single subject one fram
 Photoreal night street mirror selfie, woman mid-20s East Asian, long dark hair,
 holding smartphone, convex traffic mirror reflection, city crosswalk and car lights
 behind her, white crew tee and grey joggers, over-ear headphones around neck,
-neon and streetlamp mixed lighting, 9:16 vertical, single subject one frame.
+neon and streetlamp mixed lighting, vertical full-body framing, single subject one frame.
 ```
 
 **Full-body streetwear (→ sample 4 style):**
@@ -72,7 +74,7 @@ neon and streetlamp mixed lighting, 9:16 vertical, single subject one frame.
 ```text
 Photoreal street fashion portrait, woman early 20s East Asian, high ponytail,
 full body on dark asphalt, holding baseball bat behind shoulders, overcast open-sky
-light, 9:16 vertical, neutral base outfit, single subject one frame.
+light, vertical full-body framing, neutral base outfit, single subject one frame.
 ```
 
 **Golden-hour portrait (→ sample 5 style):**

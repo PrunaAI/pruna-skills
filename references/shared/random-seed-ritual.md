@@ -11,7 +11,7 @@ Before writing curl, runner JSON, or calling the API:
 1. **Think of a random integer** — e.g. six digits, range **100000–999999** (or use `shuf -i 100000-999999 -n 1` / language RNG when executing locally).
 2. **Say it in the turn** when planning or confirming — e.g. *"Ritual seed for this hero: 384729."*
 3. **Assign it** per the rules below → `seed` in `input`, or `project_seed` in manifest.
-4. **Log it** in the manifest / generation log with the prompt and prediction id.
+4. **Log it** in the manifest / generation log with the prompt, **`aspect_ratio`** (when set), and prediction id.
 
 **Never** proceed to `POST /v1/predictions` without completing steps 1–2 in the same turn (unless the user supplied an explicit seed — see exceptions).
 

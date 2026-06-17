@@ -50,7 +50,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 
 ## Before generating
 
-1. **[Generation diversity](../../../references/shared/generation-diversity.md)** — ritual seed + axis rotation (never copy example seeds from docs).
+1. **[Generation diversity](../../../references/shared/generation-diversity.md)** — ritual seed + axis rotation (never copy example seeds). **Multi-example batches:** different **`aspect_ratio`** per still (`1:1`, `16:9`, `9:16`, `4:3`, `3:4`, `3:2`, `2:3`).
 2. Confirm **`prompt`**, **`aspect_ratio`**, and **`seed`** with the user. Run [p-image-quality-checklist.md](../../../references/image/p-image-quality-checklist.md) on outputs before downstream steps.
 
 ## Production quality — photoreal personas
@@ -63,7 +63,7 @@ Default demos often look **AI sloppy** (generic white background, plastic skin, 
 | **Stylized / anime** | Named `visual_style_tag` — cinematic cel, cyberpunk anime, clay, CG 3D; mouth visible for avatars |
 | **Diverse cast** | Specific age, ethnicity, archetype — rotate across example sets |
 | **Dynamic worlds** | Named setting + lighting + **camera angle** — not one template repeated |
-| **Scenario matrix** | Plan medium × angle × setting × lighting per row before generating |
+| **Scenario matrix** | Plan medium × angle × setting × **aspect_ratio** per row before generating |
 | **Avatar-ready** | Face large; **mouth clearly visible**; hands away from mouth |
 | **Try-on-ready** | Full-body or region coverage for garment type (feet for shoes, etc.) |
 

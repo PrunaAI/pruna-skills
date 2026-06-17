@@ -7,7 +7,7 @@ One checklist so **every** Pruna output — **`p-image`**, **`p-video`**, try-on
 ## Three steps (every job)
 
 1. **[Random seed ritual](./random-seed-ritual.md)** — pick and state a random integer **first**; assign `seed` / `project_seed` / new seed per independent panel.
-2. **Diversify the scenario row** — change at least **two axes** from the previous output in the same session (unless user asked for continuity).
+2. **Diversify the scenario row** — change at least **two axes** from the previous output in the same session (cast, setting, camera, **aspect_ratio**, medium, … — unless user asked for continuity).
 3. **Log** — ritual seed, axes chosen, prediction id (manifest or turn text).
 
 ## Scenario axes (rotate across outputs)
@@ -22,14 +22,36 @@ One checklist so **every** Pruna output — **`p-image`**, **`p-video`**, try-on
 | **Motion** | unique `video_prompt` per clip | `p-video`, `p-video-avatar`, animate |
 | **Voice** | natural `voice_script`; one `voice` preset per character | avatar, TTS-led video |
 | **Seed** | new ritual per **independent** job; lock `project_seed` only inside one character chain | all seeded models |
+| **Aspect ratio** | different `aspect_ratio` per independent still in a batch — see [below](#aspect-ratio-multi-example-sets) | `p-image`, `p-image-edit` |
 
 Full style/camera/lighting ladders: [visual-variety-bible.md](./visual-variety-bible.md). Persona + try-on bar: [realistic-persona-showcase.md](./realistic-persona-showcase.md).
+
+## Aspect ratio (multi-example sets)
+
+When generating **two or more** stills in one session (playground grid, demo batch, mood board), give each independent output a **different** `aspect_ratio` unless the user locked a format.
+
+**Allowed `p-image` values:** `1:1` · `16:9` · `9:16` · `4:3` · `3:4` · `3:2` · `2:3`
+
+**How to pick:** after the [random seed ritual](./random-seed-ritual.md), choose ratio by cycling the list or index with `ritual_seed % 7` — state it in the turn (*"Aspect ratio: 16:9"*). Do **not** default every example to `9:16` or `1:1`.
+
+| Ratio | Typical use |
+|-------|-------------|
+| `9:16` | vertical UGC, full-body fashion, avatar talking head |
+| `16:9` | environmental wide, cinematic landscape plate |
+| `3:4` | editorial portrait, try-on full-body |
+| `4:3` | classic portrait, product + person |
+| `1:1` | packshot grid, social tile |
+| `3:2` · `2:3` | magazine / poster crops |
+
+Match prompt framing to ratio (e.g. `16:9 horizontal wide shot`, `9:16 vertical full body`). **`p-image-try-on`** inherits plate size when `preserve_input_size: true` — diversify person plates first.
+
+**Same character arc:** one ratio for the whole chain unless the user asks for reframes.
 
 ## By model (minimum diversity)
 
 | Model | Besides ritual seed, always vary |
 |-------|-----------------------------------|
-| **`p-image`** | cast + setting + camera (+ medium if not photoreal brief) |
+| **`p-image`** | cast + setting + camera + **aspect_ratio** (+ medium if not photoreal brief) |
 | **`p-image-edit`** | setting and/or angle delta; same identity URL |
 | **`p-image-try-on`** | person plate world + garment complexity; preserve scene |
 | **`p-image-upscale`** | N/A on prompt — diversify **source** stills |
@@ -52,6 +74,7 @@ Full style/camera/lighting ladders: [visual-variety-bible.md](./visual-variety-b
 | White wall + MC CU on every demo | Rotate setting + camera + cast |
 | One `video_prompt` for whole reel | Unique motion per scene row |
 | New seed mid avatar chain | Reuse `project_seed` until recast |
+| Same aspect ratio on every playground example | Rotate `1:1` · `16:9` · `9:16` · `4:3` · `3:4` · `3:2` · `2:3` per [aspect ratio rules](#aspect-ratio-multi-example-sets) |
 
 ## Related
 

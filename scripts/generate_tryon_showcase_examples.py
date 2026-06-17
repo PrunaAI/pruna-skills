@@ -13,6 +13,14 @@ BASE = "https://api.pruna.ai"
 REPO = Path(__file__).resolve().parents[1]
 OUT = REPO / "output" / "try-on-examples"
 
+# Rotate across batches — see references/shared/generation-diversity.md
+PERSON_ASPECT_RATIOS = ("2:3", "16:9", "9:16", "4:3", "3:4", "1:1", "3:2")
+
+
+def aspect_for_seed(seed: int) -> str:
+    return PERSON_ASPECT_RATIOS[seed % len(PERSON_ASPECT_RATIOS)]
+
+
 EXAMPLES = [
     {
         "id": "example-1",
@@ -23,9 +31,8 @@ EXAMPLES = [
                 "Photoreal full-body fashion photograph, woman mid-50s West African, silver locs, "
                 "standing relaxed in artisan pottery studio with ceramic shelves and clay floor, "
                 "warm tungsten practical light, neutral beige linen tunic and wide trousers base outfit, "
-                "bare feet visible, natural skin pores, not CGI, 3:4 vertical, single subject one frame"
+                "bare feet visible, natural skin pores, not CGI, editorial portrait framing, single subject one frame"
             ),
-            "aspect_ratio": "3:4",
         },
         "garments": [
             {
@@ -55,9 +62,8 @@ EXAMPLES = [
                 "Photoreal full-body street portrait, androgynous person early 20s East European, short bleached "
                 "hair, standing in neon-lit laundromat with pink and teal fluorescent tubes, washing machines "
                 "behind, grey tank top and black shorts base outfit, white sneakers visible, slight low angle, "
-                "natural skin texture, not CGI, 9:16 vertical, single subject one frame"
+                "natural skin texture, not CGI, cinematic wide environmental framing, single subject one frame"
             ),
-            "aspect_ratio": "9:16",
         },
         "garments": [
             {
@@ -140,18 +146,30 @@ def run_example(ex):
     ex_dir = OUT / ex["id"]
     ex_dir.mkdir(parents=True, exist_ok=True)
     seed = ex["ritual_seed"]
-    manifest = {"id": ex["id"], "label": ex["label"], "ritual_seed": seed, "assets": {}}
-    print(f"\n=== {ex['id']}: ritual seed {seed} ===")
+    person_ar = aspect_for_seed(seed)
+    manifest = {
+        "id": ex["id"],
+        "label": ex["label"],
+        "ritual_seed": seed,
+        "person_aspect_ratio": person_ar,
+        "assets": {},
+    }
+    print(f"\n=== {ex['id']}: ritual seed {seed}, aspect {person_ar} ===")
 
     p = ex["person"]
     print("  p-image person...")
-    pr = predict_sync("p-image", {"prompt": p["prompt"], "aspect_ratio": p["aspect_ratio"], "seed": seed})
+    pr = predict_sync("p-image", {"prompt": p["prompt"], "aspect_ratio": person_ar, "seed": seed})
     if pr.get("status") != "succeeded":
         raise RuntimeError(f"person failed: {pr}")
     person_path = ex_dir / "01_person_plate.jpg"
     download(pr["generation_url"], person_path)
     person_file_url = upload_file(person_path)
-    manifest["assets"]["person"] = {"local": str(person_path.relative_to(REPO)), "file_url": person_file_url, "prompt": p["prompt"]}
+    manifest["assets"]["person"] = {
+        "local": str(person_path.relative_to(REPO)),
+        "file_url": person_file_url,
+        "prompt": p["prompt"],
+        "aspect_ratio": person_ar,
+    }
     print(f"    saved {person_path.name}")
 
     garment_urls = []

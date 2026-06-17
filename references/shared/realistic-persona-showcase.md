@@ -153,18 +153,18 @@ Pull full ladders from [visual-variety-bible.md](./visual-variety-bible.md#light
 
 Use when building a **public example gallery** (playground or launch page):
 
-| Slot | `render_medium_tag` | `visual_style_tag` | `camera_tag` | `setting_tag` |
-|------|---------------------|--------------------|--------------|---------------|
-| 1 | photoreal | documentary | low_angle_mc | loft_brick |
-| 2 | photoreal | editorial_fashion | high_angle_full | plaster_floor |
-| 3 | photoreal | street_ugc | side_angle | mirror_selfie_night |
-| 4 | cel_anime_2d | anime_cinematic | low_angle_hero | rooftop_dusk |
-| 5 | cel_anime_2d | cyberpunk_anime | side_angle | neon_alley |
-| 6 | stop_motion_3d | clay_stop_motion | medium_cu | clay_living_room |
-| 7 | cg_3d_film | fairy_tale_3d | medium_cu | enchanted_garden |
-| 8 | photoreal | cinematic_film | extreme_cu | golden_hour_field |
+| Slot | `render_medium_tag` | `visual_style_tag` | `camera_tag` | `setting_tag` | `aspect_ratio` |
+|------|---------------------|--------------------|--------------|---------------|----------------|
+| 1 | photoreal | documentary | low_angle_mc | loft_brick | `2:3` |
+| 2 | photoreal | editorial_fashion | high_angle_full | plaster_floor | `16:9` |
+| 3 | photoreal | street_ugc | side_angle | mirror_selfie_night | `9:16` |
+| 4 | cel_anime_2d | anime_cinematic | low_angle_hero | rooftop_dusk | `4:3` |
+| 5 | cel_anime_2d | cyberpunk_anime | side_angle | neon_alley | `3:4` |
+| 6 | stop_motion_3d | clay_stop_motion | medium_cu | clay_living_room | `1:1` |
+| 7 | cg_3d_film | fairy_tale_3d | medium_cu | enchanted_garden | `3:2` |
+| 8 | photoreal | cinematic_film | extreme_cu | golden_hour_field | `2:3` |
 
-Each slot gets a **distinct** `cast_descriptor`. For avatar examples, a **unique** `video_prompt` per slot.
+Each slot gets a **distinct** `cast_descriptor` and **distinct** `aspect_ratio`. For avatar examples, a **unique** `video_prompt` per slot.
 
 ### Prompt wording: stylized vs photoreal
 

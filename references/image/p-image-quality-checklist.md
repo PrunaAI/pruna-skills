@@ -19,7 +19,7 @@ When the output feeds **`p-video-avatar`**, **`p-image-try-on`**, or a public ex
 - **Style tagged** — matches planned `visual_style_tag` / `render_medium_tag` (photoreal, cel anime, clay, etc.).
 - **Photoreal intent** (when photoreal) — natural skin texture; not waxy CGI unless stylized brief.
 - **Cast specificity** — matches planned age, ethnicity, archetype — not generic “model”.
-- **Dynamic world** — unique `setting_tag`; named lighting; **distinct `camera_tag`** — not default MC facing camera every row.
+- **Dynamic world** — unique `setting_tag`; named lighting; **distinct `camera_tag`**; **distinct `aspect_ratio`** in multi-example batches — not default MC facing camera every row.
 - **Avatar-ready** (when lip-sync next) — face large; mouth clearly visible; hands not covering mouth.
 - **Try-on-ready** (when dressing next) — body regions for garment types visible (full-body, feet, head as needed).
 - **`seed`** recorded when identity continues downstream.
