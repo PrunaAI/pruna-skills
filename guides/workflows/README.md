@@ -14,7 +14,7 @@ guides/workflows/
 | **Router** | `pruna-run`, `pruna-generative-pipeline`, `requesting-generation-feedback` |
 | **Core** | `image-to-video`, `narrated-multi-scene`, `visual-transition-reel`, `avatar-single-scene`, `avatar-multi-scene` |
 | **Verticals** | `interactive-explainer`, `music-video`, `illustrated-story-reel` |
-| **Launches** | `p-image-upscale-comparison`, `p-video-animate-comparison`, `p-video-replace-comparison` |
+| **Launches** | `p-image-upscale-comparison`, `p-video-animate-comparison`, `p-video-replace-comparison`, `p-image-try-on-launch` |
 
 **Do not delete the router skills** — they are the intake entrypoints, not duplicates of verticals.
 

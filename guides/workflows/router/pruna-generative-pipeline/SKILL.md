@@ -72,7 +72,8 @@ Deep avatar workflows already spell out cast ledgers, hero reuse, and read-throu
 | P — **Narrated story film** | Multi-scene B-roll + VO (+ optional bed) | hero → `p-image-edit` start/end stills → `p-video` with `image` + `last_frame_image` chain → [gemini-3.1-flash-tts](../../../../tools/audio/gemini-3.1-flash-tts/SKILL.md) → concat + mux ± [stable-audio-2.5](../../../../tools/audio/stable-audio-2.5/SKILL.md) | [multi-scene-ai-video](../core/narrated-multi-scene/SKILL.md) · [audio-post-production.md](../../../../references/audio/audio-post-production.md) |
 | Q — **Visual transition reel** | Multi-scene motion between two stills per beat (no VO) | `p-image` hero → `p-image-edit` start/end stills → `p-video` pair (`duration`) → selective frame chain → concat | [scene-transition-video](../core/visual-transition-reel/SKILL.md) · [scene-anchor-pair.md](../../../../references/video/scene-anchor-pair.md) |
 | R — **Educational explainer** | Narrator VO + expert/character dialogue | `p-image` hero → `p-image-edit` stills → **`narrator`** triple + **`character`** avatar → concat ± bed | [interactive-explainer](../verticals/interactive-explainer/SKILL.md) · [interactive-explainer-scenes.md](../../../../references/workflows/interactive-explainer-scenes.md) |
-| S — **Illustrated story reel** | Still-image story with VO or music (no video API) | `p-image` hero → `p-image-edit` beats → Gemini TTS **or** Stable Audio → ffmpeg Ken Burns + mux | [illustrated-story-reel](../verticals/illustrated-story-reel/SKILL.md) |
+| S — **Illustrated story reel** | Still-image story with VO or music (no video API); **9:16**, **16:9**, or **1:1** | `p-image` hero → `p-image-edit` beats → Gemini TTS **or** Stable Audio → ffmpeg Ken Burns + mux | [illustrated-story-reel](../verticals/illustrated-story-reel/SKILL.md) |
+| T — **Virtual try-on launch** | Fashion vertical showcase reel | `p-image` person + garment → **`p-image-try-on`** → `p-video-avatar` / `p-video` / still slider → Gemini TTS → concat + **Stable Audio** bed | [p-image-try-on-launch](../launches/p-image-try-on-launch/SKILL.md) |
 
 ## Handoff rules (all recipes)
 
@@ -108,6 +109,8 @@ Full intake, steps, and shine lines for every letter: **[recipe-catalog.md](../.
 | **P** | Scene anchor triple + VO ([narrated-multi-scene](../core/narrated-multi-scene/SKILL.md)) |
 | **Q** | Start/end still pairs, no VO ([visual-transition-reel](../core/visual-transition-reel/SKILL.md)) |
 | **R** | Narrator + character dialogue ([interactive-explainer](../verticals/interactive-explainer/SKILL.md)) |
+| **S** | Still story + VO or music ([illustrated-story-reel](../verticals/illustrated-story-reel/SKILL.md)) |
+| **T** | Try-on launch reel — six fashion verticals ([p-image-try-on-launch](../launches/p-image-try-on-launch/SKILL.md)) |
 
 ## Atomic tool index
 

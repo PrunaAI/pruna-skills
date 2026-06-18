@@ -177,9 +177,19 @@ For **full narrated story films**, use Recipe **P** ([scene anchor triple](../vi
 
 ## Recipe S — Illustrated story reel
 
-**Shine:** Picture-book / illustrated social story — still frames with Ken Burns motion, narration or music, **no p-video**.
+**Shine:** Picture-book / illustrated story — still frames with Ken Burns motion, narration or music, **no p-video**. Vertical reel, **horizontal slideshow**, or square — set `defaults.aspect_ratio` (`9:16`, `16:9`, `1:1`).
+
+**Intake:** Narration vs music? Aspect ratio and platform (Reels vs YouTube/presentations)?
 
 **Steps:** [illustrated-story-reel](../../guides/workflows/verticals/illustrated-story-reel/SKILL.md) — `p-image` hero → `p-image-edit` beats → Gemini TTS per beat **or** Stable Audio / user track → ffmpeg assemble.
+
+## Recipe T — Virtual try-on launch reel
+
+**Shine:** Six fashion verticals in one announcement — ecommerce PDP, virtual fitting room, wholesale catalog, lookbook campaign, UGC ads, personalized outfit recommendations. Person + garment generation → **`p-image-try-on`** → motion branch (`p-video-avatar`, `p-video`, or before/after still slider) → Gemini narration on B-roll rows → concat → **Stable Audio** bed.
+
+**Intake:** Which verticals? Motion mix (avatar vs I2V vs slider)? Cast diversity per [visual-variety-bible.md](../shared/visual-variety-bible.md)?
+
+**Steps:** [p-image-try-on-launch](../../guides/workflows/launches/p-image-try-on-launch/SKILL.md) — phased runner or curl. Beat detail: [try-on-beats.md](../../guides/workflows/launches/p-image-try-on-launch/try-on-beats.md).
 
 ## More ideas (map to recipes)
 
@@ -199,6 +209,7 @@ For **full narrated story films**, use Recipe **P** ([scene anchor triple](../vi
 | Replace cast or products in footage | **N** |
 | Narrated multi-scene story | **P** |
 | Illustrated still story (VO or music, no video) | **S** |
+| Virtual try-on launch reel (fashion verticals) | **T** |
 
 If a use case is not covered, define a new row: **intake → ordered models → handoff URLs**.
 

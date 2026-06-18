@@ -1,6 +1,6 @@
 ---
 name: illustrated-story-reel
-description: Use when the user wants a still-image story reel, picture-book slideshow, or illustrated narrative with voiceover or music—and explicitly not generative video (p-video).
+description: Use when the user wants a still-image story (vertical reel, horizontal slideshow, or square), picture-book narrative with voiceover or music—and explicitly not generative video (p-video).
 license: MIT
 metadata:
   version: "0.0.1"
@@ -10,7 +10,9 @@ metadata:
 
 Sequential **p-image** / **p-image-edit** stills assembled in ffmpeg with subtle Ken Burns motion, synced to **narration** (Gemini TTS) or **instrumental music** (Stable Audio or user track). **No p-video.**
 
-Ideal for social story posts, fairy-tale explainers, mood reels, and “moving illustration” formats like illustrated TikTok/X threads.
+Delivery is **not** limited to vertical reels. Set `defaults.aspect_ratio` to **`9:16`** (Stories/Reels/TikTok), **`16:9`** (YouTube, presentations, landing-page hero), or **`1:1`** (feed squares). The runner renders at 1080p for the chosen ratio; default output filename is `story_reel.mp4` — override with `--output-name` (e.g. `story_slideshow.mp4`) when the deliverable is landscape.
+
+Ideal for social story posts, fairy-tale explainers, mood reels, horizontal photo essays, product ramps, and “moving illustration” formats.
 
 ## Overview
 
@@ -44,20 +46,24 @@ Default runner **`--phase stills`**.
 |------|--------|
 | Models | **p-image**, **p-image-edit**, Gemini TTS, Stable Audio 2.5 |
 | Plan field | `audio_mode`: `"narration"` \| `"music"` |
+| Aspect | `defaults.aspect_ratio`: `"9:16"` \| `"16:9"` \| `"1:1"` (match in `hero_prompt` / still lines) |
 | Runner | `verticals/illustrated-story-reel/scripts/run_from_plan.py` |
-| Template | `templates/story-plan.template.json` |
-| Output | `{out_dir}/story_reel.mp4` |
+| Template | `templates/story-plan.template.json` (9:16) · `templates/story-plan.landscape.template.json` (16:9) |
+| Output | `{out_dir}/story_reel.mp4` (default; use `--output-name` for landscape naming) |
 
 ## Intake — ask before generating
 
-**First question (required):** “Should this story use **narration** (voiceover per beat) or **music** (instrumental bed / your track)?”
+**First questions (required):**
 
-Set `audio_mode` in the plan accordingly.
+1. **Delivery shape** — vertical reel (**9:16**), horizontal slideshow (**16:9**), or square (**1:1**)?
+2. **Audio** — **narration** (voiceover per beat) or **music** (instrumental bed / user track)?
+
+Set `defaults.aspect_ratio` and `audio_mode` in the plan before generation. Align `hero_prompt` wording with the ratio (e.g. “16:9 horizontal frame” for landscape).
 
 | Topic | Questions |
 |-------|-----------|
 | **Story** | Title? Beat order (1…N)? Emotional arc? |
-| **Visual** | Style (`style_bible`)? Portrait **9:16** vs landscape **16:9**? Character continuity? |
+| **Visual** | Style (`style_bible`)? Character continuity? `chain_from_previous` for edit chains? |
 | **Per beat** | `edit_prompt` (one frame)? `narration` line (narration mode)? `hold_seconds` (music mode)? |
 | **Motion** | `ken_burns`: `zoom_in`, `zoom_out`, `pan_left`, `pan_right`, `none`? Crossfade vs hard cut? |
 | **Music mode** | Stable Audio prompt, user `music.track` path, or equal seconds per beat? |
@@ -85,6 +91,9 @@ python3 ... --approve-stills --phase music   # music mode
 
 # Phase C — Ken Burns + mux
 python3 ... --approve-audio --phase assemble
+
+# Landscape example (16:9 in plan.json defaults)
+python3 ... --approve-audio --phase assemble --output-name story_slideshow.mp4
 ```
 
 ## Common mistakes
@@ -96,6 +105,8 @@ python3 ... --approve-audio --phase assemble
 | One long narration blob | One line per beat; TTS per scene for sync |
 | Music mode without `hold_seconds` | Set per beat or `defaults.hold_seconds` |
 | Negation in still prompts | Positive description only — see [interactive-explainer-prompts.md](../../../../../references/workflows/interactive-explainer-prompts.md) |
+| Assuming vertical only | Set `aspect_ratio` to `16:9` and landscape framing in prompts for horizontal deliverables |
+| Mismatched ratio in prompts | `aspect_ratio` in plan must match “vertical” / “horizontal” / “square” in `hero_prompt` and beats |
 
 ## Related
 

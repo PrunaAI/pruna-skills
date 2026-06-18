@@ -14,6 +14,7 @@ examples/workflows/
     p-image-upscale-comparison/
     p-video-animate-comparison/
     p-video-replace-comparison/
+    p-image-try-on-launch/
   tools/
     p-image-try-on/           # try-on scenario briefs
   shared/

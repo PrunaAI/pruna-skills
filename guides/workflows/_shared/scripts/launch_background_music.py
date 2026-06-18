@@ -193,15 +193,18 @@ def apply_background_music(
 
     duration = int(min(MAX_DURATION_SECONDS, math.ceil(probe_duration_seconds(video_path) + 1)))
     bed_path = out_dir / "audio" / "launch_bed.mp3"
-    print(f"Generating {duration}s background bed ({model})...")
-    generate_bed(
-        prompt=bed_prompt,
-        duration_seconds=duration,
-        out_path=bed_path,
-        token=api_token,
-        model=model,
-        seed=seed,
-    )
+    if cfg.get("reuse_bed") and bed_path.exists() and bed_path.stat().st_size > 0:
+        print(f"Reusing existing bed {bed_path.name}")
+    else:
+        print(f"Generating {duration}s background bed ({model})...")
+        generate_bed(
+            prompt=bed_prompt,
+            duration_seconds=duration,
+            out_path=bed_path,
+            token=api_token,
+            model=model,
+            seed=seed,
+        )
 
     final_name = cfg.get("output_name") or f"{video_path.stem}_with_music.mp4"
     out_path = out_dir / final_name

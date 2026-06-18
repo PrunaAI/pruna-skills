@@ -17,6 +17,7 @@ Every workflow skill uses [staged-generation-gate.md](../shared/staged-generatio
 | [p-video-replace-comparison](../../guides/workflows/launches/p-video-replace-comparison/SKILL.md) | `launches/p-video-replace-comparison/scripts/run_from_plan.py` | `stills` | plan → stills → video → render+bed |
 | [p-video-animate-comparison](../../guides/workflows/launches/p-video-animate-comparison/SKILL.md) | `launches/p-video-animate-comparison/scripts/run_from_plan.py` | `stills` | plan → stills → animate → render |
 | [p-image-upscale-comparison](../../guides/workflows/launches/p-image-upscale-comparison/SKILL.md) | local ffmpeg | — | plan → upscale QA → comparison render |
+| [p-image-try-on-launch](../../guides/workflows/launches/p-image-try-on-launch/SKILL.md) | `launches/p-image-try-on-launch/scripts/run_from_plan.py` | `stills` | plan → stills → video → tts → assemble+bed |
 | [pruna-generative-pipeline](../../guides/workflows/router/pruna-generative-pipeline/SKILL.md) | recipe-specific | — | routes to rows above |
 
 ## Universal agent rules

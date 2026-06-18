@@ -34,7 +34,7 @@ All generative calls use:
 | Synchronous | `Try-Sync: true` | Fast jobs (many images, simple edits). Completes within ~60s or may time out. |
 | Asynchronous | omit `Try-Sync` | Video, long edits, production reliability. Poll `get_url` / status until `succeeded` or `failed`. |
 
-Official guidance: prefer **async for video**; sync is acceptable for quick **p-image** / **p-image-edit** / **p-image-upscale** when latency is low.
+Official guidance: prefer **async for video**; sync is acceptable for quick **p-image** / **p-image-edit** / **p-image-upscale** / **p-image-try-on** when latency is low.
 
 ## Parallel async (multi-scene / batch)
 
@@ -51,7 +51,7 @@ Full spec: [scene-anchor-triple.md](./scene-anchor-triple.md).
 ## File uploads
 
 1. `POST /v1/files` with `-F "content=@/path/to/file.jpg"` and `apikey` header.
-2. Use `urls.get` from the response (or construct `https://api.pruna.ai/v1/files/{id}`) as the **`image`**, **`last_frame_image`**, **`images[]`**, **`audio`**, etc. value in `input`.
+2. Use `urls.get` from the response (or construct `https://api.pruna.ai/v1/files/{id}`) as the **`image`**, **`last_frame_image`**, **`images[]`**, **`person_image`**, **`garment_images[]`**, **`audio`**, etc. value in `input`.
 
 Uploaded files expire (see upload response `expires_at`).
 

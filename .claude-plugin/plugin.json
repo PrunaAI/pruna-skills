@@ -26,6 +26,7 @@
     "./guides/workflows/launches/p-image-upscale-comparison/SKILL.md",
     "./guides/workflows/launches/p-video-animate-comparison/SKILL.md",
     "./guides/workflows/launches/p-video-replace-comparison/SKILL.md",
+    "./guides/workflows/launches/p-image-try-on-launch/SKILL.md",
     "./guides/workflows/verticals/music-video/SKILL.md"
   ]
 }

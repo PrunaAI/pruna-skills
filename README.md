@@ -24,7 +24,7 @@ guides/workflows/                  # see “Workflow organization” below
   router/        pruna-run, pruna-generative-pipeline, requesting-generation-feedback
   core/          image-to-video, narrated-multi-scene, visual-transition-reel, avatar-*
   verticals/     interactive-explainer, music-video, illustrated-story-reel
-  launches/      p-image-upscale-comparison, p-video-animate-comparison, p-video-replace-comparison
+  launches/      p-image-upscale-comparison, p-video-animate-comparison, p-video-replace-comparison, p-image-try-on-launch
 
 examples/workflows/              # mirrors core/ + verticals/ + launches (see examples/README.md)
   core/visual-transition-reel/
@@ -104,6 +104,7 @@ Explainer specs: [interactive-explainer-scenes.md](references/workflows/interact
 | `p-image-upscale-comparison` | Before/after upscale slider MP4 |
 | `p-video-animate-comparison` | Motion-transfer slider comparison reel |
 | `p-video-replace-comparison` | In-video replace slider demos |
+| `p-image-try-on-launch` | Virtual try-on launch reel — six fashion verticals, narration, background music |
 | `requesting-generation-feedback` | Discipline skill — pause before paid generation |
 
 ## Portable workflow install
@@ -126,6 +127,7 @@ Explainer specs: [interactive-explainer-scenes.md](references/workflows/interact
 # Launches
 ./scripts/install_skill.sh p-image-upscale-comparison
 ./scripts/install_skill.sh p-video-replace-comparison
+./scripts/install_skill.sh p-image-try-on-launch
 ```
 
 **Legacy folder names** (still accepted by `install_skill.sh`):

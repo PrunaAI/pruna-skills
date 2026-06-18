@@ -1,6 +1,6 @@
 # illustrated-story-reel
 
-Still-image story reels — **p-image** / **p-image-edit** beats + Ken Burns ffmpeg assembly. Narration or music (no **p-video**).
+Still-image stories — **p-image** / **p-image-edit** beats + Ken Burns ffmpeg assembly. Vertical (**9:16**), horizontal (**16:9**), or square (**1:1**) via `defaults.aspect_ratio` in the plan. Narration or music (no **p-video**).
 
 ## Install
 
