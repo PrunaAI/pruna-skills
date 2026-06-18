@@ -40,6 +40,8 @@ Ask the user which **recipe** fits (or hybrid). Capture answers before any `POST
 
 ## Confirmation and execution (all recipes)
 
+0. **[Generation diversity](../../../../references/shared/generation-diversity.md)** — ritual seed + diversify axes before the first generation in a session.
+
 1. **Draft** any scripts, beats, or prompts that the user must approve in **natural, human language** (spoken wording for VO; clear intent per scene otherwise).
 2. **Pause** and obtain **explicit confirmation** (“approve”, “go”, “run it”) before the first upload or **`POST /v1/predictions`**. If the user revises copy or cast, re-confirm when the change matters for cost or outcome.
 3. **Staged execution** — after plan approval: stills only → user approves → audio prep (TTS / song) when applicable → user approves → video → user approves clips → assembly and final audio (bed). See [staged-generation-gate.md](../../../../references/shared/staged-generation-gate.md) and [requesting-generation-feedback](../requesting-generation-feedback/SKILL.md).
@@ -79,7 +81,8 @@ Deep avatar workflows already spell out cast ledgers, hero reuse, and read-throu
 - **Do not** chain the next step until the previous URL is valid and (for portraits) checklist-approved when using recipe **G**.
 - **Character continuity:** One **approved source / hero** URL per recurring subject; branch new looks and styles with **`p-image-edit`** from that URL (plus style bible), not unrelated fresh **`p-image`** identity pulls—unless the user resets the character.
 - **Dynamic scenes:** Multi-scene avatar pieces must vary **camera angle**, **background/setting**, **lighting**, and **`visual_style_tag`** per beat—no repetitive office-only stacks unless requested. Run [visual-variety-bible.md](../../../../references/shared/visual-variety-bible.md) checklist on launch reels.
-- **Photoreal stills:** Hero via **`p-image`** (documentary/photoreal prompt) → slop gate; every **`p-image-edit`** still → slop gate before **`p-video-avatar`**.
+- **Photoreal stills:** Hero via **`p-image`** (documentary/photoreal prompt) → slop gate; every **`p-image-edit`** still → slop gate before **`p-video-avatar`**. Persona bar: [realistic-persona-showcase.md](../../../../references/shared/realistic-persona-showcase.md).
+- **Dynamic avatar motion:** unique **`video_prompt`** per scene — not duplicated medium-CU dolly on every row.
 - **Seed lock:** Record **`project_seed`** at hero generation; reuse on hero regen and all **`p-video-avatar`** calls in the project manifest.
 - **Same voice for the same role:** When a character speaks in more than one clip, keep **`voice`** (and usually **`voice_language`**) identical across those clips.
 - **Human delivery:** **`voice_script`** = speakable dialogue; **`voice_prompt`** = realistic performance direction (never marketing copy).

@@ -24,6 +24,8 @@ See also: [parallel-execution.md](./parallel-execution.md) Phase 0, [generation-
 5. **Regeneration loop** — reject → rerun only the failed asset (still, TTS, or clip), not the whole pipeline.
 6. Run model checklists on every still before Phase B.
 7. **Ask when art direction is unclear** — visual mode, cast, continuity, motion energy, bed yes/no. Do not guess and burn video credits.
+8. **[Generation diversity](./generation-diversity.md)** — ritual seed + rotate ≥2 scenario axes vs the previous output in session.
+9. **[Random seed ritual](./random-seed-ritual.md)** — before **every** `POST /v1/predictions`, pick and state a random integer; assign `seed` / `project_seed` per ritual rules. Never copy doc example seeds for new work.
 
 ## Art direction — ask the user when unclear
 

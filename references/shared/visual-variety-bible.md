@@ -283,10 +283,26 @@ Cyberpunk netrunner woman, chrome undercut, iridescent jacket, neon arcade corri
 low angle from below, mouth visible mid-speech, bright electric atmosphere, single subject one frame.
 ```
 
+## Ecommerce try-on & photoreal personas
+
+Public examples across **`p-image`**, **`p-image-try-on`**, and **`p-video-avatar`** should not share one “white studio + plain tee + medium dolly” template.
+
+| Rule | Guidance |
+|------|----------|
+| **Unified bar** | [generation-diversity.md](./generation-diversity.md) · [realistic-persona-showcase.md](./realistic-persona-showcase.md)
+| **Person plate** | Photoreal **`p-image`** editorial prompts → slop gate |
+| **Try-on** | Garment tiers + preservation — [p-image-try-on-showcase.md](../image/p-image-try-on-showcase.md) |
+| **Avatar motion** | Unique **`video_prompt`** per clip; natural **`voice_script`** |
+| **Cast** | Diversity ledger — gender, age, ethnicity spread |
+| **Playground** | Pin try-on refs on [p-image-try-on](https://replicate.com/prunaai/p-image-try-on); match with diverse [p-video-avatar](https://replicate.com/prunaai/p-video-avatar) examples — @ShinyTaskForce |
+
+**Try-on → avatar handoff:** approved try-on still → optional upscale → **`p-video-avatar`**; lock **`seed`** from person-plate generation.
+
 ## Workflow-specific notes
 
 | Workflow | Variety emphasis |
 |----------|-------------------|
+| [p-image-try-on](../../tools/image/p-image-try-on/SKILL.md) | Editorial plates + complex garment refs; preservation checklist; diversity across playground set |
 | [p-video-replace-comparison](../guides/workflows/launches/p-video-replace-comparison/SKILL.md) | Scene 1 **persona ladder** + per-scene distinct `still_edit` backgrounds; optional **light bed** after concat |
 | [p-video-animate-comparison](../guides/workflows/launches/p-video-animate-comparison/SKILL.md) | 3–4 **style tags** per animate slider row |
 | [multi-scene-avatar-video](../guides/workflows/core/avatar-multi-scene/SKILL.md) | Every avatar row: new `setting_tag` + `camera_tag` via `p-image-edit` |

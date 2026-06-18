@@ -4,8 +4,8 @@ Shared specs and QA checklists, grouped like `tools/` by modality plus workflow-
 
 ```text
 references/
-  shared/       # API, execution, routing index, staged gate, variety bible
-  image/        # p-image / edit / upscale / try-on quality checklists
+  shared/       # API, execution, staged gate, generation-diversity, random seed ritual, variety bible
+  image/        # p-image / edit / upscale / try-on quality checklists + try-on showcase guide
   video/        # p-video family checklists + scene-anchor triple/pair
   audio/        # narration + bed post-production
   workflows/    # vertical deliverable specs (explainers, music video QA)

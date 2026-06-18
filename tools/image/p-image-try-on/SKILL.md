@@ -11,7 +11,11 @@ metadata:
 
 Virtually fit one or more garments onto a person's photo. **Rate limit:** 500 requests/minute · **Category:** Image Editing.
 
+The model's strength is **garment-only editing** — identity, pose, hair, background, and scene props stay intact. That supports **editorial fashion**, **complex prints / patchwork**, and **multi-garment stacks**, not just simple flat-lay tee swaps.
+
 Canonical API reference: [p-image-try-on model docs](https://docs.api.pruna.ai/guides/models/p-image-try-on)
+
+**Showcase quality bar:** [realistic-persona-showcase.md](../../../references/shared/realistic-persona-showcase.md) · try-on specifics: [p-image-try-on-showcase.md](../../../references/image/p-image-try-on-showcase.md) · examples: [example-prompt.md](../../../examples/tools/p-image-try-on/example-prompt.md)
 
 Shared HTTP patterns: [references/shared/pruna-api.md](../../../references/shared/pruna-api.md) (upload, [poll](#poll), [download](#download))
 
@@ -111,7 +115,8 @@ Tables follow the [official model page](https://docs.api.pruna.ai/guides/models/
 
 ## Before generating
 
-Confirm with the user:
+1. **[Generation diversity](../../../references/shared/generation-diversity.md)** — ritual seed + axis rotation before each try-on job (reuse hero `project_seed` when dressing an approved plate).
+2. Confirm with the user:
 
 - **`person_image`** — person photo with clear visibility of the body region to dress
 - **`garment_images`** — up to **11** refs (**≤6 recommended**)
@@ -119,6 +124,23 @@ Confirm with the user:
 - **`seed`**, **`output_format`**, **`output_quality`**, **`preserve_input_size`** when delivery format matters
 
 Run [p-image-try-on-quality-checklist.md](../../../references/image/p-image-try-on-quality-checklist.md) on outputs before downstream steps.
+
+## Production quality (not basic demos)
+
+**Upstream person plate:** try-on fidelity is capped by **`person_image`**. Follow [realistic-persona-showcase.md](../../../references/shared/realistic-persona-showcase.md) for photoreal **`p-image`** plates — not generic catalog mannequins. Try-on garment tiers: [p-image-try-on-showcase.md](../../../references/image/p-image-try-on-showcase.md).
+
+**Showcase tiers to plan for:**
+
+| Tier | Example capability |
+|------|-------------------|
+| Editorial still | Artistic prints, color-block sleeves, seated lifestyle poses |
+| Complex garments | Collaged / patchwork suits, fine pleats, multi-panel streetwear |
+| In-scene accessories | Hats, logo tees, glasses — mirror/street compositions preserved |
+| Multi-garment stack | Jacket + tee + pants in one pass (normal mode, ≤6 garments) |
+
+**Anti-slop:** avoid white-background-only demos, mushy AI person plates, turbo-only finals on complex stacks, and repeating one default face across examples. Rotate cast and settings per [visual-variety-bible.md](../../../references/shared/visual-variety-bible.md).
+
+**Replicate playground:** five internal reference predictions (June 2026) document the public bar — link table in [showcase guide](../../../references/image/p-image-try-on-showcase.md#reference-outputs-canonical-playground-bar). Pinning live examples is a separate Replicate/marketing step.
 
 ## Garment inputs
 

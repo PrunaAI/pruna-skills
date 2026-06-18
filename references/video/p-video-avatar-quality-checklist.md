@@ -12,12 +12,22 @@ See the canonical mapping in [`generation-quality-checklists.md`](./generation-q
 - Mouth/beak and eyes are unobstructed (no hair/props/foreground clutter crossing them).
 - Head pose is speaking-friendly (avoid extreme angles, tiny head crop, or chin cutoff).
 - Identity/style match cast bible and scene continuity.
+- **Photoreal path:** skin reads natural (not mushy/waxy); plate matches [realistic-persona-showcase.md](../shared/realistic-persona-showcase.md) intent.
+- **Try-on → avatar path:** try-on preservation passed; outfit details visible if script references them.
 
 ## Speech and performance
 
 - Spoken output matches intended script/audio content.
 - Voice choice is consistent for recurring characters.
 - Delivery tone matches brief; `voice_prompt` is short and does not leak unintended text.
+- **`voice_script`** reads as speakable human dialogue — not brochure/marketing copy.
+
+## Motion and scene dynamism
+
+- **`video_prompt`** is **unique to this clip** — not duplicated from other scenes in the same project.
+- Motion grammar matches the still (props, setting, angle) — e.g. glance targets exist in plate.
+- Multi-scene reels vary camera angle and movement — not every clip `medium close-up, gentle dolly push-in`.
+- **Stylized clips:** motion energy matches `visual_style_tag` (anime vs documentary vs clay).
 - **Motion templates:** when the clip is a source for `p-video-animate`, verify audible speech and visible lip sync — reject smile/wave-only outputs with no dialogue motion.
 
 ## Lip-sync and visual stability

@@ -43,6 +43,8 @@ Table: phases, CLI flags, or API fields. Link heavy detail to reference files.
 ## Workflow
 Numbered steps or phased runner commands. Link out for tables longer than ~30 lines.
 
+**Generation skills:** step 0 is [generation-diversity.md](../references/shared/generation-diversity.md) — ritual seed + axis rotation before any `POST /v1/predictions`.
+
 ## Common mistakes
 Anti-patterns table.
 

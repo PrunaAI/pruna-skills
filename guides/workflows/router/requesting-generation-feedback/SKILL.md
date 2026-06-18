@@ -40,6 +40,7 @@ Stop and ask (or show assets) if any of these are true:
 | Using `--yes-skip-*-gate` without user asking for automation | Bypasses human review | Confirm explicitly |
 | Regen prompts without deleting stills/clips | Old assets reused | Delete targets or `--fresh` / `--regen-*` per [staged-generation-gate.md](../../../../references/shared/staged-generation-gate.md) partial regen table |
 | `voice_script` revised but avatar sources not deleted | Lip sync / dialogue mismatch | Delete `sources/` + `clips/` for that scene |
+| **`POST /v1/predictions` without [random seed ritual](../../../../references/shared/random-seed-ritual.md)** | Duplicate outputs; copied example seeds | Pick and state a random integer first; log `project_seed` |
 
 ## Workflow
 

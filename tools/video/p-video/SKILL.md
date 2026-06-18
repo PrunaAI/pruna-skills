@@ -33,7 +33,8 @@ Pass `urls.get` as `input.image` (first frame) and/or `input.last_frame_image` (
 
 ## Before generating
 
-Confirm **mode** (T2V / I2V / **visual transition pair** / scene anchor triple / audio), **`duration`** (unless audio-driven), **`resolution`**, **`fps`**, **`draft`**, and **`prompt`** with the user—or run intake from [single-scene-ai-video](../../../guides/workflows/core/image-to-video/SKILL.md), [scene-transition-video](../../../guides/workflows/core/visual-transition-reel/SKILL.md), or [multi-scene-ai-video](../../../guides/workflows/core/narrated-multi-scene/SKILL.md).
+1. **[Generation diversity](../../../references/shared/generation-diversity.md)** — ritual seed + axis rotation before each job.
+2. Confirm **mode** (T2V / I2V / **visual transition pair** / scene anchor triple / audio), **`duration`** (unless audio-driven), **`resolution`**, **`fps`**, **`draft`**, **`seed`**, and **`prompt`** with the user—or run intake from [single-scene-ai-video](../../../guides/workflows/core/image-to-video/SKILL.md), [scene-transition-video](../../../guides/workflows/core/visual-transition-reel/SKILL.md), or [multi-scene-ai-video](../../../guides/workflows/core/narrated-multi-scene/SKILL.md).
 
 For **narration or music**, see [audio-post-production.md](../../../references/audio/audio-post-production.md) — Gemini TTS, Stable Audio beds, or upload audio for audio-conditioned mode.
 

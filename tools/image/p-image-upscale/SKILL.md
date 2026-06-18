@@ -46,7 +46,8 @@ Poll and download: [pruna-api.md](../../references/shared/pruna-api.md#poll).
 
 ## Before generating
 
-Confirm **`target`** MP (1–**128**), **`enhance_details`** / **`enhance_realism`**, and **`output_format`** with the user so upscale matches destination. Validate outputs with [p-image-upscale-quality-checklist.md](../../../references/image/p-image-upscale-quality-checklist.md).
+1. **[Generation diversity](../../../references/shared/generation-diversity.md)** — ritual seed + axis rotation (optional API `seed` if supported).
+2. Confirm **`target`** MP (1–**128**), **`enhance_details`** / **`enhance_realism`**, and **`output_format`** with the user so upscale matches destination. Validate outputs with [p-image-upscale-quality-checklist.md](../../../references/image/p-image-upscale-quality-checklist.md).
 
 ## When to upscale
 

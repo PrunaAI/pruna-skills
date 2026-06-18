@@ -112,9 +112,9 @@ For **full narrated story films**, use Recipe **P** ([scene anchor triple](../vi
 
 ## Recipe K — Ecommerce creative pack
 
-**Shine:** Packshots + lifestyle + motion loop.
+**Shine:** Packshots + lifestyle + motion loop; try-on on photoreal model plates with **garment-only** preservation (complex prints, multi-garment stacks — not basic white-background demos).
 
-**Steps:** [ecommerce-creative-pack-generator](../../guides/workflows/ecommerce-creative-pack-generator/SKILL.md).
+**Steps:** [ecommerce-creative-pack-generator](../../guides/workflows/ecommerce-creative-pack-generator/SKILL.md) · showcase bar: [p-image-try-on-showcase.md](../image/p-image-try-on-showcase.md).
 
 ## Recipe L — Character IP engine
 
