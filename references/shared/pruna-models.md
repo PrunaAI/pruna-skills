@@ -11,7 +11,7 @@ Pricing and limits change; confirm on the official page: [Available models](http
 | `p-image` | Text-to-image | `tools/image/p-image` | `references/image/p-image-quality-checklist.md` |
 | `p-image-edit` | Image edit / compose (1–5 images) | `tools/image/p-image-edit` | `references/image/p-image-edit-quality-checklist.md` |
 | `p-image-upscale` | Upscale (target MP 1–128, optional enhance) | `tools/image/p-image-upscale` | `references/image/p-image-upscale-quality-checklist.md` |
-| `p-image-try-on` | Virtual try-on (person + up to 11 garments, ≤6 recommended; optional pose ref, turbo) | `tools/image/p-image-try-on` | `references/image/p-image-try-on-quality-checklist.md` |
+| `p-image-try-on` | Virtual try-on (person + up to 11 garments, ≤6 finals / 7–8 reliable; optional pose ref, turbo ~4) | `tools/image/p-image-try-on` | `references/image/p-image-try-on-quality-checklist.md` |
 | `p-video` | Text / image / audio video; **first frame** (`image`) + **last frame** (`last_frame_image`) chaining | `tools/video/p-video` | `references/video/p-video-quality-checklist.md` |
 | `p-video-avatar` | Talking avatar from portrait + script or audio | `tools/video/p-video-avatar` | `references/video/p-video-avatar-quality-checklist.md` |
 | `p-video-animate` | Animate a still using source video motion (motion transfer) | `tools/video/p-video-animate` | `references/video/p-video-animate-quality-checklist.md` |

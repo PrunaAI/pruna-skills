@@ -3,7 +3,7 @@ name: p-video-replace
 description: Use when the user wants in-footage recast, wardrobe or product swap, or p-video-replace—not animating a still from a motion template.
 license: MIT
 metadata:
-  version: "0.0.1"
+  version: "0.0.2"
   pruna_model: p-video-replace
 ---
 
@@ -13,7 +13,7 @@ metadata:
 
 Given a source video and reference images plus a clear **`instruction_prompt`**, the model places referenced identities into the video — not only face swap.
 
-Full P-API parameters: [p-video-replace model docs](https://docs.api.pruna.ai/guides/models/p-video-replace).
+Full P-API parameters: [p-video-replace model docs](https://docs.api.pruna.ai/guides/models/p-video-replace) · operational guides (Runware host): [product & wardrobe](https://runware.ai/docs/models/prunaai-p-video-replace/guides/product-and-wardrobe-variations) · [recasting scenes](https://runware.ai/docs/models/prunaai-p-video-replace/guides/recasting-iconic-film-scenes)
 
 Shared HTTP patterns: [references/shared/pruna-api.md](../../../references/shared/pruna-api.md)
 
@@ -51,6 +51,8 @@ Pick the model from what the user is trying to do — these are different jobs.
 
 **Anti-pattern:** Generic lines like *"Replace the person in the video"* without naming **what** in the source and **what** from each reference. Identity comes from **`images`**; correct **slot mapping** comes from **`instruction_prompt`**.
 
+**Localized swap pattern:** name the **specific source element** to replace, list everything to **preserve**, close with *"Only the [X] should change; everything else stays as the source."* — required for clothing-only and object-only jobs.
+
 **Launch / launch reels:** Prefer **`multi_job`** (one image per API call) with per-reference prompts; default **`p-video-avatar`** sources (product in hand, desk prop, solo talking head). See [p-video-replace-comparison](../../../guides/workflows/launches/p-video-replace-comparison/SKILL.md) and [replace-beats.md](../../../guides/workflows/launches/p-video-replace-comparison/replace-beats.md) for production-tested scene patterns and anti-patterns (I2V shelf, two-shot cafe, flat-lay-only clothing refs).
 
 ## Before generating
@@ -68,7 +70,7 @@ Pick the model from what the user is trying to do — these are different jobs.
 
 Run [p-video-replace-quality-checklist.md](../../../references/video/p-video-replace-quality-checklist.md) on inputs and outputs.
 
-**Batch runs:** when several independent source videos each need replacement, create **all** predictions in one parallel async batch, then batch-poll. See [parallel-execution.md](../../../references/shared/parallel-execution.md).
+**Batch runs:** when several independent source videos each need replacement, create **all** predictions in one parallel async batch, then batch-poll. See [parallel-execution.md](../../../references/shared/parallel-execution.md). Fan out variants at **`720p`** for review; re-run approved rows at **`1080p`**.
 
 ## Making replacement work
 
@@ -76,31 +78,51 @@ Run [p-video-replace-quality-checklist.md](../../../references/video/p-video-rep
 
 | Factor | Guidance |
 |--------|----------|
+| Reference stills | **Bare product/garment packshots** — no person, hands, or props in frame |
 | Reference count | One still per slot; **up to 4** per call |
-| Multi-slot scenes | One `instruction_prompt` listing left/right, shelf order, or in-hand object |
+| Multi-slot scenes | One `instruction_prompt` listing left/right, shelf order, or in-hand object; index refs ("first reference", "reference image 2") |
 | Variant rows | One image per API call; **per-call** `instruction_prompt` naming source subject + reference cues |
+| Framing match | Chest-held product → vertical packshot; torso garment → flat-lay front face; match scale to source |
+| Held objects | Name the **person** as swap target; list the prop as **preserved** — or the ref may land on the object |
+| Character audio | **`save_audio: true`** — voice stays from the **source** clip, not the reference portrait |
 | Shot alignment | Match framing/scale between source and reference (especially products) |
-| Audio | `save_audio: true` when dialogue or SFX matter |
 
-**Character** (UGC recast):
+**Character** (UGC recast — use **position mapping** when several similar figures):
 
 ```text
-Replace the young man in the kitchen ad with the woman from the reference — coral linen shirt.
-Keep pointing gesture, handheld drift, counter, and audio unchanged.
+Replace the man in the centre of the group, the one adjusting his sunglasses, with the man from the reference.
+Preserve motion, audio, camera, lighting, and the other four men exactly as in the source.
+```
+
+**Character with held prop** (disambiguate — ref can land on phone/volleyball instead of face):
+
+```text
+Replace the bearded man kneeling on the raft, reaching toward the volleyball and yelling, with the man from the reference.
+Preserve the raft, ocean, drifting volleyball, motion, audio, camera, and lighting exactly as in the source.
 ```
 
 **Clothing only** (same model, new outfit):
 
 ```text
-Replace only the clothing: swap white tee and jeans for the emerald evening gown and heels from the reference.
-Keep the same face, walk cycle, and tracking camera.
+Replace the olive-green t-shirt the woman is wearing with the white oxford button-down from the reference.
+Preserve her face, hair, the earbuds case in her right hand, gestures, speech, studio, lighting, camera, and audio.
+Only the top she is wearing should change; everything else stays as the source.
 ```
 
 **Object** (in-hand SKU):
 
 ```text
-Replace only the plain white bottle in the creator's hand with the blue protein tub from the reference.
-Preserve face, shake motion, and gym background.
+Replace the matte-black earbuds case in the woman's right hand with the terracotta succulent from the reference.
+Preserve her face, hair, olive t-shirt, gestures, speech, studio, lighting, camera, and audio.
+Only the object in her hand should change; everything else stays as the source.
+```
+
+**Mixed** (wardrobe + product in one call):
+
+```text
+Replace the olive-green t-shirt with the white oxford from reference image 1, AND replace the earbuds case with the coffee tumbler from reference image 2.
+Preserve her face, hair, gestures, speech, studio, lighting, camera, and audio.
+Both the top and the hand object should change; everything else stays as the source.
 ```
 
 **Mixed** (cafe — face + bag + jacket):
@@ -111,6 +133,15 @@ Preserve table, cups, laughter timing, and camera orbit.
 ```
 
 Prepare references with **`p-image`** / **`p-image-edit`** when the user only has loose photos.
+
+## Limits
+
+- **Vague targets** — *"replace the product"* forces the model to guess; name the object and its location in the source.
+- **Tiny on-screen targets** — product held far from camera or corner stickers → swap quality drops; target must occupy enough of the frame.
+- **Pixel-perfect preservation** — background logos, jersey numbers, barcodes that must stay frame-identical → use inpainting with a mask, not replace.
+- Replace lifts the reference **into the scene** — small label text or patterns may drift between runs.
+
+Runware field map: `inputs.video` → `video`, `referenceImages` → `images`, `positivePrompt` → `instruction_prompt`.
 
 ## Required input
 

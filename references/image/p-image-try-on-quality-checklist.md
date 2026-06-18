@@ -21,7 +21,8 @@ See [p-image-try-on-showcase.md](./p-image-try-on-showcase.md#preservation-check
 ## Garment fit and identity
 
 - Each requested garment appears on the person (correct category — see supported types in [p-image-try-on SKILL.md](../../tools/image/p-image-try-on/SKILL.md#garment-categories)).
-- Unsupported garment types were not silently dropped without the user knowing (check logs / re-run with supported refs only).
+- **One item per body spot:** competing garments on the same region (socks + shoes) — only one expected; flag if the wrong one won.
+- Unsupported / omitted garment types were not silently dropped without the user knowing (check logs / re-run with supported refs only).
 - Garment color, pattern, logos, and key details match the reference (within reasonable lighting variance).
 - **Complex garments:** patchwork panels, collaged prints, pleats, and color-blocks align at seams — no smeared or melted panels.
 - Fit looks natural at shoulders, waist, sleeves, and hem — no obvious floating or clipping.
@@ -41,8 +42,8 @@ If **`person_image`** was generated with **`p-image`**, confirm [p-image-quality
 
 ## Turbo vs normal mode
 
-- If **`turbo: true`**, re-check every garment slot — turbo can miss items; retry in normal mode for final assets.
-- With **more than 6 garments**, verify none were dropped or merged incorrectly.
+- If **`turbo: true`**, re-check every garment slot — turbo can miss items; retry in normal mode for final assets. Sweet spot **~4 pieces** in turbo.
+- With **more than 6 garments**, verify none were dropped or merged incorrectly; **7–8** is the upper reliable band before drop risk rises.
 
 ## Non-flatlay / prompt (EXPERIMENTAL)
 

@@ -12,10 +12,14 @@ See the canonical mapping in [`generation-quality-checklists.md`](./generation-q
 - **`replace_target`** is explicit: character, clothing, object, or mixed.
 - **`subject_in_video`** (or equivalent plan note) lists what in the source will be swapped.
 - **`images`** array has **1–4** clear references (rights cleared); one still per slot.
+- **Product/object refs** are bare packshots — no person, hands, or scene props in frame.
 - **`instruction_prompt`** maps each reference to a **specific** source slot — not generic "replace the person."
+- **Localized swaps:** prompt ends with *only [X] changes; everything else stays as the source* for clothing/object rows.
+- **Held-object scenes:** prompt names the **person** as swap target and lists the prop as preserved.
 - **`multi_job` rows:** each reference has its **own** `instruction_prompt` when using a launch runner or plan JSON.
 - **`single_call` rows:** one prompt maps index order to screen position (left/right, shelf L→R, etc.).
 - **`resolution`** and **`target_fps`** match delivery spec.
+- **Variant batches:** review at **720p**; finals at **1080p** only for approved rows.
 - Source **`video_prompt`** uses continuous camera when footage is generated (not locked-off).
 - Generated sources default to **`p-video-avatar`** (not I2V) for VO + replace rows unless user supplies upload.
 - **`multi_job`** rows: each reference has its own mapped `instruction_prompt`; prefer over `single_call` for mixed/UGC/cafe/SKU ladders.
@@ -39,6 +43,7 @@ Run [visual-variety-bible.md](./visual-variety-bible.md) checklist **before** Ph
 - Swapped element reads from the reference (face, outfit, or object) — not the original.
 - **Clothing-only** jobs: face and body identity stable unless intentionally recasting.
 - **Object-only** jobs: hands, surfaces, and camera path unchanged except the product/prop.
+- **Character recast:** voice/timbre from **source** audio, not the reference portrait.
 - Audio (when `save_audio` is true) stays aligned with the source clip.
 
 ## Technical quality

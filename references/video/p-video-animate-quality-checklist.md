@@ -8,12 +8,14 @@ See the canonical mapping in [`generation-quality-checklists.md`](./generation-q
 
 ## Input gate (pre-render)
 
-- Source **`video`** is the intended motion template (camera path, acting, timing, scene structure).
+- Source **`video`** is the intended motion template (camera path, acting, timing, scene structure); motion is **clear and readable** (not blurry, fast-cut, or low-contrast).
 - Reference **`image`** clearly shows the subject to animate (face/body unobstructed, rights cleared).
-- **Pose and framing alignment:** shot size, facing direction, and visible limbs match the motion template (or repose with **`p-image-edit`** first).
+- **First-frame alignment:** framing, pose, and visible limbs match the **first frame** of the source video (or repose with **`p-image-edit`** first).
+- **Mismatch risk:** head-and-shoulders still + full-body template → expect lost choreography, not full-body motion.
 - **Proportion fit:** human full-body motion on meme/mascot/chibi subjects often breaks legs, arms, and contact points—flag before generate.
-- **`instruction_prompt`** (if used) steers subject behavior without contradicting source motion.
+- **`instruction_prompt`** (if used) describes **behavior overrides only** — not a repeat of the image description.
 - **`resolution`** and **`target_fps`** match delivery spec.
+- Source longer than budget: plan to **split** the template and animate segments (~5 s compute per 1 s video).
 
 ## Motion transfer fidelity
 

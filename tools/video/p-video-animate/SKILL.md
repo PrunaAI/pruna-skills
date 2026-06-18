@@ -3,7 +3,7 @@ name: p-video-animate
 description: Use when the user wants motion transfer onto a still from a reference video, UGC variations from motion templates, or p-video-animate—not replacing a person inside existing footage.
 license: MIT
 metadata:
-  version: "0.0.1"
+  version: "0.0.2"
   pruna_model: p-video-animate
 ---
 
@@ -15,7 +15,7 @@ metadata:
 
 Given a reference input image and video, the model generates a new video using **(1)** the style of the reference image, and **(2)** preserving the original motion, acting, timing, camera movement, and scene structure of the reference video.
 
-Also on Replicate: [prunaai/p-video-animate](https://replicate.com/prunaai/p-video-animate). Full P-API parameters: [p-video-animate model docs](https://docs.api.pruna.ai/guides/models/p-video-animate).
+Also on Replicate: [prunaai/p-video-animate](https://replicate.com/prunaai/p-video-animate). Full P-API parameters: [p-video-animate model docs](https://docs.api.pruna.ai/guides/models/p-video-animate) · operational guide (Runware host): [animating images from video](https://runware.ai/docs/models/prunaai-p-video-animate/guides/animating-images-from-video)
 
 Shared HTTP patterns: [references/shared/pruna-api.md](../../../references/shared/pruna-api.md)
 
@@ -61,7 +61,13 @@ Run [p-video-animate-quality-checklist.md](../../../references/video/p-video-ani
 
 ## Making motion transfer work
 
-**Appearance from image, motion from video.** Quality depends on how well the reference image aligns with the motion template.
+**Appearance from image, motion from video.** The largest quality factor is how well the reference image matches the **first frame** of the source video. Ask before every pair:
+
+1. **Framing** — same body region (head-and-shoulders, medium, full body)?
+2. **Pose** — subject facing and limb position roughly aligned?
+3. **Visibility** — same body parts visible; no extra crop or occlusion the video lacks?
+
+When all three line up, motion transfers cleanly — including secondary cues (camera drift, hair movement, shadow shift). Mismatched pairs lose those.
 
 | Factor | Guidance |
 |--------|----------|
@@ -71,15 +77,31 @@ Run [p-video-animate-quality-checklist.md](../../../references/video/p-video-ani
 | Proportions | Human full-body motion on chibi/mascot subjects often breaks legs and gait |
 | Speaking templates | When source video has dialogue, persona mouth must be clear and large enough |
 
-**Before generate:** repose with **`p-image-edit`** when pose is close but not exact. Upscale reference stills for identity detail.
+**When pairing fails:** head-and-shoulders still + full-body dance → the model **does not hallucinate limbs**; the head drifts subtly and **most choreography is lost**. Generate a full-body reference or pick a closer template.
 
-**`instruction_prompt`** — steer without fighting source motion:
+**Before generate:** repose with **`p-image-edit`** when framing or pose is close but not exact. Upscale reference stills for identity detail.
+
+**Long clips:** ~**5 s compute per 1 s** of video — split the source and animate segments separately for long templates.
+
+**Wrong tool:** not for object removal, background replacement, scene rewriting, or frame-exact pixel edits — use **`p-image-edit`**, **`p-video-replace`**, or inpainting workflows instead.
+
+**`instruction_prompt`** — optional; overrides **behavior**, not who is on screen. Leave blank when the source motion is already right.
+
+Useful (one specific beat on top of source motion):
 
 ```text
-Animate the reference subject using the exact motion, timing, and camera movement from the source video. Keep identity and outfit from the reference image.
+At the very end of the clip, just after her last gesture, she gives a clear thumbs-up toward the camera. Keep the source motion otherwise.
 ```
 
-**Style variety:** photoreal, 3D, claymation, and anime/game personas can share one motion template when framing aligns — useful for slider demos showing range.
+Less useful (repeats what the image already shows):
+
+```text
+A confident woman in a charcoal blazer speaks to the camera in a modern office.
+```
+
+**Style variety:** photoreal, cartoon, 3D, and mascot stills can share one motion template when framing aligns — the reference image's rendering style carries through.
+
+Runware field map: `referenceImages[0]` → `image`, `referenceVideos[0]` → `video`, `positivePrompt` → `instruction_prompt`, `settings.preserveAudio` → `save_audio`.
 
 Mixed-reel context (motion templates, sliders, avatar CTA): [animate-beats.md](../../../guides/workflows/core/avatar-multi-scene/animate-beats.md).
 

@@ -80,7 +80,7 @@ Explainer specs: [interactive-explainer-scenes.md](references/workflows/interact
 | `p-image` | `Model: p-image` — T2I, aspect ratios, optional LoRA |
 | `p-image-edit` | `Model: p-image-edit` — prompt + 1–5 image URLs |
 | `p-image-upscale` | `Model: p-image-upscale` — target MP (1–128), enhance flags |
-| `p-image-try-on` | `Model: p-image-try-on` — person photo + up to 11 garment refs (≤6 recommended); optional `turbo`, `reference_pose`, `prompt` |
+| `p-image-try-on` | `Model: p-image-try-on` — person photo + up to 11 garment refs (≤6 finals); optional `turbo` (~4), `reference_pose`, `prompt` |
 | `p-video` | `Model: p-video` — T2V, I2V, first+last frame chaining, optional audio |
 | `p-video-avatar` | `Model: p-video-avatar` — portrait + `voice_script` or `audio` |
 | `p-video-animate` | `Model: p-video-animate` — *animate this picture with motion* — one `image` + motion-template `video` |
