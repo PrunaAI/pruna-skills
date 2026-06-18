@@ -3,6 +3,9 @@
 
 Phases: stills → video → tts → assemble (+ optional background music).
 Default motion is ``showcase`` — garment ref → person → slider → try-on hold (one aspect ratio).
+
+Single-scene redo: set ``force_rerender`` on one scene, delete its clip/audio, ``--phase video``.
+See SKILL.md § Redo one scene and § CTA avatar.
 """
 
 from __future__ import annotations
@@ -117,7 +120,7 @@ def crop_avatar_portrait(src: Path, dest: Path, width: int, height: int, *, crop
         new_h = max(1, int(round(cropped.height * scale)))
         resized = cropped.resize((new_w, new_h), Image.Resampling.LANCZOS)
         left = (new_w - width) // 2
-        top = (new_h - height) // 2
+        top = 0  # ponytail: anchor top — lip-sync needs face, not center crop
         framed = resized.crop((left, top, left + width, top + height))
     dest.parent.mkdir(parents=True, exist_ok=True)
     framed.save(dest)
@@ -265,10 +268,7 @@ def gen_try_on(
         "output_format": "png",
         "preserve_input_size": True,
     }
-    if garment_meta:
-        types = [str(g["type"]) for g in garment_meta if g.get("type")]
-        if types and len(types) == len(garment_urls):
-            payload["garment_types"] = types
+    # ponytail: garment_types removed — API auto-classifies; field returns 400 if sent
     result = run_prediction("p-image-try-on", payload, api_key, label=label)
     download_file(result["generation_url"], dest, api_key)
     normalize_image(dest, width, height)
@@ -335,13 +335,44 @@ def resolve_avatar_source_id(scene: dict, scenes: list[dict]) -> str:
 
 
 def resolve_avatar_try_on_index(scene: dict, try_on_count: int) -> int:
+    if "use_try_on_index" in scene:
+        raw = int(scene["use_try_on_index"])
+        if raw < 0:
+            raw = try_on_count + raw
+        return max(0, min(raw, try_on_count - 1))
     if scene.get("use_final_try_on") or scene.get("still_from_previous"):
         return max(0, try_on_count - 1)
-    raw = scene.get("use_try_on_index", -1)
-    idx = int(raw)
-    if idx < 0:
-        idx = try_on_count + idx
-    return max(0, min(idx, try_on_count - 1))
+    return max(0, try_on_count - 1)
+
+
+def resolve_avatar_try_on_path(entry: dict, scene: dict) -> Path:
+    if scene.get("use_try_on_all") and entry.get("try_on_all"):
+        return Path(entry["try_on_all"])
+    try_idx = int(
+        entry.get("avatar_try_on_index", resolve_avatar_try_on_index(scene, len(entry["try_on"])))
+    )
+    return Path(entry["try_on"][try_idx])
+
+
+def resolve_person_from_scene(scene: dict, manifest: dict, dest: Path, plan: dict) -> None:
+    src_id = str(scene["person_from_scene"])
+    src = manifest.get(src_id)
+    if not src:
+        raise RuntimeError(f"Scene {scene['id']}: person_from_scene {src_id} not in manifest yet")
+    if scene.get("person_from_try_on_all"):
+        if not src.get("try_on_all"):
+            raise RuntimeError(f"Scene {scene['id']}: source {src_id} has no try_on_all")
+        src_path = Path(src["try_on_all"])
+    else:
+        idx = int(scene.get("person_from_try_on_index", -1))
+        if idx < 0:
+            idx = len(src["try_on"]) + idx
+        idx = max(0, min(idx, len(src["try_on"]) - 1))
+        src_path = Path(src["try_on"][idx])
+    shutil.copy2(src_path, dest)
+    width, height = canvas_size(plan)
+    normalize_image(dest, width, height)
+    print(f"Scene {scene['id']} person ← {src_id} {src_path.name}")
 
 
 def persona_gender_for_avatar(scene: dict, scenes: list[dict], src_id: str) -> str:
@@ -388,12 +419,12 @@ def phase_stills(scenes: list[dict], plan: dict, out_dir: Path, api_key: str) ->
     need_stills = [
         s
         for s in scenes
-        if (s.get("person") or s.get("poses"))
+        if (s.get("person") or s.get("poses") or s.get("person_from_scene"))
         and not s.get("still_from")
         and not s.get("still_from_previous")
     ]
 
-    def stills_job(scene: dict) -> tuple[str, dict]:
+    def stills_job(scene: dict, manifest_snapshot: dict) -> tuple[str, dict]:
         sid = scene["id"]
         sdir = scene_dir(out_dir, sid)
         if scene.get("force_rerender") and sdir.exists():
@@ -441,15 +472,18 @@ def phase_stills(scenes: list[dict], plan: dict, out_dir: Path, api_key: str) ->
             }
 
         person_path = sdir / "person.png"
-        gen_p_image(
-            scene["person"]["prompt"],
-            plan,
-            person_path,
-            api_key,
-            seed=scene["person"].get("seed"),
-            label=f"scene {sid} person",
-            scene=scene,
-        )
+        if scene.get("person_from_scene"):
+            resolve_person_from_scene(scene, manifest_snapshot, person_path, plan)
+        else:
+            gen_p_image(
+                scene["person"]["prompt"],
+                plan,
+                person_path,
+                api_key,
+                seed=scene["person"].get("seed"),
+                label=f"scene {sid} person",
+                scene=scene,
+            )
         garment_paths = resolve_garment_paths(scene, sdir, plan, api_key)
         garment_list = scene.get("garments") or []
         try_on_paths: list[Path] = []
@@ -493,11 +527,24 @@ def phase_stills(scenes: list[dict], plan: dict, out_dir: Path, api_key: str) ->
             entry["try_on_all"] = str(dest_all)
         return sid, entry
 
-    with ThreadPoolExecutor(max_workers=3) as pool:
-        futures = {pool.submit(stills_job, s): s["id"] for s in need_stills}
-        for fut in as_completed(futures):
-            sid, data = fut.result()
-            manifest[sid] = data
+    pending = list(need_stills)
+    while pending:
+        ready = [
+            s
+            for s in pending
+            if not s.get("person_from_scene") or str(s["person_from_scene"]) in manifest
+        ]
+        if not ready:
+            raise RuntimeError(
+                f"Unresolved person_from_scene dependencies for scenes: {[s['id'] for s in pending]}"
+            )
+        with ThreadPoolExecutor(max_workers=3) as pool:
+            futures = {pool.submit(stills_job, s, manifest): s["id"] for s in ready}
+            for fut in as_completed(futures):
+                sid, data = fut.result()
+                manifest[sid] = data
+        for s in ready:
+            pending.remove(s)
 
     for scene in scenes:
         motion = scene.get("motion")
@@ -520,8 +567,10 @@ def phase_stills(scenes: list[dict], plan: dict, out_dir: Path, api_key: str) ->
         if src.get("pose_labels"):
             entry["pose_labels"] = src["pose_labels"]
         if motion == "avatar":
-            try_idx = resolve_avatar_try_on_index(scene, len(src["try_on"]))
-            entry["avatar_try_on_index"] = try_idx
+            if scene.get("use_try_on_all") and src.get("try_on_all"):
+                entry["avatar_try_on_path"] = src["try_on_all"]
+            else:
+                entry["avatar_try_on_index"] = resolve_avatar_try_on_index(scene, len(src["try_on"]))
         manifest[scene["id"]] = entry
 
     (out_dir / "manifest_stills.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
@@ -659,13 +708,20 @@ def render_avatar(
         return
     gender = persona_gender_for_avatar(scene, scenes, src_id)
     defaults = plan.get("defaults", {})
-    portrait_dir = out_dir / "stills" / ".avatar_portraits"
-    portrait_dir.mkdir(parents=True, exist_ok=True)
-    portrait = portrait_dir / f"scene_{scene['id']}_portrait.png"
-    crop_ratio = float(
-        scene.get("avatar_crop_top_ratio") or defaults.get("avatar_crop_top_ratio", 0.62)
-    )
-    crop_avatar_portrait(try_on, portrait, width, height, crop_top_ratio=crop_ratio)
+    use_full = scene.get("avatar_use_full_frame")
+    if use_full is None:
+        use_full = defaults.get("avatar_use_full_frame", False)
+    if use_full:
+        image_path = try_on
+    else:
+        portrait_dir = out_dir / "stills" / ".avatar_portraits"
+        portrait_dir.mkdir(parents=True, exist_ok=True)
+        portrait = portrait_dir / f"scene_{scene['id']}_portrait.png"
+        crop_ratio = float(
+            scene.get("avatar_crop_top_ratio") or defaults.get("avatar_crop_top_ratio", 0.62)
+        )
+        crop_avatar_portrait(try_on, portrait, width, height, crop_top_ratio=crop_ratio)
+        image_path = portrait
 
     avatar_model = str(scene.get("avatar_model") or defaults.get("avatar_model", "p-video-avatar"))
     use_audio = scene.get("avatar_use_uploaded_audio")
@@ -675,7 +731,7 @@ def render_avatar(
         raise RuntimeError(f"Scene {scene['id']}: avatar lip-sync requires p-video-avatar, got {avatar_model}")
 
     payload: dict = {
-        "image": upload_file(portrait, api_key),
+        "image": upload_file(image_path, api_key),
         "video_prompt": build_avatar_video_prompt(scene, plan),
         "resolution": scene.get("avatar_resolution") or defaults.get("avatar_resolution", "720p"),
         "seed": int(scene.get("avatar_seed") or scene_seed(plan, scene)),
@@ -965,17 +1021,19 @@ def phase_video(scenes: list[dict], plan: dict, out_dir: Path, api_key: str) -> 
     audio_dir = out_dir / "audio"
     audio_dir.mkdir(parents=True, exist_ok=True)
 
-    for scene in scenes:
+    def render_scene_clip(scene: dict) -> Path | None:
         sid = scene["id"]
         motion = scene.get("motion", "showcase")
         if motion == "stills_source":
-            continue
+            return None
         entry = manifest[sid]
         clip = clips_dir / f"scene_{sid}.mp4"
         if motion == "avatar":
             src_id = resolve_avatar_source_id(scene, scenes)
-            try_idx = int(entry.get("avatar_try_on_index", resolve_avatar_try_on_index(scene, len(entry["try_on"]))))
-            try_on = Path(entry["try_on"][try_idx])
+            if entry.get("avatar_try_on_path"):
+                try_on = Path(entry["avatar_try_on_path"])
+            else:
+                try_on = resolve_avatar_try_on_path(entry, scene)
             render_avatar(
                 scene,
                 try_on,
@@ -989,7 +1047,16 @@ def phase_video(scenes: list[dict], plan: dict, out_dir: Path, api_key: str) -> 
             )
         else:
             render_showcase_scene(scene, entry, plan, clip, scenes=scenes, out_dir=out_dir)
-        clip_paths.append(clip)
+        return clip
+
+    render_scenes = [s for s in scenes if s.get("motion") != "stills_source"]
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        futures = {pool.submit(render_scene_clip, s): s["id"] for s in render_scenes}
+        for fut in as_completed(futures):
+            clip = fut.result()
+            if clip is not None:
+                clip_paths.append(clip)
+    clip_paths.sort(key=lambda p: next(i for i, s in enumerate(scenes) if f"scene_{s['id']}.mp4" == p.name))
 
     if replicate_token:
         width, height = canvas_size(plan)

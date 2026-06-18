@@ -33,9 +33,34 @@ Alternate **feature explainers** (`avatar` + `voice_script`) with **try-on proof
 | 4 | `avatar` | scale | **`still_from_previous`** → final try-on from scene 3 · **`persona_gender`** voice match |
 | 5 | `showcase_ladder` | personalized | Work / weekend / evening on one person |
 | 5f | `showcase_flash` | flash | **Double-cycle quick swaps** before CTA avatar |
-| 6 | `avatar` | cta | **`still_from_previous`** → evening look from scene 5 |
+| 6 | `avatar` | cta | **`still_from_previous`** + **`use_try_on_all`** → evening look from scene 5 · **Pruna API CTA** (see below) |
 
 **Timing keys:** `showcase_timing` (standard), `rapid_timing` (multi-garment montage), per-scene override on ladder rows.
+
+### CTA beat (scene 6)
+
+End the hybrid reel on an **`avatar`** row that **invites API use** — upload person + garment refs, docs link. Do **not** repeat turbo/pricing here; those belong on hook (0) and scale (4).
+
+**Plan flags:** `still_from_previous: true`, `use_try_on_all: true` when scene 5 was multi-garment.
+
+**Example `voice_script`:**
+
+```text
+That's P-Image-Try-On. [short pause] Upload a person photo and your garment refs on the Pruna API — try it today at docs.api.pruna.ai.
+```
+
+**Example `video_prompt`:** slow confident push-in, open-palm invite gesture, clear lip sync on the API line.
+
+### Avatar voice copy (feature rows)
+
+| Row | Feature | Pricing / speed in VO |
+|-----|---------|------------------------|
+| 0 | speed | Fastest/cheapest hook — no per-item math |
+| 2 | preservation | Character consistency — same face, same scene |
+| 4 | scale | **$0.015** first garment, **$0.008** each extra; quality **&lt;2s/garment** |
+| 6 | cta | API upload + docs — **no** pricing recap |
+
+Speak **P-Image-Try-On** with dashes (not *pee-image*). For tiered cost TTS: *"one and a half cents for the first garment, eight tenths for each extra"* — not a flat per-item rate.
 
 ## Default 8-beat reel (~90s, showcase-only)
 
@@ -60,9 +85,7 @@ See [SKILL.md](./SKILL.md) use-case table. Every vertical uses the same **garmen
 
 ## Garment reference rules
 
-API **`garment_types`** (one per ref, same order as `garment_images[]`): `underwear`, `bottoms`, `dresses`, `feet`, `tops`, `top-layers`, `outerwear`, `headwear`, `neckwear`, `bags`, `wristwear-single`. Full table: [p-image-try-on/SKILL.md](../../../tools/image/p-image-try-on/SKILL.md#garment-types).
-
-In scene plans, set `"type"` on each garment object — the runner maps it to `garment_types[]`.
+In scene plans, set `"type"` on each garment object for labeling and showcase chips — the API **auto-classifies** garments; do not send `garment_types` in predictions.
 
 | Type | Best reference | Avoid |
 |------|----------------|-------|
@@ -76,7 +99,7 @@ In scene plans, set `"type"` on each garment object — the runner maps it to `g
 | `bags` | Front-facing product, strap laid out | Cluttered lifestyle scene |
 | `wristwear-single` | Single item flat-lay, clasp visible | Multiple stacked pieces |
 
-**Multi-garment rows:** up to 10 refs per call; always pass matching `type` / `garment_types` for 2+ items.
+**Multi-garment rows:** up to 11 refs per call. Category hints in plan `type` fields are for humans/showcase only.
 
 ## Slop gate
 

@@ -54,6 +54,24 @@ Set `"background_music": { "enabled": true, ... }` in the plan. Tool: [stable-au
 
 Curl-first alternative: `templates/curl-phase-a.template.sh` and `templates/curl-phase-b.template.sh`.
 
+## Redo one scene
+
+Set `force_rerender: true` on that scene in `plan.json`, delete `clips/scene_{id}.mp4` (+ `audio/avatar_{id}.mp3` for avatar rows), bump `avatar_seed` if needed, then:
+
+```bash
+python3 ./scripts/run_from_plan.py \
+  --plan ./output/my-try-on-launch/plan.json \
+  --out-dir ./output/my-try-on-launch \
+  --phase video --approve-stills --yes-skip-stills-gate
+
+python3 ./scripts/run_from_plan.py \
+  --plan ./output/my-try-on-launch/plan.json \
+  --out-dir ./output/my-try-on-launch \
+  --assemble-only --background-music --yes-skip-stills-gate --yes-skip-clips-gate
+```
+
+See [SKILL.md](./SKILL.md) for CTA copy and pricing voice rules.
+
 ## Expected path after install
 
 ```text

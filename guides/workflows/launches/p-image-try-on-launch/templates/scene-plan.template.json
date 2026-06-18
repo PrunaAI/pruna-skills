@@ -197,10 +197,12 @@
       "vertical": "outro",
       "motion": "avatar",
       "title": "CTA",
-      "still_from": "6",
-      "use_try_on_index": 2,
-      "voice_script": "Upload a person, upload the garment, ship the campaign — try p-image-try-on on the Pruna API today.",
-      "video_prompt": "Camera moves continuously with gentle push-in. She speaks to camera, confident close, mouth centered."
+      "feature": "cta",
+      "still_from_previous": true,
+      "use_try_on_all": true,
+      "persona_gender": "female",
+      "voice_script": "That's P-Image-Try-On. [short pause] Upload a person photo and your garment refs on the Pruna API — try it today at docs.api.pruna.ai.",
+      "video_prompt": "Slow confident push-in, open palm gesture inviting the viewer, warm close energy, clear lip sync on the API call-to-action."
     }
   ]
 }

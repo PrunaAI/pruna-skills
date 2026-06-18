@@ -31,7 +31,6 @@ create_async "${MODEL_TRYON}" '{
   "input": {
     "person_image": "PERSON_URL",
     "garment_images": ["GARMENT_URL"],
-    "garment_types": ["tops"],
     "output_format": "png",
     "preserve_input_size": true
   }

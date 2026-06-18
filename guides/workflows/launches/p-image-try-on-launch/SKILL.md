@@ -3,7 +3,7 @@ name: p-image-try-on-launch
 description: Use when the user needs a p-image-try-on launch reel, virtual fitting room demo, fashion vertical showcase, or try-on announcement with narration and background music.
 license: MIT
 metadata:
-  version: "0.0.1"
+  version: "0.0.2"
 ---
 
 # P-Image-Try-On launch reel
@@ -130,6 +130,65 @@ p-image person plate (full-body or upper-body, neutral base outfit)
 **Gender-matched garments:** set **`persona_gender`** on every person row; garment still prompts auto-prefix **Women's** / **Men's** when not already tagged (override per garment with `"gender": "male"` if needed).
 
 **Aspect ratio lock:** set `defaults.output_width` / `output_height` (e.g. **1080×1920** for 9:16). All stills normalized; avatar + showcase clips normalized before concat.
+
+## CTA avatar (final scene)
+
+The last row must be an **`avatar`** beat that **closes on the Pruna API** — not another feature bullet (no turbo reprisé, no extra pricing recap on the outro).
+
+| Plan field | Use on CTA |
+|------------|------------|
+| `still_from_previous: true` | Portrait from the **prior showcase** row (evening / final look after ladder or flash) |
+| `use_try_on_all: true` | When the prior row was multi-garment — use the composite `try_on_all` still |
+| `video_prompt` | Inviting gesture, clear lip sync on the API line, push-in energy |
+
+**Example `voice_script`:**
+
+```text
+That's P-Image-Try-On. [short pause] Upload a person photo and your garment refs on the Pruna API — try it today at docs.api.pruna.ai.
+```
+
+If TTS garbles the URL, spell it in the script (`docs dot API dot pruna dot AI`) or drop the spoken URL and keep the upload action.
+
+## Avatar voice copy (hook / feature rows)
+
+Use speakable scripts on **`avatar`** rows. Cross-check pricing against [p-image-try-on pricing](../../../tools/image/p-image-try-on/SKILL.md).
+
+| Topic | Say | Avoid |
+|-------|-----|-------|
+| **Tiered cost** | **$0.015** first garment, **$0.008** each additional — e.g. *"one and a half cents for the first garment, eight tenths for each extra"* | Flat *"a cent and a half per item"* or *"two seconds each, a cent and a half"* |
+| **Speed** | Quality mode **under two seconds per garment**; turbo **under four seconds total** | Same latency for every garment count |
+| **Product name** | **P-Image-Try-On** (dashes, spoken as words) | *"pee-image"* or lowercase product slug in VO |
+
+Hook (scene 0) can sell speed/value; scale row (scene 4) carries pricing; **CTA alone** carries the API action.
+
+## Redo one scene
+
+To regenerate a single clip without re-running the whole reel:
+
+1. Set `"force_rerender": true` on **that scene only** in `plan.json` (remove after success).
+2. Bump `avatar_seed` (avatar rows) for a fresh take.
+3. Delete existing outputs for that scene:
+   - Avatar: `clips/scene_{id}.mp4` and `audio/avatar_{id}.mp3`
+   - Narration overlay: `audio/narration_{id}.mp3` if applicable
+4. Re-render video — other scenes reuse existing clips:
+
+```bash
+python3 guides/workflows/launches/p-image-try-on-launch/scripts/run_from_plan.py \
+  --plan output/launches/<project>/plan.json \
+  --out-dir output/launches/<project> \
+  --phase video --approve-stills --yes-skip-stills-gate
+```
+
+5. Reassemble:
+
+```bash
+python3 guides/workflows/launches/p-image-try-on-launch/scripts/run_from_plan.py \
+  --plan output/launches/<project>/plan.json \
+  --out-dir output/launches/<project> \
+  --assemble-only --background-music --yes-skip-stills-gate --yes-skip-clips-gate
+```
+
+Use `--force-avatar` or `--force-video` only when redoing **all** avatar or showcase clips — not for a single scene.
 
 ## Narration
 
