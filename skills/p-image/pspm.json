@@ -1,0 +1,15 @@
+{
+  "$schema": "https://pspm.dev/schemas/pspm.json",
+  "name": "@pruna/p-image",
+  "version": "0.0.1",
+  "description": "Use when the user wants to generate an image from text, create photos or illustrations from a prompt, or needs a new still for downstream video or avatar work.",
+  "license": "MIT",
+  "files": [
+    "SKILL.md",
+    "skill.manifest.json",
+    "pspm.json",
+    "references",
+    "scripts",
+    "templates"
+  ]
+}

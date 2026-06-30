@@ -1,0 +1,15 @@
+{
+  "$schema": "https://pspm.dev/schemas/pspm.json",
+  "name": "@pruna/p-image-edit",
+  "version": "0.0.1",
+  "description": "Use when the user wants to edit an existing image, change wardrobe or background, compose from reference photos, inpaint-style adjustments, or multi-image edits from a prompt.",
+  "license": "MIT",
+  "files": [
+    "SKILL.md",
+    "skill.manifest.json",
+    "pspm.json",
+    "references",
+    "scripts",
+    "templates"
+  ]
+}

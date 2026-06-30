@@ -1,0 +1,15 @@
+{
+  "$schema": "https://pspm.dev/schemas/pspm.json",
+  "name": "@pruna/p-image-try-on",
+  "version": "0.0.1",
+  "description": "Use when the user wants virtual try-on, dress a person in clothing from reference photos, garment fitting on a model still, or ecommerce fashion compositing.",
+  "license": "MIT",
+  "files": [
+    "SKILL.md",
+    "skill.manifest.json",
+    "pspm.json",
+    "references",
+    "scripts",
+    "templates"
+  ]
+}

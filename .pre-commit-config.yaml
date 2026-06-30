@@ -1,0 +1,10 @@
+# See https://pre-commit.com for installation: pip install pre-commit && pre-commit install
+repos:
+  - repo: local
+    hooks:
+      - id: bundle-skills
+        name: bundle skills from catalog
+        entry: scripts/pre_commit_bundle_skills.sh
+        language: script
+        pass_filenames: false
+        stages: [pre-commit]

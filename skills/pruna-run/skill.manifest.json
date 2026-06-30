@@ -1,0 +1,11 @@
+{
+  "references": [
+    "pruna-api.md",
+    "generation-diversity.md",
+    "staged-generation-gate.md"
+  ],
+  "scripts": {
+    "core": [],
+    "shared": []
+  }
+}

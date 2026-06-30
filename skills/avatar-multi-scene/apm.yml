@@ -1,0 +1,10 @@
+name: avatar-multi-scene
+version: 0.0.1
+type: skill
+description: Use when the user needs multiple talking-head segments, motion-transfer comparison reels, mixed host and animate clips, or multi-scene UGC with character continuity.
+dependencies:
+  apm:
+    - PrunaAI/pruna-ai-content-generation-skills/skills/p-image
+    - PrunaAI/pruna-ai-content-generation-skills/skills/p-image-edit
+    - PrunaAI/pruna-ai-content-generation-skills/skills/p-video-avatar
+    - PrunaAI/pruna-ai-content-generation-skills/skills/p-video-animate

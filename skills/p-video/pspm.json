@@ -1,0 +1,15 @@
+{
+  "$schema": "https://pspm.dev/schemas/pspm.json",
+  "name": "@pruna/p-video",
+  "version": "0.0.1",
+  "description": "Use when the user wants to generate video from text or stills, animate between start and end frames, create B-roll or cinematic clips, or build narrated scene chains.",
+  "license": "MIT",
+  "files": [
+    "SKILL.md",
+    "skill.manifest.json",
+    "pspm.json",
+    "references",
+    "scripts",
+    "templates"
+  ]
+}

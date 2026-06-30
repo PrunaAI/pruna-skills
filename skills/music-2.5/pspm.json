@@ -1,0 +1,15 @@
+{
+  "$schema": "https://pspm.dev/schemas/pspm.json",
+  "name": "@pruna/music-2.5",
+  "version": "0.0.1",
+  "description": "Use when the user wants AI song generation with vocals, sung lyrics, original tracks from a style prompt, or source audio for a music video.",
+  "license": "MIT",
+  "files": [
+    "SKILL.md",
+    "skill.manifest.json",
+    "pspm.json",
+    "references",
+    "scripts",
+    "templates"
+  ]
+}

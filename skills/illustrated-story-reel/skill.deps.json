@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "skill": "illustrated-story-reel",
+  "version": "0.0.1",
+  "repository": "PrunaAI/pruna-ai-content-generation-skills",
+  "skillsPath": "skills",
+  "depends": [
+    "p-image",
+    "p-image-edit",
+    "gemini-3.1-flash-tts",
+    "stable-audio-2.5"
+  ],
+  "resolvers": {
+    "skills": {
+      "depends": [
+        "p-image",
+        "p-image-edit",
+        "gemini-3.1-flash-tts",
+        "stable-audio-2.5"
+      ]
+    },
+    "apm": {
+      "dependencies": {
+        "apm": [
+          "PrunaAI/pruna-ai-content-generation-skills/skills/p-image",
+          "PrunaAI/pruna-ai-content-generation-skills/skills/p-image-edit",
+          "PrunaAI/pruna-ai-content-generation-skills/skills/gemini-3.1-flash-tts",
+          "PrunaAI/pruna-ai-content-generation-skills/skills/stable-audio-2.5"
+        ]
+      }
+    },
+    "pspm": {
+      "githubDependencies": {
+        "github:PrunaAI/pruna-ai-content-generation-skills/skills/p-image": "main",
+        "github:PrunaAI/pruna-ai-content-generation-skills/skills/p-image-edit": "main",
+        "github:PrunaAI/pruna-ai-content-generation-skills/skills/gemini-3.1-flash-tts": "main",
+        "github:PrunaAI/pruna-ai-content-generation-skills/skills/stable-audio-2.5": "main"
+      }
+    },
+    "openclaw": {
+      "install": [
+        "git:PrunaAI/pruna-ai-content-generation-skills@main"
+      ],
+      "note": "Install each skill under skills/<name> from the repo tree."
+    }
+  }
+}

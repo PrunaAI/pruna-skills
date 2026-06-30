@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "core": [],
+    "shared": []
+  },
+  "references": [
+    "pruna-api.md",
+    "api-credentials.md",
+    "generation-diversity.md",
+    "random-seed-ritual.md",
+    "generation-quality-checklists.md",
+    "p-video-animate-quality-checklist.md",
+    "parallel-execution.md"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://pspm.dev/schemas/pspm.json",
+  "name": "@pruna/music-video",
+  "version": "0.0.1",
+  "description": "Use when the user wants a music video, lyric video, sung promo, or original song paired with performance and B-roll clips.",
+  "license": "MIT",
+  "files": [
+    "SKILL.md",
+    "skill.manifest.json",
+    "pspm.json",
+    "references",
+    "scripts",
+    "templates",
+    "skill.deps.json",
+    "apm.yml"
+  ],
+  "githubDependencies": {
+    "github:PrunaAI/pruna-ai-content-generation-skills/skills/music-2.5": "main",
+    "github:PrunaAI/pruna-ai-content-generation-skills/skills/whisperx": "main",
+    "github:PrunaAI/pruna-ai-content-generation-skills/skills/p-image": "main",
+    "github:PrunaAI/pruna-ai-content-generation-skills/skills/p-image-edit": "main",
+    "github:PrunaAI/pruna-ai-content-generation-skills/skills/p-video": "main",
+    "github:PrunaAI/pruna-ai-content-generation-skills/skills/p-video-avatar": "main"
+  }
+}

@@ -1,253 +1,262 @@
 # pruna-ai-content-generation-skills
 
-Agent skills for content generation with the [Pruna AI API](https://docs.api.pruna.ai/guides/models): image generation and editing, video and avatar video, upscaling, and composed workflows (for example avatar concept pipelines).
+Agent skills for generating images, video, and audio with the [Pruna AI API](https://docs.api.pruna.ai/guides/models) — plus multi-step workflows for explainers, music videos, and similar projects.
 
-Skills follow the [Agent Skills](https://agentskills.io/specification) layout so they can be installed manually in Cursor, via the `skills` CLI, and optionally registered for Claude Code.
+Skills follow the [Agent Skills](https://agentskills.io/specification) format. Install with [`npx skills`](https://www.npmjs.com/package/skills), [APM](https://microsoft.github.io/apm/), [PSPM](https://docs.anyt.io/pspm/introduction), or other agents — see [Install skills](#install-skills).
 
-## Layout (as implemented)
+## Repository layout
 
 ```text
-references/                        # specs + QA (by modality — see references/README.md)
-  shared/     pruna-api, pruna-models, parallel-execution, generation-quality-checklists, …
-  image/      p-image* quality checklists
-  video/      p-video* checklists, scene-anchor-triple, scene-anchor-pair
-  audio/      audio-post-production
-  workflows/  interactive-explainer-scenes, music-video-quality-checklist, …
+catalog/                           # authoring sources — edit here (see catalog/README.md)
+  references/     API specs, quality checklists, workflow docs
+  tools/          one skill per model (p-image, p-video, …)
+  workflows/      multi-step workflows (router, core, verticals, _shared/scripts)
+  examples/       starter prompts and templates
 
-tools/
-  image/   p-image, p-image-edit, p-image-upscale, p-image-try-on
-  video/   p-video, p-video-avatar, p-video-animate, p-video-replace
-  audio/   gemini-3.1-flash-tts, music-2.5, stable-audio-2.5
+skills/                            # generated install bundles — do not edit; rebuilt on pre-commit
+scripts/                           # repo build tooling (bundle, install, pre-commit)
 
-guides/workflows/                  # see “Workflow organization” below
-  _shared/scripts/
-  router/        pruna-run, pruna-generative-pipeline, requesting-generation-feedback
-  core/          image-to-video, narrated-multi-scene, visual-transition-reel, avatar-*
-  verticals/     interactive-explainer, music-video, illustrated-story-reel
-  launches/      p-image-upscale-comparison, p-video-animate-comparison, p-video-replace-comparison, p-image-try-on-launch
-
-examples/workflows/              # mirrors core/ + verticals/ + launches (see examples/README.md)
-  core/visual-transition-reel/
-  verticals/interactive-explainer/, music-video/
-  launches/p-image-upscale-comparison/, …
-
-output/                          # generated projects (see output/README.md)
-  core/, verticals/, launches/    # same tier names as guides/workflows
-
-scripts/install_skill.sh
-.claude-plugin/plugin.json
+output/                            # local generated files (not committed)
+.mine/                             # Pruna-internal campaign work (not for public install)
 ```
 
-Atomic **tool** skills link to `references/` instead of duplicating API tables. **Workflow** skills layer intake, scene tables, and runners on top of tools + `core/`.
+**Tool** skills document a single API. **Workflow** skills describe full projects: scene plans, approval steps, and helper scripts.
 
 ## Workflow organization
 
-| Layer | Path | Pick when |
-|-------|------|-----------|
-| **Router** | `guides/workflows/router/` (`pruna-run`, `pruna-generative-pipeline`) | User has not chosen a pipeline yet |
-| **Core** | `guides/workflows/core/*` | You know the **scene pattern** (one beat, triple + VO, pair transitions, avatar table) |
-| **Vertical** | `guides/workflows/verticals/*` | You know the **deliverable** (explainer, music video) |
-| **Launches** | `guides/workflows/launches/*` | Before/after or slider demo reels (not a product vertical) |
+| Layer | Where | Choose this when |
+|-------|--------|------------------|
+| **Models** | `catalog/tools/` | You need one API call (a single image, video clip, or audio file) |
+| **Router** | `catalog/workflows/router/` | You are not sure which workflow fits yet |
+| **Core** | `catalog/workflows/core/` | You know the scene structure (one clip, multi-scene story, transitions, talking head) |
+| **Vertical** | `catalog/workflows/verticals/` | You know the end product (explainer, music video, illustrated story) |
 
-**Start here:** [pruna-generative-pipeline](guides/workflows/router/pruna-generative-pipeline/SKILL.md) (recipes A–R) or [pruna-run](guides/workflows/router/pruna-run/SKILL.md) (fast single-shot routing).
+Pruna-internal marketing reels live in [`.mine/`](.mine/README.md) and are not part of the public install set.
 
-### Core skills (scene grammar)
+**Good starting points:** [pruna-generative-pipeline](catalog/workflows/router/pruna-generative-pipeline/SKILL.md) (recipe menu) or [pruna-run](catalog/workflows/router/pruna-run/SKILL.md) (quick single-shot generation).
 
-| Folder | Former name | Use for |
-|--------|-------------|---------|
-| [image-to-video](guides/workflows/core/image-to-video/SKILL.md) | `single-scene-ai-video` | One `p-video` beat (triple, I2V, T2V) |
-| [narrated-multi-scene](guides/workflows/core/narrated-multi-scene/SKILL.md) | `multi-scene-ai-video` | Scene anchor triple → parallel `p-video` + concat |
-| [visual-transition-reel](guides/workflows/core/visual-transition-reel/SKILL.md) | `scene-transition-video` | Pair anchors, motion between stills, no VO |
-| [avatar-single-scene](guides/workflows/core/avatar-single-scene/SKILL.md) | `single-scene-avatar-video` | One `p-video-avatar` |
-| [avatar-multi-scene](guides/workflows/core/avatar-multi-scene/SKILL.md) | `multi-scene-avatar-video` | Multi-scene avatar / animate + assembly |
+### Core workflows (building blocks)
 
-### Vertical skills (deliverables)
+| Skill | Also known as | What it does |
+|-------|---------------|--------------|
+| [image-to-video](catalog/workflows/core/image-to-video/SKILL.md) | `single-scene-ai-video` | One video clip from a start image, optional end image, and optional narration audio |
+| [narrated-multi-scene](catalog/workflows/core/narrated-multi-scene/SKILL.md) | `multi-scene-ai-video` | Multi-scene film: each scene has start and end images plus narration, then clips are combined |
+| [visual-transition-reel](catalog/workflows/core/visual-transition-reel/SKILL.md) | `scene-transition-video` | Montage that moves between still images — visual only, no spoken narration required |
+| [avatar-single-scene](catalog/workflows/core/avatar-single-scene/SKILL.md) | `single-scene-avatar-video` | One talking-head clip: portrait image plus script, with a quality check before you pay for video |
+| [avatar-multi-scene](catalog/workflows/core/avatar-multi-scene/SKILL.md) | `multi-scene-avatar-video` | Several talking-head or motion-transfer scenes with the same character, then assembled into one video |
 
-| Folder | Former name | Use for |
-|--------|-------------|---------|
-| [interactive-explainer](guides/workflows/verticals/interactive-explainer/SKILL.md) | `educational-explainer` | Learning explainers (history, science, biography): narrator + character dialogue |
-| [music-video](guides/workflows/verticals/music-video/SKILL.md) | `ai-music-video` | Song-led video (Music 2.5 + cut map + avatar/B-roll) |
-| [illustrated-story-reel](guides/workflows/verticals/illustrated-story-reel/SKILL.md) | — | Stills-only story + narration or music (no p-video) |
+### Vertical workflows (finished formats)
 
-Explainer specs: [interactive-explainer-scenes.md](references/workflows/interactive-explainer-scenes.md). Full model index: [pruna-models.md](references/shared/pruna-models.md).
+| Skill | Also known as | What it does |
+|-------|---------------|--------------|
+| [interactive-explainer](catalog/workflows/verticals/interactive-explainer/SKILL.md) | `educational-explainer` | Educational video: narrator scenes plus character dialogue (history, science, biography, and similar) |
+| [music-video](catalog/workflows/verticals/music-video/SKILL.md) | `ai-music-video` | Full music video: generated song, timed cuts, performance clips and background footage |
+| [illustrated-story-reel](catalog/workflows/verticals/illustrated-story-reel/SKILL.md) | — | Story told with still images (Ken Burns motion), plus narration or music — no video model required |
 
-**Also aligned with workflows:** [examples/](examples/README.md) (`core/`, `verticals/`, `launches/`) and [output/](output/README.md) use the same tier names for project folders.
+More detail: [interactive-explainer-scenes.md](catalog/references/workflows/interactive-explainer-scenes.md) · [pruna-models.md](catalog/references/shared/pruna-models.md) · [examples](catalog/examples/README.md)
 
-## Skills in this repo
+## All skills
 
-| `name` (folder) | Role |
-|-----------------|------|
-| `p-image` | `Model: p-image` — T2I, aspect ratios, optional LoRA |
-| `p-image-edit` | `Model: p-image-edit` — prompt + 1–5 image URLs |
-| `p-image-upscale` | `Model: p-image-upscale` — target MP (1–128), enhance flags |
-| `p-image-try-on` | `Model: p-image-try-on` — person photo + up to 11 garment refs (≤6 finals); optional `turbo` (~4), `reference_pose`, `prompt` |
-| `p-video` | `Model: p-video` — T2V, I2V, first+last frame chaining, optional audio |
-| `p-video-avatar` | `Model: p-video-avatar` — portrait + `voice_script` or `audio` |
-| `p-video-animate` | `Model: p-video-animate` — *animate this picture with motion* — one `image` + motion-template `video` |
-| `p-video-replace` | `Model: p-video-replace` — *replace this person in this video* — source `video` + 1–4 identity `images` in one call |
-| `stable-audio-2.5` | Replicate — instrumental background bed for launch reels (mix under VO via `launch_background_music.py`) |
-| `music-2.5` | Replicate — full songs with vocals from lyrics + style prompt ([MiniMax Music 2.5](https://replicate.com/minimax/music-2.5)) |
-| `gemini-3.1-flash-tts` | Replicate — narration / voiceover with style prompts ([Gemini 3.1 Flash TTS](https://replicate.com/google/gemini-3.1-flash-tts)) |
-| `pruna-generative-pipeline` | Scenario hub: mood board, hero+variants, I2V, audio-led video, draft→final, links to core/vertical skills |
-| `pruna-run` | Fast entrypoint: auto-route prompt to image/i2v/avatar/I-L |
-| **Core** | |
-| `image-to-video` | One `p-video` beat — scene anchor triple or I2V/T2V |
-| `narrated-multi-scene` | Scene anchor triple → parallel `p-video` + assembly |
-| `visual-transition-reel` | Scene anchor pair → transitions + concat (no VO) |
-| `avatar-single-scene` | One `p-video-avatar` after intake + slop gate |
-| `avatar-multi-scene` | Scene table (`avatar` / `animate` rows) + assembly |
-| **Verticals** | |
-| `interactive-explainer` | Learning explainers: narrator triple + character `p-video-avatar` |
-| `music-video` | Lyrics → Music 2.5 → avatar + B-roll → assembly |
-| `illustrated-story-reel` | p-image/edit stills → Ken Burns slideshow + VO or music |
-| **Launches** | |
-| `p-image-upscale-comparison` | Before/after upscale slider MP4 |
-| `p-video-animate-comparison` | Motion-transfer slider comparison reel |
-| `p-video-replace-comparison` | In-video replace slider demos |
-| `p-image-try-on-launch` | Virtual try-on launch reel — six fashion verticals, narration, background music |
-| `requesting-generation-feedback` | Discipline skill — pause before paid generation |
+### Model skills (Pruna API)
 
-## Portable workflow install
+| Skill | What it does |
+|-------|----------------|
+| `p-image` | Generate an image from a text prompt; choose aspect ratio and optional seed |
+| `p-image-edit` | Edit or compose images from a text prompt plus one to five reference images |
+| `p-image-upscale` | Upscale an image (1–128 megapixels) with optional detail or realism enhancement |
+| `p-image-try-on` | Put clothing from reference photos onto a person photo (virtual try-on) |
+| `p-video` | Generate video from text, from a still image, or between a start and end frame; can sync to uploaded audio |
+| `p-video-avatar` | Talking-head video from a portrait plus a spoken script or audio file |
+| `p-video-animate` | Apply motion from a reference video onto a still image |
+| `p-video-replace` | Swap a person, outfit, or product into existing footage using reference images |
 
-`install_skill.sh` looks for skills under `router/`, `core/`, `verticals/`, and `launches/`, then bundles `SKILL.md`, manifests, templates, references, and `_shared` scripts into `~/.cursor/skills/<name>/`.
+### Model skills (Replicate)
+
+| Skill | What it does |
+|-------|----------------|
+| `music-2.5` | Generate a full song with vocals from lyrics and a style prompt ([MiniMax Music 2.5](https://replicate.com/minimax/music-2.5)) |
+| `gemini-3.1-flash-tts` | Generate spoken narration with controllable voice and delivery ([Gemini Flash TTS](https://replicate.com/google/gemini-3.1-flash-tts)) |
+| `stable-audio-2.5` | Generate instrumental background music to mix under a video |
+| `whisperx` | Transcribe audio (used in music-video lyric timing workflows) |
+
+### Router skills
+
+| Skill | What it does |
+|-------|----------------|
+| `pruna-generative-pipeline` | Help pick a workflow from a recipe menu (mood boards, hero variants, multi-scene films, and more) |
+| `pruna-run` | Run a single prompt quickly — routes to image, image-to-video, or avatar generation |
+| `requesting-generation-feedback` | Pause for user approval before paid API calls and final assembly |
+
+### Core workflows
+
+| Skill | What it does |
+|-------|----------------|
+| `image-to-video` | Plan and generate one cinematic clip |
+| `narrated-multi-scene` | Plan and generate a multi-scene narrated film |
+| `visual-transition-reel` | Plan and generate a visual montage between stills |
+| `avatar-single-scene` | Plan and generate one talking-head clip with approval gates |
+| `avatar-multi-scene` | Plan and generate several avatar or motion-transfer scenes |
+
+### Vertical workflows
+
+| Skill | What it does |
+|-------|----------------|
+| `interactive-explainer` | End-to-end educational explainer with narrator and character scenes |
+| `music-video` | End-to-end music video from lyrics through song, clips, and final edit |
+| `illustrated-story-reel` | End-to-end illustrated story with stills and narration or music |
+
+## Install skills
+
+Use the committed [`skills/`](skills/README.md) bundles (not the repo root). `metadata.version` matches [`VERSION`](VERSION) (**0.0.1**). Workflow folders include generated **`depends:`**, **`apm.yml`**, **`pspm.json`**, and **`skill.deps.json`** from the same `tool_skills` list.
+
+Copy-paste project manifests: [catalog/examples/consumer-manifests/](catalog/examples/consumer-manifests/README.md). Full comparison: [skill-package-managers.md](catalog/references/shared/skill-package-managers.md).
+
+### `npx skills` (Cursor, Codex, Claude Code, …)
+
+**From GitHub (no clone)**
 
 ```bash
-# Router
-./scripts/install_skill.sh pruna-generative-pipeline
+# List
+npx skills add PrunaAI/pruna-ai-content-generation-skills/skills --list
 
-# Core
-./scripts/install_skill.sh narrated-multi-scene
-./scripts/install_skill.sh avatar-multi-scene
-./scripts/install_skill.sh visual-transition-reel
+# Tool skill
+npx skills add PrunaAI/pruna-ai-content-generation-skills/skills \
+  --skill p-image --agent cursor -y
 
-# Verticals
-./scripts/install_skill.sh interactive-explainer
-./scripts/install_skill.sh music-video
+# Shorthand
+npx skills add PrunaAI/pruna-ai-content-generation-skills/skills@p-image -y
 
-# Launches
-./scripts/install_skill.sh p-image-upscale-comparison
-./scripts/install_skill.sh p-video-replace-comparison
-./scripts/install_skill.sh p-image-try-on-launch
+# Workflow — tool skills from depends: in SKILL.md frontmatter
+npx skills add PrunaAI/pruna-ai-content-generation-skills/skills \
+  --skill avatar-multi-scene --agent cursor -y
+
+# Router + vertical
+npx skills add PrunaAI/pruna-ai-content-generation-skills/skills \
+  --skill pruna-generative-pipeline --skill music-video -y
 ```
 
-**Legacy folder names** (still accepted by `install_skill.sh`):
+| Format | Example |
+|--------|---------|
+| GitHub shorthand | `npx skills add PrunaAI/pruna-ai-content-generation-skills/skills --skill p-image -y` |
+| `@skill` shorthand | `npx skills add PrunaAI/pruna-ai-content-generation-skills/skills@p-image -y` |
+| Full tree URL | `npx skills add https://github.com/PrunaAI/pruna-ai-content-generation-skills/tree/main/skills -y` |
+| Single skill URL | `npx skills add https://github.com/PrunaAI/pruna-ai-content-generation-skills/tree/main/skills/p-image -y` |
+| Global (`-g`) | `npx skills add PrunaAI/pruna-ai-content-generation-skills/skills --skill p-image -g -y` |
 
-| Old name | Installs |
-|----------|----------|
-| `single-scene-ai-video` | `image-to-video` |
-| `multi-scene-ai-video` | `narrated-multi-scene` |
-| `scene-transition-video` | `visual-transition-reel` |
-| `single-scene-avatar-video` | `avatar-single-scene` |
-| `multi-scene-avatar-video` | `avatar-multi-scene` |
-| `educational-explainer` | `interactive-explainer` |
-| `documentary-explainer` | `interactive-explainer` |
-| `ai-music-video` | `music-video` |
+Always use the **`/skills`** path — not the repo root (root also discovers `.mine/` launch skills).
 
-See each skill's `README-INSTALL.md` under its folder for run commands. Plan runners that support it default to **`--phase stills`** (human-in-the-loop gate).
+**From a local clone**
+
+```bash
+npx skills add ./skills --list
+npx skills add ./skills --skill p-image --agent cursor -y
+npx skills add ./skills --skill avatar-multi-scene --agent cursor -y
+```
+
+Restart Cursor or start a new chat. Installed paths look like `~/.cursor/skills/<name>/SKILL.md` or `.cursor/skills/<name>/SKILL.md`. Do not use `~/.cursor/skills-cursor/` (Cursor built-ins).
+
+### APM
+
+Install a skill path from GitHub (workflow bundles include **`apm.yml`** listing transitive tool skills):
+
+```bash
+apm install PrunaAI/pruna-ai-content-generation-skills/skills/p-image
+apm install PrunaAI/pruna-ai-content-generation-skills/skills/avatar-multi-scene
+```
+
+Or declare deps in a project **`apm.yml`** and run `apm install`:
+
+```yaml
+dependencies:
+  apm:
+    - PrunaAI/pruna-ai-content-generation-skills/skills/avatar-multi-scene
+```
+
+### PSPM
+
+Add from GitHub, then install into the project (each bundle ships **`pspm.json`** as `@pruna/<skill>`):
+
+```bash
+pspm add github:PrunaAI/pruna-ai-content-generation-skills/skills/p-image
+pspm add github:PrunaAI/pruna-ai-content-generation-skills/skills/avatar-multi-scene
+pspm install
+```
+
+Or pin in **`pspm.json`**:
+
+```json
+"githubDependencies": {
+  "github:PrunaAI/pruna-ai-content-generation-skills/skills/avatar-multi-scene": "main"
+}
+```
+
+### OpenClaw / ClawHub
+
+Install from the repo git ref, then add each skill subpath (no single meta-install yet):
+
+```bash
+openclaw skills install git:PrunaAI/pruna-ai-content-generation-skills@main
+# install skills/<name> from the cloned tree per skill
+```
+
+### Workflow dependencies
+
+Workflow skills declare sibling tool skills in **`depends:`** frontmatter:
+
+```yaml
+depends:
+  - p-image
+  - p-image-edit
+  - p-video-avatar
+  - p-video-animate
+```
+
+Inspect machine-readable deps: `cat skills/avatar-multi-scene/skill.deps.json | jq '.depends, .resolvers'`
+
+**Maintainers:** `./scripts/bundle_all_skills.sh` then commit `skills/`. Registry publish: [`catalog/PUBLISHING.md`](catalog/PUBLISHING.md) (`./scripts/publish_all_skills.sh --execute` with `PSPM_API_KEY`).
+
+See each skill's `README-INSTALL.md` for details. Workflow runners that support phased generation default to **`--phase stills`** so you can review images before paying for video.
+
+## Optional: validate skills locally
+
+```bash
+npx skills-ref validate ./skills/p-image
+```
+
+See [skills-ref](https://github.com/agentskills/agentskills/tree/main/skills-ref) and [skill creation best practices](https://agentskills.io/skill-creation/best-practices).
 
 ## Fast path: agent workflows
 
-Use workflow skills with phased curl (see each `tools/*/SKILL.md`) or portable runners:
+Use workflow skills with phased curl (see each `catalog/tools/*/SKILL.md`) or portable runners:
 
 ```bash
 export PRUNA_API_KEY="your_key"
 
-# Replace comparison reel — stills first, then video after approval
-python3 guides/workflows/launches/p-video-replace-comparison/scripts/run_from_plan.py \
-  --plan output/launches/p-video-replace-announcement/announcement_plan.json \
-  --out-dir output/launches/p-video-replace-announcement \
-  --phase stills
-
 # Upscale before/after slider from any still pair
-python3 guides/workflows/launches/p-image-upscale-comparison/scripts/generate_upscale_comparison.py \
+python3 catalog/workflows/_shared/scripts/generate_upscale_comparison.py \
   --before assets/before.jpg --after assets/after.jpg \
   --output output/upscale-demo.mp4 --preset portrait
 
 # Learning explainer (vertical) — edit plan.json first
-python3 guides/workflows/verticals/interactive-explainer/scripts/run_from_plan.py \
+python3 catalog/workflows/verticals/interactive-explainer/scripts/run_from_plan.py \
   --plan output/verticals/interactive-explainer/my-explainer/plan.json \
   --out-dir output/verticals/interactive-explainer/my-explainer \
   --final-name my_explainer_final.mp4
 
 # Music video (vertical)
-python3 guides/workflows/verticals/music-video/scripts/run_from_plan.py \
+python3 catalog/workflows/verticals/music-video/scripts/run_from_plan.py \
   --plan output/verticals/music-video/my-music-video/plan.json \
   --out-dir output/verticals/music-video/my-music-video
 ```
 
-For scenario routing, use [pruna-run](guides/workflows/router/pruna-run/SKILL.md) or [pruna-generative-pipeline](guides/workflows/router/pruna-generative-pipeline/SKILL.md). Example prompts live under [examples/workflows/](examples/workflows/).
+For scenario routing, use [pruna-run](catalog/workflows/router/pruna-run/SKILL.md) or [pruna-generative-pipeline](catalog/workflows/router/pruna-generative-pipeline/SKILL.md). Example prompts live under [catalog/examples/workflows/](catalog/examples/README.md).
 
 ## Skill format (required for installability)
 
 - **Directory name** must match the `name` field in `SKILL.md` YAML frontmatter (lowercase, hyphens, max 64 characters, no leading/trailing hyphen, no `--`). See the [Agent Skills specification](https://agentskills.io/specification).
 - **`SKILL.md`** must include at least `name` and `description` (what the skill does and when to use it, including trigger phrases).
 
-Optional: `scripts/`, `references/`, `assets/`, `license`, `compatibility`, `metadata` in frontmatter. For Cursor-only behavior (for example load when explicitly invoked), you can set `disable-model-invocation: true` in frontmatter where appropriate.
-
-## Installing in Cursor (manual)
-
-**Personal (all projects):**
-
-```bash
-mkdir -p ~/.cursor/skills
-cp -R path/to/pruna-ai-content-generation-skills/tools/image/p-image ~/.cursor/skills/
-# repeat for each skill directory you want
-```
-
-**Project-only (checked into another repo):**
-
-```bash
-mkdir -p .cursor/skills
-cp -R path/to/pruna-ai-content-generation-skills/guides/workflows/verticals/interactive-explainer .cursor/skills/
-# or: core/narrated-multi-scene, verticals/music-video, tools/image/p-image, …
-```
-
-Prefer `./scripts/install_skill.sh <skill-name>` so references and `_shared` scripts are copied automatically.
-
-Restart Cursor or start a new chat so skills are discovered. Installed path should look like:
-
-```text
-~/.cursor/skills/<skill-name>/SKILL.md
-```
-
-or
-
-```text
-.cursor/skills/<skill-name>/SKILL.md
-```
-
-Do not install into `~/.cursor/skills-cursor/`; that tree is reserved for Cursor built-in skills.
-
-## Installing with `npx skills` (CLI)
-
-The [skills](https://www.npmjs.com/package/skills) CLI can install skills from a Git repository or a local path into configured agents.
-
-**From GitHub (after this repo is published):**
-
-```bash
-npx skills add <org>/pruna-ai-content-generation-skills --agent cursor
-```
-
-**From a local clone (smoke test and development):**
-
-```bash
-cd /path/to/pruna-ai-content-generation-skills
-npx skills add . --agent cursor --list
-```
-
-Use `--list` to see which skills the CLI detects before copying. If your CLI version supports installing a subset, use its flag (often `--skill <name>`) to install only selected skills.
-
-**Updates:** use your CLI’s update command (for example `npx skills update`) or re-run `add` after pulling the repo, depending on the version you use.
-
-## Optional: validate skills locally
-
-The Agent Skills project provides a validator to catch frontmatter and naming issues:
-
-```bash
-npx skills-ref validate ./tools/image/p-image
-```
-
-See [skills-ref](https://github.com/agentskills/agentskills/tree/main/skills-ref). Run once per skill directory (or in CI over each leaf folder containing `SKILL.md`).
+Optional: `scripts/`, `references/`, `assets/`, `license`, `compatibility`, `metadata`, and workflow-only **`depends:`** (sibling skill names) in frontmatter.
 
 ## Optional: Claude Code plugin
 
@@ -255,20 +264,54 @@ This repo includes [`.claude-plugin/plugin.json`](./.claude-plugin/plugin.json) 
 
 ## API setup
 
-Set **`PRUNA_API_KEY`** for shell examples. Pruna uses the **`apikey`** HTTP header (see [references/shared/pruna-api.md](./references/shared/pruna-api.md) and the [Quickstart](https://docs.api.pruna.ai/guides/quickstart)).
+| Service | Env var | Get a key |
+|---------|---------|-----------|
+| **Pruna** (images, video, try-on, upscale) | `PRUNA_API_KEY` | [dashboard.pruna.ai](https://dashboard.pruna.ai/) |
+| **Replicate** (Music 2.5, TTS, Stable Audio, WhisperX) | `REPLICATE_API_TOKEN` | [replicate.com/account/api-tokens](https://replicate.com/account/api-tokens) |
 
-## Naming and side-by-side installs
+```bash
+export PRUNA_API_KEY="your_pruna_key"
+export REPLICATE_API_TOKEN="r8_..."   # when using audio / song tools
+```
 
-If users might already have another vendor’s skill named `p-image`, consider a **`pruna-` prefix** in both folder name and `name:` frontmatter (for example `pruna-p-image`) so two installs do not collide. Folder name and `name` must still match exactly.
+Pruna uses the **`apikey`** HTTP header — see [pruna-api.md](./catalog/references/shared/pruna-api.md). Replicate uses **`Authorization: Bearer`** — see [replicate-api.md](./catalog/references/shared/replicate-api.md).
 
-## What to decide for your team
+**Agents:** if a required key is missing, do not call paid APIs — use the signup templates in [api-credentials.md](./catalog/references/shared/api-credentials.md).
 
-| Topic | Why it matters |
-|--------|----------------|
-| Cursor vs Claude Code vs both | Drives whether you maintain `.claude-plugin/plugin.json` and which install sections you emphasize. |
-| Public vs private GitHub | `npx skills add` against private repos may need auth; document the expected method. |
-| Skill discovery from this repo | Run `npx skills add . --list` from the repo root and adjust layout or docs if the CLI does not discover nested paths as expected. |
-| Canonical auth and base URL | Already centralized in `references/shared/pruna-api.md`; keep skills linking there. |
+## Contributing
+
+We welcome fixes and improvements to skills, references, and bundled install packages.
+
+### What to change where
+
+| You want to… | Edit here | Then run |
+|--------------|-----------|----------|
+| Model API usage or examples | `catalog/tools/<modality>/<skill>/SKILL.md` | `./scripts/bundle_skill.sh <skill>` |
+| Workflow steps or scene plans | `catalog/workflows/**/SKILL.md` | `./scripts/bundle_skill.sh <skill>` |
+| Shared API or quality rules | `catalog/references/shared/` or `catalog/references/<modality>/` | `./scripts/bundle_all_skills.sh` |
+| Which files ship in an install | `<skill>/skill.manifest.json` | `./scripts/bundle_skill.sh <skill>` |
+| Package version | `VERSION` | `python3 scripts/sync_skill_versions.py` then `./scripts/bundle_all_skills.sh` |
+
+Source of truth is **`catalog/`**. The **`skills/`** folder is generated — edit catalog first; **pre-commit** rebuilds bundles when catalog changes (`pip install pre-commit && pre-commit install`).
+
+### Pull request checklist
+
+1. `SKILL.md` frontmatter `name` matches the folder name ([Agent Skills spec](https://agentskills.io/specification)).
+2. New or changed references are listed in `skill.manifest.json`; workflow deps in `tool_skills` (bundled as `depends:`).
+3. `./scripts/bundle_all_skills.sh` (or `bundle_skill.sh` for a single skill) and commit the updated `skills/` tree when install bundles change.
+4. `npx skills-ref validate ./skills/<skill-name>` passes for skills you touched.
+5. No API keys, tokens, or generated media in the commit.
+
+### Style for skill text
+
+- Write for someone new to the repo — avoid insider abbreviations in README and skill intros (say “narration” not “VO”, “background footage” not “B-roll” unless the API field name requires it).
+- Prefer full sentences in tables and descriptions over arrow chains (`A → B → C`).
+- If another vendor already ships a skill named `p-image`, use a `pruna-` prefix in both folder and frontmatter `name` (for example `pruna-p-image`).
+- Pruna-internal campaign work belongs in `.mine/`, not the public `skills/` bundles.
+
+### Questions and larger changes
+
+Open a GitHub issue on [PrunaAI/pruna-ai-content-generation-skills](https://github.com/PrunaAI/pruna-ai-content-generation-skills) before large refactors (new workflow tier, manifest format changes, or removing skills). For typos and small doc fixes, a pull request is enough.
 
 ## License
 

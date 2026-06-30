@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "skill": "music-video",
+  "version": "0.0.1",
+  "repository": "PrunaAI/pruna-ai-content-generation-skills",
+  "skillsPath": "skills",
+  "depends": [
+    "music-2.5",
+    "whisperx",
+    "p-image",
+    "p-image-edit",
+    "p-video",
+    "p-video-avatar"
+  ],
+  "resolvers": {
+    "skills": {
+      "depends": [
+        "music-2.5",
+        "whisperx",
+        "p-image",
+        "p-image-edit",
+        "p-video",
+        "p-video-avatar"
+      ]
+    },
+    "apm": {
+      "dependencies": {
+        "apm": [
+          "PrunaAI/pruna-ai-content-generation-skills/skills/music-2.5",
+          "PrunaAI/pruna-ai-content-generation-skills/skills/whisperx",
+          "PrunaAI/pruna-ai-content-generation-skills/skills/p-image",
+          "PrunaAI/pruna-ai-content-generation-skills/skills/p-image-edit",
+          "PrunaAI/pruna-ai-content-generation-skills/skills/p-video",
+          "PrunaAI/pruna-ai-content-generation-skills/skills/p-video-avatar"
+        ]
+      }
+    },
+    "pspm": {
+      "githubDependencies": {
+        "github:PrunaAI/pruna-ai-content-generation-skills/skills/music-2.5": "main",
+        "github:PrunaAI/pruna-ai-content-generation-skills/skills/whisperx": "main",
+        "github:PrunaAI/pruna-ai-content-generation-skills/skills/p-image": "main",
+        "github:PrunaAI/pruna-ai-content-generation-skills/skills/p-image-edit": "main",
+        "github:PrunaAI/pruna-ai-content-generation-skills/skills/p-video": "main",
+        "github:PrunaAI/pruna-ai-content-generation-skills/skills/p-video-avatar": "main"
+      }
+    },
+    "openclaw": {
+      "install": [
+        "git:PrunaAI/pruna-ai-content-generation-skills@main"
+      ],
+      "note": "Install each skill under skills/<name> from the repo tree."
+    }
+  }
+}

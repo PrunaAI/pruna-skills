@@ -1,0 +1,15 @@
+{
+  "$schema": "https://pspm.dev/schemas/pspm.json",
+  "name": "@pruna/pruna-run",
+  "version": "0.0.1",
+  "description": "Use when the user wants a quick single-shot generation with minimal intake\u2014one image, video clip, or avatar call from a prompt without a full multi-step plan.",
+  "license": "MIT",
+  "files": [
+    "SKILL.md",
+    "skill.manifest.json",
+    "pspm.json",
+    "references",
+    "scripts",
+    "templates"
+  ]
+}

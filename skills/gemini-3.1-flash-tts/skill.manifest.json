@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "core": [],
+    "shared": []
+  },
+  "references": [
+    "replicate-api.md",
+    "api-credentials.md",
+    "audio-post-production.md",
+    "scene-anchor-triple.md",
+    "generation-diversity.md"
+  ]
+}
