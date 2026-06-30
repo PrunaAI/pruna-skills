@@ -103,6 +103,14 @@ ffmpeg -y -i concat_video.mp4 -i narration.mp3 \
 
 Narration / avatar dialogue stays on stream `0:a`; bed is stream `1:a` at low volume.
 
+**Bed on silent concat** — loop a short generated clip to full video length (no per-assemble Stable Audio call):
+
+```text
+[1:a]volume=0.12,aloop=loop=-1:size=2e+09[bed]  →  map video + [bed], -shortest
+```
+
+Plan field `"reuse_bed": true` skips regeneration when `audio/launch_bed.mp3` exists. Delete that file (or set `reuse_bed: false`) only when you want a new prompt or seed.
+
 ## Intake questions (audio)
 
 Ask before generating paid audio or video:
@@ -120,7 +128,7 @@ Ask before generating paid audio or video:
 ```json
 {
   "narration": { "enabled": true, "voice": "Sulafat", "mode": "per_scene" },
-  "background_music": { "enabled": true, "volume": 0.10, "prompt": "Instrumental ... no vocals" },
+  "background_music": { "enabled": true, "reuse_bed": true, "volume": 0.10, "prompt": "Instrumental ... no vocals" },
   "p_video_audio": { "save_audio": true }
 }
 ```

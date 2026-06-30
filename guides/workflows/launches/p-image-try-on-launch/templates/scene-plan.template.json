@@ -26,6 +26,7 @@
   },
   "background_music": {
     "enabled": true,
+    "reuse_bed": true,
     "prompt": "Instrumental fashion-tech pop bed, soft four-on-the-floor groove, warm synth pads, modern retail energy, understated background music, no vocals, 100 BPM",
     "volume": 0.12,
     "output_name": "try_on_launch_with_music.mp4"

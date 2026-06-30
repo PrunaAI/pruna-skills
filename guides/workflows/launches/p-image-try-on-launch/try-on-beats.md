@@ -2,7 +2,20 @@
 
 Companion to [SKILL.md](./SKILL.md). Each **`vertical`** chapter is one plan row using **`showcase`** or **`showcase_ladder`** motion — proof of **clothing change**, not resolution/upscale.
 
-Run [visual-variety-bible.md](../../../references/shared/visual-variety-bible.md) before API calls.
+Run [visual-variety-bible.md](../../../references/shared/visual-variety-bible.md) before API calls. For **marketing reels**, also run [p-image-try-on-marketing-scenarios.md](../../../references/image/p-image-try-on-marketing-scenarios.md) — realistic settings, cast ledger, and non-overlapping garment slots.
+
+## Marketing scenario diversity (launch reels)
+
+When the user wants a **catchy retail marketing reel** (not a basic API demo):
+
+1. Pick a [ritual seed](../../../references/shared/random-seed-ritual.md) → `project_seed`.
+2. Fill the **cast + vertical + setting** matrix from [marketing scenarios](../../../references/image/p-image-try-on-marketing-scenarios.md#example-cast--vertical-matrix-7-scenes).
+3. Set `defaults.try_on_mode: "single_pass"` for multi-garment rows (one API call, up to 11 refs).
+4. Assign distinct `type` per garment — runner rejects overlapping body slots.
+5. Use natural-light person prompts; plain packshot garment refs (no logos/text).
+6. Motion: `showcase_garment_flash` / `showcase_rapid` for stacks; `showcase_flash` between beats for pacing.
+
+**Why:** Buyers recognize real moments (office try-on, boardwalk PDP, mirror selfie UGC). Diversity across rows proves preservation + multi-garment scale without repeating one synthetic set.
 
 ## Showcase clip structure (every beat)
 
@@ -75,7 +88,11 @@ Speak **P-Image-Try-On** with dashes (not *pee-image*). For tiered cost TTS: *"o
 | 6 | try_on | `personalized_outfits` | `showcase_ladder` |
 | 7 | cta | — | `showcase` |
 
-Concat + crossfade + instrumental bed → `*_with_music.mp4`.
+Concat + crossfade + instrumental bed → `*_with_music.mp4`. Set `background_music.reuse_bed: true` to loop an existing `audio/launch_bed.mp3` on re-assemble instead of calling Stable Audio again.
+
+**GPT comparison bookends** — set `comparison_bookends.enabled: true` to prepend/append clips from existing comparison folders. Or set `comparison.after_each_try_on: true` to insert a 4s side-by-side after every try-on scene (recommended for marketing reels).
+
+**Simulated Pruna speed** — when reusing `try_on_all.png`, boards show a stable random latency between `simulated_pruna_seconds_min` and `simulated_pruna_seconds_max` (default 3.5–4.5s) per scene.
 
 ## Vertical chapters
 

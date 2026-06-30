@@ -50,6 +50,7 @@ class ShowcaseJob:
     after_label: str = "After · try-on"
     compare_title: str = "Same person · new outfit"
     timing: Timing = Timing()
+    show_labels: bool = True
 
 
 def ease_in_out(t: float) -> float:
@@ -155,6 +156,7 @@ def split_compare_frame(
     before_label: str,
     after_label: str,
     header: str | None = None,
+    show_labels: bool = True,
 ) -> Image.Image:
     width, height = before.size
     half = width // 2
@@ -163,6 +165,8 @@ def split_compare_frame(
     frame.paste(after.crop((half, 0, width, height)), (half, 0))
     draw = ImageDraw.Draw(frame)
     draw.line([(half, 0), (half, height)], fill=(255, 255, 255), width=6)
+    if not show_labels:
+        return frame
     return draw_banner(
         frame,
         header=header,
@@ -188,11 +192,12 @@ def render_frames(job: ShowcaseJob) -> list[Image.Image]:
     try_on = load_canvas(job.try_on, job.width, job.height)
     timing = job.timing
 
+    show = job.show_labels
     frames: list[Image.Image] = []
     for _ in range(int(timing.garment_seconds * job.fps)):
-        frames.append(draw_banner(garment, chip=job.garment_label))
+        frames.append(draw_banner(garment, chip=job.garment_label, show_labels=show))
     for _ in range(int(timing.person_seconds * job.fps)):
-        frames.append(draw_banner(person, chip=job.person_label))
+        frames.append(draw_banner(person, chip=job.person_label, show_labels=show))
 
     for _ in range(int(timing.compare_seconds * job.fps)):
         frames.append(
@@ -202,6 +207,7 @@ def render_frames(job: ShowcaseJob) -> list[Image.Image]:
                 before_label=job.before_label,
                 after_label=job.after_label,
                 header=job.compare_title,
+                show_labels=show,
             )
         )
 
@@ -215,18 +221,19 @@ def render_frames(job: ShowcaseJob) -> list[Image.Image]:
                 left_label=job.before_label,
                 right_label=job.after_label,
                 header=job.compare_title,
+                show_labels=show,
             )
         )
 
     for _ in range(int(timing.hold_seconds * job.fps)):
-        frames.append(draw_banner(try_on, chip=job.after_label))
+        frames.append(draw_banner(try_on, chip=job.after_label, show_labels=show))
 
     flash_frames = max(2, int(timing.flash_seconds * job.fps))
     toggle = flash_frames // 2
     for i in range(flash_frames):
-        frames.append(
-            draw_banner(try_on if i >= toggle else person, chip="Outfit changed" if i >= toggle else job.before_label)
-        )
+        img = try_on if i >= toggle else person
+        chip = "Outfit changed" if i >= toggle else job.before_label
+        frames.append(draw_banner(img, chip=chip, show_labels=show))
     return frames
 
 
@@ -305,6 +312,69 @@ def render_showcase(job: ShowcaseJob) -> Path:
     frames = render_frames(job)
     encode_frames(frames, job.output, job.fps)
     return job.output
+
+
+def render_multi_garment_showcase(
+    *,
+    person: Path,
+    garments: list[Path],
+    try_on: Path,
+    output: Path,
+    width: int,
+    height: int,
+    fps: int,
+    timing: Timing,
+    garment_count_label: str,
+    person_label: str = "Input · person photo",
+    before_label: str = "Before · base outfit",
+    after_label: str = "After · full stack",
+    compare_title: str = "One API call · every garment",
+    show_labels: bool = True,
+) -> Path:
+    """Single-pass multi-garment beat — product grid → person → before/after → wipe → hold."""
+    person_img = load_canvas(person, width, height)
+    try_on_img = load_canvas(try_on, width, height)
+    garment_imgs = [load_canvas(path, width, height) for path in garments]
+    frames: list[Image.Image] = []
+
+    grid = compose_garment_grid(garment_imgs, width=width, height=height)
+    for _ in range(max(1, int(timing.garment_seconds * fps))):
+        frames.append(draw_banner(grid, chip=garment_count_label, header="Input · garment refs", show_labels=show_labels))
+
+    for _ in range(max(1, int(timing.person_seconds * fps))):
+        frames.append(draw_banner(person_img, chip=person_label, show_labels=show_labels))
+
+    for _ in range(max(1, int(timing.compare_seconds * fps))):
+        frames.append(
+            split_compare_frame(
+                person_img,
+                try_on_img,
+                before_label=before_label,
+                after_label=after_label,
+                header=compare_title,
+                show_labels=show_labels,
+            )
+        )
+
+    slider_frames = max(1, int(timing.slider_seconds * fps))
+    for i in range(slider_frames):
+        t = i / max(1, slider_frames - 1)
+        frame = slider_frame(person_img, try_on_img, t)
+        frames.append(
+            draw_banner(
+                frame,
+                left_label=before_label,
+                right_label=after_label,
+                header=compare_title,
+                show_labels=show_labels,
+            )
+        )
+
+    for _ in range(max(1, int(timing.hold_seconds * fps))):
+        frames.append(draw_banner(try_on_img, chip=after_label, show_labels=show_labels))
+
+    encode_frames(frames, output, fps)
+    return output
 
 
 def render_ladder(
@@ -457,17 +527,18 @@ def render_rapid(
     after_label: str,
     compare_title: str,
     timing: Timing,
+    show_labels: bool = True,
 ) -> Path:
     """Fast multi-garment montage — garment flash → wipe → try-on hold, repeated."""
     person_img = load_canvas(person, width, height)
     frames: list[Image.Image] = []
     for _ in range(max(1, int(timing.person_seconds * fps))):
-        frames.append(draw_banner(person_img, chip=person_label))
+        frames.append(draw_banner(person_img, chip=person_label, show_labels=show_labels))
     for garment_path, try_on_path, garment_label in pairs:
         garment = load_canvas(garment_path, width, height)
         try_on = load_canvas(try_on_path, width, height)
         for _ in range(max(1, int(timing.garment_seconds * fps))):
-            frames.append(draw_banner(garment, chip=garment_label))
+            frames.append(draw_banner(garment, chip=garment_label, show_labels=show_labels))
         slider_frames = max(1, int(timing.slider_seconds * fps))
         for i in range(slider_frames):
             t = i / max(1, slider_frames - 1)
@@ -478,10 +549,11 @@ def render_rapid(
                     header=compare_title,
                     left_label=before_label,
                     right_label=after_label,
+                    show_labels=show_labels,
                 )
             )
         for _ in range(max(1, int(timing.hold_seconds * fps))):
-            frames.append(draw_banner(try_on, chip=after_label))
+            frames.append(draw_banner(try_on, chip=after_label, show_labels=show_labels))
     encode_frames(frames, output, fps)
     return output
 
@@ -619,9 +691,15 @@ def compose_garment_grid(
     elif n == 3:
         layouts = [(0, 0, 0), (1, 0, 1), (2, 0, 2)]
         cols, rows = 1, 3
-    else:
+    elif n <= 4:
         layouts = [(0, 0, 0), (1, 1, 0), (2, 0, 1), (3, 1, 1)]
         cols, rows = 2, 2
+    elif n <= 6:
+        cols, rows = 2, 3
+        layouts = [(i, i % cols, i // cols) for i in range(n)]
+    else:
+        cols, rows = 2, min(5, (n + 1) // 2)
+        layouts = [(i, i % cols, i // cols) for i in range(n)]
 
     for idx, col, row in layouts[:n]:
         x0, y0, cw, ch = cell_for(col, row, cols, rows)
@@ -758,17 +836,22 @@ def _render_flash_beat_cut(
     timing: FlashSwapTiming,
     rng: random.Random,
     chip_labels: list[str],
+    show_labels: bool = True,
 ) -> list[Image.Image]:
     width, height = imgs[0].size
     frames: list[Image.Image] = []
+    use_zoom = timing.zoom_peak > 1.01
     for pos, idx in enumerate(order):
         hold = _flash_hold_seconds(timing, rng)
-        chip = chip_labels[idx] if idx < len(chip_labels) else f"Look {idx + 1}"
+        chip = chip_labels[idx] if show_labels and idx < len(chip_labels) else None
         pulse_frames = max(1, int(hold * fps))
         for i in range(pulse_frames):
-            scale = 1.0 + (timing.zoom_peak - 1.0) * abs((i / max(1, pulse_frames - 1)) - 0.5) * 2.0
-            frame = _zoom_frame(imgs[idx], scale)
-            frames.append(draw_banner(frame, chip=chip))
+            if use_zoom:
+                scale = 1.0 + (timing.zoom_peak - 1.0) * abs((i / max(1, pulse_frames - 1)) - 0.5) * 2.0
+                frame = _zoom_frame(imgs[idx], scale)
+            else:
+                frame = imgs[idx]
+            frames.append(draw_banner(frame, chip=chip, show_labels=show_labels))
         if pos < len(order) - 1:
             nxt = imgs[order[pos + 1]]
             _append_crossfade(frames, imgs[idx], nxt, fps=fps, fade_seconds=max(0.18, _fade_seconds(timing) * 0.65))
@@ -783,18 +866,23 @@ def _render_flash_zoom_pulse(
     timing: FlashSwapTiming,
     rng: random.Random,
     chip_labels: list[str],
+    show_labels: bool = True,
 ) -> list[Image.Image]:
     frames: list[Image.Image] = []
     fade = _fade_seconds(timing)
+    use_zoom = timing.zoom_peak > 1.01
     for pos, idx in enumerate(order):
         hold = _flash_hold_seconds(timing, rng)
-        chip = chip_labels[idx] if idx < len(chip_labels) else f"Look {idx + 1}"
+        chip = chip_labels[idx] if show_labels and idx < len(chip_labels) else None
         pulse_frames = max(2, int(hold * fps))
         for i in range(pulse_frames):
-            t = i / max(1, pulse_frames - 1)
-            scale = 1.0 + (timing.zoom_peak - 1.0) * (1.0 - abs(2.0 * t - 1.0))
-            frame = _zoom_frame(imgs[idx], scale)
-            frames.append(draw_banner(frame, chip=chip))
+            if use_zoom:
+                t = i / max(1, pulse_frames - 1)
+                scale = 1.0 + (timing.zoom_peak - 1.0) * (1.0 - abs(2.0 * t - 1.0))
+                frame = _zoom_frame(imgs[idx], scale)
+            else:
+                frame = imgs[idx]
+            frames.append(draw_banner(frame, chip=chip, show_labels=show_labels))
         if pos < len(order) - 1:
             nxt = imgs[order[pos + 1]]
             _append_crossfade(frames, imgs[idx], nxt, fps=fps, fade_seconds=fade)
@@ -845,11 +933,15 @@ def render_flash_swaps(
         order = _flash_order(len(imgs), shuffle=timing.shuffle, rng=rng, style=style, cycle=cycle)
         if style == "beat_cut":
             frames.extend(
-                _render_flash_beat_cut(imgs, order, fps=fps, timing=timing, rng=rng, chip_labels=chip_labels)
+                _render_flash_beat_cut(
+                    imgs, order, fps=fps, timing=timing, rng=rng, chip_labels=chip_labels, show_labels=show_labels
+                )
             )
         elif style == "zoom_pulse":
             frames.extend(
-                _render_flash_zoom_pulse(imgs, order, fps=fps, timing=timing, rng=rng, chip_labels=chip_labels)
+                _render_flash_zoom_pulse(
+                    imgs, order, fps=fps, timing=timing, rng=rng, chip_labels=chip_labels, show_labels=show_labels
+                )
             )
         elif style == "staccato":
             frames.extend(_render_flash_staccato(imgs, order, timing=timing, chip_labels=chip_labels))

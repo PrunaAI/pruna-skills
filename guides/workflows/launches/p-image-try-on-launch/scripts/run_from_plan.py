@@ -34,6 +34,11 @@ if str(_SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(_SCRIPT_DIR))
 
 from concat_clips import concat_clips, probe_duration  # noqa: E402
+from render_tryon_comparison_bookends import (  # noqa: E402
+    interleave_try_on_comparisons,
+    render_bookend_clips,
+)
+from run_tryon_replicate_comparison import compare_plan_scenes  # noqa: E402
 from generate_tryon_showcase import (  # noqa: E402
     FlashSwapTiming,
     ShowcaseJob,
@@ -46,6 +51,7 @@ from generate_tryon_showcase import (  # noqa: E402
     render_garment_flash_montage,
     render_garment_reel,
     render_ladder,
+    render_multi_garment_showcase,
     render_rapid,
     render_showcase,
 )
@@ -77,6 +83,51 @@ DEFAULT_AVATAR_VIDEO_PROMPT = (
     "Clear visible lip movement matching speech, natural jaw and mouth articulation, "
     "subtle continuous handheld push-in, eyes to lens, expressive but stable face."
 )
+
+# One winner per body slot — tops + outerwear + neckwear may layer; dress is exclusive.
+_GARMENT_SLOT: dict[str, str] = {
+    "tops": "torso_inner",
+    "top-layers": "torso_mid",
+    "outerwear": "torso_outer",
+    "bottoms": "legs",
+    "dresses": "full_body",
+    "underwear": "underwear",
+    "feet": "feet",
+    "headwear": "head",
+    "neckwear": "neck",
+    "bags": "bag",
+    "wristwear-single": "wrist",
+}
+_DRESS_EXCLUSIVE = frozenset({"torso_inner", "torso_mid", "torso_outer", "legs", "full_body"})
+
+
+def resolve_try_on_mode(scene: dict, plan: dict) -> str:
+    return str(scene.get("try_on_mode") or plan.get("defaults", {}).get("try_on_mode", "incremental"))
+
+
+def validate_garment_slots(garments: list[dict], *, scene_id: str) -> None:
+    """Reject overlapping body slots so one-pass multi-garment calls do not compete."""
+    seen: dict[str, str] = {}
+    for i, garment in enumerate(garments):
+        gtype = str(garment.get("type") or "tops")
+        slot = _GARMENT_SLOT.get(gtype, gtype)
+        label = garment.get("output_label") or f"garment {i}"
+        if slot == "full_body":
+            conflicts = [seen[s] for s in seen if s in _DRESS_EXCLUSIVE]
+            if conflicts:
+                raise ValueError(
+                    f"Scene {scene_id}: dress overlaps {', '.join(conflicts)} — use dress alone or drop separates."
+                )
+            seen[slot] = label
+            continue
+        if slot in _DRESS_EXCLUSIVE and "full_body" in seen:
+            raise ValueError(f"Scene {scene_id}: {label} ({gtype}) overlaps dress slot.")
+        if slot in seen:
+            raise ValueError(
+                f"Scene {scene_id}: overlapping slot '{slot}' — {seen[slot]} and {label} "
+                f"(types {gtype}). Use one item per body region."
+            )
+        seen[slot] = label
 
 
 def canvas_size(plan: dict) -> tuple[int, int]:
@@ -486,25 +537,47 @@ def phase_stills(scenes: list[dict], plan: dict, out_dir: Path, api_key: str) ->
             )
         garment_paths = resolve_garment_paths(scene, sdir, plan, api_key)
         garment_list = scene.get("garments") or []
+        try_on_mode = resolve_try_on_mode(scene, plan)
+        single_pass = try_on_mode == "single_pass" and len(garment_paths) > 1
+        if len(garment_list) > 1:
+            validate_garment_slots(garment_list, scene_id=sid)
+
         try_on_paths: list[Path] = []
-        for i, garment in enumerate(garment_list):
-            dest = sdir / (f"try_on_{i:02d}.png" if len(garment_paths) > 1 else "try_on.png")
+        if single_pass:
+            dest_all = sdir / "try_on_all.png"
             gen_try_on(
                 person_path,
-                [garment_paths[i]],
-                dest,
+                garment_paths,
+                dest_all,
                 plan,
                 api_key,
-                label=f"scene {sid} try-on {i}",
-                garment_meta=[garment],
+                label=f"scene {sid} try-on all garments ({len(garment_paths)} refs, single pass)",
+                garment_meta=garment_list,
             )
-            try_on_paths.append(dest)
+            try_on_paths = [dest_all]
+        else:
+            for i, garment in enumerate(garment_list):
+                dest = sdir / (f"try_on_{i:02d}.png" if len(garment_paths) > 1 else "try_on.png")
+                gen_try_on(
+                    person_path,
+                    [garment_paths[i]],
+                    dest,
+                    plan,
+                    api_key,
+                    label=f"scene {sid} try-on {i}",
+                    garment_meta=[garment],
+                )
+                try_on_paths.append(dest)
         entry: dict = {
             "person": str(person_path),
             "garments": [str(p) for p in garment_paths],
             "try_on": [str(p) for p in try_on_paths],
+            "try_on_mode": try_on_mode,
         }
-        if scene.get("multi_garment_try_on") and len(garment_paths) > 1:
+        if single_pass:
+            entry["try_on_all"] = str(try_on_paths[0])
+            entry["single_pass"] = True
+        elif scene.get("multi_garment_try_on") and len(garment_paths) > 1:
             dest_all = sdir / "try_on_all.png"
             all_indices = scene.get("try_on_all_indices")
             if all_indices is not None:
@@ -778,6 +851,7 @@ def render_showcase_scene(
     labels = scene.get("showcase_labels") or {}
     compare_title = str(labels.get("compare", "Same person · new outfit"))
     fps = int(plan.get("defaults", {}).get("fps", 24))
+    show_lbl = show_labels_for(scene, plan)
 
     if clip.exists() and clip.stat().st_size > 0 and not scene.get("force_rerender"):
         normalize_video(clip, width, height)
@@ -805,25 +879,47 @@ def render_showcase_scene(
             compare_title=compare_title,
         )
     elif motion == "showcase_rapid":
-        pairs = []
-        garments = entry["garments"]
-        try_ons = entry["try_on"]
-        for i, try_on in enumerate(try_ons):
-            label = scene.get("garments", [{}])[i].get("output_label") or f"Look {i + 1}"
-            pairs.append((Path(garments[i]), Path(try_on), str(label)))
-        render_rapid(
-            person=Path(entry["person"]),
-            pairs=pairs,
-            output=clip,
-            width=width,
-            height=height,
-            fps=fps,
-            person_label=str(labels.get("person", "Input · person photo")),
-            before_label=str(labels.get("before", "Before · base outfit")),
-            after_label=str(labels.get("after", "After · try-on")),
-            compare_title=compare_title,
-            timing=timing,
-        )
+        if entry.get("single_pass") and len(entry["garments"]) > 1:
+            render_multi_garment_showcase(
+                person=Path(entry["person"]),
+                garments=[Path(p) for p in entry["garments"]],
+                try_on=Path(entry["try_on_all"] or entry["try_on"][0]),
+                output=clip,
+                width=width,
+                height=height,
+                fps=fps,
+                timing=timing,
+                garment_count_label=str(
+                    scene.get("garment_count_label")
+                    or f"{len(entry['garments'])} garments · one call"
+                ),
+                person_label=str(labels.get("person", "Input · person photo")),
+                before_label=str(labels.get("before", "Before · base outfit")),
+                after_label=str(labels.get("after", "After · full stack")),
+                compare_title=compare_title,
+                show_labels=show_lbl,
+            )
+        else:
+            pairs = []
+            garments = entry["garments"]
+            try_ons = entry["try_on"]
+            for i, try_on in enumerate(try_ons):
+                label = scene.get("garments", [{}])[i].get("output_label") or f"Look {i + 1}"
+                pairs.append((Path(garments[i]), Path(try_on), str(label)))
+            render_rapid(
+                person=Path(entry["person"]),
+                pairs=pairs,
+                output=clip,
+                width=width,
+                height=height,
+                fps=fps,
+                person_label=str(labels.get("person", "Input · person photo")),
+                before_label=str(labels.get("before", "Before · base outfit")),
+                after_label=str(labels.get("after", "After · try-on")),
+                compare_title=compare_title,
+                timing=timing,
+                show_labels=show_lbl,
+            )
     elif motion == "showcase_fit_poses":
         labels = scene.get("showcase_labels") or {}
         compare_title = str(labels.get("compare", "Same garment · every fit angle"))
@@ -890,9 +986,12 @@ def render_showcase_scene(
         src_id = str(entry.get("reused_from", scene.get("still_from", scene["id"])))
         src_scene = next((s for s in scenes if s["id"] == src_id), scene)
         garment_paths = [Path(p) for p in entry["garments"]]
-        try_on_paths = [Path(p) for p in entry["try_on"]]
-        if entry.get("try_on_all"):
-            try_on_paths = try_on_paths + [Path(entry["try_on_all"])]
+        if entry.get("single_pass"):
+            try_on_paths = [Path(entry["try_on_all"] or entry["try_on"][0])]
+        else:
+            try_on_paths = [Path(p) for p in entry["try_on"]]
+            if entry.get("try_on_all"):
+                try_on_paths = try_on_paths + [Path(entry["try_on_all"])]
         reel_cfg = plan.get("garment_reel_timing", {})
         grid_sec = 0.0
         sec_per = float(scene.get("garment_reel_seconds") or reel_cfg.get("seconds_per_garment", 0.45))
@@ -971,23 +1070,45 @@ def render_showcase_scene(
             show_labels=show_labels_for(scene, plan),
         )
     else:
-        job = ShowcaseJob(
-            person=Path(entry["person"]),
-            garment=Path(entry["garments"][0]),
-            try_on=Path(entry["try_on"][0]),
-            output=clip,
-            width=width,
-            height=height,
-            fps=fps,
-            title=scene.get("title", "Try-on"),
-            garment_label=str(labels.get("garment", "Input · garment ref")),
-            person_label=str(labels.get("person", "Input · person photo")),
-            before_label=str(labels.get("before", "Before · base outfit")),
-            after_label=str(labels.get("after", "After · try-on")),
-            compare_title=compare_title,
-            timing=timing,
-        )
-        render_showcase(job)
+        if entry.get("single_pass") and len(entry["garments"]) > 1:
+            render_multi_garment_showcase(
+                person=Path(entry["person"]),
+                garments=[Path(p) for p in entry["garments"]],
+                try_on=Path(entry["try_on_all"] or entry["try_on"][0]),
+                output=clip,
+                width=width,
+                height=height,
+                fps=fps,
+                timing=timing,
+                garment_count_label=str(
+                    scene.get("garment_count_label")
+                    or f"{len(entry['garments'])} garments · one call"
+                ),
+                person_label=str(labels.get("person", "Input · person photo")),
+                before_label=str(labels.get("before", "Before · base outfit")),
+                after_label=str(labels.get("after", "After · full stack")),
+                compare_title=compare_title,
+                show_labels=show_lbl,
+            )
+        else:
+            job = ShowcaseJob(
+                person=Path(entry["person"]),
+                garment=Path(entry["garments"][0]),
+                try_on=Path(entry["try_on"][0]),
+                output=clip,
+                width=width,
+                height=height,
+                fps=fps,
+                title=scene.get("title", "Try-on"),
+                garment_label=str(labels.get("garment", "Input · garment ref")),
+                person_label=str(labels.get("person", "Input · person photo")),
+                before_label=str(labels.get("before", "Before · base outfit")),
+                after_label=str(labels.get("after", "After · try-on")),
+                compare_title=compare_title,
+                timing=timing,
+                show_labels=show_lbl,
+            )
+            render_showcase(job)
     normalize_video(clip, width, height)
     print(f"Wrote {clip}")
 
@@ -1214,18 +1335,56 @@ def phase_tts(scenes: list[dict], plan: dict, out_dir: Path, token: str) -> None
             shutil.move(muxed, clip)
 
 
+def phase_compare(
+    plan: dict,
+    out_dir: Path,
+    *,
+    only_ids: list[str] | None,
+    skip_gpt: bool,
+    run_pruna: bool,
+    gpt_quality: str | None,
+) -> None:
+    cmp_cfg = plan.get("comparison") or {}
+    compare_plan_scenes(
+        plan,
+        out_dir,
+        only_ids=only_ids,
+        gpt_quality=gpt_quality or str(cmp_cfg.get("gpt_quality", "medium")),
+        skip_gpt=skip_gpt,
+        run_pruna=run_pruna,
+        comparisons_subdir=str(cmp_cfg.get("subdir", "comparisons")),
+    )
+    print(f"Phase compare complete — review {out_dir / cmp_cfg.get('subdir', 'comparisons')}")
+    print("Point comparison_bookends.source_dir at that folder, then --assemble-only")
+
+
 def phase_assemble(plan: dict, out_dir: Path, *, background_music: bool) -> Path:
     width, height = canvas_size(plan)
+    fps = int(plan.get("defaults", {}).get("fps", 24))
     manifest_clips = json.loads((out_dir / "manifest_clips.json").read_text(encoding="utf-8"))
     clip_paths = [Path(p) for p in manifest_clips]
-    for clip in clip_paths:
-        normalize_video(clip, width, height)
+    clip_paths = interleave_try_on_comparisons(
+        plan, out_dir, clip_paths, width=width, height=height, fps=fps
+    )
+    bookend_cfg = plan.get("comparison_bookends") or {}
+    intro_clip: Path | None = None
+    outro_clip: Path | None = None
+    if bookend_cfg.get("enabled"):
+        intro_clip, outro_clip = render_bookend_clips(plan, out_dir, width=width, height=height, fps=fps)
+    all_clips: list[Path] = []
+    if intro_clip is not None:
+        all_clips.append(intro_clip)
+    all_clips.extend(clip_paths)
+    if outro_clip is not None:
+        all_clips.append(outro_clip)
+    for clip in all_clips:
         ensure_audio_track(clip)
+        normalize_video(clip, width, height)
     assemble_cfg = plan.get("assemble", {})
     output_name = assemble_cfg.get("output_name", "try_on_launch.mp4")
     output = out_dir / output_name
     crossfade = float(assemble_cfg.get("crossfade_seconds", 0.25))
-    concat_clips(clip_paths, output, crossfade_seconds=crossfade)
+    concat_clips(all_clips, output, crossfade_seconds=crossfade)
     normalize_video(output, width, height)
     print(f"Wrote {output}")
 
@@ -1243,7 +1402,7 @@ def main() -> None:
     parser.add_argument("--out-dir", type=Path, default=DEFAULT_OUT)
     parser.add_argument(
         "--phase",
-        choices=("stills", "video", "tts", "assemble", "all"),
+        choices=("stills", "video", "tts", "compare", "assemble", "all"),
         default="stills",
     )
     parser.add_argument("--approve-stills", action="store_true")
@@ -1253,6 +1412,10 @@ def main() -> None:
     parser.add_argument("--yes-skip-clips-gate", action="store_true")
     parser.add_argument("--background-music", action="store_true")
     parser.add_argument("--assemble-only", action="store_true")
+    parser.add_argument("--only", default=None, help="Comma-separated scene ids (compare phase)")
+    parser.add_argument("--skip-gpt", action="store_true", help="Compare phase: render boards only, no GPT API")
+    parser.add_argument("--run-pruna", action="store_true", help="Compare phase: re-run p-image-try-on")
+    parser.add_argument("--gpt-quality", default=None, choices=("low", "medium", "high", "auto"))
     parser.add_argument("--fresh", action="store_true")
     parser.add_argument("--force-video", action="store_true", help="Re-render showcase clips even if they exist")
     parser.add_argument("--force-avatar", action="store_true", help="Re-render avatar clips even if they exist")
@@ -1272,6 +1435,26 @@ def main() -> None:
     apply_approve_flags(args, args.out_dir)
 
     run_phase = "assemble" if args.assemble_only else args.phase
+
+    only_ids = [s.strip() for s in args.only.split(",")] if args.only else None
+
+    if run_phase in ("compare", "all"):
+        ensure_phase_a_allowed(
+            args.out_dir,
+            approve_flag=args.approve_stills,
+            skip_gate=args.yes_skip_stills_gate,
+            label="Phase compare",
+        )
+        phase_compare(
+            plan,
+            args.out_dir,
+            only_ids=only_ids,
+            skip_gpt=args.skip_gpt,
+            run_pruna=args.run_pruna,
+            gpt_quality=args.gpt_quality,
+        )
+        if run_phase == "compare":
+            return
 
     if run_phase in ("video", "tts", "assemble", "all"):
         ensure_phase_a_allowed(

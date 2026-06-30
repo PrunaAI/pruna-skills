@@ -37,7 +37,7 @@
   ],
   "generation_phases": {
     "default": "stills",
-    "phases": ["stills", "video", "tts", "assemble"],
+    "phases": ["stills", "video", "tts", "compare", "assemble"],
     "gates": {
       "video": {
         "requires": "phase_a_approved",

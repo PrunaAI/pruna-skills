@@ -138,6 +138,7 @@ def mix_bed_under_video(
             str(out_path),
         ]
     else:
+        filter_complex = f"[1:a]volume={vol},aloop=loop=-1:size=2e+09[bed]"
         cmd = [
             ffmpeg,
             "-y",
@@ -146,7 +147,7 @@ def mix_bed_under_video(
             "-i",
             str(bed_path),
             "-filter_complex",
-            f"[1:a]volume={vol}[bed]",
+            filter_complex,
             "-map",
             "0:v",
             "-map",
@@ -192,9 +193,14 @@ def apply_background_music(
     api_token = token or require_replicate_token()
 
     duration = int(min(MAX_DURATION_SECONDS, math.ceil(probe_duration_seconds(video_path) + 1)))
-    bed_path = out_dir / "audio" / "launch_bed.mp3"
+    if cfg.get("bed_path"):
+        bed_path = Path(cfg["bed_path"])
+        if not bed_path.is_absolute():
+            bed_path = out_dir / bed_path
+    else:
+        bed_path = out_dir / "audio" / "launch_bed.mp3"
     if cfg.get("reuse_bed") and bed_path.exists() and bed_path.stat().st_size > 0:
-        print(f"Reusing existing bed {bed_path.name}")
+        print(f"Reusing existing bed {bed_path} (loops to video length)")
     else:
         print(f"Generating {duration}s background bed ({model})...")
         generate_bed(
@@ -243,21 +249,35 @@ def main() -> int:
     parser.add_argument("--volume", type=float, default=DEFAULT_VOLUME)
     parser.add_argument("--duration", type=int, default=None)
     parser.add_argument("--seed", type=int, default=None)
+    parser.add_argument(
+        "--reuse-bed",
+        action="store_true",
+        help="Skip Stable Audio generation when audio/launch_bed.mp3 already exists",
+    )
+    parser.add_argument(
+        "--bed-path",
+        type=Path,
+        default=None,
+        help="Existing bed MP3 to loop under video (default: out-dir/audio/launch_bed.mp3)",
+    )
     args = parser.parse_args()
 
     token = require_replicate_token()
     out_dir = args.out_dir or args.video.parent
-    duration = args.duration or int(
-        min(MAX_DURATION_SECONDS, math.ceil(probe_duration_seconds(args.video) + 1))
-    )
-    bed_path = out_dir / "audio" / "launch_bed.mp3"
-    generate_bed(
-        prompt=args.prompt,
-        duration_seconds=duration,
-        out_path=bed_path,
-        token=token,
-        seed=args.seed,
-    )
+    bed_path = args.bed_path or out_dir / "audio" / "launch_bed.mp3"
+    if args.reuse_bed and bed_path.exists() and bed_path.stat().st_size > 0:
+        print(f"Reusing existing bed {bed_path} (loops to video length)")
+    else:
+        duration = args.duration or int(
+            min(MAX_DURATION_SECONDS, math.ceil(probe_duration_seconds(args.video) + 1))
+        )
+        generate_bed(
+            prompt=args.prompt,
+            duration_seconds=duration,
+            out_path=bed_path,
+            token=token,
+            seed=args.seed,
+        )
     out_path = args.out or out_dir / f"{args.video.stem}_with_music.mp4"
     mix_bed_under_video(
         video_path=args.video,

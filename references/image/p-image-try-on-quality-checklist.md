@@ -12,7 +12,7 @@ The model should change **clothing only**. Fail if the plate’s world drifted:
 
 - Face structure, skin tone, and expression match **`person_image`**.
 - Hair length, color, and style unchanged (unless headwear was requested).
-- Background, props, and scene geometry preserved (mirror lines, floor texture, street context).
+- Background, props, and scene geometry preserved (floor texture, street context) — **except** mirror reflections, which often keep the base outfit while the subject updates; reject mirror plates for try-on marketing.
 - Lighting direction and shadow mood consistent with the plate.
 - Pose and limb positions preserved (or match **`reference_pose`** when set).
 

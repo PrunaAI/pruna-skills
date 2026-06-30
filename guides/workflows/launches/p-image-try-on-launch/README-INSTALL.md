@@ -50,7 +50,7 @@ python3 ./scripts/run_from_plan.py \
   --approve-audio --phase assemble --background-music
 ```
 
-Set `"background_music": { "enabled": true, ... }` in the plan. Tool: [stable-audio-2.5](../../../tools/audio/stable-audio-2.5/SKILL.md).
+Set `"background_music": { "enabled": true, "reuse_bed": true, ... }` in the plan — generate the bed once, then re-assemble with the same `audio/launch_bed.mp3` looped under the new concat (no new Stable Audio call). Tool: [stable-audio-2.5](../../../tools/audio/stable-audio-2.5/SKILL.md).
 
 Curl-first alternative: `templates/curl-phase-a.template.sh` and `templates/curl-phase-b.template.sh`.
 

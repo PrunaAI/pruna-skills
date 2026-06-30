@@ -17,6 +17,7 @@ Turn **generated people + garment references** into a multi-vertical announcemen
 **Plan runner:** [`scripts/run_from_plan.py`](./scripts/run_from_plan.py) (default `--phase stills`)  
 **Staged generation:** [staged-generation-gate.md](../../../references/shared/staged-generation-gate.md)  
 **Visual variety:** [visual-variety-bible.md](../../../references/shared/visual-variety-bible.md)  
+**Marketing scenario diversity:** [p-image-try-on-marketing-scenarios.md](../../../references/image/p-image-try-on-marketing-scenarios.md)  
 **Quality gate:** [p-image-try-on-quality-checklist.md](../../../references/image/p-image-try-on-quality-checklist.md)
 
 Install: `./scripts/install_skill.sh p-image-try-on-launch`
@@ -26,6 +27,7 @@ Install: `./scripts/install_skill.sh p-image-try-on-launch`
 | Resource | Path |
 |----------|------|
 | Vertical chapters, scene tables, prompt triggers | [try-on-beats.md](./try-on-beats.md) |
+| Marketing reels — realistic scenario diversity | [p-image-try-on-marketing-scenarios.md](../../../references/image/p-image-try-on-marketing-scenarios.md) |
 | Runner | [`run_from_plan.py`](./scripts/run_from_plan.py) · default `--phase stills` |
 | Plan template | [`templates/scene-plan.template.json`](./templates/scene-plan.template.json) |
 | Example prompt | [`examples/workflows/launches/p-image-try-on-launch/example-prompt.md`](../../../examples/workflows/launches/p-image-try-on-launch/example-prompt.md) |
@@ -33,7 +35,7 @@ Install: `./scripts/install_skill.sh p-image-try-on-launch`
 
 ## Use cases by vertical
 
-Each reel chapter maps to one **`vertical`** field in the plan. Run [visual-variety-bible.md](../../../references/shared/visual-variety-bible.md) so cast, setting, and garment palette differ across rows.
+Each reel chapter maps to one **`vertical`** field in the plan. For **marketing / launch reels**, run the [marketing scenario diversity iteration](../../../references/image/p-image-try-on-marketing-scenarios.md) (cast ledger + setting ladder + garment slots + `try_on_mode`) — not just [visual-variety-bible.md](../../../references/shared/visual-variety-bible.md) in isolation.
 
 | Vertical | `vertical` key | What to show | Typical motion |
 |----------|--------------|--------------|----------------|
@@ -59,7 +61,8 @@ Each reel chapter maps to one **`vertical`** field in the plan. Run [visual-vari
 |-------|-----------|
 | **Verticals** | Which chapters from the table above? All six or a subset? |
 | **Cast** | How many distinct people? Gender / ethnicity / age diversity per [visual-variety-bible](../../../references/shared/visual-variety-bible.md)? |
-| **Garments** | Flat-lay packshots, on-hanger, or ghost-mannequin? 1–10 refs per try-on row? Set **`type`** per ref (see [garment types](../../../tools/image/p-image-try-on/SKILL.md#garment-types)) — e.g. `tops`, `bottoms`, `outerwear`. |
+| **Garments** | Flat-lay packshots, on-hanger, or ghost-mannequin? 1–11 refs per try-on row? Set **`type`** per ref (one body slot each — see [marketing scenarios](../../../references/image/p-image-try-on-marketing-scenarios.md#garment-body-slots-no-overlap)). Use **`defaults.try_on_mode: "single_pass"`** for multi-garment marketing beats. |
+| **Realism** | Everyday locations and natural light, or stylized? For retail marketing defaults, follow [marketing scenarios](../../../references/image/p-image-try-on-marketing-scenarios.md) — avoid neon/LED unless user asks. |
 | **Motion mode** | Default **`showcase`** — garment ref, person photo, side-by-side before/after, wipe, try-on hold. Use **`showcase_ladder`** for multi-outfit rows. |
 | **Delivery** | Reel length (~60–90s), `9:16` vs `16:9`, `720p`/`1080p` |
 | **Music** | Light **instrumental bed** after concat? Style prompt + volume (~0.12)? |
@@ -209,6 +212,98 @@ Runner: `--phase tts` after still approval. Listen before assemble ([workflow-fe
 
 If narration runs longer than the showcase clip, the runner **holds the last frame** until VO finishes (small tail pad) — narration is never cut with `-shortest`.
 
+## GPT Image 2 comparison bookends (marketing reels)
+
+Bookend the showcase reel with **existing** P-Image-Try-On vs GPT Image 2 comparison GIFs — no new try-on API calls during assemble. Stats (latency + published price) are baked into the comparison renders from [`run_tryon_replicate_comparison.py`](./scripts/run_tryon_replicate_comparison.py).
+
+### Two comparison sources
+
+| Source | When to use | `comparison_bookends.source_dir` |
+|--------|-------------|----------------------------------|
+| **Playground examples** | Generic API demo (default) | `output/comparisons/p-image-try-on-vs-gpt-image-2` |
+| **Your reel scenes** | Same person + garments as the marketing stills | `comparisons` (under campaign `out-dir`) |
+
+### Generate GPT try-on for plan scenes (side-by-side)
+
+After stills are approved, run GPT Image 2 on the **same** `person.png` + `garment_*.png` inputs. Pruna side reuses `try_on_all.png` — no duplicate p-image-try-on call.
+
+```bash
+python3 guides/workflows/launches/p-image-try-on-launch/scripts/run_from_plan.py \
+  --plan output/launches/<project>/plan.json \
+  --out-dir output/launches/<project> \
+  --approve-stills --phase compare --only 3,7
+```
+
+Or standalone:
+
+```bash
+python3 guides/workflows/launches/p-image-try-on-launch/scripts/run_tryon_replicate_comparison.py \
+  --plan output/launches/<project>/plan.json \
+  --campaign-dir output/launches/<project> \
+  --only 3,7
+```
+
+Writes `comparisons/scene_{id}/` with `gpt_image_2.png`, `p_image_try_on.png` (copy of try-on still), `comparison_compact.png`, `comparison.gif`, and `run_meta.json` (measured GPT latency + pricing).
+
+**Plan JSON:**
+
+```json
+"comparison": {
+  "gpt_quality": "medium",
+  "reuse_pruna_output": true,
+  "pruna_turbo": false,
+  "subdir": "comparisons",
+  "bookend_scene_ids": ["3", "7"]
+}
+```
+
+Then point bookends at campaign-local comparisons:
+
+```json
+"comparison_bookends": {
+  "enabled": true,
+  "source_dir": "comparisons",
+  "intro_slug": "scene_3",
+  "outro_slug": "scene_7",
+  "intro_mode": "compact",
+  "outro_mode": "full"
+}
+```
+
+Re-assemble: `--assemble-only --background-music`
+
+Playground-only comparison (no plan scenes):
+
+```bash
+python3 guides/workflows/launches/p-image-try-on-launch/scripts/run_tryon_replicate_comparison.py \
+  --slug feat_b2b_art_blazer_set --slug dom_vfr_boutique_womens_office
+```
+
+Use `--skip-generate` to re-render PNG/GIF boards from existing `p_image_try_on.png` + `gpt_image_2.png`.
+
+### Bookend assembly (no API)
+
+```json
+"comparison_bookends": {
+  "enabled": true,
+  "source_dir": "output/comparisons/p-image-try-on-vs-gpt-image-2",
+  "intro_slug": "feat_b2b_art_blazer_set",
+  "outro_slug": "dom_vfr_boutique_womens_office",
+  "intro_mode": "compact",
+  "outro_mode": "full",
+  "intro_seconds": 3.5,
+  "outro_seconds": 7.5
+}
+```
+
+| Field | Role |
+|-------|------|
+| `intro_mode: compact` | Hold `comparison_compact.png` — quick P-Image vs GPT hook with latency + price |
+| `outro_mode: full` | Animated `comparison.gif` (inputs → outputs) — recap after the last scene |
+| `intro_slug` / `outro_slug` | Subfolders with `comparison.gif` + `run_meta.json` |
+
+Re-assemble only: `--assemble-only --background-music` prepends `clips/comparison_intro.mp4` and appends `clips/comparison_outro.mp4`. Delete those clips or `comparison_bookends.meta.json` to force a re-render from GIFs/PNGs.
+
 ## Background music (required for launch delivery)
 
 After ffmpeg concat, add a **low-volume instrumental bed** under dialogue — does not replace VO.
@@ -218,13 +313,18 @@ After ffmpeg concat, add a **low-volume instrumental bed** under dialogue — do
 ```json
 "background_music": {
   "enabled": true,
+  "reuse_bed": true,
   "prompt": "Instrumental fashion-tech pop bed, soft four-on-the-floor groove, warm synth pads, modern retail energy, understated background music, no vocals, 100 BPM",
   "volume": 0.12,
   "output_name": "try_on_launch_with_music.mp4"
 }
 ```
 
-**Runner** (requires `REPLICATE_API_TOKEN`, `ffmpeg`, `ffprobe`):
+**Reuse the bed on re-assemble** — generate Stable Audio **once**, then loop it under any new concat. Set `"reuse_bed": true` (or pass `--reuse-bed` to the standalone mix script). The mixer loops `audio/launch_bed.mp3` to the video duration with ffmpeg `aloop`; you do **not** need a new Replicate call every time clips change.
+
+Only regenerate the bed when you want a different prompt, tempo, or seed — delete `audio/launch_bed.mp3` first, or set `"reuse_bed": false`.
+
+**Runner** (requires `REPLICATE_API_TOKEN` on first bed only, `ffmpeg`, `ffprobe`):
 
 ```bash
 python3 guides/workflows/launches/p-image-try-on-launch/scripts/run_from_plan.py \
@@ -239,6 +339,7 @@ Or standalone:
 python3 guides/workflows/_shared/scripts/launch_background_music.py \
   --video output/launches/p-image-try-on-launch/try_on_launch.mp4 \
   --volume 0.12 \
+  --reuse-bed \
   --prompt "Instrumental fashion-tech pop bed, soft groove, no vocals, 100 BPM"
 ```
 
