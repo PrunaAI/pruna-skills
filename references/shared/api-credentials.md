@@ -32,7 +32,7 @@
 | **Sign up / get token** | [Replicate API tokens](https://replicate.com/account/api-tokens) ([sign in](https://replicate.com/signin) first if needed) |
 | **Docs** | [replicate-api.md](./replicate-api.md) |
 
-**Used by:** `music-2.5`, `gemini-3.1-flash-tts`, `stable-audio-2.5`, `whisperx`, and workflow beds/TTS/song phases.
+**Used by:** `music-2.5`, `gemini-3.1-flash-tts`, `stable-audio-2.5`, `whisperx`, `p-image-ideogram`, and workflow beds/TTS/song phases.
 
 ### If `REPLICATE_API_TOKEN` is missing — agent message template
 
@@ -49,6 +49,7 @@
 | Task | Keys required |
 |------|----------------|
 | `p-image`, `p-image-edit`, `p-image-upscale`, `p-image-try-on` | `PRUNA_API_KEY` |
+| `p-image-ideogram` | `REPLICATE_API_TOKEN` |
 | `p-video`, `p-video-avatar`, `p-video-animate`, `p-video-replace` | `PRUNA_API_KEY` |
 | Music 2.5 song generation | `REPLICATE_API_TOKEN` |
 | Gemini TTS narration | `REPLICATE_API_TOKEN` |

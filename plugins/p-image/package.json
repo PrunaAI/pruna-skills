@@ -1,0 +1,17 @@
+{
+  "name": "@PrunaAI/p-image",
+  "version": "0.0.2",
+  "license": "MIT",
+  "description": "Use when the user wants the fastest text-to-image stills, quick draft photos, mood boards, or bulk panels where good quality and extremely low latency matter more than maximum photoreal fidelity.",
+  "repository": "https://github.com/PrunaAI/pruna-skills",
+  "files": [
+    ".claude-plugin",
+    "openclaw.plugin.json",
+    "skills"
+  ],
+  "openclaw": {
+    "bundledSkills": [
+      "p-image"
+    ]
+  }
+}

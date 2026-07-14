@@ -3,7 +3,7 @@ name: illustrated-story-reel
 description: Use when the user wants a still-image story reel or slideshow, picture-book narrative with voiceover or music—and explicitly not full motion-video generation.
 license: MIT
 metadata:
-  version: "0.0.1"
+  version: "0.0.2"
 ---
 
 # Illustrated story reel
@@ -27,9 +27,22 @@ One still per story beat. Hero anchor → **p-image-edit** per scene. Audio driv
 
 **When NOT to use:** motion between two composed stills (**visual-transition-reel**), lip-sync avatars (**interactive-explainer**), or full sung music video (**music-video**).
 
+## Security & scope
+
+**Still-image slideshow only — no `p-video*`.** Bundled references are scoped to this workflow; do not follow video/avatar examples from other skills.
+
+| Risk | Mitigation |
+|------|------------|
+| Paid API use | `PRUNA_API_KEY` + `REPLICATE_API_TOKEN`; gates before TTS/music/assembly |
+| Credential exposure | Parent agent holds keys; do not pass to subagents except per-lane still/TTS work |
+| Local execution | `ffmpeg`/`ffprobe` subprocess; **`-y` overwrites** output MP4 without confirmation |
+| Data retention | `plan.json`, `generation_status.json`, and media under `--out-dir` may contain prompts — treat as confidential |
+
+Requires: [api-credentials.md](../../../../../references/shared/api-credentials.md) · Permissions: `skill.manifest.json`
+
 ## Feedback gates
 
-[staged-generation-gate.md](../../../../../references/shared/staged-generation-gate.md) · [workflow-feedback-gates.md](../../../../../references/workflows/workflow-feedback-gates.md)
+[illustrated-story-reel-gates.md](../../../../../references/workflows/illustrated-story-reel-gates.md)
 
 | Phase | What to show | Proceed when |
 |-------|--------------|--------------|
@@ -82,7 +95,7 @@ Do not start generation until the beat table is written and **audio_mode** is co
 
 ```bash
 # Phase A — stills only
-python3 catalog/workflows/verticals/illustrated-story-reel/scripts/run_from_plan.py \
+python3 workflows/verticals/illustrated-story-reel/scripts/run_from_plan.py \
   --plan output/.../plan.json --out-dir output/.../ --phase stills
 
 # Phase A2 — narration OR music (matches audio_mode in plan)
@@ -104,7 +117,7 @@ python3 ... --approve-audio --phase assemble --output-name story_slideshow.mp4
 | Skipping audio listen gate | Run `--phase tts` or `music`; wait for **approve audio** |
 | One long narration blob | One line per beat; TTS per scene for sync |
 | Music mode without `hold_seconds` | Set per beat or `defaults.hold_seconds` |
-| Negation in still prompts | Positive description only — see [interactive-explainer-prompts.md](../../../../../references/workflows/interactive-explainer-prompts.md) |
+| Negation in still prompts | Positive description only — see [illustrated-story-reel-prompts.md](../../../../../references/workflows/illustrated-story-reel-prompts.md) |
 | Assuming vertical only | Set `aspect_ratio` to `16:9` and landscape framing in prompts for horizontal deliverables |
 | Mismatched ratio in prompts | `aspect_ratio` in plan must match “vertical” / “horizontal” / “square” in `hero_prompt` and beats |
 

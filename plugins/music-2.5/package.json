@@ -1,0 +1,17 @@
+{
+  "name": "@PrunaAI/music-2.5",
+  "version": "0.0.2",
+  "license": "MIT",
+  "description": "Use when the user wants AI song generation with vocals, sung lyrics, original tracks from a style prompt, or source audio for a music video.",
+  "repository": "https://github.com/PrunaAI/pruna-skills",
+  "files": [
+    ".claude-plugin",
+    "openclaw.plugin.json",
+    "skills"
+  ],
+  "openclaw": {
+    "bundledSkills": [
+      "music-2.5"
+    ]
+  }
+}

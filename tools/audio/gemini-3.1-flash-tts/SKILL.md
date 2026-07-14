@@ -3,7 +3,7 @@ name: gemini-3.1-flash-tts
 description: Use when the user needs narration or voiceover audio for explainers, documentary tracks, scene voice lines, or TTS to pair with generated video.
 license: MIT
 metadata:
-  version: "0.0.1"
+  version: "0.0.2"
   provider: replicate
   replicate_model: google/gemini-3.1-flash-tts
 ---
@@ -164,7 +164,7 @@ Truncated narration mid-sentence usually means the line exceeded the cap, not th
 
 - [scene-anchor-triple.md](../../../references/video/scene-anchor-triple.md) — **`image` + `last_frame_image` + `audio`** per scene
 - [audio-post-production.md](../../../references/audio/audio-post-production.md) — narration + bed layering
-- [multi-scene-ai-video](../../../workflows/core/narrated-multi-scene/SKILL.md) — scene table + assembly
+- [narrated-multi-scene](../../../workflows/core/narrated-multi-scene/SKILL.md) — scene table + assembly
 - [stable-audio-2.5](../stable-audio-2.5/SKILL.md) — instrumental beds
 - [music-2.5](../music-2.5/SKILL.md) — full songs with vocals
 - [replicate-api.md](../../../references/shared/replicate-api.md)

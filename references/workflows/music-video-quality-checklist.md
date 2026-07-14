@@ -36,7 +36,7 @@ Run at lyrics approval, after song generation, on stills, and on final assembly.
 
 ## Clip gate
 
-- [ ] **`project_seed`** passed on all **`p-video-avatar`** performance jobs when same-singer continuity is intended
+- [ ] **Hero plate URL** locked on all **`p-video-avatar`** performance jobs when same-singer continuity is intended
 - [ ] Performance uses **`input.audio`** slice — not mismatched `voice_script`
 - [ ] Lip sync acceptable for performance segments
 - [ ] B-roll motion matches audio energy
@@ -51,6 +51,6 @@ Run at lyrics approval, after song generation, on stills, and on final assembly.
 
 ## Related
 
-- [ai-music-video SKILL](../workflows/verticals/music-video/SKILL.md)
+- [music-video SKILL](../workflows/verticals/music-video/SKILL.md)
 - [lyrics-and-cuts.md](../workflows/verticals/music-video/lyrics-and-cuts.md)
 - [generation-quality-checklists.md](./generation-quality-checklists.md)

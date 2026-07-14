@@ -1,0 +1,17 @@
+{
+  "name": "@PrunaAI/stable-audio-2.5",
+  "version": "0.0.2",
+  "license": "MIT",
+  "description": "Use when the user wants light instrumental background music, an ambient bed under dialogue or voiceover, or underscore for reels and explainers.",
+  "repository": "https://github.com/PrunaAI/pruna-skills",
+  "files": [
+    ".claude-plugin",
+    "openclaw.plugin.json",
+    "skills"
+  ],
+  "openclaw": {
+    "bundledSkills": [
+      "stable-audio-2.5"
+    ]
+  }
+}

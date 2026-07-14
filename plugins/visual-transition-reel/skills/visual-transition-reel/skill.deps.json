@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "skill": "visual-transition-reel",
+  "version": "0.0.2",
+  "repository": "PrunaAI/pruna-skills",
+  "pluginPath": "plugins/visual-transition-reel",
+  "skillPath": "plugins/visual-transition-reel/skills/visual-transition-reel",
+  "skillsPath": "plugins/visual-transition-reel/skills",
+  "depends": [
+    "p-image",
+    "p-image-edit",
+    "p-video",
+    "stable-audio-2.5"
+  ],
+  "resolvers": {
+    "skills": {
+      "depends": [
+        "p-image",
+        "p-image-edit",
+        "p-video",
+        "stable-audio-2.5"
+      ]
+    },
+    "apm": {
+      "dependencies": {
+        "apm": [
+          "PrunaAI/pruna-skills/plugins/p-image/skills/p-image",
+          "PrunaAI/pruna-skills/plugins/p-image-edit/skills/p-image-edit",
+          "PrunaAI/pruna-skills/plugins/p-video/skills/p-video",
+          "PrunaAI/pruna-skills/plugins/stable-audio-2.5/skills/stable-audio-2.5"
+        ]
+      }
+    },
+    "openclaw": {
+      "install": [
+        "git:PrunaAI/pruna-skills@main"
+      ],
+      "note": "Install each skill from plugins/<name>/skills/<name> in the repo tree."
+    }
+  }
+}

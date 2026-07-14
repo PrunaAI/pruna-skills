@@ -1,0 +1,10 @@
+{
+  "name": "avatar-single-scene",
+  "description": "Use when the user needs one talking-head clip, a single host line with lip sync, or one spokesperson beat\u2014not multi-segment host reels or motion-transfer comparison grids.",
+  "version": "0.0.2",
+  "author": {
+    "name": "Pruna AI"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/PrunaAI/pruna-skills"
+}

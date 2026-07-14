@@ -1,0 +1,21 @@
+{
+  "name": "@PrunaAI/illustrated-story-reel",
+  "version": "0.0.2",
+  "license": "MIT",
+  "description": "Use when the user wants a still-image story reel or slideshow, picture-book narrative with voiceover or music\u2014and explicitly not full motion-video generation.",
+  "repository": "https://github.com/PrunaAI/pruna-skills",
+  "files": [
+    ".claude-plugin",
+    "openclaw.plugin.json",
+    "skills"
+  ],
+  "openclaw": {
+    "bundledSkills": [
+      "illustrated-story-reel",
+      "p-image",
+      "p-image-edit",
+      "gemini-3.1-flash-tts",
+      "stable-audio-2.5"
+    ]
+  }
+}

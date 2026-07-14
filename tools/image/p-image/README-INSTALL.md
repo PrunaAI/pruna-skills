@@ -5,23 +5,23 @@
 No clone required:
 
 ```bash
-npx skills add PrunaAI/pruna-ai-content-generation-skills/skills@p-image --agent cursor -y
+npx skills add PrunaAI/pruna-skills/plugins/p-image/skills@p-image --agent cursor -y
 ```
 
 Or:
 
 ```bash
-npx skills add PrunaAI/pruna-ai-content-generation-skills/skills --skill p-image -y
+npx skills add PrunaAI/pruna-skills/plugins/p-image/skills --skill p-image -y
 ```
 
-See [skills/README.md](../../../skills/README.md) for more URL formats.
+See [README.md](../../../README.md#install-skills) for more URL formats.
 
 ## Install from a clone
 
 ```bash
-npx skills add ./skills --skill p-image -y
+npx skills add ./plugins/p-image/skills --skill p-image -y
 # or:
-npx skills add PrunaAI/pruna-ai-content-generation-skills/skills --skill p-image --agent cursor -y
+npx skills add PrunaAI/pruna-skills/plugins/p-image/skills --skill p-image --agent cursor -y
 ```
 
 Restart Cursor or start a new chat.

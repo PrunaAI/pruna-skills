@@ -1,0 +1,10 @@
+{
+  "id": "narrated-multi-scene",
+  "name": "narrated-multi-scene",
+  "description": "Use when the user needs a multi-scene narrated film, episodic B-roll story, chaptered promo, or several linked video beats with voiceover and no in-scene character dialogue.",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

@@ -1,0 +1,33 @@
+name: Verify skills
+
+on:
+  pull_request:
+    paths:
+      - "tools/**"
+      - "guides/**"
+      - "workflows/**"
+      - "references/**"
+      - "scripts/**"
+      - "VERSION"
+      - "skills.sh.json"
+      - "plugins/**"
+      - ".claude-plugin/**"
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Verify bundles
+        run: ./scripts/verify_skill_bundles.sh
+
+      - name: Check skills.sh.json
+        run: python3 scripts/write_skills_sh_json.py --check
+
+      - name: Validate skills (skills-ref)
+        run: python3 scripts/validate_all_skills.py

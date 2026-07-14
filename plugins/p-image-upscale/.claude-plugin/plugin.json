@@ -1,0 +1,10 @@
+{
+  "name": "p-image-upscale",
+  "description": "Use when the user wants to upscale image resolution, enhance detail in an existing still, or prepare photos for print, large crops, or quality demos.",
+  "version": "0.0.2",
+  "author": {
+    "name": "Pruna AI"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/PrunaAI/pruna-skills"
+}

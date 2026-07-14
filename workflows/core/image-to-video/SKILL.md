@@ -1,8 +1,9 @@
 ---
 name: image-to-video
 description: Use when the user needs one video clip from stills, a single narrated story beat, one B-roll shot, or one scene—not a full multi-scene film or talking-head-only piece.
+license: MIT
 metadata:
-  version: "0.0.1"
+  version: "0.0.2"
 ---
 
 # Single-scene AI video (Pruna `p-video`)
@@ -27,7 +28,7 @@ One **`p-video`** prediction. See [p-video](../../../../tools/video/p-video/SKIL
 
 | Topic | Questions |
 |-------|-----------|
-| **Mode** | **`triple`** (`image` + `last_frame_image` + `audio` — preferred for narrated beats) · **`pair`** (start + end still + `duration` — [scene-transition-video](../visual-transition-reel/SKILL.md)) · T2V · I2V · I2V+last · audio-only (no frames) |
+| **Mode** | **`triple`** (`image` + `last_frame_image` + `audio` — preferred for narrated beats) · **`pair`** (start + end still + `duration` — [visual-transition-reel](../visual-transition-reel/SKILL.md)) · T2V · I2V · I2V+last · audio-only (no frames) |
 | **Creative** | Motion `prompt` only — what happens between first and last frame? One paragraph max. |
 | **Frames** | Start still (upload or `p-image-edit`)? End still (`last_frame_edit_prompt`)? Part of a longer **`frame_chain`**? |
 | **Audio** | [Gemini TTS](../../../../tools/audio/gemini-3.1-flash-tts/SKILL.md) → upload → **`input.audio`** (preferred). Optional [Stable Audio](../../../../tools/audio/stable-audio-2.5/SKILL.md) bed **after** render. Post-mux is fallback only — [audio-post-production.md](../../../../../references/audio/audio-post-production.md). |
@@ -56,7 +57,7 @@ Full spec: [scene-anchor-triple.md](../../../../../references/video/scene-anchor
 
 ## Related
 
-- Multi-scene triple + frame chain: [multi-scene-ai-video](../narrated-multi-scene/SKILL.md)
-- Multi-scene visual transitions (pair, no VO): [scene-transition-video](../visual-transition-reel/SKILL.md)
-- Talking head: [single-scene-avatar-video](../avatar-single-scene/SKILL.md)
+- Multi-scene triple + frame chain: [narrated-multi-scene](../narrated-multi-scene/SKILL.md)
+- Multi-scene visual transitions (pair, no VO): [visual-transition-reel](../visual-transition-reel/SKILL.md)
+- Talking head: [avatar-single-scene](../avatar-single-scene/SKILL.md)
 - Pipeline hub: [pruna-generative-pipeline](../pruna-generative-pipeline/SKILL.md)

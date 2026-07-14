@@ -22,7 +22,7 @@ Header: `Authorization: Bearer ${REPLICATE_API_TOKEN}`
 # Download output URL (string or list depending on model)
 ```
 
-Shared client: [`catalog/workflows/_shared/scripts/replicate_api.py`](../workflows/_shared/scripts/replicate_api.py)
+Shared client: [`workflows/_shared/scripts/replicate_api.py`](../workflows/_shared/scripts/replicate_api.py)
 
 ## Stable Audio 2.5
 
@@ -36,7 +36,7 @@ Model: `minimax/music-2.5`
 Required input: `lyrics` (1–3,500 chars, structure tags supported)  
 Optional: `prompt` (style), `sample_rate`, `bitrate`, `audio_format` (`mp3` default)
 
-Workflow: [ai-music-video](../workflows/verticals/music-video/SKILL.md) · tool skill: [music-2.5](../tools/audio/music-2.5/SKILL.md)
+Workflow: [music-video](../workflows/verticals/music-video/SKILL.md) · tool skill: [music-2.5](../tools/audio/music-2.5/SKILL.md)
 
 ## Gemini 3.1 Flash TTS
 
@@ -45,3 +45,12 @@ Required input: `text`
 Optional: `voice` (default `Kore`), `prompt` (style/scene), `language_code` (default `en-US`)
 
 Output: audio file URL. Use for narration — upload to Pruna as part of [scene anchor triple](./scene-anchor-triple.md) (`input.audio` + `input.image` + `input.last_frame_image` on `p-video`). Layering with beds: [audio-post-production.md](./audio-post-production.md)
+
+## p-image-ideogram (Pruna deployment)
+
+Deployment: `prunaai/p-image-ideogram-preview`  
+Endpoint: `POST https://api.replicate.com/v1/deployments/prunaai/p-image-ideogram-preview/predictions`  
+Required input: `prompt`  
+Optional: `mode` (`very low` · `low` · `medium` default · `high` · `very high`), `aspect_ratio`, `image_size`, `width`, `height` (when `aspect_ratio=custom`), `seed`, `output_format`, `output_quality`
+
+Use for high-quality fast photoreal stills. Fastest drafts: [p-image](../tools/image/p-image/SKILL.md) (Pruna P-API). Tool skill: [p-image-ideogram](../tools/image/p-image-ideogram/SKILL.md)

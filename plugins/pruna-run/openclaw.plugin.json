@@ -1,0 +1,10 @@
+{
+  "id": "pruna-run",
+  "name": "pruna-run",
+  "description": "Use when the user wants a quick single-shot generation with minimal intake\u2014one image, video clip, or avatar call from a prompt without a full multi-step plan.",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

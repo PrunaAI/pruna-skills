@@ -1,0 +1,10 @@
+{
+  "name": "stable-audio-2.5",
+  "description": "Use when the user wants light instrumental background music, an ambient bed under dialogue or voiceover, or underscore for reels and explainers.",
+  "version": "0.0.2",
+  "author": {
+    "name": "Pruna AI"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/PrunaAI/pruna-skills"
+}

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "skill": "narrated-multi-scene",
+  "version": "0.0.2",
+  "repository": "PrunaAI/pruna-skills",
+  "pluginPath": "plugins/narrated-multi-scene",
+  "skillPath": "plugins/narrated-multi-scene/skills/narrated-multi-scene",
+  "skillsPath": "plugins/narrated-multi-scene/skills",
+  "depends": [
+    "p-image",
+    "p-image-edit",
+    "p-video",
+    "gemini-3.1-flash-tts",
+    "stable-audio-2.5"
+  ],
+  "resolvers": {
+    "skills": {
+      "depends": [
+        "p-image",
+        "p-image-edit",
+        "p-video",
+        "gemini-3.1-flash-tts",
+        "stable-audio-2.5"
+      ]
+    },
+    "apm": {
+      "dependencies": {
+        "apm": [
+          "PrunaAI/pruna-skills/plugins/p-image/skills/p-image",
+          "PrunaAI/pruna-skills/plugins/p-image-edit/skills/p-image-edit",
+          "PrunaAI/pruna-skills/plugins/p-video/skills/p-video",
+          "PrunaAI/pruna-skills/plugins/gemini-3.1-flash-tts/skills/gemini-3.1-flash-tts",
+          "PrunaAI/pruna-skills/plugins/stable-audio-2.5/skills/stable-audio-2.5"
+        ]
+      }
+    },
+    "openclaw": {
+      "install": [
+        "git:PrunaAI/pruna-skills@main"
+      ],
+      "note": "Install each skill from plugins/<name>/skills/<name> in the repo tree."
+    }
+  }
+}

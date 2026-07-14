@@ -1,6 +1,6 @@
 # Animate beats in multi-scene reels
 
-How **`p-video-animate`** fits into mixed **`avatar` + `animate`** pieces built with [multi-scene-avatar-video](./SKILL.md).
+How **`p-video-animate`** fits into mixed **`avatar` + `animate`** pieces built with [avatar-multi-scene](./SKILL.md).
 
 ## What each model does
 
@@ -114,19 +114,19 @@ Avatar CTA rows use **`type: avatar`** → deliver `{id}_avatar.mp4`. Animate ro
 
 ## Slider comparison (optional)
 
-Requires `ffmpeg` + Pillow (`pip install -r catalog/workflows/_shared/scripts/requirements.txt`).
+Requires `ffmpeg` + Pillow (`pip install -r workflows/_shared/scripts/requirements.txt`).
 
 ```bash
-python3 catalog/workflows/_shared/scripts/generate_video_comparison.py \
+python3 workflows/_shared/scripts/generate_video_comparison.py \
   --source path/to/motion-template.mp4 \
   --output path/to/animated-output.mp4 \
   --render path/to/scene_compare.mp4
 ```
 
-Multi-sample mode: [`examples/workflows/launches/p-video-animate-comparison/`](../../../examples/workflows/launches/p-video-animate-comparison/)
+Multi-sample mode: [`.mine/examples/workflows/launches/p-video-animate-comparison/`](../../../.mine/examples/workflows/launches/p-video-animate-comparison/)
 
 ## Assembly
 
 Concat clips in scene-table order — avatar MP4s and animate comparison MP4s interleaved as planned. Level audio in your editor or ffmpeg.
 
-Example plan schema: [examples/workflows/launches/p-video-animate-comparison/](../../../examples/workflows/launches/p-video-animate-comparison/).
+Example plan schema: [.mine/examples/workflows/launches/p-video-animate-comparison/](../../../.mine/examples/workflows/launches/p-video-animate-comparison/).

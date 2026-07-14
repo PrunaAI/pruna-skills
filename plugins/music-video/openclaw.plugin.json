@@ -1,0 +1,10 @@
+{
+  "id": "music-video",
+  "name": "music-video",
+  "description": "Use when the user wants a music video, lyric video, sung promo, or original song paired with performance and B-roll clips.",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

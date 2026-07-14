@@ -1,0 +1,12 @@
+name: interactive-explainer
+version: 0.0.2
+type: skill
+description: Use when the user wants educational explainers with a host plus in-story characters, history or science shorts, or witness and expert dialogue—not wall-to-wall narration alone.
+dependencies:
+  apm:
+    - PrunaAI/pruna-skills/plugins/p-image/skills/p-image
+    - PrunaAI/pruna-skills/plugins/p-image-edit/skills/p-image-edit
+    - PrunaAI/pruna-skills/plugins/p-video/skills/p-video
+    - PrunaAI/pruna-skills/plugins/p-video-avatar/skills/p-video-avatar
+    - PrunaAI/pruna-skills/plugins/gemini-3.1-flash-tts/skills/gemini-3.1-flash-tts
+    - PrunaAI/pruna-skills/plugins/stable-audio-2.5/skills/stable-audio-2.5

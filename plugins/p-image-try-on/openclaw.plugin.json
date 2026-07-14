@@ -1,0 +1,10 @@
+{
+  "id": "p-image-try-on",
+  "name": "p-image-try-on",
+  "description": "Use when the user wants virtual try-on, dress a person in clothing from reference photos, garment fitting on a model still, or ecommerce fashion compositing.",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

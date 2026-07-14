@@ -1,0 +1,17 @@
+{
+  "name": "@PrunaAI/p-video",
+  "version": "0.0.2",
+  "license": "MIT",
+  "description": "Use when the user wants one video clip from text or stills, start/end frame animation, or B-roll and cinematic shots\u2014not multi-scene films, talking-head avatar clips, or motion transfer from a template video.",
+  "repository": "https://github.com/PrunaAI/pruna-skills",
+  "files": [
+    ".claude-plugin",
+    "openclaw.plugin.json",
+    "skills"
+  ],
+  "openclaw": {
+    "bundledSkills": [
+      "p-video"
+    ]
+  }
+}

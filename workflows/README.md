@@ -1,7 +1,7 @@
 # Workflows
 
 ```text
-catalog/workflows/
+workflows/
   _shared/scripts/
   router/              # entry — pruna-run, pruna-generative-pipeline
   core/                # scene grammar (HOW)
@@ -18,35 +18,22 @@ catalog/workflows/
 
 **Do not delete the router skills** — they are the intake entrypoints, not duplicates of verticals.
 
-### Canonical paths vs legacy install aliases
-
-| Canonical path | Legacy install aliases |
-|----------------|------------------------|
-| `verticals/interactive-explainer` | `educational-explainer`, `documentary-explainer` |
-| `core/narrated-multi-scene` | `multi-scene-ai-video` |
-| `core/visual-transition-reel` | `scene-transition-video` |
-| `verticals/music-video` | `ai-music-video` |
-| `core/image-to-video` | `single-scene-ai-video` |
-| `core/avatar-single-scene` | `single-scene-avatar-video` |
-| `core/avatar-multi-scene` | `multi-scene-avatar-video` |
-
-Legacy skill names — see [legacy-aliases.md](legacy-aliases.md) (canonical `name:` in frontmatter only).
-
 **Human-in-the-loop:** Every workflow uses [staged-generation-gate.md](../../../references/shared/staged-generation-gate.md). Per-skill commands: [workflow-feedback-gates.md](../../../references/workflows/workflow-feedback-gates.md).
 
-Install: `npx skills add ./skills --skill <folder-name> --agent cursor -y`. Pruna-internal launch skills: `bundle_skill.sh <name> --mine` (`.mine/` only).
+Install: `npx skills add ./plugins/<name>/skills --skill <folder-name> --agent cursor -y` or `/plugin install <name>@pruna-skills`. Pruna-internal launch skills: `bundle_skill.sh <name> --mine` (`.mine/` only).
 
-### Portable bundles (`skills/`)
+### Generated plugins (`plugins/`)
 
-Author in `catalog/`; publish via generation:
+Author in `tools/`, `guides/`, or `workflows/`; publish via generation:
 
 ```text
-catalog/workflows/{router,core,verticals}/<skill>/   ← SKILL.md + skill.manifest.json
-catalog/tools/{image,video,audio}/<skill>/           ← model tool skills
-catalog/references/                                  ← shared docs (listed in manifests)
+workflows/{router,core,verticals}/<skill>/   ← SKILL.md + skill.manifest.json
+tools/{image,video,audio}/<skill>/           ← model tool skills
+references/                                  ← shared docs (listed in manifests)
         │
         ▼  ./scripts/bundle_all_skills.sh  (also runs on pre-commit)
-skills/<skill>/                                      ← flat install tree for npx skills add
+plugins/<skill>/.claude-plugin/plugin.json
+plugins/<skill>/skills/<skill>/                      ← self-contained install tree
 ```
 
-`skill.manifest.json` declares which overlapping `catalog/references/` and `_shared/scripts/` files copy into each bundle. Check freshness: `./scripts/verify_skill_bundles.sh`.
+Workflow plugins copy direct `tool_skills` into `plugins/<workflow>/skills/`. Check freshness: `./scripts/verify_skill_bundles.sh`.

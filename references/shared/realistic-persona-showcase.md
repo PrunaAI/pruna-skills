@@ -2,7 +2,18 @@
 
 How to produce **diverse, art-directed personas and scenarios** across **`p-image`** → optional **`p-image-try-on`** / **`p-image-edit`** → **`p-video-avatar`**. Covers **photographic styles**, **anime and stylized mediums**, **camera angles**, **lighting**, **settings**, and **cast** — not generic “AI stock portrait” demos.
 
-**Variety ladders (full tables):** [visual-variety-bible.md](./visual-variety-bible.md) · **Try-on garment specifics:** [p-image-try-on-quality-checklist.md](../image/p-image-try-on-quality-checklist.md) · **Copy-paste examples:** [example-prompt.md](../../examples/shared/realistic-persona/example-prompt.md)
+**Variety ladders (full tables):** [visual-variety-bible.md](./visual-variety-bible.md) · **Try-on garment specifics:** [p-image-try-on-quality-checklist.md](../image/p-image-try-on-quality-checklist.md) · **Copy-paste examples:** [realistic-persona-example-prompt.md](./realistic-persona-example-prompt.md)
+
+## Contents
+
+- [Why this exists](#why-this-exists)
+- [Pipeline overview](#pipeline-overview)
+- [Shared anti-patterns](#shared-anti-patterns)
+- [Dynamic scenario generation](#dynamic-scenario-generation)
+- [p-image — persona plates](#p-image--persona--scenario-plates)
+- [Identity lock](#identity-lock)
+- [p-video-avatar — dynamic realistic personas](#p-video-avatar--dynamic-realistic-personas)
+- [Diversity for public showcases](#diversity-for-public-showcases)
 
 ## Why this exists
 
@@ -13,7 +24,7 @@ Current public examples often read as **AI sloppy** or **too simplistic**: same 
 **Before any step:** [generation-diversity.md](./generation-diversity.md) (ritual seed + axis rotation) · [random seed ritual](./random-seed-ritual.md)
 
 ```text
-p-image (hero plate)     → slop gate → identity anchor + locked seed
+p-image (hero plate)     → slop gate → identity anchor (plate URL + cast descriptor)
     ↓ optional
 p-image-edit / try-on    → slop gate → dressed or reposed still
     ↓ optional
@@ -182,7 +193,7 @@ Stylized hosts can lip-sync when:
 1. **Mouth is large and visible** in the still (same gate as photoreal)
 2. **`video_prompt`** matches the style energy (anime: slightly more expressive head motion; clay: smaller subtle moves)
 3. **`voice_prompt`** matches archetype (*“warm anime protagonist delivery”* vs *“documentary narrator calm”*)
-4. **`seed`** locked per character across clips in the same style
+4. **Hero plate URL** locked per character across clips in the same style
 
 For **cross-style multi-scene reels** (photoreal → anime → clay): treat each style as a **new row** with its own hero still — do not expect one photoreal hero to **`p-image-edit`** into anime; generate a fresh **`p-image`** per `visual_style_tag`.
 
@@ -242,9 +253,9 @@ After hero approval, branch with **`p-image-edit`** from the **same anchor URL**
 
 Templates: [prompt-templates.md](../../workflows/core/avatar-multi-scene/prompt-templates.md).
 
-### Seed lock
+### Identity lock
 
-**[Random seed ritual](./random-seed-ritual.md)** first — the ritual integer becomes **`project_seed`**. Reuse on hero regen and every **`p-video-avatar`** call for that character.
+**[Random seed ritual](./random-seed-ritual.md) (SSoT)** first — log `ritual_seed` for prompt planning. Character continuity = **approved hero plate URL** + cast descriptor across hero regen and **`p-video-avatar`** clips.
 
 ## `p-video-avatar` — dynamic realistic personas
 
@@ -299,7 +310,7 @@ Workflow skills: [avatar-single-scene](../../workflows/core/avatar-single-scene/
 1. Photoreal **`p-image`** plate → slop gate
 2. **`p-image-try-on`** (normal mode for complex garments) → preservation checklist
 3. Optional upscale if delivery resolution demands it
-4. **`p-video-avatar`** with **`seed`** from step 1 — script references the outfit naturally
+4. **`p-video-avatar`** — reuse approved try-on plate URL; script references the outfit naturally
 
 Example **`voice_script`:** *"Okay — this is the patchwork jacket on me, not a mannequin. The print actually stayed sharp."*
 
@@ -343,4 +354,4 @@ Coordinate with @ShinyTaskForce.
 | `p-image-try-on` | [p-image-try-on SKILL.md](../../tools/image/p-image-try-on/SKILL.md) | [p-image-try-on-quality-checklist.md](../image/p-image-try-on-quality-checklist.md) |
 | `p-video-avatar` | [p-video-avatar SKILL.md](../../tools/video/p-video-avatar/SKILL.md) | [p-video-avatar-quality-checklist.md](../video/p-video-avatar-quality-checklist.md) |
 
-Example prompts: [examples/shared/realistic-persona/example-prompt.md](../../examples/shared/realistic-persona/example-prompt.md)
+Example prompts: [realistic-persona-example-prompt.md](./realistic-persona-example-prompt.md)

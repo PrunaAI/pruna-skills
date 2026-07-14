@@ -1,0 +1,10 @@
+{
+  "id": "whisperx",
+  "name": "whisperx",
+  "description": "Use when the user needs word-level lyric timestamps, cut-safe line boundaries for music videos, or alignment after song generation before editing clips.",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

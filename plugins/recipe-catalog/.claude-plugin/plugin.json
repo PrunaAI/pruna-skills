@@ -1,0 +1,10 @@
+{
+  "name": "recipe-catalog",
+  "description": "Use when choosing a generative pipeline \u2014 mood boards, hero variants, explainers, music videos, avatar reels, and other recipe letters A\u2013R with linked tool and workflow skills.",
+  "version": "0.0.2",
+  "author": {
+    "name": "Pruna AI"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/PrunaAI/pruna-skills"
+}

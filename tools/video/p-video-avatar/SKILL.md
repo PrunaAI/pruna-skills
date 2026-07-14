@@ -3,7 +3,7 @@ name: p-video-avatar
 description: Use when the user wants a talking-head video, lip-synced host or spokesperson clip, on-camera performance from a portrait plus script, or narrated avatar footage.
 license: MIT
 metadata:
-  version: "0.0.1"
+  version: "0.0.2"
   pruna_model: p-video-avatar
 ---
 
@@ -11,7 +11,7 @@ metadata:
 
 Talking-head video from one image plus **either** `voice_script` **or** `audio` (if both, audio wins). Full parameters: [P-Video-Avatar (Pruna docs)](https://docs.pruna.ai/en/stable/docs_pruna_endpoints/performance_models/p-video-avatar.html).
 
-**Dynamic personas & scenarios:** [realistic-persona-showcase.md](../../../references/shared/realistic-persona-showcase.md) · examples: [example-prompt.md](../../examples/shared/realistic-persona/example-prompt.md)
+**Dynamic personas & scenarios:** [realistic-persona-showcase.md](../../../references/shared/realistic-persona-showcase.md) · examples: [example-prompt.md](../../../references/shared/realistic-persona-example-prompt.md)
 
 Shared HTTP patterns: [pruna-api.md](../../../references/shared/pruna-api.md) (upload, [poll](#poll), [download](#download))
 
@@ -33,9 +33,9 @@ See **Example: async** below. Poll and download: [pruna-api.md](../../../referen
 
 ## Before generating
 
-Follow [single-scene-avatar-video](../../../workflows/core/avatar-single-scene/SKILL.md) or [multi-scene-avatar-video](../../../workflows/core/avatar-multi-scene/SKILL.md): **[generation diversity](../../../references/shared/generation-diversity.md)** first, then **natural human `voice_script`**, **realistic conversational `voice_prompt`**, **per-scene dynamic `video_prompt`**, **locked `project_seed`**, **one fixed `voice` per recurring character**, **explicit user confirmation** before any **`POST /v1/predictions`**, then emit and run the agreed generation steps.
+Follow [avatar-single-scene](../../../workflows/core/avatar-single-scene/SKILL.md) or [avatar-multi-scene](../../../workflows/core/avatar-multi-scene/SKILL.md): **[generation diversity](../../../references/shared/generation-diversity.md)** first, then **natural human `voice_script`**, **realistic conversational `voice_prompt`**, **per-scene dynamic `video_prompt`**, **locked hero plate URL**, **one fixed `voice` per recurring character**, **explicit user confirmation** before any **`POST /v1/predictions`**, then emit and run the agreed generation steps.
 
-When calling the model directly for a small experiment: **ritual seed first**, then confirm **`image`** URL (approved still from `/v1/files`), exact **`voice_script`**, **`voice`** / **`voice_language`**, **`voice_prompt`** (human delivery—not script text), **`video_prompt`** (camera/motion), **`resolution`**, and **`seed`** with the user. Run [p-video-avatar-quality-checklist.md](../../../references/video/p-video-avatar-quality-checklist.md) on stills and outputs.
+When calling the model directly for a small experiment: **random seed ritual (SSoT)** first, then confirm **`image`** URL (approved still from `/v1/files`), exact **`voice_script`**, **`voice`** / **`voice_language`**, **`voice_prompt`** (human delivery—not script text), **`video_prompt`** (camera/motion), and **`resolution`** with the user. Run [p-video-avatar-quality-checklist.md](../../../references/video/p-video-avatar-quality-checklist.md) on stills and outputs.
 
 ## Dynamic realistic personas (production)
 
@@ -47,7 +47,7 @@ A believable avatar needs **three layers** — not a static face on the default 
 
 **Stylized hosts (anime, clay, 3D):** same mouth-visibility gate; match **`voice_prompt`** and **`video_prompt`** energy to the style (*anime*: slightly more expressive motion; *documentary*: restrained). Cross-style reels need **separate hero stills per `visual_style_tag`** — do not edit photoreal into anime from one anchor.
 
-**Upstream plate quality caps avatar quality.** Regenerate mushy or synthetic stills before avatar. For fashion UGC: photoreal **`p-image`** → **`p-image-try-on`** → slop gate → avatar with same **`seed`**.
+**Upstream plate quality caps avatar quality.** Regenerate mushy or synthetic stills before avatar. For fashion UGC: photoreal **`p-image`** → **`p-image-try-on`** → slop gate → avatar with same approved plate URL.
 
 Multi-scene: pair each clip’s **`video_prompt`** with a matching **`p-image-edit`** still (background/angle delta only). See [avatar-multi-scene/prompt-templates.md](../../../workflows/core/avatar-multi-scene/prompt-templates.md) scene table.
 
@@ -60,11 +60,11 @@ Multi-scene: pair each clip’s **`video_prompt`** with a matching **`p-image-ed
 | **`voice_script`** | Speakable copy: contractions, short sentences, light fillers (*"Hey —"*, *"right?"*). Avoid brochure language. |
 | **`voice_prompt`** | How they *sound*: *"Natural conversational tone like a founder on LinkedIn, relaxed pacing, real pauses, honest not salesy."* Never paste product names or script lines here. |
 | **`video_prompt`** | **Unique per clip** — angle, push-in, gesture, setting motion, glance beats. Never copy one string across a multi-scene reel. Default `The person is talking.` is quick-test only. |
-| **`seed`** | [Generation diversity](../../../references/shared/generation-diversity.md) at project start → **`project_seed`**; reuse on every clip for that character unless A/B testing motion. |
+| **`seed`** | Optional API reproducibility only — pass **`api_seed`** when user locks an integer. Ritual string is **not** passed to API. |
 
 **Motion-template use case (for `p-video-animate` beats):** When this model generates a **source motion video**, prompts must explicitly request **speaking** — `clear lip movement`, explain gestures, `speaks directly to camera`. Motion-source stills need `mouth clearly visible ready to speak`. See [animate-beats.md](../../../workflows/core/avatar-multi-scene/animate-beats.md).
 
-Templates and good/bad pairs: [multi-scene-avatar-video/prompt-templates.md](../../../workflows/core/avatar-multi-scene/prompt-templates.md).
+Templates and good/bad pairs: [avatar-multi-scene/prompt-templates.md](../../../workflows/core/avatar-multi-scene/prompt-templates.md).
 
 ## Field names (JSON)
 
@@ -122,7 +122,7 @@ Start `negative_prompt_strength` around **0.3–0.4** and tune per asset. Higher
 
 Omit `Try-Sync`. For multiple clips, **create all jobs in parallel**, then batch-poll every `get_url`. See [parallel-execution.md](../../../references/shared/parallel-execution.md).
 
-Example `"seed": 518263` is illustrative — use your [random seed ritual](../../../references/shared/random-seed-ritual.md) integer.
+Complete the [random seed ritual](../../../references/shared/random-seed-ritual.md) (SSoT) before writing prompts. Omit `seed` from API `input` unless the user supplied **`api_seed`**.
 
 ```bash
 curl -X POST 'https://api.pruna.ai/v1/predictions' \
@@ -137,7 +137,6 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
       "voice_language": "English (US)",
       "voice_prompt": "Natural conversational tone — relaxed pacing, real pauses.",
       "resolution": "720p",
-      "seed": 518263,
       "video_prompt": "Medium close-up speaking directly to lens, subtle push-in",
       "negative_prompt": "subtitles, captions, on-screen text, watermark, logo, typography, letters, words",
       "negative_prompt_strength": 0.35
@@ -161,7 +160,6 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
       "voice_language": "English (US)",
       "voice_prompt": "Natural conversational tone — like a founder on LinkedIn, relaxed pacing, real pauses, honest not salesy.",
       "resolution": "720p",
-      "seed": 518263,
       "video_prompt": "Medium close-up speaking directly to lens, subtle push-in, natural head motion, warm confident energy"
     }
   }'
@@ -191,10 +189,10 @@ If both `audio` and `voice_script` are set, **audio wins**.
 
 ## Typical next steps
 
-- One-scene avatar workflow: [single-scene-avatar-video](../../../workflows/core/avatar-single-scene/SKILL.md)
-- Multi-scene avatar workflow: [multi-scene-avatar-video](../../../workflows/core/avatar-multi-scene/SKILL.md)
+- One-scene avatar workflow: [avatar-single-scene](../../../workflows/core/avatar-single-scene/SKILL.md)
+- Multi-scene avatar workflow: [avatar-multi-scene](../../../workflows/core/avatar-multi-scene/SKILL.md)
 - Pipeline: [pruna-generative-pipeline](../../../workflows/router/pruna-generative-pipeline/SKILL.md)
 
 ## Related workflow
 
-Avatar + animate reels: [multi-scene-avatar-video](../../../workflows/core/avatar-multi-scene/SKILL.md) — slider script: [`generate_video_comparison.py`](../../../workflows/_shared/scripts/generate_video_comparison.py).
+Avatar + animate reels: [avatar-multi-scene](../../../workflows/core/avatar-multi-scene/SKILL.md) — slider script: [`generate_video_comparison.py`](../../../workflows/_shared/scripts/generate_video_comparison.py).

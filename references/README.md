@@ -16,4 +16,4 @@ references/
 
 **Model index:** [shared/pruna-models.md](shared/pruna-models.md)
 
-Portable installs copy files by **basename** into `references/` (see `scripts/bundle_skill.sh`). Marketing-only try-on docs live in [`.mine/catalog/references/image/`](../.mine/README.md).
+Portable installs copy files by **basename** into `references/` (see `scripts/bundle_skill.sh`). Marketing-only try-on docs live in [`.mine/references/image/`](../.mine/README.md).

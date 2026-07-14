@@ -1,0 +1,10 @@
+{
+  "name": "pruna-full",
+  "description": "Complete Pruna Skills bundle: all tool, router, core, and vertical skills in one plugin.",
+  "version": "0.0.2",
+  "author": {
+    "name": "Pruna AI"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/PrunaAI/pruna-skills"
+}

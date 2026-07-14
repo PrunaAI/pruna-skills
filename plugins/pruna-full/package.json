@@ -1,0 +1,43 @@
+{
+  "name": "@PrunaAI/pruna-full",
+  "version": "0.0.2",
+  "license": "MIT",
+  "description": "Complete Pruna Skills bundle: all tool, router, core, and vertical skills in one plugin.",
+  "repository": "https://github.com/PrunaAI/pruna-skills",
+  "files": [
+    ".claude-plugin",
+    "openclaw.plugin.json",
+    "skills"
+  ],
+  "openclaw": {
+    "bundledSkills": [
+      "avatar-multi-scene",
+      "avatar-single-scene",
+      "gemini-3.1-flash-tts",
+      "generation-diversity",
+      "generation-quality-checklists",
+      "illustrated-story-reel",
+      "image-to-video",
+      "interactive-explainer",
+      "music-2.5",
+      "music-video",
+      "narrated-multi-scene",
+      "p-image",
+      "p-image-edit",
+      "p-image-ideogram",
+      "p-image-try-on",
+      "p-image-upscale",
+      "p-video",
+      "p-video-animate",
+      "p-video-avatar",
+      "p-video-replace",
+      "pruna-generative-pipeline",
+      "pruna-run",
+      "recipe-catalog",
+      "requesting-generation-feedback",
+      "stable-audio-2.5",
+      "visual-transition-reel",
+      "whisperx"
+    ]
+  }
+}

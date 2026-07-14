@@ -1,8 +1,9 @@
 ---
 name: narrated-multi-scene
 description: Use when the user needs a multi-scene narrated film, episodic B-roll story, chaptered promo, or several linked video beats with voiceover and no in-scene character dialogue.
+license: MIT
 metadata:
-  version: "0.0.1"
+  version: "0.0.2"
 ---
 
 # Multi-scene AI video (Pruna `p-video` only)
@@ -122,8 +123,8 @@ See [scene-anchor-triple.md](../../../../../references/video/scene-anchor-triple
 
 ## Related
 
-- Single clip: [single-scene-ai-video](../image-to-video/SKILL.md)
-- Talking avatars: [multi-scene-avatar-video](../avatar-multi-scene/SKILL.md)
+- Single clip: [image-to-video](../image-to-video/SKILL.md)
+- Talking avatars: [avatar-multi-scene](../avatar-multi-scene/SKILL.md)
 - Audio layering: [audio-post-production.md](../../../../../references/audio/audio-post-production.md)
 - Parallel vs phased: [parallel-execution.md](../../../../../references/shared/parallel-execution.md)
 - Generic chain: [pruna-generative-pipeline](../pruna-generative-pipeline/SKILL.md)

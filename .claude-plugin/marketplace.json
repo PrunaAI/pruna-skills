@@ -1,0 +1,181 @@
+{
+  "name": "pruna-skills",
+  "owner": {
+    "name": "Pruna AI"
+  },
+  "metadata": {
+    "description": "Pruna Skills \u2014 generative media agent skills for the Pruna AI API",
+    "version": "0.0.2",
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "avatar-multi-scene",
+      "description": "Use when the user needs multiple talking-head segments, motion-transfer comparison reels, mixed host and animate clips, or multi-scene UGC with character continuity.",
+      "version": "0.0.2",
+      "source": "./plugins/avatar-multi-scene"
+    },
+    {
+      "name": "avatar-single-scene",
+      "description": "Use when the user needs one talking-head clip, a single host line with lip sync, or one spokesperson beat\u2014not multi-segment host reels or motion-transfer comparison grids.",
+      "version": "0.0.2",
+      "source": "./plugins/avatar-single-scene"
+    },
+    {
+      "name": "gemini-3.1-flash-tts",
+      "description": "Use when the user needs narration or voiceover audio for explainers, documentary tracks, scene voice lines, or TTS to pair with generated video.",
+      "version": "0.0.2",
+      "source": "./plugins/gemini-3.1-flash-tts"
+    },
+    {
+      "name": "generation-diversity",
+      "description": "Use when outputs look generic or repetitive \u2014 apply the random seed ritual, explicit prompt structure, and scenario axis rotation before any paid generation call.",
+      "version": "0.0.2",
+      "source": "./plugins/generation-diversity"
+    },
+    {
+      "name": "generation-quality-checklists",
+      "description": "Use when reviewing generated images, video, or audio \u2014 run the core quality checklist and model-specific checklist before asking the user to approve stills or clips.",
+      "version": "0.0.2",
+      "source": "./plugins/generation-quality-checklists"
+    },
+    {
+      "name": "illustrated-story-reel",
+      "description": "Use when the user wants a still-image story reel or slideshow, picture-book narrative with voiceover or music\u2014and explicitly not full motion-video generation.",
+      "version": "0.0.2",
+      "source": "./plugins/illustrated-story-reel"
+    },
+    {
+      "name": "image-to-video",
+      "description": "Use when the user needs one video clip from stills, a single narrated story beat, one B-roll shot, or one scene\u2014not a full multi-scene film or talking-head-only piece.",
+      "version": "0.0.2",
+      "source": "./plugins/image-to-video"
+    },
+    {
+      "name": "interactive-explainer",
+      "description": "Use when the user wants educational explainers with a host plus in-story characters, history or science shorts, or witness and expert dialogue\u2014not wall-to-wall narration alone.",
+      "version": "0.0.2",
+      "source": "./plugins/interactive-explainer"
+    },
+    {
+      "name": "music-2.5",
+      "description": "Use when the user wants AI song generation with vocals, sung lyrics, original tracks from a style prompt, or source audio for a music video.",
+      "version": "0.0.2",
+      "source": "./plugins/music-2.5"
+    },
+    {
+      "name": "music-video",
+      "description": "Use when the user wants a music video, lyric video, sung promo, or original song paired with performance and B-roll clips.",
+      "version": "0.0.2",
+      "source": "./plugins/music-video"
+    },
+    {
+      "name": "narrated-multi-scene",
+      "description": "Use when the user needs a multi-scene narrated film, episodic B-roll story, chaptered promo, or several linked video beats with voiceover and no in-scene character dialogue.",
+      "version": "0.0.2",
+      "source": "./plugins/narrated-multi-scene"
+    },
+    {
+      "name": "p-image",
+      "description": "Use when the user wants the fastest text-to-image stills, quick draft photos, mood boards, or bulk panels where good quality and extremely low latency matter more than maximum photoreal fidelity.",
+      "version": "0.0.2",
+      "source": "./plugins/p-image"
+    },
+    {
+      "name": "p-image-edit",
+      "description": "Use when the user wants to edit an existing image, change wardrobe or background, compose from reference photos, inpaint-style adjustments, or multi-image edits from a prompt.",
+      "version": "0.0.2",
+      "source": "./plugins/p-image-edit"
+    },
+    {
+      "name": "p-image-ideogram",
+      "description": "Use when the user wants high-fidelity photoreal stills, editorial portraits, hero plates, legible text rendering, or poster typography\u2014not the fastest draft stills or mood-board throughput.",
+      "version": "0.0.2",
+      "source": "./plugins/p-image-ideogram"
+    },
+    {
+      "name": "p-image-try-on",
+      "description": "Use when the user wants virtual try-on, dress a person in clothing from reference photos, garment fitting on a model still, or ecommerce fashion compositing.",
+      "version": "0.0.2",
+      "source": "./plugins/p-image-try-on"
+    },
+    {
+      "name": "p-image-upscale",
+      "description": "Use when the user wants to upscale image resolution, enhance detail in an existing still, or prepare photos for print, large crops, or quality demos.",
+      "version": "0.0.2",
+      "source": "./plugins/p-image-upscale"
+    },
+    {
+      "name": "p-video",
+      "description": "Use when the user wants one video clip from text or stills, start/end frame animation, or B-roll and cinematic shots\u2014not multi-scene films, talking-head avatar clips, or motion transfer from a template video.",
+      "version": "0.0.2",
+      "source": "./plugins/p-video"
+    },
+    {
+      "name": "p-video-animate",
+      "description": "Use when the user wants to animate a still using motion from another video, motion-transfer remixes, or performance variations from a template clip\u2014not replacing someone inside existing footage.",
+      "version": "0.0.2",
+      "source": "./plugins/p-video-animate"
+    },
+    {
+      "name": "p-video-avatar",
+      "description": "Use when the user wants a talking-head video, lip-synced host or spokesperson clip, on-camera performance from a portrait plus script, or narrated avatar footage.",
+      "version": "0.0.2",
+      "source": "./plugins/p-video-avatar"
+    },
+    {
+      "name": "p-video-replace",
+      "description": "Use when the user wants to swap a person, outfit, or product inside existing video, in-footage recast, wardrobe change, or product replacement while keeping camera motion and audio.",
+      "version": "0.0.2",
+      "source": "./plugins/p-video-replace"
+    },
+    {
+      "name": "pruna-full",
+      "description": "Complete Pruna Skills bundle: all tool, router, core, and vertical skills in one plugin.",
+      "version": "0.0.2",
+      "source": "./plugins/pruna-full"
+    },
+    {
+      "name": "pruna-generative-pipeline",
+      "description": "Use when the user is unsure which production workflow fits, needs a recipe menu for multi-step media projects, or wants chained image, video, and audio with approval gates.",
+      "version": "0.0.2",
+      "source": "./plugins/pruna-generative-pipeline"
+    },
+    {
+      "name": "pruna-run",
+      "description": "Use when the user wants a quick single-shot generation with minimal intake\u2014one image, video clip, or avatar call from a prompt without a full multi-step plan.",
+      "version": "0.0.2",
+      "source": "./plugins/pruna-run"
+    },
+    {
+      "name": "recipe-catalog",
+      "description": "Use when choosing a generative pipeline \u2014 mood boards, hero variants, explainers, music videos, avatar reels, and other recipe letters A\u2013R with linked tool and workflow skills.",
+      "version": "0.0.2",
+      "source": "./plugins/recipe-catalog"
+    },
+    {
+      "name": "requesting-generation-feedback",
+      "description": "Use when the agent is about to call paid generation APIs, deliver a final audio mix, or proceed without user review in a multi-step image, video, or audio workflow.",
+      "version": "0.0.2",
+      "source": "./plugins/requesting-generation-feedback"
+    },
+    {
+      "name": "stable-audio-2.5",
+      "description": "Use when the user wants light instrumental background music, an ambient bed under dialogue or voiceover, or underscore for reels and explainers.",
+      "version": "0.0.2",
+      "source": "./plugins/stable-audio-2.5"
+    },
+    {
+      "name": "visual-transition-reel",
+      "description": "Use when the user needs a visual montage, transitions between stills, action-sequence reel, or multi-scene piece where narration is optional or absent.",
+      "version": "0.0.2",
+      "source": "./plugins/visual-transition-reel"
+    },
+    {
+      "name": "whisperx",
+      "description": "Use when the user needs word-level lyric timestamps, cut-safe line boundaries for music videos, or alignment after song generation before editing clips.",
+      "version": "0.0.2",
+      "source": "./plugins/whisperx"
+    }
+  ]
+}

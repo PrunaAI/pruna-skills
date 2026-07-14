@@ -1,0 +1,10 @@
+{
+  "name": "gemini-3.1-flash-tts",
+  "description": "Use when the user needs narration or voiceover audio for explainers, documentary tracks, scene voice lines, or TTS to pair with generated video.",
+  "version": "0.0.2",
+  "author": {
+    "name": "Pruna AI"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/PrunaAI/pruna-skills"
+}

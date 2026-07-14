@@ -1,0 +1,17 @@
+{
+  "name": "@PrunaAI/p-video-avatar",
+  "version": "0.0.2",
+  "license": "MIT",
+  "description": "Use when the user wants a talking-head video, lip-synced host or spokesperson clip, on-camera performance from a portrait plus script, or narrated avatar footage.",
+  "repository": "https://github.com/PrunaAI/pruna-skills",
+  "files": [
+    ".claude-plugin",
+    "openclaw.plugin.json",
+    "skills"
+  ],
+  "openclaw": {
+    "bundledSkills": [
+      "p-video-avatar"
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "p-image-upscale",
+  "name": "p-image-upscale",
+  "description": "Use when the user wants to upscale image resolution, enhance detail in an existing still, or prepare photos for print, large crops, or quality demos.",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

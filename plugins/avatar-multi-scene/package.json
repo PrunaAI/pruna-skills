@@ -1,0 +1,21 @@
+{
+  "name": "@PrunaAI/avatar-multi-scene",
+  "version": "0.0.2",
+  "license": "MIT",
+  "description": "Use when the user needs multiple talking-head segments, motion-transfer comparison reels, mixed host and animate clips, or multi-scene UGC with character continuity.",
+  "repository": "https://github.com/PrunaAI/pruna-skills",
+  "files": [
+    ".claude-plugin",
+    "openclaw.plugin.json",
+    "skills"
+  ],
+  "openclaw": {
+    "bundledSkills": [
+      "avatar-multi-scene",
+      "p-image",
+      "p-image-edit",
+      "p-video-avatar",
+      "p-video-animate"
+    ]
+  }
+}

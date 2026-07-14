@@ -1,0 +1,17 @@
+{
+  "name": "@PrunaAI/pruna-generative-pipeline",
+  "version": "0.0.2",
+  "license": "MIT",
+  "description": "Use when the user is unsure which production workflow fits, needs a recipe menu for multi-step media projects, or wants chained image, video, and audio with approval gates.",
+  "repository": "https://github.com/PrunaAI/pruna-skills",
+  "files": [
+    ".claude-plugin",
+    "openclaw.plugin.json",
+    "skills"
+  ],
+  "openclaw": {
+    "bundledSkills": [
+      "pruna-generative-pipeline"
+    ]
+  }
+}

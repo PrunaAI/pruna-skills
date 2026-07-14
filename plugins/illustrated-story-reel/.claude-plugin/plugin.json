@@ -1,0 +1,10 @@
+{
+  "name": "illustrated-story-reel",
+  "description": "Use when the user wants a still-image story reel or slideshow, picture-book narrative with voiceover or music\u2014and explicitly not full motion-video generation.",
+  "version": "0.0.2",
+  "author": {
+    "name": "Pruna AI"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/PrunaAI/pruna-skills"
+}

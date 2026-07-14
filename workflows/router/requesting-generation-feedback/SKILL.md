@@ -1,9 +1,9 @@
 ---
 name: requesting-generation-feedback
-description: Use before paid generation API calls, final audio mix, or skipping user review in any multi-step image, video, or audio workflow.
+description: Use when the agent is about to call paid generation APIs, deliver a final audio mix, or proceed without user review in a multi-step image, video, or audio workflow.
 license: MIT
 metadata:
-  version: "0.0.1"
+  version: "0.0.2"
 ---
 
 # Requesting generation feedback
@@ -40,7 +40,7 @@ Stop and ask (or show assets) if any of these are true:
 | Using `--yes-skip-*-gate` without user asking for automation | Bypasses human review | Confirm explicitly |
 | Regen prompts without deleting stills/clips | Old assets reused | Delete targets or `--fresh` / `--regen-*` per [staged-generation-gate.md](../../../../references/shared/staged-generation-gate.md) partial regen table |
 | `voice_script` revised but avatar sources not deleted | Lip sync / dialogue mismatch | Delete `sources/` + `clips/` for that scene |
-| **`POST /v1/predictions` without [random seed ritual](../../../../references/shared/random-seed-ritual.md)** | Duplicate outputs; copied example seeds | Pick and state a random integer first; log `project_seed` |
+| **`POST /v1/predictions` without [random seed ritual](../../../../references/shared/random-seed-ritual.md) (SSoT)** | Duplicate outputs; copied example strings | Generate and state a ritual string first; log `ritual_seed` |
 | **`PRUNA_API_KEY` or `REPLICATE_API_TOKEN` missing** | Cannot run API or runners | Stop; send signup links from [api-credentials.md](../../../../references/shared/api-credentials.md) — [Pruna dashboard](https://dashboard.pruna.ai/) and/or [Replicate API tokens](https://replicate.com/account/api-tokens) |
 
 ## Workflow

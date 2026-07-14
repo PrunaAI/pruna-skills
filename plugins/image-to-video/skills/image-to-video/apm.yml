@@ -1,0 +1,11 @@
+name: image-to-video
+version: 0.0.2
+type: skill
+description: Use when the user needs one video clip from stills, a single narrated story beat, one B-roll shot, or one scene—not a full multi-scene film or talking-head-only piece.
+dependencies:
+  apm:
+    - PrunaAI/pruna-skills/plugins/p-image/skills/p-image
+    - PrunaAI/pruna-skills/plugins/p-image-edit/skills/p-image-edit
+    - PrunaAI/pruna-skills/plugins/p-video/skills/p-video
+    - PrunaAI/pruna-skills/plugins/gemini-3.1-flash-tts/skills/gemini-3.1-flash-tts
+    - PrunaAI/pruna-skills/plugins/stable-audio-2.5/skills/stable-audio-2.5

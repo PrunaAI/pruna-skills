@@ -1,0 +1,10 @@
+name: visual-transition-reel
+version: 0.0.2
+type: skill
+description: Use when the user needs a visual montage, transitions between stills, action-sequence reel, or multi-scene piece where narration is optional or absent.
+dependencies:
+  apm:
+    - PrunaAI/pruna-skills/plugins/p-image/skills/p-image
+    - PrunaAI/pruna-skills/plugins/p-image-edit/skills/p-image-edit
+    - PrunaAI/pruna-skills/plugins/p-video/skills/p-video
+    - PrunaAI/pruna-skills/plugins/stable-audio-2.5/skills/stable-audio-2.5

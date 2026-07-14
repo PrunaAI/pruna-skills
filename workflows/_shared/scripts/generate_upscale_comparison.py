@@ -15,8 +15,9 @@ from typing import Any
 try:
     from PIL import Image, ImageDraw, ImageFont
 except ImportError as exc:  # pragma: no cover
+    _req = Path(__file__).resolve().parent / "requirements-comparison.txt"
     raise SystemExit(
-        "Pillow is required. Install with: pip install -r scripts/requirements-comparison.txt"
+        f"Pillow is required. Install with: pip install -r {_req}"
     ) from exc
 
 

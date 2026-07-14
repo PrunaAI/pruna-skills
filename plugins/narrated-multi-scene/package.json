@@ -1,0 +1,22 @@
+{
+  "name": "@PrunaAI/narrated-multi-scene",
+  "version": "0.0.2",
+  "license": "MIT",
+  "description": "Use when the user needs a multi-scene narrated film, episodic B-roll story, chaptered promo, or several linked video beats with voiceover and no in-scene character dialogue.",
+  "repository": "https://github.com/PrunaAI/pruna-skills",
+  "files": [
+    ".claude-plugin",
+    "openclaw.plugin.json",
+    "skills"
+  ],
+  "openclaw": {
+    "bundledSkills": [
+      "narrated-multi-scene",
+      "p-image",
+      "p-image-edit",
+      "p-video",
+      "gemini-3.1-flash-tts",
+      "stable-audio-2.5"
+    ]
+  }
+}

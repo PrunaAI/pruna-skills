@@ -1,0 +1,17 @@
+{
+  "name": "@PrunaAI/generation-diversity",
+  "version": "0.0.2",
+  "license": "MIT",
+  "description": "Use when outputs look generic or repetitive \u2014 apply the random seed ritual, explicit prompt structure, and scenario axis rotation before any paid generation call.",
+  "repository": "https://github.com/PrunaAI/pruna-skills",
+  "files": [
+    ".claude-plugin",
+    "openclaw.plugin.json",
+    "skills"
+  ],
+  "openclaw": {
+    "bundledSkills": [
+      "generation-diversity"
+    ]
+  }
+}

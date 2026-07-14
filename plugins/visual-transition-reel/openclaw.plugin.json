@@ -1,0 +1,10 @@
+{
+  "id": "visual-transition-reel",
+  "name": "visual-transition-reel",
+  "description": "Use when the user needs a visual montage, transitions between stills, action-sequence reel, or multi-scene piece where narration is optional or absent.",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "p-image",
+  "name": "p-image",
+  "description": "Use when the user wants the fastest text-to-image stills, quick draft photos, mood boards, or bulk panels where good quality and extremely low latency matter more than maximum photoreal fidelity.",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

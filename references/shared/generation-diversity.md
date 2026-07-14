@@ -2,13 +2,108 @@
 
 One checklist so **every** Pruna output — **`p-image`**, **`p-video`**, try-on, avatar, replace, animate — is as **diverse** as the brief allows. Details live in linked docs; this page is the agent shortcut.
 
-**Not a separate “ponytail scale”.** Hair (ponytail, locs, fade, buzz cut, etc.) is one **cast** choice in the matrix below — same as age, ethnicity, or setting. Use the **full** checklist here for every generation.
+Use the **full** checklist here for every generation.
+
+## Contents
+
+- [Three steps (every job)](#three-steps-every-job)
+- [Explicit prompt structure](#explicit-prompt-structure-required)
+- [Text & typography by model](#text--typography-by-model)
+- [SSoT axis derivation](#ssot-axis-derivation-sum-mod)
+- [Scenario axes](#scenario-axes-rotate-across-outputs)
+- [Render categories](#render-categories)
+- [Crowded scenes](#crowded-scenes-p-image)
+- [Body type spread](#body-type-spread)
+- [Location-matched crowds](#location-matched-crowds)
+- [Group classes](#group-classes--courses)
+- [Framing & camera](#framing--camera)
+- [Scene spice](#scene-spice-when-it-fits)
+- [Photoreal anti-slop](#photoreal-anti-slop-neon--stylized-briefs)
+- [Aspect ratio](#aspect-ratio-multi-example-sets)
+- [By model](#by-model-minimum-diversity)
+- [When not to maximize diversity](#when-not-to-maximize-diversity)
+- [Anti-patterns](#anti-patterns)
 
 ## Three steps (every job)
 
-1. **[Random seed ritual](./random-seed-ritual.md)** — **always first**, before the prompt. Pick a fresh random integer (e.g. 100000–999999), **state it in the turn**, pass as `seed` on the API call. **One new ritual seed per independent generation** in a batch; lock `project_seed` only inside one character chain.
-2. **Diversify the scenario row** — change at least **two axes** from the previous output in the same session (cast, setting, camera, **`render_category_tag`**, **aspect_ratio**, … — unless user asked for continuity).
-3. **Log** — ritual seed, axes chosen, prediction id (manifest or turn text).
+1. **[Random seed ritual](./random-seed-ritual.md) (SSoT)** — **always first**, before the prompt. Generate a fresh random string, **state it in the turn**, derive axes via [sum-mod](#ssot-axis-derivation-sum-mod). **Do not** pass the ritual string to API `seed`. **One new ritual string per independent generation**; reuse only on same-brief slop retry.
+2. **Write an [explicit prompt](#explicit-prompt-structure-required)** — name specific people, animals, objects, actions, setting, and camera/light. Add text/typography only when the brief needs it — see [text rules by model](#text--typography-by-model).
+3. **Diversify the scenario row** — change at least **two axes** from the previous output in the same session (cast, setting, camera, **`render_category_tag`**, **aspect_ratio**, creatures, props, … — unless user asked for continuity).
+4. **Log** — `ritual_seed`, axes chosen, prediction id (manifest or turn text).
+
+## Explicit prompt structure (required)
+
+**Vague prompts produce generic AI slop.** After the ritual and axis picks, every still prompt must be **specific and dynamic** — concrete nouns, frozen actions, named places. Prefer playground/creative briefs over marketing abstractions.
+
+**Name at least four of these per prompt (log tags in manifest):**
+
+| Clause | Log as | Agent must specify |
+|--------|--------|-------------------|
+| **People** | `cast_descriptor` | Named role + age band + expression (`fearless grandmother in floral apron`, not `woman`) |
+| **Animals / creatures** | `creature_tag` | Species + attitude (`otter DJ`, `luna moth knight`, `VIP anglerfish`) |
+| **Objects** | `prop_tag` | Concrete props (`vinyl record`, `chrome rocket sled`, `velvet rope`, `tiny boombox`) |
+| **Action** | `action_tag` | Frozen mid-motion verb (`scratching vinyl`, `lassoing runaway taco truck`, `cape mid-swing`) |
+| **Duration** | `duration_tag` | When timing matters (`1970s`, `8PM`, `45-minute spin class`, `Saturday-morning cartoon`) |
+| **Setting** | `setting_tag` | Named place + era + materials (`packed 1970s roller rink`, `abyss-depth jellyfish nightclub`, `Monument Valley dust storm`) |
+| **Text / typography** | `text_spec` | Only when brief needs readable type — exact strings + surface (see [by model](#text--typography-by-model)) |
+| **Camera + light** | `camera_tag`, `lighting_tag` | `fish-eye lens`, `tilt-shift macro`, `teal-magenta cinematic`, `golden hour sparkle` |
+| **Style** | `render_category_tag` | Medium (`cel-shaded anime`, `baroque oil painting`, `ink-wash storybook`, `photoreal documentary`) |
+
+**Template:**
+
+```text
+{people and/or creatures} {action} with/at {specific objects} in {named setting},
+{style or era cues}, {camera_tag}, {lighting_tag}
+```
+
+**Good examples (dynamic / specific):**
+
+```text
+Disco ball reflections on an otter DJ scratching vinyl at a packed 1970s roller rink,
+fish-eye lens, glitter confetti mid-air, funky energy
+```
+
+```text
+Bioluminescent jellyfish nightclub at abyss depth, VIP anglerfish in sunglasses at velvet rope,
+teal-magenta cinematic lighting
+```
+
+```text
+Corgi cowboy lassoing a runaway taco truck through Monument Valley dust storm,
+pulp western poster energy, dynamic diagonal composition
+```
+
+**Anti-pattern:** `cool cyberpunk portrait, neon vibes` — no subject, no action, no place. **Right:** name who, what they're doing, where, with which props.
+
+## Text & typography by model
+
+**Never use negation to suppress text** — `no text`, `without signs`, `no typography` often **invoke** the thing you are trying to avoid. Describe surfaces positively when you want blank walls (`plain unmarked walls`, `matte unprinted props`).
+
+| Model | Prompt upsampling | Typography in prompt |
+|-------|-------------------|----------------------|
+| **`p-image`** | **No** effective prompt upsampling | **Avoid** dense readable-type requests unless user explicitly wants `text_rendering`. Short prompts; skip `readable`, `legible`, `headline`, multi-sign lists — they drift to gibberish. Collage triggers still apply: [interactive-explainer-prompts.md](../workflows/interactive-explainer-prompts.md) (`flat lay`, `grid`, `collage`, …). |
+| **`p-image-ideogram`** | **Yes** — `mode` runs upsamplers (ideogram-sft, Gemini Flash, etc.) | **OK** to name exact strings and placements when the brief needs type (`rooftop neon PRUNA`, `chalkboard HAPPY HOUR 5-7`). List every string + surface for `text_rendering` rows. |
+
+**`p-image` text hygiene:** prefer scenes without copy. If a screen appears: `monitor soft colorful blur glow only` — not legible UI unless the user asked for readable text and you route to **`p-image-ideogram`**.
+
+**`p-image-ideogram` text briefs:** stack multiple strings across the frame (billboard, awning, kiosk, phone notification) with positions; end with `crisp legible typography` when quality matters. Benchmark: repo `output/p-image-ideogram-mode-comparison/` text_rendering rows.
+
+**Collage triggers (all T2I models):** still avoid `flat lay`, `packshot`, `grid`, `collage`, `montage`, `contact sheet`, `split`, `before and after` — use `single frame`, `one camera angle` instead. Full table: [interactive-explainer-prompts.md](../workflows/interactive-explainer-prompts.md).
+
+## SSoT axis derivation (sum-mod)
+
+After stating `ritual_seed` (random string), derive prompt choices — sum Unicode/ASCII char codes, mod list length:
+
+```text
+RATIOS = ["1:1", "16:9", "9:16", "4:3", "3:4", "3:2", "2:3"]
+aspect_ratio  ← RATIOS[ sum(codes(ritual_seed)) % 7 ]
+camera_tag    ← camera_tags[ sum(codes(ritual_seed[0:4])) % len(camera_tags) ]
+render_tag    ← render_tags[ sum(codes(ritual_seed[4:8])) % len(render_tags) ]
+```
+
+`camera_tags` and `render_tags` — see [framing & camera](#framing--camera) and [render categories](#render-categories). State derived picks in the turn (*"Aspect ratio: 16:9, camera: over-shoulder"*).
+
+**User `api_seed`:** when the user supplies an integer for reproducibility, pass it as `input.seed` — separate from the ritual string.
 
 ## Scenario axes (rotate across outputs)
 
@@ -16,12 +111,12 @@ One checklist so **every** Pruna output — **`p-image`**, **`p-video`**, try-on
 |------|-----------|------------|
 | **Cast** | age, ethnicity, gender, archetype, **hairstyle**, **body type** (rotate — see [below](#body-type-spread)), disability aids (wheelchair, cane), visible age band twice in prompt | all person/content gens |
 | **Medium** | `render_category_tag` — rotate across [render categories](#render-categories) | `p-image`, avatar stills |
-| **Setting** | unique `setting_tag` — not repeat adjacent rows | stills + video plates |
+| **Setting** | unique `setting_tag` — specific room/street/venue/era, not repeat adjacent rows | stills + video plates |
 | **Camera** | `camera_tag` — rotate across [framing ladder](#framing--camera); never default MC facing lens | stills, `video_prompt` |
 | **Lighting** | `lighting_tag` — golden hour · neon · overcast · practical | stills, video mood |
 | **Motion** | unique `video_prompt` per clip | `p-video`, `p-video-avatar`, animate |
 | **Voice** | natural `voice_script`; one `voice` preset per character | avatar, TTS-led video |
-| **Seed** | new ritual per **independent** job; lock `project_seed` only inside one character chain | all seeded models |
+| **Seed** | new ritual string per **independent** job; reuse only on same-brief slop retry | all generation skills |
 | **Aspect ratio** | different `aspect_ratio` per independent still in a batch — see [below](#aspect-ratio-multi-example-sets) | `p-image`, `p-image-edit` |
 | **Crowd density** | layered background population + activity cues — see [below](#crowded-scenes-p-image) | `p-image` plates with busy worlds |
 
@@ -43,7 +138,7 @@ Sources: [Arena text-to-image](https://arena.ai/leaderboard/text-to-image) · [A
 
 | Tag | Typical prompt lane |
 |-----|---------------------|
-| `product_branding_commercial` | packshot, person + product, crowded launch/showroom |
+| `product_branding_commercial` | single product on seamless studio, person + product in named setting, showroom (not `flat lay` / `packshot` words) |
 | `3d_imaging_modeling` | CG film still, clay/stop-motion, rounded 3D forms |
 | `cartoon_anime_fantasy` | cel anime, fantasy character, crowded stylized world |
 | `photoreal_cinematic` | documentary crowd scenes, film-scale wide, urban march |
@@ -211,7 +306,7 @@ When generating **two or more** stills in one session (playground grid, demo bat
 
 **Allowed `p-image` values:** `1:1` · `16:9` · `9:16` · `4:3` · `3:4` · `3:2` · `2:3`
 
-**How to pick:** after the [random seed ritual](./random-seed-ritual.md), choose ratio by cycling the list or index with `ritual_seed % 7` — state it in the turn (*"Aspect ratio: 16:9"*). Do **not** default every example to `9:16` or `1:1`.
+**How to pick:** after the [random seed ritual](./random-seed-ritual.md), use [sum-mod](#ssot-axis-derivation-sum-mod) on `ritual_seed` — state it in the turn (*"Aspect ratio: 16:9"*). Do **not** default every example to `9:16` or `1:1`.
 
 | Ratio | Typical use |
 |-------|-------------|
@@ -230,7 +325,8 @@ Match prompt framing to ratio (e.g. `16:9 horizontal wide shot`, `9:16 vertical 
 
 | Model | Besides ritual seed, always vary |
 |-------|-----------------------------------|
-| **`p-image`** | cast + setting + camera + **`render_category_tag`** + **aspect_ratio** |
+| **`p-image`** | cast/creature + objects + action + setting + camera + **`render_category_tag`** + **aspect_ratio**; [explicit structure](#explicit-prompt-structure-required); [text hygiene](#text--typography-by-model) (no upsampling) |
+| **`p-image-ideogram`** | same axes; explicit typography OK when brief needs it; use `mode: medium`+; [text rules](#text--typography-by-model) |
 | **`p-image-edit`** | edit tag + setting/angle delta; same identity URL |
 | **`p-image-try-on`** | person plate world + garment complexity; preserve scene |
 | **`p-image-upscale`** | N/A on prompt — diversify **source** stills |
@@ -241,18 +337,19 @@ Match prompt framing to ratio (e.g. `16:9 horizontal wide shot`, `9:16 vertical 
 
 ## When **not** to maximize diversity
 
-- **Same character arc** — lock `project_seed`, one `voice`, hero URL; vary only setting/angle/motion per scene.
-- **User asked for continuity** — match their locked seed and cast.
-- **Draft → final** — same prompt + `project_seed`; change only `draft: false`.
+- **Same character arc** — lock hero plate URL, one `voice`, cast descriptor; vary only setting/angle/motion per scene.
+- **User asked for continuity** — match their cast and approved plates.
+- **Draft → final** — same prompt; change only `draft: false`. Use `api_seed` only if user locked API reproducibility.
 
 ## Anti-patterns
 
 | Wrong | Right |
 |-------|--------|
-| Copy doc example seeds | [Random seed ritual](./random-seed-ritual.md) |
+| Copy doc example ritual strings | [Random seed ritual](./random-seed-ritual.md) — fresh string each time |
+| Pass ritual string as API `seed` | Ritual is SSoT planning only; `api_seed` when user requests |
 | White wall + MC CU on every demo | Rotate setting + camera + cast |
 | One `video_prompt` for whole reel | Unique motion per scene row |
-| New seed mid avatar chain | Reuse `project_seed` until recast |
+| New ritual string mid avatar chain on same brief | Reuse `ritual_seed` until recast or new independent output |
 | Same aspect ratio on every playground example | Rotate `1:1` · `16:9` · `9:16` · `4:3` · `3:4` · `3:2` · `2:3` per [aspect ratio rules](#aspect-ratio-multi-example-sets) |
 | Every hero same athletic body | Rotate [body type spread](#body-type-spread) |
 | Generic hospital hallway | Named ER set dressing + mixed body types in crowd |
@@ -264,6 +361,9 @@ Match prompt framing to ratio (e.g. `16:9 horizontal wide shot`, `9:16 vertical 
 | Subject facing camera / at viewer | Off-lens gaze, profile, from behind, or watching crowd |
 | Random animals with no setting reason | Animals only when place implies them |
 | Every stylized panel is anime | Rotate [render categories](#render-categories) — use `cartoon_anime_fantasy` at most once per batch |
+| Vague `cool portrait, neon vibes` | [Explicit structure](#explicit-prompt-structure-required) — named subject, action, objects, setting |
+| `no text` / `without signage` in prompt | Negation invokes text — use [text rules by model](#text--typography-by-model) |
+| Dense typography on **`p-image`** | Route to **`p-image-ideogram`** or drop copy — `p-image` has no prompt upsampling |
 
 ## Related
 

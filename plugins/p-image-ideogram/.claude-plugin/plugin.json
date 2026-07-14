@@ -1,0 +1,10 @@
+{
+  "name": "p-image-ideogram",
+  "description": "Use when the user wants high-fidelity photoreal stills, editorial portraits, hero plates, legible text rendering, or poster typography\u2014not the fastest draft stills or mood-board throughput.",
+  "version": "0.0.2",
+  "author": {
+    "name": "Pruna AI"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/PrunaAI/pruna-skills"
+}

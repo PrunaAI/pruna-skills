@@ -1,0 +1,10 @@
+{
+  "id": "avatar-single-scene",
+  "name": "avatar-single-scene",
+  "description": "Use when the user needs one talking-head clip, a single host line with lip sync, or one spokesperson beat\u2014not multi-segment host reels or motion-transfer comparison grids.",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

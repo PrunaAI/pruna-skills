@@ -2,7 +2,7 @@
 
 Canonical pattern for **educational shorts** — history, science, nature, how-it-works, children's topics — that **alternate host narration with in-story character speech**. Not wall-to-wall voice-over.
 
-Related: [scene-anchor-triple.md](../video/scene-anchor-triple.md) (narrator beats) · [multi-scene-avatar-video](../workflows/core/avatar-multi-scene/SKILL.md) (character beats) · [interactive-explainer](../workflows/verticals/interactive-explainer/SKILL.md)
+Related: [scene-anchor-triple.md](../video/scene-anchor-triple.md) (narrator beats) · [avatar-multi-scene](../workflows/core/avatar-multi-scene/SKILL.md) (character beats) · [interactive-explainer](../workflows/verticals/interactive-explainer/SKILL.md)
 
 ## Why hybrid?
 
@@ -257,5 +257,5 @@ Runner: [`run_from_plan.py`](../workflows/verticals/interactive-explainer/script
 ## Workflows
 
 - [interactive-explainer](../workflows/verticals/interactive-explainer/SKILL.md) — primary workflow
-- [multi-scene-ai-video](../workflows/core/narrated-multi-scene/SKILL.md) — narrator-only fallback
-- [multi-scene-avatar-video](../workflows/core/avatar-multi-scene/SKILL.md) — character-only pieces
+- [narrated-multi-scene](../workflows/core/narrated-multi-scene/SKILL.md) — narrator-only fallback
+- [avatar-multi-scene](../workflows/core/avatar-multi-scene/SKILL.md) — character-only pieces

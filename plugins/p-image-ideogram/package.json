@@ -1,0 +1,17 @@
+{
+  "name": "@PrunaAI/p-image-ideogram",
+  "version": "0.0.2",
+  "license": "MIT",
+  "description": "Use when the user wants high-fidelity photoreal stills, editorial portraits, hero plates, legible text rendering, or poster typography\u2014not the fastest draft stills or mood-board throughput.",
+  "repository": "https://github.com/PrunaAI/pruna-skills",
+  "files": [
+    ".claude-plugin",
+    "openclaw.plugin.json",
+    "skills"
+  ],
+  "openclaw": {
+    "bundledSkills": [
+      "p-image-ideogram"
+    ]
+  }
+}

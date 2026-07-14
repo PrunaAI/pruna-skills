@@ -3,7 +3,7 @@ name: p-video-animate
 description: Use when the user wants to animate a still using motion from another video, motion-transfer remixes, or performance variations from a template clip—not replacing someone inside existing footage.
 license: MIT
 metadata:
-  version: "0.0.1"
+  version: "0.0.2"
   pruna_model: p-video-animate
 ---
 
@@ -177,7 +177,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 - Replace people in existing footage (not motion transfer): [p-video-replace](../p-video-replace/SKILL.md)
 - Talking-head clips (script-driven, not motion transfer): [p-video-avatar](../p-video-avatar/SKILL.md)
 - Pipeline hub: [pruna-generative-pipeline](../../../workflows/router/pruna-generative-pipeline/SKILL.md)
-- Multi-scene motion transfer + slider demos: [multi-scene-avatar-video](../../../workflows/core/avatar-multi-scene/SKILL.md) (`animate` rows)
+- Multi-scene motion transfer + slider demos: [avatar-multi-scene](../../../workflows/core/avatar-multi-scene/SKILL.md) (`animate` rows)
 
 ## Related workflow
 

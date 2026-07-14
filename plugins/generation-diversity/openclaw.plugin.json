@@ -1,0 +1,10 @@
+{
+  "id": "generation-diversity",
+  "name": "generation-diversity",
+  "description": "Use when outputs look generic or repetitive \u2014 apply the random seed ritual, explicit prompt structure, and scenario axis rotation before any paid generation call.",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

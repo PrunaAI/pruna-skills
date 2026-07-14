@@ -1,0 +1,21 @@
+{
+  "name": "@PrunaAI/visual-transition-reel",
+  "version": "0.0.2",
+  "license": "MIT",
+  "description": "Use when the user needs a visual montage, transitions between stills, action-sequence reel, or multi-scene piece where narration is optional or absent.",
+  "repository": "https://github.com/PrunaAI/pruna-skills",
+  "files": [
+    ".claude-plugin",
+    "openclaw.plugin.json",
+    "skills"
+  ],
+  "openclaw": {
+    "bundledSkills": [
+      "visual-transition-reel",
+      "p-image",
+      "p-image-edit",
+      "p-video",
+      "stable-audio-2.5"
+    ]
+  }
+}

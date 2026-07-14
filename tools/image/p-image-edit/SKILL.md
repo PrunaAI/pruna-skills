@@ -3,7 +3,7 @@ name: p-image-edit
 description: Use when the user wants to edit an existing image, change wardrobe or background, compose from reference photos, inpaint-style adjustments, or multi-image edits from a prompt.
 license: MIT
 metadata:
-  version: "0.0.1"
+  version: "0.0.2"
   pruna_model: p-image-edit
 ---
 
@@ -48,11 +48,11 @@ Poll and download: [pruna-api.md](../../../references/shared/pruna-api.md#poll).
 1. **[Generation diversity](../../../references/shared/generation-diversity.md)** — ritual seed + axis rotation when the job accepts `seed` or you need a logged `run_id`.
 2. Confirm **`prompt`**, which **reference files** to upload (1–5), **`aspect_ratio`**, and **`turbo`** on/off with the user. Run [p-image-edit-quality-checklist.md](../../../references/image/p-image-edit-quality-checklist.md) on outputs.
 
-**Avatar pipelines:** edit from the locked **upscaled** hero URL. Chain: **`p-image-edit` → `p-image-upscale` → slop gate → `p-video-avatar`**. Never pass raw edit URLs to video models. See [multi-scene-avatar-video](../../../workflows/core/avatar-multi-scene/SKILL.md).
+**Avatar pipelines:** edit from the locked **upscaled** hero URL. Chain: **`p-image-edit` → `p-image-upscale` → slop gate → `p-video-avatar`**. Never pass raw edit URLs to video models. See [avatar-multi-scene](../../../workflows/core/avatar-multi-scene/SKILL.md).
 
-**Multi-scene narrated films:** generate **start still** (`edit_prompt`) and **end still** (`last_frame_edit_prompt`) per scene for the [scene anchor triple](../../../references/video/scene-anchor-triple.md). Run all scene edits **in parallel** after the hero anchor exists ([parallel-execution.md](../../../references/shared/parallel-execution.md)). See [multi-scene-ai-video](../../../workflows/core/narrated-multi-scene/SKILL.md).
+**Multi-scene narrated films:** generate **start still** (`edit_prompt`) and **end still** (`last_frame_edit_prompt`) per scene for the [scene anchor triple](../../../references/video/scene-anchor-triple.md). Run all scene edits **in parallel** after the hero anchor exists ([parallel-execution.md](../../../references/shared/parallel-execution.md)). See [narrated-multi-scene](../../../workflows/core/narrated-multi-scene/SKILL.md).
 
-**Visual transition reels:** same start/end still pattern for the [scene anchor pair](../../../references/video/scene-anchor-pair.md) — see [scene-transition-video](../../../workflows/core/visual-transition-reel/SKILL.md).
+**Visual transition reels:** same start/end still pattern for the [scene anchor pair](../../../references/video/scene-anchor-pair.md) — see [visual-transition-reel](../../../workflows/core/visual-transition-reel/SKILL.md).
 
 ## Prerequisites
 
@@ -94,4 +94,4 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 
 ## Related workflow
 
-Multi-scene avatar + animate reels: [multi-scene-avatar-video](../../../workflows/core/avatar-multi-scene/SKILL.md) — phased curl or local slider script (not in this tool skill).
+Multi-scene avatar + animate reels: [avatar-multi-scene](../../../workflows/core/avatar-multi-scene/SKILL.md) — phased curl or local slider script (not in this tool skill).

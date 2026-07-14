@@ -20,7 +20,7 @@ Scene 4: "What's actually cool is the speed — cheap enough that you can genuin
 Scene 5: "Anyway — check out Tellers. Link's in the post. I'd love to see what you build."
 ```
 
-Store scenes in JSON (`v2_avatar_only_scripts.json` pattern in `prompt-templates.md`) with **`project_seed`**, per-scene **`video_prompt`**, and **`still_prompt`** deltas.
+Store scenes in JSON (`v2_avatar_only_scripts.json` pattern in `prompt-templates.md`) with **`ritual_seed`**, per-scene **`video_prompt`**, and **`still_prompt`** deltas.
 
 ## Mixed announcement (avatar + animate slider beats)
 
@@ -48,7 +48,7 @@ All-slider showcase (UGC variations, recasting demo):
 
 1. Scene table with only **`animate`** rows.
 2. Upload motion templates + reference stills in parallel.
-3. Parallel **`p-video-animate`** → batch slider render via [`batch.template.json`](../../../examples/workflows/launches/p-video-animate-comparison/batch.template.json).
+3. Parallel **`p-video-animate`** → batch slider render via [`batch.template.json`](../../../.mine/examples/workflows/launches/p-video-animate-comparison/batch.template.json).
 4. Concat comparison MP4s:
 
 ```bash
@@ -64,7 +64,7 @@ ffmpeg -f concat -safe 0 -i concat_list.txt -c copy output/recast_reel.mp4
 **Slider-only** (animate outputs already exist):
 
 ```bash
-python3 catalog/workflows/_shared/scripts/generate_video_comparison.py \
+python3 workflows/_shared/scripts/generate_video_comparison.py \
   --source assets/motion/scene2_template.mp4 \
   --output output/scene2_animated.mp4 \
   --render output/scene2_compare.mp4
@@ -118,8 +118,8 @@ Avoid stuffing script, product names, or brand slogans into **`voice_prompt`**�
 ```markdown
 # [Project] — multi-scene avatar (Pruna)
 
-## project_seed
-- seed: 482901 (hero p-image + all p-video-avatar)
+## ritual_seed
+- ritual_seed: "k7Qm2xP9" (SSoT planning — do not pass to API)
 
 ## Character sheet
 - role, age, hair, realism, wardrobe baseline, personality

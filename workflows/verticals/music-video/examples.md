@@ -9,7 +9,7 @@ OUT=output/verticals/music-video/purple-pruna-rap
 # Final: $OUT/purple_pruna_rap.mp4
 ```
 
-See [`music_video_plan.json`](../../../../output/verticals/music-video/purple-pruna-rap/music_video_plan.json) for lyrics, `project_seed`, and segment prompts.
+See [`music_video_plan.json`](../../../../output/verticals/music-video/purple-pruna-rap/music_video_plan.json) for lyrics, `ritual_seed`, and segment prompts.
 
 ## Human rapper (lip-sync performance)
 
@@ -26,24 +26,24 @@ OUT=output/verticals/music-video/my-music-video
 mkdir -p "$OUT/clips" "$OUT/audio" "$OUT/stills"
 
 # 1. Approve lyrics in plan → generate song → cut structure + WhisperX align
-python3 catalog/workflows/verticals/music-video/scripts/run_from_plan.py \
+python3 workflows/verticals/music-video/scripts/run_from_plan.py \
   --plan "$OUT/music_video_plan.json" --out-dir "$OUT" --phase song
 
-python3 catalog/workflows/verticals/music-video/scripts/run_from_plan.py \
+python3 workflows/verticals/music-video/scripts/run_from_plan.py \
   --plan "$OUT/music_video_plan.json" --out-dir "$OUT" --phase cuts
 
-python3 catalog/workflows/verticals/music-video/scripts/run_from_plan.py \
+python3 workflows/verticals/music-video/scripts/run_from_plan.py \
   --plan "$OUT/music_video_plan.json" --out-dir "$OUT" --phase align
 
 # 2. Stills + clips (staged — approve stills before full --phase video)
-python3 catalog/workflows/verticals/music-video/scripts/run_from_plan.py \
+python3 workflows/verticals/music-video/scripts/run_from_plan.py \
   --plan "$OUT/music_video_plan.json" --out-dir "$OUT" --phase stills --only 01_2
 
-python3 catalog/workflows/verticals/music-video/scripts/run_from_plan.py \
+python3 workflows/verticals/music-video/scripts/run_from_plan.py \
   --plan "$OUT/music_video_plan.json" --out-dir "$OUT" --phase video --only 01_2
 
 # 3. Assemble when all clips exist
-python3 catalog/workflows/verticals/music-video/scripts/run_from_plan.py \
+python3 workflows/verticals/music-video/scripts/run_from_plan.py \
   --plan "$OUT/music_video_plan.json" --out-dir "$OUT" --phase assemble
 ```
 
@@ -62,7 +62,7 @@ Or run `--phase all` after lyrics and still gates are approved. See [whisperx](.
 
 1. Approve one performance **hero** still → set `hero_still` URL in plan.
 2. Every performance segment: **`p-image-edit`** from hero — vary setting/camera, not identity.
-3. All **`p-video-avatar`** calls: `"seed": project_seed` from plan.
+3. All **`p-video-avatar`** calls: reuse approved still plate URL; omit API `seed` unless plan sets `api_seed`.
 4. B-roll may show hands, city, product — no face required.
 
 See [SKILL.md](./SKILL.md) **Character continuity**.

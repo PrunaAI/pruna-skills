@@ -3,7 +3,7 @@ name: music-video
 description: Use when the user wants a music video, lyric video, sung promo, or original song paired with performance and B-roll clips.
 license: MIT
 metadata:
-  version: "0.0.1"
+  version: "0.0.2"
 ---
 
 # AI music video (lyrics → song → synced clips)
@@ -64,12 +64,12 @@ Ask whether performance beats should read as **one singer** or whether **recasts
 
 | Intent | Stills | Video | Anti-pattern |
 |--------|--------|-------|--------------|
-| **Same singer throughout** | One approved **hero** via `p-image` (locked `project_seed`) → every performance still via **`p-image-edit`** off that URL — change only angle, setting, expression, wardrobe *delta* | Pass **`seed`: `project_seed`** on all **`p-video-avatar`** jobs; reuse `cast_descriptor` in edit prompts | Fresh unrelated **`p-image`** text prompt per line — faces drift |
-| **Same singer, new locations** | Hero + edits per beat — vary **`setting_tag`**, **`camera_tag`**, **`lighting_tag`**; keep identity anchors (age, hair, face, baseline outfit) in the character sheet | Same seed lock; distinct **`video_prompt`** per cut | Grey-wall repeat or identical framing on consecutive performance lines |
+| **Same singer throughout** | One approved **hero** via `p-image` (locked plate URL) → every performance still via **`p-image-edit`** off that URL — change only angle, setting, expression, wardrobe *delta* | Reuse hero plate + `cast_descriptor` on all **`p-video-avatar`** jobs; distinct **`video_prompt`** per cut | Fresh unrelated **`p-image`** text prompt per line — faces drift |
+| **Same singer, new locations** | Hero + edits per beat — vary **`setting_tag`**, **`camera_tag`**, **`lighting_tag`**; keep identity anchors (age, hair, face, baseline outfit) in the character sheet | Same plate lock; distinct **`video_prompt`** per cut | Grey-wall repeat or identical framing on consecutive performance lines |
 | **Deliberate recasts** | Only on **broll** beats, labeled guest rows, or when the user explicitly asks — never silent identity swaps on back-to-back performance lines | N/A for lip-sync rows | Random new face mid-chorus without user approval |
 | **Mascot / stylized host** | One approved mascot still → **`p-image-edit`** for pose/setting | **`p-video`** scene anchor triple: `image` + optional `last_frame_image` + song **`audio`** slice | **`p-video-avatar`** on non-human stills |
 
-Record in the plan: `project_seed`, `cast` / `character_sheet`, approved **`hero_still`** URL, and `continuity: same_singer | recasts_ok`. Full cast-ledger patterns: [multi-scene-avatar-video](../../core/avatar-multi-scene/SKILL.md) **Character sheet** and **Source portrait / hero**.
+Record in the plan: `ritual_seed`, `cast` / `character_sheet`, approved **`hero_still`** URL, and `continuity: same_singer | recasts_ok`. Full cast-ledger patterns: [avatar-multi-scene](../../core/avatar-multi-scene/SKILL.md) **Character sheet** and **Source portrait / hero**.
 
 ## Pipeline phases
 
@@ -86,7 +86,7 @@ Record in the plan: `project_seed`, `cast` / `character_sheet`, approved **`hero
 Default runner **`--phase song`**. Phased flow:
 
 ```bash
-python3 catalog/workflows/verticals/music-video/scripts/run_from_plan.py --plan PLAN --out-dir OUT --phase song
+python3 workflows/verticals/music-video/scripts/run_from_plan.py --plan PLAN --out-dir OUT --phase song
 python3 ... --approve-song --phase align
 python3 ... --phase stills
 python3 ... --approve-stills --phase video
@@ -107,7 +107,7 @@ One approved still per segment.
 
 **When continuity is intended (default for one singer):**
 
-1. Generate and gate **one hero** performance still with **`p-image`** + locked **`project_seed`**.
+1. Generate and gate **one hero** performance still with **`p-image`** + [random seed ritual](../../../references/shared/random-seed-ritual.md) (SSoT); lock hero plate URL for continuity.
 2. Store the approved URL as **`hero_still`** in the plan.
 3. Every later performance still = **`p-image-edit`** from **`hero_still`** — *"Using attached reference as identity; change only: [angle], [setting], [expression]."*
 4. Run the slop gate on hero and each edit before Phase D.
@@ -133,7 +133,7 @@ Run [music-video-quality-checklist.md](../../../../../references/workflows/music
 Override with `cast.performance_model: p-video-avatar | p-video` when needed.
 
 ```bash
-python3 catalog/workflows/verticals/music-video/scripts/run_from_plan.py \
+python3 workflows/verticals/music-video/scripts/run_from_plan.py \
   --plan output/my-mv/music_video_plan.json \
   --out-dir output/my-mv \
   --phase video --only 01_2 01_3
@@ -148,7 +148,7 @@ The runner calls `slice_audio.py` with `start_sec` / `end_sec` from the cut mani
 | `save_audio` | **`true`** — embed vocal in clip (required for audio-led cuts) |
 | `video_prompt` | Unique motion per cut — push-in, arc, handheld sway |
 | `resolution` | Match plan (default `720p`; use `1080p` when user asks for final delivery) |
-| `seed` | Lock for same singer across performance clips |
+| `api_seed` | Optional — only when user locks API reproducibility |
 
 ### B-roll (`p-video`)
 
@@ -176,7 +176,7 @@ For `[Inst]` / `[Solo]` with no vocals, use `duration` from cut map instead of a
 Name clips to match cut ids (e.g. `01_2.mp4`) or set `"clip"` on each cut in the manifest.
 
 ```bash
-python3 catalog/workflows/verticals/music-video/scripts/assemble_music_video.py \
+python3 workflows/verticals/music-video/scripts/assemble_music_video.py \
   --plan output/my-mv/music_video_plan.json \
   --cuts output/my-mv/cut_manifest.json \
   --clips-dir output/my-mv/clips \

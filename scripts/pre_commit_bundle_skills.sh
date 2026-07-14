@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Pre-commit: rebuild skills/ when catalog sources change; block .mine in bundles.
+# Pre-commit: rebuild plugins/ when source skills change; block .mine in bundles.
 set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "${REPO_ROOT}"
@@ -9,7 +9,7 @@ NEEDS_BUNDLE=0
 while IFS= read -r f; do
   [[ -z "$f" ]] && continue
   case "$f" in
-    catalog/*|scripts/install_skill.sh|scripts/bundle*.sh|scripts/write_dep_manifests.py|scripts/write_skill_manifests.py|scripts/sync_skill_versions.py|VERSION)
+    tools/*|workflows/*|guides/*|references/*|scripts/install_skill.sh|scripts/bundle*.sh|scripts/build_plugins.py|scripts/write_dep_manifests.py|scripts/write_skill_manifests.py|scripts/write_skills_sh_json.py|scripts/write_readme_skills_section.py|scripts/sync_skill_versions.py|VERSION)
       NEEDS_BUNDLE=1
       break
       ;;
@@ -17,13 +17,13 @@ while IFS= read -r f; do
 done <<<"$STAGED"
 
 if [[ "${NEEDS_BUNDLE}" -eq 1 ]]; then
-  echo "Rebuilding skills/ from catalog/ …"
+  echo "Rebuilding plugins/ from tools/, guides/, workflows/ …"
   ./scripts/bundle_all_skills.sh
-  git add skills/
+  git add plugins/ .claude-plugin/marketplace.json skills.sh.json README.skills.md
 fi
 
-if [[ -d skills ]] && rg -q '\.mine' skills/ 2>/dev/null; then
-  echo "skills/ contains .mine references — fix catalog sources and rebundle" >&2
+if [[ -d plugins ]] && rg -q '\.mine' plugins/ 2>/dev/null; then
+  echo "plugins/ contains .mine references — fix source skills and rebundle" >&2
   exit 1
 fi
 

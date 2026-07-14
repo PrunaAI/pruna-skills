@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       target:
-        description: "Targets (pspm,index)"
-        default: "pspm,index"
+        description: "Targets (clawhub,clawhub-plugins,index,github,npx)"
+        default: "clawhub,clawhub-plugins,index"
       skill:
         description: "Optional single skill name (blank = all)"
         required: false
@@ -31,10 +31,11 @@ jobs:
 
       - name: Publish to registries
         env:
-          PSPM_API_KEY: ${{ secrets.PSPM_API_KEY }}
+          CLAWHUB_TOKEN: ${{ secrets.CLAWHUB_TOKEN }}
+          CLAWHUB_OWNER: ${{ vars.CLAWHUB_OWNER }}
         run: |
           TARGET="${{ github.event.inputs.target }}"
-          [[ -z "${TARGET}" ]] && TARGET="pspm,index"
+          [[ -z "${TARGET}" ]] && TARGET="clawhub,clawhub-plugins,index"
           ARGS=(--execute --target "${TARGET}")
           SKILL="${{ github.event.inputs.skill }}"
           [[ -n "${SKILL}" ]] && ARGS+=(--skill "${SKILL}")
