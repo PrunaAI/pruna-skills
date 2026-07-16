@@ -1,0 +1,26 @@
+{
+  "name": "@pruna-ai/whisperx",
+  "version": "1.0.1",
+  "type": "module",
+  "license": "MIT",
+  "description": "Use when the user needs word-level lyric timestamps, cut-safe line boundaries for music videos, or alignment after song generation before editing clips.",
+  "repository": "https://github.com/PrunaAI/pruna-skills",
+  "files": [
+    ".claude-plugin",
+    "openclaw.plugin.json",
+    "openclaw-entry.mjs",
+    "README.md",
+    "skills"
+  ],
+  "openclaw": {
+    "extensions": [
+      "./openclaw-entry.mjs"
+    ],
+    "compat": {
+      "pluginApi": ">=2026.3.24-beta.2"
+    },
+    "bundledSkills": [
+      "whisperx"
+    ]
+  }
+}

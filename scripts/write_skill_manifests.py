@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-TOOLS = REPO / "catalog" / "tools"
+TOOLS = REPO / "tools"
 
 BASE_PRUNA = [
     "pruna-api.md",
@@ -55,8 +55,9 @@ TOOL_REFS: dict[str, list[str]] = {
         "audio-post-production.md",
         "scene-anchor-triple.md",
         "generation-diversity.md",
+        "random-seed-ritual.md",
     ],
-    "music-2.5": ["replicate-api.md", "api-credentials.md", "generation-diversity.md"],
+    "music-2.5": ["replicate-api.md", "api-credentials.md", "generation-diversity.md", "random-seed-ritual.md"],
     "stable-audio-2.5": ["replicate-api.md", "api-credentials.md", "audio-post-production.md"],
     "whisperx": ["replicate-api.md", "api-credentials.md"],
 }
@@ -70,13 +71,14 @@ WORKFLOW_MANIFESTS: dict[str, dict] = {
             "recipe-catalog.md",
             "staged-generation-gate.md",
             "generation-diversity.md",
+            "random-seed-ritual.md",
             "generation-quality-checklists.md",
             "workflow-feedback-gates.md",
         ],
         "scripts": {"core": [], "shared": []},
     },
     "pruna-run": {
-        "references": ["pruna-api.md", "api-credentials.md", "generation-diversity.md", "staged-generation-gate.md"],
+        "references": ["pruna-api.md", "api-credentials.md", "generation-diversity.md", "random-seed-ritual.md", "staged-generation-gate.md"],
         "scripts": {"core": [], "shared": []},
     },
     "requesting-generation-feedback": {
@@ -97,6 +99,7 @@ WORKFLOW_MANIFESTS: dict[str, dict] = {
             "workflow-feedback-gates.md",
             "p-video-quality-checklist.md",
             "generation-diversity.md",
+            "random-seed-ritual.md",
             "parallel-execution.md",
         ],
         "scripts": {"core": [], "shared": []},
@@ -109,6 +112,7 @@ WORKFLOW_MANIFESTS: dict[str, dict] = {
             "workflow-feedback-gates.md",
             "p-video-quality-checklist.md",
             "generation-diversity.md",
+            "random-seed-ritual.md",
             "parallel-execution.md",
         ],
         "scripts": {"core": [], "shared": []},
@@ -121,6 +125,7 @@ WORKFLOW_MANIFESTS: dict[str, dict] = {
             "p-video-avatar-quality-checklist.md",
             "realistic-persona-showcase.md",
             "generation-diversity.md",
+            "random-seed-ritual.md",
         ],
         "scripts": {"core": [], "shared": []},
     },
@@ -147,8 +152,8 @@ def main() -> None:
             print(f"wrote tools/{mod}/{name}/skill.manifest.json")
 
     wf_roots = [
-        REPO / "catalog/workflows/router",
-        REPO / "catalog/workflows/core",
+        REPO / "workflows/router",
+        REPO / "workflows/core",
     ]
     for root in wf_roots:
         for name, spec in WORKFLOW_MANIFESTS.items():

@@ -1,0 +1,26 @@
+{
+  "name": "@pruna-ai/p-image-edit",
+  "version": "1.0.1",
+  "type": "module",
+  "license": "MIT",
+  "description": "Use when the user wants to edit an existing image, change wardrobe or background, compose from reference photos, inpaint-style adjustments, or multi-image edits from a prompt.",
+  "repository": "https://github.com/PrunaAI/pruna-skills",
+  "files": [
+    ".claude-plugin",
+    "openclaw.plugin.json",
+    "openclaw-entry.mjs",
+    "README.md",
+    "skills"
+  ],
+  "openclaw": {
+    "extensions": [
+      "./openclaw-entry.mjs"
+    ],
+    "compat": {
+      "pluginApi": ">=2026.3.24-beta.2"
+    },
+    "bundledSkills": [
+      "p-image-edit"
+    ]
+  }
+}

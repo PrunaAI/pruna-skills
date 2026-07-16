@@ -1,0 +1,14 @@
+{
+  "version": 11,
+  "model": "p-image",
+  "deployment": "p-image",
+  "approach": "v1-inspired full ideogram render, no PIL overlay",
+  "prediction_id": "466apsvqcnrmr0czc37rjzebx0",
+  "output_url": "https://replicate.delivery/xezq/tCf9r8hvmu1tICiqOxfkFLbXtOpfYLFDMfsTzD0ECpAd06jbB/high_seed_3313451754.png",
+  "prompt": "Wide cinematic SaaS hero poster 16:9. Center foreground: adorable knitted plum prune mascot, yarn knit texture, friendly eyes, small leaf stem on top, chunky orange knitted scarf in Pruna brand color #FF6B35. Mascot presents a floating semicircle dashboard with six glass panels and crisp legible labels: IMAGES, VIDEO, MUSIC, EXPLAINERS, AVATARS, WORKFLOWS. Each panel shows a miniature scene: product hero still, cinematic video clapper frame, music waveform vinyl, documentary host with in-scene characters, talking-head lip sync avatar, multi-step pipeline nodes. Background deep charcoal-to-purple gradient with warm orange #FF6B35 rim light and soft violet glow, subtle yarn knit motifs in corners. Top center headline text only \u2014 no logo mark, no icon beside the title. Headline exactly two words with a space: PRUNA SKILLS in bold white sans-serif. Subtitle in orange: Built for AI AGENTS \u2014 generative media skills, word AGENTS emphasized. Small white line below: Cursor \u00b7 Claude Code \u00b7 Codex. Premium tech brand advertising shoot, editorial, crisp legible typography, vibrant, catchy, no merged words, no watermark",
+  "input": {
+    "thinking": "high",
+    "image_size": "2K",
+    "aspect_ratio": "16:9"
+  }
+}

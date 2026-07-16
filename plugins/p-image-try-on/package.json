@@ -1,0 +1,26 @@
+{
+  "name": "@pruna-ai/p-image-try-on",
+  "version": "1.0.1",
+  "type": "module",
+  "license": "MIT",
+  "description": "Use when the user wants virtual try-on, dress a person in clothing from reference photos, garment fitting on a model still, or ecommerce fashion compositing.",
+  "repository": "https://github.com/PrunaAI/pruna-skills",
+  "files": [
+    ".claude-plugin",
+    "openclaw.plugin.json",
+    "openclaw-entry.mjs",
+    "README.md",
+    "skills"
+  ],
+  "openclaw": {
+    "extensions": [
+      "./openclaw-entry.mjs"
+    ],
+    "compat": {
+      "pluginApi": ">=2026.3.24-beta.2"
+    },
+    "bundledSkills": [
+      "p-image-try-on"
+    ]
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "skill": "illustrated-story-reel",
+  "version": "1.0.1",
+  "repository": "PrunaAI/pruna-skills",
+  "pluginPath": "plugins/illustrated-story-reel",
+  "skillPath": "plugins/illustrated-story-reel/skills/illustrated-story-reel",
+  "skillsPath": "plugins/illustrated-story-reel/skills",
+  "depends": [
+    "p-image",
+    "p-image-edit",
+    "gemini-3.1-flash-tts",
+    "stable-audio-2.5"
+  ],
+  "resolvers": {
+    "skills": {
+      "depends": [
+        "p-image",
+        "p-image-edit",
+        "gemini-3.1-flash-tts",
+        "stable-audio-2.5"
+      ]
+    },
+    "apm": {
+      "dependencies": {
+        "apm": [
+          "PrunaAI/pruna-skills/plugins/p-image/skills/p-image",
+          "PrunaAI/pruna-skills/plugins/p-image-edit/skills/p-image-edit",
+          "PrunaAI/pruna-skills/plugins/gemini-3.1-flash-tts/skills/gemini-3.1-flash-tts",
+          "PrunaAI/pruna-skills/plugins/stable-audio-2.5/skills/stable-audio-2.5"
+        ]
+      }
+    },
+    "openclaw": {
+      "install": [
+        "git:PrunaAI/pruna-skills@main"
+      ],
+      "note": "Install each skill from plugins/<name>/skills/<name> in the repo tree."
+    }
+  }
+}

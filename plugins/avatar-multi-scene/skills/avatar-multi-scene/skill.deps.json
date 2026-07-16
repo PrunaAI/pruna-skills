@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "skill": "avatar-multi-scene",
+  "version": "1.0.1",
+  "repository": "PrunaAI/pruna-skills",
+  "pluginPath": "plugins/avatar-multi-scene",
+  "skillPath": "plugins/avatar-multi-scene/skills/avatar-multi-scene",
+  "skillsPath": "plugins/avatar-multi-scene/skills",
+  "depends": [
+    "p-image",
+    "p-image-edit",
+    "p-video-avatar",
+    "p-video-animate"
+  ],
+  "resolvers": {
+    "skills": {
+      "depends": [
+        "p-image",
+        "p-image-edit",
+        "p-video-avatar",
+        "p-video-animate"
+      ]
+    },
+    "apm": {
+      "dependencies": {
+        "apm": [
+          "PrunaAI/pruna-skills/plugins/p-image/skills/p-image",
+          "PrunaAI/pruna-skills/plugins/p-image-edit/skills/p-image-edit",
+          "PrunaAI/pruna-skills/plugins/p-video-avatar/skills/p-video-avatar",
+          "PrunaAI/pruna-skills/plugins/p-video-animate/skills/p-video-animate"
+        ]
+      }
+    },
+    "openclaw": {
+      "install": [
+        "git:PrunaAI/pruna-skills@main"
+      ],
+      "note": "Install each skill from plugins/<name>/skills/<name> in the repo tree."
+    }
+  }
+}

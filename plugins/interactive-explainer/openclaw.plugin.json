@@ -1,0 +1,19 @@
+{
+  "id": "interactive-explainer",
+  "name": "interactive-explainer",
+  "description": "Use when the user wants educational explainers with a host plus in-story characters, history or science shorts, or witness and expert dialogue\u2014not wall-to-wall narration alone.",
+  "skills": [
+    "skills/interactive-explainer",
+    "skills/p-image",
+    "skills/p-image-edit",
+    "skills/p-video",
+    "skills/p-video-avatar",
+    "skills/gemini-3.1-flash-tts",
+    "skills/stable-audio-2.5"
+  ],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

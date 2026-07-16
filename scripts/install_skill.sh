@@ -3,22 +3,10 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-CATALOG="${REPO_ROOT}/catalog"
 SKILL="${1:?Usage: install_skill.sh <skill-name> [--target DIR] [--with-examples] [--mine]}"
 TARGET="${HOME}/.cursor/skills"
 WITH_EXAMPLES=0
 USE_MINE=0
-
-# Legacy folder names → new paths under core/ or verticals/
-case "${SKILL}" in
-  single-scene-ai-video) SKILL=image-to-video ;;
-  multi-scene-ai-video) SKILL=narrated-multi-scene ;;
-  scene-transition-video) SKILL=visual-transition-reel ;;
-  single-scene-avatar-video) SKILL=avatar-single-scene ;;
-  multi-scene-avatar-video) SKILL=avatar-multi-scene ;;
-  educational-explainer|documentary-explainer) SKILL=interactive-explainer ;;
-  ai-music-video) SKILL=music-video ;;
-esac
 
 shift
 while [[ $# -gt 0 ]]; do
@@ -34,22 +22,21 @@ SKILL_SRC=""
 if [[ "${USE_MINE}" -eq 1 ]]; then
   SEARCH_BASES=(
     "${REPO_ROOT}/.mine/guides/workflows/launches"
-  )
-  EXAMPLE_BASES=(
-    "${REPO_ROOT}/.mine/examples/workflows/launches"
+    "${REPO_ROOT}/.mine/tools/image"
+    "${REPO_ROOT}/.mine/tools/video"
+    "${REPO_ROOT}/.mine/tools/audio"
   )
 else
   SEARCH_BASES=(
-    "${CATALOG}/workflows/router"
-    "${CATALOG}/workflows/core"
-    "${CATALOG}/workflows/verticals"
-    "${CATALOG}/tools/image"
-    "${CATALOG}/tools/video"
-    "${CATALOG}/tools/audio"
-  )
-  EXAMPLE_BASES=(
-    "${CATALOG}/examples/workflows/core"
-    "${CATALOG}/examples/workflows/verticals"
+    "${REPO_ROOT}/workflows/router"
+    "${REPO_ROOT}/workflows/core"
+    "${REPO_ROOT}/workflows/verticals"
+    "${REPO_ROOT}/tools/image"
+    "${REPO_ROOT}/tools/video"
+    "${REPO_ROOT}/tools/audio"
+    "${REPO_ROOT}/guides/prompting"
+    "${REPO_ROOT}/guides/quality"
+    "${REPO_ROOT}/guides/routing"
   )
 fi
 for base in "${SEARCH_BASES[@]}"; do
@@ -61,9 +48,9 @@ done
 MANIFEST="${SKILL_SRC}/skill.manifest.json"
 if [[ -z "${SKILL_SRC}" || ! -f "${SKILL_SRC}/SKILL.md" ]]; then
   if [[ "${USE_MINE}" -eq 1 ]]; then
-    echo "Skill not found: ${SKILL} (searched .mine/catalog/workflows/launches/)" >&2
+    echo "Skill not found: ${SKILL} (searched .mine/guides/workflows/launches/)" >&2
   else
-    echo "Skill not found: ${SKILL} (searched catalog/workflows/{router,core,verticals}, catalog/tools/)" >&2
+    echo "Skill not found: ${SKILL} (searched workflows/, tools/, guides/)" >&2
     echo "Pruna-internal launch skills: install_skill.sh ${SKILL} --mine" >&2
   fi
   exit 1
@@ -78,28 +65,24 @@ rm -rf "${DEST}"
 mkdir -p "${DEST}/scripts" "${DEST}/references" "${DEST}/templates"
 
 # Skill markdown + beat docs
-for f in SKILL.md README-INSTALL.md examples.md replace-beats.md animate-beats.md skill.manifest.json; do
+for f in SKILL.md README-INSTALL.md example-prompt.md examples.md replace-beats.md animate-beats.md prompt-templates.md lyrics-and-cuts.md skill.manifest.json; do
   [[ -f "${SKILL_SRC}/${f}" ]] && cp "${SKILL_SRC}/${f}" "${DEST}/"
 done
 
-# Templates from skill templates/ or examples/workflows/
+# Templates from skill templates/
 if [[ -d "${SKILL_SRC}/templates" ]]; then
   cp -R "${SKILL_SRC}/templates/." "${DEST}/templates/"
 fi
-EXAMPLES=""
-for ex_base in "${EXAMPLE_BASES[@]}"; do
-  if [[ -d "${ex_base}/${SKILL}" ]]; then
-    EXAMPLES="${ex_base}/${SKILL}"
-    break
-  fi
-done
-if [[ -n "${EXAMPLES}" ]]; then
-  for f in "${EXAMPLES}"/*.json "${EXAMPLES}"/*.md; do
-    [[ -f "$f" ]] || continue
-    case "$(basename "$f")" in
-      example-prompt.md) cp "$f" "${DEST}/" ;;
-      *.json) cp "$f" "${DEST}/templates/" 2>/dev/null || true ;;
-    esac
+if [[ "${USE_MINE}" -eq 1 ]]; then
+  for ex_base in "${REPO_ROOT}/.mine/examples/workflows/launches"; do
+    [[ -d "${ex_base}/${SKILL}" ]] || continue
+    for f in "${ex_base}/${SKILL}"/*.json "${ex_base}/${SKILL}"/*.md; do
+      [[ -f "$f" ]] || continue
+      case "$(basename "$f")" in
+        example-prompt.md) cp "$f" "${DEST}/" ;;
+        *.json) cp "$f" "${DEST}/templates/" 2>/dev/null || true ;;
+      esac
+    done
   done
 fi
 
@@ -109,7 +92,7 @@ import json, shutil
 from pathlib import Path
 repo = Path("${REPO_ROOT}")
 dest = Path("${DEST}")
-refs_roots = [repo / "catalog" / "references"]
+refs_roots = [repo / "references"]
 if ${USE_MINE}:
     refs_roots.append(repo / ".mine" / "references")
 manifest = json.loads(Path("${MANIFEST}").read_text())
@@ -134,7 +117,7 @@ for name in manifest.get("references", []):
 PY
 
 # Scripts: skill scripts/ + shared from manifest
-SHARED="${CATALOG}/workflows/_shared/scripts"
+SHARED="${REPO_ROOT}/workflows/_shared/scripts"
 python3 - <<PY
 import json, shutil
 from pathlib import Path
@@ -162,11 +145,18 @@ PY
 # Rewrite reference links in markdown for portable bundle
 find "${DEST}" -name '*.md' -print0 | while IFS= read -r -d '' f; do
   sed -i '' \
+    -e 's|(\.\./\.\./_shared/scripts/|(\./scripts/|g' \
+    -e 's|(\.\./_shared/scripts/|(\./scripts/|g' \
+    -e 's|catalog/workflows/_shared/scripts/|scripts/|g' \
     -e 's|(\.\./\.\./\.\./catalog/references/|(\./references/|g' \
     -e 's|(\.\./\.\./catalog/references/|(\./references/|g' \
     -e 's|(\.\./catalog/references/|(\./references/|g' \
     -e 's|(\./catalog/references/|(\./references/|g' \
-    -e 's|(\.\./\.\./\.\./references/|(\./references/|g' \
+    -e 's|(\(\.\./\)\{1,\}references/|(./references/|g' \
+    -e 's|(\./references/image/|(./references/|g' \
+    -e 's|(\(\.\./\)\{1,\}examples/shared/realistic-persona/example-prompt.md|(./example-prompt.md|g' \
+    -e 's|(\(\.\./\)\{1,\}examples/tools/p-image-try-on/example-prompt.md|(./example-prompt.md|g' \
+    -e 's|(\(\.\./\)\{1,\}examples/tools/p-image-ideogram/example-prompt.md|(./example-prompt.md|g' \
     -e 's|(\.\./\.\./references/|(\./references/|g' \
     -e 's|(\.\./references/|(\./references/|g' \
     -e 's|(\./references/video/|(\./references/|g' \
@@ -181,12 +171,20 @@ find "${DEST}" -name '*.md' -print0 | while IFS= read -r -d '' f; do
     -e 's|(\.\./\.\./scripts/|(\./scripts/|g' \
     -e 's|(\../../../catalog/tools/|(\./|g' \
     -e 's|(\../../../tools/|(\./|g' \
+    -e 's|]((./|](./|g' \
     "$f" 2>/dev/null || sed -i \
+    -e 's|(\.\./\.\./_shared/scripts/|(\./scripts/|g' \
+    -e 's|(\.\./_shared/scripts/|(\./scripts/|g' \
+    -e 's|catalog/workflows/_shared/scripts/|scripts/|g' \
     -e 's|(\.\./\.\./\.\./catalog/references/|(\./references/|g' \
     -e 's|(\.\./\.\./catalog/references/|(\./references/|g' \
     -e 's|(\.\./catalog/references/|(\./references/|g' \
     -e 's|(\./catalog/references/|(\./references/|g' \
-    -e 's|(\.\./\.\./\.\./references/|(\./references/|g' \
+    -e 's|(\(\.\./\)\{1,\}references/|(./references/|g' \
+    -e 's|(\./references/image/|(./references/|g' \
+    -e 's|(\(\.\./\)\{1,\}examples/shared/realistic-persona/example-prompt.md|(./example-prompt.md|g' \
+    -e 's|(\(\.\./\)\{1,\}examples/tools/p-image-try-on/example-prompt.md|(./example-prompt.md|g' \
+    -e 's|(\(\.\./\)\{1,\}examples/tools/p-image-ideogram/example-prompt.md|(./example-prompt.md|g' \
     -e 's|(\.\./\.\./references/|(\./references/|g' \
     -e 's|(\.\./references/|(\./references/|g' \
     -e 's|(\./references/video/|(\./references/|g' \
@@ -201,25 +199,9 @@ find "${DEST}" -name '*.md' -print0 | while IFS= read -r -d '' f; do
     -e 's|(\.\./\.\./scripts/|(\./scripts/|g' \
     -e 's|(\../../../catalog/tools/|(\./|g' \
     -e 's|(\../../../tools/|(\./|g' \
+    -e 's|]((./|](./|g' \
     "$f"
 done
-
-# Drop catalog cross-links — other skills are separate install bundles
-python3 - <<'PY'
-import re
-from pathlib import Path
-dest = Path("${DEST}")
-pat = re.compile(r"\[([^\]]+)\]\([^)]*catalog/(?:tools|workflows)/[^)]+\)")
-for md in dest.rglob("*.md"):
-    text = md.read_text()
-    new = pat.sub(r"\1", text)
-    if new != text:
-        md.write_text(new)
-PY
-
-# Declare tool skill deps (skills depends:, apm.yml, pspm.json, skill.deps.json)
-python3 "${REPO_ROOT}/scripts/write_dep_manifests.py" \
-  --manifest "${MANIFEST}" --dest "${DEST}" --skill "${SKILL}"
 
 echo "Bundled ${SKILL} -> ${DEST}"
 echo "  pip install -r ${DEST}/scripts/requirements.txt  # when present"

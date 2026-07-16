@@ -1,8 +1,9 @@
 ---
 name: avatar-multi-scene
 description: Use when the user needs multiple talking-head segments, motion-transfer comparison reels, mixed host and animate clips, or multi-scene UGC with character continuity.
+license: MIT
 metadata:
-  version: "0.0.1"
+  version: "1.0.1"
 ---
 
 # Multi-scene avatar & motion-transfer video (Pruna only)
@@ -58,7 +59,7 @@ Follow this skill in **plain language** when talking to the person requesting th
 | **Style** | Agreed **style bible** line for all image prompts? |
 | **Character sheet** | Per speaker: age range, wardrobe baseline, hair, skin/realism level, personality adjectives—record before hero generation (see **Character sheet** below). |
 | **Scene variety** | Each scene must differ in **camera angle**, **background/setting**, and/or **energy**—no two consecutive scenes with the same framing and location unless the user asks. Plan **`visual_style_tag`**, **`setting_tag`**, **`camera_tag`**, **`lighting_tag`** per row; cast diversity (gender, age, ethnicity) on launch reels — [visual-variety-bible.md](../../../../../references/shared/visual-variety-bible.md). |
-| **Seeds** | **[Random seed ritual](../../../../references/shared/random-seed-ritual.md)** at hero — pick and state a random integer; record as **`project_seed`**; reuse for hero regen and every **`p-video-avatar`** call unless A/B testing motion. |
+| **Ritual seed (SSoT)** | **[Random seed ritual](../../../../references/shared/random-seed-ritual.md)** at hero — generate and state a ritual string; log as **`ritual_seed`**; derive prompt axes via sum-mod. **Do not** pass ritual string to API `seed`. |
 | **References** | Which files to upload; rights cleared? |
 | **Beat mix** | Which scenes are **`avatar`** vs **`animate`**? All avatar, all animate, or mixed announcement? |
 | **Narrated B-roll cutaways** | Optional **`p-video`** beats using [scene anchor triple](../../../../../references/video/scene-anchor-triple.md) alongside avatar rows |
@@ -72,7 +73,7 @@ If anything material is unknown, **ask** before the first upload or prediction.
 
 Maintain a **cast table** in the manifest: one Pruna **`voice`** + **`voice_language`** per recurring character — **never** swap presets mid-story unless the user requests a recast.
 
-Before hero generation, fill a **character sheet** per speaker (age, face, realism, wardrobe baseline, personality, locked **`project_seed`**). Templates and manifest JSON: **[prompt-templates.md](./prompt-templates.md)**.
+Before hero generation, fill a **character sheet** per speaker (age, face, realism, wardrobe baseline, personality, **`ritual_seed`** for planning). Templates and manifest JSON: **[prompt-templates.md](./prompt-templates.md)**.
 
 **Rule:** New locations and styles = **`p-image-edit`** off the approved hero URL — not unrelated fresh **`p-image`** identity pulls.
 
@@ -127,12 +128,11 @@ Combine **`avatar`** talking-head beats and **`animate`** slider demos in one sc
 
 End product launches with a speakable **`avatar`** CTA unless the user opts out. See [animate-beats.md](./animate-beats.md) for model roles, alignment, and slider assembly.
 
-## Seed policy
+## Identity & ritual seed policy
 
-1. **Hero `p-image`:** set **`seed`** once; store in manifest as `project_seed`.
-2. **Regenerate hero only:** reuse `project_seed` + same prompt unless the user resets identity.
-3. **`p-image-edit`:** seed support varies—continuity comes from the **hero file URL**, not re-rolling identity.
-4. **`p-video-avatar`:** pass **`seed`: `project_seed`** on every clip for reproducible motion/delivery when the API accepts it; if a scene needs a motion retry, bump seed only for that scene and note it in the manifest.
+Must complete **[random seed ritual](../../../../references/shared/random-seed-ritual.md) (SSoT)** before hero prompt work. Log **`ritual_seed`** in manifest; reuse only on same-brief slop retry.
+
+Character continuity = **approved hero plate URL** + cast descriptor — not API `seed`. Pass **`api_seed`** in `input` only when the user explicitly locks reproducibility.
 
 ## Natural voice (mandatory for avatar social / founder content)
 
@@ -189,7 +189,7 @@ Use the **approved hero** as the reference for **`p-image-edit`**, not a rejecte
 | Style-locked stills | `p-image`, `p-image-edit` | [p-image](../../../../tools/image/p-image/SKILL.md), [p-image-edit](../../../../tools/image/p-image-edit/SKILL.md) |
 | Talking clips | `p-video-avatar` | [p-video-avatar](../../../../tools/video/p-video-avatar/SKILL.md) |
 | Motion transfer | **`p-video-animate`** | [p-video-animate](../../../../tools/video/p-video-animate/SKILL.md) |
-| Slider comparison (animate rows) | [`generate_video_comparison.py`](../_shared/scripts/generate_video_comparison.py) | local; install via `npx skills add PrunaAI/pruna-ai-content-generation-skills/skills --skill avatar-multi-scene --agent cursor -y` |
+| Slider comparison (animate rows) | [`generate_video_comparison.py`](../_shared/scripts/generate_video_comparison.py) | local; install via `npx skills add PrunaAI/pruna-skills/plugins/avatar-multi-scene/skills --skill avatar-multi-scene --agent cursor -y` |
 
 Use **`PRUNA_API_KEY`** and the **`apikey`** header on every call. **Async + parallel by default**: batch all avatar jobs once approved stills pass slop; batch all animate jobs once motion + still URLs are ready; poll all `get_url` together. See [parallel-execution.md](../../../../../references/shared/parallel-execution.md).
 
@@ -234,7 +234,7 @@ Field names and curl shapes: **[prompt-templates.md](./prompt-templates.md)** ·
 ## Related
 
 - Pruna-only pipeline overview: [pruna-generative-pipeline](../pruna-generative-pipeline/SKILL.md)
-- One-scene avatar: [single-scene-avatar-video](../avatar-single-scene/SKILL.md)
-- Cinematic B-roll (non-avatar): [single-scene-ai-video](../image-to-video/SKILL.md), [multi-scene-ai-video](../narrated-multi-scene/SKILL.md)
+- One-scene avatar: [avatar-single-scene](../avatar-single-scene/SKILL.md)
+- Cinematic B-roll (non-avatar): [image-to-video](../image-to-video/SKILL.md), [narrated-multi-scene](../narrated-multi-scene/SKILL.md)
 - Still upscale slider demos: [p-image-upscale-comparison](../../launches/p-image-upscale-comparison/SKILL.md)
 - Motion transfer tool: [p-video-animate](../../../../tools/video/p-video-animate/SKILL.md)

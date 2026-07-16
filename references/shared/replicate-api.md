@@ -22,7 +22,7 @@ Header: `Authorization: Bearer ${REPLICATE_API_TOKEN}`
 # Download output URL (string or list depending on model)
 ```
 
-Shared client: [`catalog/workflows/_shared/scripts/replicate_api.py`](../workflows/_shared/scripts/replicate_api.py)
+Shared client: [`workflows/_shared/scripts/replicate_api.py`](../workflows/_shared/scripts/replicate_api.py)
 
 ## Stable Audio 2.5
 
@@ -36,7 +36,7 @@ Model: `minimax/music-2.5`
 Required input: `lyrics` (1–3,500 chars, structure tags supported)  
 Optional: `prompt` (style), `sample_rate`, `bitrate`, `audio_format` (`mp3` default)
 
-Workflow: [ai-music-video](../workflows/verticals/music-video/SKILL.md) · tool skill: [music-2.5](../tools/audio/music-2.5/SKILL.md)
+Workflow: [music-video](../workflows/verticals/music-video/SKILL.md) · tool skill: [music-2.5](../tools/audio/music-2.5/SKILL.md)
 
 ## Gemini 3.1 Flash TTS
 

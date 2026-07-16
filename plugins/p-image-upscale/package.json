@@ -1,0 +1,26 @@
+{
+  "name": "@pruna-ai/p-image-upscale",
+  "version": "1.0.1",
+  "type": "module",
+  "license": "MIT",
+  "description": "Use when the user wants to upscale image resolution, enhance detail in an existing still, or prepare photos for print, large crops, or quality demos.",
+  "repository": "https://github.com/PrunaAI/pruna-skills",
+  "files": [
+    ".claude-plugin",
+    "openclaw.plugin.json",
+    "openclaw-entry.mjs",
+    "README.md",
+    "skills"
+  ],
+  "openclaw": {
+    "extensions": [
+      "./openclaw-entry.mjs"
+    ],
+    "compat": {
+      "pluginApi": ">=2026.3.24-beta.2"
+    },
+    "bundledSkills": [
+      "p-image-upscale"
+    ]
+  }
+}

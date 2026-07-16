@@ -1,17 +1,22 @@
 ---
 name: p-image
-description: Use when the user wants to generate an image from text, create photos or illustrations from a prompt, or needs a new still for downstream video or avatar work.
+description: Use when the user wants the fastest text-to-image stills, quick draft photos, mood boards, or bulk panels where good quality and extremely low latency matter more than maximum photoreal fidelity.
 license: MIT
 metadata:
-  version: "0.0.1"
+  version: "1.0.1"
   pruna_model: p-image
 ---
 
 # p-image (Pruna)
 
-Ultra-fast text-to-image via Pruna. Full parameters: [p-image model docs](https://docs.api.pruna.ai/guides/models/p-image).
+**Good quality, extremely fast** text-to-image via Pruna P-API. Full parameters: [p-image model docs](https://docs.api.pruna.ai/guides/models/p-image).
 
-**Dynamic persona & scenarios:** [realistic-persona-showcase.md](../../../references/shared/realistic-persona-showcase.md) · examples: [example-prompt.md](../../examples/shared/realistic-persona/example-prompt.md)
+## When NOT to use
+
+- Editing an existing image → [p-image-edit](../p-image-edit/SKILL.md)
+- Virtual try-on on a person plate → [p-image-try-on](../p-image-try-on/SKILL.md)
+
+**Dynamic persona & scenarios:** [realistic-persona-showcase.md](../../../references/shared/realistic-persona-showcase.md) · examples: [example-prompt.md](../../../references/shared/realistic-persona-example-prompt.md)
 
 Shared HTTP patterns: [pruna-api.md](../../../references/shared/pruna-api.md) (upload, [poll](#poll), [download](#download))
 
@@ -26,16 +31,15 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   -H 'Model: p-image' \
   -d '{
     "input": {
-      "prompt": "Product hero shot, minimal studio lighting, 4k",
-      "aspect_ratio": "9:16",
-      "seed": 518263
+      "prompt": "Disco ball reflections on an otter DJ scratching vinyl at a packed 1970s roller rink, fish-eye lens, glitter confetti mid-air, funky energy",
+      "aspect_ratio": "9:16"
     }
   }'
 ```
 
 Poll and download: [pruna-api.md](../../../references/shared/pruna-api.md#poll).
 
-Example `"seed": 518263` is illustrative — use a fresh [random seed ritual](../../../references/shared/random-seed-ritual.md) integer for each new generation.
+Complete the [random seed ritual](../../../references/shared/random-seed-ritual.md) (SSoT) before writing prompts — **do not** pass the ritual string as API `seed`. Optional `api_seed` only when the user requests reproducibility.
 
 ### Create (sync — quick test only)
 
@@ -45,13 +49,13 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   -H "apikey: ${PRUNA_API_KEY}" \
   -H 'Model: p-image' \
   -H 'Try-Sync: true' \
-  -d '{"input":{"prompt":"Product hero shot","aspect_ratio":"9:16"}}'
+  -d '{"input":{"prompt":"Corgi cowboy lassoing a runaway taco truck through Monument Valley dust storm, pulp western poster energy, dynamic diagonal composition","aspect_ratio":"16:9"}}'
 ```
 
 ## Before generating
 
-1. **[Generation diversity](../../../references/shared/generation-diversity.md)** — ritual seed + axis rotation (never copy example seeds). **Multi-example batches:** different **`aspect_ratio`** per still (`1:1`, `16:9`, `9:16`, `4:3`, `3:4`, `3:2`, `2:3`).
-2. Confirm **`prompt`**, **`aspect_ratio`**, and **`seed`** with the user. Run [p-image-quality-checklist.md](../../../references/image/p-image-quality-checklist.md) on outputs before downstream steps.
+1. **[Generation diversity](../../../references/shared/generation-diversity.md)** — ritual seed (SSoT) + [explicit prompt structure](../../../references/shared/generation-diversity.md#explicit-prompt-structure-required) (specific people/animals, objects, actions, setting). **`p-image` has no prompt upsampling** — follow [text hygiene](../../../references/shared/generation-diversity.md#text--typography-by-model). **Multi-example batches:** different **`aspect_ratio`** per still.
+2. Confirm **`prompt`** and **`aspect_ratio`** with the user. Run [p-image-quality-checklist.md](../../../references/image/p-image-quality-checklist.md) on outputs before downstream steps.
 
 ## Production quality — photoreal personas
 
@@ -69,7 +73,7 @@ Default demos often look **AI sloppy** (generic white background, plastic skin, 
 
 Full scenario generation (photographic styles, anime sub-styles, camera ladder, 8-slot matrix): [realistic-persona-showcase.md](../../../references/shared/realistic-persona-showcase.md). Variety planning: [visual-variety-bible.md](../../../references/shared/visual-variety-bible.md).
 
-Lock **`seed`** at hero generation when the same identity continues to **`p-image-edit`**, **`p-image-try-on`**, or **`p-video-avatar`**.
+Lock **hero plate URL** at hero generation when the same identity continues to **`p-image-edit`**, **`p-image-try-on`**, or **`p-video-avatar`**.
 
 ## Required input
 
@@ -78,7 +82,9 @@ Lock **`seed`** at hero generation when the same identity continues to **`p-imag
 ## Common optional fields
 
 - `aspect_ratio`: `1:1`, `16:9`, `9:16`, `4:3`, `3:4`, `3:2`, `2:3`, `custom` (with `width` / `height` multiples of 16, 256–1440)
-- `seed`, `prompt_upsampling`, `lora_weights`, `lora_scale`, `hf_api_token`, `disable_safety_checker`
+- `seed`, `lora_weights`, `lora_scale`, `hf_api_token`, `disable_safety_checker`
+
+**No prompt upsampling** on this model — keep prompts concrete per [generation-diversity](../../../references/shared/generation-diversity.md#text--typography-by-model). Avoid dense readable typography; prefer scenes without copy.
 
 ## Example: synchronous
 
@@ -94,9 +100,9 @@ Omit `Try-Sync`. For N panels with no shared dependency, **POST all jobs in para
 - Virtual try-on on a photoreal person plate: [p-image-try-on](../p-image-try-on/SKILL.md) — see [realistic-persona-showcase.md](../../../references/shared/realistic-persona-showcase.md)
 - Upscale output: [p-image-upscale](../p-image-upscale/SKILL.md)
 - Animate still: [p-video](../../video/p-video/SKILL.md) — prefer [scene anchor triple](../../../references/video/scene-anchor-triple.md) (`image` + `last_frame_image` + `audio`) for narrated beats; or [p-video-avatar](../../video/p-video-avatar/SKILL.md) for talking head
-- Scripted workflows (intake first): [single-scene-avatar-video](../../../workflows/core/avatar-single-scene/SKILL.md), [multi-scene-avatar-video](../../../workflows/core/avatar-multi-scene/SKILL.md)
+- Scripted workflows (intake first): [avatar-single-scene](../../../workflows/core/avatar-single-scene/SKILL.md), [avatar-multi-scene](../../../workflows/core/avatar-multi-scene/SKILL.md)
 - Full pipeline: [pruna-generative-pipeline](../../../workflows/router/pruna-generative-pipeline/SKILL.md)
 
 ## Related workflow
 
-Avatar + animate reels: [multi-scene-avatar-video](../../../workflows/core/avatar-multi-scene/SKILL.md) — bundled scripts live in workflow skills, not here.
+Avatar + animate reels: [avatar-multi-scene](../../../workflows/core/avatar-multi-scene/SKILL.md) — bundled scripts live in workflow skills, not here.

@@ -1,0 +1,17 @@
+{
+  "id": "illustrated-story-reel",
+  "name": "illustrated-story-reel",
+  "description": "Use when the user wants a still-image story reel or slideshow, picture-book narrative with voiceover or music\u2014and explicitly not full motion-video generation.",
+  "skills": [
+    "skills/illustrated-story-reel",
+    "skills/p-image",
+    "skills/p-image-edit",
+    "skills/gemini-3.1-flash-tts",
+    "skills/stable-audio-2.5"
+  ],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

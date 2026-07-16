@@ -1,0 +1,31 @@
+{
+  "name": "@pruna-ai/image-to-video",
+  "version": "1.0.1",
+  "type": "module",
+  "license": "MIT",
+  "description": "Use when the user needs one video clip from stills, a single narrated story beat, one B-roll shot, or one scene\u2014not a full multi-scene film or talking-head-only piece.",
+  "repository": "https://github.com/PrunaAI/pruna-skills",
+  "files": [
+    ".claude-plugin",
+    "openclaw.plugin.json",
+    "openclaw-entry.mjs",
+    "README.md",
+    "skills"
+  ],
+  "openclaw": {
+    "extensions": [
+      "./openclaw-entry.mjs"
+    ],
+    "compat": {
+      "pluginApi": ">=2026.3.24-beta.2"
+    },
+    "bundledSkills": [
+      "image-to-video",
+      "p-image",
+      "p-image-edit",
+      "p-video",
+      "gemini-3.1-flash-tts",
+      "stable-audio-2.5"
+    ]
+  }
+}

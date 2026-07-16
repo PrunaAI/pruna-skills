@@ -1,0 +1,10 @@
+{
+  "name": "avatar-multi-scene",
+  "description": "Use when the user needs multiple talking-head segments, motion-transfer comparison reels, mixed host and animate clips, or multi-scene UGC with character continuity.",
+  "version": "1.0.1",
+  "author": {
+    "name": "Pruna AI"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/PrunaAI/pruna-skills"
+}

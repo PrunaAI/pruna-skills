@@ -1,0 +1,38 @@
+{
+  "id": "pruna-full",
+  "name": "pruna-full",
+  "description": "Complete Pruna Skills bundle: all tool, router, core, and vertical skills in one plugin.",
+  "skills": [
+    "skills/avatar-multi-scene",
+    "skills/avatar-single-scene",
+    "skills/gemini-3.1-flash-tts",
+    "skills/generation-diversity",
+    "skills/generation-quality-checklists",
+    "skills/illustrated-story-reel",
+    "skills/image-to-video",
+    "skills/interactive-explainer",
+    "skills/music-2.5",
+    "skills/music-video",
+    "skills/narrated-multi-scene",
+    "skills/p-image",
+    "skills/p-image-edit",
+    "skills/p-image-try-on",
+    "skills/p-image-upscale",
+    "skills/p-video",
+    "skills/p-video-animate",
+    "skills/p-video-avatar",
+    "skills/p-video-replace",
+    "skills/pruna-generative-pipeline",
+    "skills/pruna-run",
+    "skills/recipe-catalog",
+    "skills/requesting-generation-feedback",
+    "skills/stable-audio-2.5",
+    "skills/visual-transition-reel",
+    "skills/whisperx"
+  ],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

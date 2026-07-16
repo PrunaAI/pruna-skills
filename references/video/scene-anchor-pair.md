@@ -92,8 +92,8 @@ Scene 3: start_3 → end_3   duration=5
 
 | Pattern | Anchors | Duration | Workflow |
 |---------|---------|----------|----------|
-| **Pair** | `image` + `last_frame_image` + `prompt` | `duration` | [scene-transition-video](../workflows/core/visual-transition-reel/SKILL.md) |
-| **Triple** | pair + `audio` | follows audio | [multi-scene-ai-video](../workflows/core/narrated-multi-scene/SKILL.md) |
+| **Pair** | `image` + `last_frame_image` + `prompt` | `duration` | [visual-transition-reel](../workflows/core/visual-transition-reel/SKILL.md) |
+| **Triple** | pair + `audio` | follows audio | [narrated-multi-scene](../workflows/core/narrated-multi-scene/SKILL.md) |
 
 Upgrade a pair scene to triple by adding TTS → upload → `audio` and removing `duration`.
 
@@ -103,7 +103,7 @@ Upgrade a pair scene to triple by adding TTS → upload → `audio` and removing
 {
   "title": "Neon alley handoff",
   "hero_prompt": "Cinematic cyberpunk alley, single subject, 16:9 one frame",
-  "project_seed": 482901,
+  "ritual_seed": "k7Qm2xP9",
   "frame_chain_mode": "extract_last_frame",
   "assembly": {
     "chain_crossfade_seconds": 0.15,
@@ -148,7 +148,7 @@ Upgrade a pair scene to triple by adding TTS → upload → `audio` and removing
 
 ## Workflows that implement this
 
-- [scene-transition-video](../workflows/core/visual-transition-reel/SKILL.md) — primary workflow
-- [single-scene-ai-video](../workflows/core/image-to-video/SKILL.md) — one pair beat
+- [visual-transition-reel](../workflows/core/visual-transition-reel/SKILL.md) — primary workflow
+- [image-to-video](../workflows/core/image-to-video/SKILL.md) — one pair beat
 - [p-video](../tools/video/p-video/SKILL.md) — API reference (visual transition mode)
 - Example runner: [`run_from_plan.py`](../workflows/core/visual-transition-reel/scripts/run_from_plan.py)

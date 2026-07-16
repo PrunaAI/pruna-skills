@@ -1,0 +1,10 @@
+{
+  "name": "p-video",
+  "description": "Use when the user wants one video clip from text or stills, start/end frame animation, or B-roll and cinematic shots\u2014not multi-scene films, talking-head avatar clips, or motion transfer from a template video.",
+  "version": "1.0.1",
+  "author": {
+    "name": "Pruna AI"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/PrunaAI/pruna-skills"
+}

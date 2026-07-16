@@ -1,0 +1,62 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "Image Generation",
+      "description": "Generate and edit images with Pruna API models.",
+      "skills": [
+        "p-image",
+        "p-image-edit",
+        "p-image-upscale",
+        "p-image-try-on"
+      ]
+    },
+    {
+      "title": "Video Generation",
+      "description": "Generate and edit video with Pruna API models.",
+      "skills": [
+        "p-video",
+        "p-video-avatar",
+        "p-video-animate",
+        "p-video-replace"
+      ]
+    },
+    {
+      "title": "Audio & Speech",
+      "description": "Music, TTS, transcription, and background audio.",
+      "skills": [
+        "music-2.5",
+        "gemini-3.1-flash-tts",
+        "stable-audio-2.5",
+        "whisperx"
+      ]
+    },
+    {
+      "title": "Guides",
+      "description": "Prompting, quality gates, and workflow routing \u2014 no API required.",
+      "skills": [
+        "generation-diversity",
+        "generation-quality-checklists",
+        "recipe-catalog"
+      ]
+    },
+    {
+      "title": "Workflows",
+      "description": "Multi-step production pipelines for explainers, music videos, and reels.",
+      "skills": [
+        "pruna-generative-pipeline",
+        "pruna-run",
+        "requesting-generation-feedback",
+        "image-to-video",
+        "narrated-multi-scene",
+        "visual-transition-reel",
+        "avatar-single-scene",
+        "avatar-multi-scene",
+        "interactive-explainer",
+        "music-video",
+        "illustrated-story-reel"
+      ]
+    }
+  ]
+}

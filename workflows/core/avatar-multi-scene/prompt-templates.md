@@ -1,6 +1,6 @@
 # Prompt templates (Pruna only)
 
-Companion to [multi-scene-avatar-video/SKILL.md](./SKILL.md) — cast ledger, character sheet, still edits, and per-scene voice/video fields.
+Companion to [avatar-multi-scene/SKILL.md](./SKILL.md) — cast ledger, character sheet, still edits, and per-scene voice/video fields.
 
 ## Cast ledger (voice lock)
 
@@ -31,7 +31,7 @@ Face/hair: [short dark hair, light stubble, brown eyes]
 Realism: photorealistic documentary portrait, not CGI, not illustration
 Wardrobe baseline: [black crew-neck — keep unless scene script changes outfit]
 Personality: [warm, direct, founder-energy, honest]
-project_seed: [integer — lock at hero p-image, reuse on p-video-avatar]
+ritual_seed: [string — SSoT planning only; generate fresh, do not copy examples]
 Pruna voice: [e.g. Puck (Male)] / [English (US)]
 ```
 
@@ -47,23 +47,21 @@ Pruna voice: [e.g. Puck (Male)] / [English (US)]
 
 Pair each row with its own **`voice_script`**, **`voice_prompt`**, and **`video_prompt`** in the manifest JSON.
 
-## Seed lock (manifest snippet)
+## Ritual seed (manifest snippet)
 
 ```json
 {
-  "project_seed": 518263,
-  "seed_policy": {
-    "p_image_hero": 518263,
-    "p_video_avatar_all_scenes": 518263
-  }
+  "ritual_seed": "k7Qm2xP9",
+  "ritual_seed_policy": "ssot_dag_before_every_generation",
+  "api_seed": null
 }
 ```
 
-Replace integers with your [ritual seed](../../../../../references/shared/random-seed-ritual.md) — do not copy from this template.
+`ritual_seed` is **SSoT planning only** — do not pass to API `input.seed`. Set `api_seed` only when the user explicitly locks API reproducibility.
 
-Pass `"seed": <project_seed from ritual>` in hero **`p-image`** and every **`p-video-avatar`** `input` unless retrying one scene with a **new ritual number**.
+Replace strings with your [random seed ritual](../../../../../references/shared/random-seed-ritual.md) — do not copy from this template.
 
-**Ritual:** [random-seed-ritual.md](../../../../../references/shared/random-seed-ritual.md) — pick a random integer before every generation; never copy `482901` from this doc.
+**Ritual:** [random-seed-ritual.md](../../../../../references/shared/random-seed-ritual.md) (SSoT) — generate a random string before every generation; derive prompt axes via sum-mod.
 
 ## Fashion / ecommerce try-on path
 
@@ -73,7 +71,7 @@ When the deliverable is **dressed model stills** or **fashion UGC avatar**:
 2. **`p-image-try-on`** with garment refs (normal mode for complex stacks) — [p-image-try-on-quality-checklist.md](../../../../../references/image/p-image-try-on-quality-checklist.md)
 3. Optional **`p-image-upscale`** → slop gate → **`p-video-avatar`** with **unique `video_prompt`** and natural **`voice_script`**
 
-Preserve **`project_seed`** from step 1 through step 3. Plan cast diversity for public example sets per [visual-variety-bible.md](../../../../../references/shared/visual-variety-bible.md).
+Lock **hero plate URL** from step 1 through step 3. Plan cast diversity for public example sets per [visual-variety-bible.md](../../../../../references/shared/visual-variety-bible.md).
 
 ## Style bible (paste into every image prompt)
 
@@ -284,7 +282,7 @@ Store approved scenes in a machine-readable file (e.g. `v2_avatar_only_scripts.j
 
 ```json
 {
-  "project_seed": 482901,
+  "ritual_seed": "k7Qm2xP9",
   "cast": {
     "voice": "Puck (Male)",
     "voice_language": "English (US)",

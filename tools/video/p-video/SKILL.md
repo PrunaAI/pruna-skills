@@ -1,9 +1,9 @@
 ---
 name: p-video
-description: Use when the user wants to generate video from text or stills, animate between start and end frames, create B-roll or cinematic clips, or build narrated scene chains.
+description: Use when the user wants one video clip from text or stills, start/end frame animation, or B-roll and cinematic shots—not multi-scene films, talking-head avatar clips, or motion transfer from a template video.
 license: MIT
 metadata:
-  version: "0.0.1"
+  version: "1.0.1"
   pruna_model: p-video
 ---
 
@@ -34,7 +34,7 @@ Pass `urls.get` as `input.image` (first frame) and/or `input.last_frame_image` (
 ## Before generating
 
 1. **[Generation diversity](../../../references/shared/generation-diversity.md)** — ritual seed + axis rotation before each job.
-2. Confirm **mode** (T2V / I2V / **visual transition pair** / scene anchor triple / audio), **`duration`** (unless audio-driven), **`resolution`**, **`fps`**, **`draft`**, **`seed`**, and **`prompt`** with the user—or run intake from [single-scene-ai-video](../../../workflows/core/image-to-video/SKILL.md), [scene-transition-video](../../../workflows/core/visual-transition-reel/SKILL.md), or [multi-scene-ai-video](../../../workflows/core/narrated-multi-scene/SKILL.md).
+2. Confirm **mode** (T2V / I2V / **visual transition pair** / scene anchor triple / audio), **`duration`** (unless audio-driven), **`resolution`**, **`fps`**, **`draft`**, **`seed`**, and **`prompt`** with the user—or run intake from [image-to-video](../../../workflows/core/image-to-video/SKILL.md), [visual-transition-reel](../../../workflows/core/visual-transition-reel/SKILL.md), or [narrated-multi-scene](../../../workflows/core/narrated-multi-scene/SKILL.md).
 
 For **narration or music**, see [audio-post-production.md](../../../references/audio/audio-post-production.md) — Gemini TTS, Stable Audio beds, or upload audio for audio-conditioned mode.
 
@@ -102,7 +102,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 - Use **`draft: true`** on the full chain for cheap motion approval, then rerun finals with locked `seed`/prompts.
 - [P-Video limitations](https://replicate.com/prunaai/p-video): not built for extreme camera motion or very complex arcs — prefer short beats (4–5s) and clear start/end plates.
 
-See [scene-transition-video](../../../workflows/core/visual-transition-reel/SKILL.md) for multi-scene visual montages and [multi-scene-ai-video](../../../workflows/core/narrated-multi-scene/SKILL.md) for scene-table columns and [parallel-execution.md](../../../references/shared/parallel-execution.md) for phased vs parallel batches.
+See [visual-transition-reel](../../../workflows/core/visual-transition-reel/SKILL.md) for multi-scene visual montages and [narrated-multi-scene](../../../workflows/core/narrated-multi-scene/SKILL.md) for scene-table columns and [parallel-execution.md](../../../references/shared/parallel-execution.md) for phased vs parallel batches.
 
 Canonical visual transition spec: [scene-anchor-pair.md](../../../references/video/scene-anchor-pair.md).  
 Canonical narrated spec: [scene-anchor-triple.md](../../../references/video/scene-anchor-triple.md).
@@ -137,7 +137,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 
 **Stills pipeline:** `p-image` (hero) → `p-image-edit` (`edit_prompt` → start) → `p-image-edit` (`last_frame_edit_prompt` → end).
 
-**Multi-scene:** [scene-transition-video](../../../workflows/core/visual-transition-reel/SKILL.md) — selective `chain_from_previous`, `extract_last_frame`, concat crossfades.
+**Multi-scene:** [visual-transition-reel](../../../workflows/core/visual-transition-reel/SKILL.md) — selective `chain_from_previous`, `extract_last_frame`, concat crossfades.
 
 **Upgrade to narrated:** add TTS → upload → `audio`; omit `duration` → [scene-anchor-triple.md](../../../references/video/scene-anchor-triple.md).
 
@@ -267,13 +267,13 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 
 ## Typical next steps
 
-- One-scene workflow: [single-scene-ai-video](../../../workflows/core/image-to-video/SKILL.md)
-- Visual transitions (pair, no VO): [scene-transition-video](../../../workflows/core/visual-transition-reel/SKILL.md)
-- Multi-scene + frame chain + narration: [multi-scene-ai-video](../../../workflows/core/narrated-multi-scene/SKILL.md)
+- One-scene workflow: [image-to-video](../../../workflows/core/image-to-video/SKILL.md)
+- Visual transitions (pair, no VO): [visual-transition-reel](../../../workflows/core/visual-transition-reel/SKILL.md)
+- Multi-scene + frame chain + narration: [narrated-multi-scene](../../../workflows/core/narrated-multi-scene/SKILL.md)
 - Talking portrait: [p-video-avatar](../p-video-avatar/SKILL.md)
 - Narration TTS: [gemini-3.1-flash-tts](../../audio/gemini-3.1-flash-tts/SKILL.md)
 - Pipeline hub: [pruna-generative-pipeline](../../../workflows/router/pruna-generative-pipeline/SKILL.md)
 
 ## Related workflow
 
-Multi-scene AI video: [multi-scene-ai-video](../../../workflows/core/narrated-multi-scene/SKILL.md) — scene table, frame columns, audio phases.
+Multi-scene AI video: [narrated-multi-scene](../../../workflows/core/narrated-multi-scene/SKILL.md) — scene table, frame columns, audio phases.

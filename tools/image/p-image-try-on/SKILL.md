@@ -3,7 +3,7 @@ name: p-image-try-on
 description: Use when the user wants virtual try-on, dress a person in clothing from reference photos, garment fitting on a model still, or ecommerce fashion compositing.
 license: MIT
 metadata:
-  version: "0.0.1"
+  version: "1.0.1"
   pruna_model: p-image-try-on
 ---
 
@@ -15,7 +15,7 @@ The model's strength is **garment-only editing** — identity, pose, hair, backg
 
 Canonical API reference: [p-image-try-on model docs](https://docs.api.pruna.ai/guides/models/p-image-try-on) · operational guide (Runware host): [virtual try-on](https://runware.ai/docs/models/prunaai-p-image-try-on/guides/virtual-try-on)
 
-**Showcase quality bar:** [realistic-persona-showcase.md](../../../references/shared/realistic-persona-showcase.md) · try-on checklist: [p-image-try-on-quality-checklist.md](../../../references/image/p-image-try-on-quality-checklist.md) · examples: [example-prompt.md](../../examples/tools/p-image-try-on/example-prompt.md)
+**Showcase quality bar:** [realistic-persona-showcase.md](../../../references/shared/realistic-persona-showcase.md) · try-on checklist: [p-image-try-on-quality-checklist.md](../../../references/image/p-image-try-on-quality-checklist.md) · examples: [example-prompt.md](./example-prompt.md)
 
 Shared HTTP patterns: [pruna-api.md](../../../references/shared/pruna-api.md) (upload, [poll](#poll), [download](#download))
 
@@ -124,7 +124,7 @@ Tables follow the [official model page](https://docs.api.pruna.ai/guides/models/
 
 ## Before generating
 
-1. **[Generation diversity](../../../references/shared/generation-diversity.md)** — ritual seed + axis rotation before each try-on job (reuse hero `project_seed` when dressing an approved plate).
+1. **[Generation diversity](../../../references/shared/generation-diversity.md)** — random seed ritual (SSoT) + axis rotation before each try-on job (reuse approved hero plate URL when dressing an approved plate).
 2. Confirm with the user:
 
 - **`person_image`** — person photo with clear visibility of the body region to dress

@@ -1,0 +1,10 @@
+name: avatar-single-scene
+version: 1.0.1
+type: skill
+description: Use when the user needs one talking-head clip, a single host line with lip sync, or one spokesperson beat—not multi-segment host reels or motion-transfer comparison grids.
+dependencies:
+  apm:
+    - PrunaAI/pruna-skills/plugins/p-image/skills/p-image
+    - PrunaAI/pruna-skills/plugins/p-image-edit/skills/p-image-edit
+    - PrunaAI/pruna-skills/plugins/p-video-avatar/skills/p-video-avatar
+    - PrunaAI/pruna-skills/plugins/gemini-3.1-flash-tts/skills/gemini-3.1-flash-tts

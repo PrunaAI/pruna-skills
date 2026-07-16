@@ -1,0 +1,26 @@
+{
+  "name": "@pruna-ai/requesting-generation-feedback",
+  "version": "1.0.1",
+  "type": "module",
+  "license": "MIT",
+  "description": "Use when the agent is about to call paid generation APIs, deliver a final audio mix, or proceed without user review in a multi-step image, video, or audio workflow.",
+  "repository": "https://github.com/PrunaAI/pruna-skills",
+  "files": [
+    ".claude-plugin",
+    "openclaw.plugin.json",
+    "openclaw-entry.mjs",
+    "README.md",
+    "skills"
+  ],
+  "openclaw": {
+    "extensions": [
+      "./openclaw-entry.mjs"
+    ],
+    "compat": {
+      "pluginApi": ">=2026.3.24-beta.2"
+    },
+    "bundledSkills": [
+      "requesting-generation-feedback"
+    ]
+  }
+}

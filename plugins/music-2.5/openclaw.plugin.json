@@ -1,0 +1,13 @@
+{
+  "id": "music-2.5",
+  "name": "music-2.5",
+  "description": "Use when the user wants AI song generation with vocals, sung lyrics, original tracks from a style prompt, or source audio for a music video.",
+  "skills": [
+    "skills/music-2.5"
+  ],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

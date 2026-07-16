@@ -1,0 +1,18 @@
+{
+  "id": "narrated-multi-scene",
+  "name": "narrated-multi-scene",
+  "description": "Use when the user needs a multi-scene narrated film, episodic B-roll story, chaptered promo, or several linked video beats with voiceover and no in-scene character dialogue.",
+  "skills": [
+    "skills/narrated-multi-scene",
+    "skills/p-image",
+    "skills/p-image-edit",
+    "skills/p-video",
+    "skills/gemini-3.1-flash-tts",
+    "skills/stable-audio-2.5"
+  ],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

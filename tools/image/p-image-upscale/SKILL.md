@@ -3,7 +3,7 @@ name: p-image-upscale
 description: Use when the user wants to upscale image resolution, enhance detail in an existing still, or prepare photos for print, large crops, or quality demos.
 license: MIT
 metadata:
-  version: "0.0.1"
+  version: "1.0.1"
   pruna_model: p-image-upscale
 ---
 
@@ -57,7 +57,7 @@ Poll and download: [pruna-api.md](../../../references/shared/pruna-api.md#poll).
 | Mood board / packshot enlargement | **4–16** | Optional in [pruna-generative-pipeline](../../../workflows/router/pruna-generative-pipeline/SKILL.md) recipes A/B/C |
 | Before/after slider video | [`generate_upscale_comparison.py`](../../../workflows/_shared/scripts/generate_upscale_comparison.py) | Not used in avatar or motion-transfer pipelines |
 
-**Video workflows** ([multi-scene-avatar-video](../../../workflows/core/avatar-multi-scene/SKILL.md), [p-video-animate](../../../tools/video/p-video-animate/SKILL.md), [p-video-replace](../../../tools/video/p-video-replace/SKILL.md)) feed **`p-image`** / **`p-image-edit`** outputs directly into video models after the slop gate—do **not** add an upscale step unless the user explicitly asks for print-scale stills.
+**Video workflows** ([avatar-multi-scene](../../../workflows/core/avatar-multi-scene/SKILL.md), [p-video-animate](../../../tools/video/p-video-animate/SKILL.md), [p-video-replace](../../../tools/video/p-video-replace/SKILL.md)) feed **`p-image`** / **`p-image-edit`** outputs directly into video models after the slop gate—do **not** add an upscale step unless the user explicitly asks for print-scale stills.
 
 Recommended defaults: `enhance_details: true`, `enhance_realism: false`. Use `enhance_realism: true` only when the source is already photoreal and you need extra skin texture—it can add waxy artifacts on synthetic edits.
 
@@ -100,7 +100,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 
 - Further edit: upscaled URL → [p-image-edit](../p-image-edit/SKILL.md) for layout or copy-safe tweaks.
 - **Before/after demo:** zoom + slider from any still pair → [`generate_upscale_comparison.py`](../../../workflows/_shared/scripts/generate_upscale_comparison.py).
-- Avatar / motion video (no upscale): [multi-scene-avatar-video](../../../workflows/core/avatar-multi-scene/SKILL.md).
+- Avatar / motion video (no upscale): [avatar-multi-scene](../../../workflows/core/avatar-multi-scene/SKILL.md).
 
 ## Related workflow
 

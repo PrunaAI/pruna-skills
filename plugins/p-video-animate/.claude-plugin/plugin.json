@@ -1,0 +1,10 @@
+{
+  "name": "p-video-animate",
+  "description": "Use when the user wants to animate a still using motion from another video, motion-transfer remixes, or performance variations from a template clip\u2014not replacing someone inside existing footage.",
+  "version": "1.0.1",
+  "author": {
+    "name": "Pruna AI"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/PrunaAI/pruna-skills"
+}

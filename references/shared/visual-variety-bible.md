@@ -305,7 +305,7 @@ Public examples across **`p-image`**, **`p-image-try-on`**, and **`p-video-avata
 | [p-image-try-on](../../tools/image/p-image-try-on/SKILL.md) | Editorial plates + complex garment refs; preservation checklist; diversity across playground set |
 | [p-video-replace](../../tools/video/p-video-replace/SKILL.md) | Scene 1 **persona ladder** + per-scene distinct `still_edit` backgrounds; optional **light bed** after concat |
 | [p-video-animate](../../tools/video/p-video-animate/SKILL.md) | 3–4 **style tags** per animate slider row |
-| [multi-scene-avatar-video](../workflows/core/avatar-multi-scene/SKILL.md) | Every avatar row: new `setting_tag` + `camera_tag` via `p-image-edit` |
+| [avatar-multi-scene](../workflows/core/avatar-multi-scene/SKILL.md) | Every avatar row: new `setting_tag` + `camera_tag` via `p-image-edit` |
 | [pruna-generative-pipeline](../workflows/router/pruna-generative-pipeline/SKILL.md) | Intake must capture variety plan before recipe execution |
 
 ## Variety checklist (before first API call)

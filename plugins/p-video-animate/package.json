@@ -1,0 +1,26 @@
+{
+  "name": "@pruna-ai/p-video-animate",
+  "version": "1.0.1",
+  "type": "module",
+  "license": "MIT",
+  "description": "Use when the user wants to animate a still using motion from another video, motion-transfer remixes, or performance variations from a template clip\u2014not replacing someone inside existing footage.",
+  "repository": "https://github.com/PrunaAI/pruna-skills",
+  "files": [
+    ".claude-plugin",
+    "openclaw.plugin.json",
+    "openclaw-entry.mjs",
+    "README.md",
+    "skills"
+  ],
+  "openclaw": {
+    "extensions": [
+      "./openclaw-entry.mjs"
+    ],
+    "compat": {
+      "pluginApi": ">=2026.3.24-beta.2"
+    },
+    "bundledSkills": [
+      "p-video-animate"
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@pruna-ai/music-video",
+  "version": "1.0.1",
+  "type": "module",
+  "license": "MIT",
+  "description": "Use when the user wants a music video, lyric video, sung promo, or original song paired with performance and B-roll clips.",
+  "repository": "https://github.com/PrunaAI/pruna-skills",
+  "files": [
+    ".claude-plugin",
+    "openclaw.plugin.json",
+    "openclaw-entry.mjs",
+    "README.md",
+    "skills"
+  ],
+  "openclaw": {
+    "extensions": [
+      "./openclaw-entry.mjs"
+    ],
+    "compat": {
+      "pluginApi": ">=2026.3.24-beta.2"
+    },
+    "bundledSkills": [
+      "music-video",
+      "music-2.5",
+      "whisperx",
+      "p-image",
+      "p-image-edit",
+      "p-video",
+      "p-video-avatar"
+    ]
+  }
+}

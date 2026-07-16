@@ -1,0 +1,13 @@
+{
+  "id": "pruna-generative-pipeline",
+  "name": "pruna-generative-pipeline",
+  "description": "Use when the user is unsure which production workflow fits, needs a recipe menu for multi-step media projects, or wants chained image, video, and audio with approval gates.",
+  "skills": [
+    "skills/pruna-generative-pipeline"
+  ],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

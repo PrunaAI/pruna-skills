@@ -1,6 +1,6 @@
 # Lyrics and cut-safe editing
 
-How to write lyrics for [Music 2.5](https://replicate.com/minimax/music-2.5) and map them to video clips **without cutting mid-word**. Workflow skill: [ai-music-video/SKILL.md](./SKILL.md).
+How to write lyrics for [Music 2.5](https://replicate.com/minimax/music-2.5) and map them to video clips **without cutting mid-word**. Workflow skill: [music-video/SKILL.md](./SKILL.md).
 
 ## Pipeline (lyrics → align)
 
@@ -14,7 +14,7 @@ How to write lyrics for [Music 2.5](https://replicate.com/minimax/music-2.5) and
 Do **not** generate video until **3b** completes — proportional timings drift on rap and paraphrased vocals.
 
 ```bash
-python3 catalog/workflows/verticals/music-video/scripts/run_from_plan.py --plan PLAN --out-dir OUT --phase song
+python3 workflows/verticals/music-video/scripts/run_from_plan.py --plan PLAN --out-dir OUT --phase song
 python3 ... --approve-song --phase align
 ```
 
@@ -64,18 +64,18 @@ Full tag list: [music-2.5 SKILL.md](../../../../tools/audio/music-2.5/SKILL.md#s
 After lyrics are approved, generate a cut map:
 
 ```bash
-python3 catalog/workflows/verticals/music-video/scripts/parse_lyric_cuts.py \
+python3 workflows/verticals/music-video/scripts/parse_lyric_cuts.py \
   --plan output/my-mv/music_video_plan.json \
   --out output/my-mv/cut_manifest.json
 
 # After song exists — proportional timing (fallback only)
-python3 catalog/workflows/verticals/music-video/scripts/parse_lyric_cuts.py \
+python3 workflows/verticals/music-video/scripts/parse_lyric_cuts.py \
   --plan output/my-mv/music_video_plan.json \
   --song output/my-mv/song.mp3 \
   --out output/my-mv/cut_manifest.json
 
 # Preferred — WhisperX word-level alignment on the rendered song
-python3 catalog/workflows/verticals/music-video/scripts/run_from_plan.py \
+python3 workflows/verticals/music-video/scripts/run_from_plan.py \
   --plan output/my-mv/music_video_plan.json \
   --out-dir output/my-mv \
   --phase align
@@ -113,7 +113,7 @@ Override any cut in the plan with explicit `"beat_type": "performance" | "broll"
 | **performance** (mascot / stylized) | `p-video` | Song slice → `input.audio` — **not** avatar (humanizes non-human stills) |
 | **broll** | `p-video` | Same slice or `duration` from cut map |
 
-**Performance stills:** when the user wants one singer throughout, land **one hero** with `p-image` + locked `project_seed`, then **`p-image-edit`** every performance frame off that URL — mouth visible, statement wardrobe, varied `setting_tag` per chorus pass. Only mint a fresh identity with unrelated `p-image` prompts when recasts are deliberate (usually B-roll only).
+**Performance stills:** when the user wants one singer throughout, land **one hero** with `p-image` + [random seed ritual](../../../references/shared/random-seed-ritual.md) (SSoT), then **`p-image-edit`** every performance frame off that URL — mouth visible, statement wardrobe, varied `setting_tag` per chorus pass. Only mint a fresh identity with unrelated `p-image` prompts when recasts are deliberate (usually B-roll only).
 
 **B-roll prompts:** match **mood + palette** of the music prompt — golden hour for warm ballads, neon for electronic, etc. See [visual-variety-bible.md](../../../../../references/shared/visual-variety-bible.md).
 

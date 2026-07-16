@@ -3,7 +3,7 @@ name: stable-audio-2.5
 description: Use when the user wants light instrumental background music, an ambient bed under dialogue or voiceover, or underscore for reels and explainers.
 license: MIT
 metadata:
-  version: "0.0.1"
+  version: "1.0.1"
   provider: replicate
   replicate_model: stability-ai/stable-audio-2.5
 ---
@@ -80,7 +80,7 @@ Poll `urls.get` until `status` is `succeeded`; download `output` MP3.
 ### Post-concat bed on any MP4
 
 ```bash
-python3 catalog/workflows/_shared/scripts/launch_background_music.py \
+python3 workflows/_shared/scripts/launch_background_music.py \
   --video output/my_reel/final.mp4 \
   --volume 0.12
 ```

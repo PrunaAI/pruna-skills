@@ -1,0 +1,9 @@
+{
+  "scripts": { "core": [], "shared": [] },
+  "references": [
+    "generation-quality-checklists.md",
+    "staged-generation-gate.md",
+    "generation-diversity.md",
+    "random-seed-ritual.md"
+  ]
+}

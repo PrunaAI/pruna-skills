@@ -1,0 +1,10 @@
+{
+  "name": "generation-quality-checklists",
+  "description": "Use when reviewing generated images, video, or audio \u2014 run the core quality checklist and model-specific checklist before asking the user to approve stills or clips.",
+  "version": "1.0.1",
+  "author": {
+    "name": "Pruna AI"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/PrunaAI/pruna-skills"
+}

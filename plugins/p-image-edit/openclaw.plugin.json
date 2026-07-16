@@ -1,0 +1,13 @@
+{
+  "id": "p-image-edit",
+  "name": "p-image-edit",
+  "description": "Use when the user wants to edit an existing image, change wardrobe or background, compose from reference photos, inpaint-style adjustments, or multi-image edits from a prompt.",
+  "skills": [
+    "skills/p-image-edit"
+  ],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

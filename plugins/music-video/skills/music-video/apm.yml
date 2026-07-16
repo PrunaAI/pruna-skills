@@ -1,0 +1,12 @@
+name: music-video
+version: 1.0.1
+type: skill
+description: Use when the user wants a music video, lyric video, sung promo, or original song paired with performance and B-roll clips.
+dependencies:
+  apm:
+    - PrunaAI/pruna-skills/plugins/music-2.5/skills/music-2.5
+    - PrunaAI/pruna-skills/plugins/whisperx/skills/whisperx
+    - PrunaAI/pruna-skills/plugins/p-image/skills/p-image
+    - PrunaAI/pruna-skills/plugins/p-image-edit/skills/p-image-edit
+    - PrunaAI/pruna-skills/plugins/p-video/skills/p-video
+    - PrunaAI/pruna-skills/plugins/p-video-avatar/skills/p-video-avatar

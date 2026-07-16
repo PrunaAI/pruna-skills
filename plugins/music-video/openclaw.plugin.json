@@ -1,0 +1,19 @@
+{
+  "id": "music-video",
+  "name": "music-video",
+  "description": "Use when the user wants a music video, lyric video, sung promo, or original song paired with performance and B-roll clips.",
+  "skills": [
+    "skills/music-video",
+    "skills/music-2.5",
+    "skills/whisperx",
+    "skills/p-image",
+    "skills/p-image-edit",
+    "skills/p-video",
+    "skills/p-video-avatar"
+  ],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

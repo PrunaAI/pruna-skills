@@ -1,8 +1,8 @@
 # Educational explainer motion (dynamic, physics-safe)
 
-Motion rules for **narrator** (`p-video`) and **character** (`p-video-avatar`) beats in [educational-explainer](../workflows/verticals/interactive-explainer/SKILL.md).
+Motion rules for **narrator** (`p-video`) and **character** (`p-video-avatar`) beats in [interactive-explainer](../workflows/verticals/interactive-explainer/SKILL.md).
 
-Related: [scene-anchor-triple.md](./scene-anchor-triple.md) · [scene-transition-video](../workflows/core/visual-transition-reel/SKILL.md)
+Related: [scene-anchor-triple.md](./scene-anchor-triple.md) · [visual-transition-reel](../workflows/core/visual-transition-reel/SKILL.md)
 
 ## Defaults
 

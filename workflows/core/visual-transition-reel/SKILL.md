@@ -1,8 +1,9 @@
 ---
 name: visual-transition-reel
 description: Use when the user needs a visual montage, transitions between stills, action-sequence reel, or multi-scene piece where narration is optional or absent.
+license: MIT
 metadata:
-  version: "0.0.1"
+  version: "1.0.1"
 ---
 
 # Scene transition video (Pruna `p-video` + `p-image` / `p-image-edit`)
@@ -13,7 +14,7 @@ Canonical spec: [scene-anchor-pair.md](../../../../../references/video/scene-anc
 
 See [p-video](../../../../tools/video/p-video/SKILL.md), [p-image](../../../../tools/image/p-image/SKILL.md), [p-image-edit](../../../../tools/image/p-image-edit/SKILL.md), [parallel-execution.md](../../../../../references/shared/parallel-execution.md), and [pruna-api.md](../../../../../references/shared/pruna-api.md).
 
-For narrated films (pair + TTS audio), use [multi-scene-ai-video](../narrated-multi-scene/SKILL.md) instead.
+For narrated films (pair + TTS audio), use [narrated-multi-scene](../narrated-multi-scene/SKILL.md) instead.
 
 **Staged generation:** [staged-generation-gate.md](../../../../../references/shared/staged-generation-gate.md) · [workflow-feedback-gates.md](../../../../../references/workflows/workflow-feedback-gates.md). Default runner **`--phase stills`**.
 
@@ -36,7 +37,7 @@ For narrated films (pair + TTS audio), use [multi-scene-ai-video](../narrated-mu
 | **Per scene *i*** | **Start still** (`edit_prompt` or upload)? **End still** (`last_frame_edit_prompt`)? **Transition `video_prompt`** (OPEN/MID/CLOSE motion)? `duration_seconds`? |
 | **Continuity** | Per scene: **`chain_from_previous`** only when motion continues. Otherwise composed OPENING still + hard cut. |
 | **Stills source** | Generate via **`p-image`** hero + **`p-image-edit`**, or user-supplied photo pairs? |
-| **Global** | `style_bible`? `aspect_ratio`? `project_seed`? `frame_chain_mode` (`extract_last_frame` vs `parallel_vignettes`)? |
+| **Global** | `style_bible`? `aspect_ratio`? `ritual_seed`? `frame_chain_mode` (`extract_last_frame` vs `parallel_vignettes`)? |
 | **Audio** | Native SFX only (default), optional [stable-audio-2.5](../../../../tools/audio/stable-audio-2.5/SKILL.md) bed in post, or upgrade to triple + TTS? |
 | **Assembly** | Concat order; chain crossfade (~0.12–0.15s) vs hard cut (0)? Target total duration? |
 
@@ -55,7 +56,7 @@ Ask follow-ups until every scene row has enough to build `input` without guessin
 
 One approved anchor still when generating from text:
 
-1. **`p-image`** with `hero_prompt` + `style_bible` + locked `project_seed`
+1. **`p-image`** with `hero_prompt` + `style_bible` + [random seed ritual](../../../references/shared/random-seed-ritual.md) (SSoT)
 2. Slop gate — approve before branching edits
 
 Skip when every scene uses **uploaded** start/end images.
@@ -137,10 +138,10 @@ Default **`--phase stills`**. Phased flow:
 
 ```bash
 mkdir -p output/core/visual-transition-reel/my-transitions/{stills,clips}
-cp catalog/workflows/core/visual-transition-reel/templates/transition-plan.template.json \
+cp workflows/core/visual-transition-reel/templates/transition-plan.template.json \
    output/core/visual-transition-reel/my-transitions/plan.json
 
-python3 catalog/workflows/core/visual-transition-reel/scripts/run_from_plan.py \
+python3 workflows/core/visual-transition-reel/scripts/run_from_plan.py \
   --plan output/core/visual-transition-reel/my-transitions/plan.json \
   --out-dir output/core/visual-transition-reel/my-transitions
 
@@ -162,7 +163,7 @@ Requires `PRUNA_API_KEY`. Optional bed needs `REPLICATE_API_TOKEN`.
 
 ## Related
 
-- One beat: [single-scene-ai-video](../image-to-video/SKILL.md)
-- Narrated triple: [multi-scene-ai-video](../narrated-multi-scene/SKILL.md)
+- One beat: [image-to-video](../image-to-video/SKILL.md)
+- Narrated triple: [narrated-multi-scene](../narrated-multi-scene/SKILL.md)
 - Scenario hub: [pruna-generative-pipeline](../pruna-generative-pipeline/SKILL.md) (Recipe Q)
-- Example prompt: [examples/workflows/core/visual-transition-reel/example-prompt.md](../../../examples/workflows/core/visual-transition-reel/example-prompt.md)
+- Example prompt: [./example-prompt.md](./example-prompt.md)

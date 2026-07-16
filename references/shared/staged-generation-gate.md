@@ -25,7 +25,7 @@ See also: [parallel-execution.md](./parallel-execution.md) Phase 0, [generation-
 5. Run model checklists on every still before Phase B — **open each image and review it visually** against the checklist (see [generation-quality-checklists.md](./generation-quality-checklists.md#who-applies-these-checklists)); then present paths for user approval.
 7. **Ask when art direction is unclear** — visual mode, cast, continuity, motion energy, bed yes/no. Do not guess and burn video credits.
 8. **[Generation diversity](./generation-diversity.md)** — ritual seed + rotate ≥2 scenario axes vs the previous output in session.
-9. **[Random seed ritual](./random-seed-ritual.md)** — before **every** `POST /v1/predictions`, pick and state a random integer; assign `seed` / `project_seed` per ritual rules. Never copy doc example seeds for new work.
+9. **[Random seed ritual](./random-seed-ritual.md) (SSoT)** — before **every** `POST /v1/predictions`, generate and state a ritual string; derive prompt axes via sum-mod. **Do not** pass ritual string to API `seed`. Never copy doc example strings for new work.
 
 ## Art direction — ask the user when unclear
 
@@ -81,7 +81,7 @@ python3 ./scripts/run_from_plan.py --plan ./my-plan.json --out-dir ./output/reel
 ### Interactive explainer
 
 ```bash
-python3 catalog/workflows/verticals/interactive-explainer/scripts/run_from_plan.py \
+python3 workflows/verticals/interactive-explainer/scripts/run_from_plan.py \
   --plan ./output/.../plan.json --out-dir ./output/... --phase stills
 # review stills/
 python3 .../run_from_plan.py --plan ... --out-dir ... --approve-stills --phase tts

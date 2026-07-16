@@ -1,13 +1,14 @@
 ---
 name: avatar-single-scene
-description: Use when the user needs one talking-head clip, a single host line with lip sync, one spokesperson beat, or staged approval before generating avatar video.
+description: Use when the user needs one talking-head clip, a single host line with lip sync, or one spokesperson beat—not multi-segment host reels or motion-transfer comparison grids.
+license: MIT
 metadata:
-  version: "0.0.1"
+  version: "1.0.1"
 ---
 
 # Single-scene avatar video (Pruna only)
 
-One approved portrait → one **`p-video-avatar`** job. Stills and QA reuse the same patterns as [multi-scene-avatar-video](../avatar-multi-scene/SKILL.md); use [generation-quality-checklists.md](../../../../../references/shared/generation-quality-checklists.md) and that folder’s **`prompt-templates.md`**.
+One approved portrait → one **`p-video-avatar`** job. Stills and QA reuse the same patterns as [avatar-multi-scene](../avatar-multi-scene/SKILL.md); use [generation-quality-checklists.md](../../../../../references/shared/generation-quality-checklists.md) and that folder’s **`prompt-templates.md`**.
 
 Speak to the requester in **plain language**: explain what they will hear (full **`voice_script`**) and see (still + motion) before anything hits the API.
 
@@ -27,7 +28,7 @@ Atomic APIs: [p-video-avatar](../../../../tools/video/p-video-avatar/SKILL.md), 
 
 ## Natural language script
 
-Write **`voice_script`** as **real dialogue**: contractions, natural rhythm, short sentences—how a person talks on camera, not a press release. See [multi-scene-avatar-video/prompt-templates.md](../avatar-multi-scene/prompt-templates.md) for good/bad examples.
+Write **`voice_script`** as **real dialogue**: contractions, natural rhythm, short sentences—how a person talks on camera, not a press release. See [avatar-multi-scene/prompt-templates.md](../avatar-multi-scene/prompt-templates.md) for good/bad examples.
 
 **`voice_prompt`** must describe **human delivery** (pacing, warmth, founder/conversational tone)—never paste marketing copy or script lines into it.
 
@@ -48,8 +49,8 @@ Write **`voice_script`** as **real dialogue**: contractions, natural rhythm, sho
 | **Look** | `9:16` / `16:9` still? Avatar **`resolution`** `720p` or `1080p`? |
 | **Image source** | Upload-only reference, or generate/refine with **`p-image`** / **`p-image-edit`** first? |
 | **Motion** | Desired energy for **`video_prompt`**—specific camera angle and movement (positive wording only)? |
-| **Character** | Age, look, realism level (photoreal vs stylized)—see character sheet in [multi-scene-avatar-video](../avatar-multi-scene/SKILL.md) |
-| **Seed** | **[Random seed ritual](../../../../references/shared/random-seed-ritual.md)** at hero → **`project_seed`**; pass same value to **`p-video-avatar`** (or user-supplied seed) |
+| **Character** | Age, look, realism level (photoreal vs stylized)—see character sheet in [avatar-multi-scene](../avatar-multi-scene/SKILL.md) |
+| **Ritual seed (SSoT)** | **[Random seed ritual](../../../../references/shared/random-seed-ritual.md)** at hero → log **`ritual_seed`**; derive prompt axes. Identity continuity = approved plate URL. Optional **`api_seed`** only when user locks API reproducibility |
 | **Audio (optional)** | Upload [Gemini TTS](../../../../tools/audio/gemini-3.1-flash-tts/SKILL.md) for lip-sync via **`input.audio`** (preferred over post-mux) — see [scene-anchor-triple.md](../../../../../references/video/scene-anchor-triple.md) avatar variant. Or use native **`voice_script`**. |
 
 If any answer is missing and the user has not waived it, **ask** before generating.
@@ -79,5 +80,5 @@ When the user confirms:
 
 ## Related
 
-- Multi-scene version: [multi-scene-avatar-video](../avatar-multi-scene/SKILL.md)
+- Multi-scene version: [avatar-multi-scene](../avatar-multi-scene/SKILL.md)
 - Generative chain overview: [pruna-generative-pipeline](../pruna-generative-pipeline/SKILL.md)

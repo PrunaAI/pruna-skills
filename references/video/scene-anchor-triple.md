@@ -156,9 +156,9 @@ Upgrade a **pair** to a **triple** by adding TTS → upload → `input.audio` an
 
 ## Workflows that implement this
 
-- [scene-transition-video](../workflows/core/visual-transition-reel/SKILL.md) — visual pair (no VO)
-- [multi-scene-ai-video](../workflows/core/narrated-multi-scene/SKILL.md) — primary narrated workflow
-- [single-scene-ai-video](../workflows/core/image-to-video/SKILL.md) — one beat
+- [visual-transition-reel](../workflows/core/visual-transition-reel/SKILL.md) — visual pair (no VO)
+- [narrated-multi-scene](../workflows/core/narrated-multi-scene/SKILL.md) — primary narrated workflow
+- [image-to-video](../workflows/core/image-to-video/SKILL.md) — one beat
 - [pruna-generative-pipeline](../workflows/router/pruna-generative-pipeline/SKILL.md) — Recipe **P**
 - Example runner: `output/dog-plush-movie/render_audio_led.py`
 

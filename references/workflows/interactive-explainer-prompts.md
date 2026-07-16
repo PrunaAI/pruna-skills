@@ -1,6 +1,6 @@
 # Interactive explainer — positive prompts & blocked phrases
 
-Extracted reference for [educational-explainer](../../workflows/verticals/interactive-explainer/SKILL.md). The runner enforces these via `validate_plan` and `STILL_PROMPT_TRIGGERS` in [`run_from_plan.py`](../../workflows/verticals/interactive-explainer/scripts/run_from_plan.py).
+Extracted reference for [interactive-explainer](../../workflows/verticals/interactive-explainer/SKILL.md). The runner enforces these via `validate_plan` and `STILL_PROMPT_TRIGGERS` in [`run_from_plan.py`](../../workflows/verticals/interactive-explainer/scripts/run_from_plan.py).
 
 ## Principle
 

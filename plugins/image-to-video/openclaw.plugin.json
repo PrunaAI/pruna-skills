@@ -1,0 +1,18 @@
+{
+  "id": "image-to-video",
+  "name": "image-to-video",
+  "description": "Use when the user needs one video clip from stills, a single narrated story beat, one B-roll shot, or one scene\u2014not a full multi-scene film or talking-head-only piece.",
+  "skills": [
+    "skills/image-to-video",
+    "skills/p-image",
+    "skills/p-image-edit",
+    "skills/p-video",
+    "skills/gemini-3.1-flash-tts",
+    "skills/stable-audio-2.5"
+  ],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

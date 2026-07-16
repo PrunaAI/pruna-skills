@@ -1,0 +1,8 @@
+{
+  "scripts": { "core": [], "shared": [] },
+  "references": [
+    "recipe-catalog.md",
+    "staged-generation-gate.md",
+    "pruna-models.md"
+  ]
+}

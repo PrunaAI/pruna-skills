@@ -1,0 +1,13 @@
+{
+  "id": "requesting-generation-feedback",
+  "name": "requesting-generation-feedback",
+  "description": "Use when the agent is about to call paid generation APIs, deliver a final audio mix, or proceed without user review in a multi-step image, video, or audio workflow.",
+  "skills": [
+    "skills/requesting-generation-feedback"
+  ],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

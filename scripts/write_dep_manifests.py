@@ -9,8 +9,7 @@ import re
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-GITHUB_REPO = "PrunaAI/pruna-ai-content-generation-skills"
-SKILLS_PATH = "skills"
+GITHUB_REPO = "PrunaAI/pruna-skills"
 GIT_REF = "main"
 
 
@@ -32,11 +31,7 @@ def patch_skill_md_depends(skill_md: Path, deps: list[str]) -> None:
 
 
 def apm_path(skill: str) -> str:
-    return f"{GITHUB_REPO}/{SKILLS_PATH}/{skill}"
-
-
-def pspm_key(skill: str) -> str:
-    return f"github:{GITHUB_REPO}/{SKILLS_PATH}/{skill}"
+    return f"{GITHUB_REPO}/plugins/{skill}/skills/{skill}"
 
 
 def write_apm_yml(dest: Path, skill: str, version: str, description: str, deps: list[str]) -> None:
@@ -51,84 +46,82 @@ def write_apm_yml(dest: Path, skill: str, version: str, description: str, deps: 
     )
 
 
-def write_pspm_json(dest: Path, skill: str, version: str, description: str, deps: list[str]) -> None:
-    files = ["SKILL.md", "skill.manifest.json", "pspm.json", "references", "scripts", "templates"]
-    if deps:
-        files.extend(["skill.deps.json", "apm.yml"])
-    payload: dict = {
-        "$schema": "https://pspm.dev/schemas/pspm.json",
-        "name": f"@pruna/{skill}",
-        "version": version,
-        "description": description,
-        "license": "MIT",
-        "files": files,
-    }
-    if deps:
-        payload["githubDependencies"] = {pspm_key(d): GIT_REF for d in deps}
-    dest.write_text(json.dumps(payload, indent=2) + "\n")
-
-
 def write_skill_deps_json(
-    dest: Path, skill: str, version: str, deps: list[str], *, include_resolvers: bool = True
+    dest: Path,
+    skill: str,
+    version: str,
+    deps: list[str],
+    skills_path: str,
+    *,
+    include_resolvers: bool = True,
 ) -> None:
     payload: dict = {
         "schemaVersion": 1,
         "skill": skill,
         "version": version,
         "repository": GITHUB_REPO,
-        "skillsPath": SKILLS_PATH,
+        "pluginPath": f"plugins/{skill}",
+        "skillPath": f"plugins/{skill}/skills/{skill}",
+        "skillsPath": skills_path,
         "depends": deps,
     }
     if include_resolvers:
         payload["resolvers"] = {
             "skills": {"depends": deps},
             "apm": {"dependencies": {"apm": [apm_path(d) for d in deps]}},
-            "pspm": {"githubDependencies": {pspm_key(d): GIT_REF for d in deps}},
             "openclaw": {
                 "install": [f"git:{GITHUB_REPO}@{GIT_REF}"],
-                "note": "Install each skill under skills/<name> from the repo tree.",
+                "note": "Install each skill from plugins/<name>/skills/<name> in the repo tree.",
             },
         }
     dest.write_text(json.dumps(payload, indent=2) + "\n")
 
 
-def emit_for_bundle(dest: Path, skill: str, manifest_path: Path, version: str) -> bool:
+def emit_for_bundle(
+    dest: Path,
+    skill: str,
+    manifest_path: Path,
+    version: str,
+    skills_path: str,
+) -> bool:
     """Write publish/dep manifests for a bundled skill dir. Returns True if tool_skills present."""
     manifest = json.loads(manifest_path.read_text())
     deps: list[str] = list(manifest.get("tool_skills") or [])
-    skill_md = dest / "SKILL.md"
-    description = read_description(skill_md, skill)
-    write_pspm_json(dest / "pspm.json", skill, version, description, deps)
     if not deps:
         return False
+    skill_md = dest / "SKILL.md"
+    description = read_description(skill_md, skill)
     patch_skill_md_depends(skill_md, deps)
     write_apm_yml(dest / "apm.yml", skill, version, description, deps)
-    write_skill_deps_json(dest / "skill.deps.json", skill, version, deps)
+    write_skill_deps_json(dest / "skill.deps.json", skill, version, deps, skills_path)
     return True
 
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--manifest", type=Path, help="catalog skill.manifest.json")
+    ap.add_argument("--manifest", type=Path, help="skill.manifest.json path")
     ap.add_argument("--dest", type=Path, help="bundle output directory")
     ap.add_argument("--skill", help="skill name")
+    ap.add_argument("--skills-path", default="plugins", help="plugin skills/ directory (repo-relative)")
     args = ap.parse_args()
-    version = (REPO / "VERSION").read_text().strip()
+    ver = (REPO / "VERSION").read_text().strip()
 
     if not args.manifest or not args.dest or not args.skill:
         ap.error("--manifest, --dest, and --skill are required")
-    emit_for_bundle(args.dest, args.skill, args.manifest, version)
+    emit_for_bundle(args.dest, args.skill, args.manifest, ver, args.skills_path)
     print(f"publish manifests -> {args.dest}")
 
 
 if __name__ == "__main__":
     main()
     # ponytail: smoke when bundles exist
-    deps_file = REPO / "skills/avatar-multi-scene/skill.deps.json"
+    deps_file = REPO / "plugins/avatar-multi-scene/skills/avatar-multi-scene/skill.deps.json"
     if deps_file.is_file():
         m = json.loads(
-            (REPO / "catalog/workflows/core/avatar-multi-scene/skill.manifest.json").read_text()
+            (REPO / "workflows/core/avatar-multi-scene/skill.manifest.json").read_text()
         )
         d = json.loads(deps_file.read_text())
         assert d["depends"] == m["tool_skills"], "avatar-multi-scene skill.deps.json drift"
+        assert d["skillsPath"] == "plugins/avatar-multi-scene/skills"
         assert "skilldex" not in d.get("resolvers", {}), "skilldex resolver removed"
+        assert "pspm" not in d.get("resolvers", {}), "pspm resolver removed"

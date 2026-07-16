@@ -12,25 +12,25 @@ Not everything called a “skills marketplace” is a package manager.
 |------|------|----------|
 | **Specification** | Defines `SKILL.md` + folder layout | [agentskills.io](https://agentskills.io/specification) |
 | **Validator** | Lint / parse; no install graph | [skills-ref](https://github.com/agentskills/agentskills/tree/main/skills-ref) |
-| **Installer CLI** | Fetch skills → agent directories | `npx skills`, `pspm`, `apm`, `skillpm`, `openclaw skills` |
-| **Registry / index** | Discovery, stats, search | [skills.sh](https://skills.sh), ClawHub, Skilldex registry, PSPM registry |
+| **Installer CLI** | Fetch skills → agent directories | `npx skills`, `apm`, `skillpm`, `openclaw skills` |
+| **Registry / index** | Discovery, stats, search | [skills.sh](https://skills.sh), ClawHub, Skilldex registry |
 | **Marketplace** | Curated catalog, often zip + payment | Agensi, Claude `/plugin` marketplaces |
 | **Native plugin system** | Skills + agents + hooks + MCP in one bundle | Claude Code plugins, Copilot plugins, `.claude-plugin/plugin.json` |
 
-**Pruna repo position:** we author in `catalog/`, ship portable bundles in `skills/`, and generate cross-installer dependency hints from one `tool_skills` list.
+**Pruna repo position:** we author in ``, ship self-contained plugins in `plugins/`, and generate cross-installer dependency hints from one `tool_skills` list.
 
 ## At a glance — installers
 
-| | **skills** | **APM** | **PSPM** | **Skilldex** | **OpenClaw / ClawHub** |
-|---|------------|---------|----------|--------------|------------------------|
-| **CLI** | `npx skills add` | `apm install` | `pspm add` | `skillpm` / `spm` | `openclaw skills install` / `clawhub install` |
-| **Project manifest** | `skills-lock.json` (optional) | `apm.yml` | `pspm.json` | `skilldex.json` | workspace `skills/` + `.clawhub/origin.json` |
-| **Lockfile** | hashes in lock | `apm.lock.yaml` | `pspm-lock.json` | install metadata in manifest | ClawHub version pins |
-| **Skill unit** | `SKILL.md` folder | skill bundle, `.apm/` package, plugin | `SKILL.md` + `pspm.json` | `.skill` / `SKILL.md` package | `SKILL.md` bundle |
-| **Also manages** | — | prompts, instructions, MCP, LSP | `runtime/` (uv/pnpm) | **skillsets** (bundled coherent groups) | OpenClaw-only trust verify |
-| **Transitive deps** | `depends:` in `SKILL.md` ([#860](https://github.com/vercel-labs/skills/issues/860)) | `dependencies.apm` in `apm.yml` | `dependencies` / `githubDependencies` | remote refs in `SKILLSET.md`; git install | registry + `git:owner/repo@ref` |
-| **Registry** | skills.sh + any GitHub | any git host | PSPM registry + GitHub | Skilldex registry (metadata) | ClawHub public registry |
-| **Agents** | 68+ via symlinks | Copilot, Claude, Cursor, Codex, Gemini, … | 40+ | Claude Code (MCP-native) | OpenClaw (+ portable `SKILL.md`) |
+| | **skills** | **APM** | **Skilldex** | **OpenClaw / ClawHub** |
+|---|------------|---------|--------------|------------------------|
+| **CLI** | `npx skills add` | `apm install` | `skillpm` / `spm` | `openclaw skills install` / `clawhub install` |
+| **Project manifest** | `skills-lock.json` (optional) | `apm.yml` | `skilldex.json` | workspace `skills/` + `.clawhub/origin.json` |
+| **Lockfile** | hashes in lock | `apm.lock.yaml` | install metadata in manifest | ClawHub version pins |
+| **Skill unit** | `SKILL.md` folder | skill bundle, `.apm/` package, plugin | `.skill` / `SKILL.md` package | `SKILL.md` bundle |
+| **Also manages** | — | prompts, instructions, MCP, LSP | **skillsets** (bundled coherent groups) | OpenClaw-only trust verify |
+| **Transitive deps** | `depends:` in `SKILL.md` ([#860](https://github.com/vercel-labs/skills/issues/860)) | `dependencies.apm` in `apm.yml` | remote refs in `SKILLSET.md`; git install | registry + `git:owner/repo@ref` |
+| **Registry** | skills.sh + any GitHub | any git host | Skilldex registry (metadata) | ClawHub public registry |
+| **Agents** | 68+ via symlinks | Copilot, Claude, Cursor, Codex, Gemini, … | Claude Code (MCP-native) | OpenClaw (+ portable `SKILL.md`) |
 
 ### Secondary channels (not full package managers)
 
@@ -49,7 +49,6 @@ agentskills.io (SKILL.md + scripts/ references/ assets/)
         │
         ├── skills (+ skills.sh)     … GitHub install, 68+ agents, depends: siblings
         ├── APM                      … full agent stack manifest (skills + MCP + prompts)
-        ├── PSPM                     … semver registry + githubDependencies
         ├── Skilldex (skillpm)       … scoped install, validation score, skillsets
         ├── OpenClaw / ClawHub       … OpenClaw registry + git/local install
         └── Marketplaces (Agensi, Claude plugins) … discovery + bundling, varied dep models
@@ -57,7 +56,6 @@ agentskills.io (SKILL.md + scripts/ references/ assets/)
 
 - **skills** — “install this skill folder from GitHub.”
 - **APM** — “reproduce the whole agent setup for the team.”
-- **PSPM** — “publish and version skill packages (npm-like).”
 - **Skilldex** — “install with scopes + quality score; bundle related skills as a **skillset**.”
 - **ClawHub** — “OpenClaw’s versioned public registry.”
 - **Agensi / Claude plugins** — discovery and distribution; you (or MCP) place files in skill dirs.
@@ -79,13 +77,6 @@ agentskills.io (SKILL.md + scripts/ references/ assets/)
 - **Strength:** one manifest for skills **and** MCP; policy + security scan
 - **Drop-in:** [documented migration from `npx skills`](https://github.com/microsoft/apm)
 
-### PSPM (AnyT)
-
-- **Install:** `pspm add github:owner/repo/path` or registry `@user/name`
-- **Deps:** `dependencies` (semver), `githubDependencies`, `localDependencies`, `wellKnownDependencies`
-- **Strength:** private registry, encryption, frozen lockfile CI
-- **Skill package:** requires `pspm.json` beside `SKILL.md` for publish; GitHub installs can consume generated manifest
-
 ### Skilldex (`skillpm` / `spm`)
 
 - **Install:** `skillpm install <path|git+https://…>` at global / shared / project scope
@@ -93,7 +84,7 @@ agentskills.io (SKILL.md + scripts/ references/ assets/)
 - **SKILLSET.md:** frontmatter includes `skills:` list for remote skill refs; embedded skills auto-discovered
 - **Strength:** spec conformance **scoring**, MCP tools (`skilldex_install`, …), skillset coherence
 - **vs skills.sh:** Skilldex paper explicitly compares to vercel-labs/skills — adds scoping, scoring, skillsets ([arXiv:2604.16911](https://arxiv.org/abs/2604.16911))
-- **This repo:** does not generate Skilldex skillsets; use `depends:` / `apm.yml` / `pspm.json` instead
+- **This repo:** does not generate Skilldex skillsets; use `depends:` / `apm.yml` instead
 
 ### OpenClaw + ClawHub
 
@@ -119,8 +110,8 @@ agentskills.io (SKILL.md + scripts/ references/ assets/)
 ### skills-ref (validator only)
 
 ```bash
-npx skills-ref validate ./skills/p-image
-npx skills-ref validate --allow-field depends ./skills/avatar-multi-scene
+npx skills-ref validate ./plugins/p-image/skills/p-image
+npx skills-ref validate --allow-field depends ./plugins/avatar-multi-scene/skills/avatar-multi-scene
 ```
 
 Use `--allow-field depends` (and any harness-specific fields) until `depends` enters the base spec allowlist ([#350](https://github.com/agentskills/agentskills/pull/350)).
@@ -149,7 +140,6 @@ Sibling **names** in the same source tree. Unknown keys should be ignored by oth
 |------|------|------------|---------|
 | **skills** | `SKILL.md` | YAML list of **sibling names** | `depends: [p-image]` |
 | **APM** | `apm.yml` | YAML `dependencies.apm` **full paths** | `PrunaAI/…/skills/p-image` |
-| **PSPM** | `pspm.json` | JSON `githubDependencies` map | `"github:PrunaAI/…/skills/p-image": "main"` |
 | **Canonical** | `skill.deps.json` | JSON `depends` + optional `resolvers` | machine interchange |
 
 **Rule:** short names only in `SKILL.md`. Full paths / URLs only in sidecar manifests (generated, not hand-edited).
@@ -166,47 +156,43 @@ Sibling **names** in the same source tree. Unknown keys should be ignored by oth
 |--------|----------|
 | `SKILL.md` → `depends:` | `npx skills` (sibling names) |
 | `apm.yml` | APM (full repo paths) |
-| `pspm.json` | PSPM (`githubDependencies`) |
 | `skill.deps.json` | canonical JSON + `resolvers` |
 
-**Author once:** `tool_skills` in `catalog/**/skill.manifest.json` only — do not hand-edit dep sidecars in `skills/`.
+**Author once:** `tool_skills` in `**/skill.manifest.json` only — do not hand-edit dep sidecars in `plugins/`.
 
 ## Install equivalents (this repository)
 
-Source: `PrunaAI/pruna-ai-content-generation-skills/skills`
+Source: `PrunaAI/pruna-skills/plugins/<name>/skills/<name>`
 
 ```bash
 # skills CLI
-npx skills add PrunaAI/pruna-ai-content-generation-skills/skills \
+npx skills add PrunaAI/pruna-skills/plugins/avatar-multi-scene/skills \
   --skill avatar-multi-scene --agent cursor -y
 
 # APM
-apm install PrunaAI/pruna-ai-content-generation-skills/skills/avatar-multi-scene
+apm install PrunaAI/pruna-skills/plugins/avatar-multi-scene/skills/avatar-multi-scene
 
-# PSPM
-pspm add github:PrunaAI/pruna-ai-content-generation-skills/skills/avatar-multi-scene
-
-# OpenClaw (git — install subpaths per skill)
-openclaw skills install git:PrunaAI/pruna-ai-content-generation-skills@main
+# Claude plugin marketplace
+/plugin install avatar-multi-scene@pruna-skills
 ```
 
-Copy-paste project manifests: [consumer-manifests](../../examples/consumer-manifests/README.md).
+Copy-paste project manifests: [consumer-manifests](../../references/consumer-manifests/README.md).
 
 ## Cross-manager annotation matrix
 
-| Concern | skills | APM | PSPM | Skilldex | OpenClaw | Recommendation |
-|---------|--------|-----|------|----------|----------|----------------|
-| **Identity** | `name` in `SKILL.md` | path in `apm.yml` | scoped `name` in `pspm.json` | package name / folder | slug from `name` or `--as` | `name` === folder name everywhere |
-| **Version** | `metadata.version` | `version` in `apm.yml` | `version` in `pspm.json` | registry version | ClawHub version tag | repo [`VERSION`](../../../VERSION) at bundle time |
-| **Sibling deps** | `depends: [short names]` | full `owner/repo/skills/name` | `githubDependencies` map | `SKILLSET.md` `skills:` | multiple installs | generate from `tool_skills` |
-| **Coherent bundles** | repeated `--skill` or `depends` | transitive `apm.yml` | lockfile graph | **skillset** + shared assets | meta-package on ClawHub | `depends:` + repeated installs |
-| **Runtime reqs** | `compatibility` | — | `requirements` in `pspm.json` | scored in validate | — | document API keys in `compatibility` |
+| Concern | skills | APM | Skilldex | OpenClaw | Recommendation |
+|---------|--------|-----|----------|----------|----------------|
+| **Identity** | `name` in `SKILL.md` | path in `apm.yml` | package name / folder | slug from `name` or `--as` | `name` === folder name everywhere |
+| **Version** | `metadata.version` | `version` in `apm.yml` | registry version | ClawHub version tag | repo [`VERSION`](../../../VERSION) at bundle time |
+| **Sibling deps** | `depends: [short names]` | full `owner/repo/skills/name` | `SKILLSET.md` `skills:` | multiple installs | generate from `tool_skills` |
+| **Coherent bundles** | repeated `--skill` or `depends` | transitive `apm.yml` | **skillset** + shared assets | meta-package on ClawHub | `depends:` + repeated installs |
+| **Runtime reqs** | `compatibility` | — | scored in validate | — | document API keys in `compatibility` |
 | **Validation** | skills-ref | apm scan (unicode) | publish checks | conformance score /100 | `openclaw skills verify` | CI: `skills-ref validate --allow-field depends` |
 
 ### Rules (avoid breakage)
 
 1. **Short names in `depends:` only** — no GitHub paths in `SKILL.md`.
-2. **Full paths in `apm.yml` / `pspm.json` only** — generated in `skills/`, not hand-edited.
+2. **Full paths in `apm.yml` only** — generated in `plugins/`, not hand-edited.
 3. **Don’t encode installer logic in `metadata`** — use per-tool dep fields.
 4. **Bundled `references/` are copies** — tool skills are separate installs, not `../p-image/`.
 5. **Extra frontmatter is safe** — tools that don’t know `depends` should ignore it.
@@ -219,7 +205,6 @@ Copy-paste project manifests: [consumer-manifests](../../examples/consumer-manif
 | Fast install to Cursor / Codex / many agents | `npx skills add` |
 | Search + popularity signals | skills.sh |
 | Team agent stack (skills + MCP + lockfile) | APM |
-| Registry publish, semver, private packages | PSPM |
 | Scoped install + quality score + skill bundles | Skilldex |
 | OpenClaw agent + public versioned registry | ClawHub / `openclaw skills` |
 | Paid / reviewed marketplace catalog | Agensi |
@@ -232,10 +217,10 @@ Likely convergence:
 
 1. **agentskills.io** adopts optional `depends` (sibling + optional remote).
 2. **skills-ref** adds `depends` to the default allowlist.
-3. **APM / PSPM** read `depends` when present and map to their native dep fields.
+3. **APM** read `depends` when present and map to their native dep fields.
 4. **Skillsets** (Skilldex) or **meta-packages** (ClawHub) express workflow + tool skills as one install unit.
 
-Until then: **author `tool_skills` once** in `catalog/`, bundle to `depends` + `apm.yml` + `pspm.json`.
+Until then: **author `tool_skills` once** in ``, bundle to `depends` + `apm.yml`.
 
 ## Links
 
@@ -245,7 +230,6 @@ Until then: **author `tool_skills` once** in `catalog/`, bundle to `depends` + `
 | skills-ref | [github.com/agentskills/agentskills](https://github.com/agentskills/agentskills/tree/main/skills-ref) |
 | skills CLI + skills.sh | [github.com/vercel-labs/skills](https://github.com/vercel-labs/skills) · [#860 depends](https://github.com/vercel-labs/skills/issues/860) |
 | APM | [microsoft.github.io/apm](https://microsoft.github.io/apm/) |
-| PSPM | [docs.anyt.io/pspm](https://docs.anyt.io/pspm/introduction) |
 | Skilldex | [github.com/Pandemonium-Research/Skilldex](https://github.com/Pandemonium-Research/Skilldex) · [paper](https://arxiv.org/abs/2604.16911) |
 | OpenClaw / ClawHub | [docs.openclaw.ai/tools/skills](https://docs.openclaw.ai/tools/skills) |
 | Agensi | [agensi.io/skills](https://www.agensi.io/skills) |

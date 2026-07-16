@@ -1,6 +1,6 @@
 # Animate beats in multi-scene reels
 
-How **`p-video-animate`** fits into mixed **`avatar` + `animate`** pieces built with [multi-scene-avatar-video](./SKILL.md).
+How **`p-video-animate`** fits into mixed **`avatar` + `animate`** pieces built with [avatar-multi-scene](./SKILL.md).
 
 ## What each model does
 
@@ -9,7 +9,7 @@ How **`p-video-animate`** fits into mixed **`avatar` + `animate`** pieces built 
 | **`p-image` / `p-image-edit`** | Reference stills — motion-source portrait and persona subjects |
 | **`p-video-avatar`** | Optional: generate a **motion template** (talking-head source video) when you don't have a licensed `.mp4` |
 | **`p-video-animate`** | Transfer motion from source video onto reference image |
-| **Slider render** | Optional comparison MP4 (motion template vs animated output) via [`generate_video_comparison.py`](../../../workflows/_shared/scripts/generate_video_comparison.py) |
+| **Slider render** | Optional comparison MP4 (motion template vs animated output) via [`generate_video_comparison.py`](./scripts/generate_video_comparison.py) |
 
 **`p-video-animate`** takes:
 
@@ -114,19 +114,25 @@ Avatar CTA rows use **`type: avatar`** → deliver `{id}_avatar.mp4`. Animate ro
 
 ## Slider comparison (optional)
 
-Requires `ffmpeg` + Pillow (`pip install -r catalog/workflows/_shared/scripts/requirements.txt`).
+Requires `ffmpeg` + Pillow (`pip install -r ./scripts/requirements-comparison.txt`).
 
 ```bash
-python3 catalog/workflows/_shared/scripts/generate_video_comparison.py \
+python3 ./scripts/generate_video_comparison.py \
   --source path/to/motion-template.mp4 \
   --output path/to/animated-output.mp4 \
   --render path/to/scene_compare.mp4
 ```
 
-Multi-sample mode: [`examples/workflows/launches/p-video-animate-comparison/`](../../../examples/workflows/launches/p-video-animate-comparison/)
+Multi-sample / multi-scene batch mode — copy [`batch.template.json`](./templates/batch.template.json), set `source`, `render`, and per-persona `samples[].output` paths, then:
+
+```bash
+python3 ./scripts/generate_video_comparison.py --config ./templates/batch.template.json
+```
+
+Dry-run: add `--dry-run` to validate paths before rendering.
 
 ## Assembly
 
 Concat clips in scene-table order — avatar MP4s and animate comparison MP4s interleaved as planned. Level audio in your editor or ffmpeg.
 
-Example plan schema: [examples/workflows/launches/p-video-animate-comparison/](../../../examples/workflows/launches/p-video-animate-comparison/).
+Batch config schema: [`batch.template.json`](./templates/batch.template.json) (`scenes[]` with `source`, `render`, and `samples[]` per row).

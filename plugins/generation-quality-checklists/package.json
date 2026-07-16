@@ -1,0 +1,26 @@
+{
+  "name": "@pruna-ai/generation-quality-checklists",
+  "version": "1.0.1",
+  "type": "module",
+  "license": "MIT",
+  "description": "Use when reviewing generated images, video, or audio \u2014 run the core quality checklist and model-specific checklist before asking the user to approve stills or clips.",
+  "repository": "https://github.com/PrunaAI/pruna-skills",
+  "files": [
+    ".claude-plugin",
+    "openclaw.plugin.json",
+    "openclaw-entry.mjs",
+    "README.md",
+    "skills"
+  ],
+  "openclaw": {
+    "extensions": [
+      "./openclaw-entry.mjs"
+    ],
+    "compat": {
+      "pluginApi": ">=2026.3.24-beta.2"
+    },
+    "bundledSkills": [
+      "generation-quality-checklists"
+    ]
+  }
+}

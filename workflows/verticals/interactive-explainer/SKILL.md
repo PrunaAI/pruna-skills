@@ -1,21 +1,22 @@
 ---
 name: interactive-explainer
 description: Use when the user wants educational explainers with a host plus in-story characters, history or science shorts, or witness and expert dialogue—not wall-to-wall narration alone.
+license: MIT
 metadata:
-  version: "0.0.1"
+  version: "1.0.1"
 ---
 
 # Educational explainer (narrator + character interaction)
 
 **Not** wall-to-wall narration. Alternate **host / narrator VO** (`p-video` + TTS) with **people in the story speaking** (`p-video-avatar` + `voice_script`) — historians, scientists, witnesses, animated guides, etc.
 
-Canonical scene patterns: [educational-explainer-scenes.md](../../../../../references/workflows/interactive-explainer-scenes.md)  
-Motion (dynamic, physics-safe): [educational-explainer-motion.md](../../../../../references/workflows/interactive-explainer-motion.md)  
+Canonical scene patterns: [interactive-explainer-scenes.md](../../../../../references/workflows/interactive-explainer-scenes.md)  
+Motion (dynamic, physics-safe): [interactive-explainer-motion.md](../../../../../references/workflows/interactive-explainer-motion.md)  
 Narrator triple spec: [scene-anchor-triple.md](../../../../../references/video/scene-anchor-triple.md)
 
 See [p-video](../../../../tools/video/p-video/SKILL.md), [p-video-avatar](../../../../tools/video/p-video-avatar/SKILL.md), [p-image](../../../../tools/image/p-image/SKILL.md), [p-image-edit](../../../../tools/image/p-image-edit/SKILL.md), [gemini-3.1-flash-tts](../../../../tools/audio/gemini-3.1-flash-tts/SKILL.md).
 
-For **narrator-only** explainers, use [multi-scene-ai-video](../../core/narrated-multi-scene/SKILL.md) instead.
+For **narrator-only** explainers, use [narrated-multi-scene](../../core/narrated-multi-scene/SKILL.md) instead.
 
 **Staged generation:** [staged-generation-gate.md](../../../../../references/shared/staged-generation-gate.md) — approve plan → stills → narration TTS → video clips → assembly + bed. Default runner phase is **`stills`**.
 
@@ -61,7 +62,7 @@ Template: [`explainer-plan.template.json`](templates/explainer-plan.template.jso
 
 ## Motion (dynamic, physics-safe)
 
-Every scene needs **visible motion** — but not physics-heavy action. See [educational-explainer-motion.md](../../../../../references/workflows/interactive-explainer-motion.md).
+Every scene needs **visible motion** — but not physics-heavy action. See [interactive-explainer-motion.md](../../../../../references/workflows/interactive-explainer-motion.md).
 
 | Do | Don't |
 |----|-------|
@@ -157,7 +158,7 @@ Dialogue arc, stand-alone test, causal chain, visual–audio alignment, visual m
 - Motivational character lines instead of witness detail
 - Narrator rows that combine two visual chapters in one still
 - Static `video_prompt` (`OPEN: hold. CLOSE: hold.`) — always add a MID motion beat
-- Physics-trap motion (throwing, pouring, walking, prop handoffs) — see [educational-explainer-motion.md](../../../../../references/workflows/interactive-explainer-motion.md)
+- Physics-trap motion (throwing, pouring, walking, prop handoffs) — see [interactive-explainer-motion.md](../../../../../references/workflows/interactive-explainer-motion.md)
 - `720p` / `24` fps unless user explicitly requests draft quality
 - **Missing causal chain** — climax without prerequisite beats (mechanism, local standoff, deadline)
 - **Visual–audio mismatch** — character interior while narration describes harbor, ships, or courts
@@ -177,8 +178,8 @@ Requires `PRUNA_API_KEY`; optional bed needs `REPLICATE_API_TOKEN`.
 
 - Prompt tables: [interactive-explainer-prompts.md](../../../../../references/workflows/interactive-explainer-prompts.md)
 - Feedback: [requesting-generation-feedback](../../router/requesting-generation-feedback/SKILL.md)
-- Narrator-only: [multi-scene-ai-video](../../core/narrated-multi-scene/SKILL.md)
-- Visual transitions (no VO): [scene-transition-video](../../core/visual-transition-reel/SKILL.md)
+- Narrator-only: [narrated-multi-scene](../../core/narrated-multi-scene/SKILL.md)
+- Visual transitions (no VO): [visual-transition-reel](../../core/visual-transition-reel/SKILL.md)
 - Hub: [pruna-generative-pipeline](../pruna-generative-pipeline/SKILL.md) (Recipe R)
-- Example prompts: [examples/workflows/verticals/interactive-explainer/example-prompt.md](../../../examples/workflows/verticals/interactive-explainer/example-prompt.md)
+- Example prompts: [./example-prompt.md](./example-prompt.md)
 - Example plans (local workspace): `output/verticals/interactive-explainer/<project-slug>/plan.json` — see [output/README.md](../../../../output/README.md)
