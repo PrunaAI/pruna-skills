@@ -1,7 +1,7 @@
 {
   "id": "p-video-avatar",
   "name": "p-video-avatar",
-  "description": "Use when the user wants a talking-head video, lip-synced host or spokesperson clip, on-camera performance from a portrait plus script, or narrated avatar footage.",
+  "description": "Use when the user wants one talking-head API call from a portrait plus script. Prefer avatar-single-scene for a full single-beat workflow with gates; prefer avatar-multi-scene for multiple host segments.",
   "skills": [
     "skills/p-video-avatar"
   ],

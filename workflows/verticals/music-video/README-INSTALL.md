@@ -1,11 +1,26 @@
 # music-video
 
-Portable install:
+## Install
 
 ```bash
-npx skills add PrunaAI/pruna-skills/plugins/music-video/skills --skill music-video --agent cursor -y
+npx skills add PrunaAI/pruna-skills@music-video -y
 ```
 
-Requires `REPLICATE_API_TOKEN`, `PRUNA_API_KEY`, `ffmpeg`, and `ffprobe`.
+For a workflow with embedded tool dependencies, prefer:
 
-Copy [`templates/music-video-plan.template.json`](./templates/music-video-plan.template.json) to your output folder and edit lyrics before running `generate_song.py`.
+```bash
+npx plugins add PrunaAI/pruna-skills -y
+# pick music-video
+```
+
+List all skills: `npx skills add PrunaAI/pruna-skills -l`
+
+After install, start a **new chat**. See the [root README](../../../README.md).
+
+## From a local clone
+
+```bash
+npx skills add .@music-video -y
+# or:
+npx skills add ./plugins/music-video/skills --skill music-video -y
+```

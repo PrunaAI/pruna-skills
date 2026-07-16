@@ -2,17 +2,25 @@
 
 ## Install
 
-From a clone of this repository:
-
 ```bash
-mkdir -p ~/.cursor/skills
-cp -R /path/to/pruna-skills/workflows/core/avatar-single-scene ~/.cursor/skills/
+npx skills add PrunaAI/pruna-skills@avatar-single-scene -y
 ```
 
-Or install the whole repository with `npx skills add` (see repository root `README.md`). Restart Cursor or start a new chat.
+For a workflow with embedded tool dependencies, prefer:
 
-## Expected path
+```bash
+npx plugins add PrunaAI/pruna-skills -y
+# pick avatar-single-scene
+```
 
-```text
-~/.cursor/skills/avatar-single-scene/SKILL.md
+List all skills: `npx skills add PrunaAI/pruna-skills -l`
+
+After install, start a **new chat**. See the [root README](../../../README.md).
+
+## From a local clone
+
+```bash
+npx skills add .@avatar-single-scene -y
+# or:
+npx skills add ./plugins/avatar-single-scene/skills --skill avatar-single-scene -y
 ```

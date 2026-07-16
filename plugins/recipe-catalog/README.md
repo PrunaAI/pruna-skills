@@ -1,6 +1,6 @@
 # recipe-catalog
 
-Use when choosing a generative pipeline — mood boards, hero variants, explainers, music videos, avatar reels, and other recipe letters A–R with linked tool and workflow skills.
+Use when choosing among recipe letters A–R (mood boards, hero variants, explainers, music videos, avatar reels) and need linked tools/workflows. Prefer pruna-generative-pipeline when routing a live multi-step project with approval gates.
 
 ## Install
 

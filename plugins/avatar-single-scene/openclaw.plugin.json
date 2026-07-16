@@ -1,7 +1,7 @@
 {
   "id": "avatar-single-scene",
   "name": "avatar-single-scene",
-  "description": "Use when the user needs one talking-head clip, a single host line with lip sync, or one spokesperson beat\u2014not multi-segment host reels or motion-transfer comparison grids.",
+  "description": "Use when the user needs one talking-head beat with intake and approval gates\u2014not a raw p-video-avatar call, multi-segment host reels (avatar-multi-scene), or motion-transfer grids.",
   "skills": [
     "skills/avatar-single-scene",
     "skills/p-image",

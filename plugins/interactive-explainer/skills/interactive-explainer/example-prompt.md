@@ -26,5 +26,6 @@ cp workflows/verticals/interactive-explainer/templates/explainer-plan.template.j
 ## Install skill
 
 ```bash
-npx skills add PrunaAI/pruna-skills/plugins/interactive-explainer/skills --skill interactive-explainer --agent cursor -y
+npx skills add PrunaAI/pruna-skills@interactive-explainer -y
+# or: npx plugins add PrunaAI/pruna-skills -y  # pick interactive-explainer
 ```

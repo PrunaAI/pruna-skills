@@ -1,9 +1,9 @@
 {
   "name": "@pruna-ai/image-to-video",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "license": "MIT",
-  "description": "Use when the user needs one video clip from stills, a single narrated story beat, one B-roll shot, or one scene\u2014not a full multi-scene film or talking-head-only piece.",
+  "description": "Use when the user needs one narrated or B-roll scene from stills with optional TTS\u2014not a bare p-video API call, multi-scene film (narrated-multi-scene), or talking-head-only piece (avatar-single-scene).",
   "repository": "https://github.com/PrunaAI/pruna-skills",
   "files": [
     ".claude-plugin",

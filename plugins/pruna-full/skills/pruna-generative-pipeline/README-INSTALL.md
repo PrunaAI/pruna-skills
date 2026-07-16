@@ -2,17 +2,25 @@
 
 ## Install
 
-From a clone of this repository:
-
 ```bash
-mkdir -p ~/.cursor/skills
-cp -R /path/to/pruna-skills/workflows/router/pruna-generative-pipeline ~/.cursor/skills/
+npx skills add PrunaAI/pruna-skills@pruna-generative-pipeline -y
 ```
 
-Or install the whole repository with `npx skills add` (see repository root `README.md`). Restart Cursor or start a new chat.
+For a workflow with embedded tool dependencies, prefer:
 
-## Expected path
+```bash
+npx plugins add PrunaAI/pruna-skills -y
+# pick pruna-generative-pipeline
+```
 
-```text
-~/.cursor/skills/pruna-generative-pipeline/SKILL.md
+List all skills: `npx skills add PrunaAI/pruna-skills -l`
+
+After install, start a **new chat**. See the [root README](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/README/SKILL.md).
+
+## From a local clone
+
+```bash
+npx skills add .@pruna-generative-pipeline -y
+# or:
+npx skills add ./plugins/pruna-generative-pipeline/skills --skill pruna-generative-pipeline -y
 ```

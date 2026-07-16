@@ -25,7 +25,8 @@ python3 workflows/core/visual-transition-reel/scripts/run_from_plan.py \
 ## Install skill bundle
 
 ```bash
-npx skills add PrunaAI/pruna-skills/plugins/visual-transition-reel/skills --skill visual-transition-reel --agent cursor -y
+npx skills add PrunaAI/pruna-skills@visual-transition-reel -y
+# or: npx plugins add PrunaAI/pruna-skills -y  # pick visual-transition-reel
 ```
 
 ## Related

@@ -10,6 +10,7 @@
 | Shared API or quality rules | `references/shared/` or `references/<modality>/` | `./scripts/bundle_all_skills.sh` |
 | What ships in an install | `<skill>/skill.manifest.json` | `./scripts/bundle_skill.sh <skill>` |
 | Package version | `VERSION` | `python3 scripts/sync_skill_versions.py && ./scripts/bundle_all_skills.sh` |
+| Skill name list | `skills.catalog.json` | `./scripts/bundle_all_skills.sh` |
 
 **Do not edit `plugins/`** — it is generated. Pre-commit rebuilds when `tools/`, `guides/`, or `workflows/` change.
 
@@ -21,22 +22,24 @@
 | **Guides** | `guides/{prompting,quality,routing}/` | Prompting, QA, routing — no paid API |
 | **Workflows** | `workflows/{router,core,verticals}/` | End-to-end production pipelines |
 
-Authoring conventions: [SKILL-TEMPLATE.md](SKILL-TEMPLATE.md). Publish runbook: [PUBLISHING.md](PUBLISHING.md).
+Authoring conventions: [SKILL-TEMPLATE.md](SKILL-TEMPLATE.md). Publish runbook: [PUBLISHING.md](PUBLISHING.md). Follow-ups: [BACKLOG.md](BACKLOG.md).
 
 ## Pull request checklist
 
 1. `SKILL.md` frontmatter `name` matches the folder name ([Agent Skills spec](https://agentskills.io/specification)).
 2. References listed in `skill.manifest.json`; workflow deps in `tool_skills`.
-3. `./scripts/bundle_all_skills.sh` and commit updated `plugins/`, `skills.sh.json`, `README.skills.md`.
-4. `npx skills-ref validate ./plugins/<skill>/skills/<skill>` for skills you touched.
-5. No API keys, tokens, or generated media in the commit.
+3. If adding a skill, add its name to [`skills.catalog.json`](skills.catalog.json).
+4. `./scripts/bundle_all_skills.sh` and commit updated `plugins/`, `skills.sh.json`, `README.skills.md`.
+5. `make validate` (or `./scripts/validate_release.sh`) for skills you touched.
+6. No API keys, tokens, or generated media in the commit.
 
 ## Makefile shortcuts
 
 ```bash
 make bundle    # rebuild plugins/
 make verify    # check plugins/ is current
-make validate  # skills-ref on all primaries
+make validate  # verify + skills-ref + clawhub + install smoke
+make smoke     # install smoke only
 make publish   # ClawHub dry-run
 make release   # full release dry-run
 ```

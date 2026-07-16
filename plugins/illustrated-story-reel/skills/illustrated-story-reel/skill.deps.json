@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "skill": "illustrated-story-reel",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "repository": "PrunaAI/pruna-skills",
   "pluginPath": "plugins/illustrated-story-reel",
   "skillPath": "plugins/illustrated-story-reel/skills/illustrated-story-reel",

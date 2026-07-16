@@ -16,7 +16,9 @@ GITHUB_REPO = "PrunaAI/pruna-skills"
 GITHUB_TREE = f"https://github.com/{GITHUB_REPO}/tree/main"
 SUITE_PLUGIN = "pruna-full"
 SUITE_DESCRIPTION = (
-    "Complete Pruna Skills bundle: all tool, router, core, and vertical skills in one plugin."
+    "All 26 Pruna skills in one plugin. Multi-scene workflows use staged approval "
+    "(plan → stills → clips before paid video) via requesting-generation-feedback, "
+    "and parallel subagents per scene lane after you confirm — parent agent merges results."
 )
 CLAWHUB_SCOPE = "pruna-ai"
 REL_LINK = re.compile(r"\[([^\]]*)\]\((?!https?://|mailto:|#)([^)]+)\)")
@@ -312,13 +314,10 @@ def main() -> None:
         "plugins/<name>/skills/<name>/SKILL.md\n"
         "plugins/pruna-full/skills/*               # all skills in one plugin\n"
         "```\n\n"
-        "**Install options:**\n"
-        "- Standalone tool/router: `/plugin install p-image@pruna-skills`\n"
-        "- Workflow with deps embedded: `/plugin install avatar-multi-scene@pruna-skills`\n"
-        "- Everything: `/plugin install pruna-full@pruna-skills`\n"
-        "- npx skills: `npx skills add ./plugins/<name>/skills --skill <name>`\n"
-        "- ClawHub plugin: `clawhub package publish ./plugins/<name>`\n"
-        "- ClawHub skill: `clawhub skill publish ./plugins/<name>/skills/<name>`\n"
+        "**Install (preferred):**\n"
+        "- `npx skills add PrunaAI/pruna-skills@p-image -y`\n"
+        "- `npx plugins add PrunaAI/pruna-skills -y` → pick a workflow or `pruna-full`\n\n"
+        "**Also:** `/plugin install <name>@pruna-skills` · ClawHub publish via `./scripts/publish_all_skills.sh`\n"
     )
 
 

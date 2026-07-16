@@ -1,5 +1,5 @@
 name: music-video
-version: 1.0.2
+version: 1.0.3
 type: skill
 description: Use when the user wants a music video, lyric video, sung promo, or original song paired with performance and B-roll clips.
 dependencies:

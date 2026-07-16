@@ -71,12 +71,30 @@ Single skill or plugin:
 ./scripts/publish_all_skills.sh --execute --target clawhub-plugins --plugin avatar-multi-scene
 ```
 
-Validate a plugin locally:
+Validate before release:
+
+```bash
+./scripts/validate_release.sh          # verify + skills-ref + clawhub + install smoke
+# or: make validate
+```
+
+Single plugin:
 
 ```bash
 claude plugin validate ./plugins/p-image
-clawhub package publish ./plugins/p-image --family bundle-plugin --dry-run
+clawhub package validate ./plugins/p-image
 ```
+
+Every `plugins/*/package.json` must declare OpenClaw entry + API compat (enforced by `verify_skill_bundles.sh`):
+
+```json
+"openclaw": {
+  "extensions": ["./openclaw-entry.mjs"],
+  "compat": { "pluginApi": ">=2026.3.24-beta.2" }
+}
+```
+
+See [package-openclaw-entry-missing](https://docs.openclaw.ai/clawhub/plugin-validation-fixes#package-openclaw-entry-missing) and [package-plugin-api-compat-missing](https://docs.openclaw.ai/clawhub/plugin-validation-fixes#package-plugin-api-compat-missing).
 
 ### ClawHub skills
 
@@ -115,14 +133,9 @@ Claude Code install (GitHub marketplace, no ClawHub required):
 After pushing to GitHub and tagging `skills-v*`:
 
 ```bash
-# One skill from a standalone plugin
-npx skills add PrunaAI/pruna-skills/plugins/p-image/skills --skill p-image -y
-
-# List skills discoverable via marketplace.json at repo root
+npx skills add PrunaAI/pruna-skills@p-image -y
+npx skills add PrunaAI/pruna-skills@music-video -y
 npx skills add PrunaAI/pruna-skills -l
-
-# Workflow plugin (primary + embedded deps in same folder)
-npx skills add PrunaAI/pruna-skills/plugins/avatar-multi-scene/skills --skill avatar-multi-scene -y
 ```
 
 Listing on [skills.sh](https://skills.sh) follows install telemetry — no separate submission step.
@@ -131,16 +144,41 @@ Listing on [skills.sh](https://skills.sh) follows install telemetry — no separ
 
 The [plugins CLI](https://www.npmjs.com/package/plugins) shallow-clones GitHub and scans `plugins/` for `.claude-plugin/plugin.json` bundles. No npm publish — push `plugins/` to `main`.
 
-After clone:
-
 ```bash
-npx plugins discover ./plugins
-npx plugins add ./plugins/p-image -y
-npx plugins add ./plugins/music-video -y
-npx plugins add ./plugins/pruna-full -y
+npx plugins discover PrunaAI/pruna-skills
+npx plugins add PrunaAI/pruna-skills -y
+npx plugins add PrunaAI/pruna-skills -y --target cursor
 ```
 
-See the [plugins CLI on npm](https://www.npmjs.com/package/plugins) for supported agents (Claude Code, Cursor, Copilot CLI, VS Code, Codex, …).
+See the [plugins CLI on npm](https://www.npmjs.com/package/plugins) for supported agents.
+
+## Manual IDE smoke (after release)
+
+CI covers file layout only. Before announcing a release, spend ~5–10 minutes:
+
+1. **Cursor** — `npx skills add PrunaAI/pruna-skills@p-image -y` → new chat → “Generate a product hero with p-image” → skill loads.
+2. **Claude Code** — `npx plugins add PrunaAI/pruna-skills -y` (pick `music-video` or `/plugin install music-video@pruna-skills`) → new session → trigger a workflow prompt.
+3. **Copilot CLI** — `copilot plugin install p-image@pruna-skills` (or `npx plugins … --target github-copilot`) → confirm skill/plugin is listed.
+
+If Copilot native install fails without a `.github/plugin.json`, see [BACKLOG.md](BACKLOG.md).
+
+**ClawHub naming:** docs use `@PrunaAI/…`; `package.json` scope is `@pruna-ai/…` (same org, different casing).
+
+## How consumers get updates (Claude / Cursor / Copilot)
+
+There is **no separate “submit to Cursor” or “Claude App Store” upload**. One GitHub push (plus optional ClawHub publish) updates every IDE channel.
+
+| Channel | Separate publish? | What you do | What users run |
+|---------|-------------------|-------------|----------------|
+| **Cursor** | No | Push `plugins/` to GitHub | `npx skills add PrunaAI/pruna-skills@p-image -y` or `npx plugins add PrunaAI/pruna-skills -y` |
+| **Claude Code** | No (marketplace is in-repo) | Keep `.claude-plugin/marketplace.json` current via bundle; push | `/plugin marketplace add PrunaAI/pruna-skills` then `/plugin install <name>@pruna-skills` |
+| **Copilot CLI / VS Code** | No | Same GitHub push | `npx plugins add PrunaAI/pruna-skills -y` or `copilot plugin marketplace add` + `copilot plugin install …` |
+| **skills.sh** | No | Nothing — listing follows install telemetry | Discover after installs; drive traffic from README |
+| **ClawHub / OpenClaw** | Yes | `./scripts/publish_all_skills.sh --execute` (or CI on tag) | `clawhub install @PrunaAI/p-image` |
+| **ChatGPT** | Manual / admin | Upload `SKILL.md` in product UI | No `npx` path |
+
+**Claude:** users add the GitHub repo once as a marketplace; they refresh after you push tags/commits.  
+**Cursor:** skills land via `npx skills` (`.agents/skills/` or `~/.cursor/skills/`); plugins via `npx plugins`. Default is latest `main`; pin with `skills-v*` when the CLI supports `@ref`.
 
 ### ClawHub CI (reusable workflow)
 

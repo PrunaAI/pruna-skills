@@ -1,6 +1,6 @@
 {
   "name": "@pruna-ai/p-video-animate",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "license": "MIT",
   "description": "Use when the user wants to animate a still using motion from another video, motion-transfer remixes, or performance variations from a template clip\u2014not replacing someone inside existing footage.",

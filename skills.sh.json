@@ -26,8 +26,8 @@
       "title": "Audio & Speech",
       "description": "Music, TTS, transcription, and background audio.",
       "skills": [
-        "music-2.5",
         "gemini-3.1-flash-tts",
+        "music-2.5",
         "stable-audio-2.5",
         "whisperx"
       ]

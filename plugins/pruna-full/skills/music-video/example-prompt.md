@@ -19,5 +19,6 @@ Edit `lyrics` and `music.prompt`, then follow [examples.md](../../../../workflow
 ## Install skill bundle
 
 ```bash
-npx skills add PrunaAI/pruna-skills/plugins/music-video/skills --skill music-video --agent cursor -y
+npx skills add PrunaAI/pruna-skills@music-video -y
+# or: npx plugins add PrunaAI/pruna-skills -y  # pick music-video
 ```

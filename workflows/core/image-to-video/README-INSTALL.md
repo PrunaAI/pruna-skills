@@ -2,17 +2,25 @@
 
 ## Install
 
-From a clone of this repository:
-
 ```bash
-mkdir -p ~/.cursor/skills
-cp -R /path/to/pruna-skills/workflows/core/image-to-video ~/.cursor/skills/
+npx skills add PrunaAI/pruna-skills@image-to-video -y
 ```
 
-Or install the whole repository with `npx skills add` (see repository root `README.md`). Restart Cursor or start a new chat.
+For a workflow with embedded tool dependencies, prefer:
 
-## Expected path
+```bash
+npx plugins add PrunaAI/pruna-skills -y
+# pick image-to-video
+```
 
-```text
-~/.cursor/skills/image-to-video/SKILL.md
+List all skills: `npx skills add PrunaAI/pruna-skills -l`
+
+After install, start a **new chat**. See the [root README](../../../README.md).
+
+## From a local clone
+
+```bash
+npx skills add .@image-to-video -y
+# or:
+npx skills add ./plugins/image-to-video/skills --skill image-to-video -y
 ```

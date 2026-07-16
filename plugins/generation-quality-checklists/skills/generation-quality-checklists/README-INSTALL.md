@@ -1,7 +1,26 @@
-# Install generation-quality-checklists
+# generation-quality-checklists
+
+## Install
 
 ```bash
 npx skills add PrunaAI/pruna-skills@generation-quality-checklists -y
-npx skills add ./guides/quality/generation-quality-checklists -y
-/plugin install generation-quality-checklists@pruna-skills
+```
+
+For a workflow with embedded tool dependencies, prefer:
+
+```bash
+npx plugins add PrunaAI/pruna-skills -y
+# pick generation-quality-checklists
+```
+
+List all skills: `npx skills add PrunaAI/pruna-skills -l`
+
+After install, start a **new chat**. See the [root README](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/README/SKILL.md).
+
+## From a local clone
+
+```bash
+npx skills add .@generation-quality-checklists -y
+# or:
+npx skills add ./plugins/generation-quality-checklists/skills --skill generation-quality-checklists -y
 ```

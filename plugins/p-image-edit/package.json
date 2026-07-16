@@ -1,6 +1,6 @@
 {
   "name": "@pruna-ai/p-image-edit",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "license": "MIT",
   "description": "Use when the user wants to edit an existing image, change wardrobe or background, compose from reference photos, inpaint-style adjustments, or multi-image edits from a prompt.",

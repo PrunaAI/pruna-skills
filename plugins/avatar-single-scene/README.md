@@ -1,6 +1,6 @@
 # avatar-single-scene
 
-Use when the user needs one talking-head clip, a single host line with lip sync, or one spokesperson beat—not multi-segment host reels or motion-transfer comparison grids.
+Use when the user needs one talking-head beat with intake and approval gates—not a raw p-video-avatar call, multi-segment host reels (avatar-multi-scene), or motion-transfer grids.
 
 ## Install
 

@@ -3,7 +3,7 @@ name: music-2.5
 description: Use when the user wants AI song generation with vocals, sung lyrics, original tracks from a style prompt, or source audio for a music video.
 license: MIT
 metadata:
-  version: "1.0.2"
+  version: "1.0.3"
   provider: replicate
   replicate_model: minimax/music-2.5
 ---

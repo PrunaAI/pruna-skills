@@ -1,9 +1,9 @@
 ---
 name: p-video
-description: Use when the user wants one video clip from text or stills, start/end frame animation, or B-roll and cinematic shots—not multi-scene films, talking-head avatar clips, or motion transfer from a template video.
+description: Use when the user wants one video clip from text or stills, start/end frame animation, or B-roll—not multi-scene films (image-to-video / narrated-multi-scene), talking-head lip-sync (p-video-avatar), or motion transfer (p-video-animate).
 license: MIT
 metadata:
-  version: "1.0.2"
+  version: "1.0.3"
   pruna_model: p-video
 ---
 

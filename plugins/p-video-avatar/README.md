@@ -1,6 +1,6 @@
 # p-video-avatar
 
-Use when the user wants a talking-head video, lip-synced host or spokesperson clip, on-camera performance from a portrait plus script, or narrated avatar footage.
+Use when the user wants one talking-head API call from a portrait plus script. Prefer avatar-single-scene for a full single-beat workflow with gates; prefer avatar-multi-scene for multiple host segments.
 
 ## Install
 

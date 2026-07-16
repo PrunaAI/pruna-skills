@@ -1,7 +1,7 @@
 {
   "id": "pruna-run",
   "name": "pruna-run",
-  "description": "Use when the user wants a quick single-shot generation with minimal intake\u2014one image, video clip, or avatar call from a prompt without a full multi-step plan.",
+  "description": "Use when the user wants a quick single-shot generation with minimal intake\u2014one image, video clip, or avatar call from a prompt. Do not use for multi-scene films, music videos, explainers, or when they need a recipe menu or staged approval plan.",
   "skills": [
     "skills/pruna-run"
   ],

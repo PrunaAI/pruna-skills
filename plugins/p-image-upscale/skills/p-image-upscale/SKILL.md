@@ -3,7 +3,7 @@ name: p-image-upscale
 description: Use when the user wants to upscale image resolution, enhance detail in an existing still, or prepare photos for print, large crops, or quality demos.
 license: MIT
 metadata:
-  version: "1.0.2"
+  version: "1.0.3"
   pruna_model: p-image-upscale
 ---
 

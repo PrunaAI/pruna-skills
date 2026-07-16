@@ -1,6 +1,6 @@
 {
   "name": "@pruna-ai/p-image",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "license": "MIT",
   "description": "Use when the user wants the fastest text-to-image stills, quick draft photos, mood boards, or bulk panels where good quality and extremely low latency matter more than maximum photoreal fidelity.",

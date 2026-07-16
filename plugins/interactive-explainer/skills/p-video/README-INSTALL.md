@@ -1,22 +1,26 @@
 # p-video
 
-Premium video: text-to-video, image-to-video, **scene anchor triple** (`image` + `last_frame_image` + `audio`), optional draft mode.
-
-See [scene-anchor-triple.md](./references/scene-anchor-triple.md) for narrated multi-scene films.
-
 ## Install
 
-From a clone of this repository:
-
 ```bash
-mkdir -p ~/.cursor/skills
-cp -R /path/to/pruna-skills/tools/video/p-video ~/.cursor/skills/
+npx skills add PrunaAI/pruna-skills@p-video -y
 ```
 
-Or install the whole repository with `npx skills add` (see repository root `README.md`). Restart Cursor or start a new chat.
+For a workflow with embedded tool dependencies, prefer:
 
-## Expected path
+```bash
+npx plugins add PrunaAI/pruna-skills -y
+# pick p-video
+```
 
-```text
-~/.cursor/skills/p-video/SKILL.md
+List all skills: `npx skills add PrunaAI/pruna-skills -l`
+
+After install, start a **new chat**. See the [root README](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/README/SKILL.md).
+
+## From a local clone
+
+```bash
+npx skills add .@p-video -y
+# or:
+npx skills add ./plugins/p-video/skills --skill p-video -y
 ```

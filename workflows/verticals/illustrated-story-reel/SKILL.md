@@ -3,7 +3,7 @@ name: illustrated-story-reel
 description: Use when the user wants a still-image story reel or slideshow, picture-book narrative with voiceover or music—and explicitly not full motion-video generation.
 license: MIT
 metadata:
-  version: "1.0.2"
+  version: "1.0.3"
 ---
 
 # Illustrated story reel

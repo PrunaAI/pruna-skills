@@ -68,9 +68,41 @@ for plugin_dir in plugin_dirs:
         if extra:
             bad.append(f"{manifest_dir}: unexpected files {extra!r} (only plugin.json allowed)")
 
-    for clawhub_file in ("openclaw.plugin.json", "package.json"):
+    for clawhub_file in ("openclaw.plugin.json", "package.json", "openclaw-entry.mjs"):
         if not (plugin_dir / clawhub_file).is_file():
             bad.append(f"{plugin_dir}: missing {clawhub_file} (ClawHub bundle-plugin publish)")
+
+    # OpenClaw package validation: package-openclaw-entry-missing + package-plugin-api-compat-missing
+    # https://docs.openclaw.ai/clawhub/plugin-validation-fixes#package-openclaw-entry-missing
+    # https://docs.openclaw.ai/clawhub/plugin-validation-fixes#package-plugin-api-compat-missing
+    pkg_path = plugin_dir / "package.json"
+    if pkg_path.is_file():
+        pkg = json.loads(pkg_path.read_text())
+        oc = pkg.get("openclaw") or {}
+        exts = oc.get("extensions") or oc.get("runtimeExtensions") or []
+        if not exts:
+            bad.append(
+                f"{pkg_path}: openclaw.extensions (or runtimeExtensions) missing — "
+                "package-openclaw-entry-missing"
+            )
+        else:
+            for rel in exts:
+                entry_file = plugin_dir / str(rel).lstrip("./")
+                if not entry_file.is_file():
+                    bad.append(f"{pkg_path}: entrypoint missing on disk: {rel}")
+        compat = (oc.get("compat") or {}).get("pluginApi")
+        if not compat:
+            bad.append(
+                f"{pkg_path}: openclaw.compat.pluginApi missing — "
+                "package-plugin-api-compat-missing"
+            )
+        files = pkg.get("files") or []
+        for required in ("openclaw-entry.mjs", "openclaw.plugin.json", "package.json"):
+            # package.json itself is always packed; files[] must include the entry + manifest
+            if required == "package.json":
+                continue
+            if required not in files and f"./{required}" not in files:
+                bad.append(f"{pkg_path}: files[] must include {required} for npm pack")
 
     if not primary.is_file():
         if name == SUITE_PLUGIN:

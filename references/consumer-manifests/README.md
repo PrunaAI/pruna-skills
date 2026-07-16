@@ -4,7 +4,8 @@ Copy-paste examples for installing Pruna workflow skills with package managers o
 
 **Full landscape:** [skill-package-managers.md](../../references/shared/skill-package-managers.md) (skills, APM, ClawHub, Agensi, Claude plugins, skills-ref).
 
-**Source:** `PrunaAI/pruna-skills/plugins/<name>/skills/<name>`  
+**Preferred install:** `npx skills add PrunaAI/pruna-skills@avatar-multi-scene -y` or `npx plugins add PrunaAI/pruna-skills -y`.  
+**APM source path:** `PrunaAI/pruna-skills/plugins/<name>/skills/<name>`  
 **Workflow example:** `avatar-multi-scene` (embeds `p-image`, `p-image-edit`, `p-video-avatar`, `p-video-animate` in the same plugin)
 
 Fat workflow plugins include tool skills under `plugins/<workflow>/skills/`. The primary workflow skill also has `depends:`, `apm.yml`, and `skill.deps.json`.
@@ -41,7 +42,8 @@ dependencies:
 ## skills CLI (reference)
 
 ```bash
-npx skills add PrunaAI/pruna-skills/plugins/avatar-multi-scene/skills --skill avatar-multi-scene --agent cursor -y
+npx skills add PrunaAI/pruna-skills@avatar-multi-scene -y
+npx plugins add PrunaAI/pruna-skills -y   # pick avatar-multi-scene
 ```
 
 ## Plugin marketplace

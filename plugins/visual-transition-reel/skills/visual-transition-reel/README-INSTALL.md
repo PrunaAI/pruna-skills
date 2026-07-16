@@ -1,32 +1,26 @@
 # visual-transition-reel
 
-Smooth multi-scene reels use the [scene anchor pair](./references/scene-anchor-pair.md): **`image`** + **`last_frame_image`** + transition **`prompt`** + **`duration`** per `p-video` scene. Stills from **`p-image`** hero + **`p-image-edit`**.
-
 ## Install
 
 ```bash
-npx skills add PrunaAI/pruna-skills/plugins/visual-transition-reel/skills --skill visual-transition-reel --agent cursor -y
+npx skills add PrunaAI/pruna-skills@visual-transition-reel -y
 ```
 
-Or copy manually:
+For a workflow with embedded tool dependencies, prefer:
 
 ```bash
-mkdir -p ~/.cursor/skills
-cp -R /path/to/pruna-skills/workflows/core/visual-transition-reel ~/.cursor/skills/
+npx plugins add PrunaAI/pruna-skills -y
+# pick visual-transition-reel
 ```
 
-## Expected path
+List all skills: `npx skills add PrunaAI/pruna-skills -l`
 
-```text
-~/.cursor/skills/visual-transition-reel/SKILL.md
-```
+After install, start a **new chat**. See the [root README](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/README/SKILL.md).
 
-## Run
+## From a local clone
 
 ```bash
-cp workflows/core/visual-transition-reel/templates/transition-plan.template.json \
-  output/core/visual-transition-reel/my-reel/plan.json
-python3 workflows/core/visual-transition-reel/scripts/run_from_plan.py \
-  --plan output/core/visual-transition-reel/my-reel/plan.json \
-  --out-dir output/core/visual-transition-reel/my-reel
+npx skills add .@visual-transition-reel -y
+# or:
+npx skills add ./plugins/visual-transition-reel/skills --skill visual-transition-reel -y
 ```

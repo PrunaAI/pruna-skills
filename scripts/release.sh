@@ -12,8 +12,7 @@ echo "==> Set VERSION=${VERSION}"
 echo "${VERSION}" > VERSION
 python3 scripts/sync_skill_versions.py
 ./scripts/bundle_all_skills.sh
-./scripts/verify_skill_bundles.sh
-python3 scripts/validate_all_skills.py
+./scripts/validate_release.sh
 
 TAG="skills-v${VERSION}"
 if [[ "${EXECUTE}" -eq 0 ]]; then

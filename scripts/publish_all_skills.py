@@ -230,9 +230,8 @@ def write_publish_index() -> Path:
                 "pluginPath": f"plugins/{name}",
                 "skillPath": f"plugins/{name}/skills/{name}",
                 "clawhubSkill": f"@{owner}/{clawhub_slug(name)}",
-                "npxInstall": (
-                    f"npx skills add {GITHUB_REPO}/plugins/{name}/skills --skill {name} -y"
-                ),
+                "npxInstall": f"npx skills add {GITHUB_REPO}@{name} -y",
+                "npxPlugins": f"npx plugins add {GITHUB_REPO} -y  # pick {name}",
             }
             for name in skills
         ],
@@ -242,9 +241,8 @@ def write_publish_index() -> Path:
                 "path": f"plugins/{name}",
                 "clawhubPackage": f"@{owner}/{name}",
                 "claudeInstall": f"/plugin install {name}@pruna-skills",
-                "npxInstall": (
-                    f"npx skills add {GITHUB_REPO}/plugins/{name}/skills --skill {name} -y"
-                ),
+                "npxInstall": f"npx skills add {GITHUB_REPO}@{name} -y",
+                "npxPlugins": f"npx plugins add {GITHUB_REPO} -y  # pick {name}",
             }
             for name in plugins
         ],
@@ -255,10 +253,10 @@ def write_publish_index() -> Path:
                 "note": "No upload API — consumers install from GitHub paths after push",
             },
             "npx": {
-                "method": "npx skills add (GitHub source)",
+                "method": "npx skills add / npx plugins add (GitHub source)",
                 "listAll": f"npx skills add {GITHUB_REPO} -l",
-                "installSkill": f"npx skills add {GITHUB_REPO}/plugins/<name>/skills --skill <name> -y",
-                "installPluginSkills": f"npx skills add {GITHUB_REPO}/plugins/<name>/skills --skill <name> -y",
+                "installSkill": f"npx skills add {GITHUB_REPO}@<name> -y",
+                "installPlugin": f"npx plugins add {GITHUB_REPO} -y",
                 "skillsSh": "https://skills.sh — listing via install telemetry after first install",
             },
             "clawhubSkills": {
@@ -294,7 +292,8 @@ def print_github_npx_instructions() -> None:
     print("\nGitHub / npx skills (no registry upload):")
     print(f"  1. Push plugins/ and .claude-plugin/marketplace.json to main")
     print(f"  2. git tag {tag} && git push origin {tag}")
-    print(f"  3. Consumers: npx skills add {GITHUB_REPO}/plugins/<name>/skills --skill <name> -y")
+    print(f"  3. Consumers: npx skills add {GITHUB_REPO}@<name> -y")
+    print(f"     Or plugins: npx plugins add {GITHUB_REPO} -y")
     print(f"     Or list all: npx skills add {GITHUB_REPO} -l")
 
 

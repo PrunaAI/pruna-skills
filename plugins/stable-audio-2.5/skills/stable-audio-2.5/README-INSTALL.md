@@ -1,7 +1,26 @@
 # stable-audio-2.5
 
-Copy `SKILL.md` into your agent skills folder or install via the repo plugin manifest.
+## Install
 
-Requires `REPLICATE_API_TOKEN`, `ffmpeg`, and `ffprobe`.
+```bash
+npx skills add PrunaAI/pruna-skills@stable-audio-2.5 -y
+```
 
-Mix script ships with workflow bundles that list `launch_background_music.py` in `skill.manifest.json` → `scripts.shared`.
+For a workflow with embedded tool dependencies, prefer:
+
+```bash
+npx plugins add PrunaAI/pruna-skills -y
+# pick stable-audio-2.5
+```
+
+List all skills: `npx skills add PrunaAI/pruna-skills -l`
+
+After install, start a **new chat**. See the [root README](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/README/SKILL.md).
+
+## From a local clone
+
+```bash
+npx skills add .@stable-audio-2.5 -y
+# or:
+npx skills add ./plugins/stable-audio-2.5/skills --skill stable-audio-2.5 -y
+```

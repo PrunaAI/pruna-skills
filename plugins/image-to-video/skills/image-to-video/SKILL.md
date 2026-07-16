@@ -1,9 +1,9 @@
 ---
 name: image-to-video
-description: Use when the user needs one video clip from stills, a single narrated story beat, one B-roll shot, or one scene—not a full multi-scene film or talking-head-only piece.
+description: Use when the user needs one narrated or B-roll scene from stills with optional TTS—not a bare p-video API call, multi-scene film (narrated-multi-scene), or talking-head-only piece (avatar-single-scene).
 license: MIT
 metadata:
-  version: "1.0.2"
+  version: "1.0.3"
 depends:
   - p-image
   - p-image-edit

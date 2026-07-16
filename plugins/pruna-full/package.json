@@ -1,9 +1,9 @@
 {
   "name": "@pruna-ai/pruna-full",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "license": "MIT",
-  "description": "Complete Pruna Skills bundle: all tool, router, core, and vertical skills in one plugin.",
+  "description": "All 26 Pruna skills in one plugin. Multi-scene workflows use staged approval (plan \u2192 stills \u2192 clips before paid video) via requesting-generation-feedback, and parallel subagents per scene lane after you confirm \u2014 parent agent merges results.",
   "repository": "https://github.com/PrunaAI/pruna-skills",
   "files": [
     ".claude-plugin",

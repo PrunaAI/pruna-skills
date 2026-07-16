@@ -10,6 +10,7 @@ on:
       - "scripts/**"
       - "VERSION"
       - "skills.sh.json"
+      - "skills.catalog.json"
       - "plugins/**"
       - ".claude-plugin/**"
 
@@ -23,11 +24,5 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Verify bundles
-        run: ./scripts/verify_skill_bundles.sh
-
-      - name: Check skills.sh.json
-        run: python3 scripts/write_skills_sh_json.py --check
-
-      - name: Validate skills (skills-ref)
-        run: python3 scripts/validate_all_skills.py
+      - name: Validate release
+        run: ./scripts/validate_release.sh

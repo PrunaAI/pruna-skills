@@ -162,14 +162,14 @@ Sibling **names** in the same source tree. Unknown keys should be ignored by oth
 
 ## Install equivalents (this repository)
 
-Source: `PrunaAI/pruna-skills/plugins/<name>/skills/<name>`
+Preferred skills CLI form: `PrunaAI/pruna-skills@<name>`. APM still needs the full plugin skill path.
 
 ```bash
-# skills CLI
-npx skills add PrunaAI/pruna-skills/plugins/avatar-multi-scene/skills \
-  --skill avatar-multi-scene --agent cursor -y
+# skills CLI (default)
+npx skills add PrunaAI/pruna-skills@avatar-multi-scene -y
+npx plugins add PrunaAI/pruna-skills -y   # pick avatar-multi-scene
 
-# APM
+# APM (full git path)
 apm install PrunaAI/pruna-skills/plugins/avatar-multi-scene/skills/avatar-multi-scene
 
 # Claude plugin marketplace

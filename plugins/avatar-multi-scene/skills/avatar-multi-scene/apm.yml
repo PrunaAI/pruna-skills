@@ -1,5 +1,5 @@
 name: avatar-multi-scene
-version: 1.0.2
+version: 1.0.3
 type: skill
 description: Use when the user needs multiple talking-head segments, motion-transfer comparison reels, mixed host and animate clips, or multi-scene UGC with character continuity.
 dependencies:

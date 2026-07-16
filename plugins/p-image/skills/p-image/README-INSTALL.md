@@ -1,33 +1,26 @@
 # p-image
 
-## Install from GitHub
-
-No clone required:
+## Install
 
 ```bash
-npx skills add PrunaAI/pruna-skills/plugins/p-image/skills@p-image --agent cursor -y
+npx skills add PrunaAI/pruna-skills@p-image -y
 ```
 
-Or:
+For a workflow with embedded tool dependencies, prefer:
 
 ```bash
-npx skills add PrunaAI/pruna-skills/plugins/p-image/skills --skill p-image -y
+npx plugins add PrunaAI/pruna-skills -y
+# pick p-image
 ```
 
-See [README.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/README/SKILL.md#install-skills) for more URL formats.
+List all skills: `npx skills add PrunaAI/pruna-skills -l`
 
-## Install from a clone
+After install, start a **new chat**. See the [root README](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/README/SKILL.md).
+
+## From a local clone
 
 ```bash
-npx skills add ./plugins/p-image/skills --skill p-image -y
+npx skills add .@p-image -y
 # or:
-npx skills add PrunaAI/pruna-skills/plugins/p-image/skills --skill p-image --agent cursor -y
-```
-
-Restart Cursor or start a new chat.
-
-## Expected path
-
-```text
-~/.cursor/skills/p-image/SKILL.md
+npx skills add ./plugins/p-image/skills --skill p-image -y
 ```

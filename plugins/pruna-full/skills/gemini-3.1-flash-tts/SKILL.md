@@ -3,7 +3,7 @@ name: gemini-3.1-flash-tts
 description: Use when the user needs narration or voiceover audio for explainers, documentary tracks, scene voice lines, or TTS to pair with generated video.
 license: MIT
 metadata:
-  version: "1.0.2"
+  version: "1.0.3"
   provider: replicate
   replicate_model: google/gemini-3.1-flash-tts
 ---

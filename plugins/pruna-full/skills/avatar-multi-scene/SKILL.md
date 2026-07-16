@@ -3,7 +3,7 @@ name: avatar-multi-scene
 description: Use when the user needs multiple talking-head segments, motion-transfer comparison reels, mixed host and animate clips, or multi-scene UGC with character continuity.
 license: MIT
 metadata:
-  version: "1.0.2"
+  version: "1.0.3"
 ---
 
 # Multi-scene avatar & motion-transfer video (Pruna only)
@@ -189,7 +189,7 @@ Use the **approved hero** as the reference for **`p-image-edit`**, not a rejecte
 | Style-locked stills | `p-image`, `p-image-edit` | [p-image](../../../../tools/image/p-image/SKILL.md), [p-image-edit](../../../../tools/image/p-image-edit/SKILL.md) |
 | Talking clips | `p-video-avatar` | [p-video-avatar](../../../../tools/video/p-video-avatar/SKILL.md) |
 | Motion transfer | **`p-video-animate`** | [p-video-animate](../../../../tools/video/p-video-animate/SKILL.md) |
-| Slider comparison (animate rows) | [`generate_video_comparison.py`](./scripts/generate_video_comparison.py) | local; install via `npx skills add PrunaAI/pruna-skills/plugins/avatar-multi-scene/skills --skill avatar-multi-scene --agent cursor -y` |
+| Slider comparison (animate rows) | [`generate_video_comparison.py`](./scripts/generate_video_comparison.py) | local; install via `npx skills add PrunaAI/pruna-skills@avatar-multi-scene -y` or `npx plugins add PrunaAI/pruna-skills -y` |
 
 Use **`PRUNA_API_KEY`** and the **`apikey`** header on every call. **Async + parallel by default**: batch all avatar jobs once approved stills pass slop; batch all animate jobs once motion + still URLs are ready; poll all `get_url` together. See [parallel-execution.md](./references/parallel-execution.md).
 

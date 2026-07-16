@@ -1,20 +1,26 @@
 # narrated-multi-scene
 
-Narrated multi-scene films use the [scene anchor triple](../../../../references/video/scene-anchor-triple.md): **`image`** + **`last_frame_image`** + **`audio`** per `p-video` scene.
-
 ## Install
 
-From a clone of this repository:
-
 ```bash
-mkdir -p ~/.cursor/skills
-cp -R /path/to/pruna-skills/workflows/core/narrated-multi-scene ~/.cursor/skills/
+npx skills add PrunaAI/pruna-skills@narrated-multi-scene -y
 ```
 
-Or install the whole repository with `npx skills add` (see repository root `README.md`). Restart Cursor or start a new chat.
+For a workflow with embedded tool dependencies, prefer:
 
-## Expected path
+```bash
+npx plugins add PrunaAI/pruna-skills -y
+# pick narrated-multi-scene
+```
 
-```text
-~/.cursor/skills/narrated-multi-scene/SKILL.md
+List all skills: `npx skills add PrunaAI/pruna-skills -l`
+
+After install, start a **new chat**. See the [root README](../../../README.md).
+
+## From a local clone
+
+```bash
+npx skills add .@narrated-multi-scene -y
+# or:
+npx skills add ./plugins/narrated-multi-scene/skills --skill narrated-multi-scene -y
 ```

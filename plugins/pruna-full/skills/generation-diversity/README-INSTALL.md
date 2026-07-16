@@ -1,7 +1,26 @@
-# Install generation-diversity
+# generation-diversity
+
+## Install
 
 ```bash
 npx skills add PrunaAI/pruna-skills@generation-diversity -y
-npx skills add ./guides/prompting/generation-diversity -y
-/plugin install generation-diversity@pruna-skills
+```
+
+For a workflow with embedded tool dependencies, prefer:
+
+```bash
+npx plugins add PrunaAI/pruna-skills -y
+# pick generation-diversity
+```
+
+List all skills: `npx skills add PrunaAI/pruna-skills -l`
+
+After install, start a **new chat**. See the [root README](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/README/SKILL.md).
+
+## From a local clone
+
+```bash
+npx skills add .@generation-diversity -y
+# or:
+npx skills add ./plugins/generation-diversity/skills --skill generation-diversity -y
 ```

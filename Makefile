@@ -1,4 +1,4 @@
-.PHONY: bundle verify validate publish release skills-sh readme
+.PHONY: bundle verify validate publish release skills-sh readme smoke
 
 bundle:
 	./scripts/bundle_all_skills.sh
@@ -7,7 +7,10 @@ verify:
 	./scripts/verify_skill_bundles.sh
 
 validate:
-	python3 scripts/validate_all_skills.py
+	./scripts/validate_release.sh
+
+smoke:
+	./scripts/smoke_install.sh
 
 publish:
 	./scripts/publish_all_skills.sh
@@ -20,3 +23,4 @@ skills-sh:
 
 readme:
 	python3 scripts/write_readme_skills_section.py
+	python3 scripts/write_readme_install.py

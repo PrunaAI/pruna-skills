@@ -2,17 +2,25 @@
 
 ## Install
 
-From a clone of this repository:
-
 ```bash
-mkdir -p ~/.cursor/skills
-cp -R /path/to/pruna-skills/tools/image/p-image-edit ~/.cursor/skills/
+npx skills add PrunaAI/pruna-skills@p-image-edit -y
 ```
 
-Or install the whole repository with `npx skills add` (see repository root `README.md`). Restart Cursor or start a new chat.
+For a workflow with embedded tool dependencies, prefer:
 
-## Expected path
+```bash
+npx plugins add PrunaAI/pruna-skills -y
+# pick p-image-edit
+```
 
-```text
-~/.cursor/skills/p-image-edit/SKILL.md
+List all skills: `npx skills add PrunaAI/pruna-skills -l`
+
+After install, start a **new chat**. See the [root README](../../../README.md).
+
+## From a local clone
+
+```bash
+npx skills add .@p-image-edit -y
+# or:
+npx skills add ./plugins/p-image-edit/skills --skill p-image-edit -y
 ```
