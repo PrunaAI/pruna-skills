@@ -1,9 +1,9 @@
 ---
 name: interactive-explainer
-description: Use when the user wants educational explainers with a host plus in-story characters, history or science shorts, or witness and expert dialogue—not wall-to-wall narration alone.
+description: Use when someone wants an educational explainer with a host and characters — history or science shorts with dialogue, not voiceover-only B-roll.
 license: MIT
 metadata:
-  version: "1.0.3"
+  version: "1.0.4"
 depends:
   - p-image
   - p-image-edit

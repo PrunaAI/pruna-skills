@@ -1,9 +1,9 @@
 {
   "name": "@pruna-ai/p-video-replace",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "module",
   "license": "MIT",
-  "description": "Use when the user wants to swap a person, outfit, or product inside existing video, in-footage recast, wardrobe change, or product replacement while keeping camera motion and audio.",
+  "description": "Use when someone wants to swap a person, outfit, or product inside existing footage while keeping the camera move and audio.",
   "repository": "https://github.com/PrunaAI/pruna-skills",
   "files": [
     ".claude-plugin",

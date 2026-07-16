@@ -1,9 +1,9 @@
 ---
 name: avatar-multi-scene
-description: Use when the user needs multiple talking-head segments, motion-transfer comparison reels, mixed host and animate clips, or multi-scene UGC with character continuity.
+description: Use when someone wants the same person hosting several clips — multi-segment UGC, comparison reels, or mixed speaking and animated scenes with continuity.
 license: MIT
 metadata:
-  version: "1.0.3"
+  version: "1.0.4"
 ---
 
 # Multi-scene avatar & motion-transfer video (Pruna only)

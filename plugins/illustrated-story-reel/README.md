@@ -1,6 +1,6 @@
 # illustrated-story-reel
 
-Use when the user wants a still-image story reel or slideshow, picture-book narrative with voiceover or music—and explicitly not full motion-video generation.
+Use when someone wants a slideshow story with narration or music — picture-book style illustrated frames, not full motion video.
 
 ## Install
 

@@ -1,6 +1,6 @@
 # p-image
 
-Use when the user wants the fastest text-to-image stills, quick draft photos, mood boards, or bulk panels where good quality and extremely low latency matter more than maximum photoreal fidelity.
+Use when someone wants a fast AI image — product shots, hero visuals, mood boards, or draft photos from a text prompt.
 
 ## Install
 

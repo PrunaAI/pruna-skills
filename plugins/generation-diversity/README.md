@@ -1,6 +1,6 @@
 # generation-diversity
 
-Use when outputs look generic or repetitive — apply the random seed ritual, explicit prompt structure, and scenario axis rotation before any paid generation call.
+Use when generations look generic or samey — vary seeds, prompt structure, and scenario axes before the next paid image, video, or audio call.
 
 ## Install
 

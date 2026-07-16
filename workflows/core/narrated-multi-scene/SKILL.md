@@ -1,9 +1,9 @@
 ---
 name: narrated-multi-scene
-description: Use when the user needs a multi-scene narrated film, episodic B-roll story, chaptered promo, or several linked video beats with voiceover and no in-scene character dialogue.
+description: Use when someone wants a multi-part story with voiceover — episodic B-roll, chaptered promo, or several linked video scenes without on-camera dialogue.
 license: MIT
 metadata:
-  version: "1.0.3"
+  version: "1.0.4"
 ---
 
 # Multi-scene AI video (Pruna `p-video` only)

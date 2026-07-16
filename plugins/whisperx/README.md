@@ -1,6 +1,6 @@
 # whisperx
 
-Use when the user needs word-level lyric timestamps, cut-safe line boundaries for music videos, or alignment after song generation before editing clips.
+Use when someone needs word-level lyric timestamps or cut-safe line boundaries before editing music-video clips.
 
 ## Install
 

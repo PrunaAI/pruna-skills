@@ -1,9 +1,9 @@
 {
   "name": "@pruna-ai/p-image",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "module",
   "license": "MIT",
-  "description": "Use when the user wants the fastest text-to-image stills, quick draft photos, mood boards, or bulk panels where good quality and extremely low latency matter more than maximum photoreal fidelity.",
+  "description": "Use when someone wants a fast AI image \u2014 product shots, hero visuals, mood boards, or draft photos from a text prompt.",
   "repository": "https://github.com/PrunaAI/pruna-skills",
   "files": [
     ".claude-plugin",

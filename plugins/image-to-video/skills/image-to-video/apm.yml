@@ -1,7 +1,7 @@
 name: image-to-video
-version: 1.0.3
+version: 1.0.4
 type: skill
-description: Use when the user needs one narrated or B-roll scene from stills with optional TTS—not a bare p-video API call, multi-scene film (narrated-multi-scene), or talking-head-only piece (avatar-single-scene).
+description: Use when someone wants one short film beat from images — a narrated scene, story moment, or cinematic B-roll with optional voiceover.
 dependencies:
   apm:
     - PrunaAI/pruna-skills/plugins/p-image/skills/p-image

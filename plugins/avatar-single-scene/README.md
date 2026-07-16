@@ -1,6 +1,6 @@
 # avatar-single-scene
 
-Use when the user needs one talking-head beat with intake and approval gates—not a raw p-video-avatar call, multi-segment host reels (avatar-multi-scene), or motion-transfer grids.
+Use when someone wants one polished host-on-camera beat — a speaking person with intake and approval gates before generation.
 
 ## Install
 

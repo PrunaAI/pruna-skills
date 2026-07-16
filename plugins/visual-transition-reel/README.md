@@ -1,6 +1,6 @@
 # visual-transition-reel
 
-Use when the user needs a visual montage, transitions between stills, action-sequence reel, or multi-scene piece where narration is optional or absent.
+Use when someone wants a montage with transitions between shots — action-sequence reel or multi-scene piece where narration is optional.
 
 ## Install
 

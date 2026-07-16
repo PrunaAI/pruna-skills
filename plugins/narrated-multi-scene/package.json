@@ -1,9 +1,9 @@
 {
   "name": "@pruna-ai/narrated-multi-scene",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "module",
   "license": "MIT",
-  "description": "Use when the user needs a multi-scene narrated film, episodic B-roll story, chaptered promo, or several linked video beats with voiceover and no in-scene character dialogue.",
+  "description": "Use when someone wants a multi-part story with voiceover \u2014 episodic B-roll, chaptered promo, or several linked video scenes without on-camera dialogue.",
   "repository": "https://github.com/PrunaAI/pruna-skills",
   "files": [
     ".claude-plugin",

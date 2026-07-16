@@ -1,6 +1,6 @@
 # p-image-upscale
 
-Use when the user wants to upscale image resolution, enhance detail in an existing still, or prepare photos for print, large crops, or quality demos.
+Use when someone wants to upscale or sharpen an existing image for print, large crops, or higher-quality delivery.
 
 ## Install
 

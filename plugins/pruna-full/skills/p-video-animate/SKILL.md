@@ -1,9 +1,9 @@
 ---
 name: p-video-animate
-description: Use when the user wants to animate a still using motion from another video, motion-transfer remixes, or performance variations from a template clip—not replacing someone inside existing footage.
+description: Use when someone wants a photo to move like another video — motion transfer, dance remixes, or performance variations from a template clip.
 license: MIT
 metadata:
-  version: "1.0.3"
+  version: "1.0.4"
   pruna_model: p-video-animate
 ---
 

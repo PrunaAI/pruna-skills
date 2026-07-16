@@ -1,6 +1,6 @@
 # p-video-animate
 
-Use when the user wants to animate a still using motion from another video, motion-transfer remixes, or performance variations from a template clip—not replacing someone inside existing footage.
+Use when someone wants a photo to move like another video — motion transfer, dance remixes, or performance variations from a template clip.
 
 ## Install
 

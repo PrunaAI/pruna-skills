@@ -1,6 +1,6 @@
 # p-video-avatar
 
-Use when the user wants one talking-head API call from a portrait plus script. Prefer avatar-single-scene for a full single-beat workflow with gates; prefer avatar-multi-scene for multiple host segments.
+Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo.
 
 ## Install
 

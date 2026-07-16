@@ -1,7 +1,7 @@
 {
   "name": "generation-quality-checklists",
-  "description": "Use when reviewing generated images, video, or audio \u2014 run the core quality checklist and model-specific checklist before asking the user to approve stills or clips.",
-  "version": "1.0.3",
+  "description": "Use when reviewing generated images, videos, or audio before shipping \u2014 run the quality checklists before asking for approval.",
+  "version": "1.0.4",
   "author": {
     "name": "Pruna AI"
   },

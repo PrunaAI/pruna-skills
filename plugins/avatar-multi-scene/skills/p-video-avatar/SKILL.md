@@ -1,9 +1,9 @@
 ---
 name: p-video-avatar
-description: Use when the user wants one talking-head API call from a portrait plus script. Prefer avatar-single-scene for a full single-beat workflow with gates; prefer avatar-multi-scene for multiple host segments.
+description: Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo.
 license: MIT
 metadata:
-  version: "1.0.3"
+  version: "1.0.4"
   pruna_model: p-video-avatar
 ---
 

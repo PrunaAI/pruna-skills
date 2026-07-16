@@ -1,9 +1,9 @@
 {
   "name": "@pruna-ai/avatar-single-scene",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "module",
   "license": "MIT",
-  "description": "Use when the user needs one talking-head beat with intake and approval gates\u2014not a raw p-video-avatar call, multi-segment host reels (avatar-multi-scene), or motion-transfer grids.",
+  "description": "Use when someone wants one polished host-on-camera beat \u2014 a speaking person with intake and approval gates before generation.",
   "repository": "https://github.com/PrunaAI/pruna-skills",
   "files": [
     ".claude-plugin",

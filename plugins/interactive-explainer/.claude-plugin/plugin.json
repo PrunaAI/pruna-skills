@@ -1,7 +1,7 @@
 {
   "name": "interactive-explainer",
-  "description": "Use when the user wants educational explainers with a host plus in-story characters, history or science shorts, or witness and expert dialogue\u2014not wall-to-wall narration alone.",
-  "version": "1.0.3",
+  "description": "Use when someone wants an educational explainer with a host and characters \u2014 history or science shorts with dialogue, not voiceover-only B-roll.",
+  "version": "1.0.4",
   "author": {
     "name": "Pruna AI"
   },

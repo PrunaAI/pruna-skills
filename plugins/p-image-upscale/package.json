@@ -1,9 +1,9 @@
 {
   "name": "@pruna-ai/p-image-upscale",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "module",
   "license": "MIT",
-  "description": "Use when the user wants to upscale image resolution, enhance detail in an existing still, or prepare photos for print, large crops, or quality demos.",
+  "description": "Use when someone wants to upscale or sharpen an existing image for print, large crops, or higher-quality delivery.",
   "repository": "https://github.com/PrunaAI/pruna-skills",
   "files": [
     ".claude-plugin",

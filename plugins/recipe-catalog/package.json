@@ -1,9 +1,9 @@
 {
   "name": "@pruna-ai/recipe-catalog",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "module",
   "license": "MIT",
-  "description": "Use when choosing among recipe letters A\u2013R (mood boards, hero variants, explainers, music videos, avatar reels) and need linked tools/workflows. Prefer pruna-generative-pipeline when routing a live multi-step project with approval gates.",
+  "description": "Use when browsing recipe ideas for mood boards, hero images, explainers, music videos, or avatar reels and need the linked tools. For a live multi-step project, prefer the generative pipeline.",
   "repository": "https://github.com/PrunaAI/pruna-skills",
   "files": [
     ".claude-plugin",

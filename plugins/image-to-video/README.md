@@ -1,6 +1,6 @@
 # image-to-video
 
-Use when the user needs one narrated or B-roll scene from stills with optional TTS—not a bare p-video API call, multi-scene film (narrated-multi-scene), or talking-head-only piece (avatar-single-scene).
+Use when someone wants one short film beat from images — a narrated scene, story moment, or cinematic B-roll with optional voiceover.
 
 ## Install
 

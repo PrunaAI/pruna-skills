@@ -1,7 +1,7 @@
 {
   "name": "pruna-full",
   "description": "All 26 Pruna skills in one plugin. Multi-scene workflows use staged approval (plan \u2192 stills \u2192 clips before paid video) via requesting-generation-feedback, and parallel subagents per scene lane after you confirm \u2014 parent agent merges results.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": {
     "name": "Pruna AI"
   },

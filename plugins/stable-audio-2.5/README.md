@@ -1,6 +1,6 @@
 # stable-audio-2.5
 
-Use when the user wants light instrumental background music, an ambient bed under dialogue or voiceover, or underscore for reels and explainers.
+Use when someone wants light instrumental background music — an ambient bed under dialogue or underscore for reels and explainers.
 
 ## Install
 

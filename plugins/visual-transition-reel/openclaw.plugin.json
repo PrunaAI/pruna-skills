@@ -1,7 +1,7 @@
 {
   "id": "visual-transition-reel",
   "name": "visual-transition-reel",
-  "description": "Use when the user needs a visual montage, transitions between stills, action-sequence reel, or multi-scene piece where narration is optional or absent.",
+  "description": "Use when someone wants a montage with transitions between shots \u2014 action-sequence reel or multi-scene piece where narration is optional.",
   "skills": [
     "skills/visual-transition-reel",
     "skills/p-image",

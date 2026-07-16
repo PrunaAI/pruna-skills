@@ -1,9 +1,9 @@
 ---
 name: generation-diversity
-description: Use when outputs look generic or repetitive — apply the random seed ritual, explicit prompt structure, and scenario axis rotation before any paid generation call.
+description: Use when generations look generic or samey — vary seeds, prompt structure, and scenario axes before the next paid image, video, or audio call.
 license: MIT
 metadata:
-  version: "1.0.3"
+  version: "1.0.4"
   package: pruna-skills
   tier: guide
 ---

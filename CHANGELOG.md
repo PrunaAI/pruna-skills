@@ -4,6 +4,19 @@ All notable changes to Pruna Skills are documented here. Skill and plugin `metad
 
 ## [Unreleased]
 
+## [1.0.4] — 2026-07-16
+
+GitHub tag: `skills-v1.0.4`
+
+### Docs / descriptions
+
+- README **Start here** + team default callout; same three-line default in [AGENTS.md](AGENTS.md).
+- Rewrite all 26 skill `description` frontmatter lines (natural tone; images, video, edits, avatars, voice, full productions) — [docs/skill-description-style.md](docs/skill-description-style.md).
+- Description trigger / non-trigger audit in [SKILL-TEST-LOG.md](SKILL-TEST-LOG.md).
+- Agents/MCP decision gate (doc only): [docs/agents-mcp-gate.md](docs/agents-mcp-gate.md).
+- skills.sh badge deferred (listing URL returns 500 until telemetry lands); team bootstrap noted in [BACKLOG.md](BACKLOG.md).
+- Copilot dual `.github/plugin.json` still gated — CLI not installed (ENOENT), not a format failure.
+
 ## [1.0.3] — 2026-07-16
 
 GitHub tag: `skills-v1.0.3`

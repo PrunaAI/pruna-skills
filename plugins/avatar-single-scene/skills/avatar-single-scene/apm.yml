@@ -1,7 +1,7 @@
 name: avatar-single-scene
-version: 1.0.3
+version: 1.0.4
 type: skill
-description: Use when the user needs one talking-head beat with intake and approval gates—not a raw p-video-avatar call, multi-segment host reels (avatar-multi-scene), or motion-transfer grids.
+description: Use when someone wants one polished host-on-camera beat — a speaking person with intake and approval gates before generation.
 dependencies:
   apm:
     - PrunaAI/pruna-skills/plugins/p-image/skills/p-image

@@ -1,6 +1,6 @@
 # generation-quality-checklists
 
-Use when reviewing generated images, video, or audio — run the core quality checklist and model-specific checklist before asking the user to approve stills or clips.
+Use when reviewing generated images, videos, or audio before shipping — run the quality checklists before asking for approval.
 
 ## Install
 

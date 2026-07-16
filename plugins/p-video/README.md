@@ -1,6 +1,6 @@
 # p-video
 
-Use when the user wants one video clip from text or stills, start/end frame animation, or B-roll—not multi-scene films (image-to-video / narrated-multi-scene), talking-head lip-sync (p-video-avatar), or motion transfer (p-video-animate).
+Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts.
 
 ## Install
 

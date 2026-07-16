@@ -1,9 +1,9 @@
 ---
 name: avatar-single-scene
-description: Use when the user needs one talking-head beat with intake and approval gates—not a raw p-video-avatar call, multi-segment host reels (avatar-multi-scene), or motion-transfer grids.
+description: Use when someone wants one polished host-on-camera beat — a speaking person with intake and approval gates before generation.
 license: MIT
 metadata:
-  version: "1.0.3"
+  version: "1.0.4"
 depends:
   - p-image
   - p-image-edit

@@ -1,9 +1,9 @@
 ---
 name: p-image
-description: Use when the user wants the fastest text-to-image stills, quick draft photos, mood boards, or bulk panels where good quality and extremely low latency matter more than maximum photoreal fidelity.
+description: Use when someone wants a fast AI image — product shots, hero visuals, mood boards, or draft photos from a text prompt.
 license: MIT
 metadata:
-  version: "1.0.3"
+  version: "1.0.4"
   pruna_model: p-image
 ---
 

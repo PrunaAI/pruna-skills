@@ -1,7 +1,7 @@
 {
   "id": "music-video",
   "name": "music-video",
-  "description": "Use when the user wants a music video, lyric video, sung promo, or original song paired with performance and B-roll clips.",
+  "description": "Use when someone wants a full music video \u2014 original song or vocals, performance clips, B-roll, and lyric-synced edits.",
   "skills": [
     "skills/music-video",
     "skills/music-2.5",

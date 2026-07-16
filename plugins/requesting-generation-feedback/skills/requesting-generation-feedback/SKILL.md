@@ -1,9 +1,9 @@
 ---
 name: requesting-generation-feedback
-description: Use when about to call paid generation APIs, skip user review of prompts/stills/clips, or mux final audio without clip approval. Do not use as a stall after the user already approved the current phase.
+description: Use when about to spend on generation — pause for review of prompts, images, or clips before the next paid step. Not after the user already approved the current phase.
 license: MIT
 metadata:
-  version: "1.0.3"
+  version: "1.0.4"
 ---
 
 # Requesting generation feedback

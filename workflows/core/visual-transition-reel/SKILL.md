@@ -1,9 +1,9 @@
 ---
 name: visual-transition-reel
-description: Use when the user needs a visual montage, transitions between stills, action-sequence reel, or multi-scene piece where narration is optional or absent.
+description: Use when someone wants a montage with transitions between shots — action-sequence reel or multi-scene piece where narration is optional.
 license: MIT
 metadata:
-  version: "1.0.3"
+  version: "1.0.4"
 ---
 
 # Scene transition video (Pruna `p-video` + `p-image` / `p-image-edit`)

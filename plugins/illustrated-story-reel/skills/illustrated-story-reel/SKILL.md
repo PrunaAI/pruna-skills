@@ -1,9 +1,9 @@
 ---
 name: illustrated-story-reel
-description: Use when the user wants a still-image story reel or slideshow, picture-book narrative with voiceover or music—and explicitly not full motion-video generation.
+description: Use when someone wants a slideshow story with narration or music — picture-book style illustrated frames, not full motion video.
 license: MIT
 metadata:
-  version: "1.0.3"
+  version: "1.0.4"
 depends:
   - p-image
   - p-image-edit

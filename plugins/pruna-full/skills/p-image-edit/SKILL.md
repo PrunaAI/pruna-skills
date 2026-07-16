@@ -1,9 +1,9 @@
 ---
 name: p-image-edit
-description: Use when the user wants to edit an existing image, change wardrobe or background, compose from reference photos, inpaint-style adjustments, or multi-image edits from a prompt.
+description: Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits.
 license: MIT
 metadata:
-  version: "1.0.3"
+  version: "1.0.4"
   pruna_model: p-image-edit
 ---
 

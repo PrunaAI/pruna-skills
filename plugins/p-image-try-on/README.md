@@ -1,6 +1,6 @@
 # p-image-try-on
 
-Use when the user wants virtual try-on, dress a person in clothing from reference photos, garment fitting on a model still, or ecommerce fashion compositing.
+Use when someone wants virtual try-on — dress a person in clothes from reference photos for fashion or ecommerce.
 
 ## Install
 

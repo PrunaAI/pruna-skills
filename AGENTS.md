@@ -12,6 +12,8 @@ npx plugins add PrunaAI/pruna-skills -y   # workflows / pruna-full
 
 List: `npx skills add PrunaAI/pruna-skills -l` · Catalog: [skills.sh](https://skills.sh)
 
+**Team default:** one tool (`@p-image`) → one workflow plugin (`music-video`) → full suite (`pruna-full` with staged approval + subagents after confirm). Open [README.skills.md](README.skills.md) only for the full catalog.
+
 ## Layout
 
 | Path | Role |

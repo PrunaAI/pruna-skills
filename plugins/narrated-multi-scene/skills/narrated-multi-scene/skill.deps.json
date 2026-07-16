@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "skill": "narrated-multi-scene",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "repository": "PrunaAI/pruna-skills",
   "pluginPath": "plugins/narrated-multi-scene",
   "skillPath": "plugins/narrated-multi-scene/skills/narrated-multi-scene",

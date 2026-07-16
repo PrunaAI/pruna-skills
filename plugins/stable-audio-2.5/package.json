@@ -1,9 +1,9 @@
 {
   "name": "@pruna-ai/stable-audio-2.5",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "module",
   "license": "MIT",
-  "description": "Use when the user wants light instrumental background music, an ambient bed under dialogue or voiceover, or underscore for reels and explainers.",
+  "description": "Use when someone wants light instrumental background music \u2014 an ambient bed under dialogue or underscore for reels and explainers.",
   "repository": "https://github.com/PrunaAI/pruna-skills",
   "files": [
     ".claude-plugin",

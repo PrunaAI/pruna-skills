@@ -1,7 +1,7 @@
 {
   "id": "p-image",
   "name": "p-image",
-  "description": "Use when the user wants the fastest text-to-image stills, quick draft photos, mood boards, or bulk panels where good quality and extremely low latency matter more than maximum photoreal fidelity.",
+  "description": "Use when someone wants a fast AI image \u2014 product shots, hero visuals, mood boards, or draft photos from a text prompt.",
   "skills": [
     "skills/p-image"
   ],

@@ -1,7 +1,7 @@
 {
   "name": "requesting-generation-feedback",
-  "description": "Use when about to call paid generation APIs, skip user review of prompts/stills/clips, or mux final audio without clip approval. Do not use as a stall after the user already approved the current phase.",
-  "version": "1.0.3",
+  "description": "Use when about to spend on generation \u2014 pause for review of prompts, images, or clips before the next paid step. Not after the user already approved the current phase.",
+  "version": "1.0.4",
   "author": {
     "name": "Pruna AI"
   },

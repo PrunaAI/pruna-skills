@@ -1,6 +1,6 @@
 # gemini-3.1-flash-tts
 
-Use when the user needs narration or voiceover audio for explainers, documentary tracks, scene voice lines, or TTS to pair with generated video.
+Use when someone needs spoken narration or voiceover — explainer tracks, documentary lines, or voice to pair with generated video.
 
 ## Install
 

@@ -1,9 +1,9 @@
 ---
 name: music-video
-description: Use when the user wants a music video, lyric video, sung promo, or original song paired with performance and B-roll clips.
+description: Use when someone wants a full music video — original song or vocals, performance clips, B-roll, and lyric-synced edits.
 license: MIT
 metadata:
-  version: "1.0.3"
+  version: "1.0.4"
 ---
 
 # AI music video (lyrics → song → synced clips)

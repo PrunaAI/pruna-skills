@@ -1,6 +1,6 @@
 # p-video-replace
 
-Use when the user wants to swap a person, outfit, or product inside existing video, in-footage recast, wardrobe change, or product replacement while keeping camera motion and audio.
+Use when someone wants to swap a person, outfit, or product inside existing footage while keeping the camera move and audio.
 
 ## Install
 

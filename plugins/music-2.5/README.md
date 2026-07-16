@@ -1,6 +1,6 @@
 # music-2.5
 
-Use when the user wants AI song generation with vocals, sung lyrics, original tracks from a style prompt, or source audio for a music video.
+Use when someone wants an original AI song with vocals — sung lyrics, a style prompt track, or source audio for a music video.
 
 ## Install
 

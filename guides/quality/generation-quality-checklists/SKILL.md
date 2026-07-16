@@ -1,9 +1,9 @@
 ---
 name: generation-quality-checklists
-description: Use when reviewing generated images, video, or audio — run the core quality checklist and model-specific checklist before asking the user to approve stills or clips.
+description: Use when reviewing generated images, videos, or audio before shipping — run the quality checklists before asking for approval.
 license: MIT
 metadata:
-  version: "1.0.3"
+  version: "1.0.4"
   package: pruna-skills
   tier: guide
 ---

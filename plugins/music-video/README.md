@@ -1,6 +1,6 @@
 # music-video
 
-Use when the user wants a music video, lyric video, sung promo, or original song paired with performance and B-roll clips.
+Use when someone wants a full music video — original song or vocals, performance clips, B-roll, and lyric-synced edits.
 
 ## Install
 

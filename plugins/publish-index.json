@@ -1,8 +1,8 @@
 {
-  "version": "1.0.3",
+  "version": "1.0.4",
   "package": "pruna-skills",
   "repository": "https://github.com/PrunaAI/pruna-skills",
-  "gitTag": "skills-v1.0.3",
+  "gitTag": "skills-v1.0.4",
   "skills": [
     {
       "name": "avatar-multi-scene",
@@ -434,7 +434,7 @@
   "registries": {
     "github": {
       "method": "git tag + push",
-      "tag": "skills-v1.0.3",
+      "tag": "skills-v1.0.4",
       "note": "No upload API \u2014 consumers install from GitHub paths after push"
     },
     "npx": {

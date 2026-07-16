@@ -1,6 +1,6 @@
 # pruna-generative-pipeline
 
-Use when the user is unsure which production workflow fits, needs a recipe menu for multi-step media, or wants chained image/video/audio with staged approval gates. Do not use for a single known tool call (prefer that tool or pruna-run).
+Use when someone is unsure which production fits — need a menu for chained images, video, and audio with staged approval. Not for a single known tool call.
 
 ## Install
 
