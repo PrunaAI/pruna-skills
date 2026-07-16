@@ -2,54 +2,43 @@
 
 ![Pruna Skills — images, video, music, explainers, avatars, and workflows for agent coding tools](docs/assets/readme-hero-pruna-skills.png)
 
-Generate images, video, and audio with the [Pruna AI API](https://docs.api.pruna.ai/guides/models), plus multi-step workflows like explainers, music videos, and avatars. Skills follow the [Agent Skills](https://agentskills.io/specification) format and work in Cursor, Claude Code, Copilot, Codex, and [many more agents](https://skills.sh).
+Generate images, video, and audio with the [Pruna AI API](https://docs.api.pruna.ai/guides/models), plus multi-step workflows (explainers, music videos, avatars, and more). Skills follow the [Agent Skills](https://agentskills.io/specification) format and work in Cursor, Claude Code, Copilot, Codex, and [many more agents](https://skills.sh).
 
 ## How this works
 
-A **skill** is a playbook (`SKILL.md`) your agent loads for one job.
+| Term | Meaning |
+|------|---------|
+| **Skill** | A playbook (`SKILL.md`) the agent follows for one job |
+| **Plugin** | An install package — one skill, or a workflow plus the tools it needs |
+| **Tool** | One paid API call (image, video, audio) — install with `npx skills` |
+| **Workflow** | A multi-step deliverable with approval gates — install with `npx plugins` |
+| **References** | Shared markdown in [`references/`](references/README.md) (QA, API notes, policy). Not something you install; bundling copies them into each skill. Unrelated to **reference images** you upload for edit/try-on |
 
-A **plugin** is an **install bundle** — manifest plus one or more skill folders. Workflow plugins embed the workflow skill plus its tool dependencies.
+Pick a tool for a single generation. Pick a workflow (or **`pruna-full`**) when you want a finished production. Don’t install the same tool twice — once alone and again inside a workflow plugin.
 
-**References** are shared markdown specs in the repo ([`references/`](references/README.md)). They are best practices that are shared across various **skils**.
-
-| Type | What it is | Typical install |
-|------|------------|-----------------|
-| **Tool** | One paid API call — image, video, or audio | `npx skills` |
-| **Workflow** | Multi-step deliverable with approval gates | Prefer `npx plugins` |
-
-**Rule of thumb:** one operation → `npx skills add …@tool-name`. Finished production → `npx plugins add` and pick a workflow (or **`pruna-full`** for everything once). Do not install the same tool twice — standalone and again inside a workflow plugin.
-
-Every bundled skill includes shared generation policy (diversity, QA, staged approvals for workflows) — injected at bundle time from [references/policies/](references/policies/).
-
-Unsure which workflow fits? See [docs/WORKFLOW-RECIPES.md](docs/WORKFLOW-RECIPES.md).
+Every skill ships with shared generation policy (diversity, QA, staged approvals for workflows) from [references/policies/](references/policies/). Recipe ideas: [docs/WORKFLOW-RECIPES.md](docs/WORKFLOW-RECIPES.md). Full list: [docs/SKILL-CATALOG.md](docs/SKILL-CATALOG.md) (12 tools + 8 workflows).
 
 ## Quickstart
 
 ```bash
 export PRUNA_API_KEY="your_key"   # see [api-setup.md](docs/api-setup.md)
+
+npx skills add PrunaAI/pruna-skills@p-image -y          # one tool
+npx plugins add PrunaAI/pruna-skills                    # pick music-video, pruna-full, …
+npx skills add PrunaAI/pruna-skills -l                  # list skills
+npx plugins discover PrunaAI/pruna-skills               # list plugins
 ```
 
-| Goal | Command |
-|------|---------|
-| **One tool** | `npx skills add PrunaAI/pruna-skills@p-image -y` |
-| **One production** | `npx plugins add PrunaAI/pruna-skills` → pick e.g. `music-video` |
-| **Full suite (non-overlapping)** | same picker → **`pruna-full`** |
-
-```bash
-npx skills add PrunaAI/pruna-skills -l
-npx plugins discover PrunaAI/pruna-skills
-```
-
-Full inventory: [docs/SKILL-CATALOG.md](docs/SKILL-CATALOG.md) (20 skills: 12 tools + 8 workflows).
-
-**Plugins CLI gotcha:** no `@name` filter — `npx plugins add PrunaAI/pruna-skills@pruna-full` fails. Use the picker, or Claude Code:
+The plugins CLI has no `@name` filter (that’s skills-only). So `npx plugins add PrunaAI/pruna-skills@pruna-full` won’t work — use the picker, or in Claude Code:
 
 ```text
 /plugin marketplace add PrunaAI/pruna-skills
 /plugin install pruna-full@pruna-skills
 ```
 
-On multi-scene work, agents pause for plan → stills → clips before paid video. Skim [agent safety](references/shared/agent-safety.md) before enabling skills in untrusted repos.
+Prefer **`pruna-full`** over `npx plugins add … -y` if you want everything once; `-y` installs every plugin package and overlaps tools.
+
+Multi-scene workflows pause for plan → stills → clips before paid video. Skim [agent safety](references/shared/agent-safety.md) before enabling skills in untrusted repos. After install, start a **new chat**.
 
 ## Examples
 
@@ -68,7 +57,7 @@ plan.json → song.mp3 → stills/*.jpg → clips/*.mp4 → final.mp4
 
 Install: `npx plugins add PrunaAI/pruna-skills` → pick `music-video`. Template: [music-video-plan.template.json](workflows/music-video/templates/music-video-plan.template.json).
 
-## Choosing what to install
+## What’s available
 
 ### Tools (12)
 
@@ -87,7 +76,7 @@ Install: `npx plugins add PrunaAI/pruna-skills` → pick `music-video`. Template
 | Background music bed | `stable-audio-2.5` |
 | Lyric timestamps | `whisperx` |
 
-Install any tool: `npx skills add PrunaAI/pruna-skills@<name> -y`
+`npx skills add PrunaAI/pruna-skills@<name> -y`
 
 ### Workflows (8)
 
@@ -102,32 +91,15 @@ Install any tool: `npx skills add PrunaAI/pruna-skills@<name> -y`
 | Full music video | `music-video` |
 | Illustrated slideshow reel | `illustrated-story-reel` |
 
-Install: `npx plugins add PrunaAI/pruna-skills` → pick workflow name.
+`npx plugins add PrunaAI/pruna-skills` → pick the workflow. Each workflow plugin embeds the tools it needs.
 
 ### Full suite
 
-**`pruna-full`** — all 20 skills in one plugin. Prefer this over `npx plugins add … -y` (which installs 21 overlapping plugin packages).
-
-## Install skills (`npx skills`)
-
-```bash
-npx skills add PrunaAI/pruna-skills@p-image -y
-```
-
-After install, start a **new chat**.
-
-## Install plugins (`npx plugins`)
-
-```bash
-npx plugins add PrunaAI/pruna-skills
-npx plugins add PrunaAI/pruna-skills --target cursor
-```
-
-Workflow plugins embed their tools — e.g. `music-video` includes `p-image`, `p-video`, TTS, and friends.
+**`pruna-full`** — all 20 skills in one plugin.
 
 ## Other install channels
 
-Claude Code marketplace, ClawHub, APM — see [skill-package-managers.md](references/shared/skill-package-managers.md) and [PUBLISHING.md](docs/PUBLISHING.md).
+Claude Code marketplace, ClawHub, APM — [skill-package-managers.md](references/shared/skill-package-managers.md) and [PUBLISHING.md](docs/PUBLISHING.md).
 
 ## API setup
 
@@ -135,22 +107,17 @@ Claude Code marketplace, ClawHub, APM — see [skill-package-managers.md](refere
 
 ## Repo layout
 
-Author in `tools/` and `workflows/`. Bundling copies into `plugins/<name>/` — do not edit `plugins/` by hand.
-
-[`references/`](references/README.md) is the shared authoring library for QA checklists, API notes, and generation policy. You do **not** install it with `npx skills` / `npx plugins`. After install, those files appear inside each skill as `references/*.md`.
-
-- **`references/policies/`** — diversity, QA, approval gates — **auto-injected** into every skill
-- **`references/{shared,image,video,audio,workflows}/`** — skill-specific docs listed by basename in each `skill.manifest.json`
+Author in `tools/` and `workflows/`. Bundling writes `plugins/<name>/` — don’t edit that tree by hand.
 
 ```text
 tools/  workflows/     ──bundle──►  plugins/<name>/skills/<name>/
-references/policies/              → …/references/ + “Shared generation policy” in SKILL.md
-references/shared|image|…        → …/references/ when listed in the manifest
+references/policies/              → injected into every skill
+references/shared|image|…        → copied when listed in skill.manifest.json
 ```
 
 | Path | Role |
 |------|------|
-| `tools/`, `workflows/` | Skill source (what you install) |
+| `tools/`, `workflows/` | Skill source |
 | [`references/`](references/README.md) | Shared specs for authors/bundler — not a catalog tier |
 | `plugins/` | Generated install bundles (21 plugins) |
 | `docs/SKILL-CATALOG.md` | Generated catalog |
