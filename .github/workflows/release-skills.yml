@@ -46,6 +46,12 @@ jobs:
           git push origin HEAD
           git push origin "skills-v${{ github.event.inputs.version }}"
 
+      - name: Create GitHub Release from CHANGELOG
+        if: github.event.inputs.dry_run == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: ./scripts/create_github_release.sh "${{ github.event.inputs.version }}"
+
       - name: Publish to ClawHub
         if: github.event.inputs.dry_run == 'false'
         env:

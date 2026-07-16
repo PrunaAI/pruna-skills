@@ -4,6 +4,10 @@ All notable changes to Pruna Skills are documented here. Skill and plugin `metad
 
 ## [Unreleased]
 
+### Publishing
+
+- Always create a GitHub Release after tagging (`./scripts/create_github_release.sh`); CI does the same on `skills-v*` pushes.
+
 ## [1.0.4] — 2026-07-16
 
 GitHub tag: `skills-v1.0.4`

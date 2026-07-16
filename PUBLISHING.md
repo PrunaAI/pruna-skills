@@ -42,9 +42,14 @@ git add -A && git commit -m "[release] skills v1.0.2"
 git tag skills-v1.0.2
 git push origin main && git push origin skills-v1.0.2
 
-# 3. Upload to ClawHub (or rely on CI on tag push)
+# 3. Always create the GitHub Release (notes from CHANGELOG)
+./scripts/create_github_release.sh 1.0.2
+
+# 4. Upload to ClawHub (or rely on CI on tag push)
 ./scripts/publish_all_skills.sh --execute --target clawhub,clawhub-plugins,index
 ```
+
+A tag alone is not enough for the release page — **always** run `./scripts/create_github_release.sh <VERSION>` (or let CI create it on `skills-v*` push). Consumers and maintainers use the [Releases](https://github.com/PrunaAI/pruna-skills/releases) page for notes.
 
 Legacy one-liner steps:
 
@@ -59,9 +64,10 @@ Legacy one-liner steps:
 # 3. Upload to ClawHub
 ./scripts/publish_all_skills.sh --execute
 
-# 4. Git release marker for npx skills consumers (tag = skills-v$VERSION)
+# 4. Git tag + GitHub Release for npx skills consumers
 git tag skills-v1.0.2
 git push origin skills-v1.0.2
+./scripts/create_github_release.sh 1.0.2
 ```
 
 Single skill or plugin:

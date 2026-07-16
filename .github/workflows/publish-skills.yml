@@ -18,7 +18,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -28,6 +28,15 @@ jobs:
 
       - name: Verify bundles
         run: ./scripts/verify_skill_bundles.sh
+
+      - name: Create GitHub Release from CHANGELOG
+        if: startsWith(github.ref, 'refs/tags/skills-v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          VERSION="${TAG#skills-v}"
+          ./scripts/create_github_release.sh "${VERSION}"
 
       - name: Publish to registries
         env:
