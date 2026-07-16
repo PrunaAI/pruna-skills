@@ -3,10 +3,20 @@ name: music-2.5
 description: Use when someone wants an original AI song with vocals — sung lyrics, a style prompt track, or source audio for a music video.
 license: MIT
 metadata:
-  version: "1.0.5"
+  version: "1.0.6"
   provider: replicate
   replicate_model: minimax/music-2.5
 ---
+
+## Shared generation policy
+
+<!-- shared-generation-policy -->
+
+Before any paid `POST /v1/predictions`:
+
+1. **[Random seed ritual](./references/random-seed-ritual.md)** — always first; derive axes via sum-mod.
+2. **[Generation diversity](./references/generation-diversity.md)** — explicit prompts; rotate ≥2 scenario axes per session.
+3. **[Quality checklists](./references/generation-quality-checklists.md)** — open output files and judge pass/fail before advancing.
 
 # Music 2.5 (MiniMax · Replicate)
 
@@ -90,7 +100,7 @@ Poll `urls.get` until `status` is `succeeded`; download `output`.
 ## Repo helper
 
 ```bash
-python3 workflows/verticals/music-video/scripts/generate_song.py \
+python3 workflows/music-video/scripts/generate_song.py \
   --plan output/my-music-video/music_video_plan.json \
   --out-dir output/my-music-video
 ```
@@ -108,4 +118,4 @@ python3 workflows/verticals/music-video/scripts/generate_song.py \
 - [music-video workflow](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/music-video/skills/music-video/SKILL.md)
 - [gemini-3.1-flash-tts](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/gemini-3.1-flash-tts/skills/gemini-3.1-flash-tts/SKILL.md) — spoken narration (not song)
 - [stable-audio-2.5](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/stable-audio-2.5/skills/stable-audio-2.5/SKILL.md) — instrumental beds only
-- [replicate-api.md](./references/replicate-api.md)
+- [replicate-api.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/replicate-api.md)

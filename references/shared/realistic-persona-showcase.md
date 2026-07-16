@@ -21,7 +21,7 @@ Current public examples often read as **AI sloppy** or **too simplistic**: same 
 
 ## Pipeline overview
 
-**Before any step:** [generation-diversity.md](./generation-diversity.md) (ritual seed + axis rotation) · [random seed ritual](./random-seed-ritual.md)
+**Before any step:** [generation-diversity.md](../policies/generation-diversity.md) (ritual seed + axis rotation) · [random seed ritual](../policies/random-seed-ritual.md)
 
 ```text
 p-image (hero plate)     → slop gate → identity anchor (plate URL + cast descriptor)
@@ -251,11 +251,11 @@ After hero approval, branch with **`p-image-edit`** from the **same anchor URL**
 - Change **only** background, camera angle, emotion, or wardrobe delta
 - Never re-roll identity with a fresh unrelated **`p-image`** unless user requests recast
 
-Templates: [prompt-templates.md](../../workflows/core/avatar-multi-scene/prompt-templates.md).
+Templates: [prompt-templates.md](../../workflows/avatar-multi-scene/prompt-templates.md).
 
 ### Identity lock
 
-**[Random seed ritual](./random-seed-ritual.md) (SSoT)** first — log `ritual_seed` for prompt planning. Character continuity = **approved hero plate URL** + cast descriptor across hero regen and **`p-video-avatar`** clips.
+**[Random seed ritual](../policies/random-seed-ritual.md) (SSoT)** first — log `ritual_seed` for prompt planning. Character continuity = **approved hero plate URL** + cast descriptor across hero regen and **`p-video-avatar`** clips.
 
 ## `p-video-avatar` — dynamic realistic personas
 
@@ -303,7 +303,7 @@ See camera/motion ladder: [visual-variety-bible.md](./visual-variety-bible.md#ca
 | 3 | cafe_corner | over_shoulder | desk + mug | glance to mug |
 | 4 | led_studio | slight_high | wardrobe swap | arc right |
 
-Workflow skills: [avatar-single-scene](../../workflows/core/avatar-single-scene/SKILL.md) · [avatar-multi-scene](../../workflows/core/avatar-multi-scene/SKILL.md).
+Workflow skills: [avatar-single-scene](../../workflows/avatar-single-scene/SKILL.md) · [avatar-multi-scene](../../workflows/avatar-multi-scene/SKILL.md).
 
 ### Fashion / try-on → talking head
 

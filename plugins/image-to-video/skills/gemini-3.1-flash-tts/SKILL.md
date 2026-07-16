@@ -3,10 +3,20 @@ name: gemini-3.1-flash-tts
 description: Use when someone needs spoken narration or voiceover — explainer tracks, documentary lines, or voice to pair with generated video.
 license: MIT
 metadata:
-  version: "1.0.5"
+  version: "1.0.6"
   provider: replicate
   replicate_model: google/gemini-3.1-flash-tts
 ---
+
+## Shared generation policy
+
+<!-- shared-generation-policy -->
+
+Before any paid `POST /v1/predictions`:
+
+1. **[Random seed ritual](./references/random-seed-ritual.md)** — always first; derive axes via sum-mod.
+2. **[Generation diversity](./references/generation-diversity.md)** — explicit prompts; rotate ≥2 scenario axes per session.
+3. **[Quality checklists](./references/generation-quality-checklists.md)** — open output files and judge pass/fail before advancing.
 
 # Gemini 3.1 Flash TTS (Replicate)
 
@@ -167,4 +177,4 @@ Truncated narration mid-sentence usually means the line exceeded the cap, not th
 - [narrated-multi-scene](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/narrated-multi-scene/skills/narrated-multi-scene/SKILL.md) — scene table + assembly
 - [stable-audio-2.5](../stable-audio-2.5/SKILL.md) — instrumental beds
 - [music-2.5](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/music-2.5/skills/music-2.5/SKILL.md) — full songs with vocals
-- [replicate-api.md](./references/replicate-api.md)
+- [replicate-api.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/replicate-api.md)

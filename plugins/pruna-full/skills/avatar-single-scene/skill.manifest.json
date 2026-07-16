@@ -7,12 +7,8 @@
   ],
   "references": [
     "pruna-api.md",
-    "staged-generation-gate.md",
-    "workflow-feedback-gates.md",
     "p-video-avatar-quality-checklist.md",
-    "realistic-persona-showcase.md",
-    "generation-diversity.md",
-    "random-seed-ritual.md"
+    "realistic-persona-showcase.md"
   ],
   "scripts": {
     "core": [],

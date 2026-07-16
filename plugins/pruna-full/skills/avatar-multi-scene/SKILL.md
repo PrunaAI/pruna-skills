@@ -3,8 +3,22 @@ name: avatar-multi-scene
 description: Use when someone wants the same person hosting several clips — multi-segment UGC, comparison reels, or mixed speaking and animated scenes with continuity.
 license: MIT
 metadata:
-  version: "1.0.5"
+  version: "1.0.6"
 ---
+
+## Shared generation policy
+
+<!-- shared-generation-policy -->
+
+Before any paid `POST /v1/predictions`:
+
+1. **[Random seed ritual](./references/random-seed-ritual.md)** — always first; derive axes via sum-mod.
+2. **[Generation diversity](./references/generation-diversity.md)** — explicit prompts; rotate ≥2 scenario axes per session.
+3. **[Quality checklists](./references/generation-quality-checklists.md)** — open output files and judge pass/fail before advancing.
+4. **[Staged generation gate](./references/staged-generation-gate.md)** — plan → stills → audio → video → assembly; never skip phases in one turn.
+5. **[Approval red flags](./references/approval-red-flags.md)** — pause when plan, stills, or clips were not reviewed.
+6. **[Workflow feedback gates](./references/workflow-feedback-gates.md)** — runner flags and per-workflow commands.
+7. **[Parallel execution](./references/parallel-execution.md)** — async fan-out within each approved phase only.
 
 # Multi-scene avatar & motion-transfer video (Pruna only)
 
@@ -23,17 +37,17 @@ Visual continuity comes from **Pruna `p-image` / `p-image-edit`** on uploaded re
 
 Follow this skill in **plain language** when talking to the person requesting the video: explain cast, voices, motion templates, and scene order the way you would in a production meeting. Use **natural, speakable copy** in every `voice_script`.
 
-**Staged generation:** [staged-generation-gate.md](./references/staged-generation-gate.md) · [workflow-feedback-gates.md](./references/workflow-feedback-gates.md)
+**Staged generation:** [staged-generation-gate.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/staged-generation-gate.md) · [workflow-feedback-gates.md](./references/workflow-feedback-gates.md)
 
 ## Quick reference
 
 | Resource | Path |
 |----------|------|
-| Photoreal dynamic personas | [realistic-persona-showcase.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/shared/realistic-persona-showcase.md) |
+| Photoreal dynamic personas | [realistic-persona-showcase.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/realistic-persona-showcase.md) |
 | Cast ledger, character sheet, voice/video prompts | [prompt-templates.md](./prompt-templates.md) |
 | Animate rows, sliders, alignment | [animate-beats.md](./animate-beats.md) |
 | Examples | [examples.md](./examples.md) |
-| Feedback discipline | [requesting-generation-feedback](../requesting-generation-feedback/SKILL.md) |
+| Feedback discipline | [requesting-generation-feedback](https://github.com/PrunaAI/pruna-skills/tree/main/router/references/policies/approval-red-flags.md) |
 | Slider script | [`generate_video_comparison.py`](./scripts/generate_video_comparison.py) |
 
 ## Feedback gates (required)
@@ -58,8 +72,8 @@ Follow this skill in **plain language** when talking to the person requesting th
 | **Voice** | For **each named character**, pick **one** Pruna `voice` and `voice_language` and **reuse it in every scene** that character speaks. Any words that must be pronounced exactly (names, acronyms)? |
 | **Style** | Agreed **style bible** line for all image prompts? |
 | **Character sheet** | Per speaker: age range, wardrobe baseline, hair, skin/realism level, personality adjectives—record before hero generation (see **Character sheet** below). |
-| **Scene variety** | Each scene must differ in **camera angle**, **background/setting**, and/or **energy**—no two consecutive scenes with the same framing and location unless the user asks. Plan **`visual_style_tag`**, **`setting_tag`**, **`camera_tag`**, **`lighting_tag`** per row; cast diversity (gender, age, ethnicity) on launch reels — [visual-variety-bible.md](./references/visual-variety-bible.md). |
-| **Ritual seed (SSoT)** | **[Random seed ritual](https://github.com/PrunaAI/pruna-skills/tree/main/references/shared/random-seed-ritual.md)** at hero — generate and state a ritual string; log as **`ritual_seed`**; derive prompt axes via sum-mod. **Do not** pass ritual string to API `seed`. |
+| **Scene variety** | Each scene must differ in **camera angle**, **background/setting**, and/or **energy**—no two consecutive scenes with the same framing and location unless the user asks. Plan **`visual_style_tag`**, **`setting_tag`**, **`camera_tag`**, **`lighting_tag`** per row; cast diversity (gender, age, ethnicity) on launch reels — [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/visual-variety-bible.md). |
+| **Ritual seed (SSoT)** | **[Random seed ritual](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/random-seed-ritual.md)** at hero — generate and state a ritual string; log as **`ritual_seed`**; derive prompt axes via sum-mod. **Do not** pass ritual string to API `seed`. |
 | **References** | Which files to upload; rights cleared? |
 | **Beat mix** | Which scenes are **`avatar`** vs **`animate`**? All avatar, all animate, or mixed announcement? |
 | **Narrated B-roll cutaways** | Optional **`p-video`** beats using [scene anchor triple](https://github.com/PrunaAI/pruna-skills/tree/main/references/shared/scene-anchor-triple.md) alongside avatar rows |
@@ -130,7 +144,7 @@ End product launches with a speakable **`avatar`** CTA unless the user opts out.
 
 ## Identity & ritual seed policy
 
-Must complete **[random seed ritual](https://github.com/PrunaAI/pruna-skills/tree/main/references/shared/random-seed-ritual.md) (SSoT)** before hero prompt work. Log **`ritual_seed`** in manifest; reuse only on same-brief slop retry.
+Must complete **[random seed ritual](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/random-seed-ritual.md) (SSoT)** before hero prompt work. Log **`ritual_seed`** in manifest; reuse only on same-brief slop retry.
 
 Character continuity = **approved hero plate URL** + cast descriptor — not API `seed`. Pass **`api_seed`** in `input` only when the user explicitly locks reproducibility.
 
@@ -164,14 +178,14 @@ Optional edits after feedback; repeat confirmation if the script or cast changes
 
 Once the user confirms:
 
-1. **Write** a concrete **generation package**: phased **`curl`** steps or a small script that performs uploads, **`p-image`** / **`p-image-edit`**, parallel **`p-video-avatar`** (avatar rows), parallel **`p-video-animate`** (animate rows), **`generate_video_comparison.py`** slider renders (animate rows), and downloads—matching the approved scene table **exactly**. **Parallelize** independent lanes within each phase ([parallel-execution.md](./references/parallel-execution.md)).
+1. **Write** a concrete **generation package**: phased **`curl`** steps or a small script that performs uploads, **`p-image`** / **`p-image-edit`**, parallel **`p-video-avatar`** (avatar rows), parallel **`p-video-animate`** (animate rows), **`generate_video_comparison.py`** slider renders (animate rows), and downloads—matching the approved scene table **exactly**. **Parallelize** independent lanes within each phase ([parallel-execution.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/parallel-execution.md)).
 2. **Execute** that package when execution is possible (`PRUNA_API_KEY` present, network available). Prefer **one subagent per scene lane** (still pipeline: edit → gate; or avatar: create → poll → download) launched in parallel after the hero anchor exists. Parent agent owns confirmation, manifest merge, and assembly. If the environment cannot call the API, hand the user the same script and exact commands so they can run it locally without guesswork.
 
 The script is the contract: what runs must match what was approved.
 
 ## Core rules
 
-1. **`p-video-avatar` `input.image`** — use an approved still URL from `/v1/files` (upload, **`p-image`**, or **`p-image-edit`** output) that passed [generation-quality-checklists.md](./references/generation-quality-checklists.md).
+1. **`p-video-avatar` `input.image`** — use an approved still URL from `/v1/files` (upload, **`p-image`**, or **`p-image-edit`** output) that passed [generation-quality-checklists.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/generation-quality-checklists.md).
 2. Run the **slop gate** on every hero and scene still **before** any avatar job.
 
 ```text
@@ -185,13 +199,13 @@ Use the **approved hero** as the reference for **`p-image-edit`**, not a rejecte
 
 | Step | Model | Skill |
 |------|--------|--------|
-| Upload binaries | `POST /v1/files` | [pruna-api.md](./references/pruna-api.md) |
+| Upload binaries | `POST /v1/files` | [pruna-api.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/pruna-api.md) |
 | Style-locked stills | `p-image`, `p-image-edit` | [p-image](../../../../tools/image/p-image/SKILL.md), [p-image-edit](../../../../tools/image/p-image-edit/SKILL.md) |
 | Talking clips | `p-video-avatar` | [p-video-avatar](../../../../tools/video/p-video-avatar/SKILL.md) |
 | Motion transfer | **`p-video-animate`** | [p-video-animate](../../../../tools/video/p-video-animate/SKILL.md) |
 | Slider comparison (animate rows) | [`generate_video_comparison.py`](./scripts/generate_video_comparison.py) | local; install via `npx skills add PrunaAI/pruna-skills@avatar-multi-scene -y` or `npx plugins add PrunaAI/pruna-skills -y` |
 
-Use **`PRUNA_API_KEY`** and the **`apikey`** header on every call. **Async + parallel by default**: batch all avatar jobs once approved stills pass slop; batch all animate jobs once motion + still URLs are ready; poll all `get_url` together. See [parallel-execution.md](./references/parallel-execution.md).
+Use **`PRUNA_API_KEY`** and the **`apikey`** header on every call. **Async + parallel by default**: batch all avatar jobs once approved stills pass slop; batch all animate jobs once motion + still URLs are ready; poll all `get_url` together. See [parallel-execution.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/parallel-execution.md).
 
 ## Parallel execution & subagents
 
@@ -225,15 +239,15 @@ Field names and curl shapes: **[prompt-templates.md](./prompt-templates.md)** ·
 
 ## References
 
-- [generation-quality-checklists.md](./references/generation-quality-checklists.md)
+- [generation-quality-checklists.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/generation-quality-checklists.md)
 - [prompt-templates.md](./prompt-templates.md) — cast ledger, character sheet, voice/video templates
 - [animate-beats.md](./animate-beats.md) — `p-video-animate`, motion templates, sliders
-- [requesting-generation-feedback](../requesting-generation-feedback/SKILL.md)
+- [requesting-generation-feedback](https://github.com/PrunaAI/pruna-skills/tree/main/router/references/policies/approval-red-flags.md)
 - [examples.md](./examples.md)
 
 ## Related
 
-- Pruna-only pipeline overview: [pruna-generative-pipeline](../pruna-generative-pipeline/SKILL.md)
+- Pruna-only pipeline overview: [pruna-generative-pipeline](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/pruna-generative-pipeline/skills/pruna-generative-pipeline/SKILL.md)
 - One-scene avatar: [avatar-single-scene](../avatar-single-scene/SKILL.md)
 - Cinematic B-roll (non-avatar): [image-to-video](../image-to-video/SKILL.md), [narrated-multi-scene](../narrated-multi-scene/SKILL.md)
 - Still upscale slider demos: [p-image-upscale-comparison](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/p-image-upscale-comparison/skills/p-image-upscale-comparison/SKILL.md)

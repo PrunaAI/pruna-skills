@@ -3,7 +3,7 @@ name: stable-audio-2.5
 description: Use when someone wants light instrumental background music — an ambient bed under dialogue or underscore for reels and explainers.
 license: MIT
 metadata:
-  version: "1.0.5"
+  version: "1.0.6"
   provider: replicate
   replicate_model: stability-ai/stable-audio-2.5
 ---
@@ -98,5 +98,5 @@ python3 workflows/_shared/scripts/launch_background_music.py \
 
 - [audio-post-production.md](../../../references/audio/audio-post-production.md) — narration + bed layering
 - [gemini-3.1-flash-tts](../gemini-3.1-flash-tts/SKILL.md) — narration voiceover
-- [visual-transition-reel](../../../workflows/core/visual-transition-reel/SKILL.md) — concat + optional bed assembly
-- [replicate-api.md](../../../references/shared/replicate-api.md) — shared Replicate patterns
+- [visual-transition-reel](../../../workflows/visual-transition-reel/SKILL.md) — concat + optional bed assembly
+- [replicate-api.md](references/policies/replicate-api.md) — shared Replicate patterns

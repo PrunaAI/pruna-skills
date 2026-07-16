@@ -1,10 +1,10 @@
 # p-video-avatar quality checklist
 
-Before calling the model and after each avatar clip, **open the still or video and review it visually** against this checklist (agent vision review — see [generation-quality-checklists.md](https://github.com/PrunaAI/pruna-skills/tree/main/shared/generation-quality-checklists.md#who-applies-these-checklists)).
+Before calling the model and after each avatar clip, **open the still or video and review it visually** against this checklist (agent vision review — see [generation-quality-checklists.md](https://github.com/PrunaAI/pruna-skills/tree/main/policies/generation-quality-checklists.md#who-applies-these-checklists)).
 
 ## Applies to
 
-See the canonical mapping in [`generation-quality-checklists.md`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/generation-quality-checklists/SKILL.md).
+See the canonical mapping in [`generation-quality-checklists.md`](https://github.com/PrunaAI/pruna-skills/tree/main/policies/generation-quality-checklists.md).
 
 ## Input still gate (pre-render)
 

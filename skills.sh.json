@@ -3,7 +3,7 @@
   "notGrouped": "bottom",
   "groupings": [
     {
-      "title": "Image Generation",
+      "title": "Image Tools",
       "description": "Generate and edit images with Pruna API models.",
       "skills": [
         "p-image",
@@ -13,7 +13,7 @@
       ]
     },
     {
-      "title": "Video Generation",
+      "title": "Video Tools",
       "description": "Generate and edit video with Pruna API models.",
       "skills": [
         "p-video",
@@ -23,7 +23,7 @@
       ]
     },
     {
-      "title": "Audio & Speech",
+      "title": "Audio Tools",
       "description": "Music, TTS, transcription, and background audio.",
       "skills": [
         "gemini-3.1-flash-tts",
@@ -33,21 +33,9 @@
       ]
     },
     {
-      "title": "Guides",
-      "description": "Prompting, quality gates, and workflow routing \u2014 no API required.",
-      "skills": [
-        "generation-diversity",
-        "generation-quality-checklists",
-        "recipe-catalog"
-      ]
-    },
-    {
       "title": "Workflows",
       "description": "Multi-step production pipelines for explainers, music videos, and reels.",
       "skills": [
-        "pruna-generative-pipeline",
-        "pruna-run",
-        "requesting-generation-feedback",
         "image-to-video",
         "narrated-multi-scene",
         "visual-transition-reel",

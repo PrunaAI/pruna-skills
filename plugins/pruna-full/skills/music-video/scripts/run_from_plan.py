@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Run music-video plan: song → cuts → align → stills → clips → assemble.
 
-Phased execution (default --phase song): see references/shared/staged-generation-gate.md
+Phased execution (default --phase song): see references/policies/staged-generation-gate.md
 """
 
 from __future__ import annotations

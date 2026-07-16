@@ -1,10 +1,10 @@
 # p-image-try-on quality checklist
 
-After each `p-image-try-on` output is saved, **open the file and review it visually** against this checklist (agent vision review — see [generation-quality-checklists.md](https://github.com/PrunaAI/pruna-skills/tree/main/shared/generation-quality-checklists.md#who-applies-these-checklists)).
+After each `p-image-try-on` output is saved, **open the file and review it visually** against this checklist (agent vision review — see [generation-quality-checklists.md](https://github.com/PrunaAI/pruna-skills/tree/main/policies/generation-quality-checklists.md#who-applies-these-checklists)).
 
 ## Applies to
 
-See the canonical mapping in [`generation-quality-checklists.md`](https://github.com/PrunaAI/pruna-skills/tree/main/shared/generation-quality-checklists.md).
+See the canonical mapping in [`generation-quality-checklists.md`](https://github.com/PrunaAI/pruna-skills/tree/main/policies/generation-quality-checklists.md).
 
 ## Scene preservation (garment-only edit)
 
@@ -29,7 +29,7 @@ See [realistic-persona-showcase.md](https://github.com/PrunaAI/pruna-skills/tree
 
 ## Upstream person plate (before try-on)
 
-If **`person_image`** was generated with **`p-image`**, confirm [p-image-quality-checklist.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/p-image-quality-checklist/SKILL.md) passed first — mushy or synthetic plates produce mushy try-ons.
+If **`person_image`** was generated with **`p-image`**, confirm [p-image-quality-checklist.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/p-image-quality-checklist/SKILL.md) passed first — mushy or synthetic plates produce mushy try-ons.
 
 - Photoreal editorial intent (not generic “fashion model white background” unless requested).
 - Cast and setting match the showcase brief when building public examples — [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/shared/visual-variety-bible.md).

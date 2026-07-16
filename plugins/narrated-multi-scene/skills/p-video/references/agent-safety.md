@@ -30,4 +30,4 @@ Downloads (`curl -o …`, runners writing under an output dir) **create or overw
 
 - [api-credentials.md](./api-credentials.md) — signup + header rules
 - [pruna-api.md](./pruna-api.md) — upload / poll / download
-- [staged-generation-gate.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/staged-generation-gate/SKILL.md) — approval phases
+- [staged-generation-gate.md](https://github.com/PrunaAI/pruna-skills/tree/main/policies/staged-generation-gate.md) — approval phases

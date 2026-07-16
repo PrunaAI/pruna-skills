@@ -5,8 +5,6 @@
   },
   "references": [
     "replicate-api.md",
-    "api-credentials.md",
-    "generation-diversity.md",
-    "random-seed-ritual.md"
+    "api-credentials.md"
   ]
 }

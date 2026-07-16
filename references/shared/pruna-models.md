@@ -2,7 +2,7 @@
 
 Pricing and limits change; confirm on the official page: [Available models](https://docs.api.pruna.ai/guides/models).
 
-**Execution:** Multi-scene and batch runs should use **async parallel fan-out** and **subagents per independent lane** — see [parallel-execution.md](./parallel-execution.md).
+**Execution:** Multi-scene and batch runs should use **async parallel fan-out** and **subagents per independent lane** — see [parallel-execution.md](../policies/parallel-execution.md).
 
 ## First-party Pruna models covered by this repo
 
@@ -22,7 +22,7 @@ Pricing and limits change; confirm on the official page: [Available models](http
 | Tool | Type | Skill folder | Notes |
 |------|------|--------------|-------|
 | `stable-audio-2.5` | Text-to-music bed | `tools/audio/stable-audio-2.5` | Requires `REPLICATE_API_TOKEN`; mix via `launch_background_music.py` |
-| `music-2.5` | Full song with vocals (lyrics + style) | `tools/audio/music-2.5` | Requires `REPLICATE_API_TOKEN`; [music-video](../workflows/verticals/music-video/SKILL.md) workflow |
+| `music-2.5` | Full song with vocals (lyrics + style) | `tools/audio/music-2.5` | Requires `REPLICATE_API_TOKEN`; [music-video](../workflows/music-video/SKILL.md) workflow |
 | `gemini-3.1-flash-tts` | Narration / voiceover TTS | `tools/audio/gemini-3.1-flash-tts` | Requires `REPLICATE_API_TOKEN`; mux or drive `p-video` via uploaded audio — [audio-post-production.md](../audio/audio-post-production.md) |
 
 ## Related models (not duplicated as skills here)
@@ -35,14 +35,14 @@ Documented on the same models page: `p-image-lora`, trainers, `flux-*`, `wan-*`,
 |----------|------|
 | Prompt-first fast entrypoint (auto route + direct chains) | `workflows/router/pruna-run` |
 | Pruna generative **scenario hub** (mood boards, packs, I2V, audio-led `p-video`, upscale chains; points to scene workflows) | `workflows/router/pruna-generative-pipeline` |
-| Single-scene avatar (`p-video-avatar`, intake first) | `workflows/core/avatar-single-scene` |
-| Multi-scene avatar (stills + `p-video-avatar` per scene, intake first) | `workflows/core/avatar-multi-scene` |
-| Single-scene cinematic (`p-video`, intake first) | `workflows/core/image-to-video` |
-| Multi-scene cinematic (`p-video` per scene, scene anchor triple) | `workflows/core/narrated-multi-scene` |
-| Multi-scene visual transitions (`p-image`/`p-image-edit` stills → `p-video` pair) | `workflows/core/visual-transition-reel` |
-| Educational explainer (narrator + character interaction) | `workflows/verticals/interactive-explainer` |
+| Single-scene avatar (`p-video-avatar`, intake first) | `workflows/avatar-single-scene` |
+| Multi-scene avatar (stills + `p-video-avatar` per scene, intake first) | `workflows/avatar-multi-scene` |
+| Single-scene cinematic (`p-video`, intake first) | `workflows/image-to-video` |
+| Multi-scene cinematic (`p-video` per scene, scene anchor triple) | `workflows/narrated-multi-scene` |
+| Multi-scene visual transitions (`p-image`/`p-image-edit` stills → `p-video` pair) | `workflows/visual-transition-reel` |
+| Educational explainer (narrator + character interaction) | `workflows/interactive-explainer` |
 | Upscale comparison demo | `workflows/_shared/scripts/generate_upscale_comparison.py` |
-| Motion-transfer showcase (`p-video-animate` + slider comparisons) | `workflows/core/avatar-multi-scene` (animate rows); slider script: `workflows/_shared/scripts/generate_video_comparison.py` |
+| Motion-transfer showcase (`p-video-animate` + slider comparisons) | `workflows/avatar-multi-scene` (animate rows); slider script: `workflows/_shared/scripts/generate_video_comparison.py` |
 | In-video replacement showcase (`p-video-replace` + slider comparisons) | `workflows/_shared/scripts/generate_video_comparison.py` |
 | Virtual try-on reel (`p-image-try-on` + avatar / I2V + bed) | `p-image-try-on` tool skill + [realistic-persona-showcase.md](./realistic-persona-showcase.md) |
-| AI music video (lyrics → Music 2.5 → avatar + B-roll) | `workflows/verticals/music-video` |
+| AI music video (lyrics → Music 2.5 → avatar + B-roll) | `workflows/music-video` |

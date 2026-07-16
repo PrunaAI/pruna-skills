@@ -52,5 +52,5 @@ Run at lyrics approval, after song generation, on stills, and on final assembly.
 ## Related
 
 - [music-video SKILL](../SKILL.md)
-- [lyrics-and-cuts.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/verticals/music-video/lyrics-and-cuts.md)
-- [generation-quality-checklists.md](./generation-quality-checklists.md)
+- [lyrics-and-cuts.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/music-video/lyrics-and-cuts.md)
+- [generation-quality-checklists.md](https://github.com/PrunaAI/pruna-skills/tree/main/policies/generation-quality-checklists.md)

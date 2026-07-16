@@ -3,15 +3,25 @@ name: p-image-upscale
 description: Use when someone wants to upscale or sharpen an existing image for print, large crops, or higher-quality delivery.
 license: MIT
 metadata:
-  version: "1.0.5"
+  version: "1.0.6"
   pruna_model: p-image-upscale
 ---
+
+## Shared generation policy
+
+<!-- shared-generation-policy -->
+
+Before any paid `POST /v1/predictions`:
+
+1. **[Random seed ritual](./references/random-seed-ritual.md)** — always first; derive axes via sum-mod.
+2. **[Generation diversity](./references/generation-diversity.md)** — explicit prompts; rotate ≥2 scenario axes per session.
+3. **[Quality checklists](./references/generation-quality-checklists.md)** — open output files and judge pass/fail before advancing.
 
 # p-image-upscale (Pruna)
 
 AI upscaling with configurable target resolution. Full parameters: [p-image-upscale model docs](https://docs.api.pruna.ai/guides/models/p-image-upscale).
 
-Shared HTTP patterns: [pruna-api.md](./references/pruna-api.md) (upload, [poll](#poll), [download](#download))
+Shared HTTP patterns: [pruna-api.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/pruna-api.md) (upload, [poll](#poll), [download](#download))
 
 ## HTTP (curl)
 
@@ -42,11 +52,11 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-Poll and download: [pruna-api.md](./references/pruna-api.md#poll).
+Poll and download: [pruna-api.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/pruna-api.md#poll).
 
 ## Before generating
 
-1. **[Generation diversity](./references/generation-diversity.md)** — ritual seed + axis rotation (optional API `seed` if supported).
+1. **[Generation diversity](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/generation-diversity.md)** — ritual seed + axis rotation (optional API `seed` if supported).
 2. Confirm **`target`** MP (1–**128**), **`enhance_details`** / **`enhance_realism`**, and **`output_format`** with the user so upscale matches destination. Validate outputs with [p-image-upscale-quality-checklist.md](./references/p-image-upscale-quality-checklist.md).
 
 ## When to upscale
@@ -54,7 +64,7 @@ Poll and download: [pruna-api.md](./references/pruna-api.md#poll).
 | Use case | Typical `target` MP | Notes |
 |----------|---------------------|--------|
 | Print / billboard / extreme crop | **8–128** | Confirm cost/latency with user |
-| Mood board / packshot enlargement | **4–16** | Optional in [pruna-generative-pipeline](../pruna-generative-pipeline/SKILL.md) recipes A/B/C |
+| Mood board / packshot enlargement | **4–16** | Optional in [pruna-generative-pipeline](https://github.com/PrunaAI/pruna-skills/tree/main/docs/WORKFLOW-RECIPES.md) recipes A/B/C |
 | Before/after slider video | [`generate_upscale_comparison.py`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/_shared/scripts/generate_upscale_comparison.py) | Not used in avatar or motion-transfer pipelines |
 
 **Video workflows** ([avatar-multi-scene](../avatar-multi-scene/SKILL.md), [p-video-animate](../p-video-animate/SKILL.md), [p-video-replace](../p-video-replace/SKILL.md)) feed **`p-image`** / **`p-image-edit`** outputs directly into video models after the slop gate—do **not** add an upscale step unless the user explicitly asks for print-scale stills.

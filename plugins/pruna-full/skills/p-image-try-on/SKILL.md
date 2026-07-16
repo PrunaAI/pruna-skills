@@ -3,9 +3,19 @@ name: p-image-try-on
 description: Use when someone wants virtual try-on — dress a person in clothes from reference photos for fashion or ecommerce.
 license: MIT
 metadata:
-  version: "1.0.5"
+  version: "1.0.6"
   pruna_model: p-image-try-on
 ---
+
+## Shared generation policy
+
+<!-- shared-generation-policy -->
+
+Before any paid `POST /v1/predictions`:
+
+1. **[Random seed ritual](./references/random-seed-ritual.md)** — always first; derive axes via sum-mod.
+2. **[Generation diversity](./references/generation-diversity.md)** — explicit prompts; rotate ≥2 scenario axes per session.
+3. **[Quality checklists](./references/generation-quality-checklists.md)** — open output files and judge pass/fail before advancing.
 
 # p-image-try-on (Pruna)
 
@@ -15,9 +25,9 @@ The model's strength is **garment-only editing** — identity, pose, hair, backg
 
 Canonical API reference: [p-image-try-on model docs](https://docs.api.pruna.ai/guides/models/p-image-try-on) · operational guide (Runware host): [virtual try-on](https://runware.ai/docs/models/prunaai-p-image-try-on/guides/virtual-try-on)
 
-**Showcase quality bar:** [realistic-persona-showcase.md](./references/realistic-persona-showcase.md) · try-on checklist: [p-image-try-on-quality-checklist.md](./references/p-image-try-on-quality-checklist.md) · examples: [example-prompt.md](./example-prompt.md)
+**Showcase quality bar:** [realistic-persona-showcase.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/realistic-persona-showcase.md) · try-on checklist: [p-image-try-on-quality-checklist.md](./references/p-image-try-on-quality-checklist.md) · examples: [example-prompt.md](./example-prompt.md)
 
-Shared HTTP patterns: [pruna-api.md](./references/pruna-api.md) (upload, [poll](#poll), [download](#download))
+Shared HTTP patterns: [pruna-api.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/pruna-api.md) (upload, [poll](#poll), [download](#download))
 
 ## Pricing
 
@@ -92,7 +102,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-Poll and download: [pruna-api.md](./references/pruna-api.md#poll).
+Poll and download: [pruna-api.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/pruna-api.md#poll).
 
 ## Parameters
 
@@ -124,7 +134,7 @@ Tables follow the [official model page](https://docs.api.pruna.ai/guides/models/
 
 ## Before generating
 
-1. **[Generation diversity](./references/generation-diversity.md)** — random seed ritual (SSoT) + axis rotation before each try-on job (reuse approved hero plate URL when dressing an approved plate).
+1. **[Generation diversity](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/generation-diversity.md)** — random seed ritual (SSoT) + axis rotation before each try-on job (reuse approved hero plate URL when dressing an approved plate).
 2. Confirm with the user:
 
 - **`person_image`** — person photo with clear visibility of the body region to dress
@@ -136,7 +146,7 @@ Run [p-image-try-on-quality-checklist.md](./references/p-image-try-on-quality-ch
 
 ## Production quality (not basic demos)
 
-**Upstream person plate:** try-on fidelity is capped by **`person_image`**. Follow [realistic-persona-showcase.md](./references/realistic-persona-showcase.md) for photoreal **`p-image`** plates — not generic catalog mannequins. Garment tiers: see **Showcase tiers** below and [p-image-try-on-quality-checklist.md](./references/p-image-try-on-quality-checklist.md).
+**Upstream person plate:** try-on fidelity is capped by **`person_image`**. Follow [realistic-persona-showcase.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/realistic-persona-showcase.md) for photoreal **`p-image`** plates — not generic catalog mannequins. Garment tiers: see **Showcase tiers** below and [p-image-try-on-quality-checklist.md](./references/p-image-try-on-quality-checklist.md).
 
 **Showcase tiers to plan for:**
 
@@ -147,9 +157,9 @@ Run [p-image-try-on-quality-checklist.md](./references/p-image-try-on-quality-ch
 | In-scene accessories | Hats, logo tees, glasses — mirror/street compositions preserved |
 | Multi-garment stack | Jacket + tee + pants + hat + shoes in one pass (normal mode; plan ≤6 for finals) |
 
-**Anti-slop:** avoid white-background-only demos, mushy AI person plates, turbo-only finals on complex stacks, and repeating one default face across examples. Rotate cast and settings per [visual-variety-bible.md](./references/visual-variety-bible.md).
+**Anti-slop:** avoid white-background-only demos, mushy AI person plates, turbo-only finals on complex stacks, and repeating one default face across examples. Rotate cast and settings per [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/visual-variety-bible.md).
 
-**Replicate playground:** diversify pinned examples on [p-image-try-on](https://replicate.com/prunaai/p-image-try-on) per [realistic-persona-showcase.md](./references/realistic-persona-showcase.md).
+**Replicate playground:** diversify pinned examples on [p-image-try-on](https://replicate.com/prunaai/p-image-try-on) per [realistic-persona-showcase.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/realistic-persona-showcase.md).
 
 ## Garment inputs
 
@@ -227,4 +237,4 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 - **Restyle one piece:** keep `person_image` + unchanged garments; swap a single `garment_images[]` URL per variant.
 - Upscale for delivery: [p-image-upscale](../p-image-upscale/SKILL.md)
 - Animate try-on still: [p-video](../p-video/SKILL.md) (I2V) or [p-video-avatar](../p-video-avatar/SKILL.md)
-- Ecommerce pack workflows: [pruna-generative-pipeline](../pruna-generative-pipeline/SKILL.md) recipe K
+- Ecommerce pack workflows: [pruna-generative-pipeline](https://github.com/PrunaAI/pruna-skills/tree/main/docs/WORKFLOW-RECIPES.md) recipe K

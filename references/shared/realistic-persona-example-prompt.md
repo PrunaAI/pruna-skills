@@ -2,9 +2,9 @@
 
 Cross-model examples for **`p-image`** scenario plates → optional **`p-image-try-on`** → **`p-video-avatar`**.
 
-**Before every curl:** [random seed ritual](../../../references/shared/random-seed-ritual.md) (SSoT) + [generation diversity](../../../references/shared/generation-diversity.md) — state ritual string and derive axes; **omit API `seed`** unless user sets `api_seed`.
+**Before every curl:** [random seed ritual](references/policies/random-seed-ritual.md) (SSoT) + [generation diversity](references/policies/generation-diversity.md) — state ritual string and derive axes; **omit API `seed`** unless user sets `api_seed`.
 
-Full ladders and 8-slot matrix: [realistic-persona-showcase.md](../../../references/shared/realistic-persona-showcase.md).
+Full ladders and 8-slot matrix: [realistic-persona-showcase.md](references/policies/realistic-persona-showcase.md).
 
 ## 1. Photoreal documentary (`p-image`) — avatar-ready
 
@@ -130,4 +130,4 @@ When publishing a public set, cover **medium × angle × setting × aspect_ratio
 
 Each slot: distinct **`cast_descriptor`** and **`aspect_ratio`**. Avatar slots: unique **`video_prompt`**.
 
-Full rules: [realistic-persona-showcase.md](../../../references/shared/realistic-persona-showcase.md) · [visual-variety-bible.md](../../../references/shared/visual-variety-bible.md).
+Full rules: [realistic-persona-showcase.md](references/policies/realistic-persona-showcase.md) · [visual-variety-bible.md](references/policies/visual-variety-bible.md).

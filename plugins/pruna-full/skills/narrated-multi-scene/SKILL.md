@@ -3,20 +3,34 @@ name: narrated-multi-scene
 description: Use when someone wants a multi-part story with voiceover — episodic B-roll, chaptered promo, or several linked video scenes without on-camera dialogue.
 license: MIT
 metadata:
-  version: "1.0.5"
+  version: "1.0.6"
 ---
+
+## Shared generation policy
+
+<!-- shared-generation-policy -->
+
+Before any paid `POST /v1/predictions`:
+
+1. **[Random seed ritual](./references/random-seed-ritual.md)** — always first; derive axes via sum-mod.
+2. **[Generation diversity](./references/generation-diversity.md)** — explicit prompts; rotate ≥2 scenario axes per session.
+3. **[Quality checklists](./references/generation-quality-checklists.md)** — open output files and judge pass/fail before advancing.
+4. **[Staged generation gate](./references/staged-generation-gate.md)** — plan → stills → audio → video → assembly; never skip phases in one turn.
+5. **[Approval red flags](./references/approval-red-flags.md)** — pause when plan, stills, or clips were not reviewed.
+6. **[Workflow feedback gates](./references/workflow-feedback-gates.md)** — runner flags and per-workflow commands.
+7. **[Parallel execution](./references/parallel-execution.md)** — async fan-out within each approved phase only.
 
 # Multi-scene AI video (Pruna `p-video` only)
 
 Each scene = one **`p-video`** job (same model, separate predictions). Assembly is **outside** Pruna (ffmpeg or your editor). No **`p-video-avatar`** in this workflow.
 
-See [p-video](../../../../tools/video/p-video/SKILL.md) (first/last frame chaining), [scene-anchor-triple.md](./references/scene-anchor-triple.md), [scene-anchor-pair.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/shared/scene-anchor-pair.md) (visual-only alternative), [audio-post-production.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/shared/audio-post-production.md), and [pruna-api.md](./references/pruna-api.md).
+See [p-video](../../../../tools/video/p-video/SKILL.md) (first/last frame chaining), [scene-anchor-triple.md](./references/scene-anchor-triple.md), [scene-anchor-pair.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/shared/scene-anchor-pair.md) (visual-only alternative), [audio-post-production.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/shared/audio-post-production.md), and [pruna-api.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/pruna-api.md).
 
 For **visual transitions without narration**, use [visual-transition-reel](../visual-transition-reel/SKILL.md) instead.
 
 For **educational explainers** (history, science, nature, how-it-works) with narrator + in-story character dialogue, use [interactive-explainer](../interactive-explainer/SKILL.md) instead of narrator-only tables.
 
-**Staged generation:** [staged-generation-gate.md](./references/staged-generation-gate.md) · [workflow-feedback-gates.md](./references/workflow-feedback-gates.md)
+**Staged generation:** [staged-generation-gate.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/staged-generation-gate.md) · [workflow-feedback-gates.md](./references/workflow-feedback-gates.md)
 
 ## Feedback gates (required)
 
@@ -126,5 +140,5 @@ See [scene-anchor-triple.md](./references/scene-anchor-triple.md) for when to ch
 - Single clip: [image-to-video](../image-to-video/SKILL.md)
 - Talking avatars: [avatar-multi-scene](../avatar-multi-scene/SKILL.md)
 - Audio layering: [audio-post-production.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/shared/audio-post-production.md)
-- Parallel vs phased: [parallel-execution.md](./references/parallel-execution.md)
-- Generic chain: [pruna-generative-pipeline](../pruna-generative-pipeline/SKILL.md)
+- Parallel vs phased: [parallel-execution.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/parallel-execution.md)
+- Generic chain: [pruna-generative-pipeline](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/pruna-generative-pipeline/skills/pruna-generative-pipeline/SKILL.md)

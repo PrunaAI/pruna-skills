@@ -1,6 +1,6 @@
 # Interactive explainer — positive prompts & blocked phrases
 
-Extracted reference for [interactive-explainer](../../workflows/verticals/interactive-explainer/SKILL.md). The runner enforces these via `validate_plan` and `STILL_PROMPT_TRIGGERS` in [`run_from_plan.py`](../../workflows/verticals/interactive-explainer/scripts/run_from_plan.py).
+Extracted reference for [interactive-explainer](../../workflows/interactive-explainer/SKILL.md). The runner enforces these via `validate_plan` and `STILL_PROMPT_TRIGGERS` in [`run_from_plan.py`](../../workflows/interactive-explainer/scripts/run_from_plan.py).
 
 ## Principle
 
@@ -81,7 +81,7 @@ Broader blocked-phrase table (keyboards, mirrors, packshots): [visual-variety-bi
 
 ## Related
 
-- Workflow skill: [interactive-explainer/SKILL.md](../../workflows/verticals/interactive-explainer/SKILL.md)
+- Workflow skill: [interactive-explainer/SKILL.md](../../workflows/interactive-explainer/SKILL.md)
 - Motion: [interactive-explainer-motion.md](./interactive-explainer-motion.md)
 - Scenes: [interactive-explainer-scenes.md](./interactive-explainer-scenes.md)
-- Gates: [staged-generation-gate.md](../shared/staged-generation-gate.md)
+- Gates: [staged-generation-gate.md](../policies/staged-generation-gate.md)

@@ -2,7 +2,7 @@
 
 Official docs: [Developer Portal](https://docs.api.pruna.ai/), [Quickstart](https://docs.api.pruna.ai/guides/quickstart), [Models](https://docs.api.pruna.ai/guides/models).
 
-**Before first upload or paid call:** [agent-safety.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/agent-safety/SKILL.md) — privacy, credentials, local disk, locale.
+**Before first upload or paid call:** [agent-safety.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/agent-safety/SKILL.md) — privacy, credentials, local disk, locale.
 
 ## Authentication
 
@@ -42,17 +42,17 @@ Official guidance: prefer **async for video**; sync is acceptable for quick **p-
 
 When several predictions **do not depend on each other's outputs**, create them **in parallel** (async, no `Try-Sync`), then **poll all** `get_url` endpoints until every job finishes. Use **phased** execution when later steps need URLs from earlier steps (hero → scene edits → avatars).
 
-Full patterns, phase diagrams, subagent splits, and script shapes: [parallel-execution.md](./parallel-execution.md).
+Full patterns, phase diagrams, subagent splits, and script shapes: [parallel-execution.md](https://github.com/PrunaAI/pruna-skills/tree/main/policies/parallel-execution.md).
 
 ## Scene anchor triple (multi-scene `p-video`)
 
 Narrated story films pass three uploads per scene — **`image`**, **`last_frame_image`**, **`audio`** — in one prediction. Omit `duration` when `audio` is set.
 
-Full spec: [scene-anchor-triple.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/scene-anchor-triple/SKILL.md).
+Full spec: [scene-anchor-triple.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/scene-anchor-triple/SKILL.md).
 
 ## File uploads
 
-Local files leave the machine and are processed at `https://api.pruna.ai/` — see [agent-safety.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/agent-safety/SKILL.md).
+Local files leave the machine and are processed at `https://api.pruna.ai/` — see [agent-safety.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/agent-safety/SKILL.md).
 
 1. `POST /v1/files` with `-F "content=@/path/to/file.jpg"` and `apikey` header.
 2. Use `urls.get` from the response (or construct `https://api.pruna.ai/v1/files/{id}`) as the **`image`**, **`last_frame_image`**, **`images[]`**, **`person_image`**, **`garment_images[]`**, **`audio`**, etc. value in `input`.
@@ -82,7 +82,7 @@ Use the `get_url` from the create response. Repeat every few seconds until done.
 
 ## Download output {#download}
 
-`-o` writes (or overwrites) a local file — confirm the path with the user ([agent-safety.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/agent-safety/SKILL.md)).
+`-o` writes (or overwrites) a local file — confirm the path with the user ([agent-safety.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/agent-safety/SKILL.md)).
 
 ```bash
 curl -L -H "apikey: ${PRUNA_API_KEY}" \
@@ -106,4 +106,4 @@ Skills in this repo assume **`PRUNA_API_KEY`** is set in the shell when running 
 
 **Missing key:** agents must stop and point the user to [api-credentials.md](./api-credentials.md) — sign up at [dashboard.pruna.ai](https://dashboard.pruna.ai/), create an API key, then `export PRUNA_API_KEY=...`.
 
-**Agent discipline:** [generation-diversity.md](./generation-diversity.md) before every `POST /v1/predictions`.
+**Agent discipline:** [generation-diversity.md](https://github.com/PrunaAI/pruna-skills/tree/main/policies/generation-diversity.md) before every `POST /v1/predictions`.

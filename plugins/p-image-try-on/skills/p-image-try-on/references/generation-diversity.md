@@ -117,7 +117,7 @@ render_tag    ← render_tags[ sum(codes(ritual_seed[4:8])) % len(render_tags) ]
 | **Aspect ratio** | different `aspect_ratio` per independent still in a batch — see [below](#aspect-ratio-multi-example-sets) | `p-image`, `p-image-edit` |
 | **Crowd density** | layered background population + activity cues — see [below](#crowded-scenes-p-image) | `p-image` plates with busy worlds |
 
-Full style/camera/lighting ladders: [visual-variety-bible.md](./visual-variety-bible.md). Persona + try-on bar: [realistic-persona-showcase.md](./realistic-persona-showcase.md).
+Full style/camera/lighting ladders: [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/shared/visual-variety-bible.md). Persona + try-on bar: [realistic-persona-showcase.md](https://github.com/PrunaAI/pruna-skills/tree/main/shared/realistic-persona-showcase.md).
 
 ## Render categories
 
@@ -179,7 +179,7 @@ Source: [Arena video edit](https://arena.ai/leaderboard/video-edit)
 
 Edit tags: `face_recast` · `wardrobe_swap` · `accessory_swap` · `background_replace` · `object_in_hand_swap` · `style_transfer_on_subject`
 
-Same-gender / identity rules for talking-head beats still apply — see [visual-variety-bible.md](./visual-variety-bible.md).
+Same-gender / identity rules for talking-head beats still apply — see [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/shared/visual-variety-bible.md).
 
 ## Crowded scenes (`p-image`)
 
@@ -364,4 +364,4 @@ Match prompt framing to ratio (e.g. `16:9 horizontal wide shot`, `9:16 vertical 
 ## Related
 
 - [generation-quality-checklists.md](./generation-quality-checklists.md) — core + model checklists
-- [staged-generation-gate.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/staged-generation-gate/SKILL.md) — approval phases
+- [staged-generation-gate.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/staged-generation-gate.md) — approval phases

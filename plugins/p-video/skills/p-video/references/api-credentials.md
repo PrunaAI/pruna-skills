@@ -30,7 +30,7 @@
 | **Env var** | `REPLICATE_API_TOKEN` |
 | **Header** | `Authorization: Bearer ${REPLICATE_API_TOKEN}` |
 | **Sign up / get token** | [Replicate API tokens](https://replicate.com/account/api-tokens) ([sign in](https://replicate.com/signin) first if needed) |
-| **Docs** | [replicate-api.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/replicate-api/SKILL.md) |
+| **Docs** | [replicate-api.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/replicate-api/SKILL.md) |
 
 **Used by:** `music-2.5`, `gemini-3.1-flash-tts`, `stable-audio-2.5`, `whisperx`, and workflow beds/TTS/song phases.
 

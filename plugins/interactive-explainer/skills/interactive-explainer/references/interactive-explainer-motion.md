@@ -115,4 +115,4 @@ If the story needs action, **imply it** in the stills and use **camera move + re
 - [ ] `defaults.resolution` = `720p`, `defaults.fps` = `24`
 - [ ] Start/end stills differ enough that camera move has somewhere to go
 
-Runner warns on missing MID beat or physics keywords — see [`run_from_plan.py`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/verticals/interactive-explainer/scripts/run_from_plan.py) `validate_plan`.
+Runner warns on missing MID beat or physics keywords — see [`run_from_plan.py`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/interactive-explainer/scripts/run_from_plan.py) `validate_plan`.

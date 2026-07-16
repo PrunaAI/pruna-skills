@@ -2,7 +2,7 @@
 
 Used by external tool skills (e.g. [stable-audio-2.5](../../stable-audio-2.5/SKILL.md), [gemini-3.1-flash-tts](../../gemini-3.1-flash-tts/SKILL.md)).
 
-**Missing token:** agents must stop and point the user to [api-credentials.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/api-credentials/SKILL.md) — sign up at [replicate.com/account/api-tokens](https://replicate.com/account/api-tokens) ([sign in](https://replicate.com/signin) if needed), then `export REPLICATE_API_TOKEN=r8_...`.
+**Missing token:** agents must stop and point the user to [api-credentials.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/api-credentials/SKILL.md) — sign up at [replicate.com/account/api-tokens](https://replicate.com/account/api-tokens) ([sign in](https://replicate.com/signin) if needed), then `export REPLICATE_API_TOKEN=r8_...`.
 
 ## Auth
 
@@ -44,4 +44,4 @@ Model: `google/gemini-3.1-flash-tts`
 Required input: `text`  
 Optional: `voice` (default `Kore`), `prompt` (style/scene), `language_code` (default `en-US`)
 
-Output: audio file URL. Use for narration — upload to Pruna as part of [scene anchor triple](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/scene-anchor-triple/SKILL.md) (`input.audio` + `input.image` + `input.last_frame_image` on `p-video`). Layering with beds: [audio-post-production.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/audio-post-production/SKILL.md)
+Output: audio file URL. Use for narration — upload to Pruna as part of [scene anchor triple](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/scene-anchor-triple/SKILL.md) (`input.audio` + `input.image` + `input.last_frame_image` on `p-video`). Layering with beds: [audio-post-production.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/audio-post-production/SKILL.md)

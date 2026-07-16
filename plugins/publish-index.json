@@ -1,8 +1,8 @@
 {
-  "version": "1.0.5",
+  "version": "1.0.6",
   "package": "pruna-skills",
   "repository": "https://github.com/PrunaAI/pruna-skills",
-  "gitTag": "skills-v1.0.5",
+  "gitTag": "skills-v1.0.6",
   "skills": [
     {
       "name": "avatar-multi-scene",
@@ -27,22 +27,6 @@
       "clawhubSkill": "@pruna-ai/gemini-3-1-flash-tts",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@gemini-3.1-flash-tts -y",
       "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: gemini-3.1-flash-tts"
-    },
-    {
-      "name": "generation-diversity",
-      "pluginPath": "plugins/generation-diversity",
-      "skillPath": "plugins/generation-diversity/skills/generation-diversity",
-      "clawhubSkill": "@pruna-ai/generation-diversity",
-      "npxInstall": "npx skills add PrunaAI/pruna-skills@generation-diversity -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: generation-diversity"
-    },
-    {
-      "name": "generation-quality-checklists",
-      "pluginPath": "plugins/generation-quality-checklists",
-      "skillPath": "plugins/generation-quality-checklists/skills/generation-quality-checklists",
-      "clawhubSkill": "@pruna-ai/generation-quality-checklists",
-      "npxInstall": "npx skills add PrunaAI/pruna-skills@generation-quality-checklists -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: generation-quality-checklists"
     },
     {
       "name": "illustrated-story-reel",
@@ -157,38 +141,6 @@
       "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: p-video-replace"
     },
     {
-      "name": "pruna-generative-pipeline",
-      "pluginPath": "plugins/pruna-generative-pipeline",
-      "skillPath": "plugins/pruna-generative-pipeline/skills/pruna-generative-pipeline",
-      "clawhubSkill": "@pruna-ai/pruna-generative-pipeline",
-      "npxInstall": "npx skills add PrunaAI/pruna-skills@pruna-generative-pipeline -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: pruna-generative-pipeline"
-    },
-    {
-      "name": "pruna-run",
-      "pluginPath": "plugins/pruna-run",
-      "skillPath": "plugins/pruna-run/skills/pruna-run",
-      "clawhubSkill": "@pruna-ai/pruna-run",
-      "npxInstall": "npx skills add PrunaAI/pruna-skills@pruna-run -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: pruna-run"
-    },
-    {
-      "name": "recipe-catalog",
-      "pluginPath": "plugins/recipe-catalog",
-      "skillPath": "plugins/recipe-catalog/skills/recipe-catalog",
-      "clawhubSkill": "@pruna-ai/recipe-catalog",
-      "npxInstall": "npx skills add PrunaAI/pruna-skills@recipe-catalog -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: recipe-catalog"
-    },
-    {
-      "name": "requesting-generation-feedback",
-      "pluginPath": "plugins/requesting-generation-feedback",
-      "skillPath": "plugins/requesting-generation-feedback/skills/requesting-generation-feedback",
-      "clawhubSkill": "@pruna-ai/requesting-generation-feedback",
-      "npxInstall": "npx skills add PrunaAI/pruna-skills@requesting-generation-feedback -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: requesting-generation-feedback"
-    },
-    {
       "name": "stable-audio-2.5",
       "pluginPath": "plugins/stable-audio-2.5",
       "skillPath": "plugins/stable-audio-2.5/skills/stable-audio-2.5",
@@ -237,22 +189,6 @@
       "claudeInstall": "/plugin install gemini-3.1-flash-tts@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@gemini-3.1-flash-tts -y",
       "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: gemini-3.1-flash-tts"
-    },
-    {
-      "name": "generation-diversity",
-      "path": "plugins/generation-diversity",
-      "clawhubPackage": "@pruna-ai/generation-diversity",
-      "claudeInstall": "/plugin install generation-diversity@pruna-skills",
-      "npxInstall": "npx skills add PrunaAI/pruna-skills@generation-diversity -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: generation-diversity"
-    },
-    {
-      "name": "generation-quality-checklists",
-      "path": "plugins/generation-quality-checklists",
-      "clawhubPackage": "@pruna-ai/generation-quality-checklists",
-      "claudeInstall": "/plugin install generation-quality-checklists@pruna-skills",
-      "npxInstall": "npx skills add PrunaAI/pruna-skills@generation-quality-checklists -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: generation-quality-checklists"
     },
     {
       "name": "illustrated-story-reel",
@@ -375,38 +311,6 @@
       "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: pruna-full"
     },
     {
-      "name": "pruna-generative-pipeline",
-      "path": "plugins/pruna-generative-pipeline",
-      "clawhubPackage": "@pruna-ai/pruna-generative-pipeline",
-      "claudeInstall": "/plugin install pruna-generative-pipeline@pruna-skills",
-      "npxInstall": "npx skills add PrunaAI/pruna-skills@pruna-generative-pipeline -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: pruna-generative-pipeline"
-    },
-    {
-      "name": "pruna-run",
-      "path": "plugins/pruna-run",
-      "clawhubPackage": "@pruna-ai/pruna-run",
-      "claudeInstall": "/plugin install pruna-run@pruna-skills",
-      "npxInstall": "npx skills add PrunaAI/pruna-skills@pruna-run -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: pruna-run"
-    },
-    {
-      "name": "recipe-catalog",
-      "path": "plugins/recipe-catalog",
-      "clawhubPackage": "@pruna-ai/recipe-catalog",
-      "claudeInstall": "/plugin install recipe-catalog@pruna-skills",
-      "npxInstall": "npx skills add PrunaAI/pruna-skills@recipe-catalog -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: recipe-catalog"
-    },
-    {
-      "name": "requesting-generation-feedback",
-      "path": "plugins/requesting-generation-feedback",
-      "clawhubPackage": "@pruna-ai/requesting-generation-feedback",
-      "claudeInstall": "/plugin install requesting-generation-feedback@pruna-skills",
-      "npxInstall": "npx skills add PrunaAI/pruna-skills@requesting-generation-feedback -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: requesting-generation-feedback"
-    },
-    {
       "name": "stable-audio-2.5",
       "path": "plugins/stable-audio-2.5",
       "clawhubPackage": "@pruna-ai/stable-audio-2.5",
@@ -434,7 +338,7 @@
   "registries": {
     "github": {
       "method": "git tag + push",
-      "tag": "skills-v1.0.5",
+      "tag": "skills-v1.0.6",
       "note": "No upload API \u2014 consumers install from GitHub paths after push"
     },
     "npx": {
@@ -449,13 +353,13 @@
       "method": "clawhub skill publish",
       "owner": "pruna-ai",
       "install": "clawhub install @pruna-ai/<slug>",
-      "publish": "./scripts/publish_all_skills.sh --execute --target clawhub"
+      "publish": "./.maintainer/release/publish_all_skills.sh --execute --target clawhub"
     },
     "clawhubPlugins": {
       "method": "clawhub package publish --family bundle-plugin",
       "owner": "pruna-ai",
       "install": "openclaw plugins install clawhub:@pruna-ai/<name>",
-      "publish": "./scripts/publish_all_skills.sh --execute --target clawhub-plugins"
+      "publish": "./.maintainer/release/publish_all_skills.sh --execute --target clawhub-plugins"
     },
     "claude": {
       "method": "plugin marketplace in repo",

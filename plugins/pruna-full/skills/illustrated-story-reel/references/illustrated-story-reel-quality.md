@@ -8,8 +8,8 @@ Agent vision review for **illustrated-story-reel** stills and audio. **No video 
 
 ## Core (every job)
 
-- **[Generation diversity](https://github.com/PrunaAI/pruna-skills/tree/main/shared/generation-diversity.md)** — ritual seed + rotate scenario axes.
-- **[Random seed ritual](https://github.com/PrunaAI/pruna-skills/tree/main/shared/random-seed-ritual.md)** — state ritual string before every prediction; never copy doc examples.
+- **[Generation diversity](https://github.com/PrunaAI/pruna-skills/tree/main/policies/generation-diversity.md)** — ritual seed + rotate scenario axes.
+- **[Random seed ritual](https://github.com/PrunaAI/pruna-skills/tree/main/policies/random-seed-ritual.md)** — state ritual string before every prediction; never copy doc examples.
 - Goal and acceptance criteria are explicit.
 - `aspect_ratio` in plan matches prompt wording (vertical / horizontal / square).
 - No accidental watermarks, UI overlays, or stray text unless requested.

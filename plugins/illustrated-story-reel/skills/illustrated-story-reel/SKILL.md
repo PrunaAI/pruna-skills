@@ -3,13 +3,27 @@ name: illustrated-story-reel
 description: Use when someone wants a slideshow story with narration or music — picture-book style illustrated frames, not full motion video.
 license: MIT
 metadata:
-  version: "1.0.5"
+  version: "1.0.6"
 depends:
   - p-image
   - p-image-edit
   - gemini-3.1-flash-tts
   - stable-audio-2.5
 ---
+
+## Shared generation policy
+
+<!-- shared-generation-policy -->
+
+Before any paid `POST /v1/predictions`:
+
+1. **[Random seed ritual](./references/random-seed-ritual.md)** — always first; derive axes via sum-mod.
+2. **[Generation diversity](./references/generation-diversity.md)** — explicit prompts; rotate ≥2 scenario axes per session.
+3. **[Quality checklists](./references/generation-quality-checklists.md)** — open output files and judge pass/fail before advancing.
+4. **[Staged generation gate](./references/staged-generation-gate.md)** — plan → stills → audio → video → assembly; never skip phases in one turn.
+5. **[Approval red flags](./references/approval-red-flags.md)** — pause when plan, stills, or clips were not reviewed.
+6. **[Workflow feedback gates](./references/workflow-feedback-gates.md)** — runner flags and per-workflow commands.
+7. **[Parallel execution](./references/parallel-execution.md)** — async fan-out within each approved phase only.
 
 # Illustrated story reel
 
@@ -43,7 +57,7 @@ One still per story beat. Hero anchor → **p-image-edit** per scene. Audio driv
 | Local execution | `ffmpeg`/`ffprobe` subprocess; **`-y` overwrites** output MP4 without confirmation |
 | Data retention | `plan.json`, `generation_status.json`, and media under `--out-dir` may contain prompts — treat as confidential |
 
-Requires: [api-credentials.md](./references/api-credentials.md) · Permissions: `skill.manifest.json`
+Requires: [api-credentials.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/api-credentials.md) · Permissions: `skill.manifest.json`
 
 ## Feedback gates
 
@@ -100,7 +114,7 @@ Do not start generation until the beat table is written and **audio_mode** is co
 
 ```bash
 # Phase A — stills only
-python3 workflows/verticals/illustrated-story-reel/scripts/run_from_plan.py \
+python3 workflows/illustrated-story-reel/scripts/run_from_plan.py \
   --plan output/.../plan.json --out-dir output/.../ --phase stills
 
 # Phase A2 — narration OR music (matches audio_mode in plan)

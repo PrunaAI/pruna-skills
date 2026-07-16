@@ -3,9 +3,19 @@ name: p-video-animate
 description: Use when someone wants a photo to move like another video — motion transfer, dance remixes, or performance variations from a template clip.
 license: MIT
 metadata:
-  version: "1.0.5"
+  version: "1.0.6"
   pruna_model: p-video-animate
 ---
+
+## Shared generation policy
+
+<!-- shared-generation-policy -->
+
+Before any paid `POST /v1/predictions`:
+
+1. **[Random seed ritual](./references/random-seed-ritual.md)** — always first; derive axes via sum-mod.
+2. **[Generation diversity](./references/generation-diversity.md)** — explicit prompts; rotate ≥2 scenario axes per session.
+3. **[Quality checklists](./references/generation-quality-checklists.md)** — open output files and judge pass/fail before advancing.
 
 # p-video-animate (Pruna)
 
@@ -17,7 +27,7 @@ Given a reference input image and video, the model generates a new video using *
 
 Also on Replicate: [prunaai/p-video-animate](https://replicate.com/prunaai/p-video-animate). Full P-API parameters: [p-video-animate model docs](https://docs.api.pruna.ai/guides/models/p-video-animate) · operational guide (Runware host): [animating images from video](https://runware.ai/docs/models/prunaai-p-video-animate/guides/animating-images-from-video)
 
-Shared HTTP patterns: [pruna-api.md](./references/pruna-api.md)
+Shared HTTP patterns: [pruna-api.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/pruna-api.md)
 
 ## p-video-animate vs p-video-replace
 
@@ -45,7 +55,7 @@ Shared HTTP patterns: [pruna-api.md](./references/pruna-api.md)
 
 ## Before generating
 
-1. **[Generation diversity](./references/generation-diversity.md)** — ritual seed + axis rotation; pass as `seed` when set.
+1. **[Generation diversity](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/generation-diversity.md)** — ritual seed + axis rotation; pass as `seed` when set.
 2. Confirm with the user:
 
 - **`video`** URL — motion/audio source (upload `.mp4` to `/v1/files` first)
@@ -57,7 +67,7 @@ Shared HTTP patterns: [pruna-api.md](./references/pruna-api.md)
 
 Run [p-video-animate-quality-checklist.md](./references/p-video-animate-quality-checklist.md) on inputs and outputs.
 
-**Batch runs:** when several image+video pairs are independent, create **all** predictions in one parallel async batch, then batch-poll. See [parallel-execution.md](./references/parallel-execution.md).
+**Batch runs:** when several image+video pairs are independent, create **all** predictions in one parallel async batch, then batch-poll. See [parallel-execution.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/parallel-execution.md).
 
 ## Making motion transfer work
 
@@ -103,7 +113,7 @@ A confident woman in a charcoal blazer speaks to the camera in a modern office.
 
 Runware field map: `referenceImages[0]` → `image`, `referenceVideos[0]` → `video`, `positivePrompt` → `instruction_prompt`, `settings.preserveAudio` → `save_audio`.
 
-Mixed-reel context (motion templates, sliders, avatar CTA): [animate-beats.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/avatar-multi-scene/animate-beats.md).
+Mixed-reel context (motion templates, sliders, avatar CTA): [animate-beats.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/avatar-multi-scene/animate-beats.md).
 
 ## Required input
 
@@ -153,7 +163,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-Poll and download: [pruna-api.md](./references/pruna-api.md#poll).
+Poll and download: [pruna-api.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/pruna-api.md#poll).
 
 ## Example: sync (single quick test only)
 
@@ -176,7 +186,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 - Generate or edit reference subjects: [p-image](../p-image/SKILL.md), [p-image-edit](../p-image-edit/SKILL.md)
 - Replace people in existing footage (not motion transfer): [p-video-replace](../p-video-replace/SKILL.md)
 - Talking-head clips (script-driven, not motion transfer): [p-video-avatar](../p-video-avatar/SKILL.md)
-- Pipeline hub: [pruna-generative-pipeline](../pruna-generative-pipeline/SKILL.md)
+- Pipeline hub: [pruna-generative-pipeline](https://github.com/PrunaAI/pruna-skills/tree/main/docs/WORKFLOW-RECIPES.md)
 - Multi-scene motion transfer + slider demos: [avatar-multi-scene](../avatar-multi-scene/SKILL.md) (`animate` rows)
 
 ## Related workflow

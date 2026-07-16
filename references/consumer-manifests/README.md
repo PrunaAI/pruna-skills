@@ -2,7 +2,7 @@
 
 Copy-paste examples for installing Pruna workflow skills with package managers other than `npx skills`.
 
-**Full landscape:** [skill-package-managers.md](../../references/shared/skill-package-managers.md) (skills, APM, ClawHub, Agensi, Claude plugins, skills-ref).
+**Full landscape:** [skill-package-managers.md](references/policies/skill-package-managers.md) (skills, APM, ClawHub, Agensi, Claude plugins, skills-ref).
 
 **Preferred install:**
 
@@ -84,4 +84,4 @@ npx skills-ref validate --allow-field depends ./plugins/avatar-multi-scene/skill
 | `p-image` | `…/plugins/p-image/skills/p-image` |
 | `avatar-multi-scene` | `…/plugins/avatar-multi-scene/skills/avatar-multi-scene` |
 
-Full comparison: [skill-package-managers.md](../../references/shared/skill-package-managers.md).
+Full comparison: [skill-package-managers.md](references/policies/skill-package-managers.md).

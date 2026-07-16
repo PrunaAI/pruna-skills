@@ -1,10 +1,10 @@
 # p-video-replace quality checklist
 
-After each replace job, **open the source video, reference images, and output clip** and review them against this checklist (agent vision review — see [generation-quality-checklists.md](../shared/generation-quality-checklists.md#who-applies-these-checklists)).
+After each replace job, **open the source video, reference images, and output clip** and review them against this checklist (agent vision review — see [generation-quality-checklists.md](../policies/generation-quality-checklists.md#who-applies-these-checklists)).
 
 ## Applies to
 
-See the canonical mapping in [`generation-quality-checklists.md`](./generation-quality-checklists.md).
+See the canonical mapping in [`generation-quality-checklists.md`](../policies/generation-quality-checklists.md).
 
 ## Input gate (pre-render)
 

@@ -1,6 +1,6 @@
 """Human-in-the-loop phase gates for workflow plan runners.
 
-See references/shared/staged-generation-gate.md
+See references/policies/staged-generation-gate.md
 """
 
 from __future__ import annotations

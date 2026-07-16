@@ -151,4 +151,4 @@ Upgrade a pair scene to triple by adding TTS → upload → `audio` and removing
 - [visual-transition-reel](../../visual-transition-reel/SKILL.md) — primary workflow
 - [image-to-video](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/image-to-video/skills/image-to-video/SKILL.md) — one pair beat
 - [p-video](../../p-video/SKILL.md) — API reference (visual transition mode)
-- Example runner: [`run_from_plan.py`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/visual-transition-reel/scripts/run_from_plan.py)
+- Example runner: [`run_from_plan.py`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/visual-transition-reel/scripts/run_from_plan.py)

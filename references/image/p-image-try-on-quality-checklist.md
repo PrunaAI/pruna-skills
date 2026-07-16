@@ -1,10 +1,10 @@
 # p-image-try-on quality checklist
 
-After each `p-image-try-on` output is saved, **open the file and review it visually** against this checklist (agent vision review — see [generation-quality-checklists.md](../shared/generation-quality-checklists.md#who-applies-these-checklists)).
+After each `p-image-try-on` output is saved, **open the file and review it visually** against this checklist (agent vision review — see [generation-quality-checklists.md](../policies/generation-quality-checklists.md#who-applies-these-checklists)).
 
 ## Applies to
 
-See the canonical mapping in [`generation-quality-checklists.md`](../shared/generation-quality-checklists.md).
+See the canonical mapping in [`generation-quality-checklists.md`](../policies/generation-quality-checklists.md).
 
 ## Scene preservation (garment-only edit)
 

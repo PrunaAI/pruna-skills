@@ -226,7 +226,7 @@ Example plans: `output/verticals/interactive-explainer/<project-slug>/plan.json`
 3. **Concat** with hard cuts (default) or short crossfades on `chain_from_previous`.
 4. Optional **Stable Audio** bed under dialogue (~0.08–0.10).
 
-Runner: [`run_from_plan.py`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/verticals/interactive-explainer/scripts/run_from_plan.py)
+Runner: [`run_from_plan.py`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/interactive-explainer/scripts/run_from_plan.py)
 
 ## Plan JSON skeleton
 

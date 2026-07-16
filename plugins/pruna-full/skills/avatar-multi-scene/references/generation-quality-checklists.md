@@ -17,26 +17,26 @@ Typical flow:
 
 The user's **approve plan / approve stills / approve clips** gates are separate. Agent checklists catch obvious problems early so the user is not asked to sign off on broken outputs.
 
-Maintenance rule: keep tool/guide mapping only in this file to avoid link drift.
+Maintenance rule: keep tool/workflow mapping only in this file to avoid link drift.
 
-## Match map (tool -> checklist -> guides)
+## Match map (tool -> checklist -> workflows)
 
-| Tool/model | Checklist | Common guides |
+| Tool/model | Checklist | Common workflows |
 |------------|-----------|---------------|
-| `p-image` | [`p-image-quality-checklist.md`](https://github.com/PrunaAI/pruna-skills/tree/main/image/p-image-quality-checklist.md) · persona bar: [`realistic-persona-showcase.md`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/realistic-persona-showcase/SKILL.md) | [`image-to-video`](../../image-to-video/SKILL.md), [`narrated-multi-scene`](../../narrated-multi-scene/SKILL.md), [`pruna-generative-pipeline`](../../pruna-generative-pipeline/SKILL.md) |
-| `p-image-edit` | [`p-image-edit-quality-checklist.md`](https://github.com/PrunaAI/pruna-skills/tree/main/image/p-image-edit-quality-checklist.md) | [`avatar-single-scene`](../../avatar-single-scene/SKILL.md), [`avatar-multi-scene`](../SKILL.md), [`pruna-generative-pipeline`](../../pruna-generative-pipeline/SKILL.md) |
-| `p-image-upscale` | [`p-image-upscale-quality-checklist.md`](https://github.com/PrunaAI/pruna-skills/tree/main/image/p-image-upscale-quality-checklist.md) | [`image-to-video`](../../image-to-video/SKILL.md), [`narrated-multi-scene`](../../narrated-multi-scene/SKILL.md), [`pruna-generative-pipeline`](../../pruna-generative-pipeline/SKILL.md), [`generate_upscale_comparison.py`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/_shared/scripts/generate_upscale_comparison.py) |
-| `p-image-try-on` | [`p-image-try-on-quality-checklist.md`](https://github.com/PrunaAI/pruna-skills/tree/main/image/p-image-try-on-quality-checklist.md) | [`pruna-generative-pipeline`](../../pruna-generative-pipeline/SKILL.md), [`p-image-try-on`](../../p-image-try-on/SKILL.md), [`realistic-persona-showcase.md`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/realistic-persona-showcase/SKILL.md) |
-| `p-video` | [`p-video-quality-checklist.md`](https://github.com/PrunaAI/pruna-skills/tree/main/video/p-video-quality-checklist.md) | [`image-to-video`](../../image-to-video/SKILL.md), [`narrated-multi-scene`](../../narrated-multi-scene/SKILL.md), [`interactive-explainer`](../../interactive-explainer/SKILL.md), [`visual-transition-reel`](../../visual-transition-reel/SKILL.md), [`pruna-generative-pipeline`](../../pruna-generative-pipeline/SKILL.md) |
-| `p-video-avatar` | [`p-video-avatar-quality-checklist.md`](https://github.com/PrunaAI/pruna-skills/tree/main/video/p-video-avatar-quality-checklist.md) · persona bar: [`realistic-persona-showcase.md`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/realistic-persona-showcase/SKILL.md) | [`avatar-single-scene`](../../avatar-single-scene/SKILL.md), [`avatar-multi-scene`](../SKILL.md), [`interactive-explainer`](../../interactive-explainer/SKILL.md), [`pruna-generative-pipeline`](../../pruna-generative-pipeline/SKILL.md) |
-| `p-video-animate` | [`p-video-animate-quality-checklist.md`](https://github.com/PrunaAI/pruna-skills/tree/main/video/p-video-animate-quality-checklist.md) | [`avatar-multi-scene`](../SKILL.md), [`pruna-generative-pipeline`](../../pruna-generative-pipeline/SKILL.md) |
+| `p-image` | [`p-image-quality-checklist.md`](https://github.com/PrunaAI/pruna-skills/tree/main/image/p-image-quality-checklist.md) · persona bar: [`realistic-persona-showcase.md`](https://github.com/PrunaAI/pruna-skills/tree/main/shared/realistic-persona-showcase.md) | [`image-to-video`](../../image-to-video/SKILL.md), [`narrated-multi-scene`](../../narrated-multi-scene/SKILL.md), [`WORKFLOW-RECIPES`](https://github.com/PrunaAI/pruna-skills/tree/main/docs/WORKFLOW-RECIPES.md) |
+| `p-image-edit` | [`p-image-edit-quality-checklist.md`](https://github.com/PrunaAI/pruna-skills/tree/main/image/p-image-edit-quality-checklist.md) | [`avatar-single-scene`](../../avatar-single-scene/SKILL.md), [`avatar-multi-scene`](../SKILL.md), [`WORKFLOW-RECIPES`](https://github.com/PrunaAI/pruna-skills/tree/main/docs/WORKFLOW-RECIPES.md) |
+| `p-image-upscale` | [`p-image-upscale-quality-checklist.md`](https://github.com/PrunaAI/pruna-skills/tree/main/image/p-image-upscale-quality-checklist.md) | [`image-to-video`](../../image-to-video/SKILL.md), [`narrated-multi-scene`](../../narrated-multi-scene/SKILL.md), [`WORKFLOW-RECIPES`](https://github.com/PrunaAI/pruna-skills/tree/main/docs/WORKFLOW-RECIPES.md), [`generate_upscale_comparison.py`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/_shared/scripts/generate_upscale_comparison.py) |
+| `p-image-try-on` | [`p-image-try-on-quality-checklist.md`](https://github.com/PrunaAI/pruna-skills/tree/main/image/p-image-try-on-quality-checklist.md) | [`WORKFLOW-RECIPES`](https://github.com/PrunaAI/pruna-skills/tree/main/docs/WORKFLOW-RECIPES.md), [`p-image-try-on`](../../p-image-try-on/SKILL.md), [`realistic-persona-showcase.md`](https://github.com/PrunaAI/pruna-skills/tree/main/shared/realistic-persona-showcase.md) |
+| `p-video` | [`p-video-quality-checklist.md`](https://github.com/PrunaAI/pruna-skills/tree/main/video/p-video-quality-checklist.md) | [`image-to-video`](../../image-to-video/SKILL.md), [`narrated-multi-scene`](../../narrated-multi-scene/SKILL.md), [`interactive-explainer`](../../interactive-explainer/SKILL.md), [`visual-transition-reel`](../../visual-transition-reel/SKILL.md), [`WORKFLOW-RECIPES`](https://github.com/PrunaAI/pruna-skills/tree/main/docs/WORKFLOW-RECIPES.md) |
+| `p-video-avatar` | [`p-video-avatar-quality-checklist.md`](https://github.com/PrunaAI/pruna-skills/tree/main/video/p-video-avatar-quality-checklist.md) · persona bar: [`realistic-persona-showcase.md`](https://github.com/PrunaAI/pruna-skills/tree/main/shared/realistic-persona-showcase.md) | [`avatar-single-scene`](../../avatar-single-scene/SKILL.md), [`avatar-multi-scene`](../SKILL.md), [`interactive-explainer`](../../interactive-explainer/SKILL.md), [`WORKFLOW-RECIPES`](https://github.com/PrunaAI/pruna-skills/tree/main/docs/WORKFLOW-RECIPES.md) |
+| `p-video-animate` | [`p-video-animate-quality-checklist.md`](https://github.com/PrunaAI/pruna-skills/tree/main/video/p-video-animate-quality-checklist.md) | [`avatar-multi-scene`](../SKILL.md), [`WORKFLOW-RECIPES`](https://github.com/PrunaAI/pruna-skills/tree/main/docs/WORKFLOW-RECIPES.md) |
 | `p-video-replace` | [`p-video-replace-quality-checklist.md`](https://github.com/PrunaAI/pruna-skills/tree/main/video/p-video-replace-quality-checklist.md) | [`p-video-replace`](../../p-video-replace/SKILL.md), [`generate_video_comparison.py`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/_shared/scripts/generate_video_comparison.py) |
 | `music-2.5` + music video assembly | [`music-video-quality-checklist.md`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/music-video-quality-checklist.md) | [`music-video`](../../music-video/SKILL.md), [`music-2.5`](../../music-2.5/SKILL.md) |
 
 ## Core checklist (all models)
 
-- **[Generation diversity](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/generation-diversity/SKILL.md)** — ritual seed + rotate scenario axes on **every** model (image, video, try-on, avatar, …).
-- **[Random seed ritual](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/random-seed-ritual/SKILL.md) (SSoT)** — generate and state a ritual string **before** every generation; derive prompt axes via sum-mod; never copy example strings from docs.
+- **[Generation diversity](./generation-diversity.md)** — ritual seed + rotate scenario axes on **every** model (image, video, try-on, avatar, …).
+- **[Random seed ritual](./random-seed-ritual.md) (SSoT)** — generate and state a ritual string **before** every generation; derive prompt axes via sum-mod; never copy example strings from docs.
 - Goal and acceptance criteria are explicit (what "good" looks like is written down).
 - Input assets are valid and licensed (URL/file reachable, rights cleared).
 - Prompt and settings match the intended output format (`aspect_ratio`, duration, resolution, style lock). **Video default:** `720p`, `24` fps unless the brief asks for final `1080p` / `48`.
@@ -58,9 +58,9 @@ Maintenance rule: keep tool/guide mapping only in this file to avoid link drift.
 
 ## Visual variety (launch reels)
 
-Before **any** generation, run [generation-diversity.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/generation-diversity/SKILL.md). Launch reels: also [visual-variety-bible.md](./visual-variety-bible.md) **Variety checklist**. Persona/playground bar: [realistic-persona-showcase.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/realistic-persona-showcase/SKILL.md).
+Before **any** generation, run [generation-diversity.md](./generation-diversity.md). Launch reels: also [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/shared/visual-variety-bible.md) **Variety checklist**. Persona/playground bar: [realistic-persona-showcase.md](https://github.com/PrunaAI/pruna-skills/tree/main/shared/realistic-persona-showcase.md).
 
-For phased human review before expensive video jobs, see [staged-generation-gate.md](./staged-generation-gate.md) and the per-skill index [workflow-feedback-gates.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/workflow-feedback-gates.md).
+For phased human review before expensive video jobs, see [staged-generation-gate.md](./staged-generation-gate.md) and the per-skill index [workflow-feedback-gates.md](./workflow-feedback-gates.md).
 
 ## Workflow note
 

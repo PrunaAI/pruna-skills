@@ -3,17 +3,27 @@ name: p-video-avatar
 description: Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo.
 license: MIT
 metadata:
-  version: "1.0.5"
+  version: "1.0.6"
   pruna_model: p-video-avatar
 ---
+
+## Shared generation policy
+
+<!-- shared-generation-policy -->
+
+Before any paid `POST /v1/predictions`:
+
+1. **[Random seed ritual](./references/random-seed-ritual.md)** — always first; derive axes via sum-mod.
+2. **[Generation diversity](./references/generation-diversity.md)** — explicit prompts; rotate ≥2 scenario axes per session.
+3. **[Quality checklists](./references/generation-quality-checklists.md)** — open output files and judge pass/fail before advancing.
 
 # p-video-avatar (Pruna)
 
 Talking-head video from one image plus **either** `voice_script` **or** `audio` (if both, audio wins). Full parameters: [P-Video-Avatar (Pruna docs)](https://docs.pruna.ai/en/stable/docs_pruna_endpoints/performance_models/p-video-avatar.html).
 
-**Dynamic personas & scenarios:** [realistic-persona-showcase.md](./references/realistic-persona-showcase.md) · examples: [example-prompt.md](./references/realistic-persona-example-prompt.md)
+**Dynamic personas & scenarios:** [realistic-persona-showcase.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/realistic-persona-showcase.md) · examples: [example-prompt.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/realistic-persona-example-prompt.md)
 
-Shared HTTP patterns: [pruna-api.md](./references/pruna-api.md) (upload, [poll](#poll), [download](#download))
+Shared HTTP patterns: [pruna-api.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/pruna-api.md) (upload, [poll](#poll), [download](#download))
 
 ## HTTP (curl)
 
@@ -29,13 +39,13 @@ Use `urls.get` as `input.image`.
 
 ### Create (async — recommended)
 
-See **Example: async** below. Poll and download: [pruna-api.md](./references/pruna-api.md#poll).
+See **Example: async** below. Poll and download: [pruna-api.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/pruna-api.md#poll).
 
 ## Before generating
 
-**Data handling:** follow [agent-safety.md](./references/agent-safety.md) before any upload or `POST /v1/predictions` — media leaves the local environment; confirm output paths; never put API keys in prompts or subagent briefs.
+**Data handling:** follow [agent-safety.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/agent-safety.md) before any upload or `POST /v1/predictions` — media leaves the local environment; confirm output paths; never put API keys in prompts or subagent briefs.
 
-Follow [avatar-single-scene](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/avatar-single-scene/skills/avatar-single-scene/SKILL.md) or [avatar-multi-scene](../avatar-multi-scene/SKILL.md): **[generation diversity](./references/generation-diversity.md)** first, then **natural human `voice_script`**, **realistic conversational `voice_prompt`**, **per-scene dynamic `video_prompt`**, **locked hero plate URL**, **one fixed `voice` per recurring character**, **confirm `voice_language` with the user** (examples that use `English (US)` are illustrative only), **explicit user confirmation** before any **`POST /v1/predictions`**, then emit and run the agreed generation steps.
+Follow [avatar-single-scene](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/avatar-single-scene/skills/avatar-single-scene/SKILL.md) or [avatar-multi-scene](../avatar-multi-scene/SKILL.md): **[generation diversity](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/generation-diversity.md)** first, then **natural human `voice_script`**, **realistic conversational `voice_prompt`**, **per-scene dynamic `video_prompt`**, **locked hero plate URL**, **one fixed `voice` per recurring character**, **confirm `voice_language` with the user** (examples that use `English (US)` are illustrative only), **explicit user confirmation** before any **`POST /v1/predictions`**, then emit and run the agreed generation steps.
 
 When calling the model directly for a small experiment: **random seed ritual (SSoT)** first, then confirm **`image`** URL (approved still from `/v1/files`), exact **`voice_script`**, **`voice`** / **`voice_language`**, **`voice_prompt`** (human delivery—not script text), **`video_prompt`** (camera/motion), and **`resolution`** with the user. Run [p-video-avatar-quality-checklist.md](./references/p-video-avatar-quality-checklist.md) on stills and outputs.
 
@@ -43,7 +53,7 @@ When calling the model directly for a small experiment: **random seed ritual (SS
 
 A believable avatar needs **three layers** — not a static face on the default motion prompt:
 
-1. **Slop-gated still** — from **`p-image`** / **`p-image-edit`** / optional **`p-image-try-on`**; **any medium** (photoreal, cel anime, clay, CG 3D) with mouth visible; diverse cast, angle, and setting per [realistic-persona-showcase.md](./references/realistic-persona-showcase.md)
+1. **Slop-gated still** — from **`p-image`** / **`p-image-edit`** / optional **`p-image-try-on`**; **any medium** (photoreal, cel anime, clay, CG 3D) with mouth visible; diverse cast, angle, and setting per [realistic-persona-showcase.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/realistic-persona-showcase.md)
 2. **Human voice** — natural **`voice_script`** + short realistic **`voice_prompt`** (never brochure copy in either field)
 3. **Unique motion per clip** — distinct **`video_prompt`** per scene (angle, gesture, glance, handheld vs dolly). **Do not** ship multi-scene reels where every row uses `medium close-up, gentle dolly push-in`
 
@@ -51,9 +61,9 @@ A believable avatar needs **three layers** — not a static face on the default 
 
 **Upstream plate quality caps avatar quality.** Regenerate mushy or synthetic stills before avatar. For fashion UGC: photoreal **`p-image`** → **`p-image-try-on`** → slop gate → avatar with same approved plate URL.
 
-Multi-scene: pair each clip’s **`video_prompt`** with a matching **`p-image-edit`** still (background/angle delta only). See [avatar-multi-scene/prompt-templates.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/avatar-multi-scene/prompt-templates.md) scene table.
+Multi-scene: pair each clip’s **`video_prompt`** with a matching **`p-image-edit`** still (background/angle delta only). See [avatar-multi-scene/prompt-templates.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/avatar-multi-scene/prompt-templates.md) scene table.
 
-**Multi-scene:** after confirmation, create **all** avatar jobs **in parallel** (async, no `Try-Sync`); batch-poll. Prefer **one subagent per clip** — see [parallel-execution.md](./references/parallel-execution.md).
+**Multi-scene:** after confirmation, create **all** avatar jobs **in parallel** (async, no `Try-Sync`); batch-poll. Prefer **one subagent per clip** — see [parallel-execution.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/parallel-execution.md).
 
 ## Realistic human voice (defaults for social / founder content)
 
@@ -64,9 +74,9 @@ Multi-scene: pair each clip’s **`video_prompt`** with a matching **`p-image-ed
 | **`video_prompt`** | **Unique per clip** — angle, push-in, gesture, setting motion, glance beats. Never copy one string across a multi-scene reel. Default `The person is talking.` is quick-test only. |
 | **`seed`** | Optional API reproducibility only — pass **`api_seed`** when user locks an integer. Ritual string is **not** passed to API. |
 
-**Motion-template use case (for `p-video-animate` beats):** When this model generates a **source motion video**, prompts must explicitly request **speaking** — `clear lip movement`, explain gestures, `speaks directly to camera`. Motion-source stills need `mouth clearly visible ready to speak`. See [animate-beats.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/avatar-multi-scene/animate-beats.md).
+**Motion-template use case (for `p-video-animate` beats):** When this model generates a **source motion video**, prompts must explicitly request **speaking** — `clear lip movement`, explain gestures, `speaks directly to camera`. Motion-source stills need `mouth clearly visible ready to speak`. See [animate-beats.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/avatar-multi-scene/animate-beats.md).
 
-Templates and good/bad pairs: [avatar-multi-scene/prompt-templates.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/avatar-multi-scene/prompt-templates.md).
+Templates and good/bad pairs: [avatar-multi-scene/prompt-templates.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/avatar-multi-scene/prompt-templates.md).
 
 ## Field names (JSON)
 
@@ -122,9 +132,9 @@ Start `negative_prompt_strength` around **0.3–0.4** and tune per asset. Higher
 
 ## Example: async (recommended — use for all production)
 
-Omit `Try-Sync`. For multiple clips, **create all jobs in parallel**, then batch-poll every `get_url`. See [parallel-execution.md](./references/parallel-execution.md).
+Omit `Try-Sync`. For multiple clips, **create all jobs in parallel**, then batch-poll every `get_url`. See [parallel-execution.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/parallel-execution.md).
 
-Complete the [random seed ritual](./references/random-seed-ritual.md) (SSoT) before writing prompts. Omit `seed` from API `input` unless the user supplied **`api_seed`**.
+Complete the [random seed ritual](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/random-seed-ritual.md) (SSoT) before writing prompts. Omit `seed` from API `input` unless the user supplied **`api_seed`**.
 
 ```bash
 curl -X POST 'https://api.pruna.ai/v1/predictions' \
@@ -146,7 +156,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-`voice_language` in examples is illustrative — confirm locale with the user ([agent-safety.md](./references/agent-safety.md)).
+`voice_language` in examples is illustrative — confirm locale with the user ([agent-safety.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/agent-safety.md)).
 
 ## Example: sync (single quick test only)
 
@@ -195,7 +205,7 @@ If both `audio` and `voice_script` are set, **audio wins**.
 
 - One-scene avatar workflow: [avatar-single-scene](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/avatar-single-scene/skills/avatar-single-scene/SKILL.md)
 - Multi-scene avatar workflow: [avatar-multi-scene](../avatar-multi-scene/SKILL.md)
-- Pipeline: [pruna-generative-pipeline](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/pruna-generative-pipeline/skills/pruna-generative-pipeline/SKILL.md)
+- Pipeline: [pruna-generative-pipeline](https://github.com/PrunaAI/pruna-skills/tree/main/docs/WORKFLOW-RECIPES.md)
 
 ## Related workflow
 

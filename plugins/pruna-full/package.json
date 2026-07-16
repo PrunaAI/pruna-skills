@@ -1,9 +1,9 @@
 {
   "name": "@pruna-ai/pruna-full",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "type": "module",
   "license": "MIT",
-  "description": "All 26 Pruna skills in one plugin. Multi-scene workflows use staged approval (plan \u2192 stills \u2192 clips before paid video) via requesting-generation-feedback, and parallel subagents per scene lane after you confirm \u2014 parent agent merges results.",
+  "description": "All 20 Pruna skills in one plugin. Multi-scene workflows use staged approval (plan \u2192 stills \u2192 clips before paid video) via bundled generation policies, and parallel subagents per scene lane after you confirm \u2014 parent agent merges results.",
   "repository": "https://github.com/PrunaAI/pruna-skills",
   "files": [
     ".claude-plugin",
@@ -23,8 +23,6 @@
       "avatar-multi-scene",
       "avatar-single-scene",
       "gemini-3.1-flash-tts",
-      "generation-diversity",
-      "generation-quality-checklists",
       "illustrated-story-reel",
       "image-to-video",
       "interactive-explainer",
@@ -39,10 +37,6 @@
       "p-video-animate",
       "p-video-avatar",
       "p-video-replace",
-      "pruna-generative-pipeline",
-      "pruna-run",
-      "recipe-catalog",
-      "requesting-generation-feedback",
       "stable-audio-2.5",
       "visual-transition-reel",
       "whisperx"

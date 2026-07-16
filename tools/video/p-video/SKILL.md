@@ -3,7 +3,7 @@ name: p-video
 description: Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts.
 license: MIT
 metadata:
-  version: "1.0.5"
+  version: "1.0.6"
   pruna_model: p-video
 ---
 
@@ -13,7 +13,7 @@ Premium video from text, optional **first-frame** / **last-frame** images, or op
 
 Full P-API parameters: [p-video model docs](https://docs.api.pruna.ai/guides/models/p-video).
 
-Shared HTTP patterns: [pruna-api.md](../../../references/shared/pruna-api.md) (upload, [poll](#poll), [download](#download))
+Shared HTTP patterns: [pruna-api.md](references/policies/pruna-api.md) (upload, [poll](#poll), [download](#download))
 
 ## Skill boundary
 
@@ -25,13 +25,13 @@ This skill = **one `p-video` prediction** per invocation.
 - Motion transfer from a template video → [p-video-animate](../p-video-animate/SKILL.md)
 - Talking-head / lip-sync → [p-video-avatar](../p-video-avatar/SKILL.md)
 
-If the request exceeds one clip, **stop** and recommend: [image-to-video](../../../workflows/core/image-to-video/SKILL.md) (one narrated beat), [visual-transition-reel](../../../workflows/core/visual-transition-reel/SKILL.md) (multi-scene visual), or [narrated-multi-scene](../../../workflows/core/narrated-multi-scene/SKILL.md) (multi-scene + VO).
+If the request exceeds one clip, **stop** and recommend: [image-to-video](../../../workflows/image-to-video/SKILL.md) (one narrated beat), [visual-transition-reel](../../../workflows/visual-transition-reel/SKILL.md) (multi-scene visual), or [narrated-multi-scene](../../../workflows/narrated-multi-scene/SKILL.md) (multi-scene + VO).
 
 ## HTTP (curl)
 
 ### Create (async — recommended)
 
-See **Example: async text-to-video** below. Poll and download: [pruna-api.md](../../../references/shared/pruna-api.md#poll).
+See **Example: async text-to-video** below. Poll and download: [pruna-api.md](references/policies/pruna-api.md#poll).
 
 ### Upload for image-to-video / frame anchors
 
@@ -45,9 +45,9 @@ Pass `urls.get` as `input.image` (first frame) and/or `input.last_frame_image` (
 
 ## Before generating
 
-**Data handling:** [agent-safety.md](../../../references/shared/agent-safety.md) before any upload or paid call.
+**Data handling:** [agent-safety.md](references/policies/agent-safety.md) before any upload or paid call.
 
-1. **[Generation diversity](../../../references/shared/generation-diversity.md)** — ritual seed + axis rotation before each job.
+1. **[Generation diversity](references/policies/generation-diversity.md)** — ritual seed + axis rotation before each job.
 2. Confirm **mode** (T2V / I2V / **visual transition pair** / scene anchor triple / audio), **`duration`** (unless audio-driven), **`resolution`**, **`fps`**, **`draft`**, **`seed`**, and **`prompt`** with the user.
 3. If the request is multi-scene or needs subagents/concat — **stop** and switch skills (see **Skill boundary**).
 
@@ -195,7 +195,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-Poll and download: [pruna-api.md](../../../references/shared/pruna-api.md#poll).
+Poll and download: [pruna-api.md](references/policies/pruna-api.md#poll).
 
 ## Example: image-to-video (first frame only)
 
@@ -243,10 +243,10 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 
 ## Related workflows (do not execute from this skill)
 
-- One-scene narrated beat: [image-to-video](../../../workflows/core/image-to-video/SKILL.md)
-- Visual transitions (pair, multi-scene): [visual-transition-reel](../../../workflows/core/visual-transition-reel/SKILL.md)
-- Multi-scene + frame chain + narration: [narrated-multi-scene](../../../workflows/core/narrated-multi-scene/SKILL.md)
+- One-scene narrated beat: [image-to-video](../../../workflows/image-to-video/SKILL.md)
+- Visual transitions (pair, multi-scene): [visual-transition-reel](../../../workflows/visual-transition-reel/SKILL.md)
+- Multi-scene + frame chain + narration: [narrated-multi-scene](../../../workflows/narrated-multi-scene/SKILL.md)
 - Talking portrait: [p-video-avatar](../p-video-avatar/SKILL.md)
 - Motion transfer: [p-video-animate](../p-video-animate/SKILL.md)
 - Narration TTS: [gemini-3.1-flash-tts](../../audio/gemini-3.1-flash-tts/SKILL.md)
-- Pipeline hub: [pruna-generative-pipeline](../../../workflows/router/pruna-generative-pipeline/SKILL.md)
+- Pipeline hub: [pruna-generative-pipeline](../../../docs/WORKFLOW-RECIPES.md)

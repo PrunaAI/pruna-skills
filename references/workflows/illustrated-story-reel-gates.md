@@ -22,7 +22,7 @@ There is **no Phase B video**. Do not escalate to paid video APIs from this skil
 3. **Parallelize within a phase** (batch still edits, parallel TTS), not across phases.
 4. **Do not pass `PRUNA_API_KEY` or `REPLICATE_API_TOKEN` to subagents** unless a subagent is running an approved still or TTS lane — parent owns gates and assembly.
 5. Run [illustrated-story-reel-quality.md](./illustrated-story-reel-quality.md) on every still before audio or assembly.
-6. **[Generation diversity](../shared/generation-diversity.md)** and **[random seed ritual](../shared/random-seed-ritual.md)** before every `POST /v1/predictions`.
+6. **[Generation diversity](../policies/generation-diversity.md)** and **[random seed ritual](../policies/random-seed-ritual.md)** before every `POST /v1/predictions`.
 
 ## Wording templates
 

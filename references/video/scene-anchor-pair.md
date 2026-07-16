@@ -92,8 +92,8 @@ Scene 3: start_3 → end_3   duration=5
 
 | Pattern | Anchors | Duration | Workflow |
 |---------|---------|----------|----------|
-| **Pair** | `image` + `last_frame_image` + `prompt` | `duration` | [visual-transition-reel](../workflows/core/visual-transition-reel/SKILL.md) |
-| **Triple** | pair + `audio` | follows audio | [narrated-multi-scene](../workflows/core/narrated-multi-scene/SKILL.md) |
+| **Pair** | `image` + `last_frame_image` + `prompt` | `duration` | [visual-transition-reel](../workflows/visual-transition-reel/SKILL.md) |
+| **Triple** | pair + `audio` | follows audio | [narrated-multi-scene](../workflows/narrated-multi-scene/SKILL.md) |
 
 Upgrade a pair scene to triple by adding TTS → upload → `audio` and removing `duration`.
 
@@ -148,7 +148,7 @@ Upgrade a pair scene to triple by adding TTS → upload → `audio` and removing
 
 ## Workflows that implement this
 
-- [visual-transition-reel](../workflows/core/visual-transition-reel/SKILL.md) — primary workflow
-- [image-to-video](../workflows/core/image-to-video/SKILL.md) — one pair beat
+- [visual-transition-reel](../workflows/visual-transition-reel/SKILL.md) — primary workflow
+- [image-to-video](../workflows/image-to-video/SKILL.md) — one pair beat
 - [p-video](../tools/video/p-video/SKILL.md) — API reference (visual transition mode)
-- Example runner: [`run_from_plan.py`](../workflows/core/visual-transition-reel/scripts/run_from_plan.py)
+- Example runner: [`run_from_plan.py`](../workflows/visual-transition-reel/scripts/run_from_plan.py)

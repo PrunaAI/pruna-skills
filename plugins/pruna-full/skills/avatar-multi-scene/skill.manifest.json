@@ -1,7 +1,12 @@
 {
   "scripts": {
     "core": [],
-    "shared": ["generate_video_comparison.py", "pruna_paths.py", "requirements.txt", "requirements-comparison.txt"],
+    "shared": [
+      "generate_video_comparison.py",
+      "pruna_paths.py",
+      "requirements.txt",
+      "requirements-comparison.txt"
+    ],
     "optional": []
   },
   "tool_skills": [
@@ -12,19 +17,25 @@
   ],
   "references": [
     "pruna-api.md",
-    "staged-generation-gate.md",
-    "workflow-feedback-gates.md",
     "visual-variety-bible.md",
-    "parallel-execution.md",
-    "generation-quality-checklists.md",
     "p-video-avatar-quality-checklist.md",
     "p-video-animate-quality-checklist.md"
   ],
   "templates": [],
   "generation_phases": {
     "default": "stills",
-    "phases": ["stills", "video", "render"],
-    "requires_user_approval_before": ["p-video-avatar", "p-video-animate"]
+    "phases": [
+      "stills",
+      "video",
+      "render"
+    ],
+    "requires_user_approval_before": [
+      "p-video-avatar",
+      "p-video-animate"
+    ]
   },
-  "generation_package": ["curl", "script"]
+  "generation_package": [
+    "curl",
+    "script"
+  ]
 }

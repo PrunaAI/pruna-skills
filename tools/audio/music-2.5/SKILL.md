@@ -3,7 +3,7 @@ name: music-2.5
 description: Use when someone wants an original AI song with vocals — sung lyrics, a style prompt track, or source audio for a music video.
 license: MIT
 metadata:
-  version: "1.0.5"
+  version: "1.0.6"
   provider: replicate
   replicate_model: minimax/music-2.5
 ---
@@ -12,7 +12,7 @@ metadata:
 
 Full-length **songs with natural vocals** from lyrics + style description. Not a Pruna P-model — runs on [Replicate](https://replicate.com/minimax/music-2.5).
 
-**Primary workflow:** [music-video](../../../workflows/verticals/music-video/SKILL.md) — lyrics → song → lyric-safe cuts → `p-video-avatar` / `p-video` clips → assembly.
+**Primary workflow:** [music-video](../../../workflows/music-video/SKILL.md) — lyrics → song → lyric-safe cuts → `p-video-avatar` / `p-video` clips → assembly.
 
 ## When to use
 
@@ -90,7 +90,7 @@ Poll `urls.get` until `status` is `succeeded`; download `output`.
 ## Repo helper
 
 ```bash
-python3 workflows/verticals/music-video/scripts/generate_song.py \
+python3 workflows/music-video/scripts/generate_song.py \
   --plan output/my-music-video/music_video_plan.json \
   --out-dir output/my-music-video
 ```
@@ -105,7 +105,7 @@ python3 workflows/verticals/music-video/scripts/generate_song.py \
 ## Related
 
 - [audio-post-production.md](../../../references/audio/audio-post-production.md) — when to use songs vs narration vs beds
-- [music-video workflow](../../../workflows/verticals/music-video/SKILL.md)
+- [music-video workflow](../../../workflows/music-video/SKILL.md)
 - [gemini-3.1-flash-tts](../gemini-3.1-flash-tts/SKILL.md) — spoken narration (not song)
 - [stable-audio-2.5](../stable-audio-2.5/SKILL.md) — instrumental beds only
-- [replicate-api.md](../../../references/shared/replicate-api.md)
+- [replicate-api.md](references/policies/replicate-api.md)

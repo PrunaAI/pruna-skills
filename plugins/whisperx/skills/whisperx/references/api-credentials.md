@@ -9,7 +9,7 @@
 | **Env var** | `PRUNA_API_KEY` |
 | **Header** | `apikey: ${PRUNA_API_KEY}` (not `Authorization: Bearer`) |
 | **Sign up / get key** | [Pruna dashboard](https://dashboard.pruna.ai/) |
-| **Docs** | [Quickstart](https://docs.api.pruna.ai/guides/quickstart) · [pruna-api.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/pruna-api/SKILL.md) |
+| **Docs** | [Quickstart](https://docs.api.pruna.ai/guides/quickstart) · [pruna-api.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/pruna-api/SKILL.md) |
 
 **Used by:** all `p-image*`, `p-video*` tool skills and Pruna workflow runners.
 
@@ -64,4 +64,4 @@ When only one key is missing, suggest **only** that provider’s signup link —
 - `.env` is gitignored; prefer env vars over hardcoding in plans or manifests.
 - Never embed keys in prompts, manifests, plan JSON, logs, or **subagent task text**.
 - Prefer the **parent agent** to own API calls; do not fan credentials across parallel subagents unless the host documents isolated secret injection.
-- Full rules: [agent-safety.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/agent-safety/SKILL.md).
+- Full rules: [agent-safety.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/agent-safety/SKILL.md).

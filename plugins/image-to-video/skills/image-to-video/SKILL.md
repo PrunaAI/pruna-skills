@@ -3,7 +3,7 @@ name: image-to-video
 description: Use when someone wants one short film beat from images — a narrated scene, story moment, or cinematic B-roll with optional voiceover.
 license: MIT
 metadata:
-  version: "1.0.5"
+  version: "1.0.6"
 depends:
   - p-image
   - p-image-edit
@@ -12,9 +12,23 @@ depends:
   - stable-audio-2.5
 ---
 
+## Shared generation policy
+
+<!-- shared-generation-policy -->
+
+Before any paid `POST /v1/predictions`:
+
+1. **[Random seed ritual](./references/random-seed-ritual.md)** — always first; derive axes via sum-mod.
+2. **[Generation diversity](./references/generation-diversity.md)** — explicit prompts; rotate ≥2 scenario axes per session.
+3. **[Quality checklists](./references/generation-quality-checklists.md)** — open output files and judge pass/fail before advancing.
+4. **[Staged generation gate](./references/staged-generation-gate.md)** — plan → stills → audio → video → assembly; never skip phases in one turn.
+5. **[Approval red flags](./references/approval-red-flags.md)** — pause when plan, stills, or clips were not reviewed.
+6. **[Workflow feedback gates](./references/workflow-feedback-gates.md)** — runner flags and per-workflow commands.
+7. **[Parallel execution](./references/parallel-execution.md)** — async fan-out within each approved phase only.
+
 # Single-scene AI video (Pruna `p-video`)
 
-One **`p-video`** prediction. See [p-video](../../../../tools/video/p-video/SKILL.md), [scene-anchor-triple.md](./references/scene-anchor-triple.md), and [pruna-api.md](./references/pruna-api.md).
+One **`p-video`** prediction. See [p-video](../../../../tools/video/p-video/SKILL.md), [scene-anchor-triple.md](./references/scene-anchor-triple.md), and [pruna-api.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/pruna-api.md).
 
 ## Skill boundary
 
@@ -22,9 +36,9 @@ Exactly **one scene / one `p-video` job**. No subagents, no concat across scenes
 
 If the user wants a multi-scene film → hand off to [narrated-multi-scene](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/narrated-multi-scene/skills/narrated-multi-scene/SKILL.md) or [visual-transition-reel](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/visual-transition-reel/skills/visual-transition-reel/SKILL.md). Talking-head-only → [avatar-single-scene](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/avatar-single-scene/skills/avatar-single-scene/SKILL.md).
 
-**Data handling:** [agent-safety.md](./references/agent-safety.md) before any upload or paid call.
+**Data handling:** [agent-safety.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/agent-safety.md) before any upload or paid call.
 
-**Staged generation:** [staged-generation-gate.md](./references/staged-generation-gate.md) · [workflow-feedback-gates.md](./references/workflow-feedback-gates.md)
+**Staged generation:** [staged-generation-gate.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/staged-generation-gate.md) · [workflow-feedback-gates.md](./references/workflow-feedback-gates.md)
 
 ## Feedback gates (required)
 

@@ -2,9 +2,9 @@
 
 Cross-model examples for **`p-image`** scenario plates → optional **`p-image-try-on`** → **`p-video-avatar`**.
 
-**Before every curl:** [random seed ritual](https://github.com/PrunaAI/pruna-skills/tree/main/references/shared/random-seed-ritual.md) (SSoT) + [generation diversity](https://github.com/PrunaAI/pruna-skills/tree/main/references/shared/generation-diversity.md) — state ritual string and derive axes; **omit API `seed`** unless user sets `api_seed`.
+**Before every curl:** [random seed ritual](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/random-seed-ritual.md) (SSoT) + [generation diversity](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/generation-diversity.md) — state ritual string and derive axes; **omit API `seed`** unless user sets `api_seed`.
 
-Full ladders and 8-slot matrix: [realistic-persona-showcase.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/shared/realistic-persona-showcase.md).
+Full ladders and 8-slot matrix: [realistic-persona-showcase.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/realistic-persona-showcase.md).
 
 ## 1. Photoreal documentary (`p-image`) — avatar-ready
 
@@ -130,4 +130,4 @@ When publishing a public set, cover **medium × angle × setting × aspect_ratio
 
 Each slot: distinct **`cast_descriptor`** and **`aspect_ratio`**. Avatar slots: unique **`video_prompt`**.
 
-Full rules: [realistic-persona-showcase.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/shared/realistic-persona-showcase.md) · [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/shared/visual-variety-bible.md).
+Full rules: [realistic-persona-showcase.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/realistic-persona-showcase.md) · [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/visual-variety-bible.md).

@@ -7,8 +7,6 @@
     "replicate-api.md",
     "api-credentials.md",
     "audio-post-production.md",
-    "scene-anchor-triple.md",
-    "generation-diversity.md",
-    "random-seed-ritual.md"
+    "scene-anchor-triple.md"
   ]
 }

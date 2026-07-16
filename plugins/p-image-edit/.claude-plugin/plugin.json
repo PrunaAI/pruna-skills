@@ -1,7 +1,7 @@
 {
   "name": "p-image-edit",
   "description": "Use when someone wants to edit an existing photo \u2014 change outfits or backgrounds, compose from reference images, or apply prompt-driven edits.",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "author": {
     "name": "Pruna AI"
   },

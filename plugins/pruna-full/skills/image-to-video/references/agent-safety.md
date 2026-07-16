@@ -15,7 +15,7 @@ Local images, audio, scripts, and portraits are **uploaded to remote APIs** (pri
 - Read `PRUNA_API_KEY` / `REPLICATE_API_TOKEN` from the **host environment** only (shell / `.env` — never commit).
 - **Never** embed keys in prompts, chat, manifests, plan JSON, logs, or subagent task text.
 - Prefer the **parent agent** to own API calls. Do not fan credentials across parallel subagents unless the host documents isolated secret injection.
-- If a key is missing, stop and use the templates in [api-credentials.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/api-credentials/SKILL.md).
+- If a key is missing, stop and use the templates in [api-credentials.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/api-credentials/SKILL.md).
 
 ## Local disk
 
@@ -28,6 +28,6 @@ Downloads (`curl -o …`, runners writing under an output dir) **create or overw
 
 ## Related
 
-- [api-credentials.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/api-credentials/SKILL.md) — signup + header rules
+- [api-credentials.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/api-credentials/SKILL.md) — signup + header rules
 - [pruna-api.md](./pruna-api.md) — upload / poll / download
-- [staged-generation-gate.md](./staged-generation-gate.md) — approval phases
+- [staged-generation-gate.md](https://github.com/PrunaAI/pruna-skills/tree/main/policies/staged-generation-gate.md) — approval phases

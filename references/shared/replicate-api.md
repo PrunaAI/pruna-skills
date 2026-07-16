@@ -36,7 +36,7 @@ Model: `minimax/music-2.5`
 Required input: `lyrics` (1–3,500 chars, structure tags supported)  
 Optional: `prompt` (style), `sample_rate`, `bitrate`, `audio_format` (`mp3` default)
 
-Workflow: [music-video](../workflows/verticals/music-video/SKILL.md) · tool skill: [music-2.5](../tools/audio/music-2.5/SKILL.md)
+Workflow: [music-video](../workflows/music-video/SKILL.md) · tool skill: [music-2.5](../tools/audio/music-2.5/SKILL.md)
 
 ## Gemini 3.1 Flash TTS
 

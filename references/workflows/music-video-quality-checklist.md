@@ -51,6 +51,6 @@ Run at lyrics approval, after song generation, on stills, and on final assembly.
 
 ## Related
 
-- [music-video SKILL](../workflows/verticals/music-video/SKILL.md)
-- [lyrics-and-cuts.md](../workflows/verticals/music-video/lyrics-and-cuts.md)
-- [generation-quality-checklists.md](./generation-quality-checklists.md)
+- [music-video SKILL](../workflows/music-video/SKILL.md)
+- [lyrics-and-cuts.md](../workflows/music-video/lyrics-and-cuts.md)
+- [generation-quality-checklists.md](../policies/generation-quality-checklists.md)

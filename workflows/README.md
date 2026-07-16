@@ -1,39 +1,35 @@
 # Workflows
 
+Eight deliverable skills — multi-step productions with staged approval gates.
+
 ```text
 workflows/
-  _shared/scripts/
-  router/              # entry — pruna-run, pruna-generative-pipeline
-  core/                # scene grammar (HOW)
-  verticals/           # deliverables (WHY)
+  _shared/scripts/     # shared runners (generation_gate, pruna_api, …)
+  <name>/              # one folder per workflow skill
 ```
 
-| Tier | Skills |
-|------|--------|
-| **Router** | `pruna-run`, `pruna-generative-pipeline`, `requesting-generation-feedback` |
-| **Core** | `image-to-video`, `narrated-multi-scene`, `visual-transition-reel`, `avatar-single-scene`, `avatar-multi-scene` |
-| **Verticals** | `interactive-explainer`, `music-video`, `illustrated-story-reel` |
+| Workflow | Deliverable |
+|----------|-------------|
+| `image-to-video` | One narrated scene or B-roll from images |
+| `narrated-multi-scene` | Multi-part story with voiceover |
+| `visual-transition-reel` | Montage with transitions (no VO) |
+| `avatar-single-scene` | One host-on-camera beat |
+| `avatar-multi-scene` | Same person hosting several clips |
+| `interactive-explainer` | Explainer with host and characters |
+| `music-video` | Full music video |
+| `illustrated-story-reel` | Slideshow story with narration or music |
 
-**Pruna-internal launch reels** (comparison sliders, marketing campaigns) are in [`.mine/guides/workflows/launches/`](../../.mine/README.md).
+**Human-in-the-loop:** Every workflow bundle includes [staged-generation-gate.md](../references/policies/staged-generation-gate.md) and [workflow-feedback-gates.md](../references/policies/workflow-feedback-gates.md) (injected at bundle time).
 
-**Do not delete the router skills** — they are the intake entrypoints, not duplicates of verticals.
+**Recipe selection:** [docs/WORKFLOW-RECIPES.md](../docs/WORKFLOW-RECIPES.md) when unsure which workflow fits.
 
-**Human-in-the-loop:** Every workflow uses [staged-generation-gate.md](../../../references/shared/staged-generation-gate.md). Per-skill commands: [workflow-feedback-gates.md](../../../references/workflows/workflow-feedback-gates.md).
-
-Install: `npx skills add ./plugins/<name>/skills --skill <folder-name> --agent cursor -y` or `/plugin install <name>@pruna-skills`. Pruna-internal launch skills: `bundle_skill.sh <name> --mine` (`.mine/` only).
-
-### Generated plugins (`plugins/`)
-
-Author in `tools/`, `guides/`, or `workflows/`; publish via generation:
+Install: `npx plugins add PrunaAI/pruna-skills` → pick workflow name, or `@skill` via `npx skills` if you already have tool deps.
 
 ```text
-workflows/{router,core,verticals}/<skill>/   ← SKILL.md + skill.manifest.json
-tools/{image,video,audio}/<skill>/           ← model tool skills
-references/                                  ← shared docs (listed in manifests)
+workflows/<skill>/SKILL.md + skill.manifest.json
         │
-        ▼  ./scripts/bundle_all_skills.sh  (also runs on pre-commit)
-plugins/<skill>/.claude-plugin/plugin.json
-plugins/<skill>/skills/<skill>/                      ← self-contained install tree
+        ▼  make bundle
+plugins/<skill>/skills/<skill>/   (+ embedded tool_skills)
 ```
 
-Workflow plugins copy direct `tool_skills` into `plugins/<workflow>/skills/`. Check freshness: `./scripts/verify_skill_bundles.sh`.
+Check freshness: `make verify`.

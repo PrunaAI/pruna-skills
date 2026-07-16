@@ -7,16 +7,16 @@ Generative media skills for the [Pruna AI API](https://docs.api.pruna.ai/guides/
 A **skill** is a playbook your agent loads for one job. A **plugin** is the install package — workflow plugins also bring their tool deps.
 
 - **Tools** — one paid API call → `npx skills`
-- **Guides** — prompting / QA / recipes, no API → `npx skills`
-- **Workflows** — full productions → prefer `npx plugins`
-- **Routers** — quick one-off, pick a pipeline, or gate spend → `npx skills`
+- **Workflows** — finished deliverables (multi-step) → prefer `npx plugins`
+
+Shared diversity, QA, and approval rules ship inside every bundled skill via [references/policies/](references/policies/) (injected at bundle time). Humans picking recipes: [docs/WORKFLOW-RECIPES.md](docs/WORKFLOW-RECIPES.md).
 
 GitHub is the source of truth. [skills.sh](https://skills.sh) discovers via install telemetry. ClawHub is optional for OpenClaw. Claude marketplace is the in-repo catalog. Full onboarding: [README.md](README.md).
 
 ## Install
 
 ```bash
-export PRUNA_API_KEY="…"          # see api-setup.md
+export PRUNA_API_KEY="…" # see docs/api-setup.md
 
 npx skills add PrunaAI/pruna-skills@p-image -y
 npx plugins add PrunaAI/pruna-skills
@@ -28,15 +28,17 @@ npx skills add PrunaAI/pruna-skills -l
 npx plugins discover PrunaAI/pruna-skills
 ```
 
-**Team default:** try `@p-image`, then pick `music-video`, then `pruna-full` if you want everything. Open [README.skills.md](README.skills.md) only for the full catalog.
+**Team default:** try `@p-image`, then pick `music-video`, then `pruna-full` if you want everything. Open [docs/SKILL-CATALOG.md](docs/SKILL-CATALOG.md) only for the full catalog.
 
 ## Layout
 
 | Path | Role |
 |------|------|
-| `tools/` `guides/` `workflows/` | Author here |
+| `tools/` `workflows/` | Author here |
+| `references/` | Shared library — **not installable**. [`policies/`](references/policies/) auto-injected; other folders copied when listed in manifests |
 | `plugins/` | Generated install bundles — do not edit |
-| `skills.catalog.json` | Skill name source of truth |
+| `.maintainer/skills.catalog.json` | Skill name source of truth (12 tools + 8 workflows) |
+| `docs/SKILL-CATALOG.md` | Generated full catalog (do not edit) |
 
 ## Safety
 
@@ -48,4 +50,4 @@ Review skills before use in untrusted repos: [references/shared/agent-safety.md]
 make bundle && make validate
 ```
 
-Releases: [PUBLISHING.md](PUBLISHING.md) · Backlog: [BACKLOG.md](BACKLOG.md)
+Releases: [PUBLISHING.md](docs/PUBLISHING.md) · Backlog: [BACKLOG.md](docs/BACKLOG.md)

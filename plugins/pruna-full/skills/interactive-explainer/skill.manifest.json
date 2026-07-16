@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "core": ["run_from_plan.py"],
+    "core": [
+      "run_from_plan.py"
+    ],
     "shared": [
       "concat_clips.py",
       "generation_gate.py",
@@ -29,17 +31,20 @@
     "interactive-explainer-prompts.md",
     "scene-anchor-triple.md",
     "pruna-api.md",
-    "staged-generation-gate.md",
-    "workflow-feedback-gates.md",
-    "parallel-execution.md",
-    "generation-quality-checklists.md",
     "p-video-quality-checklist.md",
     "p-video-avatar-quality-checklist.md"
   ],
-  "templates": ["explainer-plan.template.json"],
+  "templates": [
+    "explainer-plan.template.json"
+  ],
   "generation_phases": {
     "default": "stills",
-    "phases": ["stills", "tts", "video", "assemble"],
+    "phases": [
+      "stills",
+      "tts",
+      "video",
+      "assemble"
+    ],
     "gates": {
       "tts": {
         "requires": "phase_a_approved",
@@ -57,7 +62,13 @@
         "skip_flag": "--yes-skip-clips-gate"
       }
     },
-    "requires_user_approval_before": ["p-video", "p-video-avatar"]
+    "requires_user_approval_before": [
+      "p-video",
+      "p-video-avatar"
+    ]
   },
-  "generation_package": ["curl", "script"]
+  "generation_package": [
+    "curl",
+    "script"
+  ]
 }

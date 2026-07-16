@@ -3,8 +3,22 @@ name: visual-transition-reel
 description: Use when someone wants a montage with transitions between shots — action-sequence reel or multi-scene piece where narration is optional.
 license: MIT
 metadata:
-  version: "1.0.5"
+  version: "1.0.6"
 ---
+
+## Shared generation policy
+
+<!-- shared-generation-policy -->
+
+Before any paid `POST /v1/predictions`:
+
+1. **[Random seed ritual](./references/random-seed-ritual.md)** — always first; derive axes via sum-mod.
+2. **[Generation diversity](./references/generation-diversity.md)** — explicit prompts; rotate ≥2 scenario axes per session.
+3. **[Quality checklists](./references/generation-quality-checklists.md)** — open output files and judge pass/fail before advancing.
+4. **[Staged generation gate](./references/staged-generation-gate.md)** — plan → stills → audio → video → assembly; never skip phases in one turn.
+5. **[Approval red flags](./references/approval-red-flags.md)** — pause when plan, stills, or clips were not reviewed.
+6. **[Workflow feedback gates](./references/workflow-feedback-gates.md)** — runner flags and per-workflow commands.
+7. **[Parallel execution](./references/parallel-execution.md)** — async fan-out within each approved phase only.
 
 # Scene transition video (Pruna `p-video` + `p-image` / `p-image-edit`)
 
@@ -12,11 +26,11 @@ Each scene = one **`p-video`** job steered by **two stills** and a **transition 
 
 Canonical spec: [scene-anchor-pair.md](./references/scene-anchor-pair.md)
 
-See [p-video](../../../../tools/video/p-video/SKILL.md), [p-image](../../../../tools/image/p-image/SKILL.md), [p-image-edit](../../../../tools/image/p-image-edit/SKILL.md), [parallel-execution.md](./references/parallel-execution.md), and [pruna-api.md](./references/pruna-api.md).
+See [p-video](../../../../tools/video/p-video/SKILL.md), [p-image](../../../../tools/image/p-image/SKILL.md), [p-image-edit](../../../../tools/image/p-image-edit/SKILL.md), [parallel-execution.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/parallel-execution.md), and [pruna-api.md](./references/pruna-api.md).
 
 For narrated films (pair + TTS audio), use [narrated-multi-scene](../narrated-multi-scene/SKILL.md) instead.
 
-**Staged generation:** [staged-generation-gate.md](./references/staged-generation-gate.md) · [workflow-feedback-gates.md](./references/workflow-feedback-gates.md). Default runner **`--phase stills`**.
+**Staged generation:** [staged-generation-gate.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/staged-generation-gate.md) · [workflow-feedback-gates.md](./references/workflow-feedback-gates.md). Default runner **`--phase stills`**.
 
 ## Feedback gates (required)
 
@@ -56,7 +70,7 @@ Ask follow-ups until every scene row has enough to build `input` without guessin
 
 One approved anchor still when generating from text:
 
-1. **`p-image`** with `hero_prompt` + `style_bible` + [random seed ritual](https://github.com/PrunaAI/pruna-skills/tree/main/references/shared/random-seed-ritual.md) (SSoT)
+1. **`p-image`** with `hero_prompt` + `style_bible` + [random seed ritual](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/random-seed-ritual.md) (SSoT)
 2. Slop gate — approve before branching edits
 
 Skip when every scene uses **uploaded** start/end images.
@@ -138,10 +152,10 @@ Default **`--phase stills`**. Phased flow:
 
 ```bash
 mkdir -p output/core/visual-transition-reel/my-transitions/{stills,clips}
-cp workflows/core/visual-transition-reel/templates/transition-plan.template.json \
+cp workflows/visual-transition-reel/templates/transition-plan.template.json \
    output/core/visual-transition-reel/my-transitions/plan.json
 
-python3 workflows/core/visual-transition-reel/scripts/run_from_plan.py \
+python3 workflows/visual-transition-reel/scripts/run_from_plan.py \
   --plan output/core/visual-transition-reel/my-transitions/plan.json \
   --out-dir output/core/visual-transition-reel/my-transitions
 
@@ -165,5 +179,5 @@ Requires `PRUNA_API_KEY`. Optional bed needs `REPLICATE_API_TOKEN`.
 
 - One beat: [image-to-video](../image-to-video/SKILL.md)
 - Narrated triple: [narrated-multi-scene](../narrated-multi-scene/SKILL.md)
-- Scenario hub: [pruna-generative-pipeline](../pruna-generative-pipeline/SKILL.md) (Recipe Q)
+- Scenario hub: [pruna-generative-pipeline](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/pruna-generative-pipeline/skills/pruna-generative-pipeline/SKILL.md) (Recipe Q)
 - Example prompt: [./example-prompt.md](./example-prompt.md)

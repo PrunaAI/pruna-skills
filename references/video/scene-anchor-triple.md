@@ -1,8 +1,8 @@
 # Scene anchor triple (single narrated beat → multi-scene extension)
 
-Canonical payload pattern for **one narrated `p-video` prediction**: three uploaded anchors (`image`, `last_frame_image`, `audio`) plus a motion **`prompt`**. Use this for a **single story beat** first ([image-to-video](../workflows/core/image-to-video/SKILL.md), [p-video](../tools/video/p-video/SKILL.md)).
+Canonical payload pattern for **one narrated `p-video` prediction**: three uploaded anchors (`image`, `last_frame_image`, `audio`) plus a motion **`prompt`**. Use this for a **single story beat** first ([image-to-video](../workflows/image-to-video/SKILL.md), [p-video](../tools/video/p-video/SKILL.md)).
 
-**Multi-scene extension** (`frame_chain`, concat, parallel batches, plan JSON with many rows) belongs only in [narrated-multi-scene](../workflows/core/narrated-multi-scene/SKILL.md) — do not treat this doc as permission for single-clip skills to orchestrate full films.
+**Multi-scene extension** (`frame_chain`, concat, parallel batches, plan JSON with many rows) belongs only in [narrated-multi-scene](../workflows/narrated-multi-scene/SKILL.md) — do not treat this doc as permission for single-clip skills to orchestrate full films.
 
 Related: [scene-anchor-pair.md](./scene-anchor-pair.md) (visual-only) · [audio-post-production.md](./audio-post-production.md) · [p-video](../tools/video/p-video/SKILL.md)
 
@@ -62,9 +62,9 @@ When start URL, end URL, and audio URL exist:
 
 ## Multi-scene extension (narrated-multi-scene only)
 
-The sections below apply when the user explicitly requested a **multi-scene film**. Single-clip skills must stop and hand off to [narrated-multi-scene](../workflows/core/narrated-multi-scene/SKILL.md) instead of executing them.
+The sections below apply when the user explicitly requested a **multi-scene film**. Single-clip skills must stop and hand off to [narrated-multi-scene](../workflows/narrated-multi-scene/SKILL.md) instead of executing them.
 
-**Explainer interaction (preferred):** alternate **narrator** triple beats with **character** `p-video-avatar` dialogue — see [interactive-explainer-scenes.md](../workflows/interactive-explainer-scenes.md) and [interactive-explainer](../workflows/verticals/interactive-explainer/SKILL.md).
+**Explainer interaction (preferred):** alternate **narrator** triple beats with **character** `p-video-avatar` dialogue — see [interactive-explainer-scenes.md](../workflows/interactive-explainer-scenes.md) and [interactive-explainer](../workflows/interactive-explainer/SKILL.md).
 
 **Explainer motion & format:** dynamic `OPEN:` / `MID:` / `CLOSE:` `video_prompt` per scene; default **`720p`** + **`24` fps** — see [interactive-explainer-motion.md](../workflows/interactive-explainer-motion.md).
 
@@ -72,7 +72,7 @@ The sections below apply when the user explicitly requested a **multi-scene film
 
 ### Parallel stills / video across scenes
 
-Run start stills **in parallel** from hero; then end stills **in parallel** from each start still. After **all** URLs exist for every scene row, `POST /v1/predictions` in a **parallel** batch. Patterns: [parallel-execution.md](../shared/parallel-execution.md).
+Run start stills **in parallel** from hero; then end stills **in parallel** from each start still. After **all** URLs exist for every scene row, `POST /v1/predictions` in a **parallel** batch. Patterns: [parallel-execution.md](../policies/parallel-execution.md).
 
 ### Frame chain
 
@@ -166,10 +166,10 @@ Upgrade a **pair** to a **triple** by adding TTS → upload → `input.audio` an
 
 ## Workflows that implement this
 
-- [image-to-video](../workflows/core/image-to-video/SKILL.md) — **one beat** (this skill’s default)
-- [narrated-multi-scene](../workflows/core/narrated-multi-scene/SKILL.md) — primary narrated multi-scene workflow
-- [visual-transition-reel](../workflows/core/visual-transition-reel/SKILL.md) — visual pair (no VO)
-- [pruna-generative-pipeline](../workflows/router/pruna-generative-pipeline/SKILL.md) — Recipe **P**
+- [image-to-video](../workflows/image-to-video/SKILL.md) — **one beat** (this skill’s default)
+- [narrated-multi-scene](../workflows/narrated-multi-scene/SKILL.md) — primary narrated multi-scene workflow
+- [visual-transition-reel](../workflows/visual-transition-reel/SKILL.md) — visual pair (no VO)
+- [pruna-generative-pipeline](../docs/WORKFLOW-RECIPES.md) — Recipe **P**
 
 ## Intake checklist (per beat)
 

@@ -4,7 +4,7 @@
 
 Default for those multi-step workflows: **async predictions + parallel fan-out** wherever steps do not depend on each other's outputs. In Cursor and similar agent hosts, **dispatch subagents** for independent lanes and merge results into one manifest.
 
-Shared HTTP basics: [pruna-api.md](./pruna-api.md). Credentials and privacy: [agent-safety.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/agent-safety/SKILL.md).
+Shared HTTP basics: [pruna-api.md](https://github.com/PrunaAI/pruna-skills/tree/main/shared/pruna-api.md). Credentials and privacy: [agent-safety.md](https://github.com/PrunaAI/pruna-skills/tree/main/shared/agent-safety.md).
 
 **Human-in-the-loop:** Do not start paid video phases until stills pass review. See [staged-generation-gate.md](./staged-generation-gate.md).
 
@@ -33,7 +33,7 @@ Phase 5 — download + assembly                                 (sequential orde
 
 **Multi-scene `p-video` (frame chain):** when scene *i+1* **`image`** must equal scene *i* **`last_frame_image`** and end stills are **not** pre-planned, run **phased** — finish scene *i*, extract or approve end still, upload, then start scene *i+1*. When **`p-image-edit`** produces both start and end stills for all scenes before any video job, revert to **parallel** video batch. See [p-video](../../p-video/SKILL.md) and [narrated-multi-scene](../SKILL.md).
 
-**Multi-scene narration:** [Gemini TTS](../../gemini-3.1-flash-tts/SKILL.md) per scene can run **in parallel** after scripts are approved. Upload all audio URLs, then **`p-video`** with **`image` + `last_frame_image` + `audio`** per scene ([scene-anchor-triple.md](./scene-anchor-triple.md)). Post-mux is fallback only. Optional [Stable Audio](../../stable-audio-2.5/SKILL.md) bed after concat — [audio-post-production.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/audio-post-production/SKILL.md).
+**Multi-scene narration:** [Gemini TTS](../../gemini-3.1-flash-tts/SKILL.md) per scene can run **in parallel** after scripts are approved. Upload all audio URLs, then **`p-video`** with **`image` + `last_frame_image` + `audio`** per scene ([scene-anchor-triple.md](./scene-anchor-triple.md)). Post-mux is fallback only. Optional [Stable Audio](../../stable-audio-2.5/SKILL.md) bed after concat — [audio-post-production.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/audio-post-production/SKILL.md).
 
 **Multi-scene `p-video-animate` (motion transfer):** see [avatar-multi-scene](../../avatar-multi-scene/SKILL.md) **`animate`** rows. After confirmation: parallel uploads → optional parallel `p-image-edit` per lane → **`p-video-animate` × N in one batch** → parallel slider renders → sequential concat.
 
@@ -85,7 +85,7 @@ Use subagents when **2+ independent lanes** exist after the confirmation gate.
 
 **Parent must**
 
-- Pass each subagent: scene row, hero/anchor URL, `ritual_seed`, cast ledger slice, output paths — **never** API keys in task text ([agent-safety.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/agent-safety/SKILL.md)). Prefer parent-owned API calls when the host cannot inject secrets safely.
+- Pass each subagent: scene row, hero/anchor URL, `ritual_seed`, cast ledger slice, output paths — **never** API keys in task text ([agent-safety.md](https://github.com/PrunaAI/pruna-skills/tree/main/shared/agent-safety.md)). Prefer parent-owned API calls when the host cannot inject secrets safely.
 - Refuse to start subagents until the user has **explicitly confirmed** the script/plan.
 - Reconcile partial failures: rerun **only** failed lanes.
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Scene transition video — p-image hero, p-image-edit stills, p-video pair transitions, concat.
 
-Phased execution (default --phase stills): see references/shared/staged-generation-gate.md
+Phased execution (default --phase stills): see references/policies/staged-generation-gate.md
 """
 
 from __future__ import annotations

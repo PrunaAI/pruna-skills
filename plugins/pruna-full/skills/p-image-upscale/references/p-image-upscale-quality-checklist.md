@@ -1,10 +1,10 @@
 # p-image-upscale quality checklist
 
-After each `p-image-upscale` output is saved, **open the file and review it visually** against this checklist (agent vision review — see [generation-quality-checklists.md](https://github.com/PrunaAI/pruna-skills/tree/main/shared/generation-quality-checklists.md#who-applies-these-checklists)).
+After each `p-image-upscale` output is saved, **open the file and review it visually** against this checklist (agent vision review — see [generation-quality-checklists.md](https://github.com/PrunaAI/pruna-skills/tree/main/policies/generation-quality-checklists.md#who-applies-these-checklists)).
 
 ## Applies to
 
-See the canonical mapping in [`generation-quality-checklists.md`](./generation-quality-checklists.md).
+See the canonical mapping in [`generation-quality-checklists.md`](https://github.com/PrunaAI/pruna-skills/tree/main/policies/generation-quality-checklists.md).
 
 ## Resolution and detail
 

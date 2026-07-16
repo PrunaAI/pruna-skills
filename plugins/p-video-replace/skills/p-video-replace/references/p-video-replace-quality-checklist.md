@@ -1,10 +1,10 @@
 # p-video-replace quality checklist
 
-After each replace job, **open the source video, reference images, and output clip** and review them against this checklist (agent vision review — see [generation-quality-checklists.md](https://github.com/PrunaAI/pruna-skills/tree/main/shared/generation-quality-checklists.md#who-applies-these-checklists)).
+After each replace job, **open the source video, reference images, and output clip** and review them against this checklist (agent vision review — see [generation-quality-checklists.md](https://github.com/PrunaAI/pruna-skills/tree/main/policies/generation-quality-checklists.md#who-applies-these-checklists)).
 
 ## Applies to
 
-See the canonical mapping in [`generation-quality-checklists.md`](./generation-quality-checklists.md).
+See the canonical mapping in [`generation-quality-checklists.md`](https://github.com/PrunaAI/pruna-skills/tree/main/policies/generation-quality-checklists.md).
 
 ## Input gate (pre-render)
 
@@ -27,7 +27,7 @@ See the canonical mapping in [`generation-quality-checklists.md`](./generation-q
 
 ## Launches reel gates (skills-library)
 
-Run [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/visual-variety-bible/SKILL.md) checklist **before** Phase B. Additional gates for 7-scene launch reels:
+Run [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/visual-variety-bible/SKILL.md) checklist **before** Phase B. Additional gates for 7-scene launch reels:
 
 - [ ] **Cast ledger:** when `plate_mode: p-image`, source host ≠ hero and ≠ slider ref faces — unique people per scene row
 - [ ] **Thumbnail read:** each reference still readable at **256px** width — bold silhouette, accent color, shallow DOF

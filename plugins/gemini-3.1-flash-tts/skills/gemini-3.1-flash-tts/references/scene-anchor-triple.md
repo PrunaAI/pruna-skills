@@ -4,7 +4,7 @@ Canonical payload pattern for **one narrated `p-video` prediction**: three uploa
 
 **Multi-scene extension** (`frame_chain`, concat, parallel batches, plan JSON with many rows) belongs only in [narrated-multi-scene](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/narrated-multi-scene/skills/narrated-multi-scene/SKILL.md) — do not treat this doc as permission for single-clip skills to orchestrate full films.
 
-Related: [scene-anchor-pair.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/scene-anchor-pair/SKILL.md) (visual-only) · [audio-post-production.md](./audio-post-production.md) · [p-video](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/p-video/skills/p-video/SKILL.md)
+Related: [scene-anchor-pair.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/scene-anchor-pair/SKILL.md) (visual-only) · [audio-post-production.md](./audio-post-production.md) · [p-video](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/p-video/skills/p-video/SKILL.md)
 
 ## The triple (one prediction)
 
@@ -72,7 +72,7 @@ The sections below apply when the user explicitly requested a **multi-scene film
 
 ### Parallel stills / video across scenes
 
-Run start stills **in parallel** from hero; then end stills **in parallel** from each start still. After **all** URLs exist for every scene row, `POST /v1/predictions` in a **parallel** batch. Patterns: [parallel-execution.md](https://github.com/PrunaAI/pruna-skills/tree/main/shared/parallel-execution.md).
+Run start stills **in parallel** from hero; then end stills **in parallel** from each start still. After **all** URLs exist for every scene row, `POST /v1/predictions` in a **parallel** batch. Patterns: [parallel-execution.md](https://github.com/PrunaAI/pruna-skills/tree/main/policies/parallel-execution.md).
 
 ### Frame chain
 
@@ -154,7 +154,7 @@ Use [`concat_clips.py`](https://github.com/PrunaAI/pruna-skills/tree/main/workfl
 }
 ```
 
-Upgrade a **pair** to a **triple** by adding TTS → upload → `input.audio` and omitting `duration`. Visual-only transitions: [scene-anchor-pair.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/scene-anchor-pair/SKILL.md).
+Upgrade a **pair** to a **triple** by adding TTS → upload → `input.audio` and omitting `duration`. Visual-only transitions: [scene-anchor-pair.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/scene-anchor-pair/SKILL.md).
 
 ## Variants on other models
 
@@ -169,7 +169,7 @@ Upgrade a **pair** to a **triple** by adding TTS → upload → `input.audio` an
 - [image-to-video](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/image-to-video/skills/image-to-video/SKILL.md) — **one beat** (this skill’s default)
 - [narrated-multi-scene](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/narrated-multi-scene/skills/narrated-multi-scene/SKILL.md) — primary narrated multi-scene workflow
 - [visual-transition-reel](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/visual-transition-reel/skills/visual-transition-reel/SKILL.md) — visual pair (no VO)
-- [pruna-generative-pipeline](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/pruna-generative-pipeline/skills/pruna-generative-pipeline/SKILL.md) — Recipe **P**
+- [pruna-generative-pipeline](https://github.com/PrunaAI/pruna-skills/tree/main/docs/WORKFLOW-RECIPES.md) — Recipe **P**
 
 ## Intake checklist (per beat)
 

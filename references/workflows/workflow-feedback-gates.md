@@ -1,20 +1,20 @@
 # Workflow feedback gates (index)
 
-Every workflow skill uses [staged-generation-gate.md](../shared/staged-generation-gate.md). **Agents must pause** at each gate and **ask** when art direction is unclear.
+Every workflow skill uses [staged-generation-gate.md](../policies/staged-generation-gate.md). **Agents must pause** at each gate and **ask** when art direction is unclear.
 
-**Discipline skill (read before any paid generation):** [requesting-generation-feedback](../../workflows/router/requesting-generation-feedback/SKILL.md) — red flags, pause workflow, common mistakes when about to call `POST /v1/predictions`, mix final audio, or skip user review.
+**Discipline skill (read before any paid generation):** [requesting-generation-feedback](../../workflows/router/references/policies/approval-red-flags.md) — red flags, pause workflow, common mistakes when about to call `POST /v1/predictions`, mix final audio, or skip user review.
 
 | Workflow skill | Runner | Default `--phase` | Gates |
 |----------------|--------|-------------------|-------|
-| [interactive-explainer](../../workflows/verticals/interactive-explainer/SKILL.md) | `verticals/interactive-explainer/scripts/run_from_plan.py` | `stills` | plan → stills → TTS → video → assemble+bed |
-| [music-video](../../workflows/verticals/music-video/SKILL.md) | `verticals/music-video/scripts/run_from_plan.py` | `song` | plan/lyrics → song → align → stills → video → assemble |
-| [illustrated-story-reel](../../workflows/verticals/illustrated-story-reel/SKILL.md) | `verticals/illustrated-story-reel/scripts/run_from_plan.py` | `stills` | plan → stills → tts **or** music → assemble (no p-video) |
-| [narrated-multi-scene](../../workflows/core/narrated-multi-scene/SKILL.md) | manual / phased curl | — | plan → stills → TTS → video → bed |
-| [visual-transition-reel](../../workflows/core/visual-transition-reel/SKILL.md) | `core/visual-transition-reel/scripts/run_from_plan.py` | `stills` | plan → stills → video → assemble+bed |
-| [avatar-single-scene](../../workflows/core/avatar-single-scene/SKILL.md) | manual / curl | — | plan → still → avatar |
-| [avatar-multi-scene](../../workflows/core/avatar-multi-scene/SKILL.md) | manual / curl | — | plan → hero+stills → avatar/animate → assembly |
-| [image-to-video](../../workflows/core/image-to-video/SKILL.md) | manual / curl | — | plan → stills → TTS (if triple) → video → bed |
-| [pruna-generative-pipeline](../../workflows/router/pruna-generative-pipeline/SKILL.md) | recipe-specific | — | routes to rows above |
+| [interactive-explainer](../../workflows/interactive-explainer/SKILL.md) | `verticals/interactive-explainer/scripts/run_from_plan.py` | `stills` | plan → stills → TTS → video → assemble+bed |
+| [music-video](../../workflows/music-video/SKILL.md) | `verticals/music-video/scripts/run_from_plan.py` | `song` | plan/lyrics → song → align → stills → video → assemble |
+| [illustrated-story-reel](../../workflows/illustrated-story-reel/SKILL.md) | `verticals/illustrated-story-reel/scripts/run_from_plan.py` | `stills` | plan → stills → tts **or** music → assemble (no p-video) |
+| [narrated-multi-scene](../../workflows/narrated-multi-scene/SKILL.md) | manual / phased curl | — | plan → stills → TTS → video → bed |
+| [visual-transition-reel](../../workflows/visual-transition-reel/SKILL.md) | `core/visual-transition-reel/scripts/run_from_plan.py` | `stills` | plan → stills → video → assemble+bed |
+| [avatar-single-scene](../../workflows/avatar-single-scene/SKILL.md) | manual / curl | — | plan → still → avatar |
+| [avatar-multi-scene](../../workflows/avatar-multi-scene/SKILL.md) | manual / curl | — | plan → hero+stills → avatar/animate → assembly |
+| [image-to-video](../../workflows/image-to-video/SKILL.md) | manual / curl | — | plan → stills → TTS (if triple) → video → bed |
+| [pruna-generative-pipeline](../../docs/WORKFLOW-RECIPES.md) | recipe-specific | — | routes to rows above |
 
 ## Universal agent rules
 

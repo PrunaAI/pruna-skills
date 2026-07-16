@@ -1,6 +1,6 @@
 {
   "name": "@pruna-ai/p-image-edit",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "type": "module",
   "license": "MIT",
   "description": "Use when someone wants to edit an existing photo \u2014 change outfits or backgrounds, compose from reference images, or apply prompt-driven edits.",

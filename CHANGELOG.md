@@ -4,6 +4,32 @@ All notable changes to Pruna Skills are documented here. Skill and plugin `metad
 
 ## [Unreleased]
 
+## [1.0.6] — 2026-07-16
+
+GitHub tag: `skills-v1.0.6`
+
+### Changed
+
+- **Taxonomy:** Public catalog is **12 Tools + 8 Workflows** only. Retired guide/router skills (`generation-diversity`, `generation-quality-checklists`, `recipe-catalog`, `requesting-generation-feedback`, `pruna-generative-pipeline`, `pruna-run`) — behavior preserved via bundle-injected [references/policies/](references/policies/) and [docs/WORKFLOW-RECIPES.md](docs/WORKFLOW-RECIPES.md).
+- Flattened workflow source: `workflows/<name>/` (removed `core/`, `verticals/`, `router/`, and `guides/`).
+- `make bundle` injects a marked **Shared generation policy** section into every skill; `make verify` checks policy markers and files.
+- Plugin count: **21** (20 standalone + `pruna-full`).
+
+### Docs
+
+- README: Tools vs Workflows vs Plugins; clarify that [`references/`](references/README.md) is a shared authoring library (not installable; not “reference images”); full catalog in [docs/SKILL-CATALOG.md](docs/SKILL-CATALOG.md).
+- Prefer `pruna-full` over `npx plugins … -y` (overlapping plugin packages).
+- Contributor docs under `docs/`; maintainer automation under `.maintainer/` (Makefile-only: `make bundle`, `make validate`).
+- Catalog source: [`.maintainer/skills.catalog.json`](.maintainer/skills.catalog.json); generated catalog: `docs/SKILL-CATALOG.md`. Root keeps `skills.sh.json` (skills.sh contract).
+- `api-setup.md` and `PUBLISHING.md` moved to `docs/`.
+- Policies live only under `references/policies/` (duplicates removed from `references/shared/`).
+
+### Removed
+
+- Installable skills/plugins: `generation-diversity`, `generation-quality-checklists`, `recipe-catalog`, `requesting-generation-feedback`, `pruna-generative-pipeline`, `pruna-run` (soft-delete on ClawHub at release).
+- Legacy wrapper `scripts/generate_upscale_comparison.py` (canonical: `workflows/_shared/scripts/generate_upscale_comparison.py`).
+- Dead `write_skill_manifests.py`, orphan `SCRIPT-TEMPLATE.md`, and top-level `scripts/` (now `.maintainer/`).
+
 ## [1.0.5] — 2026-07-16
 
 GitHub tag: `skills-v1.0.5`

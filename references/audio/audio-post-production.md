@@ -4,7 +4,7 @@ How to choose and **layer** audio when building reels, multi-scene films, and la
 
 **Multi-scene narrated films:** use the [scene anchor triple](./scene-anchor-triple.md) — pass TTS to **`p-video`** as `input.audio` with `image` + `last_frame_image`; do not post-mux unless re-render is impossible.
 
-**Visual-only transitions (no VO):** use the [scene anchor pair](./scene-anchor-pair.md) — `duration` instead of `audio`; see [visual-transition-reel](../workflows/core/visual-transition-reel/SKILL.md).
+**Visual-only transitions (no VO):** use the [scene anchor pair](./scene-anchor-pair.md) — `duration` instead of `audio`; see [visual-transition-reel](../workflows/visual-transition-reel/SKILL.md).
 
 ## Audio-led `p-video` (required when VO/narration exists)
 
@@ -19,7 +19,7 @@ When narration, TTS, or a timed audio slice is available **before** video render
 
 **Never** generate silent `p-video` and ffmpeg-mux narration afterward unless re-render is impossible — post-mux **truncates** lines longer than the video slot (common with Gemini TTS).
 
-**Over 20s?** Shorten scene copy → tighten TTS pace in `style_prompt` → split into two scene rows (each with its own triple). See [narrated-multi-scene](../workflows/core/narrated-multi-scene/SKILL.md) duration gate.
+**Over 20s?** Shorten scene copy → tighten TTS pace in `style_prompt` → split into two scene rows (each with its own triple). See [narrated-multi-scene](../workflows/narrated-multi-scene/SKILL.md) duration gate.
 
 Helper: [`p_video_payload.py`](../workflows/_shared/scripts/p_video_payload.py) — `build_p_video_payload(...)` enforces omitting `duration` when `audio_url` is set.
 
@@ -53,7 +53,7 @@ Helper: [`p_video_payload.py`](../workflows/_shared/scripts/p_video_payload.py) 
 | **Bed only** | Stable Audio bed | — | [`launch_background_music.py`](../workflows/_shared/scripts/launch_background_music.py) |
 | **Narration + bed (preferred)** | Gemini TTS → **`p-video` `audio`** | Stable Audio (quiet) | TTS uploaded to Pruna drives clip length + sync; bed mixed in post under narration (~0.08–0.15) |
 | **Avatar VO + bed** | `p-video-avatar` dialogue | Stable Audio bed | Same bed pattern as replace/launch reels — bed **under** existing speech |
-| **Music video** | Music 2.5 full song | — | [music-video](../workflows/verticals/music-video/SKILL.md) |
+| **Music video** | Music 2.5 full song | — | [music-video](../workflows/music-video/SKILL.md) |
 
 ## Recommended pipelines
 
@@ -141,6 +141,6 @@ Ask before generating paid audio or video:
 
 ## Related
 
-- [parallel-execution.md](./parallel-execution.md) — phased vs parallel when frames chain
-- [narrated-multi-scene](../workflows/core/narrated-multi-scene/SKILL.md)
-- [pruna-generative-pipeline](../workflows/router/pruna-generative-pipeline/SKILL.md)
+- [parallel-execution.md](../policies/parallel-execution.md) — phased vs parallel when frames chain
+- [narrated-multi-scene](../workflows/narrated-multi-scene/SKILL.md)
+- [pruna-generative-pipeline](../docs/WORKFLOW-RECIPES.md)

@@ -3,7 +3,7 @@ name: interactive-explainer
 description: Use when someone wants an educational explainer with a host and characters — history or science shorts with dialogue, not voiceover-only B-roll.
 license: MIT
 metadata:
-  version: "1.0.5"
+  version: "1.0.6"
 depends:
   - p-image
   - p-image-edit
@@ -12,6 +12,20 @@ depends:
   - gemini-3.1-flash-tts
   - stable-audio-2.5
 ---
+
+## Shared generation policy
+
+<!-- shared-generation-policy -->
+
+Before any paid `POST /v1/predictions`:
+
+1. **[Random seed ritual](./references/random-seed-ritual.md)** — always first; derive axes via sum-mod.
+2. **[Generation diversity](./references/generation-diversity.md)** — explicit prompts; rotate ≥2 scenario axes per session.
+3. **[Quality checklists](./references/generation-quality-checklists.md)** — open output files and judge pass/fail before advancing.
+4. **[Staged generation gate](./references/staged-generation-gate.md)** — plan → stills → audio → video → assembly; never skip phases in one turn.
+5. **[Approval red flags](./references/approval-red-flags.md)** — pause when plan, stills, or clips were not reviewed.
+6. **[Workflow feedback gates](./references/workflow-feedback-gates.md)** — runner flags and per-workflow commands.
+7. **[Parallel execution](./references/parallel-execution.md)** — async fan-out within each approved phase only.
 
 # Educational explainer (narrator + character interaction)
 
@@ -25,7 +39,7 @@ See [p-video](../../../../tools/video/p-video/SKILL.md), [p-video-avatar](../../
 
 For **narrator-only** explainers, use [narrated-multi-scene](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/narrated-multi-scene/skills/narrated-multi-scene/SKILL.md) instead.
 
-**Staged generation:** [staged-generation-gate.md](./references/staged-generation-gate.md) — approve plan → stills → narration TTS → video clips → assembly + bed. Default runner phase is **`stills`**.
+**Staged generation:** [staged-generation-gate.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/staged-generation-gate.md) — approve plan → stills → narration TTS → video clips → assembly + bed. Default runner phase is **`stills`**.
 
 ## Quick reference
 
@@ -34,7 +48,7 @@ For **narrator-only** explainers, use [narrated-multi-scene](https://github.com/
 | Positive prompts / blocked phrases | [interactive-explainer-prompts.md](./references/interactive-explainer-prompts.md) |
 | Scene patterns & stand-alone test | [interactive-explainer-scenes.md](./references/interactive-explainer-scenes.md) |
 | Motion (OPEN/MID/CLOSE) | [interactive-explainer-motion.md](./references/interactive-explainer-motion.md) |
-| Feedback discipline | [requesting-generation-feedback](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/requesting-generation-feedback/skills/requesting-generation-feedback/SKILL.md) |
+| Feedback discipline | [requesting-generation-feedback](https://github.com/PrunaAI/pruna-skills/tree/main/router/references/policies/approval-red-flags.md) |
 | Runner | [`run_from_plan.py`](scripts/run_from_plan.py) · `--phase stills\|tts\|video\|assemble` · `--approve-stills` · `--approve-clips` |
 | Plan template | [`explainer-plan.template.json`](templates/explainer-plan.template.json) |
 
@@ -109,7 +123,7 @@ Draft the **full scene table** as a dialogue arc before any API calls. Confirm w
 | **B — Video** | `clips/*.mp4` — motion, lip sync, text burn-in | **approve clips** |
 | **D — Bed** | Final MP4 after concat + Stable Audio mix | User accepts delivery |
 
-Ask when art direction is unclear (visual mode, cast continuity, narrator vs character mix, bed yes/no) — see [staged-generation-gate.md](./references/staged-generation-gate.md).
+Ask when art direction is unclear (visual mode, cast continuity, narrator vs character mix, bed yes/no) — see [staged-generation-gate.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/staged-generation-gate.md).
 
 ### Scene table (template)
 
@@ -184,7 +198,7 @@ Requires `PRUNA_API_KEY`; optional bed needs `REPLICATE_API_TOKEN`.
 ## Related
 
 - Prompt tables: [interactive-explainer-prompts.md](./references/interactive-explainer-prompts.md)
-- Feedback: [requesting-generation-feedback](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/requesting-generation-feedback/skills/requesting-generation-feedback/SKILL.md)
+- Feedback: [requesting-generation-feedback](https://github.com/PrunaAI/pruna-skills/tree/main/router/references/policies/approval-red-flags.md)
 - Narrator-only: [narrated-multi-scene](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/narrated-multi-scene/skills/narrated-multi-scene/SKILL.md)
 - Visual transitions (no VO): [visual-transition-reel](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/visual-transition-reel/skills/visual-transition-reel/SKILL.md)
 - Hub: [pruna-generative-pipeline](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/pruna-generative-pipeline/skills/pruna-generative-pipeline/SKILL.md) (Recipe R)

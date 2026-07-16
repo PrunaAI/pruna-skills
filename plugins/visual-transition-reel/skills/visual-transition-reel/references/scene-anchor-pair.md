@@ -2,7 +2,7 @@
 
 Canonical pattern for **smooth visual transitions** with Pruna **`p-video`**: two stills bracket motion; a **`prompt`** describes what happens **between** them. No narration required.
 
-Related: [scene-anchor-triple.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/scene-anchor-triple/SKILL.md) (pair + audio) · [p-video](../../p-video/SKILL.md) · [p-image](../../p-image/SKILL.md) · [p-image-edit](../../p-image-edit/SKILL.md)
+Related: [scene-anchor-triple.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/scene-anchor-triple/SKILL.md) (pair + audio) · [p-video](../../p-video/SKILL.md) · [p-image](../../p-image/SKILL.md) · [p-image-edit](../../p-image-edit/SKILL.md)
 
 ## The pair
 
@@ -26,7 +26,7 @@ Each scene row supplies **two Pruna file URLs** (from `POST /v1/files`) plus a m
 }
 ```
 
-**Do not** set `duration` when `audio` is also present — use [scene-anchor-triple.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/scene-anchor-triple/SKILL.md) instead.
+**Do not** set `duration` when `audio` is also present — use [scene-anchor-triple.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/scene-anchor-triple/SKILL.md) instead.
 
 ## Stills phase (`p-image` + `p-image-edit`)
 
@@ -151,4 +151,4 @@ Upgrade a pair scene to triple by adding TTS → upload → `audio` and removing
 - [visual-transition-reel](../SKILL.md) — primary workflow
 - [image-to-video](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/image-to-video/skills/image-to-video/SKILL.md) — one pair beat
 - [p-video](../../p-video/SKILL.md) — API reference (visual transition mode)
-- Example runner: [`run_from_plan.py`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/visual-transition-reel/scripts/run_from_plan.py)
+- Example runner: [`run_from_plan.py`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/visual-transition-reel/scripts/run_from_plan.py)

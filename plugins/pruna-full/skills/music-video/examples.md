@@ -26,24 +26,24 @@ OUT=output/verticals/music-video/my-music-video
 mkdir -p "$OUT/clips" "$OUT/audio" "$OUT/stills"
 
 # 1. Approve lyrics in plan → generate song → cut structure + WhisperX align
-python3 workflows/verticals/music-video/scripts/run_from_plan.py \
+python3 workflows/music-video/scripts/run_from_plan.py \
   --plan "$OUT/music_video_plan.json" --out-dir "$OUT" --phase song
 
-python3 workflows/verticals/music-video/scripts/run_from_plan.py \
+python3 workflows/music-video/scripts/run_from_plan.py \
   --plan "$OUT/music_video_plan.json" --out-dir "$OUT" --phase cuts
 
-python3 workflows/verticals/music-video/scripts/run_from_plan.py \
+python3 workflows/music-video/scripts/run_from_plan.py \
   --plan "$OUT/music_video_plan.json" --out-dir "$OUT" --phase align
 
 # 2. Stills + clips (staged — approve stills before full --phase video)
-python3 workflows/verticals/music-video/scripts/run_from_plan.py \
+python3 workflows/music-video/scripts/run_from_plan.py \
   --plan "$OUT/music_video_plan.json" --out-dir "$OUT" --phase stills --only 01_2
 
-python3 workflows/verticals/music-video/scripts/run_from_plan.py \
+python3 workflows/music-video/scripts/run_from_plan.py \
   --plan "$OUT/music_video_plan.json" --out-dir "$OUT" --phase video --only 01_2
 
 # 3. Assemble when all clips exist
-python3 workflows/verticals/music-video/scripts/run_from_plan.py \
+python3 workflows/music-video/scripts/run_from_plan.py \
   --plan "$OUT/music_video_plan.json" --out-dir "$OUT" --phase assemble
 ```
 

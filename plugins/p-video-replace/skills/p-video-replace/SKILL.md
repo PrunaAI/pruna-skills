@@ -3,9 +3,19 @@ name: p-video-replace
 description: Use when someone wants to swap a person, outfit, or product inside existing footage while keeping the camera move and audio.
 license: MIT
 metadata:
-  version: "1.0.5"
+  version: "1.0.6"
   pruna_model: p-video-replace
 ---
+
+## Shared generation policy
+
+<!-- shared-generation-policy -->
+
+Before any paid `POST /v1/predictions`:
+
+1. **[Random seed ritual](./references/random-seed-ritual.md)** — always first; derive axes via sum-mod.
+2. **[Generation diversity](./references/generation-diversity.md)** — explicit prompts; rotate ≥2 scenario axes per session.
+3. **[Quality checklists](./references/generation-quality-checklists.md)** — open output files and judge pass/fail before advancing.
 
 # p-video-replace (Pruna)
 
@@ -15,7 +25,7 @@ Given a source video and reference images plus a clear **`instruction_prompt`**,
 
 Full P-API parameters: [p-video-replace model docs](https://docs.api.pruna.ai/guides/models/p-video-replace) · operational guides (Runware host): [product & wardrobe](https://runware.ai/docs/models/prunaai-p-video-replace/guides/product-and-wardrobe-variations) · [recasting scenes](https://runware.ai/docs/models/prunaai-p-video-replace/guides/recasting-iconic-film-scenes)
 
-Shared HTTP patterns: [pruna-api.md](./references/pruna-api.md)
+Shared HTTP patterns: [pruna-api.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/pruna-api.md)
 
 ## p-video-replace vs p-video-animate
 
@@ -53,11 +63,11 @@ Pick the model from what the user is trying to do — these are different jobs.
 
 **Localized swap pattern:** name the **specific source element** to replace, list everything to **preserve**, close with *"Only the [X] should change; everything else stays as the source."* — required for clothing-only and object-only jobs.
 
-**Multi-reference replace reels:** Prefer **`multi_job`** (one image per API call) with per-reference prompts; default **`p-video-avatar`** sources (product in hand, desk prop, solo talking head). Anti-patterns: [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/shared/visual-variety-bible.md#prompt-patterns).
+**Multi-reference replace reels:** Prefer **`multi_job`** (one image per API call) with per-reference prompts; default **`p-video-avatar`** sources (product in hand, desk prop, solo talking head). Anti-patterns: [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/visual-variety-bible.md#prompt-patterns).
 
 ## Before generating
 
-1. **[Generation diversity](./references/generation-diversity.md)** — ritual seed + axis rotation; pass as `seed` when set.
+1. **[Generation diversity](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/generation-diversity.md)** — ritual seed + axis rotation; pass as `seed` when set.
 2. Confirm with the user:
 
 - **`video`** URL — source RGB `.mp4` (motion + audio source; upload to `/v1/files` first)
@@ -70,7 +80,7 @@ Pick the model from what the user is trying to do — these are different jobs.
 
 Run [p-video-replace-quality-checklist.md](./references/p-video-replace-quality-checklist.md) on inputs and outputs.
 
-**Batch runs:** when several independent source videos each need replacement, create **all** predictions in one parallel async batch, then batch-poll. See [parallel-execution.md](./references/parallel-execution.md). Fan out variants at **`720p`** for review; re-run approved rows at **`1080p`**.
+**Batch runs:** when several independent source videos each need replacement, create **all** predictions in one parallel async batch, then batch-poll. See [parallel-execution.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/parallel-execution.md). Fan out variants at **`720p`** for review; re-run approved rows at **`1080p`**.
 
 ## Making replacement work
 
@@ -198,7 +208,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-Poll and download: [pruna-api.md](./references/pruna-api.md#poll).
+Poll and download: [pruna-api.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/pruna-api.md#poll).
 
 ## Example: sync (single quick test only)
 
@@ -224,8 +234,8 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 - Generate or edit reference portraits: [p-image](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/p-image/skills/p-image/SKILL.md), [p-image-edit](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/p-image-edit/skills/p-image-edit/SKILL.md)
 - New talking-head clip from script (not in-place replacement): [p-video-avatar](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/p-video-avatar/skills/p-video-avatar/SKILL.md)
 - Multi-scene slider demos: [`generate_video_comparison.py`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/_shared/scripts/generate_video_comparison.py)
-- Pipeline hub: [pruna-generative-pipeline](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/pruna-generative-pipeline/skills/pruna-generative-pipeline/SKILL.md)
+- Pipeline hub: [pruna-generative-pipeline](https://github.com/PrunaAI/pruna-skills/tree/main/docs/WORKFLOW-RECIPES.md)
 
 ## Related workflow
 
-Slider comparison reels: [`generate_video_comparison.py`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/_shared/scripts/generate_video_comparison.py) + [pruna-generative-pipeline](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/pruna-generative-pipeline/skills/pruna-generative-pipeline/SKILL.md) recipe N.
+Slider comparison reels: [`generate_video_comparison.py`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/_shared/scripts/generate_video_comparison.py) + [pruna-generative-pipeline](https://github.com/PrunaAI/pruna-skills/tree/main/docs/WORKFLOW-RECIPES.md) recipe N.

@@ -1,20 +1,19 @@
 # Workflow feedback gates (index)
 
-Every workflow skill uses [staged-generation-gate.md](https://github.com/PrunaAI/pruna-skills/tree/main/shared/staged-generation-gate.md). **Agents must pause** at each gate and **ask** when art direction is unclear.
+Every workflow skill uses [staged-generation-gate.md](./staged-generation-gate.md). **Agents must pause** at each gate and **ask** when art direction is unclear.
 
-**Discipline skill (read before any paid generation):** [requesting-generation-feedback](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/requesting-generation-feedback/skills/requesting-generation-feedback/SKILL.md) — red flags, pause workflow, common mistakes when about to call `POST /v1/predictions`, mix final audio, or skip user review.
+**Before any paid generation:** [approval-red-flags.md](./approval-red-flags.md) — red flags, pause workflow, common mistakes.
 
 | Workflow skill | Runner | Default `--phase` | Gates |
 |----------------|--------|-------------------|-------|
-| [interactive-explainer](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/interactive-explainer/skills/interactive-explainer/SKILL.md) | `verticals/interactive-explainer/scripts/run_from_plan.py` | `stills` | plan → stills → TTS → video → assemble+bed |
-| [music-video](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/music-video/skills/music-video/SKILL.md) | `verticals/music-video/scripts/run_from_plan.py` | `song` | plan/lyrics → song → align → stills → video → assemble |
-| [illustrated-story-reel](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/illustrated-story-reel/skills/illustrated-story-reel/SKILL.md) | `verticals/illustrated-story-reel/scripts/run_from_plan.py` | `stills` | plan → stills → tts **or** music → assemble (no p-video) |
+| [interactive-explainer](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/interactive-explainer/skills/interactive-explainer/SKILL.md) | `workflows/interactive-explainer/scripts/run_from_plan.py` | `stills` | plan → stills → TTS → video → assemble+bed |
+| [music-video](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/music-video/skills/music-video/SKILL.md) | `workflows/music-video/scripts/run_from_plan.py` | `song` | plan/lyrics → song → align → stills → video → assemble |
+| [illustrated-story-reel](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/illustrated-story-reel/skills/illustrated-story-reel/SKILL.md) | `workflows/illustrated-story-reel/scripts/run_from_plan.py` | `stills` | plan → stills → tts **or** music → assemble (no p-video) |
 | [narrated-multi-scene](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/narrated-multi-scene/skills/narrated-multi-scene/SKILL.md) | manual / phased curl | — | plan → stills → TTS → video → bed |
-| [visual-transition-reel](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/visual-transition-reel/skills/visual-transition-reel/SKILL.md) | `core/visual-transition-reel/scripts/run_from_plan.py` | `stills` | plan → stills → video → assemble+bed |
+| [visual-transition-reel](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/visual-transition-reel/skills/visual-transition-reel/SKILL.md) | `workflows/visual-transition-reel/scripts/run_from_plan.py` | `stills` | plan → stills → video → assemble+bed |
 | [avatar-single-scene](../SKILL.md) | manual / curl | — | plan → still → avatar |
 | [avatar-multi-scene](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/avatar-multi-scene/skills/avatar-multi-scene/SKILL.md) | manual / curl | — | plan → hero+stills → avatar/animate → assembly |
 | [image-to-video](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/image-to-video/skills/image-to-video/SKILL.md) | manual / curl | — | plan → stills → TTS (if triple) → video → bed |
-| [pruna-generative-pipeline](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/pruna-generative-pipeline/skills/pruna-generative-pipeline/SKILL.md) | recipe-specific | — | routes to rows above |
 
 ## Universal agent rules
 
@@ -79,6 +78,4 @@ python3 ... --approve-stills --phase music    # music mode (audio_mode: music)
 python3 ... --approve-audio --phase assemble
 ```
 
-### Narrated multi-scene / avatar (no runner)
-
-Execute manually in order: hero → scene stills (parallel) → slop gate → TTS (parallel) → user listens → `p-video` batch → user reviews clips → concat → optional bed.
+For recipe selection when unsure which workflow fits, see [WORKFLOW-RECIPES.md](https://github.com/PrunaAI/pruna-skills/tree/main/docs/WORKFLOW-RECIPES.md).

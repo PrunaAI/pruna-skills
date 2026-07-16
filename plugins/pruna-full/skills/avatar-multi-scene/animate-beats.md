@@ -65,7 +65,7 @@ Repose before animate when close but not exact: *"Change only: match pose and ca
 Animate the reference subject using the exact motion, timing, and camera movement from the source video. Keep identity and outfit from the reference image.
 ```
 
-- **Style variety** (photoreal, premium anime, claymation, Disney/Pixar 3D, cyberpunk, blockbuster movie, AAA game cinematic) on one motion template shows range in slider demos — each style still needs reasonable pose/framing alignment **and** its own background, camera angle, and lighting. Record `visual_style_tag`, `setting_tag`, `camera_tag`, and `lighting_tag` per ref. See [visual-variety-bible.md](./references/visual-variety-bible.md).
+- **Style variety** (photoreal, premium anime, claymation, Disney/Pixar 3D, cyberpunk, blockbuster movie, AAA game cinematic) on one motion template shows range in slider demos — each style still needs reasonable pose/framing alignment **and** its own background, camera angle, and lighting. Record `visual_style_tag`, `setting_tag`, `camera_tag`, and `lighting_tag` per ref. See [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/visual-variety-bible.md).
 
 ### API fields
 
@@ -87,7 +87,7 @@ When building eye-catching comparison reels, generate **3–4 persona stills per
 | 5 (optional) | Cyberpunk | rain-slick alley, magenta-cyan edge |
 | 6 (optional) | AAA game cinematic | alien canyon, volumetric sun shafts |
 
-Full prompt patterns: [visual-variety-bible.md](./references/visual-variety-bible.md).
+Full prompt patterns: [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/visual-variety-bible.md).
 
 Run [p-video-animate-quality-checklist.md](./references/p-video-animate-quality-checklist.md) on inputs and outputs.
 

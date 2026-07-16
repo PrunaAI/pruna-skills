@@ -150,7 +150,7 @@ Sibling **names** in the same source tree. Unknown keys should be ignored by oth
 { "tool_skills": ["p-image", "p-image-edit", "p-video-avatar", "p-video-animate"] }
 ```
 
-`./scripts/bundle_all_skills.sh` runs `scripts/write_dep_manifests.py` and emits:
+`make bundle` runs `.maintainer/write_dep_manifests.py` and emits:
 
 | Output | Consumer |
 |--------|----------|

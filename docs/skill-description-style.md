@@ -12,15 +12,14 @@ Frontmatter `description:` lines are **trigger phrases for humans**, not interna
 | One short “Use when…” + optional “Not for…” for the nearest neighbor | Long negative lists of internal skill names |
 | Keep under ~220 characters when possible | Paste workflow phase names into description |
 
-Keep routing boundaries in the **SKILL body**, not the frontmatter.
+Keep routing boundaries in the **SKILL body**, not the frontmatter. Unsure which workflow? Humans use [WORKFLOW-RECIPES.md](WORKFLOW-RECIPES.md).
 
-## Breadth by tier
+## Breadth by type
 
 - **Image tools:** generating, editing, upscaling, try-on, compositing from references
 - **Video tools:** clips from text or images, motion transfer, in-footage swap, on-camera hosts
 - **Audio tools:** songs, voiceover, beds, lyric timing
 - **Workflows:** full productions — say what the user *gets*, not only one step
-- **Routers/guides:** menu, quick one-off, sign-off before spend, quality/diversity
 
 ## Examples
 
@@ -50,10 +49,4 @@ Keep routing boundaries in the **SKILL body**, not the frontmatter.
 
 **Natural**
 
-> Use when someone wants a full music video — original song or vocals, performance clips, B-roll, and lyric-synced edits.
-
-## After editing descriptions
-
-1. Update trigger / non-trigger notes in [SKILL-TEST-LOG.md](../SKILL-TEST-LOG.md).
-2. Run `./scripts/bundle_all_skills.sh` so plugin manifests pick up the new copy.
-3. Run `make validate`.
+> Use when someone wants a full music video — original song, synced visuals, and a finished MP4 reel.

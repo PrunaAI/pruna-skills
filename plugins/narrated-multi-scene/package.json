@@ -1,6 +1,6 @@
 {
   "name": "@pruna-ai/narrated-multi-scene",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "type": "module",
   "license": "MIT",
   "description": "Use when someone wants a multi-part story with voiceover \u2014 episodic B-roll, chaptered promo, or several linked video scenes without on-camera dialogue.",

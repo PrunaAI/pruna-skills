@@ -2,7 +2,7 @@
 
 Canonical pattern for **educational shorts** — history, science, nature, how-it-works, children's topics — that **alternate host narration with in-story character speech**. Not wall-to-wall voice-over.
 
-Related: [scene-anchor-triple.md](../video/scene-anchor-triple.md) (narrator beats) · [avatar-multi-scene](../workflows/core/avatar-multi-scene/SKILL.md) (character beats) · [interactive-explainer](../workflows/verticals/interactive-explainer/SKILL.md)
+Related: [scene-anchor-triple.md](../video/scene-anchor-triple.md) (narrator beats) · [avatar-multi-scene](../workflows/avatar-multi-scene/SKILL.md) (character beats) · [interactive-explainer](../workflows/interactive-explainer/SKILL.md)
 
 ## Why hybrid?
 
@@ -226,7 +226,7 @@ Example plans: `output/verticals/interactive-explainer/<project-slug>/plan.json`
 3. **Concat** with hard cuts (default) or short crossfades on `chain_from_previous`.
 4. Optional **Stable Audio** bed under dialogue (~0.08–0.10).
 
-Runner: [`run_from_plan.py`](../workflows/verticals/interactive-explainer/scripts/run_from_plan.py)
+Runner: [`run_from_plan.py`](../workflows/interactive-explainer/scripts/run_from_plan.py)
 
 ## Plan JSON skeleton
 
@@ -256,6 +256,6 @@ Runner: [`run_from_plan.py`](../workflows/verticals/interactive-explainer/script
 
 ## Workflows
 
-- [interactive-explainer](../workflows/verticals/interactive-explainer/SKILL.md) — primary workflow
-- [narrated-multi-scene](../workflows/core/narrated-multi-scene/SKILL.md) — narrator-only fallback
-- [avatar-multi-scene](../workflows/core/avatar-multi-scene/SKILL.md) — character-only pieces
+- [interactive-explainer](../workflows/interactive-explainer/SKILL.md) — primary workflow
+- [narrated-multi-scene](../workflows/narrated-multi-scene/SKILL.md) — narrator-only fallback
+- [avatar-multi-scene](../workflows/avatar-multi-scene/SKILL.md) — character-only pieces

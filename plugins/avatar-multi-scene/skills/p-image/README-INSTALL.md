@@ -30,7 +30,7 @@ List all skills:
 npx skills add PrunaAI/pruna-skills -l
 ```
 
-After install, start a **new chat**. See the [root README](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/README/SKILL.md).
+After install, start a **new chat**. See the [root README](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/README/SKILL.md).
 
 ## From a local clone
 

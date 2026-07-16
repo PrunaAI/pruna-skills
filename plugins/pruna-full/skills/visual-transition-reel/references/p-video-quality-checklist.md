@@ -1,10 +1,10 @@
 # p-video quality checklist
 
-After each `p-video` output is saved, **open the clip and review it visually** against this checklist (agent vision review — see [generation-quality-checklists.md](https://github.com/PrunaAI/pruna-skills/tree/main/shared/generation-quality-checklists.md#who-applies-these-checklists)).
+After each `p-video` output is saved, **open the clip and review it visually** against this checklist (agent vision review — see [generation-quality-checklists.md](https://github.com/PrunaAI/pruna-skills/tree/main/policies/generation-quality-checklists.md#who-applies-these-checklists)).
 
 ## Applies to
 
-See the canonical mapping in [`generation-quality-checklists.md`](./generation-quality-checklists.md).
+See the canonical mapping in [`generation-quality-checklists.md`](https://github.com/PrunaAI/pruna-skills/tree/main/policies/generation-quality-checklists.md).
 
 ## Motion and story fidelity
 
@@ -20,7 +20,7 @@ See the canonical mapping in [`generation-quality-checklists.md`](./generation-q
 
 ## Scene anchor triple (narrated multi-scene)
 
-When using [scene-anchor-triple.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/scene-anchor-triple/SKILL.md):
+When using [scene-anchor-triple.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/scene-anchor-triple/SKILL.md):
 
 - Start still matches `input.image`; end still matches `input.last_frame_image`.
 - Clip duration follows uploaded `audio` (no manual `duration`; ≤ **20s** API max).

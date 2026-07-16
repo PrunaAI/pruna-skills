@@ -10,14 +10,14 @@ Build smooth multi-scene reels: **`p-image`** hero → **`p-image-edit`** start/
 
 ```bash
 mkdir -p output/core/visual-transition-reel/my-transitions/{stills,clips}
-cp workflows/core/visual-transition-reel/templates/transition-plan.template.json \
+cp workflows/visual-transition-reel/templates/transition-plan.template.json \
    output/core/visual-transition-reel/my-transitions/plan.json
 ```
 
 Edit scene `edit_prompt`, `last_frame_edit_prompt`, and `video_prompt` rows, then:
 
 ```bash
-python3 workflows/core/visual-transition-reel/scripts/run_from_plan.py \
+python3 workflows/visual-transition-reel/scripts/run_from_plan.py \
   --plan output/core/visual-transition-reel/my-transitions/plan.json \
   --out-dir output/core/visual-transition-reel/my-transitions
 ```
@@ -32,4 +32,4 @@ npx skills add PrunaAI/pruna-skills@visual-transition-reel -y
 ## Related
 
 - Visual-only spec: [scene-anchor-pair.md](./references/scene-anchor-pair.md)
-- With narration: [narrated-multi-scene](../../../../workflows/core/narrated-multi-scene/SKILL.md)
+- With narration: [narrated-multi-scene](../../../../workflows/narrated-multi-scene/SKILL.md)

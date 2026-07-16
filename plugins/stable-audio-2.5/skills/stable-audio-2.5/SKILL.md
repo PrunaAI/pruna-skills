@@ -3,10 +3,20 @@ name: stable-audio-2.5
 description: Use when someone wants light instrumental background music — an ambient bed under dialogue or underscore for reels and explainers.
 license: MIT
 metadata:
-  version: "1.0.5"
+  version: "1.0.6"
   provider: replicate
   replicate_model: stability-ai/stable-audio-2.5
 ---
+
+## Shared generation policy
+
+<!-- shared-generation-policy -->
+
+Before any paid `POST /v1/predictions`:
+
+1. **[Random seed ritual](./references/random-seed-ritual.md)** — always first; derive axes via sum-mod.
+2. **[Generation diversity](./references/generation-diversity.md)** — explicit prompts; rotate ≥2 scenario axes per session.
+3. **[Quality checklists](./references/generation-quality-checklists.md)** — open output files and judge pass/fail before advancing.
 
 # Stable Audio 2.5 (Replicate)
 
@@ -99,4 +109,4 @@ python3 workflows/_shared/scripts/launch_background_music.py \
 - [audio-post-production.md](./references/audio-post-production.md) — narration + bed layering
 - [gemini-3.1-flash-tts](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/gemini-3.1-flash-tts/skills/gemini-3.1-flash-tts/SKILL.md) — narration voiceover
 - [visual-transition-reel](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/visual-transition-reel/skills/visual-transition-reel/SKILL.md) — concat + optional bed assembly
-- [replicate-api.md](./references/replicate-api.md) — shared Replicate patterns
+- [replicate-api.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/replicate-api.md) — shared Replicate patterns

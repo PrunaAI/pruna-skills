@@ -2,7 +2,7 @@
 
 Human-in-the-loop phases for workflow skills and plan runners. **Video and replace jobs are expensive** — gate on approved stills before any `p-video-*` call. **Final audio** (bed mix, full-song mux) runs only after clip review.
 
-See also: [parallel-execution.md](./parallel-execution.md) Phase 0, [generation-quality-checklists.md](./generation-quality-checklists.md), [workflow-feedback-gates.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/workflow-feedback-gates.md) (per-skill index), [requesting-generation-feedback](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/requesting-generation-feedback/skills/requesting-generation-feedback/SKILL.md) (red flags before paid generation).
+See also: [parallel-execution.md](./parallel-execution.md) Phase 0, [generation-quality-checklists.md](./generation-quality-checklists.md), [workflow-feedback-gates.md](./workflow-feedback-gates.md) (per-skill index), [approval-red-flags.md](./approval-red-flags.md) (red flags before paid generation).
 
 ## Phases
 
@@ -24,8 +24,8 @@ See also: [parallel-execution.md](./parallel-execution.md) Phase 0, [generation-
 5. **Regeneration loop** — reject → rerun only the failed asset (still, TTS, or clip), not the whole pipeline.
 5. Run model checklists on every still before Phase B — **open each image and review it visually** against the checklist (see [generation-quality-checklists.md](./generation-quality-checklists.md#who-applies-these-checklists)); then present paths for user approval.
 7. **Ask when art direction is unclear** — visual mode, cast, continuity, motion energy, bed yes/no. Do not guess and burn video credits.
-8. **[Generation diversity](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/generation-diversity/SKILL.md)** — ritual seed + rotate ≥2 scenario axes vs the previous output in session.
-9. **[Random seed ritual](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/random-seed-ritual/SKILL.md) (SSoT)** — before **every** `POST /v1/predictions`, generate and state a ritual string; derive prompt axes via sum-mod. **Do not** pass ritual string to API `seed`. Never copy doc example strings for new work.
+8. **[Generation diversity](./generation-diversity.md)** — ritual seed + rotate ≥2 scenario axes vs the previous output in session.
+9. **[Random seed ritual](./random-seed-ritual.md) (SSoT)** — before **every** `POST /v1/predictions`, generate and state a ritual string; derive prompt axes via sum-mod. **Do not** pass ritual string to API `seed`. Never copy doc example strings for new work.
 
 ## Art direction — ask the user when unclear
 
@@ -81,7 +81,7 @@ python3 ./scripts/run_from_plan.py --plan ./my-plan.json --out-dir ./output/reel
 ### Interactive explainer
 
 ```bash
-python3 workflows/verticals/interactive-explainer/scripts/run_from_plan.py \
+python3 workflows/interactive-explainer/scripts/run_from_plan.py \
   --plan ./output/.../plan.json --out-dir ./output/... --phase stills
 # review stills/
 python3 .../run_from_plan.py --plan ... --out-dir ... --approve-stills --phase tts
@@ -115,4 +115,4 @@ Skip gates for automation only: **`--yes-skip-stills-gate`**, **`--yes-skip-clip
 | Reconcat only (clips exist) | nothing | `--assemble-only --approve-clips` |
 | Bed only | `{slug}.mp4` final (keep concat) | `--assemble-only --approve-clips` |
 
-For replace-slider plans, map partial regen to the table above; blocked still trigger words: [visual-variety-bible.md](./visual-variety-bible.md#prompt-patterns).
+For replace-slider plans, map partial regen to the table above; blocked still trigger words: [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/shared/visual-variety-bible.md#prompt-patterns).

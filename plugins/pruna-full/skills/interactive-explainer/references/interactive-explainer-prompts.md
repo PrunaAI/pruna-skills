@@ -1,6 +1,6 @@
 # Interactive explainer — positive prompts & blocked phrases
 
-Extracted reference for [interactive-explainer](../SKILL.md). The runner enforces these via `validate_plan` and `STILL_PROMPT_TRIGGERS` in [`run_from_plan.py`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/verticals/interactive-explainer/scripts/run_from_plan.py).
+Extracted reference for [interactive-explainer](../SKILL.md). The runner enforces these via `validate_plan` and `STILL_PROMPT_TRIGGERS` in [`run_from_plan.py`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/interactive-explainer/scripts/run_from_plan.py).
 
 ## Principle
 
@@ -84,4 +84,4 @@ Broader blocked-phrase table (keyboards, mirrors, packshots): [visual-variety-bi
 - Workflow skill: [interactive-explainer/SKILL.md](../SKILL.md)
 - Motion: [interactive-explainer-motion.md](./interactive-explainer-motion.md)
 - Scenes: [interactive-explainer-scenes.md](./interactive-explainer-scenes.md)
-- Gates: [staged-generation-gate.md](https://github.com/PrunaAI/pruna-skills/tree/main/shared/staged-generation-gate.md)
+- Gates: [staged-generation-gate.md](https://github.com/PrunaAI/pruna-skills/tree/main/policies/staged-generation-gate.md)

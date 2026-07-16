@@ -3,7 +3,7 @@ name: music-video
 description: Use when someone wants a full music video — original song or vocals, performance clips, B-roll, and lyric-synced edits.
 license: MIT
 metadata:
-  version: "1.0.5"
+  version: "1.0.6"
 depends:
   - music-2.5
   - whisperx
@@ -12,6 +12,20 @@ depends:
   - p-video
   - p-video-avatar
 ---
+
+## Shared generation policy
+
+<!-- shared-generation-policy -->
+
+Before any paid `POST /v1/predictions`:
+
+1. **[Random seed ritual](./references/random-seed-ritual.md)** — always first; derive axes via sum-mod.
+2. **[Generation diversity](./references/generation-diversity.md)** — explicit prompts; rotate ≥2 scenario axes per session.
+3. **[Quality checklists](./references/generation-quality-checklists.md)** — open output files and judge pass/fail before advancing.
+4. **[Staged generation gate](./references/staged-generation-gate.md)** — plan → stills → audio → video → assembly; never skip phases in one turn.
+5. **[Approval red flags](./references/approval-red-flags.md)** — pause when plan, stills, or clips were not reviewed.
+6. **[Workflow feedback gates](./references/workflow-feedback-gates.md)** — runner flags and per-workflow commands.
+7. **[Parallel execution](./references/parallel-execution.md)** — async fan-out within each approved phase only.
 
 # AI music video (lyrics → song → synced clips)
 
@@ -24,7 +38,7 @@ End-to-end **music video** production:
 5. **Visual beats** — model routing below — then assemble with ffmpeg
 6. **Assembly** — trim clips to cut durations, concat, mux full song
 
-**Staged generation:** [staged-generation-gate.md](./references/staged-generation-gate.md) — approve lyrics and stills before paid video jobs.
+**Staged generation:** [staged-generation-gate.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/staged-generation-gate.md) — approve lyrics and stills before paid video jobs.
 
 ## Quick reference
 
@@ -33,7 +47,7 @@ End-to-end **music video** production:
 | Lyrics, cuts, align pipeline | [lyrics-and-cuts.md](./lyrics-and-cuts.md) |
 | Runner | [`run_from_plan.py`](./scripts/run_from_plan.py) · `--phase song\|align\|stills\|video\|assemble` |
 | Plan template | [`music-video-plan.template.json`](./templates/music-video-plan.template.json) |
-| Feedback | [requesting-generation-feedback](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/requesting-generation-feedback/skills/requesting-generation-feedback/SKILL.md) |
+| Feedback | [requesting-generation-feedback](https://github.com/PrunaAI/pruna-skills/tree/main/router/references/policies/approval-red-flags.md) |
 | QA | [music-video-quality-checklist.md](./references/music-video-quality-checklist.md) |
 
 ## Model routing (performance vs B-roll)
@@ -86,14 +100,14 @@ Record in the plan: `ritual_seed`, `cast` / `character_sheet`, approved **`hero_
 | **A — Song** | `music-2.5` | medium | User approves MP3 |
 | **B — Cut structure** | local scripts | free | Cut list matches lyric lines |
 | **B2 — Cut timings** | [whisperx](../../../../tools/audio/whisperx/SKILL.md) | low | Review `cut_manifest.json` alignment stats |
-| **C — Stills** | `p-image` / `p-image-edit` | low | Per [staged-generation-gate.md](./references/staged-generation-gate.md) |
+| **C — Stills** | `p-image` / `p-image-edit` | low | Per [staged-generation-gate.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/staged-generation-gate.md) |
 | **D — Clips** | `p-video-avatar`, `p-video` | **high** | After still approval (`--approve-stills`) |
 | **E — Assembly** | ffmpeg | free | After clip approval (`--approve-clips`) |
 
 Default runner **`--phase song`**. Phased flow:
 
 ```bash
-python3 workflows/verticals/music-video/scripts/run_from_plan.py --plan PLAN --out-dir OUT --phase song
+python3 workflows/music-video/scripts/run_from_plan.py --plan PLAN --out-dir OUT --phase song
 python3 ... --approve-song --phase align
 python3 ... --phase stills
 python3 ... --approve-stills --phase video
@@ -114,7 +128,7 @@ One approved still per segment.
 
 **When continuity is intended (default for one singer):**
 
-1. Generate and gate **one hero** performance still with **`p-image`** + [random seed ritual](https://github.com/PrunaAI/pruna-skills/tree/main/references/shared/random-seed-ritual.md) (SSoT); lock hero plate URL for continuity.
+1. Generate and gate **one hero** performance still with **`p-image`** + [random seed ritual](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/random-seed-ritual.md) (SSoT); lock hero plate URL for continuity.
 2. Store the approved URL as **`hero_still`** in the plan.
 3. Every later performance still = **`p-image-edit`** from **`hero_still`** — *"Using attached reference as identity; change only: [angle], [setting], [expression]."*
 4. Run the slop gate on hero and each edit before Phase D.
@@ -122,7 +136,7 @@ One approved still per segment.
 Performance still rules (hero and edits):
 
 - **Entire face visible**, mouth open mid-word
-- **Slight angle from the side** — not “facing camera” in still prompts ([visual-variety-bible.md](./references/visual-variety-bible.md#prompt-patterns) blocked still phrases)
+- **Slight angle from the side** — not “facing camera” in still prompts ([visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/visual-variety-bible.md#prompt-patterns) blocked still phrases)
 - Vary **`setting_tag`** per chorus pass — loft, rooftop, neon corridor — without reinventing the face
 
 B-roll stills: environment, hands, product, abstract motion plate for I2V — no identity requirement unless the B-roll shows the singer.
@@ -140,7 +154,7 @@ Run [music-video-quality-checklist.md](./references/music-video-quality-checklis
 Override with `cast.performance_model: p-video-avatar | p-video` when needed.
 
 ```bash
-python3 workflows/verticals/music-video/scripts/run_from_plan.py \
+python3 workflows/music-video/scripts/run_from_plan.py \
   --plan output/my-mv/music_video_plan.json \
   --out-dir output/my-mv \
   --phase video --only 01_2 01_3
@@ -176,14 +190,14 @@ Omit `duration` when `audio` is set. Runner: [`run_from_plan.py`](./scripts/run_
 
 For `[Inst]` / `[Solo]` with no vocals, use `duration` from cut map instead of audio.
 
-**Parallelize** independent clips after confirmation — [parallel-execution.md](./references/parallel-execution.md).
+**Parallelize** independent clips after confirmation — [parallel-execution.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/parallel-execution.md).
 
 ## Step 6 — Assemble
 
 Name clips to match cut ids (e.g. `01_2.mp4`) or set `"clip"` on each cut in the manifest.
 
 ```bash
-python3 workflows/verticals/music-video/scripts/assemble_music_video.py \
+python3 workflows/music-video/scripts/assemble_music_video.py \
   --plan output/my-mv/music_video_plan.json \
   --cuts output/my-mv/cut_manifest.json \
   --clips-dir output/my-mv/clips \
@@ -202,7 +216,7 @@ Output: `music_video.mp4` — video track from trimmed clips, **full song** on a
 | **Rhythm** | Alternate performance and B-roll on verses; hold singer through chorus hooks |
 | **Camera** | No duplicate `video_prompt` on back-to-back cuts |
 | **Instrumental breaks** | Go cinematic — wide landscapes, abstract motion, detail macros |
-| **Variety** | [visual-variety-bible.md](./references/visual-variety-bible.md) — distinct world per B-roll insert |
+| **Variety** | [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/visual-variety-bible.md) — distinct world per B-roll insert |
 
 ## Plan template
 
@@ -233,7 +247,7 @@ Requires **`ffmpeg`** and **`ffprobe`**.
 | Resource | Path |
 |----------|------|
 | Lyrics + cuts + align (steps 1–3) | [lyrics-and-cuts.md](./lyrics-and-cuts.md) |
-| Feedback discipline | [requesting-generation-feedback](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/requesting-generation-feedback/skills/requesting-generation-feedback/SKILL.md) |
+| Feedback discipline | [requesting-generation-feedback](https://github.com/PrunaAI/pruna-skills/tree/main/router/references/policies/approval-red-flags.md) |
 | Music 2.5 tool | [music-2.5](../../../../tools/audio/music-2.5/SKILL.md) |
 | WhisperX STT | [whisperx](../../../../tools/audio/whisperx/SKILL.md) |
 | Avatar API | [p-video-avatar](../../../../tools/video/p-video-avatar/SKILL.md) |

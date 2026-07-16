@@ -59,19 +59,19 @@ Pair each row with its own **`voice_script`**, **`voice_prompt`**, and **`video_
 
 `ritual_seed` is **SSoT planning only** — do not pass to API `input.seed`. Set `api_seed` only when the user explicitly locks API reproducibility.
 
-Replace strings with your [random seed ritual](https://github.com/PrunaAI/pruna-skills/tree/main/references/shared/random-seed-ritual.md) — do not copy from this template.
+Replace strings with your [random seed ritual](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/random-seed-ritual.md) — do not copy from this template.
 
-**Ritual:** [random-seed-ritual.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/shared/random-seed-ritual.md) (SSoT) — generate a random string before every generation; derive prompt axes via sum-mod.
+**Ritual:** [random-seed-ritual.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/random-seed-ritual.md) (SSoT) — generate a random string before every generation; derive prompt axes via sum-mod.
 
 ## Fashion / ecommerce try-on path
 
 When the deliverable is **dressed model stills** or **fashion UGC avatar**:
 
-1. **`p-image`** photoreal editorial plate → slop gate — [realistic-persona-showcase.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/shared/realistic-persona-showcase.md)
+1. **`p-image`** photoreal editorial plate → slop gate — [realistic-persona-showcase.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/realistic-persona-showcase.md)
 2. **`p-image-try-on`** with garment refs (normal mode for complex stacks) — [p-image-try-on-quality-checklist.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/shared/p-image-try-on-quality-checklist.md)
 3. Optional **`p-image-upscale`** → slop gate → **`p-video-avatar`** with **unique `video_prompt`** and natural **`voice_script`**
 
-Lock **hero plate URL** from step 1 through step 3. Plan cast diversity for public example sets per [visual-variety-bible.md](./references/visual-variety-bible.md).
+Lock **hero plate URL** from step 1 through step 3. Plan cast diversity for public example sets per [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/visual-variety-bible.md).
 
 ## Style bible (paste into every image prompt)
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Educational explainer — narrator p-video + character p-video-avatar, p-image/edit stills.
 
-Phased execution (default --phase stills): see references/shared/staged-generation-gate.md
+Phased execution (default --phase stills): see references/policies/staged-generation-gate.md
   stills  → hero + cast anchors + start/end PNGs
   tts     → Gemini narration MP3s (after still approval)
   video   → p-video + p-video-avatar clips (after still approval)

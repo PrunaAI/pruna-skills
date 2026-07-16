@@ -67,6 +67,6 @@ All Pruna generation skills and workflow runners — **every invocation**:
 ## Related
 
 - [generation-diversity.md](./generation-diversity.md) — ritual + axis rotation + sum-mod derivation
-- [realistic-persona-showcase.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/realistic-persona-showcase/SKILL.md) — persona planning
-- [staged-generation-gate.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/staged-generation-gate/SKILL.md) — approval phases
-- [requesting-generation-feedback/SKILL.md](../../requesting-generation-feedback/SKILL.md) — red flags
+- [realistic-persona-showcase.md](https://github.com/PrunaAI/pruna-skills/tree/main/shared/realistic-persona-showcase.md) — persona planning
+- [staged-generation-gate.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/staged-generation-gate.md) — approval phases
+- [approval-red-flags.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/approval-red-flags.md) — red flags

@@ -1,0 +1,18 @@
+{
+  "tools": {
+    "image": ["p-image", "p-image-edit", "p-image-upscale", "p-image-try-on"],
+    "video": ["p-video", "p-video-avatar", "p-video-animate", "p-video-replace"],
+    "audio": ["gemini-3.1-flash-tts", "music-2.5", "stable-audio-2.5", "whisperx"]
+  },
+  "workflows": [
+    "image-to-video",
+    "narrated-multi-scene",
+    "visual-transition-reel",
+    "avatar-single-scene",
+    "avatar-multi-scene",
+    "interactive-explainer",
+    "music-video",
+    "illustrated-story-reel"
+  ],
+  "suite": ["pruna-full"]
+}

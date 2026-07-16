@@ -21,7 +21,7 @@ Current public examples often read as **AI sloppy** or **too simplistic**: same 
 
 ## Pipeline overview
 
-**Before any step:** [generation-diversity.md](./generation-diversity.md) (ritual seed + axis rotation) · [random seed ritual](./random-seed-ritual.md)
+**Before any step:** [generation-diversity.md](https://github.com/PrunaAI/pruna-skills/tree/main/policies/generation-diversity.md) (ritual seed + axis rotation) · [random seed ritual](https://github.com/PrunaAI/pruna-skills/tree/main/policies/random-seed-ritual.md)
 
 ```text
 p-image (hero plate)     → slop gate → identity anchor (plate URL + cast descriptor)
@@ -251,11 +251,11 @@ After hero approval, branch with **`p-image-edit`** from the **same anchor URL**
 - Change **only** background, camera angle, emotion, or wardrobe delta
 - Never re-roll identity with a fresh unrelated **`p-image`** unless user requests recast
 
-Templates: [prompt-templates.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/avatar-multi-scene/prompt-templates.md).
+Templates: [prompt-templates.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/avatar-multi-scene/prompt-templates.md).
 
 ### Identity lock
 
-**[Random seed ritual](./random-seed-ritual.md) (SSoT)** first — log `ritual_seed` for prompt planning. Character continuity = **approved hero plate URL** + cast descriptor across hero regen and **`p-video-avatar`** clips.
+**[Random seed ritual](https://github.com/PrunaAI/pruna-skills/tree/main/policies/random-seed-ritual.md) (SSoT)** first — log `ritual_seed` for prompt planning. Character continuity = **approved hero plate URL** + cast descriptor across hero regen and **`p-video-avatar`** clips.
 
 ## `p-video-avatar` — dynamic realistic personas
 

@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "core": ["run_from_plan.py"],
+    "core": [
+      "run_from_plan.py"
+    ],
     "shared": [
       "concat_clips.py",
       "generation_gate.py",
@@ -14,20 +16,27 @@
     ],
     "optional": []
   },
-  "tool_skills": ["p-image", "p-image-edit", "p-video", "stable-audio-2.5"],
+  "tool_skills": [
+    "p-image",
+    "p-image-edit",
+    "p-video",
+    "stable-audio-2.5"
+  ],
   "references": [
     "scene-anchor-pair.md",
     "pruna-api.md",
-    "staged-generation-gate.md",
-    "workflow-feedback-gates.md",
-    "parallel-execution.md",
-    "generation-quality-checklists.md",
     "p-video-quality-checklist.md"
   ],
-  "templates": ["transition-plan.template.json"],
+  "templates": [
+    "transition-plan.template.json"
+  ],
   "generation_phases": {
     "default": "stills",
-    "phases": ["stills", "video", "assemble"],
+    "phases": [
+      "stills",
+      "video",
+      "assemble"
+    ],
     "gates": {
       "video": {
         "requires": "phase_a_approved",
@@ -40,7 +49,11 @@
         "skip_flag": "--yes-skip-clips-gate"
       }
     },
-    "requires_user_approval_before": ["p-video"]
+    "requires_user_approval_before": [
+      "p-video"
+    ]
   },
-  "generation_package": ["script"]
+  "generation_package": [
+    "script"
+  ]
 }

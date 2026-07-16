@@ -1,6 +1,6 @@
 # Generated plugins (do not edit)
 
-Rebuilt from `tools/`, `guides/`, `workflows/` by `./scripts/bundle_all_skills.sh`.
+Rebuilt from `tools/` and `workflows/` by `make bundle`.
 
 Each folder is a self-contained plugin:
 
@@ -25,7 +25,7 @@ npx plugins add PrunaAI/pruna-skills
 # select e.g. music-video or pruna-full
 ```
 
-**All 27 plugins:**
+**All 21 plugins:**
 
 ```bash
 npx plugins add PrunaAI/pruna-skills -y
@@ -44,4 +44,4 @@ npx plugins add PrunaAI/pruna-skills@pruna-full   # → No plugins found
 /plugin install pruna-full@pruna-skills
 ```
 
-ClawHub: `./scripts/publish_all_skills.sh`
+ClawHub: `make publish`

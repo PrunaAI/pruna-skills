@@ -1,8 +1,8 @@
 # Educational explainer motion (dynamic, physics-safe)
 
-Motion rules for **narrator** (`p-video`) and **character** (`p-video-avatar`) beats in [interactive-explainer](../workflows/verticals/interactive-explainer/SKILL.md).
+Motion rules for **narrator** (`p-video`) and **character** (`p-video-avatar`) beats in [interactive-explainer](../workflows/interactive-explainer/SKILL.md).
 
-Related: [scene-anchor-triple.md](./scene-anchor-triple.md) · [visual-transition-reel](../workflows/core/visual-transition-reel/SKILL.md)
+Related: [scene-anchor-triple.md](./scene-anchor-triple.md) · [visual-transition-reel](../workflows/visual-transition-reel/SKILL.md)
 
 ## Defaults
 
@@ -115,4 +115,4 @@ If the story needs action, **imply it** in the stills and use **camera move + re
 - [ ] `defaults.resolution` = `720p`, `defaults.fps` = `24`
 - [ ] Start/end stills differ enough that camera move has somewhere to go
 
-Runner warns on missing MID beat or physics keywords — see [`run_from_plan.py`](../workflows/verticals/interactive-explainer/scripts/run_from_plan.py) `validate_plan`.
+Runner warns on missing MID beat or physics keywords — see [`run_from_plan.py`](../workflows/interactive-explainer/scripts/run_from_plan.py) `validate_plan`.

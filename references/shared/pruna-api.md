@@ -42,7 +42,7 @@ Official guidance: prefer **async for video**; sync is acceptable for quick **p-
 
 When several predictions **do not depend on each other's outputs**, create them **in parallel** (async, no `Try-Sync`), then **poll all** `get_url` endpoints until every job finishes. Use **phased** execution when later steps need URLs from earlier steps (hero → scene edits → avatars).
 
-Full patterns, phase diagrams, subagent splits, and script shapes: [parallel-execution.md](./parallel-execution.md).
+Full patterns, phase diagrams, subagent splits, and script shapes: [parallel-execution.md](../policies/parallel-execution.md).
 
 ## Scene anchor triple (multi-scene `p-video`)
 
@@ -106,4 +106,4 @@ Skills in this repo assume **`PRUNA_API_KEY`** is set in the shell when running 
 
 **Missing key:** agents must stop and point the user to [api-credentials.md](./api-credentials.md) — sign up at [dashboard.pruna.ai](https://dashboard.pruna.ai/), create an API key, then `export PRUNA_API_KEY=...`.
 
-**Agent discipline:** [generation-diversity.md](./generation-diversity.md) before every `POST /v1/predictions`.
+**Agent discipline:** [generation-diversity.md](../policies/generation-diversity.md) before every `POST /v1/predictions`.

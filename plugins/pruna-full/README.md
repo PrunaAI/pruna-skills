@@ -1,6 +1,6 @@
 # pruna-full
 
-All 26 Pruna skills in one plugin. Multi-scene workflows use staged approval (plan → stills → clips before paid video) via requesting-generation-feedback, and parallel subagents per scene lane after you confirm — parent agent merges results.
+All 20 Pruna skills in one plugin. Multi-scene workflows use staged approval (plan → stills → clips before paid video) via bundled generation policies, and parallel subagents per scene lane after you confirm — parent agent merges results.
 
 ## Install
 

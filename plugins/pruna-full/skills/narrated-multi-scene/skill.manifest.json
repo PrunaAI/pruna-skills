@@ -9,12 +9,7 @@
   "references": [
     "pruna-api.md",
     "scene-anchor-triple.md",
-    "staged-generation-gate.md",
-    "workflow-feedback-gates.md",
-    "p-video-quality-checklist.md",
-    "generation-diversity.md",
-    "random-seed-ritual.md",
-    "parallel-execution.md"
+    "p-video-quality-checklist.md"
   ],
   "scripts": {
     "core": [],

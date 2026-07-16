@@ -3,7 +3,7 @@ name: p-image-upscale
 description: Use when someone wants to upscale or sharpen an existing image for print, large crops, or higher-quality delivery.
 license: MIT
 metadata:
-  version: "1.0.5"
+  version: "1.0.6"
   pruna_model: p-image-upscale
 ---
 
@@ -11,7 +11,7 @@ metadata:
 
 AI upscaling with configurable target resolution. Full parameters: [p-image-upscale model docs](https://docs.api.pruna.ai/guides/models/p-image-upscale).
 
-Shared HTTP patterns: [pruna-api.md](../../../references/shared/pruna-api.md) (upload, [poll](#poll), [download](#download))
+Shared HTTP patterns: [pruna-api.md](references/policies/pruna-api.md) (upload, [poll](#poll), [download](#download))
 
 ## HTTP (curl)
 
@@ -42,11 +42,11 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-Poll and download: [pruna-api.md](../../../references/shared/pruna-api.md#poll).
+Poll and download: [pruna-api.md](references/policies/pruna-api.md#poll).
 
 ## Before generating
 
-1. **[Generation diversity](../../../references/shared/generation-diversity.md)** — ritual seed + axis rotation (optional API `seed` if supported).
+1. **[Generation diversity](references/policies/generation-diversity.md)** — ritual seed + axis rotation (optional API `seed` if supported).
 2. Confirm **`target`** MP (1–**128**), **`enhance_details`** / **`enhance_realism`**, and **`output_format`** with the user so upscale matches destination. Validate outputs with [p-image-upscale-quality-checklist.md](../../../references/image/p-image-upscale-quality-checklist.md).
 
 ## When to upscale
@@ -54,10 +54,10 @@ Poll and download: [pruna-api.md](../../../references/shared/pruna-api.md#poll).
 | Use case | Typical `target` MP | Notes |
 |----------|---------------------|--------|
 | Print / billboard / extreme crop | **8–128** | Confirm cost/latency with user |
-| Mood board / packshot enlargement | **4–16** | Optional in [pruna-generative-pipeline](../../../workflows/router/pruna-generative-pipeline/SKILL.md) recipes A/B/C |
+| Mood board / packshot enlargement | **4–16** | Optional in [pruna-generative-pipeline](../../../docs/WORKFLOW-RECIPES.md) recipes A/B/C |
 | Before/after slider video | [`generate_upscale_comparison.py`](../../../workflows/_shared/scripts/generate_upscale_comparison.py) | Not used in avatar or motion-transfer pipelines |
 
-**Video workflows** ([avatar-multi-scene](../../../workflows/core/avatar-multi-scene/SKILL.md), [p-video-animate](../../../tools/video/p-video-animate/SKILL.md), [p-video-replace](../../../tools/video/p-video-replace/SKILL.md)) feed **`p-image`** / **`p-image-edit`** outputs directly into video models after the slop gate—do **not** add an upscale step unless the user explicitly asks for print-scale stills.
+**Video workflows** ([avatar-multi-scene](../../../workflows/avatar-multi-scene/SKILL.md), [p-video-animate](../../../tools/video/p-video-animate/SKILL.md), [p-video-replace](../../../tools/video/p-video-replace/SKILL.md)) feed **`p-image`** / **`p-image-edit`** outputs directly into video models after the slop gate—do **not** add an upscale step unless the user explicitly asks for print-scale stills.
 
 Recommended defaults: `enhance_details: true`, `enhance_realism: false`. Use `enhance_realism: true` only when the source is already photoreal and you need extra skin texture—it can add waxy artifacts on synthetic edits.
 
@@ -100,7 +100,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 
 - Further edit: upscaled URL → [p-image-edit](../p-image-edit/SKILL.md) for layout or copy-safe tweaks.
 - **Before/after demo:** zoom + slider from any still pair → [`generate_upscale_comparison.py`](../../../workflows/_shared/scripts/generate_upscale_comparison.py).
-- Avatar / motion video (no upscale): [avatar-multi-scene](../../../workflows/core/avatar-multi-scene/SKILL.md).
+- Avatar / motion video (no upscale): [avatar-multi-scene](../../../workflows/avatar-multi-scene/SKILL.md).
 
 ## Related workflow
 

@@ -1,7 +1,0 @@
-{
-  "scripts": { "core": [], "shared": [] },
-  "references": [
-    "generation-diversity.md",
-    "random-seed-ritual.md"
-  ]
-}

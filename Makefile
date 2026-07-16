@@ -1,26 +1,31 @@
-.PHONY: bundle verify validate publish release skills-sh readme smoke
+.PHONY: bundle bundle-skill verify validate publish release skills-sh readme smoke
 
 bundle:
-	./scripts/bundle_all_skills.sh
+	./.maintainer/bundle_all_skills.sh
+
+bundle-skill:
+	@test -n "$(SKILL)" || (echo "Usage: make bundle-skill SKILL=p-image" && exit 1)
+	$(MAKE) bundle
+	@test -f plugins/$(SKILL)/skills/$(SKILL)/SKILL.md
 
 verify:
-	./scripts/verify_skill_bundles.sh
+	./.maintainer/verify_skill_bundles.sh
 
 validate:
-	./scripts/validate_release.sh
+	./.maintainer/validate_release.sh
 
 smoke:
-	./scripts/smoke_install.sh
+	./.maintainer/smoke_install.sh
 
 publish:
-	./scripts/publish_all_skills.sh
+	./.maintainer/release/publish_all_skills.sh
 
 release:
-	@echo "Usage: ./scripts/release.sh <version> [--execute]"
+	@echo "Usage: ./.maintainer/release/release.sh <version> [--execute]"
 
 skills-sh:
-	python3 scripts/write_skills_sh_json.py
+	python3 .maintainer/write_skills_sh_json.py
 
 readme:
-	python3 scripts/write_readme_skills_section.py
-	python3 scripts/write_readme_install.py
+	python3 .maintainer/write_readme_skills_section.py
+	python3 .maintainer/write_readme_install.py

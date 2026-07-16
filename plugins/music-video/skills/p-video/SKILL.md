@@ -3,9 +3,19 @@ name: p-video
 description: Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts.
 license: MIT
 metadata:
-  version: "1.0.5"
+  version: "1.0.6"
   pruna_model: p-video
 ---
+
+## Shared generation policy
+
+<!-- shared-generation-policy -->
+
+Before any paid `POST /v1/predictions`:
+
+1. **[Random seed ritual](./references/random-seed-ritual.md)** — always first; derive axes via sum-mod.
+2. **[Generation diversity](./references/generation-diversity.md)** — explicit prompts; rotate ≥2 scenario axes per session.
+3. **[Quality checklists](./references/generation-quality-checklists.md)** — open output files and judge pass/fail before advancing.
 
 # p-video (Pruna)
 
@@ -13,7 +23,7 @@ Premium video from text, optional **first-frame** / **last-frame** images, or op
 
 Full P-API parameters: [p-video model docs](https://docs.api.pruna.ai/guides/models/p-video).
 
-Shared HTTP patterns: [pruna-api.md](./references/pruna-api.md) (upload, [poll](#poll), [download](#download))
+Shared HTTP patterns: [pruna-api.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/pruna-api.md) (upload, [poll](#poll), [download](#download))
 
 ## Skill boundary
 
@@ -31,7 +41,7 @@ If the request exceeds one clip, **stop** and recommend: [image-to-video](https:
 
 ### Create (async — recommended)
 
-See **Example: async text-to-video** below. Poll and download: [pruna-api.md](./references/pruna-api.md#poll).
+See **Example: async text-to-video** below. Poll and download: [pruna-api.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/pruna-api.md#poll).
 
 ### Upload for image-to-video / frame anchors
 
@@ -45,9 +55,9 @@ Pass `urls.get` as `input.image` (first frame) and/or `input.last_frame_image` (
 
 ## Before generating
 
-**Data handling:** [agent-safety.md](./references/agent-safety.md) before any upload or paid call.
+**Data handling:** [agent-safety.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/agent-safety.md) before any upload or paid call.
 
-1. **[Generation diversity](./references/generation-diversity.md)** — ritual seed + axis rotation before each job.
+1. **[Generation diversity](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/generation-diversity.md)** — ritual seed + axis rotation before each job.
 2. Confirm **mode** (T2V / I2V / **visual transition pair** / scene anchor triple / audio), **`duration`** (unless audio-driven), **`resolution`**, **`fps`**, **`draft`**, **`seed`**, and **`prompt`** with the user.
 3. If the request is multi-scene or needs subagents/concat — **stop** and switch skills (see **Skill boundary**).
 
@@ -195,7 +205,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-Poll and download: [pruna-api.md](./references/pruna-api.md#poll).
+Poll and download: [pruna-api.md](https://github.com/PrunaAI/pruna-skills/tree/main/references/policies/pruna-api.md#poll).
 
 ## Example: image-to-video (first frame only)
 
@@ -249,4 +259,4 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 - Talking portrait: [p-video-avatar](../p-video-avatar/SKILL.md)
 - Motion transfer: [p-video-animate](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/p-video-animate/skills/p-video-animate/SKILL.md)
 - Narration TTS: [gemini-3.1-flash-tts](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/gemini-3.1-flash-tts/skills/gemini-3.1-flash-tts/SKILL.md)
-- Pipeline hub: [pruna-generative-pipeline](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/pruna-generative-pipeline/skills/pruna-generative-pipeline/SKILL.md)
+- Pipeline hub: [pruna-generative-pipeline](https://github.com/PrunaAI/pruna-skills/tree/main/docs/WORKFLOW-RECIPES.md)

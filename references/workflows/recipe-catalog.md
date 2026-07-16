@@ -1,10 +1,10 @@
 # Pruna generative pipeline — recipe catalog (A–R)
 
-Full intake and steps for each recipe in [pruna-generative-pipeline](../../workflows/router/pruna-generative-pipeline/SKILL.md). **Confirm plan before any `POST /v1/predictions`.** Staged gates: [staged-generation-gate.md](../shared/staged-generation-gate.md).
+Full intake and steps for each recipe in [pruna-generative-pipeline](../../docs/WORKFLOW-RECIPES.md). **Confirm plan before any `POST /v1/predictions`.** Staged gates: [staged-generation-gate.md](../policies/staged-generation-gate.md).
 
 ## Recipe A — Style-locked mood board (same-style stills)
 
-**Shine:** One style bible + repeated aspect ratio + [random seed ritual](../shared/random-seed-ritual.md) (SSoT) makes a grid feel art-directed, not random.
+**Shine:** One style bible + repeated aspect ratio + [random seed ritual](../policies/random-seed-ritual.md) (SSoT) makes a grid feel art-directed, not random.
 
 **Intake:** How many panels? One subject or variations on a theme? Output aspect (`1:1` grid vs `9:16`)?
 
@@ -50,7 +50,7 @@ Full intake and steps for each recipe in [pruna-generative-pipeline](../../workf
 
 1. Ensure still exists (upload or **`p-image`**).
 2. Optional **`p-image-edit`** for end still when chaining scenes.
-3. **`p-video`** with `image` + motion `prompt`; add `last_frame_image` for controlled arc. Full intake: [image-to-video](../../workflows/core/image-to-video/SKILL.md).
+3. **`p-video`** with `image` + motion `prompt`; add `last_frame_image` for controlled arc. Full intake: [image-to-video](../../workflows/image-to-video/SKILL.md).
 
 ## Recipe E — Audio-conditioned `p-video` (single anchor)
 
@@ -82,10 +82,10 @@ For **full narrated story films**, use Recipe **P** ([scene anchor triple](../vi
 
 **Steps**
 
-1. Build **character sheet** and **scene table** — see [avatar-multi-scene](../../workflows/core/avatar-multi-scene/SKILL.md).
-2. Hero: **`p-image`** (photoreal, [SSoT ritual](../shared/random-seed-ritual.md)) → slop gate; lock plate URL.
+1. Build **character sheet** and **scene table** — see [avatar-multi-scene](../../workflows/avatar-multi-scene/SKILL.md).
+2. Hero: **`p-image`** (photoreal, [SSoT ritual](../policies/random-seed-ritual.md)) → slop gate; lock plate URL.
 3. Per scene: **`p-image-edit`** → slop gate — **parallel across scenes** after hero anchor is approved.
-4. Hand off to [avatar-single-scene](../../workflows/core/avatar-single-scene/SKILL.md) or [avatar-multi-scene](../../workflows/core/avatar-multi-scene/SKILL.md) for **`p-video-avatar`** batch.
+4. Hand off to [avatar-single-scene](../../workflows/avatar-single-scene/SKILL.md) or [avatar-multi-scene](../../workflows/avatar-multi-scene/SKILL.md) for **`p-video-avatar`** batch.
 
 ## Recipe H — Vertical social “stack”
 
@@ -95,7 +95,7 @@ For **full narrated story films**, use Recipe **P** ([scene anchor triple](../vi
 
 **Steps**
 
-1. Use [avatar-multi-scene](../../workflows/core/avatar-multi-scene/SKILL.md) for all-`p-video-avatar` stacks, or mix with [narrated-multi-scene](../../workflows/core/narrated-multi-scene/SKILL.md) B-roll only when the user explicitly wants cutaways.
+1. Use [avatar-multi-scene](../../workflows/avatar-multi-scene/SKILL.md) for all-`p-video-avatar` stacks, or mix with [narrated-multi-scene](../../workflows/narrated-multi-scene/SKILL.md) B-roll only when the user explicitly wants cutaways.
 2. Assemble outside Pruna; normalize loudness between clips if mixing sources.
 
 ## Recipe M — Motion-transfer showcase (slider comparison)
@@ -106,7 +106,7 @@ For **full narrated story films**, use Recipe **P** ([scene anchor triple](../vi
 
 **Steps**
 
-1. Full workflow: [avatar-multi-scene](../../workflows/core/avatar-multi-scene/SKILL.md) — **`animate`** rows, sliders, concat.
+1. Full workflow: [avatar-multi-scene](../../workflows/avatar-multi-scene/SKILL.md) — **`animate`** rows, sliders, concat.
 2. Optional **`p-image-edit`** to repose each still toward its motion keyframe before animate.
 3. Slider renders via [`generate_video_comparison.py`](../../workflows/_shared/scripts/generate_video_comparison.py).
 
@@ -125,7 +125,7 @@ For **full narrated story films**, use Recipe **P** ([scene anchor triple](../vi
 
 **Shine:** Full song + lyric-synced video.
 
-**Steps:** [music-video](../../workflows/verticals/music-video/SKILL.md) — lyrics → Music 2.5 → align → stills → `p-video-avatar` / `p-video` → assembly.
+**Steps:** [music-video](../../workflows/music-video/SKILL.md) — lyrics → Music 2.5 → align → stills → `p-video-avatar` / `p-video` → assembly.
 
 ## Recipe P — Narrated story film (scene anchor triple)
 
@@ -135,7 +135,7 @@ For **full narrated story films**, use Recipe **P** ([scene anchor triple](../vi
 
 **Steps**
 
-1. Full workflow: [narrated-multi-scene](../../workflows/core/narrated-multi-scene/SKILL.md) — [scene-anchor-triple.md](../video/scene-anchor-triple.md).
+1. Full workflow: [narrated-multi-scene](../../workflows/narrated-multi-scene/SKILL.md) — [scene-anchor-triple.md](../video/scene-anchor-triple.md).
 2. Hero → parallel **`p-image-edit`** start + end stills → parallel Gemini TTS → probe each MP3 (≤ ~19s) → parallel **`p-video`** triple payloads.
 3. Concat embedded VO → optional bed — [audio-post-production.md](../audio/audio-post-production.md).
 
@@ -143,13 +143,13 @@ For **full narrated story films**, use Recipe **P** ([scene anchor triple](../vi
 
 **Shine:** Multi-scene motion between two stills per beat (no VO).
 
-**Steps:** [visual-transition-reel](../../workflows/core/visual-transition-reel/SKILL.md) — [scene-anchor-pair.md](../video/scene-anchor-pair.md).
+**Steps:** [visual-transition-reel](../../workflows/visual-transition-reel/SKILL.md) — [scene-anchor-pair.md](../video/scene-anchor-pair.md).
 
 ## Recipe R — Educational explainer
 
 **Shine:** Narrator VO + expert/character dialogue.
 
-**Steps:** [interactive-explainer](../../workflows/verticals/interactive-explainer/SKILL.md) — narrator triple + character avatar → concat ± bed. Scenes: [interactive-explainer-scenes.md](./interactive-explainer-scenes.md). Prompts: [interactive-explainer-prompts.md](./interactive-explainer-prompts.md).
+**Steps:** [interactive-explainer](../../workflows/interactive-explainer/SKILL.md) — narrator triple + character avatar → concat ± bed. Scenes: [interactive-explainer-scenes.md](./interactive-explainer-scenes.md). Prompts: [interactive-explainer-prompts.md](./interactive-explainer-prompts.md).
 
 ## Recipe S — Illustrated story reel
 
@@ -157,7 +157,7 @@ For **full narrated story films**, use Recipe **P** ([scene anchor triple](../vi
 
 **Intake:** Narration vs music? Aspect ratio and platform (Reels vs YouTube/presentations)?
 
-**Steps:** [illustrated-story-reel](../../workflows/verticals/illustrated-story-reel/SKILL.md) — `p-image` hero → `p-image-edit` beats → Gemini TTS per beat **or** Stable Audio / user track → ffmpeg assemble.
+**Steps:** [illustrated-story-reel](../../workflows/illustrated-story-reel/SKILL.md) — `p-image` hero → `p-image-edit` beats → Gemini TTS per beat **or** Stable Audio / user track → ffmpeg assemble.
 
 ## Recipe T — Virtual try-on launch reel
 
@@ -165,7 +165,7 @@ For **full narrated story films**, use Recipe **P** ([scene anchor triple](../vi
 
 **Intake:** Which verticals? Motion mix (avatar vs I2V vs slider)? Cast diversity per [visual-variety-bible.md](../shared/visual-variety-bible.md)?
 
-**Steps:** [p-image-try-on](../../tools/image/p-image-try-on/SKILL.md) + [realistic-persona-showcase.md](../shared/realistic-persona-showcase.md) + [p-video-avatar](../../tools/video/p-video-avatar/SKILL.md) — phased gates per [workflow-feedback-gates.md](./workflow-feedback-gates.md).
+**Steps:** [p-image-try-on](../../tools/image/p-image-try-on/SKILL.md) + [realistic-persona-showcase.md](../shared/realistic-persona-showcase.md) + [p-video-avatar](../../tools/video/p-video-avatar/SKILL.md) — phased gates per [workflow-feedback-gates.md](../policies/workflow-feedback-gates.md).
 
 ## More ideas (map to recipes)
 
@@ -180,7 +180,7 @@ For **full narrated story films**, use Recipe **P** ([scene anchor triple](../vi
 | UGC hook testing at scale | **G** or **H** |
 | Product mini-story reels | **D** or **P** |
 | Full SKU creative kit | **B** + [p-image-try-on](../../tools/image/p-image-try-on/SKILL.md) |
-| Episodic mascot channel | **G** + [avatar-multi-scene](../../workflows/core/avatar-multi-scene/SKILL.md) |
+| Episodic mascot channel | **G** + [avatar-multi-scene](../../workflows/avatar-multi-scene/SKILL.md) |
 | Motion swap / recast demo reel | **M** |
 | Replace cast or products in footage | **N** |
 | Narrated multi-scene story | **P** |
@@ -191,6 +191,6 @@ If a use case is not covered, define a new row: **intake → ordered models → 
 
 ## Related
 
-- Hub skill: [pruna-generative-pipeline/SKILL.md](../../workflows/router/pruna-generative-pipeline/SKILL.md)
-- Feedback discipline: [requesting-generation-feedback/SKILL.md](../../workflows/router/requesting-generation-feedback/SKILL.md)
+- Hub skill: [pruna-generative-pipeline/SKILL.md](../../docs/WORKFLOW-RECIPES.md)
+- Feedback discipline: [references/policies/approval-red-flags.md](../../workflows/router/references/policies/approval-red-flags.md)
 - API: [pruna-api.md](../shared/pruna-api.md)

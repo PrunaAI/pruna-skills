@@ -3,10 +3,20 @@ name: whisperx
 description: Use when someone needs word-level lyric timestamps or cut-safe line boundaries before editing music-video clips.
 license: MIT
 metadata:
-  version: "1.0.5"
+  version: "1.0.6"
   provider: replicate
   replicate_model: victor-upmeet/whisperx
 ---
+
+## Shared generation policy
+
+<!-- shared-generation-policy -->
+
+Before any paid `POST /v1/predictions`:
+
+1. **[Random seed ritual](./references/random-seed-ritual.md)** — always first; derive axes via sum-mod.
+2. **[Generation diversity](./references/generation-diversity.md)** — explicit prompts; rotate ≥2 scenario axes per session.
+3. **[Quality checklists](./references/generation-quality-checklists.md)** — open output files and judge pass/fail before advancing.
 
 # WhisperX (Replicate · word-level STT)
 
@@ -32,20 +42,20 @@ export REPLICATE_API_TOKEN=r8_...
 
 ```bash
 # 1. Transcribe (word timestamps + YouTube SRT)
-python3 workflows/verticals/music-video/scripts/transcribe_song.py \
+python3 workflows/music-video/scripts/transcribe_song.py \
   --song output/my-mv/song.mp3 \
   --out output/my-mv/whisperx_transcript.json \
   --initial-prompt "First few lyric lines help recognition"
 # Also writes output/my-mv/whisperx_transcript.srt (UTF-8, upload to YouTube Studio)
 
 # 2. Align cut manifest (requires cut_manifest.json from parse_lyric_cuts.py)
-python3 workflows/verticals/music-video/scripts/align_lyric_cuts.py \
+python3 workflows/music-video/scripts/align_lyric_cuts.py \
   --cuts output/my-mv/cut_manifest.json \
   --transcript output/my-mv/whisperx_transcript.json \
   --song output/my-mv/song.mp3
 
 # Or via runner:
-python3 workflows/verticals/music-video/scripts/run_from_plan.py \
+python3 workflows/music-video/scripts/run_from_plan.py \
   --plan output/my-mv/music_video_plan.json \
   --out-dir output/my-mv \
   --phase align
@@ -93,5 +103,5 @@ python3 workflows/_shared/scripts/whisperx_to_srt.py \
 ## Related
 
 - [music-video workflow](../music-video/SKILL.md)
-- [lyrics-and-cuts.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/verticals/music-video/lyrics-and-cuts.md)
+- [lyrics-and-cuts.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/music-video/lyrics-and-cuts.md)
 - [music-2.5](../music-2.5/SKILL.md)

@@ -19,7 +19,7 @@ Works for history, science, nature, how-it-works, children's topics, and more.
 
 ```bash
 mkdir -p output/verticals/interactive-explainer/my-explainer/{stills,clips,audio}
-cp workflows/verticals/interactive-explainer/templates/explainer-plan.template.json \
+cp workflows/interactive-explainer/templates/explainer-plan.template.json \
    output/verticals/interactive-explainer/my-explainer/plan.json
 ```
 

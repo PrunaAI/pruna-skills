@@ -2,9 +2,9 @@
 
 How to choose and **layer** audio when building reels, multi-scene films, and launch videos.
 
-**Multi-scene narrated films:** use the [scene anchor triple](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/scene-anchor-triple/SKILL.md) — pass TTS to **`p-video`** as `input.audio` with `image` + `last_frame_image`; do not post-mux unless re-render is impossible.
+**Multi-scene narrated films:** use the [scene anchor triple](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/scene-anchor-triple/SKILL.md) — pass TTS to **`p-video`** as `input.audio` with `image` + `last_frame_image`; do not post-mux unless re-render is impossible.
 
-**Visual-only transitions (no VO):** use the [scene anchor pair](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/scene-anchor-pair/SKILL.md) — `duration` instead of `audio`; see [visual-transition-reel](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/visual-transition-reel/skills/visual-transition-reel/SKILL.md).
+**Visual-only transitions (no VO):** use the [scene anchor pair](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/scene-anchor-pair/SKILL.md) — `duration` instead of `audio`; see [visual-transition-reel](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/visual-transition-reel/skills/visual-transition-reel/SKILL.md).
 
 ## Audio-led `p-video` (required when VO/narration exists)
 
@@ -141,6 +141,6 @@ Ask before generating paid audio or video:
 
 ## Related
 
-- [parallel-execution.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/parallel-execution/SKILL.md) — phased vs parallel when frames chain
+- [parallel-execution.md](https://github.com/PrunaAI/pruna-skills/tree/main/policies/parallel-execution.md) — phased vs parallel when frames chain
 - [narrated-multi-scene](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/narrated-multi-scene/skills/narrated-multi-scene/SKILL.md)
-- [pruna-generative-pipeline](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/pruna-generative-pipeline/skills/pruna-generative-pipeline/SKILL.md)
+- [pruna-generative-pipeline](https://github.com/PrunaAI/pruna-skills/tree/main/docs/WORKFLOW-RECIPES.md)

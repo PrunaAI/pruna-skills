@@ -2,7 +2,7 @@
 
 How to produce **diverse, art-directed personas and scenarios** across **`p-image`** → optional **`p-image-try-on`** / **`p-image-edit`** → **`p-video-avatar`**. Covers **photographic styles**, **anime and stylized mediums**, **camera angles**, **lighting**, **settings**, and **cast** — not generic “AI stock portrait” demos.
 
-**Variety ladders (full tables):** [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/visual-variety-bible/SKILL.md) · **Try-on garment specifics:** [p-image-try-on-quality-checklist.md](https://github.com/PrunaAI/pruna-skills/tree/main/image/p-image-try-on-quality-checklist.md) · **Copy-paste examples:** [realistic-persona-example-prompt.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/realistic-persona-example-prompt/SKILL.md)
+**Variety ladders (full tables):** [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/visual-variety-bible/SKILL.md) · **Try-on garment specifics:** [p-image-try-on-quality-checklist.md](https://github.com/PrunaAI/pruna-skills/tree/main/image/p-image-try-on-quality-checklist.md) · **Copy-paste examples:** [realistic-persona-example-prompt.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/realistic-persona-example-prompt/SKILL.md)
 
 ## Contents
 
@@ -21,7 +21,7 @@ Current public examples often read as **AI sloppy** or **too simplistic**: same 
 
 ## Pipeline overview
 
-**Before any step:** [generation-diversity.md](./generation-diversity.md) (ritual seed + axis rotation) · [random seed ritual](./random-seed-ritual.md)
+**Before any step:** [generation-diversity.md](https://github.com/PrunaAI/pruna-skills/tree/main/policies/generation-diversity.md) (ritual seed + axis rotation) · [random seed ritual](https://github.com/PrunaAI/pruna-skills/tree/main/policies/random-seed-ritual.md)
 
 ```text
 p-image (hero plate)     → slop gate → identity anchor (plate URL + cast descriptor)
@@ -128,7 +128,7 @@ Sketch personas work for **replace/animate ladders** and variety slots. In **`p-
 
 **Safer wording:** `stylized muted-tone presenter`, `soft grey tones`, `hand-painted cel illustration`, `fluid ink outlines`.
 
-See [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/visual-variety-bible/SKILL.md#prompt-patterns) for blocked still trigger words.
+See [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/visual-variety-bible/SKILL.md#prompt-patterns) for blocked still trigger words.
 
 ### Camera angle & shot size ladder
 
@@ -150,7 +150,7 @@ Never default every plate to medium close-up facing camera. Rotate **`camera_tag
 
 ### Lighting & setting (quick rotate)
 
-Pull full ladders from [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/visual-variety-bible/SKILL.md#lighting-ladder). Minimum for a **5-example playground set**: 3 different `lighting_tag` + 5 different `setting_tag` values.
+Pull full ladders from [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/visual-variety-bible/SKILL.md#lighting-ladder). Minimum for a **5-example playground set**: 3 different `lighting_tag` + 5 different `setting_tag` values.
 
 | Example pairing | `setting_tag` | `lighting_tag` |
 |-----------------|---------------|----------------|
@@ -211,7 +211,7 @@ Add **avatar-ready** or **try-on-ready** constraints to every hero prompt:
 
 ### Dynamic prompt stack (build in order)
 
-Applies to **every** `visual_style_tag` — not photoreal only. Full stack: [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/visual-variety-bible/SKILL.md#dynamic-prompt-stack-eye-catching).
+Applies to **every** `visual_style_tag` — not photoreal only. Full stack: [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/visual-variety-bible/SKILL.md#dynamic-prompt-stack-eye-catching).
 
 1. **Style / medium** — `visual_style_tag` + `render_medium_tag` (photoreal · cel anime · clay · CG 3D)
 2. **Cast** — age, ethnicity, gender presentation, hair, archetype (or species for anthropomorphic)
@@ -251,11 +251,11 @@ After hero approval, branch with **`p-image-edit`** from the **same anchor URL**
 - Change **only** background, camera angle, emotion, or wardrobe delta
 - Never re-roll identity with a fresh unrelated **`p-image`** unless user requests recast
 
-Templates: [prompt-templates.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/avatar-multi-scene/prompt-templates.md).
+Templates: [prompt-templates.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/avatar-multi-scene/prompt-templates.md).
 
 ### Identity lock
 
-**[Random seed ritual](./random-seed-ritual.md) (SSoT)** first — log `ritual_seed` for prompt planning. Character continuity = **approved hero plate URL** + cast descriptor across hero regen and **`p-video-avatar`** clips.
+**[Random seed ritual](https://github.com/PrunaAI/pruna-skills/tree/main/policies/random-seed-ritual.md) (SSoT)** first — log `ritual_seed` for prompt planning. Character continuity = **approved hero plate URL** + cast descriptor across hero regen and **`p-video-avatar`** clips.
 
 ## `p-video-avatar` — dynamic realistic personas
 
@@ -292,7 +292,7 @@ Pair with **`p-image-edit`** stills that match — if **`video_prompt`** mention
 
 **Anti-pattern:** eight scenes with identical `medium close-up, gentle dolly push-in`.
 
-See camera/motion ladder: [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/visual-variety-bible/SKILL.md#camera-angle--movement-ladder).
+See camera/motion ladder: [visual-variety-bible.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/visual-variety-bible/SKILL.md#camera-angle--movement-ladder).
 
 ### Multi-scene dynamic table (plan before API)
 
@@ -354,4 +354,4 @@ Coordinate with @ShinyTaskForce.
 | `p-image-try-on` | [p-image-try-on SKILL.md](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/p-image-try-on/skills/p-image-try-on/SKILL.md) | [p-image-try-on-quality-checklist.md](https://github.com/PrunaAI/pruna-skills/tree/main/image/p-image-try-on-quality-checklist.md) |
 | `p-video-avatar` | [p-video-avatar SKILL.md](../../p-video-avatar/SKILL.md) | [p-video-avatar-quality-checklist.md](https://github.com/PrunaAI/pruna-skills/tree/main/video/p-video-avatar-quality-checklist.md) |
 
-Example prompts: [realistic-persona-example-prompt.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/realistic-persona-example-prompt/SKILL.md)
+Example prompts: [realistic-persona-example-prompt.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/realistic-persona-example-prompt/SKILL.md)

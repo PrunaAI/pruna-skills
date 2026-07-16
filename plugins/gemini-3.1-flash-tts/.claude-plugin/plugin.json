@@ -1,7 +1,7 @@
 {
   "name": "gemini-3.1-flash-tts",
   "description": "Use when someone needs spoken narration or voiceover \u2014 explainer tracks, documentary lines, or voice to pair with generated video.",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "author": {
     "name": "Pruna AI"
   },

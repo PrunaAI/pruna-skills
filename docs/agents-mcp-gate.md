@@ -14,7 +14,7 @@ Skills + scripts + API keys remain the portable path for Cursor and cross-provid
 
 - No MCP or agents copied into all 27 plugins
 - No Cursor dependency on MCP — any MCP is an optional enhancement for Claude/Copilot
-- No agents/MCP in this repo until criteria above are recorded as met in [BACKLOG.md](../BACKLOG.md)
+- No agents/MCP in this repo until criteria above are recorded as met in [BACKLOG.md](BACKLOG.md)
 
 ## Cross-provider rule
 
