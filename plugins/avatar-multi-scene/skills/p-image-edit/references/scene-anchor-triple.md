@@ -1,32 +1,28 @@
-# Scene anchor triple (multi-scene video)
+# Scene anchor triple (single narrated beat → multi-scene extension)
 
-Canonical pattern for **narrated story films** and **audio-synced B-roll** with Pruna **`p-video`**. Every workflow skill that touches multi-scene cinematic video should link here.
+Canonical payload pattern for **one narrated `p-video` prediction**: three uploaded anchors (`image`, `last_frame_image`, `audio`) plus a motion **`prompt`**. Use this for a **single story beat** first ([image-to-video](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/image-to-video/skills/image-to-video/SKILL.md), [p-video](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/p-video/skills/p-video/SKILL.md)).
 
-Related: [scene-anchor-pair.md](./scene-anchor-pair.md) (visual-only) · [audio-post-production.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/audio-post-production/SKILL.md) · [parallel-execution.md](./parallel-execution.md) · [p-video](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/p-video/skills/p-video/SKILL.md)
+**Multi-scene extension** (`frame_chain`, concat, parallel batches, plan JSON with many rows) belongs only in [narrated-multi-scene](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/narrated-multi-scene/skills/narrated-multi-scene/SKILL.md) — do not treat this doc as permission for single-clip skills to orchestrate full films.
 
-## The triple
+Related: [scene-anchor-pair.md](./scene-anchor-pair.md) (visual-only) · [audio-post-production.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/audio-post-production/SKILL.md) · [p-video](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/p-video/skills/p-video/SKILL.md)
 
-Each scene row supplies **three Pruna file URLs** (from `POST /v1/files`) plus a motion **`prompt`**:
+## The triple (one prediction)
+
+Each beat supplies **three Pruna file URLs** (from `POST /v1/files`) plus a motion **`prompt`**:
 
 | Anchor | `input` field | Role |
 |--------|---------------|------|
 | **First frame** | `image` | Opening composition |
-| **Last frame** | `last_frame_image` | Closing composition; becomes next scene's `image` when **`frame_chain`** is on |
+| **Last frame** | `last_frame_image` | Closing composition |
 | **Narration / VO / music slice** | `audio` | Sets **clip duration** (min(audio length, **20s** P-API max)); model syncs motion to speech or beats |
 
-**Omit `duration`** when `audio` is set. Optional **`save_audio`: true** keeps narration on the output clip — **required** for narrated films so concat preserves full lines.
+**Omit `duration`** when `audio` is set. Optional **`save_audio`: true** keeps narration on the output clip.
 
 When audio is provided, **always** upload and pass it to `p-video` at render time. Do not generate silent clips and mux narration in ffmpeg afterward.
 
-**20-second ceiling:** audio-led clips cannot run longer than P-API `duration` max (**20s**). Write per-scene TTS to **≤ ~19s** (probe with `ffprobe` after Gemini). Truncated VO with “audio passed” usually means the line was too long, not that `input.audio` was missing. Helper: [`validate_narration_duration`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/_shared/scripts/p_video_payload.py).
+**20-second ceiling:** audio-led clips cannot run longer than P-API `duration` max (**20s**). Write TTS to **≤ ~19s** (probe with `ffprobe` after Gemini). Truncated VO with “audio passed” usually means the line was too long, not that `input.audio` was missing. Helper: [`validate_narration_duration`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/_shared/scripts/p_video_payload.py).
 
-**Over-long narration — fix in order:** (1) **shorten** `scene_lines` copy; (2) **pace** — brisk delivery in TTS `style_prompt`; (3) **split** — new scene row with its own stills + VO file. Never rely on post-mux to extend a silent clip.
-
-**Visual style for explainers:** keep a single `style_bible` on every `p-image` / `p-image-edit` / `p-video` prompt — premium painterly illustration or specific period stills, **one clear focal subject per frame**, no off-brand motifs (cosmic nebula, host parody, etc.) unless requested.
-
-**Explainer interaction (preferred):** alternate **narrator** triple beats with **character** `p-video-avatar` dialogue — see [interactive-explainer-scenes.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/interactive-explainer-scenes.md) and [interactive-explainer](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/interactive-explainer/skills/interactive-explainer/SKILL.md). Do not default to all-narrator tables.
-
-**Explainer motion & format:** dynamic `OPEN:` / `MID:` / `CLOSE:` `video_prompt` per scene (camera/light — avoid physics); default **`720p`** + **`24` fps** — see [interactive-explainer-motion.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/interactive-explainer-motion.md).
+**Over-long narration — fix in order:** (1) **shorten** copy; (2) **pace** — brisk delivery in TTS `style_prompt`; (3) **split** into a new beat (that becomes a multi-scene project — hand off to narrated-multi-scene). Never rely on post-mux to extend a silent clip.
 
 ```json
 {
@@ -47,24 +43,38 @@ When audio is provided, **always** upload and pass it to `p-video` at render tim
 | Start | Hero + `edit_prompt` | `edit_prompt` |
 | End | Start still + `last_frame_edit_prompt` | `last_frame_edit_prompt` |
 
-Run start stills **in parallel** from hero; then end stills **in parallel** from each start still.
+For a **single beat**, generate start then end (or both once start exists). Parallel fan-out across many scenes is a **multi-scene** concern — see below.
 
 ## Audio phase (Replicate → Pruna)
 
-1. [Gemini 3.1 Flash TTS](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/gemini-3.1-flash-tts/skills/gemini-3.1-flash-tts/SKILL.md) per scene (or [Music 2.5](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/music-2.5/skills/music-2.5/SKILL.md) slice for music videos)
+1. [Gemini 3.1 Flash TTS](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/gemini-3.1-flash-tts/skills/gemini-3.1-flash-tts/SKILL.md) (or [Music 2.5](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/music-2.5/skills/music-2.5/SKILL.md) slice for music videos)
 2. Download MP3/WAV
-3. Upload each to `/v1/files` → use `urls.get` as `input.audio`
+3. Upload to `/v1/files` → use `urls.get` as `input.audio`
 
 **Do not** post-mux narration over silent `p-video` clips unless re-render is impossible — truncated VO is a common failure mode.
 
-## Video phase
+## Video phase (one beat)
 
-After **all** start URLs, end URLs, and audio URLs exist for every scene row:
+When start URL, end URL, and audio URL exist:
 
-- **`POST /v1/predictions`** with `Model: p-video` — **parallel** batch
-- Async only; poll all `get_url` until done
+- **`POST /v1/predictions`** with `Model: p-video` — one async job
+- Poll `get_url` until done
 
-## Frame chain (multi-scene)
+## Multi-scene extension (narrated-multi-scene only)
+
+The sections below apply when the user explicitly requested a **multi-scene film**. Single-clip skills must stop and hand off to [narrated-multi-scene](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/narrated-multi-scene/skills/narrated-multi-scene/SKILL.md) instead of executing them.
+
+**Explainer interaction (preferred):** alternate **narrator** triple beats with **character** `p-video-avatar` dialogue — see [interactive-explainer-scenes.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/interactive-explainer-scenes.md) and [interactive-explainer](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/interactive-explainer/skills/interactive-explainer/SKILL.md).
+
+**Explainer motion & format:** dynamic `OPEN:` / `MID:` / `CLOSE:` `video_prompt` per scene; default **`720p`** + **`24` fps** — see [interactive-explainer-motion.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/interactive-explainer-motion.md).
+
+**Visual style for explainers:** keep a single `style_bible` on every `p-image` / `p-image-edit` / `p-video` prompt.
+
+### Parallel stills / video across scenes
+
+Run start stills **in parallel** from hero; then end stills **in parallel** from each start still. After **all** URLs exist for every scene row, `POST /v1/predictions` in a **parallel** batch. Patterns: [parallel-execution.md](https://github.com/PrunaAI/pruna-skills/tree/main/shared/parallel-execution.md).
+
+### Frame chain
 
 **Chain only when motion continues** — same location, same moment, no time jump. Use a **composed start still** (hard cut) for new story beats, emotional pauses, or location changes.
 
@@ -93,7 +103,7 @@ Scene 2: extract(clip_1),  last=end_2,  audio=vo_2   hard cut→3
 Scene 3: composed start,  last=end_3,  audio=vo_3   chain→4
 ```
 
-## Scene + narration flow
+### Scene + narration flow
 
 Each scene row should read as one complete beat:
 
@@ -105,20 +115,12 @@ Write narration to describe what is on screen at open → close. Avoid lines tha
 
 Use [`concat_clips.py`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/_shared/scripts/concat_clips.py) with per-join **`crossfades`** — chain joins get ~0.15s fade; hard cuts get 0.
 
-## Assembly
+### Assembly
 
 1. **Concat** clips in scene order with optional crossfade (narration already embedded per clip)
 2. **Optional bed** — [stable-audio-2.5](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/stable-audio-2.5/skills/stable-audio-2.5/SKILL.md) mixed **under** narration via [`launch_background_music.py`](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/_shared/scripts/launch_background_music.py) (~0.08–0.15 volume)
 
-## Variants on other models
-
-| Model | Triple analogue |
-|-------|-----------------|
-| **`p-video-avatar`** | `image` (portrait) + optional `last_frame_image` + **`audio`** (uploaded TTS) *or* native `voice_script` |
-| **`p-video` (music video B-roll)** | `image` + **`audio`** (song slice) — `last_frame_image` optional per beat |
-| **`p-video-animate`** | `image` + **`video`** (motion template) — different axis; not narration triple |
-
-## Plan JSON shape
+### Plan JSON shape
 
 ```json
 {
@@ -154,19 +156,26 @@ Use [`concat_clips.py`](https://github.com/PrunaAI/pruna-skills/tree/main/workfl
 
 Upgrade a **pair** to a **triple** by adding TTS → upload → `input.audio` and omitting `duration`. Visual-only transitions: [scene-anchor-pair.md](./scene-anchor-pair.md).
 
+## Variants on other models
+
+| Model | Triple analogue |
+|-------|-----------------|
+| **`p-video-avatar`** | `image` (portrait) + optional `last_frame_image` + **`audio`** (uploaded TTS) *or* native `voice_script` |
+| **`p-video` (music video B-roll)** | `image` + **`audio`** (song slice) — `last_frame_image` optional per beat |
+| **`p-video-animate`** | `image` + **`video`** (motion template) — different axis; not narration triple — use the [p-video-animate](../../p-video-animate/SKILL.md) skill |
+
 ## Workflows that implement this
 
+- [image-to-video](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/image-to-video/skills/image-to-video/SKILL.md) — **one beat** (this skill’s default)
+- [narrated-multi-scene](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/narrated-multi-scene/skills/narrated-multi-scene/SKILL.md) — primary narrated multi-scene workflow
 - [visual-transition-reel](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/visual-transition-reel/skills/visual-transition-reel/SKILL.md) — visual pair (no VO)
-- [narrated-multi-scene](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/narrated-multi-scene/skills/narrated-multi-scene/SKILL.md) — primary narrated workflow
-- [image-to-video](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/image-to-video/skills/image-to-video/SKILL.md) — one beat
 - [pruna-generative-pipeline](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/pruna-generative-pipeline/skills/pruna-generative-pipeline/SKILL.md) — Recipe **P**
-- Example runner: `output/dog-plush-movie/render_audio_led.py`
 
-## Intake checklist (per scene)
+## Intake checklist (per beat)
 
 - [ ] `edit_prompt` (OPENING still — matches narration open)
 - [ ] `last_frame_edit_prompt` (CLOSING still — clear end pose)
 - [ ] Narration line → TTS → upload URL (open/mid/close aligns with visuals)
 - [ ] `video_prompt` (OPEN / MID / CLOSE motion — not duplicate narration prose)
-- [ ] `chain_from_previous` — only if motion truly continues from prior clip
 - [ ] `resolution` / `fps` / `draft` policy
+- [ ] Multi-scene only: `chain_from_previous` — only if motion truly continues from prior clip

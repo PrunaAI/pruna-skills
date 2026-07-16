@@ -3,7 +3,7 @@ name: recipe-catalog
 description: Use when choosing a generative pipeline — mood boards, hero variants, explainers, music videos, avatar reels, and other recipe letters A–R with linked tool and workflow skills.
 license: MIT
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
   package: pruna-skills
   tier: guide
 ---

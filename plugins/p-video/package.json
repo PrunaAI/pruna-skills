@@ -1,6 +1,6 @@
 {
   "name": "@pruna-ai/p-video",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "license": "MIT",
   "description": "Use when the user wants one video clip from text or stills, start/end frame animation, or B-roll and cinematic shots\u2014not multi-scene films, talking-head avatar clips, or motion transfer from a template video.",

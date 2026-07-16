@@ -3,7 +3,7 @@ name: music-video
 description: Use when the user wants a music video, lyric video, sung promo, or original song paired with performance and B-roll clips.
 license: MIT
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
 depends:
   - music-2.5
   - whisperx

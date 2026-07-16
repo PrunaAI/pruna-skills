@@ -3,7 +3,7 @@ name: narrated-multi-scene
 description: Use when the user needs a multi-scene narrated film, episodic B-roll story, chaptered promo, or several linked video beats with voiceover and no in-scene character dialogue.
 license: MIT
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
 depends:
   - p-image
   - p-image-edit

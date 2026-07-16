@@ -2,6 +2,8 @@
 
 Official docs: [Developer Portal](https://docs.api.pruna.ai/), [Quickstart](https://docs.api.pruna.ai/guides/quickstart), [Models](https://docs.api.pruna.ai/guides/models).
 
+**Before first upload or paid call:** [agent-safety.md](./agent-safety.md) — privacy, credentials, local disk, locale.
+
 ## Authentication
 
 Send your API key in the **`apikey`** header on every request (not `Authorization: Bearer`).
@@ -50,6 +52,8 @@ Full spec: [scene-anchor-triple.md](./scene-anchor-triple.md).
 
 ## File uploads
 
+Local files leave the machine and are processed at `https://api.pruna.ai/` — see [agent-safety.md](./agent-safety.md).
+
 1. `POST /v1/files` with `-F "content=@/path/to/file.jpg"` and `apikey` header.
 2. Use `urls.get` from the response (or construct `https://api.pruna.ai/v1/files/{id}`) as the **`image`**, **`last_frame_image`**, **`images[]`**, **`person_image`**, **`garment_images[]`**, **`audio`**, etc. value in `input`.
 
@@ -77,6 +81,8 @@ curl -s -H "apikey: ${PRUNA_API_KEY}" \
 Use the `get_url` from the create response. Repeat every few seconds until done.
 
 ## Download output {#download}
+
+`-o` writes (or overwrites) a local file — confirm the path with the user ([agent-safety.md](./agent-safety.md)).
 
 ```bash
 curl -L -H "apikey: ${PRUNA_API_KEY}" \

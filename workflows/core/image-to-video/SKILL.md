@@ -3,12 +3,20 @@ name: image-to-video
 description: Use when the user needs one video clip from stills, a single narrated story beat, one B-roll shot, or one scene—not a full multi-scene film or talking-head-only piece.
 license: MIT
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
 ---
 
 # Single-scene AI video (Pruna `p-video`)
 
 One **`p-video`** prediction. See [p-video](../../../../tools/video/p-video/SKILL.md), [scene-anchor-triple.md](../../../../../references/video/scene-anchor-triple.md), and [pruna-api.md](../../../../../references/shared/pruna-api.md).
+
+## Skill boundary
+
+Exactly **one scene / one `p-video` job**. No subagents, no concat across scenes, no multi-scene manifest ownership.
+
+If the user wants a multi-scene film → hand off to [narrated-multi-scene](../narrated-multi-scene/SKILL.md) or [visual-transition-reel](../visual-transition-reel/SKILL.md). Talking-head-only → [avatar-single-scene](../avatar-single-scene/SKILL.md).
+
+**Data handling:** [agent-safety.md](../../../../../references/shared/agent-safety.md) before any upload or paid call.
 
 **Staged generation:** [staged-generation-gate.md](../../../../../references/shared/staged-generation-gate.md) · [workflow-feedback-gates.md](../../../../../references/workflows/workflow-feedback-gates.md)
 
@@ -28,9 +36,9 @@ One **`p-video`** prediction. See [p-video](../../../../tools/video/p-video/SKIL
 
 | Topic | Questions |
 |-------|-----------|
-| **Mode** | **`triple`** (`image` + `last_frame_image` + `audio` — preferred for narrated beats) · **`pair`** (start + end still + `duration` — [visual-transition-reel](../visual-transition-reel/SKILL.md)) · T2V · I2V · I2V+last · audio-only (no frames) |
+| **Mode** | **`triple`** (`image` + `last_frame_image` + `audio` — preferred for narrated beats) · **`pair`** (start + end still + `duration`) · T2V · I2V · I2V+last · audio-only (no frames) |
 | **Creative** | Motion `prompt` only — what happens between first and last frame? One paragraph max. |
-| **Frames** | Start still (upload or `p-image-edit`)? End still (`last_frame_edit_prompt`)? Part of a longer **`frame_chain`**? |
+| **Frames** | Start still (upload or `p-image-edit`)? End still (`last_frame_edit_prompt`)? Stay single-scene — if the user wants a longer **`frame_chain` / multi-scene** project, stop and switch to [narrated-multi-scene](../narrated-multi-scene/SKILL.md) or [visual-transition-reel](../visual-transition-reel/SKILL.md). |
 | **Audio** | [Gemini TTS](../../../../tools/audio/gemini-3.1-flash-tts/SKILL.md) → upload → **`input.audio`** (preferred). Optional [Stable Audio](../../../../tools/audio/stable-audio-2.5/SKILL.md) bed **after** render. Post-mux is fallback only — [audio-post-production.md](../../../../../references/audio/audio-post-production.md). |
 | **Format** | Default **`720p`**, **`24` fps**; `duration` only when **no** `audio`; override `resolution` / `fps` / `aspect_ratio` when user wants final delivery |
 | **Draft** | `draft: true` for preview or `false` for final? |

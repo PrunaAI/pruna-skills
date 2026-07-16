@@ -1,8 +1,10 @@
 # Parallel async execution (agents)
 
-Default for **multi-step Pruna workflows**: **async predictions + parallel fan-out** wherever steps do not depend on each other's outputs. In Cursor and similar agent hosts, **dispatch subagents** for independent lanes and merge results into one manifest.
+**Scope:** multi-scene **workflow** skills only (`narrated-multi-scene`, `visual-transition-reel`, `avatar-multi-scene`, `interactive-explainer`, `music-video`, and similar). Single-clip tools (`p-video`, `image-to-video`, one-shot `p-video-avatar`) must **not** import this doc as permission to expand into multi-scene orchestration.
 
-Shared HTTP basics: [pruna-api.md](./pruna-api.md).
+Default for those multi-step workflows: **async predictions + parallel fan-out** wherever steps do not depend on each other's outputs. In Cursor and similar agent hosts, **dispatch subagents** for independent lanes and merge results into one manifest.
+
+Shared HTTP basics: [pruna-api.md](./pruna-api.md). Credentials and privacy: [agent-safety.md](./agent-safety.md).
 
 **Human-in-the-loop:** Do not start paid video phases until stills pass review. See [staged-generation-gate.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/staged-generation-gate/SKILL.md).
 
@@ -83,7 +85,7 @@ Use subagents when **2+ independent lanes** exist after the confirmation gate.
 
 **Parent must**
 
-- Pass each subagent: scene row, hero/anchor URL, `ritual_seed`, cast ledger slice, output paths, **`PRUNA_API_KEY`** note.
+- Pass each subagent: scene row, hero/anchor URL, `ritual_seed`, cast ledger slice, output paths — **never** API keys in task text ([agent-safety.md](./agent-safety.md)). Prefer parent-owned API calls when the host cannot inject secrets safely.
 - Refuse to start subagents until the user has **explicitly confirmed** the script/plan.
 - Reconcile partial failures: rerun **only** failed lanes.
 
@@ -92,6 +94,7 @@ Use subagents when **2+ independent lanes** exist after the confirmation gate.
 - Subagents before confirmation (wastes cost; violates workflow skills).
 - Splitting a **single** dependency chain across subagents (hero must finish before scene edits).
 - Duplicate manifest writes without merge (use one parent-owned `manifest.md` / JSON).
+- Forwarding `PRUNA_API_KEY` / `REPLICATE_API_TOKEN` into prompts, manifests, or subagent briefs.
 
 ## When to stay sequential
 

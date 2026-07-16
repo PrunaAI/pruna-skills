@@ -3,7 +3,7 @@ name: visual-transition-reel
 description: Use when the user needs a visual montage, transitions between stills, action-sequence reel, or multi-scene piece where narration is optional or absent.
 license: MIT
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
 depends:
   - p-image
   - p-image-edit

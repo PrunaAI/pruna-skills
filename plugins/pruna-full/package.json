@@ -1,6 +1,6 @@
 {
   "name": "@pruna-ai/pruna-full",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "license": "MIT",
   "description": "Complete Pruna Skills bundle: all tool, router, core, and vertical skills in one plugin.",

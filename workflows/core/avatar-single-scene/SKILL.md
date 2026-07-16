@@ -3,7 +3,7 @@ name: avatar-single-scene
 description: Use when the user needs one talking-head clip, a single host line with lip sync, or one spokesperson beat—not multi-segment host reels or motion-transfer comparison grids.
 license: MIT
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
 ---
 
 # Single-scene avatar video (Pruna only)

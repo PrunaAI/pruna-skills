@@ -1,6 +1,6 @@
 {
   "name": "@pruna-ai/generation-diversity",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "license": "MIT",
   "description": "Use when outputs look generic or repetitive \u2014 apply the random seed ritual, explicit prompt structure, and scenario axis rotation before any paid generation call.",

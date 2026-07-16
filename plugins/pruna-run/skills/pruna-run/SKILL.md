@@ -3,7 +3,7 @@ name: pruna-run
 description: Use when the user wants a quick single-shot generation with minimal intake—one image, video clip, or avatar call from a prompt without a full multi-step plan.
 license: MIT
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
 ---
 
 # pruna-run (fast entrypoint)

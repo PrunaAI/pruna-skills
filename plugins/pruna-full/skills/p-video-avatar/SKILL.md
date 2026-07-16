@@ -3,7 +3,7 @@ name: p-video-avatar
 description: Use when the user wants a talking-head video, lip-synced host or spokesperson clip, on-camera performance from a portrait plus script, or narrated avatar footage.
 license: MIT
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
   pruna_model: p-video-avatar
 ---
 
@@ -33,7 +33,9 @@ See **Example: async** below. Poll and download: [pruna-api.md](./references/pru
 
 ## Before generating
 
-Follow [avatar-single-scene](../avatar-single-scene/SKILL.md) or [avatar-multi-scene](../avatar-multi-scene/SKILL.md): **[generation diversity](./references/generation-diversity.md)** first, then **natural human `voice_script`**, **realistic conversational `voice_prompt`**, **per-scene dynamic `video_prompt`**, **locked hero plate URL**, **one fixed `voice` per recurring character**, **explicit user confirmation** before any **`POST /v1/predictions`**, then emit and run the agreed generation steps.
+**Data handling:** follow [agent-safety.md](./references/agent-safety.md) before any upload or `POST /v1/predictions` — media leaves the local environment; confirm output paths; never put API keys in prompts or subagent briefs.
+
+Follow [avatar-single-scene](../avatar-single-scene/SKILL.md) or [avatar-multi-scene](../avatar-multi-scene/SKILL.md): **[generation diversity](./references/generation-diversity.md)** first, then **natural human `voice_script`**, **realistic conversational `voice_prompt`**, **per-scene dynamic `video_prompt`**, **locked hero plate URL**, **one fixed `voice` per recurring character**, **confirm `voice_language` with the user** (examples that use `English (US)` are illustrative only), **explicit user confirmation** before any **`POST /v1/predictions`**, then emit and run the agreed generation steps.
 
 When calling the model directly for a small experiment: **random seed ritual (SSoT)** first, then confirm **`image`** URL (approved still from `/v1/files`), exact **`voice_script`**, **`voice`** / **`voice_language`**, **`voice_prompt`** (human delivery—not script text), **`video_prompt`** (camera/motion), and **`resolution`** with the user. Run [p-video-avatar-quality-checklist.md](./references/p-video-avatar-quality-checklist.md) on stills and outputs.
 
@@ -143,6 +145,8 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
     }
   }'
 ```
+
+`voice_language` in examples is illustrative — confirm locale with the user ([agent-safety.md](./references/agent-safety.md)).
 
 ## Example: sync (single quick test only)
 

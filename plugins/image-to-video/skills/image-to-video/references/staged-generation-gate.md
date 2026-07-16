@@ -2,7 +2,7 @@
 
 Human-in-the-loop phases for workflow skills and plan runners. **Video and replace jobs are expensive** — gate on approved stills before any `p-video-*` call. **Final audio** (bed mix, full-song mux) runs only after clip review.
 
-See also: [parallel-execution.md](./parallel-execution.md) Phase 0, [generation-quality-checklists.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/generation-quality-checklists/SKILL.md), [workflow-feedback-gates.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/workflow-feedback-gates.md) (per-skill index), [requesting-generation-feedback](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/requesting-generation-feedback/skills/requesting-generation-feedback/SKILL.md) (red flags before paid generation).
+See also: [parallel-execution.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/parallel-execution/SKILL.md) Phase 0, [generation-quality-checklists.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/generation-quality-checklists/SKILL.md), [workflow-feedback-gates.md](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/workflow-feedback-gates.md) (per-skill index), [requesting-generation-feedback](https://github.com/PrunaAI/pruna-skills/tree/main/plugins/requesting-generation-feedback/skills/requesting-generation-feedback/SKILL.md) (red flags before paid generation).
 
 ## Phases
 

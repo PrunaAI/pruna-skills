@@ -1,7 +1,7 @@
 {
   "name": "p-video-avatar",
   "description": "Use when the user wants a talking-head video, lip-synced host or spokesperson clip, on-camera performance from a portrait plus script, or narrated avatar footage.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": {
     "name": "Pruna AI"
   },

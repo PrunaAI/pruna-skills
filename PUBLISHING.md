@@ -1,6 +1,8 @@
-# Publishing skills (v0.0.2+)
+# Publishing skills
 
 Bundled skills live in `plugins/<name>/skills/<name>/`. Version is repo [VERSION](VERSION), synced into every `SKILL.md` `metadata.version`, plugin manifests, and registry sidecars (`apm.yml`, `skill.deps.json`).
+
+**Version alignment:** ClawHub skill versions, ClawHub plugin package versions, and the GitHub release tag **`skills-v<VERSION>`** must all match [VERSION](VERSION). Record release notes in [CHANGELOG.md](CHANGELOG.md) before tagging.
 
 ## What “publish” means per channel
 
@@ -32,6 +34,21 @@ Add secrets to GitHub Actions (`CLAWHUB_TOKEN`, optional `CLAWHUB_OWNER`) for [.
 ## Local publish
 
 ```bash
+# 1. Update CHANGELOG.md, then set VERSION and rebuild
+./scripts/release.sh 1.0.2
+
+# 2. Commit, tag (must match VERSION), push
+git add -A && git commit -m "[release] skills v1.0.2"
+git tag skills-v1.0.2
+git push origin main && git push origin skills-v1.0.2
+
+# 3. Upload to ClawHub (or rely on CI on tag push)
+./scripts/publish_all_skills.sh --execute --target clawhub,clawhub-plugins,index
+```
+
+Legacy one-liner steps:
+
+```bash
 # 1. Fresh plugins at VERSION
 ./scripts/bundle_all_skills.sh
 ./scripts/verify_skill_bundles.sh
@@ -42,9 +59,9 @@ Add secrets to GitHub Actions (`CLAWHUB_TOKEN`, optional `CLAWHUB_OWNER`) for [.
 # 3. Upload to ClawHub
 ./scripts/publish_all_skills.sh --execute
 
-# 4. Git release marker for npx skills consumers
-git tag skills-v0.0.2
-git push origin skills-v0.0.2
+# 4. Git release marker for npx skills consumers (tag = skills-v$VERSION)
+git tag skills-v1.0.2
+git push origin skills-v1.0.2
 ```
 
 Single skill or plugin:

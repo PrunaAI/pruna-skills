@@ -62,3 +62,6 @@ When only one key is missing, suggest **only** that provider’s signup link —
 
 - Never print full keys in chat or commit them to git.
 - `.env` is gitignored; prefer env vars over hardcoding in plans or manifests.
+- Never embed keys in prompts, manifests, plan JSON, logs, or **subagent task text**.
+- Prefer the **parent agent** to own API calls; do not fan credentials across parallel subagents unless the host documents isolated secret injection.
+- Full rules: [agent-safety.md](./agent-safety.md).

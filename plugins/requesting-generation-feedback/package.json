@@ -1,6 +1,6 @@
 {
   "name": "@pruna-ai/requesting-generation-feedback",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "license": "MIT",
   "description": "Use when the agent is about to call paid generation APIs, deliver a final audio mix, or proceed without user review in a multi-step image, video, or audio workflow.",

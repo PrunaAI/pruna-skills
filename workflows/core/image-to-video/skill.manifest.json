@@ -8,14 +8,14 @@
   ],
   "references": [
     "pruna-api.md",
+    "agent-safety.md",
     "scene-anchor-triple.md",
     "scene-anchor-pair.md",
     "staged-generation-gate.md",
     "workflow-feedback-gates.md",
     "p-video-quality-checklist.md",
     "generation-diversity.md",
-    "random-seed-ritual.md",
-    "parallel-execution.md"
+    "random-seed-ritual.md"
   ],
   "scripts": {
     "core": [],

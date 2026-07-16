@@ -1,5 +1,5 @@
 name: image-to-video
-version: 1.0.1
+version: 1.0.2
 type: skill
 description: Use when the user needs one video clip from stills, a single narrated story beat, one B-roll shot, or one scene—not a full multi-scene film or talking-head-only piece.
 dependencies:

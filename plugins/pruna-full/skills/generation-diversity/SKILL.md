@@ -3,7 +3,7 @@ name: generation-diversity
 description: Use when outputs look generic or repetitive — apply the random seed ritual, explicit prompt structure, and scenario axis rotation before any paid generation call.
 license: MIT
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
   package: pruna-skills
   tier: guide
 ---

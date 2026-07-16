@@ -3,7 +3,7 @@ name: stable-audio-2.5
 description: Use when the user wants light instrumental background music, an ambient bed under dialogue or voiceover, or underscore for reels and explainers.
 license: MIT
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
   provider: replicate
   replicate_model: stability-ai/stable-audio-2.5
 ---

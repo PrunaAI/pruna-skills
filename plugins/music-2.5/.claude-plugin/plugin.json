@@ -1,7 +1,7 @@
 {
   "name": "music-2.5",
   "description": "Use when the user wants AI song generation with vocals, sung lyrics, original tracks from a style prompt, or source audio for a music video.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": {
     "name": "Pruna AI"
   },

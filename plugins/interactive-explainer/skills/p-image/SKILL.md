@@ -3,7 +3,7 @@ name: p-image
 description: Use when the user wants the fastest text-to-image stills, quick draft photos, mood boards, or bulk panels where good quality and extremely low latency matter more than maximum photoreal fidelity.
 license: MIT
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
   pruna_model: p-image
 ---
 

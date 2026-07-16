@@ -1,6 +1,6 @@
 {
   "name": "@pruna-ai/whisperx",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "license": "MIT",
   "description": "Use when the user needs word-level lyric timestamps, cut-safe line boundaries for music videos, or alignment after song generation before editing clips.",

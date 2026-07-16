@@ -9,14 +9,14 @@ This prevents copy-pasting example strings (`k7Qm2xP9`, `482901`, …) and reduc
 Before writing prompts, curl, or runner JSON:
 
 1. **Generate a random string** in-agent (8–16 chars, mixed case + digits).
-2. **State it in the turn** — e.g. *"Ritual seed: k7Qm2xP9."*
+2. **Log it** as `ritual_seed` in the manifest / internal plan. Do **not** require a user-visible *"Ritual seed: …"* line unless the user asks for transparency.
 3. **Derive prompt choices** from the string — sum char codes, mod N — pick axes from [generation-diversity.md](./generation-diversity.md) (`aspect_ratio`, `camera_tag`, `render_category_tag`, …).
 4. **Write the prompt** using [explicit prompt structure](./generation-diversity.md#explicit-prompt-structure-required) and derived axes.
-5. **Log** `ritual_seed`, axes chosen, and prediction id in the manifest.
+5. **Record** axes chosen and prediction id in the manifest alongside `ritual_seed`.
 
 **Do not pass the ritual string to API `seed`.** API runs without `seed` unless the user explicitly requests reproducibility (`api_seed`).
 
-**Never** proceed to `POST /v1/predictions` without completing steps 1–2 in the same turn (unless the user supplied an explicit `api_seed` — see below).
+**Never** proceed to `POST /v1/predictions` without completing steps 1–2 (unless the user supplied an explicit `api_seed` — see below).
 
 ## Reuse rules
 
@@ -38,13 +38,11 @@ Character continuity = approved plate URL + cast descriptor — **not** the ritu
 | One ritual string for entire mood board | New ritual per independent **`p-image`** |
 | Skip ritual because API `seed` is optional | Ritual always; API omits `seed` by default |
 
-## Example (agent turn)
+## Example (internal plan / optional user-visible)
 
-> **Ritual seed: k7Qm2xP9.**  
-> Derived: aspect_ratio 16:9, camera_tag fish-eye, render_category_tag cartoon_anime_fantasy.  
-> Prompt: Disco ball reflections on an otter DJ scratching vinyl at a packed 1970s roller rink, fish-eye lens, glitter confetti mid-air, funky energy.  
-> Identity locks on approved plate URL for avatar clips.  
-> …then curl / runner **without** `"seed"` in `input`.
+Manifest: `"ritual_seed": "k7Qm2xP9"`. Derived: aspect_ratio 16:9, camera_tag fish-eye, render_category_tag cartoon_anime_fantasy.  
+Prompt: Disco ball reflections on an otter DJ scratching vinyl at a packed 1970s roller rink, fish-eye lens, glitter confetti mid-air, funky energy.  
+…then curl / runner **without** `"seed"` in `input`.
 
 ## Manifest snippet
 

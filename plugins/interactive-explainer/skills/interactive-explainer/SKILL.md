@@ -3,7 +3,7 @@ name: interactive-explainer
 description: Use when the user wants educational explainers with a host plus in-story characters, history or science shorts, or witness and expert dialogue—not wall-to-wall narration alone.
 license: MIT
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
 depends:
   - p-image
   - p-image-edit

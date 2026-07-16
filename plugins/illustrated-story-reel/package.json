@@ -1,6 +1,6 @@
 {
   "name": "@pruna-ai/illustrated-story-reel",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "license": "MIT",
   "description": "Use when the user wants a still-image story reel or slideshow, picture-book narrative with voiceover or music\u2014and explicitly not full motion-video generation.",

@@ -1,6 +1,6 @@
 {
   "name": "@pruna-ai/music-2.5",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "license": "MIT",
   "description": "Use when the user wants AI song generation with vocals, sung lyrics, original tracks from a style prompt, or source audio for a music video.",

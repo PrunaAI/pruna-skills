@@ -3,7 +3,7 @@ name: requesting-generation-feedback
 description: Use when the agent is about to call paid generation APIs, deliver a final audio mix, or proceed without user review in a multi-step image, video, or audio workflow.
 license: MIT
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
 ---
 
 # Requesting generation feedback

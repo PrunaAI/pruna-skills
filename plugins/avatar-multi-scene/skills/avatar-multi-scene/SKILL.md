@@ -3,7 +3,7 @@ name: avatar-multi-scene
 description: Use when the user needs multiple talking-head segments, motion-transfer comparison reels, mixed host and animate clips, or multi-scene UGC with character continuity.
 license: MIT
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
 depends:
   - p-image
   - p-image-edit
