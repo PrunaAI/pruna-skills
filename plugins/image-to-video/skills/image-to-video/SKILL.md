@@ -3,7 +3,7 @@ name: image-to-video
 description: Use when someone wants one short film beat from images — a narrated scene, story moment, or cinematic B-roll with optional voiceover.
 license: MIT
 metadata:
-  version: "1.0.4"
+  version: "1.0.5"
 depends:
   - p-image
   - p-image-edit

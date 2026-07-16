@@ -2,18 +2,33 @@
 
 ## Install
 
+**Skills CLI** (copy-paste):
+
 ```bash
 npx skills add PrunaAI/pruna-skills@avatar-single-scene -y
 ```
 
-For a workflow with embedded tool dependencies, prefer:
+**Plugins CLI** (workflow bundles with deps — pick from the list):
 
 ```bash
-npx plugins add PrunaAI/pruna-skills -y
-# pick avatar-single-scene
+npx plugins add PrunaAI/pruna-skills
+# when prompted, select: avatar-single-scene
 ```
 
-List all skills: `npx skills add PrunaAI/pruna-skills -l`
+Do **not** use `npx plugins add PrunaAI/pruna-skills@avatar-single-scene` — the plugins CLI has no `@name` filter (that’s skills only) and prints “No plugins found”.
+
+**Claude Code:**
+
+```text
+/plugin marketplace add PrunaAI/pruna-skills
+/plugin install avatar-single-scene@pruna-skills
+```
+
+List all skills:
+
+```bash
+npx skills add PrunaAI/pruna-skills -l
+```
 
 After install, start a **new chat**. See the [root README](https://github.com/PrunaAI/pruna-skills/tree/main/workflows/core/README/SKILL.md).
 

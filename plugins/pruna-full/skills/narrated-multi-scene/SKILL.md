@@ -3,7 +3,7 @@ name: narrated-multi-scene
 description: Use when someone wants a multi-part story with voiceover — episodic B-roll, chaptered promo, or several linked video scenes without on-camera dialogue.
 license: MIT
 metadata:
-  version: "1.0.4"
+  version: "1.0.5"
 ---
 
 # Multi-scene AI video (Pruna `p-video` only)

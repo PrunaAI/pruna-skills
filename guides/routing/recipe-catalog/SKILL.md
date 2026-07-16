@@ -3,7 +3,7 @@ name: recipe-catalog
 description: Use when browsing recipe ideas for mood boards, hero images, explainers, music videos, or avatar reels and need the linked tools. For a live multi-step project, prefer the generative pipeline.
 license: MIT
 metadata:
-  version: "1.0.4"
+  version: "1.0.5"
   package: pruna-skills
   tier: guide
 ---

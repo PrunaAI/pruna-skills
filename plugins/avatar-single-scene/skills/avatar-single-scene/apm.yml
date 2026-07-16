@@ -1,5 +1,5 @@
 name: avatar-single-scene
-version: 1.0.4
+version: 1.0.5
 type: skill
 description: Use when someone wants one polished host-on-camera beat — a speaking person with intake and approval gates before generation.
 dependencies:

@@ -1,5 +1,5 @@
 name: avatar-multi-scene
-version: 1.0.4
+version: 1.0.5
 type: skill
 description: Use when someone wants the same person hosting several clips — multi-segment UGC, comparison reels, or mixed speaking and animated scenes with continuity.
 dependencies:

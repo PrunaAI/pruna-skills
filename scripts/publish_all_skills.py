@@ -231,7 +231,7 @@ def write_publish_index() -> Path:
                 "skillPath": f"plugins/{name}/skills/{name}",
                 "clawhubSkill": f"@{owner}/{clawhub_slug(name)}",
                 "npxInstall": f"npx skills add {GITHUB_REPO}@{name} -y",
-                "npxPlugins": f"npx plugins add {GITHUB_REPO} -y  # pick {name}",
+                "npxPlugins": f"npx plugins add {GITHUB_REPO}  # select: {name}",
             }
             for name in skills
         ],
@@ -242,7 +242,7 @@ def write_publish_index() -> Path:
                 "clawhubPackage": f"@{owner}/{name}",
                 "claudeInstall": f"/plugin install {name}@pruna-skills",
                 "npxInstall": f"npx skills add {GITHUB_REPO}@{name} -y",
-                "npxPlugins": f"npx plugins add {GITHUB_REPO} -y  # pick {name}",
+                "npxPlugins": f"npx plugins add {GITHUB_REPO}  # select: {name}",
             }
             for name in plugins
         ],
@@ -256,7 +256,8 @@ def write_publish_index() -> Path:
                 "method": "npx skills add / npx plugins add (GitHub source)",
                 "listAll": f"npx skills add {GITHUB_REPO} -l",
                 "installSkill": f"npx skills add {GITHUB_REPO}@<name> -y",
-                "installPlugin": f"npx plugins add {GITHUB_REPO} -y",
+                "installPlugin": f"npx plugins add {GITHUB_REPO}  # select plugin from list; -y installs ALL",
+                "note": "plugins CLI does not support owner/repo@name (skills CLI only)",
                 "skillsSh": "https://skills.sh — listing via install telemetry after first install",
             },
             "clawhubSkills": {
@@ -293,8 +294,10 @@ def print_github_npx_instructions() -> None:
     print(f"  1. Push plugins/ and .claude-plugin/marketplace.json to main")
     print(f"  2. git tag {tag} && git push origin {tag}")
     print(f"  3. Consumers: npx skills add {GITHUB_REPO}@<name> -y")
-    print(f"     Or plugins: npx plugins add {GITHUB_REPO} -y")
+    print(f"     Or plugins: npx plugins add {GITHUB_REPO}  # select from list")
+    print(f"     Or all plugins: npx plugins add {GITHUB_REPO} -y")
     print(f"     Or list all: npx skills add {GITHUB_REPO} -l")
+    print(f"     Note: npx plugins …@name is NOT supported (skills CLI only)")
 
 
 def normalize_targets(raw: set[str]) -> set[str]:

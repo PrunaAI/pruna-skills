@@ -2,18 +2,33 @@
 
 ## Install
 
+**Skills CLI** (copy-paste):
+
 ```bash
 npx skills add PrunaAI/pruna-skills@visual-transition-reel -y
 ```
 
-For a workflow with embedded tool dependencies, prefer:
+**Plugins CLI** (workflow bundles with deps — pick from the list):
 
 ```bash
-npx plugins add PrunaAI/pruna-skills -y
-# pick visual-transition-reel
+npx plugins add PrunaAI/pruna-skills
+# when prompted, select: visual-transition-reel
 ```
 
-List all skills: `npx skills add PrunaAI/pruna-skills -l`
+Do **not** use `npx plugins add PrunaAI/pruna-skills@visual-transition-reel` — the plugins CLI has no `@name` filter (that’s skills only) and prints “No plugins found”.
+
+**Claude Code:**
+
+```text
+/plugin marketplace add PrunaAI/pruna-skills
+/plugin install visual-transition-reel@pruna-skills
+```
+
+List all skills:
+
+```bash
+npx skills add PrunaAI/pruna-skills -l
+```
 
 After install, start a **new chat**. See the [root README](../../../README.md).
 

@@ -203,6 +203,9 @@ find "${DEST}" -name '*.md' -print0 | while IFS= read -r -d '' f; do
     "$f"
 done
 
+# ponytail: git ignores empty dirs — drop placeholders so verify matches clean CI checkout
+rmdir "${DEST}/scripts" "${DEST}/templates" 2>/dev/null || true
+
 echo "Bundled ${SKILL} -> ${DEST}"
 echo "  pip install -r ${DEST}/scripts/requirements.txt  # when present"
 echo "  Requires: PRUNA_API_KEY, curl, ffmpeg (video workflows)"

@@ -1,6 +1,6 @@
 {
   "name": "@pruna-ai/p-video-animate",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "type": "module",
   "license": "MIT",
   "description": "Use when someone wants a photo to move like another video \u2014 motion transfer, dance remixes, or performance variations from a template clip.",

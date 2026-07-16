@@ -23,4 +23,7 @@ python3 scripts/write_readme_skills_section.py
 
 python3 scripts/publish_all_skills.py --target index --skip-verify
 
-echo "Done. Install: npx skills add PrunaAI/pruna-skills@<name> -y  or  npx plugins add PrunaAI/pruna-skills -y"
+echo "Done. Install: npx skills add PrunaAI/pruna-skills@<name> -y"
+echo "         Or:    npx plugins add PrunaAI/pruna-skills   # pick from list"
+echo "         Or:    npx plugins add PrunaAI/pruna-skills -y  # all plugins"
+

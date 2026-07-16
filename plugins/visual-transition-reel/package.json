@@ -1,6 +1,6 @@
 {
   "name": "@pruna-ai/visual-transition-reel",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "type": "module",
   "license": "MIT",
   "description": "Use when someone wants a montage with transitions between shots \u2014 action-sequence reel or multi-scene piece where narration is optional.",

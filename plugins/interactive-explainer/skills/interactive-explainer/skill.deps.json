@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "skill": "interactive-explainer",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "repository": "PrunaAI/pruna-skills",
   "pluginPath": "plugins/interactive-explainer",
   "skillPath": "plugins/interactive-explainer/skills/interactive-explainer",

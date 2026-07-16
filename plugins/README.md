@@ -10,8 +10,38 @@ plugins/<name>/skills/<name>/SKILL.md
 plugins/pruna-full/skills/*               # all skills in one plugin
 ```
 
-**Install (preferred):**
-- `npx skills add PrunaAI/pruna-skills@p-image -y`
-- `npx plugins add PrunaAI/pruna-skills -y` → pick a workflow or `pruna-full`
+## Install (copy-paste)
 
-**Also:** `/plugin install <name>@pruna-skills` · ClawHub publish via `./scripts/publish_all_skills.sh`
+**One skill** (`@name` works here):
+
+```bash
+npx skills add PrunaAI/pruna-skills@p-image -y
+```
+
+**One plugin** (interactive — pick from the list):
+
+```bash
+npx plugins add PrunaAI/pruna-skills
+# select e.g. music-video or pruna-full
+```
+
+**All 27 plugins:**
+
+```bash
+npx plugins add PrunaAI/pruna-skills -y
+```
+
+**Does not work** (plugins CLI has no `@` filter):
+
+```bash
+npx plugins add PrunaAI/pruna-skills@pruna-full   # → No plugins found
+```
+
+**Claude Code:**
+
+```text
+/plugin marketplace add PrunaAI/pruna-skills
+/plugin install pruna-full@pruna-skills
+```
+
+ClawHub: `./scripts/publish_all_skills.sh`

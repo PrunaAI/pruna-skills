@@ -1,8 +1,8 @@
 {
-  "version": "1.0.4",
+  "version": "1.0.5",
   "package": "pruna-skills",
   "repository": "https://github.com/PrunaAI/pruna-skills",
-  "gitTag": "skills-v1.0.4",
+  "gitTag": "skills-v1.0.5",
   "skills": [
     {
       "name": "avatar-multi-scene",
@@ -10,7 +10,7 @@
       "skillPath": "plugins/avatar-multi-scene/skills/avatar-multi-scene",
       "clawhubSkill": "@pruna-ai/avatar-multi-scene",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@avatar-multi-scene -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick avatar-multi-scene"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: avatar-multi-scene"
     },
     {
       "name": "avatar-single-scene",
@@ -18,7 +18,7 @@
       "skillPath": "plugins/avatar-single-scene/skills/avatar-single-scene",
       "clawhubSkill": "@pruna-ai/avatar-single-scene",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@avatar-single-scene -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick avatar-single-scene"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: avatar-single-scene"
     },
     {
       "name": "gemini-3.1-flash-tts",
@@ -26,7 +26,7 @@
       "skillPath": "plugins/gemini-3.1-flash-tts/skills/gemini-3.1-flash-tts",
       "clawhubSkill": "@pruna-ai/gemini-3-1-flash-tts",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@gemini-3.1-flash-tts -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick gemini-3.1-flash-tts"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: gemini-3.1-flash-tts"
     },
     {
       "name": "generation-diversity",
@@ -34,7 +34,7 @@
       "skillPath": "plugins/generation-diversity/skills/generation-diversity",
       "clawhubSkill": "@pruna-ai/generation-diversity",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@generation-diversity -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick generation-diversity"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: generation-diversity"
     },
     {
       "name": "generation-quality-checklists",
@@ -42,7 +42,7 @@
       "skillPath": "plugins/generation-quality-checklists/skills/generation-quality-checklists",
       "clawhubSkill": "@pruna-ai/generation-quality-checklists",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@generation-quality-checklists -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick generation-quality-checklists"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: generation-quality-checklists"
     },
     {
       "name": "illustrated-story-reel",
@@ -50,7 +50,7 @@
       "skillPath": "plugins/illustrated-story-reel/skills/illustrated-story-reel",
       "clawhubSkill": "@pruna-ai/illustrated-story-reel",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@illustrated-story-reel -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick illustrated-story-reel"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: illustrated-story-reel"
     },
     {
       "name": "image-to-video",
@@ -58,7 +58,7 @@
       "skillPath": "plugins/image-to-video/skills/image-to-video",
       "clawhubSkill": "@pruna-ai/image-to-video",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@image-to-video -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick image-to-video"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: image-to-video"
     },
     {
       "name": "interactive-explainer",
@@ -66,7 +66,7 @@
       "skillPath": "plugins/interactive-explainer/skills/interactive-explainer",
       "clawhubSkill": "@pruna-ai/interactive-explainer",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@interactive-explainer -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick interactive-explainer"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: interactive-explainer"
     },
     {
       "name": "music-2.5",
@@ -74,7 +74,7 @@
       "skillPath": "plugins/music-2.5/skills/music-2.5",
       "clawhubSkill": "@pruna-ai/music-2-5",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@music-2.5 -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick music-2.5"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: music-2.5"
     },
     {
       "name": "music-video",
@@ -82,7 +82,7 @@
       "skillPath": "plugins/music-video/skills/music-video",
       "clawhubSkill": "@pruna-ai/music-video",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@music-video -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick music-video"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: music-video"
     },
     {
       "name": "narrated-multi-scene",
@@ -90,7 +90,7 @@
       "skillPath": "plugins/narrated-multi-scene/skills/narrated-multi-scene",
       "clawhubSkill": "@pruna-ai/narrated-multi-scene",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@narrated-multi-scene -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick narrated-multi-scene"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: narrated-multi-scene"
     },
     {
       "name": "p-image",
@@ -98,7 +98,7 @@
       "skillPath": "plugins/p-image/skills/p-image",
       "clawhubSkill": "@pruna-ai/p-image",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@p-image -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick p-image"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: p-image"
     },
     {
       "name": "p-image-edit",
@@ -106,7 +106,7 @@
       "skillPath": "plugins/p-image-edit/skills/p-image-edit",
       "clawhubSkill": "@pruna-ai/p-image-edit",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@p-image-edit -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick p-image-edit"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: p-image-edit"
     },
     {
       "name": "p-image-try-on",
@@ -114,7 +114,7 @@
       "skillPath": "plugins/p-image-try-on/skills/p-image-try-on",
       "clawhubSkill": "@pruna-ai/p-image-try-on",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@p-image-try-on -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick p-image-try-on"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: p-image-try-on"
     },
     {
       "name": "p-image-upscale",
@@ -122,7 +122,7 @@
       "skillPath": "plugins/p-image-upscale/skills/p-image-upscale",
       "clawhubSkill": "@pruna-ai/p-image-upscale",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@p-image-upscale -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick p-image-upscale"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: p-image-upscale"
     },
     {
       "name": "p-video",
@@ -130,7 +130,7 @@
       "skillPath": "plugins/p-video/skills/p-video",
       "clawhubSkill": "@pruna-ai/p-video",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@p-video -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick p-video"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: p-video"
     },
     {
       "name": "p-video-animate",
@@ -138,7 +138,7 @@
       "skillPath": "plugins/p-video-animate/skills/p-video-animate",
       "clawhubSkill": "@pruna-ai/p-video-animate",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@p-video-animate -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick p-video-animate"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: p-video-animate"
     },
     {
       "name": "p-video-avatar",
@@ -146,7 +146,7 @@
       "skillPath": "plugins/p-video-avatar/skills/p-video-avatar",
       "clawhubSkill": "@pruna-ai/p-video-avatar",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@p-video-avatar -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick p-video-avatar"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: p-video-avatar"
     },
     {
       "name": "p-video-replace",
@@ -154,7 +154,7 @@
       "skillPath": "plugins/p-video-replace/skills/p-video-replace",
       "clawhubSkill": "@pruna-ai/p-video-replace",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@p-video-replace -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick p-video-replace"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: p-video-replace"
     },
     {
       "name": "pruna-generative-pipeline",
@@ -162,7 +162,7 @@
       "skillPath": "plugins/pruna-generative-pipeline/skills/pruna-generative-pipeline",
       "clawhubSkill": "@pruna-ai/pruna-generative-pipeline",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@pruna-generative-pipeline -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick pruna-generative-pipeline"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: pruna-generative-pipeline"
     },
     {
       "name": "pruna-run",
@@ -170,7 +170,7 @@
       "skillPath": "plugins/pruna-run/skills/pruna-run",
       "clawhubSkill": "@pruna-ai/pruna-run",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@pruna-run -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick pruna-run"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: pruna-run"
     },
     {
       "name": "recipe-catalog",
@@ -178,7 +178,7 @@
       "skillPath": "plugins/recipe-catalog/skills/recipe-catalog",
       "clawhubSkill": "@pruna-ai/recipe-catalog",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@recipe-catalog -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick recipe-catalog"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: recipe-catalog"
     },
     {
       "name": "requesting-generation-feedback",
@@ -186,7 +186,7 @@
       "skillPath": "plugins/requesting-generation-feedback/skills/requesting-generation-feedback",
       "clawhubSkill": "@pruna-ai/requesting-generation-feedback",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@requesting-generation-feedback -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick requesting-generation-feedback"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: requesting-generation-feedback"
     },
     {
       "name": "stable-audio-2.5",
@@ -194,7 +194,7 @@
       "skillPath": "plugins/stable-audio-2.5/skills/stable-audio-2.5",
       "clawhubSkill": "@pruna-ai/stable-audio-2-5",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@stable-audio-2.5 -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick stable-audio-2.5"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: stable-audio-2.5"
     },
     {
       "name": "visual-transition-reel",
@@ -202,7 +202,7 @@
       "skillPath": "plugins/visual-transition-reel/skills/visual-transition-reel",
       "clawhubSkill": "@pruna-ai/visual-transition-reel",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@visual-transition-reel -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick visual-transition-reel"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: visual-transition-reel"
     },
     {
       "name": "whisperx",
@@ -210,7 +210,7 @@
       "skillPath": "plugins/whisperx/skills/whisperx",
       "clawhubSkill": "@pruna-ai/whisperx",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@whisperx -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick whisperx"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: whisperx"
     }
   ],
   "plugins": [
@@ -220,7 +220,7 @@
       "clawhubPackage": "@pruna-ai/avatar-multi-scene",
       "claudeInstall": "/plugin install avatar-multi-scene@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@avatar-multi-scene -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick avatar-multi-scene"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: avatar-multi-scene"
     },
     {
       "name": "avatar-single-scene",
@@ -228,7 +228,7 @@
       "clawhubPackage": "@pruna-ai/avatar-single-scene",
       "claudeInstall": "/plugin install avatar-single-scene@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@avatar-single-scene -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick avatar-single-scene"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: avatar-single-scene"
     },
     {
       "name": "gemini-3.1-flash-tts",
@@ -236,7 +236,7 @@
       "clawhubPackage": "@pruna-ai/gemini-3.1-flash-tts",
       "claudeInstall": "/plugin install gemini-3.1-flash-tts@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@gemini-3.1-flash-tts -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick gemini-3.1-flash-tts"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: gemini-3.1-flash-tts"
     },
     {
       "name": "generation-diversity",
@@ -244,7 +244,7 @@
       "clawhubPackage": "@pruna-ai/generation-diversity",
       "claudeInstall": "/plugin install generation-diversity@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@generation-diversity -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick generation-diversity"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: generation-diversity"
     },
     {
       "name": "generation-quality-checklists",
@@ -252,7 +252,7 @@
       "clawhubPackage": "@pruna-ai/generation-quality-checklists",
       "claudeInstall": "/plugin install generation-quality-checklists@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@generation-quality-checklists -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick generation-quality-checklists"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: generation-quality-checklists"
     },
     {
       "name": "illustrated-story-reel",
@@ -260,7 +260,7 @@
       "clawhubPackage": "@pruna-ai/illustrated-story-reel",
       "claudeInstall": "/plugin install illustrated-story-reel@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@illustrated-story-reel -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick illustrated-story-reel"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: illustrated-story-reel"
     },
     {
       "name": "image-to-video",
@@ -268,7 +268,7 @@
       "clawhubPackage": "@pruna-ai/image-to-video",
       "claudeInstall": "/plugin install image-to-video@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@image-to-video -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick image-to-video"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: image-to-video"
     },
     {
       "name": "interactive-explainer",
@@ -276,7 +276,7 @@
       "clawhubPackage": "@pruna-ai/interactive-explainer",
       "claudeInstall": "/plugin install interactive-explainer@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@interactive-explainer -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick interactive-explainer"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: interactive-explainer"
     },
     {
       "name": "music-2.5",
@@ -284,7 +284,7 @@
       "clawhubPackage": "@pruna-ai/music-2.5",
       "claudeInstall": "/plugin install music-2.5@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@music-2.5 -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick music-2.5"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: music-2.5"
     },
     {
       "name": "music-video",
@@ -292,7 +292,7 @@
       "clawhubPackage": "@pruna-ai/music-video",
       "claudeInstall": "/plugin install music-video@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@music-video -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick music-video"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: music-video"
     },
     {
       "name": "narrated-multi-scene",
@@ -300,7 +300,7 @@
       "clawhubPackage": "@pruna-ai/narrated-multi-scene",
       "claudeInstall": "/plugin install narrated-multi-scene@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@narrated-multi-scene -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick narrated-multi-scene"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: narrated-multi-scene"
     },
     {
       "name": "p-image",
@@ -308,7 +308,7 @@
       "clawhubPackage": "@pruna-ai/p-image",
       "claudeInstall": "/plugin install p-image@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@p-image -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick p-image"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: p-image"
     },
     {
       "name": "p-image-edit",
@@ -316,7 +316,7 @@
       "clawhubPackage": "@pruna-ai/p-image-edit",
       "claudeInstall": "/plugin install p-image-edit@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@p-image-edit -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick p-image-edit"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: p-image-edit"
     },
     {
       "name": "p-image-try-on",
@@ -324,7 +324,7 @@
       "clawhubPackage": "@pruna-ai/p-image-try-on",
       "claudeInstall": "/plugin install p-image-try-on@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@p-image-try-on -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick p-image-try-on"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: p-image-try-on"
     },
     {
       "name": "p-image-upscale",
@@ -332,7 +332,7 @@
       "clawhubPackage": "@pruna-ai/p-image-upscale",
       "claudeInstall": "/plugin install p-image-upscale@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@p-image-upscale -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick p-image-upscale"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: p-image-upscale"
     },
     {
       "name": "p-video",
@@ -340,7 +340,7 @@
       "clawhubPackage": "@pruna-ai/p-video",
       "claudeInstall": "/plugin install p-video@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@p-video -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick p-video"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: p-video"
     },
     {
       "name": "p-video-animate",
@@ -348,7 +348,7 @@
       "clawhubPackage": "@pruna-ai/p-video-animate",
       "claudeInstall": "/plugin install p-video-animate@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@p-video-animate -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick p-video-animate"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: p-video-animate"
     },
     {
       "name": "p-video-avatar",
@@ -356,7 +356,7 @@
       "clawhubPackage": "@pruna-ai/p-video-avatar",
       "claudeInstall": "/plugin install p-video-avatar@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@p-video-avatar -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick p-video-avatar"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: p-video-avatar"
     },
     {
       "name": "p-video-replace",
@@ -364,7 +364,7 @@
       "clawhubPackage": "@pruna-ai/p-video-replace",
       "claudeInstall": "/plugin install p-video-replace@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@p-video-replace -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick p-video-replace"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: p-video-replace"
     },
     {
       "name": "pruna-full",
@@ -372,7 +372,7 @@
       "clawhubPackage": "@pruna-ai/pruna-full",
       "claudeInstall": "/plugin install pruna-full@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@pruna-full -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick pruna-full"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: pruna-full"
     },
     {
       "name": "pruna-generative-pipeline",
@@ -380,7 +380,7 @@
       "clawhubPackage": "@pruna-ai/pruna-generative-pipeline",
       "claudeInstall": "/plugin install pruna-generative-pipeline@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@pruna-generative-pipeline -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick pruna-generative-pipeline"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: pruna-generative-pipeline"
     },
     {
       "name": "pruna-run",
@@ -388,7 +388,7 @@
       "clawhubPackage": "@pruna-ai/pruna-run",
       "claudeInstall": "/plugin install pruna-run@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@pruna-run -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick pruna-run"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: pruna-run"
     },
     {
       "name": "recipe-catalog",
@@ -396,7 +396,7 @@
       "clawhubPackage": "@pruna-ai/recipe-catalog",
       "claudeInstall": "/plugin install recipe-catalog@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@recipe-catalog -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick recipe-catalog"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: recipe-catalog"
     },
     {
       "name": "requesting-generation-feedback",
@@ -404,7 +404,7 @@
       "clawhubPackage": "@pruna-ai/requesting-generation-feedback",
       "claudeInstall": "/plugin install requesting-generation-feedback@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@requesting-generation-feedback -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick requesting-generation-feedback"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: requesting-generation-feedback"
     },
     {
       "name": "stable-audio-2.5",
@@ -412,7 +412,7 @@
       "clawhubPackage": "@pruna-ai/stable-audio-2.5",
       "claudeInstall": "/plugin install stable-audio-2.5@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@stable-audio-2.5 -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick stable-audio-2.5"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: stable-audio-2.5"
     },
     {
       "name": "visual-transition-reel",
@@ -420,7 +420,7 @@
       "clawhubPackage": "@pruna-ai/visual-transition-reel",
       "claudeInstall": "/plugin install visual-transition-reel@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@visual-transition-reel -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick visual-transition-reel"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: visual-transition-reel"
     },
     {
       "name": "whisperx",
@@ -428,20 +428,21 @@
       "clawhubPackage": "@pruna-ai/whisperx",
       "claudeInstall": "/plugin install whisperx@pruna-skills",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@whisperx -y",
-      "npxPlugins": "npx plugins add PrunaAI/pruna-skills -y  # pick whisperx"
+      "npxPlugins": "npx plugins add PrunaAI/pruna-skills  # select: whisperx"
     }
   ],
   "registries": {
     "github": {
       "method": "git tag + push",
-      "tag": "skills-v1.0.4",
+      "tag": "skills-v1.0.5",
       "note": "No upload API \u2014 consumers install from GitHub paths after push"
     },
     "npx": {
       "method": "npx skills add / npx plugins add (GitHub source)",
       "listAll": "npx skills add PrunaAI/pruna-skills -l",
       "installSkill": "npx skills add PrunaAI/pruna-skills@<name> -y",
-      "installPlugin": "npx plugins add PrunaAI/pruna-skills -y",
+      "installPlugin": "npx plugins add PrunaAI/pruna-skills  # select plugin from list; -y installs ALL",
+      "note": "plugins CLI does not support owner/repo@name (skills CLI only)",
       "skillsSh": "https://skills.sh \u2014 listing via install telemetry after first install"
     },
     "clawhubSkills": {

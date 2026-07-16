@@ -1,7 +1,7 @@
 {
   "name": "p-image",
   "description": "Use when someone wants a fast AI image \u2014 product shots, hero visuals, mood boards, or draft photos from a text prompt.",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "author": {
     "name": "Pruna AI"
   },

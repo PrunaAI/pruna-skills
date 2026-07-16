@@ -1,5 +1,5 @@
 name: narrated-multi-scene
-version: 1.0.4
+version: 1.0.5
 type: skill
 description: Use when someone wants a multi-part story with voiceover — episodic B-roll, chaptered promo, or several linked video scenes without on-camera dialogue.
 dependencies:

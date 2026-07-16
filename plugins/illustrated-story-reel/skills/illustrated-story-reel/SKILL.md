@@ -3,7 +3,7 @@ name: illustrated-story-reel
 description: Use when someone wants a slideshow story with narration or music — picture-book style illustrated frames, not full motion video.
 license: MIT
 metadata:
-  version: "1.0.4"
+  version: "1.0.5"
 depends:
   - p-image
   - p-image-edit

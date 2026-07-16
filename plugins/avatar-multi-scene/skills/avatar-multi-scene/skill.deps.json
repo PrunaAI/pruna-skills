@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "skill": "avatar-multi-scene",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "repository": "PrunaAI/pruna-skills",
   "pluginPath": "plugins/avatar-multi-scene",
   "skillPath": "plugins/avatar-multi-scene/skills/avatar-multi-scene",

@@ -3,7 +3,7 @@ name: pruna-generative-pipeline
 description: Use when someone is unsure which production fits — need a menu for chained images, video, and audio with staged approval. Not for a single known tool call.
 license: MIT
 metadata:
-  version: "1.0.4"
+  version: "1.0.5"
 ---
 
 # Pruna generative pipeline (scenario hub)

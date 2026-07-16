@@ -1,5 +1,5 @@
 name: music-video
-version: 1.0.4
+version: 1.0.5
 type: skill
 description: Use when someone wants a full music video — original song or vocals, performance clips, B-roll, and lyric-synced edits.
 dependencies:

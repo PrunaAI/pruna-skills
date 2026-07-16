@@ -1,5 +1,5 @@
 name: visual-transition-reel
-version: 1.0.4
+version: 1.0.5
 type: skill
 description: Use when someone wants a montage with transitions between shots — action-sequence reel or multi-scene piece where narration is optional.
 dependencies:

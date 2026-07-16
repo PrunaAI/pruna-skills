@@ -3,7 +3,7 @@ name: whisperx
 description: Use when someone needs word-level lyric timestamps or cut-safe line boundaries before editing music-video clips.
 license: MIT
 metadata:
-  version: "1.0.4"
+  version: "1.0.5"
   provider: replicate
   replicate_model: victor-upmeet/whisperx
 ---

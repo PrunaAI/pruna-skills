@@ -3,7 +3,7 @@ name: avatar-single-scene
 description: Use when someone wants one polished host-on-camera beat — a speaking person with intake and approval gates before generation.
 license: MIT
 metadata:
-  version: "1.0.4"
+  version: "1.0.5"
 ---
 
 # Single-scene avatar video (Pruna only)

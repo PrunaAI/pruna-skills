@@ -1,6 +1,6 @@
 {
   "name": "@pruna-ai/illustrated-story-reel",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "type": "module",
   "license": "MIT",
   "description": "Use when someone wants a slideshow story with narration or music \u2014 picture-book style illustrated frames, not full motion video.",

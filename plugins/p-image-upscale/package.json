@@ -1,6 +1,6 @@
 {
   "name": "@pruna-ai/p-image-upscale",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "type": "module",
   "license": "MIT",
   "description": "Use when someone wants to upscale or sharpen an existing image for print, large crops, or higher-quality delivery.",

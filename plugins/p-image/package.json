@@ -1,6 +1,6 @@
 {
   "name": "@pruna-ai/p-image",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "type": "module",
   "license": "MIT",
   "description": "Use when someone wants a fast AI image \u2014 product shots, hero visuals, mood boards, or draft photos from a text prompt.",

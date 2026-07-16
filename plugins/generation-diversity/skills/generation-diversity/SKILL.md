@@ -3,7 +3,7 @@ name: generation-diversity
 description: Use when generations look generic or samey — vary seeds, prompt structure, and scenario axes before the next paid image, video, or audio call.
 license: MIT
 metadata:
-  version: "1.0.4"
+  version: "1.0.5"
   package: pruna-skills
   tier: guide
 ---

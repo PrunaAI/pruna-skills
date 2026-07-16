@@ -3,7 +3,7 @@ name: p-video
 description: Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts.
 license: MIT
 metadata:
-  version: "1.0.4"
+  version: "1.0.5"
   pruna_model: p-video
 ---
 

@@ -1,7 +1,7 @@
 {
   "name": "pruna-generative-pipeline",
   "description": "Use when someone is unsure which production fits \u2014 need a menu for chained images, video, and audio with staged approval. Not for a single known tool call.",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "author": {
     "name": "Pruna AI"
   },

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "skill": "image-to-video",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "repository": "PrunaAI/pruna-skills",
   "pluginPath": "plugins/image-to-video",
   "skillPath": "plugins/image-to-video/skills/image-to-video",

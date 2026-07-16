@@ -3,7 +3,7 @@ name: generation-quality-checklists
 description: Use when reviewing generated images, videos, or audio before shipping — run the quality checklists before asking for approval.
 license: MIT
 metadata:
-  version: "1.0.4"
+  version: "1.0.5"
   package: pruna-skills
   tier: guide
 ---

@@ -3,7 +3,7 @@ name: p-image-try-on
 description: Use when someone wants virtual try-on — dress a person in clothes from reference photos for fashion or ecommerce.
 license: MIT
 metadata:
-  version: "1.0.4"
+  version: "1.0.5"
   pruna_model: p-image-try-on
 ---
 

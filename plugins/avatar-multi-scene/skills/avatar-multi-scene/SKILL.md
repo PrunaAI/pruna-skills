@@ -3,7 +3,7 @@ name: avatar-multi-scene
 description: Use when someone wants the same person hosting several clips — multi-segment UGC, comparison reels, or mixed speaking and animated scenes with continuity.
 license: MIT
 metadata:
-  version: "1.0.4"
+  version: "1.0.5"
 depends:
   - p-image
   - p-image-edit

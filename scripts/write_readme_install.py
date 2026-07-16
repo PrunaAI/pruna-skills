@@ -26,18 +26,33 @@ def body(name: str) -> str:
 
 ## Install
 
+**Skills CLI** (copy-paste):
+
 ```bash
 npx skills add {GITHUB}@{name} -y
 ```
 
-For a workflow with embedded tool dependencies, prefer:
+**Plugins CLI** (workflow bundles with deps — pick from the list):
 
 ```bash
-npx plugins add {GITHUB} -y
-# pick {name}
+npx plugins add {GITHUB}
+# when prompted, select: {name}
 ```
 
-List all skills: `npx skills add {GITHUB} -l`
+Do **not** use `npx plugins add {GITHUB}@{name}` — the plugins CLI has no `@name` filter (that’s skills only) and prints “No plugins found”.
+
+**Claude Code:**
+
+```text
+/plugin marketplace add {GITHUB}
+/plugin install {name}@pruna-skills
+```
+
+List all skills:
+
+```bash
+npx skills add {GITHUB} -l
+```
 
 After install, start a **new chat**. See the [root README](../../../README.md).
 

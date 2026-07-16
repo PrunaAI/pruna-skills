@@ -2,40 +2,88 @@
 
 ![Pruna Skills — images, video, music, explainers, avatars, and workflows for agent coding tools](docs/assets/readme-hero-pruna-skills.png)
 
-Generate images, video, and audio with the [Pruna AI API](https://docs.api.pruna.ai/guides/models), plus multi-step workflows (explainers, music videos, avatars). Skills follow the [Agent Skills](https://agentskills.io/specification) format and work across Cursor, Claude Code, Copilot, Codex, and [many more agents](https://skills.sh).
+Generate images, video, and audio with the [Pruna AI API](https://docs.api.pruna.ai/guides/models), plus multi-step workflows like explainers, music videos, and avatars. Skills follow the [Agent Skills](https://agentskills.io/specification) format and work in Cursor, Claude Code, Copilot, Codex, and [many more agents](https://skills.sh).
 
-**Default install:** `npx skills` for one capability, `npx plugins` for a workflow (deps included). Browse the catalog on [skills.sh](https://skills.sh) after installs land there (listing is telemetry-driven — see team bootstrap in [BACKLOG.md](BACKLOG.md)).
+## How this works
+
+A **skill** is a short playbook (`SKILL.md`) your coding agent picks up when you ask for something it knows how to do — make an image, edit a photo, build a music video, and so on.
+
+A **plugin** is how you install that playbook. For a single tool it’s basically one skill. For a bigger production it also brings the helpers along (image gen, TTS, video, and the rest) so you’re not hunting missing pieces.
+
+What’s in the box:
+
+- **Tools** — one paid API call: images, edits, upscales, try-on, a short clip, voiceover, a song, lyric timing
+- **Guides** — prompting tips, quality checks, recipe ideas — nothing that spends API credits
+- **Workflows** — full productions that chain tools together (music video, explainer, avatar reel, narrated story…). Most of them pause for your OK before the expensive steps
+- **Routers** — shortcuts when you want a quick one-off (`pruna-run`), help choosing a pipeline (`pruna-generative-pipeline`), or a gate before spend (`requesting-generation-feedback`)
+
+**Rule of thumb:** `npx skills` for one tool or guide. `npx plugins` for a workflow or the whole suite. Don’t install the same tool twice — once alone and again inside a workflow plugin.
+
+### Where you get them
+
+Everything lives on [GitHub](https://github.com/PrunaAI/pruna-skills). We tag releases as `skills-v*`. Day to day you pull with `npx skills` or `npx plugins` — there’s no separate Cursor or Claude app-store submit.
+
+- **[skills.sh](https://skills.sh)** — public catalog for the skills CLI. It shows packages based on real installs, so a few team installs help us show up there.
+- **ClawHub / OpenClaw** — optional if you already use OpenClaw (`clawhub install @PrunaAI/…`). CI publishes on each tag.
+- **Claude marketplace** — same repo. Add `PrunaAI/pruna-skills` once, then `/plugin install name@pruna-skills`.
 
 ## Quickstart
 
+Set your key, then pick a path:
+
 ```bash
 export PRUNA_API_KEY="your_key"   # see [api-setup.md](api-setup.md)
+```
+
+**Try one tool**
+
+```bash
 npx skills add PrunaAI/pruna-skills@p-image -y
 ```
 
-Then open a **new chat** and try: "Generate a product hero still with p-image."
+Open a new chat and say: `Generate a product hero image`
 
-| Goal | Command |
-|------|---------|
-| One tool or guide | `npx skills add PrunaAI/pruna-skills@<name> -y` |
-| One workflow (deps bundled) | `npx plugins add PrunaAI/pruna-skills -y` → pick the workflow |
-| List everything | `npx skills add PrunaAI/pruna-skills -l` |
-| Full suite (`pruna-full`) | `npx plugins add PrunaAI/pruna-skills -y` → pick `pruna-full` |
+**Try a workflow or the full suite**
 
-**pruna-full** installs all 26 skills. Multi-scene workflows use **staged approval** (plan → stills → clips before paid video) via `requesting-generation-feedback`, and **parallel subagents per scene lane** after you confirm — the parent agent merges results.
+```bash
+npx plugins add PrunaAI/pruna-skills
+```
 
-**Skill vs plugin:** use **skills** for a single tool/guide; use **plugins** for workflows so embedded tools (`p-image`, TTS, …) come with it. Don't install the same tools twice (standalone + inside a workflow plugin).
+When the list appears, pick `music-video` or `pruna-full`.
 
-### Start here
+**Install everything**
 
-- Try one tool → `npx skills add PrunaAI/pruna-skills@p-image -y`
-- One workflow → `npx plugins add PrunaAI/pruna-skills -y` → pick `music-video`
-- Full suite → pick `pruna-full` (staged approval + parallel subagents after you confirm)
+```bash
+npx plugins add PrunaAI/pruna-skills -y
+```
 
-Not sure which skill? See [Choosing what to install](#choosing-what-to-install). Review skills before enabling them in untrusted repos — [agent safety](references/shared/agent-safety.md).
+**Browse what’s available**
+
+```bash
+npx skills add PrunaAI/pruna-skills -l
+npx plugins discover PrunaAI/pruna-skills
+```
+
+One gotcha: the plugins CLI doesn’t take `@name` the way skills does. This fails with “No plugins found”:
+
+```bash
+npx plugins add PrunaAI/pruna-skills@pruna-full
+```
+
+Use the picker above instead, or in Claude Code:
+
+```text
+/plugin marketplace add PrunaAI/pruna-skills
+/plugin install pruna-full@pruna-skills
+```
+
+`pruna-full` gives you all 26 skills. On multi-scene work it asks you to approve the plan, then stills, then clips before paid video — you stay in control of spend.
+
+Not sure what to install? See [Choosing what to install](#choosing-what-to-install). And skim [agent safety](references/shared/agent-safety.md) before enabling skills in untrusted repos.
 
 ## Contents
 
+- [How this works](#how-this-works)
 - [Quickstart](#quickstart)
 - [Choosing what to install](#choosing-what-to-install)
 - [Install skills (`npx skills`)](#install-skills-npx-skills)
@@ -49,15 +97,13 @@ Not sure which skill? See [Choosing what to install](#choosing-what-to-install).
 
 ## Choosing what to install
 
-**Team default:** start with the Quickstart table; open [README.skills.md](README.skills.md) only when you need the full catalog.
-
-Three tiers:
+Start with Quickstart if you’re new. Come back here when you know roughly what you need. The full catalog lives in [README.skills.md](README.skills.md).
 
 | Tier | What it is | Install with |
 |------|------------|--------------|
-| **Tools** | One paid API call (image, video, audio) | `npx skills` |
-| **Guides** | Prompting / quality / routing — no API | `npx skills` |
-| **Workflows** | Multi-step pipelines with tool deps | Prefer `npx plugins` |
+| **Tools** | One paid API call — image, video, or audio | `npx skills` |
+| **Guides** | Prompting, quality, routing — no API | `npx skills` |
+| **Workflows** | Multi-step productions with tool deps | Prefer `npx plugins` |
 
 ### Tools
 
@@ -69,8 +115,8 @@ Three tiers:
 | Upscale | `p-image-upscale` | `npx skills add PrunaAI/pruna-skills@p-image-upscale -y` |
 | One video clip | `p-video` | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 | Motion-transfer | `p-video-animate` | `npx skills add PrunaAI/pruna-skills@p-video-animate -y` |
-| Talking-head | `p-video-avatar` | `npx skills add PrunaAI/pruna-skills@p-video-avatar -y` |
-| Swap person/product in video | `p-video-replace` | `npx skills add PrunaAI/pruna-skills@p-video-replace -y` |
+| Person on camera speaking | `p-video-avatar` | `npx skills add PrunaAI/pruna-skills@p-video-avatar -y` |
+| Swap person or product in video | `p-video-replace` | `npx skills add PrunaAI/pruna-skills@p-video-replace -y` |
 | Narration / voiceover | `gemini-3.1-flash-tts` | `npx skills add PrunaAI/pruna-skills@gemini-3.1-flash-tts -y` |
 | Song with vocals | `music-2.5` | `npx skills add PrunaAI/pruna-skills@music-2.5 -y` |
 | Background music bed | `stable-audio-2.5` | `npx skills add PrunaAI/pruna-skills@stable-audio-2.5 -y` |
@@ -86,24 +132,52 @@ Three tiers:
 
 ### Workflows
 
-Routers (skills-only is enough):
+#### Routers
 
-| You want… | Skill |
-|-----------|-------|
-| Quick single shot | `npx skills add PrunaAI/pruna-skills@pruna-run -y` |
-| Unsure which workflow | `npx skills add PrunaAI/pruna-skills@pruna-generative-pipeline -y` |
-| Sign-off before paid calls | `npx skills add PrunaAI/pruna-skills@requesting-generation-feedback -y` |
+| You want… | Skill | Install |
+|-----------|-------|---------|
+| Quick single shot | `pruna-run` | `npx skills add PrunaAI/pruna-skills@pruna-run -y` |
+| Help choosing a workflow | `pruna-generative-pipeline` | `npx skills add PrunaAI/pruna-skills@pruna-generative-pipeline -y` |
+| Sign-off before paid calls | `requesting-generation-feedback` | `npx skills add PrunaAI/pruna-skills@requesting-generation-feedback -y` |
 
-Core and verticals — install with **plugins** so dependencies are included:
+#### Core
+
+These are multi-step. Plugins are the nicer install because the tools come with them. Skills install is fine if you already have the pieces.
+
+| You want… | Skill | Install |
+|-----------|-------|---------|
+| One narrated scene or B-roll from images | `image-to-video` | `npx skills add PrunaAI/pruna-skills@image-to-video -y` |
+| Multi-part story with voiceover | `narrated-multi-scene` | `npx skills add PrunaAI/pruna-skills@narrated-multi-scene -y` |
+| Montage with transitions | `visual-transition-reel` | `npx skills add PrunaAI/pruna-skills@visual-transition-reel -y` |
+| One host-on-camera beat | `avatar-single-scene` | `npx skills add PrunaAI/pruna-skills@avatar-single-scene -y` |
+| Same person hosting several clips | `avatar-multi-scene` | `npx skills add PrunaAI/pruna-skills@avatar-multi-scene -y` |
+
+#### Verticals
+
+| You want… | Skill | Install |
+|-----------|-------|---------|
+| Explainer with host and characters | `interactive-explainer` | `npx skills add PrunaAI/pruna-skills@interactive-explainer -y` |
+| Full music video | `music-video` | `npx skills add PrunaAI/pruna-skills@music-video -y` |
+| Slideshow story with narration | `illustrated-story-reel` | `npx skills add PrunaAI/pruna-skills@illustrated-story-reel -y` |
+
+#### Full suite
+
+| You want… | Plugin | Install |
+|-----------|--------|---------|
+| Everything | `pruna-full` | `npx plugins add PrunaAI/pruna-skills` then pick `pruna-full` |
+
+To install a workflow with its dependencies in one go:
+
+```bash
+npx plugins add PrunaAI/pruna-skills
+# pick music-video, avatar-multi-scene, pruna-full, …
+```
+
+Or grab every plugin:
 
 ```bash
 npx plugins add PrunaAI/pruna-skills -y
-# pick: image-to-video | avatar-single-scene | avatar-multi-scene |
-#       narrated-multi-scene | visual-transition-reel |
-#       illustrated-story-reel | interactive-explainer | music-video | pruna-full
 ```
-
-Or as skills only (no embedded deps): `npx skills add PrunaAI/pruna-skills@music-video -y`
 
 <!-- BEGIN README.skills.md -->
 <!-- generated by scripts/write_readme_skills_section.py; do not edit -->
@@ -176,29 +250,48 @@ Or as skills only (no embedded deps): `npx skills add PrunaAI/pruna-skills@music
 
 ## Install skills (`npx skills`)
 
-The [skills CLI](https://github.com/vercel-labs/skills) installs `SKILL.md` folders into your agent (Cursor, Codex, Claude Code, Copilot, and [more](https://skills.sh)).
+The [skills CLI](https://github.com/vercel-labs/skills) drops `SKILL.md` folders into your agent (Cursor, Codex, Claude Code, Copilot, and [more](https://skills.sh)).
 
 ```bash
-npx skills add PrunaAI/pruna-skills -l              # list
-npx skills add PrunaAI/pruna-skills@p-image -y      # one tool
-npx skills add PrunaAI/pruna-skills@music-video -y  # one workflow (skills only)
+npx skills add PrunaAI/pruna-skills -l
+npx skills add PrunaAI/pruna-skills@p-image -y
+npx skills add PrunaAI/pruna-skills@music-video -y
 ```
 
-After install, start a **new chat**. Discoverability on [skills.sh](https://skills.sh) follows install telemetry — no separate submit step.
+After install, start a **new chat**. Listing on [skills.sh](https://skills.sh) follows install telemetry — no separate submit step.
 
 ---
 
 ## Install plugins (`npx plugins`)
 
-The [plugins CLI](https://github.com/vercel-labs/plugins) installs full bundles (manifest + skills + workflow deps) into Claude Code, Cursor, Copilot CLI, VS Code, Codex, and others.
+The [plugins CLI](https://github.com/vercel-labs/plugins) installs full bundles — manifest, skills, and workflow deps — into Claude Code, Cursor, Copilot CLI, VS Code, Codex, and others.
 
 ```bash
 npx plugins discover PrunaAI/pruna-skills
-npx plugins add PrunaAI/pruna-skills -y              # interactive picker
-npx plugins add PrunaAI/pruna-skills -y --target cursor
+
+# pick one from the list, e.g. music-video or pruna-full
+npx plugins add PrunaAI/pruna-skills
+
+# install all 27 plugins
+npx plugins add PrunaAI/pruna-skills -y
+
+npx plugins add PrunaAI/pruna-skills --target cursor
 ```
 
-Each folder under `plugins/<name>/` is one plugin.
+Unlike skills, plugins doesn’t understand `@name`. This fails:
+
+```bash
+npx plugins add PrunaAI/pruna-skills@pruna-full
+```
+
+In Claude Code you can name the plugin directly:
+
+```text
+/plugin marketplace add PrunaAI/pruna-skills
+/plugin install pruna-full@pruna-skills
+```
+
+Each folder under `plugins/<name>/` is one plugin. Workflow plugins embed their tools — for example `music-video` includes `p-image`, `p-video`, TTS, and friends.
 
 ---
 
