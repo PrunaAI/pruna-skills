@@ -42,38 +42,20 @@ After install, start a **new chat**. Multi-scene workflows pause for you to revi
 
 ### Example — one image, then a three-step chain
 
-<details>
-<summary><strong>Step 1 — <code>p-image</code></strong></summary>
+**Ask your agent** (one message — the skills chain the steps):
 
-> Create an image of a red panda as barista.
+> Create an image of a red panda as a barista in a Kyoto café. Edit the same panda into an astronaut on Mars — keep pose and framing. Then chain the start and end plates into a 10-second video clip.
 
-![red panda barista](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-panda-01-open.png)
+| Step 1 · `p-image` | Step 2 · `p-image-edit` | Step 3 · `p-video` |
+|--------------------|---------------------------|---------------------|
+| Kyoto café | Same panda on Mars | 10s clip |
+| ![café](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-panda-01-open.png) | ![Mars](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-panda-02-end.png) | <video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-panda-clip.mp4" controls width="200"></video> |
 
 ```bash
 npx skills add PrunaAI/pruna-skills@p-image -y
-```
-
-</details>
-
-<details>
-<summary><strong>Steps 2–3 — <code>p-image-edit</code> + <code>p-video</code></strong></summary>
-
-> Edit the image and make sure the panda becomes an astronaut, then chain the images together with a video.
-
-| Kyoto café | Same panda on Mars |
-|------------|-------------------|
-| ![café](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-panda-01-open.png) | ![Mars](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-panda-02-end.png) |
-
-```bash
 npx skills add PrunaAI/pruna-skills@p-image-edit -y
 npx skills add PrunaAI/pruna-skills@p-video -y
 ```
-
-</details>
-
-**Final clip** — start plate → end plate → 10s motion:
-
-<video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-panda-clip.mp4" controls width="480"></video>
 
 Or install a workflow plugin that bundles the tools — e.g. `npx plugins add PrunaAI/pruna-skills` → pick `visual-transition-reel` or **`pruna-full`**.
 
