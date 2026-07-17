@@ -24,38 +24,48 @@ Every skill ships with shared generation policy (diversity, QA, staged approvals
 export PRUNA_API_KEY="your_key"   # see [api-setup.md](docs/api-setup.md)
 
 npx skills add PrunaAI/pruna-skills@p-image -y          # one tool
-npx plugins add PrunaAI/pruna-skills                    # pick music-video, pruna-full, …
-npx skills add PrunaAI/pruna-skills -l                  # list skills
+npx plugins add PrunaAI/pruna-skills                    # pick a workflow or pruna-full
+npx skills add PrunaAI/pruna-skills -l                  # list tools
 npx plugins discover PrunaAI/pruna-skills               # list plugins
 ```
 
-The plugins CLI has no `@name` filter (that’s skills-only). So `npx plugins add PrunaAI/pruna-skills@pruna-full` won’t work — use the picker, or in Claude Code:
+**Install everything once** — pick **`pruna-full`** in the plugin picker (all 20 skills, no overlap). The plugins CLI has no `@name` filter; in Claude Code:
 
 ```text
 /plugin marketplace add PrunaAI/pruna-skills
 /plugin install pruna-full@pruna-skills
 ```
 
-Prefer **`pruna-full`** over `npx plugins add … -y` if you want everything once; `-y` installs every plugin package and overlaps tools.
+Don’t run `npx plugins add … -y` for the whole repo — that installs 21 overlapping packages.
 
-Multi-scene workflows pause for plan → stills → clips before paid video. Skim [agent safety](references/shared/agent-safety.md) before enabling skills in untrusted repos. After install, start a **new chat**.
+After install, start a **new chat**. Multi-scene workflows pause for you to review the plan and images before generating video. Skim [agent safety](references/shared/agent-safety.md) before enabling skills in untrusted repos.
 
-## Examples
+### Example — one image, then a three-step chain
 
-### Tool — `p-image`
+**Step 1 — `p-image`** (one tool):
 
-| | |
-|--|--|
-| **You say** | “Generate a 9:16 product hero — matte black headphones on concrete, soft side light” |
-| **You get** | One image file or URL |
+> Create an image of a red panda as barista.
 
-### Workflow — `music-video`
+![red panda barista](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-panda-01-open.png)
 
-```text
-plan.json → song.mp3 → stills/*.jpg → clips/*.mp4 → final.mp4
+```bash
+npx skills add PrunaAI/pruna-skills@p-image -y
 ```
 
-Install: `npx plugins add PrunaAI/pruna-skills` → pick `music-video`. Template: [music-video-plan.template.json](workflows/music-video/templates/music-video-plan.template.json).
+> Edit the image and make sure the panda becomes and astronaut then chain the images together with a video.
+
+| Kyoto café | Same panda on Mars | 10s clip |
+|------------|-------------------|---------|
+| ![café](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-panda-01-open.png) | ![Mars](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-panda-02-end.png) | <video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-panda-clip.mp4" controls width="200"></video> |
+
+```bash
+npx skills add PrunaAI/pruna-skills@p-image-edit -y
+npx skills add PrunaAI/pruna-skills@p-video -y
+```
+
+Or install a workflow plugin that bundles the tools — e.g. `npx plugins add PrunaAI/pruna-skills` → pick `visual-transition-reel` or **`pruna-full`**.
+
+More examples — each a different scenario: [docs/EXAMPLES.md](docs/EXAMPLES.md).
 
 ## What’s available
 
@@ -64,38 +74,55 @@ Install: `npx plugins add PrunaAI/pruna-skills` → pick `music-video`. Template
 | You want… | Skill |
 |-----------|-------|
 | Fast text-to-image | `p-image` |
-| Edit / compose from refs | `p-image-edit` |
+| Edit or combine from reference photos | `p-image-edit` |
 | Virtual try-on | `p-image-try-on` |
 | Upscale | `p-image-upscale` |
 | One video clip | `p-video` |
-| Motion-transfer | `p-video-animate` |
+| Copy motion from one video to another | `p-video-animate` |
 | Person on camera speaking | `p-video-avatar` |
 | Swap person or product in video | `p-video-replace` |
-| Narration / voiceover | `gemini-3.1-flash-tts` |
+| Narration (text to speech) | `gemini-3.1-flash-tts` |
 | Song with vocals | `music-2.5` |
-| Background music bed | `stable-audio-2.5` |
+| Background music (no vocals) | `stable-audio-2.5` |
 | Lyric timestamps | `whisperx` |
 
-`npx skills add PrunaAI/pruna-skills@<name> -y`
+```bash
+npx skills add PrunaAI/pruna-skills@<name> -y    # e.g. @p-image, @p-video, @music-2.5
+```
 
 ### Workflows (8)
 
 | You want… | Skill |
 |-----------|-------|
-| B-roll from images | `image-to-video` |
-| Multi-part story with VO | `narrated-multi-scene` |
-| Transition montage | `visual-transition-reel` |
-| One host beat | `avatar-single-scene` |
-| Multi-scene host | `avatar-multi-scene` |
+| Turn images into video clips | `image-to-video` |
+| Multi-part story with narration | `narrated-multi-scene` |
+| Scene-to-scene transition montage | `visual-transition-reel` |
+| One short presenter clip | `avatar-single-scene` |
+| Presenter across several scenes | `avatar-multi-scene` |
 | Educational explainer | `interactive-explainer` |
 | Full music video | `music-video` |
 | Illustrated slideshow reel | `illustrated-story-reel` |
 
-`npx plugins add PrunaAI/pruna-skills` → pick the workflow. Each workflow plugin embeds the tools it needs.
+```bash
+npx plugins add PrunaAI/pruna-skills   # pick a workflow from the list
+```
 
-### Full suite
+Each workflow plugin includes the tools it needs — you don’t install those separately.
 
-**`pruna-full`** — all 20 skills in one plugin.
+### Full suite — `pruna-full`
+
+All 20 skills (12 tools + 8 workflows) in one plugin. Best if you want the whole library without picking individual packages.
+
+```bash
+npx plugins add PrunaAI/pruna-skills   # pick pruna-full
+```
+
+Claude Code:
+
+```text
+/plugin marketplace add PrunaAI/pruna-skills
+/plugin install pruna-full@pruna-skills
+```
 
 ## Other install channels
 
@@ -121,6 +148,7 @@ references/shared|image|…        → copied when listed in skill.manifest.json
 | [`references/`](references/README.md) | Shared specs for authors/bundler — not a catalog tier |
 | `plugins/` | Generated install bundles (21 plugins) |
 | `docs/SKILL-CATALOG.md` | Generated catalog |
+| `docs/EXAMPLES.md` | Prompt → image/video gallery (HF dataset + local sidecars) |
 | `docs/WORKFLOW-RECIPES.md` | Human recipe routing |
 
 Maintainers: `make bundle && make verify && make validate` — [CONTRIBUTING.md](CONTRIBUTING.md).

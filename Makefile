@@ -1,4 +1,4 @@
-.PHONY: bundle bundle-skill verify validate publish release skills-sh readme smoke
+.PHONY: bundle bundle-skill verify validate validate-doc-examples publish release skills-sh readme smoke upload-doc-examples-hf download-doc-examples-hf doc-examples-urls sync-doc-examples-hf
 
 bundle:
 	./.maintainer/bundle_all_skills.sh
@@ -29,3 +29,20 @@ skills-sh:
 readme:
 	python3 .maintainer/write_readme_skills_section.py
 	python3 .maintainer/write_readme_install.py
+
+validate-doc-examples:
+	python3 .maintainer/validate_doc_examples.py
+
+doc-examples:
+	python3 .maintainer/generate_doc_examples.py
+
+upload-doc-examples-hf:
+	python3 .maintainer/upload_doc_examples_hf.py
+
+download-doc-examples-hf:
+	python3 .maintainer/download_doc_examples_hf.py
+
+doc-examples-urls:
+	python3 .maintainer/rewrite_doc_examples_urls.py
+
+sync-doc-examples-hf: upload-doc-examples-hf doc-examples-urls

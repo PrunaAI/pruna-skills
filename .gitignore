@@ -223,3 +223,7 @@ output/
 .mine/tools/
 .agents/
 plugins/*/reports/
+
+# Doc examples — canonical copy on HF dataset PrunaAI/pruna-skills (make download-doc-examples-hf)
+docs/assets/examples/*
+!docs/assets/examples/.gitkeep
