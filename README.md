@@ -46,27 +46,10 @@ After install, start a **new chat**. Multi-scene workflows pause for you to revi
 
 > Create an image of a red panda as a barista in a Kyoto café. Edit the same panda into an astronaut on Mars — keep pose and framing. Then chain the start and end plates into a 10-second video clip.
 
-<table>
-  <thead>
-    <tr>
-      <th>Step 1 · <code>p-image</code></th>
-      <th>Step 2 · <code>p-image-edit</code></th>
-      <th>Step 3 · <code>p-video</code></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td align="center">Kyoto café</td>
-      <td align="center">Same panda on Mars</td>
-      <td align="center">10s clip</td>
-    </tr>
-    <tr>
-      <td align="center"><img src="docs/assets/examples/quickstart-panda-01-open.png" width="200" alt="Red panda barista in Kyoto café"></td>
-      <td align="center"><img src="docs/assets/examples/quickstart-panda-02-end.png" width="200" alt="Same red panda as astronaut on Mars"></td>
-      <td align="center"><video src="docs/assets/examples/quickstart-panda-clip.mp4" controls width="200"></video></td>
-    </tr>
-  </tbody>
-</table>
+| Step 1 · `p-image` | Step 2 · `p-image-edit` | Step 3 · `p-video` |
+| :-: | :-: | :-: |
+| Kyoto café | Same panda on Mars | 10s clip |
+| ![Red panda barista in Kyoto café](docs/assets/examples/quickstart-panda-01-open.png) | ![Same red panda as astronaut on Mars](docs/assets/examples/quickstart-panda-02-end.png) | <video src="docs/assets/examples/quickstart-panda-clip.mp4" width="200" controls></video> |
 
 ```bash
 npx skills add PrunaAI/pruna-skills@p-image -y
