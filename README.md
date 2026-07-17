@@ -42,7 +42,8 @@ After install, start a **new chat**. Multi-scene workflows pause for you to revi
 
 ### Example — one image, then a three-step chain
 
-**Step 1 — `p-image`** (one tool):
+<details>
+<summary><strong>Step 1 — <code>p-image</code></strong></summary>
 
 > Create an image of a red panda as barista.
 
@@ -52,16 +53,27 @@ After install, start a **new chat**. Multi-scene workflows pause for you to revi
 npx skills add PrunaAI/pruna-skills@p-image -y
 ```
 
-> Edit the image and make sure the panda becomes and astronaut then chain the images together with a video.
+</details>
 
-| Kyoto café | Same panda on Mars | 10s clip |
-|------------|-------------------|---------|
-| ![café](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-panda-01-open.png) | ![Mars](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-panda-02-end.png) | <video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-panda-clip.mp4" controls width="200"></video> |
+<details>
+<summary><strong>Steps 2–3 — <code>p-image-edit</code> + <code>p-video</code></strong></summary>
+
+> Edit the image and make sure the panda becomes an astronaut, then chain the images together with a video.
+
+| Kyoto café | Same panda on Mars |
+|------------|-------------------|
+| ![café](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-panda-01-open.png) | ![Mars](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-panda-02-end.png) |
 
 ```bash
 npx skills add PrunaAI/pruna-skills@p-image-edit -y
 npx skills add PrunaAI/pruna-skills@p-video -y
 ```
+
+</details>
+
+**Final clip** — start plate → end plate → 10s motion:
+
+<video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-panda-clip.mp4" controls width="480"></video>
 
 Or install a workflow plugin that bundles the tools — e.g. `npx plugins add PrunaAI/pruna-skills` → pick `visual-transition-reel` or **`pruna-full`**.
 

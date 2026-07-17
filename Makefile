@@ -45,4 +45,7 @@ download-doc-examples-hf:
 doc-examples-urls:
 	python3 .maintainer/rewrite_doc_examples_urls.py
 
+format-examples-md:
+	python3 .maintainer/format_examples_md.py
+
 sync-doc-examples-hf: upload-doc-examples-hf doc-examples-urls

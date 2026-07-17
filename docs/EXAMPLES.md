@@ -2,7 +2,7 @@
 
 Real prompts and outputs from the Pruna API — hosted on the [`PrunaAI/pruna-skills` Hugging Face dataset](https://huggingface.co/datasets/PrunaAI/pruna-skills) (`examples/`). Each PNG or MP4 has a matching `.meta.json` with the exact prompt and model (audio/JSON sidecars where noted). Example binaries are **not** in git; pull locally with `make download-doc-examples-hf` or regenerate with `make doc-examples`.
 
-**Ask your agent** lines are natural-language requests that load that tool or workflow. Model prompts are what hit the API.
+**Ask your agent** lines are natural-language requests that load that tool or workflow. Model prompts are what hit the API. Open **Prompts & inputs** on each card to expand — outputs (images, clips, audio) stay visible.
 
 Regenerate locally: `make doc-examples` or `python3 .maintainer/generate_doc_examples.py` (requires `PRUNA_API_KEY`; Replicate tools/workflows also need `REPLICATE_API_TOKEN`). To fill in only new examples without wiping existing assets: `python3 .maintainer/generate_doc_examples.py --only missing-tools --missing-only`.
 
@@ -15,6 +15,8 @@ Images use max P-API resolution (1440px edge); videos use final **1080p @ 24fps*
 The [README quickstart](../README.md#quickstart) walks through the **red panda café → Mars** chain (`quickstart-panda-*` assets on the dataset).
 
 ## Coverage
+
+
 
 | Skill | Example asset | Section |
 |-------|---------------|---------|
@@ -43,6 +45,8 @@ The [README quickstart](../README.md#quickstart) walks through the **red panda c
 
 ## Install
 
+
+
 ```bash
 export PRUNA_API_KEY="your_key"   # see [api-setup.md](api-setup.md)
 
@@ -60,6 +64,13 @@ npx plugins discover PrunaAI/pruna-skills
 
 ## Single tool — `p-image`
 
+**Output**
+
+![brass hummingbird terrarium](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/p-image-brass-hummingbird.png)
+
+<details>
+<summary>Prompts & inputs</summary>
+
 **Ask your agent**
 
 > Generate a 1:1 museum-style product photo of a clockwork brass hummingbird in a glass terrarium.
@@ -68,7 +79,7 @@ npx plugins discover PrunaAI/pruna-skills
 
 > 1:1 macro product photo, clockwork brass hummingbird frozen mid-flap inside a glass terrarium, tiny gears visible, dew on glass, moody forest bokeh background, museum exhibit lighting, no text
 
-![brass hummingbird terrarium](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/p-image-brass-hummingbird.png)
+</details>
 
 ```bash
 npx skills add PrunaAI/pruna-skills@p-image -y
@@ -77,6 +88,13 @@ npx skills add PrunaAI/pruna-skills@p-image -y
 ---
 
 ## Single tool — `p-image-edit`
+
+**Output**
+
+![monarch wings open](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-02-end.png)
+
+<details>
+<summary>Prompts & inputs</summary>
 
 **Ask your agent**
 
@@ -88,7 +106,7 @@ Reuses the opening plate from the [monarch chain](#chain--monarch-on-lavender).
 
 > Same butterfly same lavender same camera. Wings open wide displaying full orange and black pattern, same dew and bokeh, keep composition identical…
 
-![monarch wings open](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-02-end.png)
+</details>
 
 ```bash
 npx skills add PrunaAI/pruna-skills@p-image-edit -y
@@ -98,13 +116,20 @@ npx skills add PrunaAI/pruna-skills@p-image-edit -y
 
 ## Single tool — `p-image-upscale`
 
+**Output**
+
+![upscaled hummingbird](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/p-image-upscale-hummingbird.png)
+
+<details>
+<summary>Prompts & inputs</summary>
+
 **Ask your agent**
 
 > Upscale the brass hummingbird product shot for print — more detail, 8 megapixel target.
 
 Upscaled from [`p-image-brass-hummingbird.png`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/p-image-brass-hummingbird.png) (`target: 8`, `enhance_details: true`).
 
-![upscaled hummingbird](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/p-image-upscale-hummingbird.png)
+</details>
 
 ```bash
 npx skills add PrunaAI/pruna-skills@p-image-upscale -y
@@ -114,13 +139,20 @@ npx skills add PrunaAI/pruna-skills@p-image-upscale -y
 
 ## Single tool — `p-image-try-on`
 
+**Output**
+
+![try-on drummer](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/p-image-try-on-drummer.png)
+
+<details>
+<summary>Prompts & inputs</summary>
+
 **Ask your agent**
 
 > Put this vintage red garage band jacket on the drummer portrait — keep pose and background.
 
 Person plate: [`music-video-garage-drummer.png`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/music-video-garage-drummer.png) · Garment flat-lay: [`p-image-try-on-garage-jacket.png`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/p-image-try-on-garage-jacket.png)
 
-![try-on drummer](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/p-image-try-on-drummer.png)
+</details>
 
 ```bash
 npx skills add PrunaAI/pruna-skills@p-image-try-on -y
@@ -130,17 +162,26 @@ npx skills add PrunaAI/pruna-skills@p-image-try-on -y
 
 ## Single tool — `p-video`
 
+**Output — three patterns**
+
+| Still → clip | Start/end plates | Narration-led (Mode B) |
+|--------------|------------------|------------------------|
+| <video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/image-to-video-aurora-clip.mp4" controls width="240"></video> | <video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-clip.mp4" controls width="240"></video> | <video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/illustrated-library-whale-reel.mp4" controls width="240"></video> |
+
+<details>
+<summary>Prompts & inputs</summary>
+
 **Ask your agent**
 
 > Animate a still into video — with optional end plate, fixed duration, or narration driving length.
-
-Three checked-in patterns:
 
 | Pattern | Example | Key inputs |
 |---------|---------|------------|
 | **Still → clip** (duration) | [`image-to-video-aurora-clip.mp4`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/image-to-video-aurora-clip.mp4) | `image` + `prompt` + `duration` |
 | **Start/end plates** | [`chain-monarch-clip.mp4`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-clip.mp4) | `image` + `last_frame_image` + `duration` |
 | **Narration-led** (Mode B) | [`illustrated-library-whale-reel.mp4`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/illustrated-library-whale-reel.mp4) | `image` + `audio` + `save_audio: true` — **omit `duration`** |
+
+</details>
 
 ```bash
 npx skills add PrunaAI/pruna-skills@p-video -y
@@ -150,13 +191,20 @@ npx skills add PrunaAI/pruna-skills@p-video -y
 
 ## Single tool — `p-video-avatar`
 
+**Output**
+
+<video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/music-video-garage-drummer-clip.mp4" controls width="360"></video>
+
+<details>
+<summary>Prompts & inputs</summary>
+
 **Ask your agent**
 
 > Make the garage drummer sing along to this song slice — lip sync to the vocal track.
 
 Same clip as the [music-video](#workflow--music-video) performance beat — reuses [`music-video-garage-drummer-song.mp3`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/music-video-garage-drummer-song.mp3) slice.
 
-<video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/music-video-garage-drummer-clip.mp4" controls width="360"></video>
+</details>
 
 ```bash
 npx skills add PrunaAI/pruna-skills@p-video-avatar -y
@@ -165,6 +213,13 @@ npx skills add PrunaAI/pruna-skills@p-video-avatar -y
 ---
 
 ## Single tool — `p-video-animate`
+
+**Output**
+
+<video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/p-video-animate-monarch.mp4" controls width="640"></video>
+
+<details>
+<summary>Prompts & inputs</summary>
 
 **Ask your agent**
 
@@ -179,7 +234,7 @@ Motion transfer needs **matched framing and pose**: appearance from the still, c
 
 No `instruction_prompt` — source motion already opens the wings.
 
-<video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/p-video-animate-monarch.mp4" controls width="640"></video>
+</details>
 
 ```bash
 npx skills add PrunaAI/pruna-skills@p-video-animate -y
@@ -188,6 +243,13 @@ npx skills add PrunaAI/pruna-skills@p-video-animate -y
 ---
 
 ## Single tool — `p-video-replace`
+
+**Output**
+
+<video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/p-video-replace-jacket.mp4" controls width="360"></video>
+
+<details>
+<summary>Prompts & inputs</summary>
 
 **Ask your agent**
 
@@ -202,7 +264,7 @@ npx skills add PrunaAI/pruna-skills@p-video-animate -y
 
 Set **`save_audio: true`** so the song/vocal track from the source clip is preserved in the output.
 
-<video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/p-video-replace-jacket.mp4" controls width="360"></video>
+</details>
 
 ```bash
 npx skills add PrunaAI/pruna-skills@p-video-replace -y
@@ -212,6 +274,13 @@ npx skills add PrunaAI/pruna-skills@p-video-replace -y
 
 ## Single tool — `gemini-3.1-flash-tts`
 
+**Output**
+
+<audio src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/illustrated-library-whale-narration.mp3" controls></audio>
+
+<details>
+<summary>Prompts & inputs</summary>
+
 **Ask your agent**
 
 > Read this library-whale line in a warm storybook narrator voice.
@@ -220,7 +289,7 @@ Same narration used by [illustrated-story-reel](#workflow--illustrated-story-ree
 
 > *[warmly] In a paper-cut library deep below the city, a blue whale swims between the shelves — chasing stories printed on fluttering pages.*
 
-Audio: [`illustrated-library-whale-narration.mp3`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/illustrated-library-whale-narration.mp3)
+</details>
 
 ```bash
 npx skills add PrunaAI/pruna-skills@gemini-3.1-flash-tts -y
@@ -230,11 +299,20 @@ npx skills add PrunaAI/pruna-skills@gemini-3.1-flash-tts -y
 
 ## Single tool — `music-2.5`
 
+**Output**
+
+<audio src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/music-video-garage-drummer-song.mp3" controls></audio>
+
+<details>
+<summary>Prompts & inputs</summary>
+
 **Ask your agent**
 
 > Write an indie garage-rock song with these lyrics for a teenage drummer music video.
 
-Same song as [music-video](#workflow--music-video) — [`music-video-garage-drummer-song.mp3`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/music-video-garage-drummer-song.mp3). Sidecar includes full lyrics and style prompt.
+Same song as [music-video](#workflow--music-video). Sidecar includes full lyrics and style prompt.
+
+</details>
 
 ```bash
 npx skills add PrunaAI/pruna-skills@music-2.5 -y
@@ -244,13 +322,20 @@ npx skills add PrunaAI/pruna-skills@music-2.5 -y
 
 ## Single tool — `stable-audio-2.5`
 
+**Output**
+
+<audio src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/stable-audio-library-bed.mp3" controls></audio>
+
+<details>
+<summary>Prompts & inputs</summary>
+
 **Ask your agent**
 
 > Generate a soft whimsical instrumental bed for a paper-cut library story — no vocals.
 
-Pairs with the [whale illustrated reel](#workflow--illustrated-story-reel) mood (music-mode reels mux this under Ken Burns segments).
+Pairs with the [whale illustrated reel](#workflow--illustrated-story-reel) mood (music-mode reels mux this under Ken Burns segments). Native Stable Audio 2.5 render; if Replicate returns a provider error, the maintainer script falls back to an instrumental slice from the [garage song](#single-tool--music-25) (see sidecar `doc_fallback`).
 
-Audio: [`stable-audio-library-bed.mp3`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/stable-audio-library-bed.mp3) — native Stable Audio 2.5 render; if Replicate returns a provider error, the maintainer script falls back to an instrumental slice from the [garage song](#single-tool--music-25) (see sidecar `doc_fallback`).
+</details>
 
 ```bash
 npx skills add PrunaAI/pruna-skills@stable-audio-2.5 -y
@@ -260,11 +345,16 @@ npx skills add PrunaAI/pruna-skills@stable-audio-2.5 -y
 
 ## Single tool — `whisperx`
 
+**Output** — [`whisperx-drummer-song.json`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/whisperx-drummer-song.json) (word timestamps from [`music-video-garage-drummer-song.mp3`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/music-video-garage-drummer-song.mp3))
+
+<details>
+<summary>Prompts & inputs</summary>
+
 **Ask your agent**
 
 > Transcribe the garage drummer song with word-level timestamps for lyric-aligned cuts.
 
-Output: [`whisperx-drummer-song.json`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/whisperx-drummer-song.json) (word timestamps from [`music-video-garage-drummer-song.mp3`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/music-video-garage-drummer-song.mp3)).
+</details>
 
 ```bash
 npx skills add PrunaAI/pruna-skills@whisperx -y
@@ -275,6 +365,13 @@ npx skills add PrunaAI/pruna-skills@whisperx -y
 # Chains (multi-tool)
 
 ## Chain — monarch on lavender (`p-image` → `p-image-edit` → `p-video`)
+
+**Output**
+
+<video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-clip.mp4" controls width="640"></video>
+
+<details>
+<summary>Prompts & inputs</summary>
 
 **Ask your agent**
 
@@ -292,7 +389,7 @@ Also demonstrates **`visual-transition-reel`** (start/end plates + motion).
 |---------------|------------------|
 | ![wings closed](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-01-open.png) | ![wings open](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-02-end.png) |
 
-<video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-clip.mp4" controls width="640"></video>
+</details>
 
 ```bash
 npx plugins add PrunaAI/pruna-skills   # pick visual-transition-reel
@@ -300,9 +397,14 @@ npx plugins add PrunaAI/pruna-skills   # pick visual-transition-reel
 
 ---
 
-# Workflows
-
 ## Workflow — `image-to-video`
+
+**Output**
+
+<video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/image-to-video-aurora-clip.mp4" controls width="640"></video>
+
+<details>
+<summary>Prompts & inputs</summary>
 
 **Ask your agent**
 
@@ -310,7 +412,7 @@ npx plugins add PrunaAI/pruna-skills   # pick visual-transition-reel
 
 ![aurora still](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/image-to-video-aurora-still.png)
 
-<video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/image-to-video-aurora-clip.mp4" controls width="640"></video>
+</details>
 
 ```bash
 npx plugins add PrunaAI/pruna-skills   # pick image-to-video
@@ -320,7 +422,20 @@ npx plugins add PrunaAI/pruna-skills   # pick image-to-video
 
 ## Workflow — `visual-transition-reel`
 
+**Output**
+
+<video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-clip.mp4" controls width="640"></video>
+
+<details>
+<summary>Prompts & inputs</summary>
+
 Same assets as the [monarch chain](#chain--monarch-on-lavender) — hero still → edit end plate → `p-video` between composed frames.
+
+| Opening image | Edited end image |
+|---------------|------------------|
+| ![wings closed](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-01-open.png) | ![wings open](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-02-end.png) |
+
+</details>
 
 ```bash
 npx plugins add PrunaAI/pruna-skills   # pick visual-transition-reel
@@ -329,6 +444,13 @@ npx plugins add PrunaAI/pruna-skills   # pick visual-transition-reel
 ---
 
 ## Workflow — `narrated-multi-scene`
+
+**Output**
+
+<video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/narrated-multi-scene-demo.mp4" controls width="640"></video>
+
+<details>
+<summary>Prompts & inputs</summary>
 
 **Ask your agent**
 
@@ -343,7 +465,7 @@ Each scene is one **scene anchor triple** (`p-video` with `image` + `last_frame_
 
 Per-scene clips: `narrated-multi-scene-01-monarch.mp4`, `narrated-multi-scene-02-aurora.mp4` · Sidecar lists full scene table.
 
-<video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/narrated-multi-scene-demo.mp4" controls width="640"></video>
+</details>
 
 ```bash
 npx plugins add PrunaAI/pruna-skills   # pick narrated-multi-scene
@@ -353,13 +475,20 @@ npx plugins add PrunaAI/pruna-skills   # pick narrated-multi-scene
 
 ## Workflow — `avatar-single-scene`
 
+**Output**
+
+<video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/music-video-garage-drummer-clip.mp4" controls width="360"></video>
+
+<details>
+<summary>Prompts & inputs</summary>
+
 **Ask your agent**
 
 > One talking-head clip of the garage drummer singing along to the chorus.
 
 Same performance clip as [music-video](#workflow--music-video) / [`p-video-avatar`](#single-tool--p-video-avatar) — one beat, one plate, one avatar render.
 
-<video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/music-video-garage-drummer-clip.mp4" controls width="360"></video>
+</details>
 
 ```bash
 npx plugins add PrunaAI/pruna-skills   # pick avatar-single-scene
@@ -368,6 +497,15 @@ npx plugins add PrunaAI/pruna-skills   # pick avatar-single-scene
 ---
 
 ## Workflow — `avatar-multi-scene`
+
+**Output — scene 1 (chorus) · scene 2 (count-in)**
+
+| Scene 1 — chorus | Scene 2 — count-in |
+|------------------|--------------------|
+| <video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/music-video-garage-drummer-clip.mp4" controls width="240"></video> | <video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/avatar-multi-scene-02-count-in.mp4" controls width="240"></video> |
+
+<details>
+<summary>Prompts & inputs</summary>
 
 **Ask your agent**
 
@@ -382,7 +520,7 @@ Same hero still ([`music-video-garage-drummer.png`](https://huggingface.co/datas
 
 Sidecar: [`avatar-multi-scene-demo.meta.json`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/avatar-multi-scene-demo.meta.json)
 
-<video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/avatar-multi-scene-02-count-in.mp4" controls width="360"></video>
+</details>
 
 ```bash
 npx plugins add PrunaAI/pruna-skills   # pick avatar-multi-scene
@@ -392,16 +530,25 @@ npx plugins add PrunaAI/pruna-skills   # pick avatar-multi-scene
 
 ## Workflow — `interactive-explainer`
 
+**Output — host + B-roll components** (assemble in plan runner)
+
+| Host (`p-video-avatar`) | B-roll (`p-video` + TTS) |
+|-------------------------|---------------------------|
+| <video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/music-video-garage-drummer-clip.mp4" controls width="240"></video> | <video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/illustrated-library-whale-reel.mp4" controls width="240"></video> |
+
+<details>
+<summary>Prompts & inputs</summary>
+
 **Ask your agent**
 
 > Educational explainer mixing a talking-head host with narrated B-roll — not VO-only slideshow.
-
-Component examples in this repo (assemble in plan runner):
 
 | Beat type | Example asset | Model |
 |-----------|---------------|-------|
 | Character (host) | [`music-video-garage-drummer-clip.mp4`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/music-video-garage-drummer-clip.mp4) | `p-video-avatar` |
 | Narrator B-roll | [`illustrated-library-whale-reel.mp4`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/illustrated-library-whale-reel.mp4) | `p-video` + TTS |
+
+</details>
 
 ```bash
 npx plugins add PrunaAI/pruna-skills   # pick interactive-explainer
@@ -411,15 +558,22 @@ npx plugins add PrunaAI/pruna-skills   # pick interactive-explainer
 
 ## Workflow — `music-video`
 
+**Output**
+
+<video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/music-video-garage-drummer-clip.mp4" controls width="360"></video>
+
+<details>
+<summary>Prompts & inputs</summary>
+
 **Ask your agent**
 
 > Make a garage-band music video around a teenage girl drummer — song, stills, then performance clips.
 
 ![garage drummer](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/music-video-garage-drummer.png)
 
-<video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/music-video-garage-drummer-clip.mp4" controls width="360"></video>
-
 Pipeline: lyrics → `music-2.5` → slice → `p-video-avatar` → assembly.
+
+</details>
 
 ```bash
 npx plugins add PrunaAI/pruna-skills   # pick music-video
@@ -428,6 +582,13 @@ npx plugins add PrunaAI/pruna-skills   # pick music-video
 ---
 
 ## Workflow — `illustrated-story-reel`
+
+**Output**
+
+<video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/illustrated-library-whale-reel.mp4" controls width="640"></video>
+
+<details>
+<summary>Prompts & inputs</summary>
 
 **Ask your agent**
 
@@ -439,14 +600,10 @@ npx plugins add PrunaAI/pruna-skills   # pick music-video
 
 > Narration: *[warmly] In a paper-cut library deep below the city, a blue whale swims between the shelves — chasing stories printed on fluttering pages.*
 
-<video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/illustrated-library-whale-reel.mp4" controls width="640"></video>
-
 Ken Burns (budget) path uses the same still + [`stable-audio-library-bed.mp3`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/stable-audio-library-bed.mp3) or narration-only assembly — see [illustrated-story-reel](../workflows/illustrated-story-reel/SKILL.md).
+
+</details>
 
 ```bash
 npx plugins add PrunaAI/pruna-skills   # pick illustrated-story-reel
 ```
-
----
-
-Recipe ideas: [WORKFLOW-RECIPES.md](WORKFLOW-RECIPES.md) · Full catalog: [SKILL-CATALOG.md](SKILL-CATALOG.md).
