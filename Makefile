@@ -48,8 +48,10 @@ doc-examples-urls:
 format-examples-md:
 	python3 .maintainer/format_examples_md.py
 
+QUICKSTART_WIDTH ?= 280
+
 quickstart-gif:
 	@test -f docs/assets/examples/quickstart-panda-clip.mp4 || (echo "missing docs/assets/examples/quickstart-panda-clip.mp4" && exit 1)
-	ffmpeg -y -i docs/assets/examples/quickstart-panda-clip.mp4 -vf "fps=10,scale=200:-1:flags=lanczos,split[s0][s1];[s0]palettegen=max_colors=128[p];[s1][p]paletteuse=dither=bayer:bayer_scale=3" docs/assets/examples/quickstart-panda-clip.gif
+	ffmpeg -y -i docs/assets/examples/quickstart-panda-clip.mp4 -vf "fps=10,scale=$(QUICKSTART_WIDTH):-1:flags=lanczos,split[s0][s1];[s0]palettegen=max_colors=128[p];[s1][p]paletteuse=dither=bayer:bayer_scale=3" docs/assets/examples/quickstart-panda-clip.gif
 
 sync-doc-examples-hf: upload-doc-examples-hf doc-examples-urls
