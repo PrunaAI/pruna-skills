@@ -49,7 +49,7 @@ After install, start a **new chat**. Multi-scene workflows pause for you to revi
 | Step 1 · `p-image` | Step 2 · `p-image-try-on` | Step 3 · `p-video-avatar` |
 | :-: | :-: | :-: |
 | Drummer portrait | Jacket try-on | Performance clip |
-| <img src="docs/assets/examples/music-video-garage-drummer.png" width="280" alt="Teenage drummer portrait in a garage"> | <img src="docs/assets/examples/p-image-try-on-drummer.png" width="280" alt="Same drummer wearing the red band jacket"> | <img src="docs/assets/examples/music-video-garage-drummer-clip.gif" width="280" alt="Drummer lip-sync performance clip"> |
+| <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/music-video-garage-drummer.png" width="280" height="494" alt="Teenage drummer portrait in a garage"> | <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/p-image-try-on-drummer.png" width="280" height="494" alt="Same drummer wearing the red band jacket"> | <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/music-video-garage-drummer-clip.gif" width="280" height="494" alt="Drummer lip-sync performance clip wearing the red band jacket"> |
 
 ```bash
 npx skills add PrunaAI/pruna-skills@p-image -y

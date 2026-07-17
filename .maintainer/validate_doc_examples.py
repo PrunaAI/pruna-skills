@@ -4,12 +4,19 @@
 from __future__ import annotations
 
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "docs" / "assets" / "examples"
+EXAMPLES = ROOT / "docs" / "EXAMPLES.md"
+
+MP4_IN_MD = re.compile(
+    r"(?:examples/|assets/examples/)([a-z0-9][a-z0-9_-]*\.mp4)",
+    re.IGNORECASE,
+)
 
 # Required paths per skill (file must exist under OUT)
 REQUIRED: dict[str, list[str]] = {
@@ -93,6 +100,17 @@ def main() -> int:
             p = OUT / rel
             if not p.exists():
                 errors.append(f"{skill}: missing {rel}")
+
+    if EXAMPLES.is_file():
+        for mp4 in sorted(set(MP4_IN_MD.findall(EXAMPLES.read_text(encoding="utf-8")))):
+            gif = OUT / mp4.replace(".mp4", ".gif")
+            if not gif.is_file():
+                errors.append(f"EXAMPLES.md embed: missing preview gif for {mp4} (run make doc-example-previews)")
+            elif gif.stat().st_size > 2_500_000:
+                warnings.append(
+                    f"EXAMPLES.md embed: {gif.name} is {gif.stat().st_size // 1024}K — "
+                    "may hit content-length limits; tighten preview settings"
+                )
 
     for rel in AUDIO_MP4:
         p = OUT / rel

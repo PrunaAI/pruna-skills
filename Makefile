@@ -1,4 +1,4 @@
-.PHONY: bundle bundle-skill verify validate validate-doc-examples publish release skills-sh readme smoke upload-doc-examples-hf download-doc-examples-hf doc-examples-urls sync-doc-examples-hf format-examples-md readme-quickstart-gif quickstart-gif
+.PHONY: bundle bundle-skill verify validate validate-doc-examples publish release skills-sh readme smoke upload-doc-examples-hf download-doc-examples-hf doc-examples-urls sync-doc-examples-hf format-examples-md embed-examples-md doc-example-previews readme-quickstart-gif quickstart-gif
 
 bundle:
 	./.maintainer/bundle_all_skills.sh
@@ -48,13 +48,32 @@ doc-examples-urls:
 format-examples-md:
 	python3 .maintainer/format_examples_md.py
 
+doc-example-previews:
+	python3 .maintainer/generate_example_previews.py
+
+embed-examples-md:
+	python3 .maintainer/embed_examples_md.py
+
+format-examples-md-all: doc-example-previews embed-examples-md format-examples-md
+
 QUICKSTART_WIDTH ?= 280
+QUICKSTART_HEIGHT ?= 494
+QUICKSTART_VF = scale=$(QUICKSTART_WIDTH):$(QUICKSTART_HEIGHT):force_original_aspect_ratio=increase,crop=$(QUICKSTART_WIDTH):$(QUICKSTART_HEIGHT)
+README_STILLS = music-video-garage-drummer p-image-try-on-drummer
 README_CLIP ?= music-video-garage-drummer-clip
+README_CLIP_OUT ?= music-video-garage-drummer-clip
 
-readme-quickstart-gif:
+readme-quickstart-embeds:
+	@for s in $(README_STILLS); do \
+	  test -f docs/assets/examples/$$s.png || (echo "missing docs/assets/examples/$$s.png" && exit 1); \
+	  ffmpeg -y -i docs/assets/examples/$$s.png -vf "$(QUICKSTART_VF)" -update 1 -frames:v 1 docs/assets/examples/$$s.tmp.png && \
+	  mv docs/assets/examples/$$s.tmp.png docs/assets/examples/$$s.png; \
+	done
 	@test -f docs/assets/examples/$(README_CLIP).mp4 || (echo "missing docs/assets/examples/$(README_CLIP).mp4" && exit 1)
-	ffmpeg -y -i docs/assets/examples/$(README_CLIP).mp4 -vf "fps=12,scale=$(QUICKSTART_WIDTH):-1:flags=lanczos,split[s0][s1];[s0]palettegen=max_colors=128[p];[s1][p]paletteuse=dither=bayer:bayer_scale=3" docs/assets/examples/$(README_CLIP).gif
+	ffmpeg -y -i docs/assets/examples/$(README_CLIP).mp4 -vf "fps=12,$(QUICKSTART_VF),split[s0][s1];[s0]palettegen=max_colors=128[p];[s1][p]paletteuse=dither=bayer:bayer_scale=3" docs/assets/examples/$(README_CLIP_OUT).gif
 
-quickstart-gif: readme-quickstart-gif
+readme-quickstart-gif: readme-quickstart-embeds
 
-sync-doc-examples-hf: upload-doc-examples-hf doc-examples-urls
+quickstart-gif: readme-quickstart-embeds
+
+sync-doc-examples-hf: doc-example-previews upload-doc-examples-hf doc-examples-urls embed-examples-md

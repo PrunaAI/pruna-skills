@@ -662,15 +662,20 @@ def _remove_legacy(path: Path) -> None:
 
 def gen_music_video_drummer(*, video_only: bool = False) -> None:
     still = OUT / "music-video-garage-drummer.png"
+    try_on = OUT / "p-image-try-on-drummer.png"
     song = OUT / "music-video-garage-drummer-song.mp3"
     vocal = OUT / "music-video-garage-drummer-performance-vocal.mp3"
     if video_only:
         if not still.exists():
             sys.exit(f"missing {still} for video-only regen")
+        if not try_on.exists():
+            sys.exit(f"missing {try_on} for video-only regen — run p-image-try-on-drummer first")
     else:
         save_image("music-video-garage-drummer", DRUMMER_IMAGE, "9:16")
+        gen_p_image_try_on_drummer()
+    avatar_still = try_on if try_on.exists() else still
     audio_path, audio_source = ensure_performance_audio(song, vocal)
-    render_avatar_video("music-video-garage-drummer-clip", DRUMMER_AVATAR_PROMPT, still, audio_path)
+    render_avatar_video("music-video-garage-drummer-clip", DRUMMER_AVATAR_PROMPT, avatar_still, audio_path)
     meta = OUT / "music-video-garage-drummer-clip.meta.json"
     base = json.loads(meta.read_text(encoding="utf-8"))
     base["workflow"] = "music-video"

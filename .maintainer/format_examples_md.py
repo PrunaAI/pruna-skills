@@ -24,13 +24,17 @@ def _extract_output(block: str) -> tuple[str, str]:
     out_idx: list[int] = []
     for i, line in enumerate(lines):
         s = line.strip()
-        if s.startswith("![") or s.startswith("<video "):
+        if s.startswith("![") or s.startswith("[![") or s.startswith("<video "):
+            out_idx.append(i)
+        if s.startswith("*Preview"):
             out_idx.append(i)
         if s.startswith("**Output"):
             # already formatted — grab until bash or details
             j = i + 1
             while j < len(lines) and not lines[j].startswith("```bash") and not lines[j].startswith("<details"):
-                if lines[j].strip().startswith("![") or lines[j].strip().startswith("<video"):
+                if lines[j].strip().startswith("![") or lines[j].strip().startswith("[![") or lines[j].strip().startswith("<video"):
+                    out_idx.append(j)
+                if lines[j].strip().startswith("*Preview"):
                     out_idx.append(j)
                 j += 1
 
