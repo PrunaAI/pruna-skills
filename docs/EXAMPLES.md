@@ -12,7 +12,7 @@ Publish to Hugging Face and refresh markdown URLs: `make sync-doc-examples-hf` (
 
 Images use max P-API resolution (1440px edge); videos use final **1080p @ 24fps** (720p for some motion-transfer demos).
 
-The [README quickstart](../README.md#quickstart) walks through the **monarch wing-spread** chain (`chain-monarch-*` assets on the dataset).
+The [README quickstart](../README.md#quickstart) walks through the **drummer try-on → performance clip** chain (`music-video-garage-drummer*` + `p-image-try-on-drummer` on the dataset).
 
 ## Coverage
 

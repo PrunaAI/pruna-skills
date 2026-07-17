@@ -49,7 +49,7 @@ format-examples-md:
 	python3 .maintainer/format_examples_md.py
 
 QUICKSTART_WIDTH ?= 280
-README_CLIP ?= chain-monarch-clip
+README_CLIP ?= music-video-garage-drummer-clip
 
 readme-quickstart-gif:
 	@test -f docs/assets/examples/$(README_CLIP).mp4 || (echo "missing docs/assets/examples/$(README_CLIP).mp4" && exit 1)

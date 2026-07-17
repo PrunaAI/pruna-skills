@@ -228,6 +228,6 @@ plugins/*/reports/
 docs/assets/examples/*
 !docs/assets/examples/.gitkeep
 # README quickstart — GitHub embeds GIF/PNG from this repo (see make readme-quickstart-gif)
-!docs/assets/examples/chain-monarch-01-open.png
-!docs/assets/examples/chain-monarch-02-end.png
-!docs/assets/examples/chain-monarch-clip.gif
+!docs/assets/examples/music-video-garage-drummer.png
+!docs/assets/examples/p-image-try-on-drummer.png
+!docs/assets/examples/music-video-garage-drummer-clip.gif

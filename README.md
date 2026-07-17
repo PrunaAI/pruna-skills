@@ -40,24 +40,24 @@ Don’t run `npx plugins add … -y` for the whole repo — that installs 21 ove
 
 After install, start a **new chat**. Multi-scene workflows pause for you to review the plan and images before generating video. Skim [agent safety](references/shared/agent-safety.md) before enabling skills in untrusted repos.
 
-### Example — one image, then a three-step chain
+### Example — portrait, try-on, then performance clip
 
 **Ask your agent** (one message — the skills chain the steps):
 
-> Create a macro still of a monarch butterfly on lavender with wings closed. Edit the same butterfly so the wings are open wide. Then animate a wing spread between the start and end plates into a 10-second clip.
+> Create a portrait of a teenage girl drummer in a garage. Put a vintage red band jacket on her from a garment reference — keep pose and background. Then make her sing along to a song slice as a lip-sync performance clip.
 
-| Step 1 · `p-image` | Step 2 · `p-image-edit` | Step 3 · `p-video` |
+| Step 1 · `p-image` | Step 2 · `p-image-try-on` | Step 3 · `p-video-avatar` |
 | :-: | :-: | :-: |
-| Wings closed | Wings open | Wing spread clip |
-| <img src="docs/assets/examples/chain-monarch-01-open.png" width="280" alt="Monarch on lavender, wings closed"> | <img src="docs/assets/examples/chain-monarch-02-end.png" width="280" alt="Same monarch, wings open wide"> | <img src="docs/assets/examples/chain-monarch-clip.gif" width="280" alt="Animated wing spread"> |
+| Drummer portrait | Jacket try-on | Performance clip |
+| <img src="docs/assets/examples/music-video-garage-drummer.png" width="280" alt="Teenage drummer portrait in a garage"> | <img src="docs/assets/examples/p-image-try-on-drummer.png" width="280" alt="Same drummer wearing the red band jacket"> | <img src="docs/assets/examples/music-video-garage-drummer-clip.gif" width="280" alt="Drummer lip-sync performance clip"> |
 
 ```bash
 npx skills add PrunaAI/pruna-skills@p-image -y
-npx skills add PrunaAI/pruna-skills@p-image-edit -y
-npx skills add PrunaAI/pruna-skills@p-video -y
+npx skills add PrunaAI/pruna-skills@p-image-try-on -y
+npx skills add PrunaAI/pruna-skills@p-video-avatar -y
 ```
 
-Or install a workflow plugin that bundles the tools — e.g. `npx plugins add PrunaAI/pruna-skills` → pick `visual-transition-reel` or **`pruna-full`**.
+Or install a workflow plugin that bundles the tools — e.g. `npx plugins add PrunaAI/pruna-skills` → pick `music-video`, `avatar-single-scene`, or **`pruna-full`**.
 
 More examples — each a different scenario: [docs/EXAMPLES.md](docs/EXAMPLES.md).
 
