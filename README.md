@@ -44,12 +44,12 @@ After install, start a **new chat**. Multi-scene workflows pause for you to revi
 
 **Ask your agent** (one message — the skills chain the steps):
 
-> Create an image of a red panda as a barista in a Kyoto café. Edit the same panda into an astronaut on Mars — keep pose and framing. Then chain the start and end plates into a 10-second video clip.
+> Create a macro still of a monarch butterfly on lavender with wings closed. Edit the same butterfly so the wings are open wide. Then animate a wing spread between the start and end plates into a 10-second clip.
 
 | Step 1 · `p-image` | Step 2 · `p-image-edit` | Step 3 · `p-video` |
 | :-: | :-: | :-: |
-| Kyoto café | Same panda on Mars | 10s clip |
-| <img src="docs/assets/examples/quickstart-panda-01-open.png" width="280" alt="Red panda barista in Kyoto café"> | <img src="docs/assets/examples/quickstart-panda-02-end.png" width="280" alt="Same red panda as astronaut on Mars"> | <img src="docs/assets/examples/quickstart-panda-clip.gif" width="280" alt="10s clip — café to Mars"> |
+| Wings closed | Wings open | Wing spread clip |
+| <img src="docs/assets/examples/chain-monarch-01-open.png" width="280" alt="Monarch on lavender, wings closed"> | <img src="docs/assets/examples/chain-monarch-02-end.png" width="280" alt="Same monarch, wings open wide"> | <img src="docs/assets/examples/chain-monarch-clip.gif" width="280" alt="Animated wing spread"> |
 
 ```bash
 npx skills add PrunaAI/pruna-skills@p-image -y

@@ -227,8 +227,7 @@ plugins/*/reports/
 # Doc examples — canonical copy on HF dataset PrunaAI/pruna-skills (make download-doc-examples-hf)
 docs/assets/examples/*
 !docs/assets/examples/.gitkeep
-# README quickstart — GitHub only embeds video from files in this repo
-!docs/assets/examples/quickstart-panda-01-open.png
-!docs/assets/examples/quickstart-panda-02-end.png
-!docs/assets/examples/quickstart-panda-clip.gif
-!docs/assets/examples/quickstart-panda-clip.mp4
+# README quickstart — GitHub embeds GIF/PNG from this repo (see make readme-quickstart-gif)
+!docs/assets/examples/chain-monarch-01-open.png
+!docs/assets/examples/chain-monarch-02-end.png
+!docs/assets/examples/chain-monarch-clip.gif

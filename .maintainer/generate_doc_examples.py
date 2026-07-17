@@ -552,9 +552,10 @@ def gen_chain_monarch(*, video_only: bool = False) -> None:
         f"black pattern, same dew and bokeh, keep composition identical, {style}, no text"
     )
     video_prompt = (
-        "Monarch butterfly on lavender, static camera, morning garden, two second hold. "
-        "Subtle elegant motion: wings open slowly then one soft flutter, controlled minimal "
-        "motion, nature documentary style, no camera move."
+        "OPEN: static macro on monarch with wings closed on lavender, dew sparkling, hold two seconds. "
+        "MID: wings unfold in clear visible beats — closed to half-open to fully spread — orange and black "
+        "pattern emerges, stem flexes slightly, motion easy to read. "
+        "CLOSE: one strong downstroke flutter, soft pollen motes drift, settle with wings wide open."
     )
     if video_only:
         open_path = OUT / "chain-monarch-01-open.png"
