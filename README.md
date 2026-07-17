@@ -61,12 +61,9 @@ After install, start a **new chat**. Multi-scene workflows pause for you to revi
       <td align="center">10s clip</td>
     </tr>
     <tr>
-      <td align="center"><img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-panda-01-open.png" width="200" alt="Red panda barista in Kyoto café"></td>
-      <td align="center"><img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-panda-02-end.png" width="200" alt="Same red panda as astronaut on Mars"></td>
-      <td align="center">
-        <video src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-panda-clip.mp4" controls width="200"></video>
-        <br><a href="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-panda-clip.mp4">Open clip</a>
-      </td>
+      <td align="center"><img src="docs/assets/examples/quickstart-panda-01-open.png" width="200" alt="Red panda barista in Kyoto café"></td>
+      <td align="center"><img src="docs/assets/examples/quickstart-panda-02-end.png" width="200" alt="Same red panda as astronaut on Mars"></td>
+      <td align="center"><video src="docs/assets/examples/quickstart-panda-clip.mp4" controls width="200"></video></td>
     </tr>
   </tbody>
 </table>
