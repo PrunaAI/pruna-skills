@@ -230,4 +230,5 @@ docs/assets/examples/*
 # README quickstart — GitHub only embeds video from files in this repo
 !docs/assets/examples/quickstart-panda-01-open.png
 !docs/assets/examples/quickstart-panda-02-end.png
+!docs/assets/examples/quickstart-panda-clip.gif
 !docs/assets/examples/quickstart-panda-clip.mp4

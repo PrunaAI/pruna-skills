@@ -49,7 +49,7 @@ After install, start a **new chat**. Multi-scene workflows pause for you to revi
 | Step 1 · `p-image` | Step 2 · `p-image-edit` | Step 3 · `p-video` |
 | :-: | :-: | :-: |
 | Kyoto café | Same panda on Mars | 10s clip |
-| ![Red panda barista in Kyoto café](docs/assets/examples/quickstart-panda-01-open.png) | ![Same red panda as astronaut on Mars](docs/assets/examples/quickstart-panda-02-end.png) | <video src="docs/assets/examples/quickstart-panda-clip.mp4" width="200" controls></video> |
+| ![Red panda barista in Kyoto café](docs/assets/examples/quickstart-panda-01-open.png) | ![Same red panda as astronaut on Mars](docs/assets/examples/quickstart-panda-02-end.png) | ![10s clip — café to Mars](docs/assets/examples/quickstart-panda-clip.gif) |
 
 ```bash
 npx skills add PrunaAI/pruna-skills@p-image -y
