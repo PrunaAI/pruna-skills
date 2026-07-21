@@ -1,10 +1,10 @@
 # p-image quality checklist
 
-After each `p-image` output is saved, **open the file and review it visually** against this checklist (agent vision review — see [generation-quality-checklists.md](./generation-quality-checklists.md#who-applies-these-checklists)).
+After each `p-image` output is saved, **open the file and review it visually** against this checklist (agent vision review — see [generation-quality-checklists.md](../../generation-diversity/references/generation-quality-checklists.md#who-applies-these-checklists)).
 
 ## Applies to
 
-See the canonical mapping in [`generation-quality-checklists.md`](./generation-quality-checklists.md).
+See the canonical mapping in [`generation-quality-checklists.md`](../../generation-diversity/references/generation-quality-checklists.md).
 
 ## Composition and prompt fidelity
 
@@ -24,7 +24,7 @@ When the output feeds **`p-video-avatar`**, **`p-image-try-on`**, or a public ex
 - **Try-on-ready** (when dressing next) — body regions for garment types visible (full-body, feet, head as needed).
 - **`seed`** recorded when identity continues downstream.
 
-Scenario matrix and style ladders: [realistic-persona-showcase.md](../shared/realistic-persona-showcase.md).
+Scenario matrix and style ladders: [realistic-persona-showcase.md](./realistic-persona-showcase.md).
 
 ## Visual integrity
 

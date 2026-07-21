@@ -127,6 +127,6 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 | `negative_prompt` | `""` | Comma-separated elements to **suppress** |
 | `negative_prompt_strength` | `0` | Both must be set: non-empty prompt **and** strength **> 0** |
 
-Starter: `subtitles, captions, on-screen text, burned-in text, watermark, logo, typography, letters, words`. Start strength around **0.3–0.4**. Helper: `avatar-single-scene`
+Starter: `subtitles, captions, on-screen text, burned-in text, watermark, logo, typography, letters, words`. Start strength around **0.3–0.4**. See `avatar-single-scene`
 - Multi-scene: `avatar-multi-scene`
-- Slider demos: [ffmpeg hstack slider (see workflow SKILL) curl/ffmpeg (no shared scripts))
+- Slider demos: `avatar-multi-scene`

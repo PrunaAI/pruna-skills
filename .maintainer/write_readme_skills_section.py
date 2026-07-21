@@ -28,8 +28,6 @@ def collect(base: Path) -> list[tuple[str, str, str]]:
     if not base.is_dir():
         return rows
     for skill_md in sorted(base.rglob("SKILL.md")):
-        if "_shared" in skill_md.parts:
-            continue
         fm = read_frontmatter(skill_md)
         name = fm.get("name") or skill_md.parent.name
         desc = fm.get("description", "")

@@ -51,7 +51,7 @@ Full text hygiene: [generation-diversity — text & typography](../../generation
 
 ### 5. Typography on surfaces
 
-Readable copy is **static text on a surface** — not spoken dialogue (that is `p-video` Mode A → [audio-in-video-prompting.md](../video/audio-in-video-prompting.md)).
+Readable copy is **static text on a surface** — not spoken dialogue (that is `p-video` Mode A → [audio-in-video-prompting.md](../../video-prompting/references/audio-in-video-prompting.md)).
 
 **Template** (placeholders in square brackets are docs notation, not prompt syntax):
 
@@ -95,7 +95,7 @@ Do **not** stack genre anchors (`Wes Anderson + Lindbergh + Ghibli` → mush).
 
 These add heat without rendering: `masterpiece`, `best quality`, `8k`, `4k`, `ultra detailed`, `stunning`, `epic`, `beautiful lighting`, bare `cinematic` with no camera/light nouns.
 
-Replace with concrete camera + light from [camera-lighting-vocabulary.md](../video/camera-lighting-vocabulary.md) or diversity `camera_tag` / `lighting_tag`.
+Replace with concrete camera + light from [camera-lighting-vocabulary.md](../../video-prompting/references/camera-lighting-vocabulary.md) or diversity `camera_tag` / `lighting_tag`.
 
 Photoreal anti-slop lock when needed: [generation-diversity — photoreal anti-slop](../../generation-diversity/references/generation-diversity.md#photoreal-anti-slop-neon--stylized-briefs).
 
@@ -104,8 +104,8 @@ Photoreal anti-slop lock when needed: [generation-diversity — photoreal anti-s
 | Goal | Path |
 |------|------|
 | Same face across many stills | [character-turnaround-sheet.md](./character-turnaround-sheet.md) → scene stills → I2V |
-| Talking-head / avatar cast | [realistic-persona-showcase.md](../shared/realistic-persona-showcase.md) + avatar prompt templates |
-| Start/end plates for video | [scene-anchor-pair.md](../video/scene-anchor-pair.md) / [scene-anchor-triple.md](../video/scene-anchor-triple.md) |
+| Talking-head / avatar cast | [realistic-persona-showcase.md](./realistic-persona-showcase.md) + avatar prompt templates |
+| Start/end plates for video | [scene-anchor-pair.md](../../video-prompting/references/scene-anchor-pair.md) / [scene-anchor-triple.md](../../video-prompting/references/scene-anchor-triple.md) |
 
 ## Pre-send checklist
 

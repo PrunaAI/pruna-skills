@@ -30,4 +30,4 @@ Downloads (`curl -o …`, runners writing under an output dir) **create or overw
 
 - [api-credentials.md](./api-credentials.md) — signup + header rules
 - [pruna-api.md](./pruna-api.md) — upload / poll / download
-- [generation-quality-checklists.md#approval-gates-workflows](./generation-quality-checklists.md#approval-gates-workflows) — approval phases
+- [generation-quality-checklists.md#approval-gates-workflows](../../generation-diversity/references/generation-quality-checklists.md#approval-gates-workflows) — approval phases

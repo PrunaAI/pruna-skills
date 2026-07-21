@@ -2,6 +2,7 @@
 """Generate checked-in docs example images and videos.
 
 Requires PRUNA_API_KEY. Workflow examples (TTS, Music 2.5) also need REPLICATE_API_TOKEN.
+Assembly/Replicate helpers live under .maintainer/doc_examples/ (not skill scripts).
 """
 from __future__ import annotations
 

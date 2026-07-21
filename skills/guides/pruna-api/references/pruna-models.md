@@ -23,7 +23,7 @@ Pricing and limits change; confirm on the official page: [Available models](http
 |------|------|--------------|-------|
 | `stable-audio-2.5` | Text-to-music bed | `skills/audio/stable-audio-2.5` | Requires `REPLICATE_API_TOKEN`; mix via stable-audio-2.5 + ffmpeg bed mix |
 | `music-2.5` | Full song with vocals (lyrics + style) | `skills/audio/music-2.5` | Requires `REPLICATE_API_TOKEN`; `music-video` workflow |
-| `gemini-3.1-flash-tts` | Narration / voiceover TTS | `skills/audio/gemini-3.1-flash-tts` | Requires `REPLICATE_API_TOKEN`; mux or drive `p-video` via uploaded audio — [audio-post-production.md](../audio/audio-post-production.md) |
+| `gemini-3.1-flash-tts` | Narration / voiceover TTS | `skills/audio/gemini-3.1-flash-tts` | Requires `REPLICATE_API_TOKEN`; mux or drive `p-video` via uploaded audio — [audio-post-production.md](../../audio-prompting/references/audio-post-production.md) |
 
 ## Related models (not duplicated as skills here)
 
@@ -44,5 +44,5 @@ Documented on the same models page: `p-image-lora`, trainers, `flux-*`, `wan-*`,
 | Upscale comparison demo | agent curl/ffmpeg (no shared scripts) |
 | Motion-transfer showcase (`p-video-animate` + slider comparisons) | `workflows/avatar-multi-scene` (animate rows); slider script: agent curl/ffmpeg (no shared scripts) |
 | In-video replacement showcase (`p-video-replace` + slider comparisons) | agent curl/ffmpeg (no shared scripts) |
-| Virtual try-on reel (`p-image-try-on` + avatar / I2V + bed) | `p-image-try-on` tool skill + [realistic-persona-showcase.md](./realistic-persona-showcase.md) |
+| Virtual try-on reel (`p-image-try-on` + avatar / I2V + bed) | `p-image-try-on` tool skill + [realistic-persona-showcase.md](../../image-prompting/references/realistic-persona-showcase.md) |
 | AI music video (lyrics → Music 2.5 → avatar + B-roll) | `workflows/music-video` |

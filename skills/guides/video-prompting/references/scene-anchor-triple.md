@@ -4,7 +4,7 @@ Canonical payload pattern for **one narrated `p-video` prediction**: three uploa
 
 **Multi-scene extension** (`frame_chain`, concat, parallel batches, plan JSON with many rows) belongs only in `narrated-multi-scene` — do not treat this doc as permission for single-clip skills to orchestrate full films.
 
-Related: [scene-anchor-pair.md](./scene-anchor-pair.md) (visual-only) · [audio-post-production.md](../audio/audio-post-production.md) · [audio-in-video-prompting.md](./audio-in-video-prompting.md) · [prompt-dramaturgy.md](./prompt-dramaturgy.md) · [clip-chaining.md](./clip-chaining.md) · `p-video`
+Related: [scene-anchor-pair.md](./scene-anchor-pair.md) (visual-only) · [audio-post-production.md](../../audio-prompting/references/audio-post-production.md) · [audio-in-video-prompting.md](./audio-in-video-prompting.md) · [prompt-dramaturgy.md](./prompt-dramaturgy.md) · [clip-chaining.md](./clip-chaining.md) · `p-video`
 
 ## The triple (one prediction)
 
@@ -20,7 +20,7 @@ Each beat supplies **three Pruna file URLs** (from `POST /v1/files`) plus a moti
 
 When audio is provided, **always** upload and pass it to `p-video` at render time. Do not generate silent clips and mux narration in ffmpeg afterward.
 
-**20-second ceiling:** audio-led clips cannot run longer than P-API `duration` max (**20s**). Write TTS to **≤ ~19s** (probe with `ffprobe` after Gemini). Truncated VO with “audio passed” usually means the line was too long, not that `input.audio` was missing. Helper: `gemini-3.1-flash-tts` (or `music-2.5` slice for music videos)
+**20-second ceiling:** audio-led clips cannot run longer than P-API `duration` max (**20s**). Write TTS to **≤ ~19s** (probe with `ffprobe` after Gemini). Truncated VO with “audio passed” usually means the line was too long, not that `input.audio` was missing. See `gemini-3.1-flash-tts` (or `music-2.5` slice for music videos)
 2. Download MP3/WAV
 3. Upload to `/v1/files` → use `urls.get` as `input.audio`
 
@@ -37,15 +37,15 @@ When start URL, end URL, and audio URL exist:
 
 The sections below apply when the user explicitly requested a **multi-scene film**. Single-clip skills must stop and hand off to `narrated-multi-scene` instead of executing them.
 
-**Explainer interaction (preferred):** alternate **narrator** triple beats with **character** `p-video-avatar` dialogue — see [interactive-explainer-scenes.md](../workflows/interactive-explainer-scenes.md) and `interactive-explainer`.
+**Explainer interaction (preferred):** alternate **narrator** triple beats with **character** `p-video-avatar` dialogue — see [interactive-explainer-scenes.md](../../../workflows/interactive-explainer/references/interactive-explainer-scenes.md) and `interactive-explainer`.
 
-**Explainer motion & format:** dynamic `OPEN:` / `MID:` / `CLOSE:` `video_prompt` per scene; default **`720p`** + **`24` fps** — see [interactive-explainer-motion.md](../workflows/interactive-explainer-motion.md).
+**Explainer motion & format:** dynamic `OPEN:` / `MID:` / `CLOSE:` `video_prompt` per scene; default **`720p`** + **`24` fps** — see [interactive-explainer-motion.md](../../../workflows/interactive-explainer/references/interactive-explainer-motion.md).
 
 **Visual style for explainers:** keep a single `style_bible` on every `p-image` / `p-image-edit` / `p-video` prompt.
 
 ### Parallel stills / video across scenes
 
-Run start stills **in parallel** from hero; then end stills **in parallel** from each start still. After **all** URLs exist for every scene row, `POST /v1/predictions` in a **parallel** batch. Patterns: [pruna-api.md#parallel-async-multi-scene--batch](./generation-diversity.md).
+Run start stills **in parallel** from hero; then end stills **in parallel** from each start still. After **all** URLs exist for every scene row, `POST /v1/predictions` in a **parallel** batch. Patterns: [pruna-api.md#parallel-async-multi-scene--batch](../../generation-diversity/references/generation-diversity.md).
 
 ### Frame chain
 
@@ -137,7 +137,7 @@ Upgrade a **pair** to a **triple** by adding TTS → upload → `input.audio` an
 - `image-to-video` — **one beat** (this skill’s default)
 - `narrated-multi-scene` — primary narrated multi-scene workflow
 - `visual-transition-reel` — visual pair (no VO)
-- [pruna-generative-pipeline](../docs/WORKFLOW-RECIPES.md) — Recipe **P**
+- [WORKFLOW-RECIPES](../../../../docs/WORKFLOW-RECIPES.md) — Recipe **P**
 
 ## Intake checklist (per beat)
 

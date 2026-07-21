@@ -27,7 +27,7 @@ Saying **`no text`** often **creates** readable type. Saying **`avoid crowds`** 
 3. **Character `edit_prompt`:** `lips visible`, **slight angle from the side**; use `speaks directly to camera` in **`video_prompt`** only.
 4. **`video_prompt` (narrator):** OPEN / MID / CLOSE — camera + light + atmosphere ([interactive-explainer-motion.md](./interactive-explainer-motion.md)).
 5. **`video_prompt` (character):** `single continuous medium close-up`, `one very slow push-in`, `single uninterrupted take` — not OPEN/MID/CLOSE beats.
-6. **`p-video-avatar`:** `defaults.avatar_negative_prompt` is a **Pruna suppression token list** (nouns like `subtitles`, `watermark`) — not creative wording. See [p-video-avatar skill payload fields curl/ffmpeg (no shared scripts)).
+6. **`p-video-avatar`:** `defaults.avatar_negative_prompt` is a **Pruna suppression token list** (nouns like `subtitles`, `watermark`) — not creative wording. See `p-video-avatar`.
 
 ## Text & signage (most common)
 
@@ -75,7 +75,7 @@ Premium painterly historical illustration, one focal subject per shot, one camer
 | `Avoid labels on packaging` | **Matte unprinted** jars on **plain counter** |
 | Meta phrase **documentary still** + **end frame** | Concrete place + objects + **closing composition**, **one camera angle** |
 
-Broader blocked-phrase table (keyboards, mirrors, packshots): [generation-diversity.md#visual-variety](../policies/generation-diversity.md#prompt-patterns-variety).
+Broader blocked-phrase table (keyboards, mirrors, packshots): [generation-diversity.md#visual-variety](../../../guides/generation-diversity/references/generation-diversity.md#prompt-patterns-variety).
 
 **If text appears in `p-video` but stills are clean:** simplify the narrator `video_prompt` (camera/light only) or regenerate stills with **plain surfaces** — never answer with `no text` in the prompt.
 
@@ -84,4 +84,4 @@ Broader blocked-phrase table (keyboards, mirrors, packshots): [generation-divers
 - Workflow skill: `interactive-explainer`
 - Motion: [interactive-explainer-motion.md](./interactive-explainer-motion.md)
 - Scenes: [interactive-explainer-scenes.md](./interactive-explainer-scenes.md)
-- Gates: [generation-quality-checklists.md#approval-gates-workflows](../policies/generation-quality-checklists.md#approval-gates-workflows)
+- Gates: [generation-quality-checklists.md#approval-gates-workflows](../../../guides/generation-diversity/references/generation-quality-checklists.md#approval-gates-workflows)

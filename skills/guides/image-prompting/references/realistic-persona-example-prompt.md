@@ -2,7 +2,7 @@
 
 Cross-model examples for **`p-image`** scenario plates → optional **`p-image-try-on`** → **`p-video-avatar`**.
 
-**Before every curl:** [random seed ritual](skills/guides/generation-diversity/references/generation-diversity.md#random-seed-ritual-mandatory-before-every-generation) (SSoT) + [generation diversity](skills/guides/generation-diversity/references/generation-diversity.md) — state ritual string and derive axes; **omit API `seed`** unless user sets `api_seed`.
+**Before every curl:** [random seed ritual](../../generation-diversity/references/generation-diversity.md#random-seed-ritual-mandatory-before-every-generation) (SSoT) + [generation diversity](../../generation-diversity/references/generation-diversity.md) — state ritual string and derive axes; **omit API `seed`** unless user sets `api_seed`.
 
 Full ladders and 8-slot matrix: [realistic-persona-showcase.md](./realistic-persona-showcase.md).
 
@@ -55,7 +55,7 @@ standing hands in pockets, seamless off-white studio floor, high angle from abov
 even soft studio light, full body head to shoes visible, single subject one frame.
 ```
 
-Use as **`person_image`** for complex suit try-on — see [p-image-try-on-quality-checklist.md](../../skills/guides/image-prompting/references/p-image-try-on-quality-checklist.md).
+Use as **`person_image`** for complex suit try-on — see [p-image-try-on-quality-checklist.md](p-image-try-on-quality-checklist.md).
 
 ## 5. Scene variant (`p-image-edit`) — same identity, new angle + world
 

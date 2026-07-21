@@ -1,10 +1,10 @@
 # p-image-try-on quality checklist
 
-After each `p-image-try-on` output is saved, **open the file and review it visually** against this checklist (agent vision review — see [generation-quality-checklists.md](./generation-quality-checklists.md#who-applies-these-checklists)).
+After each `p-image-try-on` output is saved, **open the file and review it visually** against this checklist (agent vision review — see [generation-quality-checklists.md](../../generation-diversity/references/generation-quality-checklists.md#who-applies-these-checklists)).
 
 ## Applies to
 
-See the canonical mapping in [`generation-quality-checklists.md`](./generation-quality-checklists.md).
+See the canonical mapping in [`generation-quality-checklists.md`](../../generation-diversity/references/generation-quality-checklists.md).
 
 ## Scene preservation (garment-only edit)
 
@@ -16,11 +16,11 @@ The model should change **clothing only**. Fail if the plate’s world drifted:
 - Lighting direction and shadow mood consistent with the plate.
 - Pose and limb positions preserved (or match **`reference_pose`** when set).
 
-See [realistic-persona-showcase.md](../shared/realistic-persona-showcase.md#preservation-checklist-the-models-differentiator). Quality bar: [p-image-try-on-quality-checklist.md](./p-image-try-on-quality-checklist.md).
+See [realistic-persona-showcase.md](./realistic-persona-showcase.md#preservation-checklist-the-models-differentiator). Quality bar: [p-image-try-on-quality-checklist.md](./p-image-try-on-quality-checklist.md).
 
 ## Garment fit and identity
 
-- Each requested garment appears on the person (correct category — see supported types in [p-image-try-on SKILL.md](../../skills/image/p-image-try-on/SKILL.md#garment-categories)).
+- Each requested garment appears on the person (correct category — see supported types in [p-image-try-on SKILL.md](../../../image/p-image-try-on/SKILL.md#garment-categories)).
 - **One item per body spot:** competing garments on the same region (socks + shoes) — only one expected; flag if the wrong one won.
 - Unsupported / omitted garment types were not silently dropped without the user knowing (check logs / re-run with supported refs only).
 - Garment color, pattern, logos, and key details match the reference (within reasonable lighting variance).

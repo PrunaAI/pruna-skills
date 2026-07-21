@@ -136,6 +136,23 @@ for root in scan_roots:
                 if re.search(r"\]\(\./SKILL\.md\)", line) or re.search(r"\]\(\.\./SKILL\.md\)", line):
                     continue
                 bad.append(f"{path}:{i}: cross-skill SKILL.md hyperlink — use `skill-name` + overview table")
+            if "skills" in path.parts and re.search(r"\]\(\.\./(shared|policies)/", line):
+                bad.append(f"{path}:{i}: stale ../shared/ or ../policies/ path")
+
+# Relative markdown links under skills/ must resolve
+link_re = re.compile(r"\[([^\]]*)\]\(([^)]+)\)")
+for path in (repo / "skills").rglob("*.md"):
+    for i, line in enumerate(path.read_text().splitlines(), 1):
+        for m in link_re.finditer(line):
+            target = m.group(2).strip()
+            if target.startswith(("http://", "https://", "mailto:", "#")):
+                continue
+            file_part = target.split("#", 1)[0]
+            if not file_part:
+                continue
+            dest = (path.parent / file_part).resolve()
+            if not dest.is_file():
+                bad.append(f"{path}:{i}: broken link {file_part}")
 
 if bad:
     # Dedupe

@@ -2,7 +2,7 @@
 
 How to produce **diverse, art-directed personas and scenarios** across **`p-image`** → optional **`p-image-try-on`** / **`p-image-edit`** → **`p-video-avatar`**. Covers **photographic styles**, **anime and stylized mediums**, **camera angles**, **lighting**, **settings**, and **cast** — not generic “AI stock portrait” demos.
 
-**Variety ladders (full tables):** [generation-diversity.md](../../generation-diversity/references/generation-diversity.md#visual-variety) · **Try-on garment specifics:** [p-image-try-on-quality-checklist.md](../image/p-image-try-on-quality-checklist.md) · **Copy-paste examples:** [realistic-persona-example-prompt.md](./realistic-persona-example-prompt.md)
+**Variety ladders (full tables):** [generation-diversity.md](../../generation-diversity/references/generation-diversity.md#visual-variety) · **Try-on garment specifics:** [p-image-try-on-quality-checklist.md](./p-image-try-on-quality-checklist.md) · **Copy-paste examples:** [realistic-persona-example-prompt.md](./realistic-persona-example-prompt.md)
 
 ## Contents
 
@@ -222,7 +222,7 @@ Applies to **every** `visual_style_tag` — not photoreal only. Full stack: [gen
 7. **Realism or stylization lock** — photoreal lock **or** medium-specific lock (cel, clay, etc.)
 8. **Lip-sync hook** (avatar path) — `mouth clearly visible ready to speak`
 
-Run [p-image-quality-checklist.md](../image/p-image-quality-checklist.md) — persona rows below.
+Run [p-image-quality-checklist.md](./p-image-quality-checklist.md) — persona rows below.
 
 ### Hero prompt — talking head (avatar)
 
@@ -242,7 +242,7 @@ full body on dark asphalt, overcast open-sky light, neutral base outfit,
 natural skin texture, not CGI, 9:16 vertical, single subject one frame.
 ```
 
-More plate examples (including try-on garment tiers): [p-image-try-on SKILL.md](../../skills/image/p-image-try-on/SKILL.md#production-quality-not-basic-demos).
+More plate examples (including try-on garment tiers): [p-image-try-on SKILL.md](../../../image/p-image-try-on/SKILL.md#production-quality-not-basic-demos).
 
 ### Per-scene variety without new identity
 
@@ -251,7 +251,7 @@ After hero approval, branch with **`p-image-edit`** from the **same anchor URL**
 - Change **only** background, camera angle, emotion, or wardrobe delta
 - Never re-roll identity with a fresh unrelated **`p-image`** unless user requests recast
 
-Templates: [prompt-templates.md](../../workflows/avatar-multi-scene/prompt-templates.md).
+Templates: [prompt-templates.md](../../../workflows/avatar-multi-scene/prompt-templates.md).
 
 ### Identity lock
 
@@ -263,7 +263,7 @@ A realistic avatar is **not** a static face on a loop. Each clip needs **human d
 
 ### Still gate (before every clip)
 
-Run [p-video-avatar-quality-checklist.md](../video/p-video-avatar-quality-checklist.md) input section. Reject plates with obscured mouth, extreme profile-only crop, or synthetic mush skin.
+Run [p-video-avatar-quality-checklist.md](../../video-prompting/references/p-video-avatar-quality-checklist.md) input section. Reject plates with obscured mouth, extreme profile-only crop, or synthetic mush skin.
 
 ### Voice — sound human
 
@@ -316,7 +316,7 @@ Example **`voice_script`:** *"Okay — this is the patchwork jacket on me, not a
 
 ### Negative prompt (text artifacts)
 
-When stills risk signage or label bleed, use plan defaults — see [p-video-avatar SKILL.md](../../skills/video/p-video-avatar/SKILL.md#negative-prompt-suppress-on-screen-text). Primary fix remains **clean still prompts**; API negative prompt is a safety net.
+When stills risk signage or label bleed, use plan defaults — see [p-video-avatar SKILL.md](../../../video/p-video-avatar/SKILL.md#negative-prompt-suppress-on-screen-text). Primary fix remains **clean still prompts**; API negative prompt is a safety net.
 
 ## Diversity for public showcases
 
@@ -350,8 +350,8 @@ Coordinate with @ShinyTaskForce.
 
 | Model | Skill | Checklist |
 |-------|-------|-----------|
-| `p-image` | `p-image` | [p-image-quality-checklist.md](../image/p-image-quality-checklist.md) |
-| `p-image-try-on` | `p-image-try-on` | [p-image-try-on-quality-checklist.md](../image/p-image-try-on-quality-checklist.md) |
-| `p-video-avatar` | `p-video-avatar` | [p-video-avatar-quality-checklist.md](../video/p-video-avatar-quality-checklist.md) |
+| `p-image` | `p-image` | [p-image-quality-checklist.md](./p-image-quality-checklist.md) |
+| `p-image-try-on` | `p-image-try-on` | [p-image-try-on-quality-checklist.md](./p-image-try-on-quality-checklist.md) |
+| `p-video-avatar` | `p-video-avatar` | [p-video-avatar-quality-checklist.md](../../video-prompting/references/p-video-avatar-quality-checklist.md) |
 
 Example prompts: [realistic-persona-example-prompt.md](./realistic-persona-example-prompt.md)

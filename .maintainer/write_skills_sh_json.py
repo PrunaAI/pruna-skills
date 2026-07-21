@@ -24,14 +24,12 @@ def read_name(skill_md: Path) -> str | None:
 
 def discover_skills() -> set[str]:
     names: set[str] = set()
-    for base in (REPO / "skills",):
-        if not base.is_dir():
-            continue
-        for skill_md in base.rglob("SKILL.md"):
-            if "_shared" in skill_md.parts:
-                continue
-            if name := read_name(skill_md):
-                names.add(name)
+    base = REPO / "skills"
+    if not base.is_dir():
+        return names
+    for skill_md in base.rglob("SKILL.md"):
+        if name := read_name(skill_md):
+            names.add(name)
     return names
 
 

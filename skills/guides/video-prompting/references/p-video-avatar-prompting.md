@@ -1,6 +1,6 @@
 # p-video-avatar prompting
 
-Talking-head prompt craft for `p-video-avatar`. Templates: [avatar-multi-scene/prompt-templates.md](../../workflows/avatar-multi-scene/prompt-templates.md). Camera: [camera-lighting-vocabulary.md](./camera-lighting-vocabulary.md). Physics: [physics-safe-motion.md](./physics-safe-motion.md).
+Talking-head prompt craft for `p-video-avatar`. Templates: [avatar-multi-scene/prompt-templates.md](../../../workflows/avatar-multi-scene/prompt-templates.md). Camera: [camera-lighting-vocabulary.md](./camera-lighting-vocabulary.md). Physics: [physics-safe-motion.md](./physics-safe-motion.md).
 
 **Do not** use OPEN/MID/CLOSE — the model treats beats as cuts and the clip feels cutty.
 

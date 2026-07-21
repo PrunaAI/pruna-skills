@@ -2,11 +2,11 @@
 
 How to choose and **layer** audio when building reels, multi-scene films, and launch videos.
 
-**Prompt craft (how to write):** [audio-in-video-prompting.md](../video/audio-in-video-prompting.md) · [tts-style-prompting.md](./tts-style-prompting.md) · [music-and-bed-prompting.md](./music-and-bed-prompting.md) · talking heads: [p-video-avatar-prompting.md](../video/p-video-avatar-prompting.md).
+**Prompt craft (how to write):** [audio-in-video-prompting.md](../../video-prompting/references/audio-in-video-prompting.md) · [tts-style-prompting.md](./tts-style-prompting.md) · [music-and-bed-prompting.md](./music-and-bed-prompting.md) · talking heads: [p-video-avatar-prompting.md](../../video-prompting/references/p-video-avatar-prompting.md).
 
-**Multi-scene narrated films:** use the [scene anchor triple](../video/scene-anchor-triple.md) — pass TTS to **`p-video`** as `input.audio` with `image` + `last_frame_image`; do not post-mux unless re-render is impossible.
+**Multi-scene narrated films:** use the [scene anchor triple](../../video-prompting/references/scene-anchor-triple.md) — pass TTS to **`p-video`** as `input.audio` with `image` + `last_frame_image`; do not post-mux unless re-render is impossible.
 
-**Visual-only transitions (no VO):** use the [scene anchor pair](../video/scene-anchor-pair.md) — `duration` instead of `audio`; see `visual-transition-reel`.
+**Visual-only transitions (no VO):** use the [scene anchor pair](../../video-prompting/references/scene-anchor-pair.md) — `duration` instead of `audio`; see `visual-transition-reel`.
 
 ## Audio-led `p-video` (required when VO/narration exists)
 
@@ -128,6 +128,6 @@ Ask before generating paid audio or video:
 
 ## Related
 
-- [pruna-api.md#parallel-async-multi-scene--batch](./generation-diversity.md) — phased vs parallel when frames chain
+- [pruna-api.md#parallel-async-multi-scene--batch](../../generation-diversity/references/generation-diversity.md) — phased vs parallel when frames chain
 - `narrated-multi-scene`
-- [pruna-generative-pipeline](../docs/WORKFLOW-RECIPES.md)
+- [WORKFLOW-RECIPES](../../../../docs/WORKFLOW-RECIPES.md)

@@ -1,6 +1,6 @@
 # Camera and lighting vocabulary
 
-Shared lexicon for `camera_tag` / `lighting_tag` (stills) and motion lines in `p-video` / `p-video-avatar` prompts. Diversity axes: [generation-diversity.md#visual-variety](./generation-diversity.md#visual-variety). Dramaturgy: [prompt-dramaturgy.md](./prompt-dramaturgy.md).
+Shared lexicon for `camera_tag` / `lighting_tag` (stills) and motion lines in `p-video` / `p-video-avatar` prompts. Diversity axes: [generation-diversity.md#visual-variety](../../generation-diversity/references/generation-diversity.md#visual-variety). Dramaturgy: [prompt-dramaturgy.md](./prompt-dramaturgy.md).
 
 **Sources:** patterns adapted from [smixs/visual-skills](https://github.com/smixs/visual-skills) and [inference-sh/skills](https://github.com/inference-sh/skills) (MIT); rewritten for Pruna.
 

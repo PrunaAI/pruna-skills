@@ -59,19 +59,19 @@ Pair each row with its own **`voice_script`**, **`voice_prompt`**, and **`video_
 
 `ritual_seed` is **SSoT planning only** — do not pass to API `input.seed`. Set `api_seed` only when the user explicitly locks API reproducibility.
 
-Replace strings with your [random seed ritual](../skills/guides/generation-diversity/references/generation-diversity.md#random-seed-ritual-mandatory-before-every-generation) — do not copy from this template.
+Replace strings with your [random seed ritual](../../guides/generation-diversity/references/generation-diversity.md#random-seed-ritual-mandatory-before-every-generation) — do not copy from this template.
 
-**Ritual:** [generation-diversity.md#random-seed-ritual-mandatory-before-every-generation](../skills/guides/generation-diversity/references/generation-diversity.md#random-seed-ritual-mandatory-before-every-generation) (SSoT) — generate a random string before every generation; derive prompt axes via sum-mod.
+**Ritual:** [generation-diversity.md#random-seed-ritual-mandatory-before-every-generation](../../guides/generation-diversity/references/generation-diversity.md#random-seed-ritual-mandatory-before-every-generation) (SSoT) — generate a random string before every generation; derive prompt axes via sum-mod.
 
 ## Fashion / ecommerce try-on path
 
 When the deliverable is **dressed model stills** or **fashion UGC avatar**:
 
-1. **`p-image`** photoreal editorial plate → slop gate — [realistic-persona-showcase.md](../../guides/generation-diversity/references/realistic-persona-showcase.md)
-2. **`p-image-try-on`** with garment refs (normal mode for complex stacks) — [p-image-try-on-quality-checklist.md](../../../../../skills/guides/image-prompting/references/p-image-try-on-quality-checklist.md)
+1. **`p-image`** photoreal editorial plate → slop gate — [realistic-persona-showcase.md](../../guides/image-prompting/references/realistic-persona-showcase.md)
+2. **`p-image-try-on`** with garment refs (normal mode for complex stacks) — [p-image-try-on-quality-checklist.md](../../guides/image-prompting/references/p-image-try-on-quality-checklist.md)
 3. Optional **`p-image-upscale`** → slop gate → **`p-video-avatar`** with **unique `video_prompt`** and natural **`voice_script`**
 
-Lock **hero plate URL** from step 1 through step 3. Plan cast diversity for public example sets per [generation-diversity.md#visual-variety](../skills/guides/generation-diversity/references/generation-diversity.md#visual-variety).
+Lock **hero plate URL** from step 1 through step 3. Plan cast diversity for public example sets per [generation-diversity.md#visual-variety](../../guides/generation-diversity/references/generation-diversity.md#visual-variety).
 
 ## Style bible (paste into every image prompt)
 

@@ -23,15 +23,15 @@ Maintenance rule: keep tool/workflow mapping only in this file to avoid link dri
 
 | Tool/model | Checklist | Common workflows |
 |------------|-----------|---------------|
-| `p-image` | [`p-image-quality-checklist.md`](../image/p-image-quality-checklist.md) · persona bar: [`realistic-persona-showcase.md`](../shared/realistic-persona-showcase.md) | `image-to-video`, `narrated-multi-scene`, [`WORKFLOW-RECIPES`](../../docs/WORKFLOW-RECIPES.md) |
-| `p-image-edit` | [`p-image-edit-quality-checklist.md`](../image/p-image-edit-quality-checklist.md) | `avatar-single-scene`, `avatar-multi-scene`, [`WORKFLOW-RECIPES`](../../docs/WORKFLOW-RECIPES.md) |
-| `p-image-upscale` | [`p-image-upscale-quality-checklist.md`](../image/p-image-upscale-quality-checklist.md) | `image-to-video`, `narrated-multi-scene`, [`WORKFLOW-RECIPES`](../../docs/WORKFLOW-RECIPES.md), [`generate_upscale_comparison.pyagent curl/ffmpeg (no shared scripts)) |
-| `p-image-try-on` | [`p-image-try-on-quality-checklist.md`](../image/p-image-try-on-quality-checklist.md) | [`WORKFLOW-RECIPES`](../../docs/WORKFLOW-RECIPES.md), `p-image-try-on`, [`realistic-persona-showcase.md`](../shared/realistic-persona-showcase.md) |
-| `p-video` | [`p-video-quality-checklist.md`](../video/p-video-quality-checklist.md) | `image-to-video`, `narrated-multi-scene`, `interactive-explainer`, `visual-transition-reel`, [`WORKFLOW-RECIPES`](../../docs/WORKFLOW-RECIPES.md) |
-| `p-video-avatar` | [`p-video-avatar-quality-checklist.md`](../video/p-video-avatar-quality-checklist.md) · persona bar: [`realistic-persona-showcase.md`](../shared/realistic-persona-showcase.md) | `avatar-single-scene`, `avatar-multi-scene`, `interactive-explainer`, [`WORKFLOW-RECIPES`](../../docs/WORKFLOW-RECIPES.md) |
-| `p-video-animate` | [`p-video-animate-quality-checklist.md`](../video/p-video-animate-quality-checklist.md) | `avatar-multi-scene`, [`WORKFLOW-RECIPES`](../../docs/WORKFLOW-RECIPES.md) |
-| `p-video-replace` | [`p-video-replace-quality-checklist.md`](../video/p-video-replace-quality-checklist.md) | `p-video-replace`, [ffmpeg hstack slider (see workflow SKILL) curl/ffmpeg (no shared scripts)) |
-| `music-2.5` + music video assembly | [`music-video-quality-checklist.md`](../workflows/music-video-quality-checklist.md) | `music-video`, `music-2.5` |
+| `p-image` | [`p-image-quality-checklist.md`](../../image-prompting/references/p-image-quality-checklist.md) · persona bar: [`realistic-persona-showcase.md`](../../image-prompting/references/realistic-persona-showcase.md) | `image-to-video`, `narrated-multi-scene`, [`WORKFLOW-RECIPES`](../../../../docs/WORKFLOW-RECIPES.md) |
+| `p-image-edit` | [`p-image-edit-quality-checklist.md`](../../image-prompting/references/p-image-edit-quality-checklist.md) | `avatar-single-scene`, `avatar-multi-scene`, [`WORKFLOW-RECIPES`](../../../../docs/WORKFLOW-RECIPES.md) |
+| `p-image-upscale` | [`p-image-upscale-quality-checklist.md`](../../image-prompting/references/p-image-upscale-quality-checklist.md) | `image-to-video`, `narrated-multi-scene`, [`WORKFLOW-RECIPES`](../../../../docs/WORKFLOW-RECIPES.md), `p-image-upscale`
+| `p-image-try-on` | [`p-image-try-on-quality-checklist.md`](../../image-prompting/references/p-image-try-on-quality-checklist.md) | [`WORKFLOW-RECIPES`](../../../../docs/WORKFLOW-RECIPES.md), `p-image-try-on`, [`realistic-persona-showcase.md`](../../image-prompting/references/realistic-persona-showcase.md) |
+| `p-video` | [`p-video-quality-checklist.md`](../../video-prompting/references/p-video-quality-checklist.md) | `image-to-video`, `narrated-multi-scene`, `interactive-explainer`, `visual-transition-reel`, [`WORKFLOW-RECIPES`](../../../../docs/WORKFLOW-RECIPES.md) |
+| `p-video-avatar` | [`p-video-avatar-quality-checklist.md`](../../video-prompting/references/p-video-avatar-quality-checklist.md) · persona bar: [`realistic-persona-showcase.md`](../../image-prompting/references/realistic-persona-showcase.md) | `avatar-single-scene`, `avatar-multi-scene`, `interactive-explainer`, [`WORKFLOW-RECIPES`](../../../../docs/WORKFLOW-RECIPES.md) |
+| `p-video-animate` | [`p-video-animate-quality-checklist.md`](../../video-prompting/references/p-video-animate-quality-checklist.md) | `avatar-multi-scene`, [`WORKFLOW-RECIPES`](../../../../docs/WORKFLOW-RECIPES.md) |
+| `p-video-replace` | [`p-video-replace-quality-checklist.md`](../../video-prompting/references/p-video-replace-quality-checklist.md) | `p-video-replace`, `avatar-multi-scene`
+| `music-2.5` + music video assembly | [`music-video-quality-checklist.md`](../../../workflows/music-video/references/music-video-quality-checklist.md) | `music-video`, `music-2.5` |
 
 ## Core checklist (all models)
 
@@ -45,19 +45,19 @@ Maintenance rule: keep tool/workflow mapping only in this file to avoid link dri
 
 ## Model-specific checklists
 
-- [`p-image-quality-checklist.md`](../image/p-image-quality-checklist.md)
-- [`p-image-edit-quality-checklist.md`](../image/p-image-edit-quality-checklist.md)
-- [`p-image-upscale-quality-checklist.md`](../image/p-image-upscale-quality-checklist.md)
-- [`p-image-try-on-quality-checklist.md`](../image/p-image-try-on-quality-checklist.md)
-- [`p-video-quality-checklist.md`](../video/p-video-quality-checklist.md)
-- [`p-video-avatar-quality-checklist.md`](../video/p-video-avatar-quality-checklist.md)
-- [`p-video-animate-quality-checklist.md`](../video/p-video-animate-quality-checklist.md)
-- [`p-video-replace-quality-checklist.md`](../video/p-video-replace-quality-checklist.md)
-- [`music-video-quality-checklist.md`](../workflows/music-video-quality-checklist.md)
+- [`p-image-quality-checklist.md`](../../image-prompting/references/p-image-quality-checklist.md)
+- [`p-image-edit-quality-checklist.md`](../../image-prompting/references/p-image-edit-quality-checklist.md)
+- [`p-image-upscale-quality-checklist.md`](../../image-prompting/references/p-image-upscale-quality-checklist.md)
+- [`p-image-try-on-quality-checklist.md`](../../image-prompting/references/p-image-try-on-quality-checklist.md)
+- [`p-video-quality-checklist.md`](../../video-prompting/references/p-video-quality-checklist.md)
+- [`p-video-avatar-quality-checklist.md`](../../video-prompting/references/p-video-avatar-quality-checklist.md)
+- [`p-video-animate-quality-checklist.md`](../../video-prompting/references/p-video-animate-quality-checklist.md)
+- [`p-video-replace-quality-checklist.md`](../../video-prompting/references/p-video-replace-quality-checklist.md)
+- [`music-video-quality-checklist.md`](../../../workflows/music-video/references/music-video-quality-checklist.md)
 
 ## Visual variety
 
-Before **any** generation, run [generation-diversity.md](./generation-diversity.md) including the [Variety checklist](./generation-diversity.md#variety-checklist-before-first-api-call). Persona/playground bar: [realistic-persona-showcase.md](../shared/realistic-persona-showcase.md).
+Before **any** generation, run [generation-diversity.md](./generation-diversity.md) including the [Variety checklist](./generation-diversity.md#variety-checklist-before-first-api-call). Persona/playground bar: [realistic-persona-showcase.md](../../image-prompting/references/realistic-persona-showcase.md).
 
 ## Approval gates (workflows)
 
@@ -84,15 +84,15 @@ Human-in-the-loop phases for multi-step workflows. **Video and replace jobs are 
 | **approve clips** missing before concat + bed | Phase C/D only after clip review |
 | Using `--yes-skip-*-gate` without user asking for automation | Confirm explicitly |
 | Regen prompts without deleting stills/clips | Delete targets or `--fresh` / `--regen-*` |
-| Missing `PRUNA_API_KEY` / `REPLICATE_API_TOKEN` | Stop; [api-credentials.md](../shared/api-credentials.md) |
+| Missing `PRUNA_API_KEY` / `REPLICATE_API_TOKEN` | Stop; [api-credentials.md](../../pruna-api/references/api-credentials.md) |
 
 **When not to stall:** the user already replied **approve plan**, **approve stills**, or **approve clips** for the current phase — proceed with that phase only.
 
-Runner `--approve-*` flags and per-workflow commands: [workflow-feedback-gates.md](../workflows/workflow-feedback-gates.md).
+Runner `--approve-*` flags and per-workflow commands: [workflow-feedback-gates.md](workflow-feedback-gates.md).
 
 ## Workflow note
 
 For multi-scene projects, run these checks per scene and add a final continuity pass
 (style, character identity, voice, and pacing consistency across scenes).
 
-**Narrated cinematic B-roll:** validate [scene anchor triple](../video/scene-anchor-triple.md) inputs before `p-video` — start still, end still, uploaded narration URL per row.
+**Narrated cinematic B-roll:** validate [scene anchor triple](../../video-prompting/references/scene-anchor-triple.md) inputs before `p-video` — start still, end still, uploaded narration URL per row.

@@ -1,6 +1,6 @@
 # Physics-safe motion (`p-video`)
 
-What motion language `p-video` handles well vs what breaks. Explainer specialization still lives in [interactive-explainer-motion.md](../workflows/interactive-explainer-motion.md) — **this file is the shared SSoT** for safe/trap tables.
+What motion language `p-video` handles well vs what breaks. Explainer specialization still lives in [interactive-explainer-motion.md](../../../workflows/interactive-explainer/references/interactive-explainer-motion.md) — **this file is the shared SSoT** for safe/trap tables.
 
 Related: [prompt-dramaturgy.md](./prompt-dramaturgy.md) · [scene-anchor-pair.md](./scene-anchor-pair.md) · [p-video-avatar-prompting.md](./p-video-avatar-prompting.md).
 

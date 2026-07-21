@@ -70,7 +70,7 @@ wait
 
 Narrated story films pass three uploads per scene — **`image`**, **`last_frame_image`**, **`audio`** — in one prediction. Omit `duration` when `audio` is set.
 
-Full spec: [scene-anchor-triple.md](./scene-anchor-triple.md).
+Full spec: [scene-anchor-triple.md](../../video-prompting/references/scene-anchor-triple.md).
 
 ## File uploads
 
@@ -128,4 +128,4 @@ Skills in this repo assume **`PRUNA_API_KEY`** is set in the shell when running 
 
 **Missing key:** agents must stop and point the user to [api-credentials.md](./api-credentials.md) — sign up at [dashboard.pruna.ai](https://dashboard.pruna.ai/), create an API key, then `export PRUNA_API_KEY=...`.
 
-**Agent discipline:** [generation-diversity.md](./generation-diversity.md) before every `POST /v1/predictions`.
+**Agent discipline:** [generation-diversity.md](../../generation-diversity/references/generation-diversity.md) before every `POST /v1/predictions`.

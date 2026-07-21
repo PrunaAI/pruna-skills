@@ -1,6 +1,6 @@
 # Audio-in-video prompting (`p-video`)
 
-How to **write prompts** when sound matters on `p-video`. Tool picker and mix levels: [audio-post-production.md](../audio/audio-post-production.md). TTS craft: [tts-style-prompting.md](../audio/tts-style-prompting.md). Talking heads: [p-video-avatar-prompting.md](./p-video-avatar-prompting.md).
+How to **write prompts** when sound matters on `p-video`. Tool picker and mix levels: [audio-post-production.md](../../audio-prompting/references/audio-post-production.md). TTS craft: [tts-style-prompting.md](../../audio-prompting/references/tts-style-prompting.md). Talking heads: [p-video-avatar-prompting.md](./p-video-avatar-prompting.md).
 
 ## Three modes
 
@@ -8,7 +8,7 @@ How to **write prompts** when sound matters on `p-video`. Tool picker and mix le
 |------|-----|------------|
 | **A — Native SFX / dialogue** | `prompt` + optional `save_audio`; use `duration` | Name **diegetic** sounds the picture should emit |
 | **B — Uploaded audio (preferred for VO/music)** | `audio` URL; **omit `duration`**; `save_audio: true` | Motion matches **mood/beats** of the track — do not paste VO text into `prompt` |
-| **C — Post bed** | Stable Audio mixed under VO in ffmpeg | Bed prompt is separate ([music-and-bed-prompting.md](../audio/music-and-bed-prompting.md)); video prompt ignores the bed |
+| **C — Post bed** | Stable Audio mixed under VO in ffmpeg | Bed prompt is separate ([music-and-bed-prompting.md](../../audio-prompting/references/music-and-bed-prompting.md)); video prompt ignores the bed |
 
 Never generate silent `p-video` and post-mux narration unless re-render is impossible (truncation risk). Probe TTS ≤ ~19s before Mode B.
 

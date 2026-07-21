@@ -1,6 +1,6 @@
 # p-image-try-on prompting
 
-When and how to use the experimental **`prompt`** on `p-image-try-on`. Upstream person plates: [realistic-persona-showcase.md](../shared/realistic-persona-showcase.md). QA: [p-image-try-on-quality-checklist.md](./p-image-try-on-quality-checklist.md).
+When and how to use the experimental **`prompt`** on `p-image-try-on`. Upstream person plates: [realistic-persona-showcase.md](./realistic-persona-showcase.md). QA: [p-image-try-on-quality-checklist.md](./p-image-try-on-quality-checklist.md).
 
 ## Default: leave `prompt` empty
 

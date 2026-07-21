@@ -2,9 +2,9 @@
 
 Motion rules for **narrator** (`p-video`) and **character** (`p-video-avatar`) beats in `interactive-explainer`.
 
-**Shared SSoT for safe/trap tables:** [physics-safe-motion.md](../video/physics-safe-motion.md). This file specializes those rules for explainers (Tier B defaults + avatar continuous-take).
+**Shared SSoT for safe/trap tables:** [physics-safe-motion.md](../../../guides/video-prompting/references/physics-safe-motion.md). This file specializes those rules for explainers (Tier B defaults + avatar continuous-take).
 
-Related: [scene-anchor-triple.md](../video/scene-anchor-triple.md) · `visual-transition-reel` · [prompt-dramaturgy.md](../video/prompt-dramaturgy.md)
+Related: [scene-anchor-triple.md](../../../guides/video-prompting/references/scene-anchor-triple.md) · `visual-transition-reel` · [prompt-dramaturgy.md](../../../guides/video-prompting/references/prompt-dramaturgy.md)
 
 ## Defaults
 
@@ -54,7 +54,7 @@ One camera move, steady light. Mouth motion comes from the avatar model.
 
 ## Avoid (physics trap)
 
-Shared trap table: [physics-safe-motion.md](../video/physics-safe-motion.md). For explainers, stay on **Tier B** — do **not** prompt object interaction, locomotion, or force:
+Shared trap table: [physics-safe-motion.md](../../../guides/video-prompting/references/physics-safe-motion.md). For explainers, stay on **Tier B** — do **not** prompt object interaction, locomotion, or force:
 
 | Avoid | Why |
 |-------|-----|

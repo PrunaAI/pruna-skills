@@ -14,19 +14,19 @@ if [[ ! -f "${IDX}" ]]; then
   exit 1
 fi
 
-mapfile -t SKILLS < <(python3 -c "import json; print('\n'.join(s['name'] for s in json.load(open('${IDX}'))['skills']))")
-echo "Publishing ${#SKILLS[@]} skills to ClawHub$([[ ${EXECUTE} -eq 1 ]] && echo '' || echo ' (dry-run)')…"
-
-ARGS=(--target clawhub)
+ARGS=(--target clawhub --skip-verify)
 [[ ${EXECUTE} -eq 1 ]] && ARGS+=(--execute)
 
 failures=0
-for name in "${SKILLS[@]}"; do
+count=0
+while IFS= read -r name; do
+  [[ -z "${name}" ]] && continue
+  count=$((count + 1))
   echo "==> ${name}"
-  if ! python3 .maintainer/release/publish_all_skills.py "${ARGS[@]}" --skill "${name}" --skip-verify; then
+  if ! python3 .maintainer/release/publish_all_skills.py "${ARGS[@]}" --skill "${name}"; then
     failures=$((failures + 1))
   fi
-done
+done < <(python3 -c "import json; print('\n'.join(s['name'] for s in json.load(open('${IDX}'))['skills']))")
 
+echo "publish_clawhub_batches: ${count} skills, ${failures} failures$([[ ${EXECUTE} -eq 1 ]] || echo ' (dry-run)')"
 [[ ${failures} -eq 0 ]] || exit 1
-echo "publish_clawhub_batches: OK"

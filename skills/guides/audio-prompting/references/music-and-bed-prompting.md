@@ -1,6 +1,6 @@
 # Music and bed prompting
 
-Prompt craft for `music-2.5` (songs with vocals) and `stable-audio-2.5` (instrumental beds). Mix/stack: [audio-post-production.md](./audio-post-production.md). In-video sync: [audio-in-video-prompting.md](../video/audio-in-video-prompting.md).
+Prompt craft for `music-2.5` (songs with vocals) and `stable-audio-2.5` (instrumental beds). Mix/stack: [audio-post-production.md](./audio-post-production.md). In-video sync: [audio-in-video-prompting.md](../../video-prompting/references/audio-in-video-prompting.md).
 
 ## Music 2.5 (full song)
 

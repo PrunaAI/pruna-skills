@@ -21,7 +21,7 @@ Ken Burns path skips Phase B. Music-mode reels use Ken Burns only (no p-video).
 3. **Parallelize within a phase** (batch still edits, parallel TTS, parallel p-video), not across phases.
 4. **Do not pass `PRUNA_API_KEY` or `REPLICATE_API_TOKEN` to subagents** unless a subagent is running an approved still or TTS lane — parent owns gates and assembly.
 5. Run [illustrated-story-reel-quality.md](./illustrated-story-reel-quality.md) on every still before audio or video.
-6. **[Generation diversity](../policies/generation-diversity.md)** and **[random seed ritual](../policies/generation-diversity.md#random-seed-ritual-mandatory-before-every-generation)** before every `POST /v1/predictions`.
+6. **[Generation diversity](../../../guides/generation-diversity/references/generation-diversity.md)** and **[random seed ritual](../../../guides/generation-diversity/references/generation-diversity.md#random-seed-ritual-mandatory-before-every-generation)** before every `POST /v1/predictions`.
 
 ## Wording templates
 
