@@ -74,47 +74,49 @@ npx skills add PrunaAI/pruna-skills -l                  # list all
 
 ## What's in the suite
 
-Full descriptions live in [docs/SKILL-CATALOG.md](docs/SKILL-CATALOG.md).
+The `@pruna` suite includes 25 skills across three layers. First come **guides**, which teach prompting craft and how to call the APIs safely. Next are **tools**, each mapped to one paid generation call. Finally, **workflows** chain those tools into finished deliverables your agent assembles step by step.
+
+You do not need to memorize this list. Describe your goal in chat and your agent picks the right skills. For full descriptions and per-skill install commands, see [docs/SKILL-CATALOG.md](docs/SKILL-CATALOG.md).
 
 ### Guides (5)
 
-| You want… | Skill |
-|-----------|-------|
-| Diverse prompts and QA gates before you spend on API calls | `generation-diversity` |
-| Still-image prompting | `image-prompting` |
-| Video and motion prompting | `video-prompting` |
-| TTS, music, and background beds | `audio-prompting` |
-| Pruna and Replicate HTTP, plus agent safety | `pruna-api` |
+| You want to… | Skill |
+|--------------|-------|
+| Write stronger prompts and run QA before API calls | `generation-diversity` |
+| Craft still-image prompts for edits, try-on, and personas | `image-prompting` |
+| Craft video and motion prompts with safe physics and chaining | `video-prompting` |
+| Craft TTS, music, and background audio prompts | `audio-prompting` |
+| Set up credentials, HTTP calls, and agent safety | `pruna-api` |
 
 ### Tools (12)
 
-| You want… | Skill |
-|-----------|-------|
-| Fast text-to-image | `p-image` |
-| Edit or combine from reference photos | `p-image-edit` |
-| Virtual try-on | `p-image-try-on` |
-| Upscale | `p-image-upscale` |
-| One video clip | `p-video` |
-| Copy motion from one video to another | `p-video-animate` |
-| A person on camera speaking | `p-video-avatar` |
-| Swap a person or product in video | `p-video-replace` |
-| Narration (text to speech) | `gemini-3.1-flash-tts` |
-| A song with vocals | `music-2.5` |
-| Background music without vocals | `stable-audio-2.5` |
-| Lyric timestamps | `whisperx` |
+| You want to… | Skill |
+|--------------|-------|
+| Generate a fast image from text | `p-image` |
+| Edit a photo or combine reference images | `p-image-edit` |
+| Dress a person in clothes from reference photos | `p-image-try-on` |
+| Upscale or sharpen an image for delivery | `p-image-upscale` |
+| Generate one short video clip | `p-video` |
+| Make a photo move like another video | `p-video-animate` |
+| Put a person on camera speaking a script | `p-video-avatar` |
+| Swap a person or product inside existing footage | `p-video-replace` |
+| Add spoken narration or voiceover | `gemini-3.1-flash-tts` |
+| Create an original song with vocals | `music-2.5` |
+| Add light instrumental background music | `stable-audio-2.5` |
+| Get word-level lyric timestamps for editing | `whisperx` |
 
 ### Workflows (8)
 
-| You want… | Skill |
-|-----------|-------|
-| Turn images into video clips | `image-to-video` |
-| A multi-part story with narration | `narrated-multi-scene` |
-| A scene-to-scene transition montage | `visual-transition-reel` |
-| One short presenter clip | `avatar-single-scene` |
-| The same presenter across several scenes | `avatar-multi-scene` |
-| An educational explainer | `interactive-explainer` |
-| A full music video | `music-video` |
-| An illustrated slideshow reel | `illustrated-story-reel` |
+| You want to… | Skill |
+|--------------|-------|
+| Turn images into a short narrated film beat | `image-to-video` |
+| Tell a multi-part story with voiceover | `narrated-multi-scene` |
+| Build a montage with scene-to-scene transitions | `visual-transition-reel` |
+| Produce one polished presenter clip | `avatar-single-scene` |
+| Keep the same presenter across several clips | `avatar-multi-scene` |
+| Make an educational explainer with a host and characters | `interactive-explainer` |
+| Produce a full music video with lyrics and performance | `music-video` |
+| Assemble an illustrated slideshow reel | `illustrated-story-reel` |
 
 ## Other install channels
 
