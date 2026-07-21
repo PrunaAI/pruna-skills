@@ -1,10 +1,10 @@
 # p-image-try-on quality checklist
 
-After each `p-image-try-on` output is saved, **open the file and review it visually** against this checklist (agent vision review — see [generation-quality-checklists.md](../../generation-diversity/references/generation-quality-checklists.md#who-applies-these-checklists)).
+After each `p-image-try-on` output is saved, **open the file and review it visually** against this checklist (agent vision review — see `generation-diversity`).
 
 ## Applies to
 
-See the canonical mapping in [`generation-quality-checklists.md`](../../generation-diversity/references/generation-quality-checklists.md).
+See the canonical mapping in `generation-diversity`.
 
 ## Scene preservation (garment-only edit)
 
@@ -20,7 +20,7 @@ See [realistic-persona-showcase.md](./realistic-persona-showcase.md#preservation
 
 ## Garment fit and identity
 
-- Each requested garment appears on the person (correct category — see supported types in [p-image-try-on SKILL.md](../../../image/p-image-try-on/SKILL.md#garment-categories)).
+- Each requested garment appears on the person (correct category — see supported types in `p-image-try-on`).
 - **One item per body spot:** competing garments on the same region (socks + shoes) — only one expected; flag if the wrong one won.
 - Unsupported / omitted garment types were not silently dropped without the user knowing (check logs / re-run with supported refs only).
 - Garment color, pattern, logos, and key details match the reference (within reasonable lighting variance).
@@ -32,7 +32,7 @@ See [realistic-persona-showcase.md](./realistic-persona-showcase.md#preservation
 If **`person_image`** was generated with **`p-image`**, confirm [p-image-quality-checklist.md](./p-image-quality-checklist.md) passed first — mushy or synthetic plates produce mushy try-ons.
 
 - Photoreal editorial intent (not generic “fashion model white background” unless requested).
-- Cast and setting match the showcase brief when building public examples — [generation-diversity.md#visual-variety](../../generation-diversity/references/generation-diversity.md#visual-variety).
+- Cast and setting match the showcase brief when building public examples — generation-diversity.md#visual-variety (`generation-diversity`).
 
 ## Pose and composition
 

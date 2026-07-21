@@ -30,7 +30,7 @@ Follow each skill's **Before generating** / craft sections — do not restate gu
 |----------|------|
 | Lyrics, cuts, align pipeline | [lyrics-and-cuts.md](./lyrics-and-cuts.md) |
 | Plan template | [templates/music-video-plan.template.json](./templates/music-video-plan.template.json) |
-| Feedback | [../../guides/generation-diversity/references/workflow-feedback-gates.md](../../guides/generation-diversity/references/workflow-feedback-gates.md) |
+| Feedback | `generation-diversity` |
 | QA | [./references/music-video-quality-checklist.md](./references/music-video-quality-checklist.md) |
 
 ## Model routing (performance vs B-roll)

@@ -1,10 +1,10 @@
 # p-video-animate quality checklist
 
-After each animate job, **open the source video, reference image, and output clip** and review them against this list (agent vision review — see [generation-quality-checklists.md](../../generation-diversity/references/generation-quality-checklists.md#who-applies-these-checklists)).
+After each animate job, **open the source video, reference image, and output clip** and review them against this list (agent vision review — see `generation-diversity`).
 
 ## Applies to
 
-See the canonical mapping in [`generation-quality-checklists.md`](../../generation-diversity/references/generation-quality-checklists.md).
+See the canonical mapping in `generation-diversity`.
 
 ## Input gate (pre-render)
 

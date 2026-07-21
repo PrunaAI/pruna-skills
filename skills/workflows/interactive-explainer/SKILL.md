@@ -31,7 +31,7 @@ Follow each skill's **Before generating** / craft sections — do not restate gu
 | Positive prompts / blocked phrases | [./references/interactive-explainer-prompts.md](./references/interactive-explainer-prompts.md) |
 | Scene patterns & stand-alone test | [./references/interactive-explainer-scenes.md](./references/interactive-explainer-scenes.md) |
 | Motion (OPEN/MID/CLOSE) | [./references/interactive-explainer-motion.md](./references/interactive-explainer-motion.md) |
-| Feedback discipline | [../../guides/generation-diversity/references/workflow-feedback-gates.md](../../guides/generation-diversity/references/workflow-feedback-gates.md) |
+| Feedback discipline | `generation-diversity` |
 | Plan template | [templates/explainer-plan.template.json](./templates/explainer-plan.template.json) |
 
 ## Subject flavors (pick one `style_bible`)

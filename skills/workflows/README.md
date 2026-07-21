@@ -10,4 +10,4 @@ npx skills add PrunaAI/pruna-skills@music-video -y
 
 Or everything: `npx skills add PrunaAI/pruna-skills@pruna -y`.
 
-Human recipe map: [docs/WORKFLOW-RECIPES.md](../../docs/WORKFLOW-RECIPES.md).
+Human recipe map: repo `docs/WORKFLOW-RECIPES.md` (not shipped inside a skill).

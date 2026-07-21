@@ -1,6 +1,6 @@
 # TTS style prompting (Gemini 3.1 Flash TTS)
 
-Director-style `prompt` craft for `gemini-3.1-flash-tts`. Upload results to Pruna for [audio-in-video-prompting.md](../../video-prompting/references/audio-in-video-prompting.md) Mode B. Layering: [audio-post-production.md](./audio-post-production.md).
+Director-style `prompt` craft for `gemini-3.1-flash-tts`. Upload results to Pruna for Mode B in-video audio (install `video-prompting`). Layering: [audio-post-production.md](./audio-post-production.md).
 
 ## Align three channels
 
@@ -12,7 +12,7 @@ Director-style `prompt` craft for `gemini-3.1-flash-tts`. Upload results to Prun
 
 All three must point the **same** emotional direction.
 
-**Bracket clarity:** `[tags]` live only in this TTS `text` field. Still typography uses double-quoted `"[STRING]"` → [prompt-golden-rules.md](../../image-prompting/references/prompt-golden-rules.md). Native clip dialogue (`[subject] says "[LINE]"`) → [audio-in-video-prompting.md](../../video-prompting/references/audio-in-video-prompting.md) Mode A — not this skill.
+**Bracket clarity:** `[tags]` live only in this TTS `text` field. Still typography uses double-quoted `"[STRING]"` — see `image-prompting`. Native clip dialogue (`[subject] says "[LINE]"`) is Mode A in `video-prompting` — not this skill.
 
 ## Human narrator defaults
 

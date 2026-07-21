@@ -8,8 +8,8 @@ Agent vision review for **illustrated-story-reel** stills, audio, and optional p
 
 ## Core (every job)
 
-- **[Generation diversity](../../../guides/generation-diversity/references/generation-diversity.md)** — ritual seed + rotate scenario axes.
-- **[Random seed ritual](../../../guides/generation-diversity/references/generation-diversity.md#random-seed-ritual-mandatory-before-every-generation)** — state ritual string before every prediction; never copy doc examples.
+- **`generation-diversity`** — ritual seed + rotate scenario axes.
+- **Random seed ritual (`generation-diversity`)** — state ritual string before every prediction; never copy doc examples.
 - Goal and acceptance criteria are explicit.
 - `aspect_ratio` in plan matches prompt wording (vertical / horizontal / square).
 - No accidental watermarks, UI overlays, or stray text unless requested.
@@ -18,7 +18,7 @@ Agent vision review for **illustrated-story-reel** stills, audio, and optional p
 
 After each still, open the file and review:
 
-- **Hero + beats (`p-image`, `p-image-edit`):** [p-image-quality-checklist.md](../../../guides/image-prompting/references/p-image-quality-checklist.md) and [p-image-edit-quality-checklist.md](../../../guides/image-prompting/references/p-image-edit-quality-checklist.md) — skip avatar handoff rows.
+- **Hero + beats (`p-image`, `p-image-edit`):** `image-prompting` and `image-prompting` — skip avatar handoff rows.
 - **Narration (`gemini-3.1-flash-tts`):** pace, tone, line clarity per beat; probe ≤ ~19s before p-video.
 - **Music bed (`stable-audio-2.5`):** instrumental, no vocals unless brief asks; level appropriate under stills.
 - **Motion clips (`p-video`, when `motion_mode: p-video`):** style matches still; gentle illustrated drift; no photoreal morph; audio sync; no VO transcript leaked into motion.

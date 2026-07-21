@@ -23,7 +23,7 @@ Set `defaults.motion_mode` or per-scene `motion_mode`: `"ken_burns"` \| `"p-vide
 | `scenes[].motion_mode` | Override per beat |
 | `scenes[].video_prompt` | Mode B motion prompt (OPEN/MID/CLOSE) — **no VO transcript** |
 
-TTS per beat must be **≤ ~19s** (P-API audio-led cap ~20s). Probe before render — see [audio-in-video-prompting.md](../../../guides/video-prompting/references/audio-in-video-prompting.md).
+TTS per beat must be **≤ ~19s** (P-API audio-led cap ~20s). Probe before render — see `video-prompting`.
 
 ## Mode B prompt template
 
@@ -33,7 +33,7 @@ MID: whale drifts slowly forward; a few books flutter past; motion matches narra
 CLOSE: settle in the aisle, collage texture stable, gentle drift only.
 ```
 
-Rules (full ref: [audio-in-video-prompting.md](../../../guides/video-prompting/references/audio-in-video-prompting.md)):
+Rules (full ref: `video-prompting`):
 
 - Describe **picture motion**, not spoken words.
 - Match narrator mood — calm story → slow drift; wonder → slightly livelier flutter.

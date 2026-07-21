@@ -32,4 +32,4 @@ Agent-only approval phases for multi-step workflows. Universal QA: [generation-q
 1. Complete `generation-diversity` ritual before any prompt work.
 2. Install workflow tools via that skill’s **Prerequisites** (or `@pruna` once).
 3. Parallelize independent curl jobs within a phase; never skip stills approval before paid video.
-4. Recipe picker for humans: [WORKFLOW-RECIPES.md](../../../../docs/WORKFLOW-RECIPES.md).
+4. Recipe picker for humans: WORKFLOW-RECIPES.md.

@@ -31,7 +31,7 @@ If the user wants a multi-scene film → hand off to `narrated-multi-scene` or `
 
 **Data handling:** `pruna-api` (agent safety) before any upload or paid call.
 
-**Staged generation:** `generation-diversity` · [../../guides/generation-diversity/references/workflow-feedback-gates.md](../../guides/generation-diversity/references/workflow-feedback-gates.md)
+**Staged generation:** `generation-diversity` · `generation-diversity`
 
 ## Feedback gates (required)
 

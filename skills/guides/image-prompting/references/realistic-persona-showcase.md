@@ -2,7 +2,7 @@
 
 How to produce **diverse, art-directed personas and scenarios** across **`p-image`** → optional **`p-image-try-on`** / **`p-image-edit`** → **`p-video-avatar`**. Covers **photographic styles**, **anime and stylized mediums**, **camera angles**, **lighting**, **settings**, and **cast** — not generic “AI stock portrait” demos.
 
-**Variety ladders (full tables):** [generation-diversity.md](../../generation-diversity/references/generation-diversity.md#visual-variety) · **Try-on garment specifics:** [p-image-try-on-quality-checklist.md](./p-image-try-on-quality-checklist.md) · **Copy-paste examples:** [realistic-persona-example-prompt.md](./realistic-persona-example-prompt.md)
+**Variety ladders (full tables):** `generation-diversity` · **Try-on garment specifics:** [p-image-try-on-quality-checklist.md](./p-image-try-on-quality-checklist.md) · **Copy-paste examples:** [realistic-persona-example-prompt.md](./realistic-persona-example-prompt.md)
 
 ## Contents
 
@@ -21,7 +21,7 @@ Current public examples often read as **AI sloppy** or **too simplistic**: same 
 
 ## Pipeline overview
 
-**Before any step:** [generation-diversity.md](../../generation-diversity/references/generation-diversity.md) (ritual seed + axis rotation) · [random seed ritual](../../generation-diversity/references/generation-diversity.md#random-seed-ritual-mandatory-before-every-generation)
+**Before any step:** `generation-diversity` (ritual seed + axis rotation) · random seed ritual (`generation-diversity`)
 
 ```text
 p-image (hero plate)     → slop gate → identity anchor (plate URL + cast descriptor)
@@ -128,7 +128,7 @@ Sketch personas work for **replace/animate ladders** and variety slots. In **`p-
 
 **Safer wording:** `stylized muted-tone presenter`, `soft grey tones`, `hand-painted cel illustration`, `fluid ink outlines`.
 
-See [generation-diversity.md](../../generation-diversity/references/generation-diversity.md#prompt-patterns-variety) for blocked still trigger words.
+See `generation-diversity` for blocked still trigger words.
 
 ### Camera angle & shot size ladder
 
@@ -150,7 +150,7 @@ Never default every plate to medium close-up facing camera. Rotate **`camera_tag
 
 ### Lighting & setting (quick rotate)
 
-Pull full ladders from [generation-diversity.md](../../generation-diversity/references/generation-diversity.md#lighting-ladder). Minimum for a **5-example playground set**: 3 different `lighting_tag` + 5 different `setting_tag` values.
+Pull full ladders from `generation-diversity`. Minimum for a **5-example playground set**: 3 different `lighting_tag` + 5 different `setting_tag` values.
 
 | Example pairing | `setting_tag` | `lighting_tag` |
 |-----------------|---------------|----------------|
@@ -211,7 +211,7 @@ Add **avatar-ready** or **try-on-ready** constraints to every hero prompt:
 
 ### Dynamic prompt stack (build in order)
 
-Applies to **every** `visual_style_tag` — not photoreal only. Full stack: [generation-diversity.md](../../generation-diversity/references/generation-diversity.md#dynamic-prompt-stack-eye-catching).
+Applies to **every** `visual_style_tag` — not photoreal only. Full stack: `generation-diversity`.
 
 1. **Style / medium** — `visual_style_tag` + `render_medium_tag` (photoreal · cel anime · clay · CG 3D)
 2. **Cast** — age, ethnicity, gender presentation, hair, archetype (or species for anthropomorphic)
@@ -242,7 +242,7 @@ full body on dark asphalt, overcast open-sky light, neutral base outfit,
 natural skin texture, not CGI, 9:16 vertical, single subject one frame.
 ```
 
-More plate examples (including try-on garment tiers): [p-image-try-on SKILL.md](../../../image/p-image-try-on/SKILL.md#production-quality-not-basic-demos).
+More plate examples (including try-on garment tiers): `p-image-try-on`.
 
 ### Per-scene variety without new identity
 
@@ -251,11 +251,11 @@ After hero approval, branch with **`p-image-edit`** from the **same anchor URL**
 - Change **only** background, camera angle, emotion, or wardrobe delta
 - Never re-roll identity with a fresh unrelated **`p-image`** unless user requests recast
 
-Templates: [prompt-templates.md](../../../workflows/avatar-multi-scene/prompt-templates.md).
+Templates: `avatar-multi-scene`.
 
 ### Identity lock
 
-**[Random seed ritual](../../generation-diversity/references/generation-diversity.md#random-seed-ritual-mandatory-before-every-generation) (SSoT)** first — log `ritual_seed` for prompt planning. Character continuity = **approved hero plate URL** + cast descriptor across hero regen and **`p-video-avatar`** clips.
+**Random seed ritual (`generation-diversity`) (SSoT)** first — log `ritual_seed` for prompt planning. Character continuity = **approved hero plate URL** + cast descriptor across hero regen and **`p-video-avatar`** clips.
 
 ## `p-video-avatar` — dynamic realistic personas
 
@@ -263,7 +263,7 @@ A realistic avatar is **not** a static face on a loop. Each clip needs **human d
 
 ### Still gate (before every clip)
 
-Run [p-video-avatar-quality-checklist.md](../../video-prompting/references/p-video-avatar-quality-checklist.md) input section. Reject plates with obscured mouth, extreme profile-only crop, or synthetic mush skin.
+Run `video-prompting` input section. Reject plates with obscured mouth, extreme profile-only crop, or synthetic mush skin.
 
 ### Voice — sound human
 
@@ -292,7 +292,7 @@ Pair with **`p-image-edit`** stills that match — if **`video_prompt`** mention
 
 **Anti-pattern:** eight scenes with identical `medium close-up, gentle dolly push-in`.
 
-See camera/motion ladder: [generation-diversity.md](../../generation-diversity/references/generation-diversity.md#camera-angle--movement-ladder).
+See camera/motion ladder: `generation-diversity`.
 
 ### Multi-scene dynamic table (plan before API)
 
@@ -316,7 +316,7 @@ Example **`voice_script`:** *"Okay — this is the patchwork jacket on me, not a
 
 ### Negative prompt (text artifacts)
 
-When stills risk signage or label bleed, use plan defaults — see [p-video-avatar SKILL.md](../../../video/p-video-avatar/SKILL.md#negative-prompt-suppress-on-screen-text). Primary fix remains **clean still prompts**; API negative prompt is a safety net.
+When stills risk signage or label bleed, use plan defaults — see `p-video-avatar`. Primary fix remains **clean still prompts**; API negative prompt is a safety net.
 
 ## Diversity for public showcases
 
@@ -352,6 +352,6 @@ Coordinate with @ShinyTaskForce.
 |-------|-------|-----------|
 | `p-image` | `p-image` | [p-image-quality-checklist.md](./p-image-quality-checklist.md) |
 | `p-image-try-on` | `p-image-try-on` | [p-image-try-on-quality-checklist.md](./p-image-try-on-quality-checklist.md) |
-| `p-video-avatar` | `p-video-avatar` | [p-video-avatar-quality-checklist.md](../../video-prompting/references/p-video-avatar-quality-checklist.md) |
+| `p-video-avatar` | `p-video-avatar` | `video-prompting` |
 
 Example prompts: [realistic-persona-example-prompt.md](./realistic-persona-example-prompt.md)

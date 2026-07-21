@@ -51,7 +51,7 @@ Requires: `pruna-api` credentials.
 
 ## Feedback gates
 
-[./references/illustrated-story-reel-gates.md](./references/illustrated-story-reel-gates.md) · [../../guides/generation-diversity/references/workflow-feedback-gates.md](../../guides/generation-diversity/references/workflow-feedback-gates.md)
+[./references/illustrated-story-reel-gates.md](./references/illustrated-story-reel-gates.md) · `generation-diversity`
 
 | Phase | What to show | Proceed when |
 |-------|--------------|--------------|

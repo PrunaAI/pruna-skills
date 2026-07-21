@@ -1,10 +1,10 @@
 # p-video quality checklist
 
-After each `p-video` output is saved, **open the clip and review it visually** against this checklist (agent vision review — see [generation-quality-checklists.md](../../generation-diversity/references/generation-quality-checklists.md#who-applies-these-checklists)).
+After each `p-video` output is saved, **open the clip and review it visually** against this checklist (agent vision review — see `generation-diversity`).
 
 ## Applies to
 
-See the canonical mapping in [`generation-quality-checklists.md`](../../generation-diversity/references/generation-quality-checklists.md).
+See the canonical mapping in `generation-diversity`.
 
 ## Motion and story fidelity
 

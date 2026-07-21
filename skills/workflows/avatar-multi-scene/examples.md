@@ -6,7 +6,7 @@ Proven pattern from production runs:
 
 1. **Character sheet** — photoreal founder, early 30s, locked **`seed`**, one **`voice`** preset.
 2. **Hero** — `p-image` (documentary photoreal) → slop gate → approve identity anchor.
-3. **Per scene** — `p-image-edit` (from hero anchor; change **only** angle + background) → slop gate → `p-video-avatar`. **Run edits and avatar jobs in parallel batches** per phase once dependencies are met ([pruna-api.md#parallel-async-multi-scene--batch](../../guides/pruna-api/references/pruna-api.md#parallel-async-multi-scene--batch)); use **one subagent per scene lane** when the host supports it.
+3. **Per scene** — `p-image-edit` (from hero anchor; change **only** angle + background) → slop gate → `p-video-avatar`. **Run edits and avatar jobs in parallel batches** per phase once dependencies are met (pruna-api.md#parallel-async-multi-scene--batch (`pruna-api`)); use **one subagent per scene lane** when the host supports it.
 4. **Vary every scene** — e.g. dark close-up → mountain overlook → ISS cupola → desk window light → studio CTA. Never repeat the same office framing twice.
 5. **Natural voice** — contractions, conversational hooks; **`voice_prompt`** describes human delivery, not product copy.
 
@@ -40,7 +40,7 @@ Model roles and alignment: [animate-beats.md](./animate-beats.md).
 
 **Alignment reminder:** animate rows fail when a meme/mascot still meets human full-body dance motion—pick bust-only templates or repose first (see SKILL **Alignment prep**).
 
-**Style ladder reminder:** each persona still in an animate slider row should use a different **`visual_style_tag`** (photoreal, anime, claymation, Disney 3D, cyberpunk, game cinematic) with its own background, camera angle, and lighting — [generation-diversity.md#visual-variety](../../guides/generation-diversity/references/generation-diversity.md#visual-variety).
+**Style ladder reminder:** each persona still in an animate slider row should use a different **`visual_style_tag`** (photoreal, anime, claymation, Disney 3D, cyberpunk, game cinematic) with its own background, camera angle, and lighting — generation-diversity.md#visual-variety (`generation-diversity`).
 
 ## Motion-transfer-only reel (animate rows)
 

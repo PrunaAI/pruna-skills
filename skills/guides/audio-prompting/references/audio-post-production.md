@@ -2,22 +2,22 @@
 
 How to choose and **layer** audio when building reels, multi-scene films, and launch videos.
 
-**Prompt craft (how to write):** [audio-in-video-prompting.md](../../video-prompting/references/audio-in-video-prompting.md) · [tts-style-prompting.md](./tts-style-prompting.md) · [music-and-bed-prompting.md](./music-and-bed-prompting.md) · talking heads: [p-video-avatar-prompting.md](../../video-prompting/references/p-video-avatar-prompting.md).
+**Prompt craft (how to write):** [tts-style-prompting.md](./tts-style-prompting.md) · [music-and-bed-prompting.md](./music-and-bed-prompting.md). For in-video audio modes and talking-head VO, install and follow `video-prompting`.
 
-**Multi-scene narrated films:** use the [scene anchor triple](../../video-prompting/references/scene-anchor-triple.md) — pass TTS to **`p-video`** as `input.audio` with `image` + `last_frame_image`; do not post-mux unless re-render is impossible.
+**Multi-scene narrated films:** scene anchor triple lives in `video-prompting` — pass TTS to **`p-video`** as `input.audio` with `image` + `last_frame_image`; do not post-mux unless re-render is impossible. Workflow: `narrated-multi-scene`.
 
-**Visual-only transitions (no VO):** use the [scene anchor pair](../../video-prompting/references/scene-anchor-pair.md) — `duration` instead of `audio`; see `visual-transition-reel`.
+**Visual-only transitions (no VO):** scene anchor pair in `video-prompting` — `duration` instead of `audio`. Workflow: `visual-transition-reel`.
 
 ## Audio-led `p-video` (required when VO/narration exists)
 
 When narration, TTS, or a timed audio slice is available **before** video render:
 
-1. Upload the audio file to Pruna (`POST /v1/files`).
+1. Upload the audio file to Pruna (`POST /v1/files`) — see `pruna-api`.
 2. Pass `urls.get` as **`input.audio`** on **`p-video`** (or **`p-video-avatar`** for human lip-sync).
 3. **Omit `duration`** — clip length follows the audio (capped at **20s** on P-API); the model syncs motion to speech.
 4. Set **`save_audio`: true** so the full line is embedded in the output clip.
 5. **Probe TTS length** before render — per-scene lines should be **≤ ~19s** or the API truncates the tail even when `audio` is set.
-5. **Concat** clips in order (narration already on each clip). Optional bed mixed **under** VO in post.
+6. **Concat** clips in order (narration already on each clip). Optional bed mixed **under** VO in post.
 
 **Never** generate silent `p-video` and ffmpeg-mux narration afterward unless re-render is impossible — post-mux **truncates** lines longer than the video slot (common with Gemini TTS).
 
@@ -26,12 +26,12 @@ When narration, TTS, or a timed audio slice is available **before** video render
 | Need | Approach | Skill |
 |------|----------|-------|
 | Lip-sync / duration locked to VO | Upload audio → `p-video` with `audio` | `p-video` |
-| Documentary / story narrator | [Gemini 3.1 Flash TTS](https://replicate.com/google/gemini-3.1-flash-tts) | `gemini-3.1-flash-tts` |
-| Light instrumental under dialogue | [Stable Audio 2.5](https://replicate.com/stability-ai/stable-audio-2.5) | `stable-audio-2.5` |
-| Full song with sung vocals | [Music 2.5](https://replicate.com/minimax/music-2.5) | `music-2.5` |
-| Speaking on-camera character | `p-video-avatar` | `p-video-avatar` |
+| Documentary / story narrator | Gemini Flash TTS → upload → video | `gemini-3.1-flash-tts` |
+| Light instrumental under dialogue | Stable Audio bed under VO | `stable-audio-2.5` |
+| Full song with sung vocals | Music 2.5 track | `music-2.5` |
+| Speaking on-camera character | Portrait + script / audio | `p-video-avatar` |
 
-**Env:** Pruna calls need `PRUNA_API_KEY`; Replicate audio tools need `REPLICATE_API_TOKEN`. Assembly steps need **`ffmpeg`** / **`ffprobe`**.
+**Env:** Pruna calls need `PRUNA_API_KEY`; Replicate audio tools need `REPLICATE_API_TOKEN`. Assembly steps need **`ffmpeg`** / **`ffprobe`**. Credentials: `pruna-api`.
 
 ## Layering matrix
 
@@ -39,12 +39,14 @@ When narration, TTS, or a timed audio slice is available **before** video render
 |-------|---------------|-----------|-----------|
 | **Silent B-roll** | — | — | Concat video only |
 | **Native `p-video` sound** | Model output | — | Keep `save_audio` default; normalize in assembly if scenes differ |
-| **Narration only (fallback)** | Gemini TTS | — | Post-mux only when audio-led `p-video` is not suitable — prefer **Pipeline B** below |
-| **Bed only** | Stable Audio bed | — | `music-video` |
+| **Narration only (fallback)** | Gemini TTS | — | Post-mux only when audio-led `p-video` is not suitable — prefer **Pipeline A** below |
+| **Bed only** | Stable Audio bed | — | Often with `music-video` or reel beds |
 
 ## Recommended pipelines
 
 ### A — Narrated multi-scene B-roll (**preferred — scene anchor triple**)
+
+Use `narrated-multi-scene` + `video-prompting` (triple) + tools below.
 
 ```text
 Phase 0 — intake: scene table with start/end still prompts + narration lines
@@ -81,7 +83,7 @@ ffmpeg -y -i concat_video.mp4 -i narration.mp3 \
   -map 0:v -map 1:a -c:v copy -c:a aac -b:a 192k -shortest output_with_vo.mp4
 ```
 
-**Bed under existing narration + video** (same pattern as stable-audio-2.5 + ffmpeg bed mix):
+**Bed under existing narration + video** (same pattern as `stable-audio-2.5` + ffmpeg bed mix):
 
 ```text
 [1:a]volume=0.12,aloop=...[bed];
@@ -104,9 +106,9 @@ Ask before generating paid audio or video:
 
 | Topic | Questions |
 |-------|-----------|
-| **Primary voice** | Narrator (Gemini TTS), on-screen avatar (`p-video-avatar`), or native `p-video` sound only? |
+| **Primary voice** | Narrator (`gemini-3.1-flash-tts`), on-screen avatar (`p-video-avatar`), or native `p-video` sound only? |
 | **Narration scope** | Per-scene lines vs one continuous VO track? |
-| **Music / bed** | None, instrumental bed only, or full song (`music-2.5`)? |
+| **Music / bed** | None, instrumental bed only (`stable-audio-2.5`), or full song (`music-2.5`)? |
 | **Sync strategy** | **Preferred:** TTS → Pruna upload → **`p-video` / `p-video-avatar` with `audio`** (clip length = audio). Post-mux only as fallback. |
 | **Levels** | Bed volume target (default ~0.12 under avatar VO; ~0.08–0.12 under Gemini narration)? |
 
@@ -120,14 +122,20 @@ Ask before generating paid audio or video:
 }
 ```
 
-## Limitations (from [P-Video on Replicate](https://replicate.com/prunaai/p-video))
+## Limitations (P-Video audio)
 
-- Native SFX/dialogue quality varies — for premium voice realism, prefer **Gemini TTS** or **`p-video-avatar`**, then optionally mix a bed.
+- Native SFX/dialogue quality varies — for premium voice realism, prefer **`gemini-3.1-flash-tts`** or **`p-video-avatar`**, then optionally mix a bed.
 - Multi-speaker native audio can drift; dedicated TTS per role is safer for narration-heavy cuts.
-- Extreme camera motion and complex multi-scene stories are weaker than **frame-anchored chaining** + per-scene prompts — see `p-video` **First / last frame chaining**.
+- Extreme camera motion and complex multi-scene stories are weaker than **frame-anchored chaining** + per-scene prompts — see `p-video` and `video-prompting`.
 
-## Related
+## Related skills
 
-- [pruna-api.md#parallel-async-multi-scene--batch](../../generation-diversity/references/generation-diversity.md) — phased vs parallel when frames chain
-- `narrated-multi-scene`
-- [WORKFLOW-RECIPES](../../../../docs/WORKFLOW-RECIPES.md)
+| Skill | When |
+|-------|------|
+| `video-prompting` | In-video audio modes, scene anchor pair/triple, talking-head VO craft |
+| `pruna-api` | Upload / poll / parallel batches |
+| `narrated-multi-scene` | Multi-scene B-roll + VO playbook |
+| `visual-transition-reel` | Visual-only transitions (no VO) |
+| `music-video` | Full song + lyric-synced video |
+| `p-video` / `p-video-avatar` | Video API calls that consume uploaded audio |
+| `gemini-3.1-flash-tts` / `stable-audio-2.5` / `music-2.5` | Paid audio generation |

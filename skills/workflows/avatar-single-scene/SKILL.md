@@ -32,7 +32,7 @@ Follow each skill's **Before generating** / craft sections — do not restate gu
 
 ## Natural language script
 
-Write **`voice_script`** as **real dialogue**: contractions, natural rhythm, short sentences—how a person talks on camera, not a press release. See [avatar-multi-scene/prompt-templates.md](../avatar-multi-scene/prompt-templates.md) for good/bad examples.
+Write **`voice_script`** as **real dialogue**: contractions, natural rhythm, short sentences—how a person talks on camera, not a press release. See `avatar-multi-scene` for good/bad examples.
 
 **`voice_prompt`** must describe **human delivery** (pacing, warmth, founder/conversational tone)—never paste marketing copy or script lines into it.
 

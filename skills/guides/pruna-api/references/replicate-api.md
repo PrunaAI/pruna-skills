@@ -30,4 +30,4 @@ Model: `google/gemini-3.1-flash-tts`
 Required input: `text`  
 Optional: `voice` (default `Kore`), `prompt` (style/scene), `language_code` (default `en-US`)
 
-Output: audio file URL. Use for narration — upload to Pruna as part of [scene anchor triple](../../video-prompting/references/scene-anchor-triple.md) (`input.audio` + `input.image` + `input.last_frame_image` on `p-video`). Layering with beds: [audio-post-production.md](../../audio-prompting/references/audio-post-production.md)
+Output: audio file URL. Use for narration — upload to Pruna as part of scene anchor triple (`video-prompting`) (`input.audio` + `input.image` + `input.last_frame_image` on `p-video`). Layering with beds: `audio-prompting`

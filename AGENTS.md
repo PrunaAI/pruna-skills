@@ -45,7 +45,7 @@ npx skills add PrunaAI/pruna-skills -l
 
 ## Safety
 
-[skills/guides/pruna-api/references/agent-safety.md](skills/guides/pruna-api/references/agent-safety.md)
+Install `pruna-api` — agent-safety lives in that skill (`references/agent-safety.md` after install).
 
 ## Maintainers
 

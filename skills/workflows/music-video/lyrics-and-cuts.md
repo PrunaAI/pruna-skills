@@ -52,7 +52,7 @@ Pruna models, let them flow
 4. **Parentheticals** for ad-libs, backing vocals, or instrument directions — not cut mid-parenthetical.
 5. **Keep lines speakable** — avoid tongue-twisters unless intentional; short words cut cleaner.
 
-Full tag list: [music-2.5 SKILL.md](../../audio/music-2.5/SKILL.md#structure-tags).
+Full tag list: `music-2.5`.
 
 ## Cut manifest
 
@@ -95,9 +95,9 @@ Override any cut in the plan with explicit `"beat_type": "performance" | "broll"
 | **performance** (mascot / stylized) | `p-video` | Song slice → `input.audio` — **not** avatar (humanizes non-human stills) |
 | **broll** | `p-video` | Same slice or `duration` from cut map |
 
-**Performance stills:** when the user wants one singer throughout, land **one hero** with `p-image` + [random seed ritual](../../guides/generation-diversity/references/generation-diversity.md#random-seed-ritual-mandatory-before-every-generation), then **`p-image-edit`** every performance frame off that URL — mouth visible, statement wardrobe, varied setting per chorus pass. Only mint a fresh identity with unrelated `p-image` prompts when recasts are deliberate (usually B-roll only).
+**Performance stills:** when the user wants one singer throughout, land **one hero** with `p-image` + random seed ritual (`generation-diversity`), then **`p-image-edit`** every performance frame off that URL — mouth visible, statement wardrobe, varied setting per chorus pass. Only mint a fresh identity with unrelated `p-image` prompts when recasts are deliberate (usually B-roll only).
 
-**B-roll prompts:** match **mood + palette** of the music prompt — golden hour for warm ballads, neon for electronic, etc. See [generation-diversity.md#visual-variety](../../guides/generation-diversity/references/generation-diversity.md#visual-variety).
+**B-roll prompts:** match **mood + palette** of the music prompt — golden hour for warm ballads, neon for electronic, etc. See generation-diversity.md#visual-variety (`generation-diversity`).
 
 ## Aesthetic rhythm (not just sync)
 
@@ -114,7 +114,7 @@ Intro (broll, wide) → Verse line (performance, medium) → Verse line (broll, 
 ## Anti-patterns
 
 - **`voice_script`** on performance beats when you have the real song — use **`audio`** slice so lip sync matches the track.
-- One grey-wall performance clip for every line — rotate settings per [generation-diversity](../../guides/generation-diversity/references/generation-diversity.md#visual-variety).
+- One grey-wall performance clip for every line — rotate settings per `generation-diversity`.
 - New **`p-image`** identity per performance line when continuity was intended — use hero + **`p-image-edit`** instead.
 - Cutting on beat without checking **syllable endings** — proportional timing can drift; always listen once.
 - Lyrics that don't match section tags — model may blur section boundaries and break your cut map.

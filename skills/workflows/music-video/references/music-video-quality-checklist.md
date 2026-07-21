@@ -32,7 +32,7 @@ Run at lyrics approval, after song generation, on stills, and on final assembly.
 - [ ] Performance: face + mouth visible, slight angle from the side
 - [ ] Distinct `setting_tag` across consecutive performance clips
 - [ ] B-roll stills match music mood (palette, lighting)
-- [ ] No readable UI text, laptops screens, or collage trigger words — see [generation-diversity.md#visual-variety](../../../guides/generation-diversity/references/generation-diversity.md#prompt-patterns-variety) blocked still phrases where applicable
+- [ ] No readable UI text, laptops screens, or collage trigger words — see generation-diversity.md#visual-variety (`generation-diversity`) blocked still phrases where applicable
 
 ## Clip gate
 
@@ -53,4 +53,4 @@ Run at lyrics approval, after song generation, on stills, and on final assembly.
 
 - `music-video`
 - [lyrics-and-cuts.md](../lyrics-and-cuts.md)
-- [generation-quality-checklists.md](../../../guides/generation-diversity/references/generation-quality-checklists.md)
+- `generation-diversity`

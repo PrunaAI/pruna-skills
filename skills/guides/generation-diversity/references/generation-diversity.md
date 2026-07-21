@@ -146,17 +146,17 @@ pulp western poster energy, dynamic diagonal composition
 
 | Model | Prompt upsampling | Typography in prompt |
 |-------|-------------------|----------------------|
-| **`p-image`** | **No** effective prompt upsampling | **Avoid** dense readable-type requests unless user explicitly wants `text_rendering`. Short prompts; skip `readable`, `legible`, `headline`, multi-sign lists — they drift to gibberish. Collage triggers still apply: [interactive-explainer-prompts.md](../../../workflows/interactive-explainer/references/interactive-explainer-prompts.md) (`flat lay`, `grid`, `collage`, …). |
+| **`p-image`** | **No** effective prompt upsampling | **Avoid** dense readable-type requests unless user explicitly wants `text_rendering`. Short prompts; skip `readable`, `legible`, `headline`, multi-sign lists — they drift to gibberish. Collage triggers still apply: `interactive-explainer` (`flat lay`, `grid`, `collage`, …). |
 
 **`p-image` text hygiene:** prefer scenes without copy. If a screen appears: `monitor soft colorful blur glow only` — not legible UI unless the user explicitly asked for readable text (then simplify the brief or drop copy).
 
 **Channel split (quotes vs tags):**
 
-- **`text_spec` (stills):** `"[exact string]"` + `[surface]` + `[placement]` → [prompt-golden-rules.md](../../image-prompting/references/prompt-golden-rules.md) §5
-- **Native clip dialogue:** `p-video` Mode A only (`[subject] says "[LINE]"` + mouth + gesture) → [audio-in-video-prompting.md](../../video-prompting/references/audio-in-video-prompting.md) — not `p-image`
-- **`[tags]`:** Gemini TTS `text` performance only — not still typography, not `p-video` motion prompt → [tts-style-prompting.md](../../audio-prompting/references/tts-style-prompting.md)
+- **`text_spec` (stills):** `"[exact string]"` + `[surface]` + `[placement]` → `image-prompting` §5
+- **Native clip dialogue:** `p-video` Mode A only (`[subject] says "[LINE]"` + mouth + gesture) → `video-prompting` — not `p-image`
+- **`[tags]`:** Gemini TTS `text` performance only — not still typography, not `p-video` motion prompt → `audio-prompting`
 
-**Collage triggers (all T2I models):** still avoid `flat lay`, `packshot`, `grid`, `collage`, `montage`, `contact sheet`, `split`, `before and after` — use `single frame`, `one camera angle` instead. Full table: [interactive-explainer-prompts.md](../../../workflows/interactive-explainer/references/interactive-explainer-prompts.md).
+**Collage triggers (all T2I models):** still avoid `flat lay`, `packshot`, `grid`, `collage`, `montage`, `contact sheet`, `split`, `before and after` — use `single frame`, `one camera angle` instead. Full table: `interactive-explainer`.
 
 ## SSoT axis derivation (sum-mod)
 
@@ -188,7 +188,7 @@ render_tag    ← render_tags[ sum(codes(ritual_seed[4:8])) % len(render_tags) ]
 | **Aspect ratio** | different `aspect_ratio` per independent still in a batch — see [below](#aspect-ratio-multi-example-sets) | `p-image`, `p-image-edit` |
 | **Crowd density** | layered background population + activity cues — see [below](#crowded-scenes-p-image) | `p-image` plates with busy worlds |
 
-Full style/camera/lighting ladders: [Visual variety](#visual-variety) below. Persona + try-on bar: [realistic-persona-showcase.md](../../image-prompting/references/realistic-persona-showcase.md).
+Full style/camera/lighting ladders: [Visual variety](#visual-variety) below. Persona + try-on bar: `image-prompting`.
 
 ## Render categories
 
@@ -721,9 +721,9 @@ Public examples across **`p-image`**, **`p-image-try-on`**, and **`p-video-avata
 
 | Rule | Guidance |
 |------|----------|
-| **Unified bar** | this document · [realistic-persona-showcase.md](../../image-prompting/references/realistic-persona-showcase.md)
+| **Unified bar** | this document · `image-prompting`
 | **Person plate** | Photoreal **`p-image`** editorial prompts → slop gate |
-| **Try-on** | Garment tiers + preservation — [p-image-try-on-quality-checklist.md](../../image-prompting/references/p-image-try-on-quality-checklist.md) |
+| **Try-on** | Garment tiers + preservation — `image-prompting` |
 | **Avatar motion** | Unique **`video_prompt`** per clip; natural **`voice_script`** |
 | **Cast** | Diversity ledger — gender, age, ethnicity spread |
 | **Playground** | Pin try-on refs on [p-image-try-on](https://replicate.com/prunaai/p-image-try-on); match with diverse [p-video-avatar](https://replicate.com/prunaai/p-video-avatar) examples — @ShinyTaskForce |
@@ -738,7 +738,7 @@ Public examples across **`p-image`**, **`p-image-try-on`**, and **`p-video-avata
 | `p-video-replace` | Scene 1 **persona ladder** + per-scene distinct `still_edit` backgrounds; optional **light bed** after concat |
 | `p-video-animate` | 3–4 **style tags** per animate slider row |
 | `avatar-multi-scene` | Every avatar row: new `setting_tag` + `camera_tag` via `p-image-edit` |
-| [WORKFLOW-RECIPES](../../../../docs/WORKFLOW-RECIPES.md) | Intake must capture variety plan before recipe execution |
+| WORKFLOW-RECIPES | Intake must capture variety plan before recipe execution |
 
 ## Variety checklist (before first API call)
 
@@ -760,4 +760,4 @@ Public examples across **`p-image`**, **`p-image-try-on`**, and **`p-video-avata
 ## Related
 
 - [generation-quality-checklists.md](./generation-quality-checklists.md) — core + model checklists · [approval gates](./generation-quality-checklists.md#approval-gates-workflows)
-- [realistic-persona-showcase.md](../../image-prompting/references/realistic-persona-showcase.md) — persona planning
+- `image-prompting` — persona planning

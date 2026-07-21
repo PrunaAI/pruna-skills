@@ -25,5 +25,5 @@ npx skills add PrunaAI/pruna-skills@visual-transition-reel -y
 
 ## Related
 
-- Visual-only spec: [scene-anchor-pair.md](../../guides/video-prompting/references/scene-anchor-pair.md)
+- Visual-only spec: `video-prompting`
 - With narration: `narrated-multi-scene`

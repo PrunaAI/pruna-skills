@@ -1,10 +1,10 @@
 # p-video-avatar quality checklist
 
-Before calling the model and after each avatar clip, **open the still or video and review it visually** against this checklist (agent vision review — see [generation-quality-checklists.md](../../generation-diversity/references/generation-quality-checklists.md#who-applies-these-checklists)).
+Before calling the model and after each avatar clip, **open the still or video and review it visually** against this checklist (agent vision review — see `generation-diversity`).
 
 ## Applies to
 
-See the canonical mapping in [`generation-quality-checklists.md`](../../generation-diversity/references/generation-quality-checklists.md).
+See the canonical mapping in `generation-diversity`.
 
 ## Input still gate (pre-render)
 
@@ -12,7 +12,7 @@ See the canonical mapping in [`generation-quality-checklists.md`](../../generati
 - Mouth/beak and eyes are unobstructed (no hair/props/foreground clutter crossing them).
 - Head pose is speaking-friendly (avoid extreme angles, tiny head crop, or chin cutoff).
 - Identity/style match cast bible and scene continuity.
-- **Photoreal path:** skin reads natural (not mushy/waxy); plate matches [realistic-persona-showcase.md](../../image-prompting/references/realistic-persona-showcase.md) intent.
+- **Photoreal path:** skin reads natural (not mushy/waxy); plate matches `image-prompting` intent.
 - **Try-on → avatar path:** try-on preservation passed; outfit details visible if script references them.
 
 ## Speech and performance

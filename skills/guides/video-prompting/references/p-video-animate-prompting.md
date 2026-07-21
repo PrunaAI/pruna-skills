@@ -1,6 +1,6 @@
 # p-video-animate prompting
 
-Motion-transfer craft for `p-video-animate`. QA: [p-video-animate-quality-checklist.md](./p-video-animate-quality-checklist.md). Mixed reels: [animate-beats.md](../../../workflows/avatar-multi-scene/animate-beats.md).
+Motion-transfer craft for `p-video-animate`. QA: [p-video-animate-quality-checklist.md](./p-video-animate-quality-checklist.md). Mixed reels: `avatar-multi-scene`.
 
 **Appearance from `image`, motion from `video`.** Wrong tool for identity swap on real footage → [p-video-replace-prompting.md](./p-video-replace-prompting.md).
 

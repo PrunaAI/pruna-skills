@@ -2,7 +2,7 @@
 
 Canonical pattern for **educational shorts** — history, science, nature, how-it-works, children's topics — that **alternate host narration with in-story character speech**. Not wall-to-wall voice-over.
 
-Related: [scene-anchor-triple.md](../../../guides/video-prompting/references/scene-anchor-triple.md) (narrator beats) · `avatar-multi-scene` (character beats) · `interactive-explainer`
+Related: `video-prompting` (narrator beats) · `avatar-multi-scene` (character beats) · `interactive-explainer`
 
 ## Why hybrid?
 
@@ -35,12 +35,12 @@ Pick **one** flavor per film. Swap examples in prompts — the scene machinery i
 |-----------|--------|
 | Character / narrator ratio | **≥ 1 character beat per 2 narrator beats** (roughly 35–50% character) |
 | Scene order | Alternate when possible: narrator → character → narrator → … |
-| Narrator line length | **≤ ~19s** TTS (P-API 20s **audio-led `p-video`** cap) — see [scene-anchor-triple.md](../../../guides/video-prompting/references/scene-anchor-triple.md) |
+| Narrator line length | **≤ ~19s** TTS (P-API 20s **audio-led `p-video`** cap) — see `video-prompting` |
 | Character line length | Reply length as needed (often 2–4 sentences); **`p-video-avatar` may exceed 20s** — clip follows `voice_script` |
 
 ## Narrator beat (`type: "narrator"`)
 
-Scene anchor **triple** — same as [scene-anchor-triple.md](../../../guides/video-prompting/references/scene-anchor-triple.md):
+Scene anchor **triple** — same as `video-prompting`:
 
 ```json
 {

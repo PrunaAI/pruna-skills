@@ -59,8 +59,8 @@ QUICKSTART_WIDTH ?= 280
 QUICKSTART_HEIGHT ?= 494
 QUICKSTART_VF = scale=$(QUICKSTART_WIDTH):$(QUICKSTART_HEIGHT):force_original_aspect_ratio=increase,crop=$(QUICKSTART_WIDTH):$(QUICKSTART_HEIGHT)
 # README thumbs write to readme-<stem>.* so full-res EXAMPLES assets stay intact
-README_EMBED_STILLS = music-video-garage-drummer p-image-try-on-drummer chain-monarch-01-open chain-monarch-02-end illustrated-library-whale
-README_EMBED_CLIPS = music-video-garage-drummer-clip chain-monarch-clip illustrated-library-whale-reel
+README_EMBED_STILLS = music-video-garage-drummer p-image-try-on-drummer quickstart-panda-01-open quickstart-panda-02-end illustrated-library-whale
+README_EMBED_CLIPS = music-video-garage-drummer-clip quickstart-panda-clip illustrated-library-whale-reel
 # GIF caps: short preview, tight palette (GitHub content-length)
 README_GIF_SECS ?= 3.5
 README_GIF_FPS ?= 8

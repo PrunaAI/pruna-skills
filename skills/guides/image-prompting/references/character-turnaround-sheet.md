@@ -2,7 +2,7 @@
 
 Reusable identity plates before scene stills and video. Use when the brief needs the **same character** across multiple shots, not a one-off hero.
 
-Talking-head cast ledgers and voice locks stay in [avatar-multi-scene prompt-templates](../../../workflows/avatar-multi-scene/prompt-templates.md) and [realistic-persona-showcase.md](./realistic-persona-showcase.md). This page is the **visual turnaround** handoff.
+Talking-head cast ledgers and voice locks stay in avatar-multi-scene prompt-templates (`avatar-multi-scene`) and [realistic-persona-showcase.md](./realistic-persona-showcase.md). This page is the **visual turnaround** handoff.
 
 **Sources:** patterns adapted from [Square-Zero-Labs/video-prompting-skill](https://github.com/Square-Zero-Labs/video-prompting-skill) (Apache-2.0); rewritten for Pruna.
 
@@ -63,9 +63,9 @@ Front and three-quarter views, soft window light, plain backdrop, no beauty reto
 
 | Still | Source | Notes |
 |-------|--------|-------|
-| Hero / start | Sheet panel or locked hero URL | Match [scene-anchor](../../video-prompting/references/scene-anchor-pair.md) OPENING composition |
+| Hero / start | Sheet panel or locked hero URL | Match scene-anchor (`video-prompting`) OPENING composition |
 | End | Start + `last_frame_edit_prompt` | Same subject in frame; physically reachable pose |
-| Video | Motion-only `video_prompt` | Do not redescribe the face — see [prompt-dramaturgy.md](../../video-prompting/references/prompt-dramaturgy.md) |
+| Video | Motion-only `video_prompt` | Do not redescribe the face — see `video-prompting` |
 
 Identity lock line for edits:
 
@@ -86,5 +86,5 @@ same [character name], identical face and costume, do not change species or age
 ## Related
 
 - Still craft: [prompt-golden-rules.md](./prompt-golden-rules.md)
-- Pair / triple stills: [scene-anchor-pair.md](../../video-prompting/references/scene-anchor-pair.md), [scene-anchor-triple.md](../../video-prompting/references/scene-anchor-triple.md)
-- Avatar multi-scene cast table: [prompt-templates.md](../../../workflows/avatar-multi-scene/prompt-templates.md)
+- Pair / triple stills: `video-prompting`, `video-prompting`
+- Avatar multi-scene cast table: `avatar-multi-scene`

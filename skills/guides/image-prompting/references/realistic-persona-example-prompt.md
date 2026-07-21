@@ -2,7 +2,7 @@
 
 Cross-model examples for **`p-image`** scenario plates → optional **`p-image-try-on`** → **`p-video-avatar`**.
 
-**Before every curl:** [random seed ritual](../../generation-diversity/references/generation-diversity.md#random-seed-ritual-mandatory-before-every-generation) (SSoT) + [generation diversity](../../generation-diversity/references/generation-diversity.md) — state ritual string and derive axes; **omit API `seed`** unless user sets `api_seed`.
+**Before every curl:** random seed ritual (`generation-diversity`) (SSoT) + `generation-diversity` — state ritual string and derive axes; **omit API `seed`** unless user sets `api_seed`.
 
 Full ladders and 8-slot matrix: [realistic-persona-showcase.md](./realistic-persona-showcase.md).
 
@@ -130,4 +130,4 @@ When publishing a public set, cover **medium × angle × setting × aspect_ratio
 
 Each slot: distinct **`cast_descriptor`** and **`aspect_ratio`**. Avatar slots: unique **`video_prompt`**.
 
-Full rules: [realistic-persona-showcase.md](./realistic-persona-showcase.md) · [generation-diversity.md#visual-variety](../../generation-diversity/references/generation-diversity.md#visual-variety).
+Full rules: [realistic-persona-showcase.md](./realistic-persona-showcase.md) · generation-diversity.md#visual-variety (`generation-diversity`).

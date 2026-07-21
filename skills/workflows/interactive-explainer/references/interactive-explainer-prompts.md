@@ -75,7 +75,7 @@ Premium painterly historical illustration, one focal subject per shot, one camer
 | `Avoid labels on packaging` | **Matte unprinted** jars on **plain counter** |
 | Meta phrase **documentary still** + **end frame** | Concrete place + objects + **closing composition**, **one camera angle** |
 
-Broader blocked-phrase table (keyboards, mirrors, packshots): [generation-diversity.md#visual-variety](../../../guides/generation-diversity/references/generation-diversity.md#prompt-patterns-variety).
+Broader blocked-phrase table (keyboards, mirrors, packshots): generation-diversity.md#visual-variety (`generation-diversity`).
 
 **If text appears in `p-video` but stills are clean:** simplify the narrator `video_prompt` (camera/light only) or regenerate stills with **plain surfaces** — never answer with `no text` in the prompt.
 
@@ -84,4 +84,4 @@ Broader blocked-phrase table (keyboards, mirrors, packshots): [generation-divers
 - Workflow skill: `interactive-explainer`
 - Motion: [interactive-explainer-motion.md](./interactive-explainer-motion.md)
 - Scenes: [interactive-explainer-scenes.md](./interactive-explainer-scenes.md)
-- Gates: [generation-quality-checklists.md#approval-gates-workflows](../../../guides/generation-diversity/references/generation-quality-checklists.md#approval-gates-workflows)
+- Gates: generation-quality-checklists.md#approval-gates-workflows (`generation-diversity`)

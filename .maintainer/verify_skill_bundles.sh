@@ -139,9 +139,21 @@ for root in scan_roots:
             if "skills" in path.parts and re.search(r"\]\(\.\./(shared|policies)/", line):
                 bad.append(f"{path}:{i}: stale ../shared/ or ../policies/ path")
 
-# Relative markdown links under skills/ must resolve
+# Relative markdown links under skills/ must resolve AND stay inside the skill package
 link_re = re.compile(r"\[([^\]]*)\]\(([^)]+)\)")
+
+def skill_root_for(md: Path) -> Path | None:
+    p = md.parent
+    for _ in range(8):
+        if (p / "SKILL.md").is_file():
+            return p
+        if p == repo / "skills" or p.parent == p:
+            return None
+        p = p.parent
+    return None
+
 for path in (repo / "skills").rglob("*.md"):
+    skill_root = skill_root_for(path)
     for i, line in enumerate(path.read_text().splitlines(), 1):
         for m in link_re.finditer(line):
             target = m.group(2).strip()
@@ -153,6 +165,15 @@ for path in (repo / "skills").rglob("*.md"):
             dest = (path.parent / file_part).resolve()
             if not dest.is_file():
                 bad.append(f"{path}:{i}: broken link {file_part}")
+                continue
+            if skill_root is not None:
+                try:
+                    dest.relative_to(skill_root.resolve())
+                except ValueError:
+                    bad.append(
+                        f"{path}:{i}: link escapes skill package — use `skill-name` "
+                        f"(not {file_part})"
+                    )
 
 if bad:
     # Dedupe

@@ -2,7 +2,7 @@
 
 When a user describes an end product but not which workflow fits, use this document. Agents normally pick tools and workflows from skill frontmatter descriptions; humans use this when unsure.
 
-**Policies:** Install `generation-diversity` for [approval gates](../skills/guides/generation-diversity/references/generation-quality-checklists.md#approval-gates-workflows) and [workflow-feedback-gates.md](../skills/guides/generation-diversity/references/workflow-feedback-gates.md). Confirm plan before any `POST /v1/predictions`. The agent is the runner (curl + ffmpeg) — no Python scripts.
+**Policies:** Install `generation-diversity` for approval gates and workflow-feedback gates. Confirm plan before any `POST /v1/predictions`. The agent is the runner (curl + ffmpeg) — no Python scripts.
 
 ## Quick one-off routing
 
@@ -39,13 +39,9 @@ For multi-scene plans with approval gates, use a workflow plugin (`music-video`,
 
 ## Recipe details (A–T)
 
-# Pruna generative pipeline — recipe catalog (A–R)
-
-Full intake and steps for each recipe in [pruna-generative-pipeline](../../docs/WORKFLOW-RECIPES.md). **Confirm plan before any `POST /v1/predictions`.** Staged gates: [generation-quality-checklists.md#approval-gates-workflows](../policies/generation-quality-checklists.md#approval-gates-workflows).
-
 ## Recipe A — Style-locked mood board (same-style stills)
 
-**Shine:** One style bible + repeated aspect ratio + [random seed ritual](../skills/guides/generation-diversity/references/generation-diversity.md#random-seed-ritual-mandatory-before-every-generation) (SSoT) makes a grid feel art-directed, not random.
+**Shine:** One style bible + repeated aspect ratio + the random seed ritual in `generation-diversity` (SSoT) makes a grid feel art-directed, not random.
 
 **Intake:** How many panels? One subject or variations on a theme? Output aspect (`1:1` grid vs `9:16`)?
 
@@ -104,7 +100,7 @@ Full intake and steps for each recipe in [pruna-generative-pipeline](../../docs/
 1. Generate or upload audio → `/v1/files`.
 2. **`p-video`** with `audio` + `prompt` (+ optional `image`, `last_frame_image`); omit `duration`.
 
-For **full narrated story films**, use Recipe **P** ([scene anchor triple](../skills/guides/video-prompting/references/scene-anchor-triple.md)) instead.
+For **full narrated story films**, use Recipe **P** (scene anchor triple in `video-prompting`) instead.
 
 ## Recipe F — Draft preview → locked final
 
@@ -124,7 +120,7 @@ For **full narrated story films**, use Recipe **P** ([scene anchor triple](../sk
 **Steps**
 
 1. Build **character sheet** and **scene table** — see `avatar-multi-scene`.
-2. Hero: **`p-image`** (photoreal, [SSoT ritual](../skills/guides/generation-diversity/references/generation-diversity.md#random-seed-ritual-mandatory-before-every-generation)) → slop gate; lock plate URL.
+2. Hero: **`p-image`** (photoreal, SSoT ritual in `generation-diversity`) → slop gate; lock plate URL.
 3. Per scene: **`p-image-edit`** → slop gate — **parallel across scenes** after hero anchor is approved.
 4. Hand off to `avatar-single-scene` or `avatar-multi-scene` for **`p-video-avatar`** batch.
 
@@ -159,7 +155,7 @@ For **full narrated story films**, use Recipe **P** ([scene anchor triple](../sk
 
 **Steps**
 
-1. Full workflow: `p-video-replace` + [generation-diversity.md#visual-variety](../skills/guides/generation-diversity/references/generation-diversity.md#prompt-patterns-variety) — sliders via ffmpeg hstack slider (see avatar-multi-scene SKILL).
+1. Full workflow: `p-video-replace` + visual variety from `generation-diversity` — sliders via ffmpeg hstack slider (see `avatar-multi-scene`).
 2. **`p-image`** references → optional **`p-image-edit`** → **`p-video-replace`** → sliders → concat ± bed.
 
 ## Recipe O — AI music video
@@ -176,21 +172,21 @@ For **full narrated story films**, use Recipe **P** ([scene anchor triple](../sk
 
 **Steps**
 
-1. Full workflow: `narrated-multi-scene` — [scene-anchor-triple.md](../skills/guides/video-prompting/references/scene-anchor-triple.md).
+1. Full workflow: `narrated-multi-scene` — scene anchor triple in `video-prompting`.
 2. Hero → parallel **`p-image-edit`** start + end stills → parallel Gemini TTS → probe each MP3 (≤ ~19s) → parallel **`p-video`** triple payloads.
-3. Concat embedded VO → optional bed — [audio-post-production.md](../audio/audio-post-production.md).
+3. Concat embedded VO → optional bed — layering in `audio-prompting`.
 
 ## Recipe Q — Visual transition reel
 
 **Shine:** Multi-scene motion between two stills per beat (no VO).
 
-**Steps:** `visual-transition-reel` — [scene-anchor-pair.md](../skills/guides/video-prompting/references/scene-anchor-pair.md).
+**Steps:** `visual-transition-reel` — scene anchor pair in `video-prompting`.
 
 ## Recipe R — Educational explainer
 
 **Shine:** Narrator VO + expert/character dialogue.
 
-**Steps:** `interactive-explainer` — narrator triple + character avatar → concat ± bed. Scenes: [interactive-explainer-scenes.md](../skills/workflows/interactive-explainer/references/interactive-explainer-scenes.md). Prompts: [interactive-explainer-prompts.md](../skills/workflows/interactive-explainer/references/interactive-explainer-prompts.md).
+**Steps:** `interactive-explainer` — narrator triple + character avatar → concat ± bed (scenes + prompts live in that workflow skill).
 
 ## Recipe S — Illustrated story reel
 
@@ -204,9 +200,9 @@ For **full narrated story films**, use Recipe **P** ([scene anchor triple](../sk
 
 **Shine:** Six fashion verticals in one announcement — ecommerce PDP, virtual fitting room, wholesale catalog, lookbook campaign, UGC ads, personalized outfit recommendations. Person + garment generation → **`p-image-try-on`** → motion branch (`p-video-avatar`, `p-video`, or before/after still slider) → Gemini narration on B-roll rows → concat → **Stable Audio** bed.
 
-**Intake:** Which verticals? Motion mix (avatar vs I2V vs slider)? Cast diversity per [generation-diversity.md#visual-variety](../skills/guides/generation-diversity/references/generation-diversity.md#visual-variety)?
+**Intake:** Which verticals? Motion mix (avatar vs I2V vs slider)? Cast diversity per `generation-diversity`?
 
-**Steps:** `p-image-try-on` + [realistic-persona-showcase.md](../skills/guides/image-prompting/references/realistic-persona-showcase.md) + `p-video-avatar` — phased gates per [workflow-feedback-gates.md](../skills/guides/generation-diversity/references/workflow-feedback-gates.md).
+**Steps:** `p-image-try-on` + persona craft in `image-prompting` + `p-video-avatar` — phased gates in `generation-diversity`.
 
 ## More ideas (map to recipes)
 

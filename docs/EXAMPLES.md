@@ -14,7 +14,7 @@ Publish to Hugging Face and refresh markdown URLs: `make sync-doc-examples-hf` (
 
 Images use max P-API resolution (1440px edge); videos use final **1080p @ 24fps** (720p for some motion-transfer demos).
 
-The [README quickstart](../README.md#quickstart) walks through three examples: the **drummer try-on → performance** chain, the **monarch still → edit → clip** chain, and the **illustrated story reel** workflow.
+The [README quickstart](../README.md#quickstart) walks through three examples: **create an image, then try on clothes, then create a video**; **create an image, then edit it, then create a video**; and **create an image, then add narration, then assemble a video**.
 
 ## Coverage
 
@@ -228,7 +228,7 @@ npx skills add PrunaAI/pruna-skills@p-video-avatar -y
 
 > Animate the monarch still (wings closed) using the wing-open motion from our monarch clip — same butterfly, same framing.
 
-Motion transfer needs **matched framing and pose**: appearance from the still, choreography from the template ([pairing gates](../skills/guides/video-prompting/references/p-video-animate-prompting.md)).
+Motion transfer needs **matched framing and pose**: appearance from the still, choreography from the template (pairing gates in `video-prompting`).
 
 | Input | Asset |
 |-------|-------|
@@ -260,7 +260,7 @@ npx skills add PrunaAI/pruna-skills@p-video-animate -y
 
 > In this garage drummer clip, swap only her jacket for the red band tour jacket from the reference — keep face, performance, and audio.
 
-**Clothing-only** replace works better than identity swap on lip-sync performance clips ([replace prompting](../skills/guides/video-prompting/references/p-video-replace-prompting.md)).
+**Clothing-only** replace works better than identity swap on lip-sync performance clips (replace prompting in `video-prompting`).
 
 | Input | Asset |
 |-------|-------|

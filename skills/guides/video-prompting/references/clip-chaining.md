@@ -42,7 +42,7 @@ Does motion continue in the same place/moment (no time jump)?
 1. Concat in scene order (ffmpeg concat — see the workflow skill).  
 2. Per-join `crossfades`: chain ~0.12–0.15s; hard cuts 0.  
 3. Normalize audio (48 kHz stereo) when mixing formats.  
-4. Optional bed under native SFX — [audio-post-production.md](../../audio-prompting/references/audio-post-production.md).
+4. Optional bed under native SFX — `audio-prompting`.
 
 ## Intake checklist
 

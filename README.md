@@ -16,35 +16,35 @@ npx skills add PrunaAI/pruna-skills@pruna -y
 
 Next, start a **new chat** and describe what you want in plain language. Your agent reads the suite and picks the right skills for the job.
 
-Before you enable skills in an untrusted repo, skim [agent safety](skills/guides/pruna-api/references/agent-safety.md).
+Before you enable skills in an untrusted repo, install `pruna-api` and read its agent-safety guidance.
 
 ### Try it: ask your agent
 
-**Portrait, then try-on, then performance**
+**Create an image, then try on clothes, then create a video**
 
 > Create a portrait of a teenage girl drummer in a garage. Put a vintage red band jacket on her from a garment reference, and keep the pose and background. Then make her sing along to a song slice as a lip-sync performance clip.
 
 | Step 1 · `p-image` | Step 2 · `p-image-try-on` | Step 3 · `p-video-avatar` |
 | :-: | :-: | :-: |
-| Drummer portrait | Jacket try-on | Performance clip |
+| Image | Try-on | Video |
 | <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-music-video-garage-drummer.png" width="280" height="494" alt="Teenage drummer portrait in a garage"> | <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-p-image-try-on-drummer.png" width="280" height="494" alt="Same drummer wearing the red band jacket"> | <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-music-video-garage-drummer-clip.gif" width="280" height="494" alt="Drummer lip-sync performance clip wearing the red band jacket"> |
 
-**Still, then edit, then clip**
+**Create an image, then edit it, then create a video**
 
-> Generate a monarch butterfly on lavender with wings closed. Edit so the wings open wide, keeping the same stem and camera. Then animate a short clip of the wing-spread.
+> Create a whimsical portrait of a red panda barista making latte art in a sunlit Kyoto café. Edit the scene so the same panda stands inside a Mars habitat, looking out at the red desert with Earth in the sky. Then animate a short clip that dissolves from the café into the habitat.
 
 | Step 1 · `p-image` | Step 2 · `p-image-edit` | Step 3 · `p-video` |
 | :-: | :-: | :-: |
-| Wings closed | Wings open | Wing-spread clip |
-| <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-chain-monarch-01-open.png" width="280" height="494" alt="Monarch butterfly on lavender, wings closed"> | <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-chain-monarch-02-end.png" width="280" height="494" alt="Same monarch with wings open"> | <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-chain-monarch-clip.gif" width="280" height="494" alt="Monarch wing-spread video clip preview"> |
+| Image | Edit | Video |
+| <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-quickstart-panda-01-open.png" width="280" height="494" alt="Red panda barista making latte art in a Kyoto café"> | <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-quickstart-panda-02-end.png" width="280" height="494" alt="Same red panda inside a Mars habitat"> | <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-quickstart-panda-clip.gif" width="280" height="494" alt="Clip dissolving from café to Mars habitat"> |
 
-**Workflow: illustrated story reel**
+**Create an image, then add narration, then assemble a video**
 
-> Make an illustrated story still of a whale in a library, narrate a short line, and assemble a Ken Burns reel.
+> Create an illustrated story image of a whale in a library, narrate a short line, and assemble a Ken Burns reel.
 
 | Step 1 · `p-image` | Step 2 · `gemini-3.1-flash-tts` | Step 3 · assembly |
 | :-: | :-: | :-: |
-| Story still | [Narration audio](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/illustrated-library-whale-narration.mp3) | Ken Burns reel |
+| Image | [Narration](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/illustrated-library-whale-narration.mp3) | Video |
 | <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-illustrated-library-whale.png" width="280" height="494" alt="Illustrated whale in a library"> | *MP3 link above* | <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-illustrated-library-whale-reel.gif" width="280" height="494" alt="Illustrated story reel preview"> |
 
 For more inspiration, see [docs/EXAMPLES.md](docs/EXAMPLES.md). For ready-made multi-step recipes, see [docs/WORKFLOW-RECIPES.md](docs/WORKFLOW-RECIPES.md).

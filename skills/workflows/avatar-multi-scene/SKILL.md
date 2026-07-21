@@ -37,7 +37,7 @@ Visual continuity comes from **Pruna `p-image` / `p-image-edit`** on uploaded re
 
 Follow this skill in **plain language** when talking to the person requesting the video. Use **natural, speakable copy** in every `voice_script`.
 
-**Staged generation:** `generation-diversity` · [../../guides/generation-diversity/references/workflow-feedback-gates.md](../../guides/generation-diversity/references/workflow-feedback-gates.md)
+**Staged generation:** `generation-diversity` · `generation-diversity`
 
 ## Quick reference
 
@@ -47,7 +47,7 @@ Follow this skill in **plain language** when talking to the person requesting th
 | Cast ledger, character sheet, voice/video prompts | [prompt-templates.md](./prompt-templates.md) |
 | Animate rows, sliders, alignment | [animate-beats.md](./animate-beats.md) |
 | Examples | [examples.md](./examples.md) |
-| Feedback discipline | [../../guides/generation-diversity/references/workflow-feedback-gates.md](../../guides/generation-diversity/references/workflow-feedback-gates.md) |
+| Feedback discipline | `generation-diversity` |
 | Slider (agent) | ffmpeg `hstack` / wipe — see **Slider comparison** below |
 | Batch template | [templates/batch.template.json](./templates/batch.template.json) |
 

@@ -2,14 +2,14 @@
 
 Production-grade still prompts for Pruna. **`p-image` has no prompt upsampling** — concrete language is the whole craft.
 
-Tag structure, ritual seed, and diversity axes stay in [generation-diversity.md](../../generation-diversity/references/generation-diversity.md). This page is the creative-director layer on top.
+Tag structure, ritual seed, and diversity axes stay in `generation-diversity`. This page is the creative-director layer on top.
 
 **Sources:** patterns adapted from [smixs/visual-skills](https://github.com/smixs/visual-skills) (MIT) and [higgsfield-ai/skills](https://github.com/higgsfield-ai/skills) (MIT); rewritten for Pruna.
 
 ## Before writing any prompt
 
-1. Complete the [random seed ritual](../../generation-diversity/references/generation-diversity.md#random-seed-ritual-mandatory-before-every-generation) (SSoT).
-2. Name at least four clauses from [explicit prompt structure](../../generation-diversity/references/generation-diversity.md#explicit-prompt-structure-required).
+1. Complete the random seed ritual (`generation-diversity`) (SSoT).
+2. Name at least four clauses from explicit prompt structure (`generation-diversity`).
 3. Apply the rules below — then confirm `prompt` + `aspect_ratio` with the user.
 
 ## Golden rules
@@ -32,7 +32,7 @@ Describe presence, not absence. Negation often invokes the thing you forbid.
 | Clean wall | `plain unmarked wall, matte paint` | `no text, no signs` |
 | Solo subject | `solo portrait, one person` | `no other people` |
 
-Full text hygiene: [generation-diversity — text & typography](../../generation-diversity/references/generation-diversity.md#text--typography-by-model).
+Full text hygiene: generation-diversity — text & typography (`generation-diversity`).
 
 ### 3. Natural sentences over tag soup
 
@@ -51,7 +51,7 @@ Full text hygiene: [generation-diversity — text & typography](../../generation
 
 ### 5. Typography on surfaces
 
-Readable copy is **static text on a surface** — not spoken dialogue (that is `p-video` Mode A → [audio-in-video-prompting.md](../../video-prompting/references/audio-in-video-prompting.md)).
+Readable copy is **static text on a surface** — not spoken dialogue (that is `p-video` Mode A → `video-prompting`).
 
 **Template** (placeholders in square brackets are docs notation, not prompt syntax):
 
@@ -66,7 +66,7 @@ Rules:
 - Always name **surface** + **placement** (upper third, lower right of display, centered on label)
 - Add weight/color when it matters (bold condensed sans, cream #hex)
 - One primary text element per still unless the user wants a layout brief
-- Default: no readable copy — [generation-diversity text hygiene](../../generation-diversity/references/generation-diversity.md#text--typography-by-model)
+- Default: no readable copy — generation-diversity text hygiene (`generation-diversity`)
 - Prefer scenes without dense typography — `p-image` is weak at multi-line UI copy
 - **Not** spoken dialogue (`[subject] says "…"`) — use `p-video` Mode A
 - **Not** square-bracket `[tags]` — those are Gemini TTS performance tags only; stills use quoted strings
@@ -95,9 +95,9 @@ Do **not** stack genre anchors (`Wes Anderson + Lindbergh + Ghibli` → mush).
 
 These add heat without rendering: `masterpiece`, `best quality`, `8k`, `4k`, `ultra detailed`, `stunning`, `epic`, `beautiful lighting`, bare `cinematic` with no camera/light nouns.
 
-Replace with concrete camera + light from [camera-lighting-vocabulary.md](../../video-prompting/references/camera-lighting-vocabulary.md) or diversity `camera_tag` / `lighting_tag`.
+Replace with concrete camera + light from `video-prompting` or diversity `camera_tag` / `lighting_tag`.
 
-Photoreal anti-slop lock when needed: [generation-diversity — photoreal anti-slop](../../generation-diversity/references/generation-diversity.md#photoreal-anti-slop-neon--stylized-briefs).
+Photoreal anti-slop lock when needed: generation-diversity — photoreal anti-slop (`generation-diversity`).
 
 ## Continuity handoffs
 
@@ -105,7 +105,7 @@ Photoreal anti-slop lock when needed: [generation-diversity — photoreal anti-s
 |------|------|
 | Same face across many stills | [character-turnaround-sheet.md](./character-turnaround-sheet.md) → scene stills → I2V |
 | Talking-head / avatar cast | [realistic-persona-showcase.md](./realistic-persona-showcase.md) + avatar prompt templates |
-| Start/end plates for video | [scene-anchor-pair.md](../../video-prompting/references/scene-anchor-pair.md) / [scene-anchor-triple.md](../../video-prompting/references/scene-anchor-triple.md) |
+| Start/end plates for video | `video-prompting` / `video-prompting` |
 
 ## Pre-send checklist
 

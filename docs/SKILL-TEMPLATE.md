@@ -34,9 +34,11 @@ metadata:
 ---
 ```
 
-## Cross-skill references (no SKILL.md hyperlinks)
+## Cross-skill references (no outbound hyperlinks)
 
-Never link to another skill with `[p-image](../p-image/SKILL.md)`. Name the skill with backticks (`` `p-image` ``) and, in overview sections, use a **Skill | Description | Install** table.
+Markdown links may only target files **inside the same skill package** (e.g. `./references/foo.md`). Never link to another skill’s `SKILL.md`, `references/`, or to repo `docs/`.
+
+Name other skills with backticks (`` `p-image` ``) and, in overview sections, use a **Skill | Description | Install** table. External vendor URLs (`https://…`) are fine.
 
 Descriptions come from each skill’s frontmatter `description:` (the “use when” line). Bundle regenerates tables via `.maintainer/write_skill_cross_refs.py`.
 
@@ -45,6 +47,7 @@ Descriptions come from each skill’s frontmatter `description:` (the “use whe
 | **## Prerequisites** | Overview table of required skills (guides for tools; tools for workflows) |
 | **## Pruna tools** / **## Related** / **## When NOT to use** | Same table shape — description = when to use that skill |
 | Inline prose | `` `skill-name` `` only |
+| Same-skill craft | Relative links to `./references/…` only |
 
 Example row:
 

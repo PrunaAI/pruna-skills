@@ -2,7 +2,7 @@
 
 APIs used by **illustrated-story-reel**. Optional **`p-video`** when `motion_mode: p-video`.
 
-Credentials: [api-credentials.md](../../../guides/pruna-api/references/api-credentials.md)
+Credentials: `pruna-api`
 
 ## Pruna P-API (stills + optional motion)
 

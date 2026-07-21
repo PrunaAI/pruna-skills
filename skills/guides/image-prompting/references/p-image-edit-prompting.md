@@ -41,7 +41,7 @@ Quote the exact string; name surface + placement. Do not use Gemini TTS `[tags]`
 | `edit_prompt` | `OPENING:` or `OPEN:` | Start composition |
 | `last_frame_edit_prompt` | `CLOSING:` or `CLOSE:` | End composition — physically reachable from start |
 
-Rules: [scene-anchor-pair.md](../../video-prompting/references/scene-anchor-pair.md) · [scene-anchor-triple.md](../../video-prompting/references/scene-anchor-triple.md).
+Rules: `video-prompting` · `video-prompting`.
 
 - Subject must appear in **both** stills when the beat follows that subject.
 - Change only pose, camera, background beat, or prop state — not medium mid-scene.
