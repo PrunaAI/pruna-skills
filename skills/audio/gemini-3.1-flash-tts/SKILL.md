@@ -59,7 +59,7 @@ curl -s -X POST \
   "https://api.replicate.com/v1/models/google/gemini-3.1-flash-tts/predictions"
 ```
 
-Poll `urls.get` until `status` is `succeeded`; download `output` (audio URL). Shared client: [pruna-api / Replicate HTTP in tool skill curl/ffmpeg (no shared scripts)).
+Poll `urls.get` until `status` is `succeeded`; download `output` (audio URL). Shared client: follow `pruna-api` (Replicate HTTP in the tool skill).
 
 ## Before generating
 

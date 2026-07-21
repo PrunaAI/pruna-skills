@@ -86,7 +86,7 @@ Each scene row should read as one complete beat:
 
 Write narration to describe what is on screen at open → close. Avoid lines that reference action that hasn't happened yet or already finished.
 
-Use `stable-audio-2.5` mixed **under** narration via [stable-audio-2.5 + ffmpeg bed mix curl/ffmpeg (no shared scripts)) (~0.08–0.15 volume)
+Use `stable-audio-2.5` mixed **under** narration via `stable-audio-2.5` + ffmpeg bed mix (~0.08–0.15 volume)
 
 ### Plan JSON shape
 

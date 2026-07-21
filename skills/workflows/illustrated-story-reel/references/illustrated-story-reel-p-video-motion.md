@@ -42,7 +42,7 @@ Rules (full ref: [audio-in-video-prompting.md](../../../guides/video-prompting/r
 
 ## API payload
 
-Use [`build_p_video_payloadagent curl/ffmpeg (no shared scripts)):
+Use Build the `p-video` payload (see `p-video` skill):
 
 ```python
 build_p_video_payload(

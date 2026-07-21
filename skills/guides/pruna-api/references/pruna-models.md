@@ -31,18 +31,16 @@ Documented on the same models page: `p-image-lora`, trainers, `flux-*`, `wan-*`,
 
 ## Composed workflows in this repo
 
-| Workflow | Path |
-|----------|------|
-| Prompt-first fast entrypoint (auto route + direct chains) | `workflows/router/pruna-run` |
-| Pruna generative **scenario hub** (mood boards, packs, I2V, audio-led `p-video`, upscale chains; points to scene workflows) | `workflows/router/pruna-generative-pipeline` |
-| Single-scene avatar (`p-video-avatar`, intake first) | `workflows/avatar-single-scene` |
-| Multi-scene avatar (stills + `p-video-avatar` per scene, intake first) | `workflows/avatar-multi-scene` |
-| Single-scene cinematic (`p-video`, intake first) | `workflows/image-to-video` |
-| Multi-scene cinematic (`p-video` per scene, scene anchor triple) | `workflows/narrated-multi-scene` |
-| Multi-scene visual transitions (`p-image`/`p-image-edit` stills → `p-video` pair) | `workflows/visual-transition-reel` |
-| Educational explainer (narrator + character interaction) | `workflows/interactive-explainer` |
-| Upscale comparison demo | agent curl/ffmpeg (no shared scripts) |
-| Motion-transfer showcase (`p-video-animate` + slider comparisons) | `workflows/avatar-multi-scene` (animate rows); slider script: agent curl/ffmpeg (no shared scripts) |
-| In-video replacement showcase (`p-video-replace` + slider comparisons) | agent curl/ffmpeg (no shared scripts) |
-| Virtual try-on reel (`p-image-try-on` + avatar / I2V + bed) | `p-image-try-on` tool skill + [realistic-persona-showcase.md](../../image-prompting/references/realistic-persona-showcase.md) |
-| AI music video (lyrics → Music 2.5 → avatar + B-roll) | `workflows/music-video` |
+| Workflow | Skill path |
+|----------|------------|
+| Full suite install | `skills/suite/pruna` (`@pruna`) |
+| Single-scene avatar (`p-video-avatar`, intake first) | `skills/workflows/avatar-single-scene` |
+| Multi-scene avatar (stills + `p-video-avatar` / animate rows) | `skills/workflows/avatar-multi-scene` |
+| Single-scene cinematic (`p-video`, intake first) | `skills/workflows/image-to-video` |
+| Multi-scene cinematic (`p-video` + scene anchor triple) | `skills/workflows/narrated-multi-scene` |
+| Multi-scene visual transitions (stills → `p-video` pair) | `skills/workflows/visual-transition-reel` |
+| Educational explainer (narrator + character) | `skills/workflows/interactive-explainer` |
+| Illustrated story reel (Ken Burns / gentle `p-video`) | `skills/workflows/illustrated-story-reel` |
+| AI music video (lyrics → Music 2.5 → avatar + B-roll) | `skills/workflows/music-video` |
+| Virtual try-on + persona bar | `p-image-try-on` + [realistic-persona-showcase.md](../../image-prompting/references/realistic-persona-showcase.md) |
+| Human recipe map | [docs/WORKFLOW-RECIPES.md](../../../../docs/WORKFLOW-RECIPES.md) |
