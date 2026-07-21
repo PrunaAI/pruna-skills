@@ -40,6 +40,8 @@ Markdown links may only target files **inside the same skill package** (e.g. `./
 
 Name other skills with backticks (`` `p-image` ``) and, in overview sections, use a **Skill | Description | Install** table. External vendor URLs (`https://…`) are fine.
 
+**Repo docs** (`README.md`, `docs/*`): same rule for craft — do not deep-link `skills/.../references/…`. Name the skill. Catalog browse links to `…/SKILL.md` on GitHub are OK.
+
 Descriptions come from each skill’s frontmatter `description:` (the “use when” line). Bundle regenerates tables via `.maintainer/write_skill_cross_refs.py`.
 
 | Section | Contents |

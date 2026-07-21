@@ -175,6 +175,29 @@ for path in (repo / "skills").rglob("*.md"):
                         f"(not {file_part})"
                     )
 
+# Repo docs must not deep-link into skill references/ (name the skill instead).
+# Allow https:// GitHub browse links (SKILL-CATALOG) and same-docs relative links.
+docs_scan = [repo / "README.md", repo / "AGENTS.md", repo / "CONTRIBUTING.md"]
+docs_scan.extend((repo / "docs").rglob("*.md"))
+skip_doc_names = {"CHANGELOG.md", "BACKLOG.md", "SKILL-TEST-LOG.md"}
+for path in docs_scan:
+    if not path.is_file() or path.name in skip_doc_names:
+        continue
+    for i, line in enumerate(path.read_text().splitlines(), 1):
+        for m in link_re.finditer(line):
+            target = m.group(2).strip()
+            if target.startswith(("http://", "https://", "mailto:", "#")):
+                continue
+            if re.search(r"skills/.+/references/", target) or re.search(
+                r"\.\./skills/.+/references/", target
+            ):
+                bad.append(
+                    f"{path}:{i}: docs must not deep-link skill references/ — "
+                    f"name the skill (`skill-name`), not {target}"
+                )
+            if re.search(r"\.\./(policies|shared)/", target):
+                bad.append(f"{path}:{i}: stale policies/shared path {target}")
+
 if bad:
     # Dedupe
     seen = []
