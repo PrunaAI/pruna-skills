@@ -5,7 +5,7 @@
 Mascot battle rapper — **`cast.host_type: mascot`** → all performance beats use **`p-video`** + song **`audio`** slices (not `p-video-avatar`).
 
 ```bash
-OUT=output/verticals/music-video/purple-pruna-rap
+OUT=output/music-video/purple-pruna-rap
 # Final: $OUT/purple_pruna_rap.mp4
 ```
 
@@ -22,7 +22,7 @@ Plan template: [`templates/music-video-plan.template.json`](./templates/music-vi
 **Pipeline** (agent is the runner — follow `this skill` phase table; curl + ffmpeg, no Python scripts):
 
 ```bash
-OUT=output/verticals/music-video/my-music-video
+OUT=output/music-video/my-music-video
 mkdir -p "$OUT/clips" "$OUT/audio" "$OUT/stills"
 cp skills/workflows/music-video/templates/music-video-plan.template.json \
   "$OUT/music_video_plan.json"

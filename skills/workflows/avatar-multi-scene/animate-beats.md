@@ -114,22 +114,14 @@ Avatar CTA rows use **`type: avatar`** → deliver `{id}_avatar.mp4`. Animate ro
 
 ## Slider comparison (optional)
 
-Requires `ffmpeg` + Pillow (`pip install -r ./scripts/requirements-comparison.txt`).
+Side-by-side before/after with ffmpeg (no extra Python deps):
 
 ```bash
-python3 ffmpeg hstack slider (see workflow SKILL) \
-  --source path/to/motion-template.mp4 \
-  --output path/to/animated-output.mp4 \
-  --render path/to/scene_compare.mp4
+ffmpeg -y -i path/to/motion-template.mp4 -i path/to/animated-output.mp4 \
+  -filter_complex "[0:v][1:v]hstack=inputs=2[v]" -map "[v]" -an path/to/scene_compare.mp4
 ```
 
-Multi-sample / multi-scene batch mode — copy [`batch.template.json`](./templates/batch.template.json), set `source`, `render`, and per-persona `samples[].output` paths, then:
-
-```bash
-python3 ffmpeg hstack slider (see workflow SKILL) --config ./templates/batch.template.json
-```
-
-Dry-run: add `--dry-run` to validate paths before rendering.
+For several persona variations, repeat per sample and concat, or build a simple hstack grid in your editor.
 
 ## Assembly
 

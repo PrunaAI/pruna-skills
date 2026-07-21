@@ -9,9 +9,9 @@ Build a lyric-synced music video: **lyrics → MiniMax Music 2.5 song → Whispe
 ## Copy plan template
 
 ```bash
-mkdir -p output/verticals/music-video/my-music-video/{clips,audio,stills}
+mkdir -p output/music-video/my-music-video/{clips,audio,stills}
 cp skills/workflows/music-video/templates/music-video-plan.template.json \
-   output/verticals/music-video/my-music-video/music_video_plan.json
+   output/music-video/my-music-video/music_video_plan.json
 ```
 
 Edit `lyrics` and `music.prompt`, then follow [examples.md](./examples.md) and `this skill`.

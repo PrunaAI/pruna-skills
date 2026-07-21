@@ -60,7 +60,7 @@ Skills come in four types. Together they take you from a plain-language request 
 | **Tool** | One paid API call | `@p-image` |
 | **Workflow** | A multi-step playbook your agent runs with curl and ffmpeg | `@music-video` |
 
-When you install `@pruna`, you already have every skill listed below. If you install a single tool instead, it pulls in the guides it needs under **Prerequisites**. Workflows list the tools they depend on, so you only need to install those separately when you skip the suite.
+When you install `@pruna`, you already have every skill in the catalog. If you install a single tool instead, it pulls in the guides it needs under **Prerequisites**. Workflows list the tools they depend on, so you only need to install those separately when you skip the suite.
 
 ### Install one skill at a time
 
@@ -76,47 +76,11 @@ npx skills add PrunaAI/pruna-skills -l                  # list all
 
 The `@pruna` suite includes 25 skills across three layers. First come **guides**, which teach prompting craft and how to call the APIs safely. Next are **tools**, each mapped to one paid generation call. Finally, **workflows** chain those tools into finished deliverables your agent assembles step by step.
 
-You do not need to memorize this list. Describe your goal in chat and your agent picks the right skills. For full descriptions and per-skill install commands, see [docs/SKILL-CATALOG.md](docs/SKILL-CATALOG.md).
+You do not need to memorize the list. Describe your goal in chat and your agent picks the right skills.
 
-### Guides (5)
-
-| You want to… | Skill |
-|--------------|-------|
-| Write stronger prompts and run QA before API calls | `generation-diversity` |
-| Craft still-image prompts for edits, try-on, and personas | `image-prompting` |
-| Craft video and motion prompts with safe physics and chaining | `video-prompting` |
-| Craft TTS, music, and background audio prompts | `audio-prompting` |
-| Set up credentials, HTTP calls, and agent safety | `pruna-api` |
-
-### Tools (12)
-
-| You want to… | Skill |
-|--------------|-------|
-| Generate a fast image from text | `p-image` |
-| Edit a photo or combine reference images | `p-image-edit` |
-| Dress a person in clothes from reference photos | `p-image-try-on` |
-| Upscale or sharpen an image for delivery | `p-image-upscale` |
-| Generate one short video clip | `p-video` |
-| Make a photo move like another video | `p-video-animate` |
-| Put a person on camera speaking a script | `p-video-avatar` |
-| Swap a person or product inside existing footage | `p-video-replace` |
-| Add spoken narration or voiceover | `gemini-3.1-flash-tts` |
-| Create an original song with vocals | `music-2.5` |
-| Add light instrumental background music | `stable-audio-2.5` |
-| Get word-level lyric timestamps for editing | `whisperx` |
-
-### Workflows (8)
-
-| You want to… | Skill |
-|--------------|-------|
-| Turn images into a short narrated film beat | `image-to-video` |
-| Tell a multi-part story with voiceover | `narrated-multi-scene` |
-| Build a montage with scene-to-scene transitions | `visual-transition-reel` |
-| Produce one polished presenter clip | `avatar-single-scene` |
-| Keep the same presenter across several clips | `avatar-multi-scene` |
-| Make an educational explainer with a host and characters | `interactive-explainer` |
-| Produce a full music video with lyrics and performance | `music-video` |
-| Assemble an illustrated slideshow reel | `illustrated-story-reel` |
+- **Browse by goal:** [docs/SKILL-CATALOG.md](docs/SKILL-CATALOG.md) (full descriptions)
+- **Per-skill install commands:** [skills/suite/pruna/SKILL.md](skills/suite/pruna/SKILL.md) (included when you install `@pruna`)
+- **Multi-step recipes:** [docs/WORKFLOW-RECIPES.md](docs/WORKFLOW-RECIPES.md)
 
 ## Other install channels
 

@@ -4,6 +4,20 @@ All notable changes to Pruna Skills are documented here. Skill and plugin `metad
 
 ## [Unreleased]
 
+### Changed
+
+- README: dedupe suite tables; link to [docs/SKILL-CATALOG.md](docs/SKILL-CATALOG.md) and [skills/suite/pruna/SKILL.md](skills/suite/pruna/SKILL.md) instead.
+- Workflow example paths: `output/<workflow>/…` (removed stale `output/verticals/`).
+- [docs/SKILL-TEST-LOG.md](docs/SKILL-TEST-LOG.md) and [docs/agents-mcp-gate.md](docs/agents-mcp-gate.md) updated for skills-only layout (`@pruna` suite, no router skills).
+
+### Removed
+
+- Orphan `docs/assets/readme-hero-base.png`, `.maintainer/release/publish_clawhub_batches.sh`, duplicate Makefile GIF targets, `skills/workflows/README.md`.
+
+### Note on [1.0.6]
+
+Release notes below describe a brief plugin-era taxonomy (tools/workflows only). **Current catalog:** 5 guides + 12 tools + 8 workflows + `@pruna` suite — see [`.maintainer/skills.catalog.json`](.maintainer/skills.catalog.json).
+
 ## [1.0.6] — 2026-07-16
 
 GitHub tag: `skills-v1.0.6`

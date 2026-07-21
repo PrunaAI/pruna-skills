@@ -20,7 +20,7 @@ Credentials: `pruna-api`
 | `p-image-edit` | Per-beat still from hero or chained prior plate |
 | `p-video` | Optional Mode B clip: still + narration (`save_audio: true`, omit `duration`) |
 
-Shared clients: `scripts/pruna_api.py`, p-video skill payload fields, `scripts/story_video_clips.py`
+HTTP patterns and upload/poll/download: `pruna-api`. p-video payload fields: `p-video` skill.
 
 ## Replicate (audio)
 

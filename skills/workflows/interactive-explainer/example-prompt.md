@@ -18,9 +18,9 @@ Works for history, science, nature, how-it-works, children's topics, and more.
 ## Copy template
 
 ```bash
-mkdir -p output/verticals/interactive-explainer/my-explainer/{stills,clips,audio}
+mkdir -p output/interactive-explainer/my-explainer/{stills,clips,audio}
 cp skills/workflows/interactive-explainer/templates/explainer-plan.template.json \
-   output/verticals/interactive-explainer/my-explainer/plan.json
+   output/interactive-explainer/my-explainer/plan.json
 ```
 
 ## Install

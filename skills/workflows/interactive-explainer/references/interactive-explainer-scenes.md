@@ -210,7 +210,7 @@ Do not mix photoreal and painterly vocabulary in the same film.
 
 Science / how-it-works may end **narrator-only** after the expert (`07_conclusion` pattern).
 
-Example plans: `output/verticals/interactive-explainer/<project-slug>/plan.json`.
+Example plans: `output/interactive-explainer/<project-slug>/plan.json`.
 
 ## Visual continuity
 

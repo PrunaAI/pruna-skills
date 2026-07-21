@@ -1,4 +1,4 @@
-.PHONY: bundle bundle-skill verify validate validate-doc-examples publish release skills-sh readme smoke upload-doc-examples-hf download-doc-examples-hf doc-examples-urls sync-doc-examples-hf format-examples-md embed-examples-md doc-example-previews readme-example-embeds readme-quickstart-embeds readme-quickstart-gif quickstart-gif
+.PHONY: bundle bundle-skill verify validate validate-doc-examples publish release skills-sh readme smoke upload-doc-examples-hf download-doc-examples-hf doc-examples-urls sync-doc-examples-hf format-examples-md embed-examples-md doc-example-previews readme-example-embeds readme-quickstart-embeds
 
 bundle:
 	./.maintainer/bundle_all_skills.sh
@@ -80,9 +80,5 @@ readme-example-embeds:
 	done
 
 readme-quickstart-embeds: readme-example-embeds
-
-readme-quickstart-gif: readme-example-embeds
-
-quickstart-gif: readme-example-embeds
 
 sync-doc-examples-hf: doc-example-previews upload-doc-examples-hf doc-examples-urls embed-examples-md

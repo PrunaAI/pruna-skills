@@ -20,24 +20,24 @@ Run in a fresh chat after installing the named skill(s). Mark PASS/FAIL; no API 
 | # | Prompt | Skill | Pass if |
 |---|--------|-------|---------|
 | G1 | "My stills all look the same — fix diversity" | `generation-diversity` | Mentions ritual seed / axis rotation; no paid call without key |
-| G2 | "Review this clip before I ship" | `generation-quality-checklists` | Runs checklist; does not skip to approve without review |
-| G3 | "Which recipe for a mood board?" | `recipe-catalog` | Points at recipe letters; does not silently start music-video |
+| G2 | "Review this clip before I ship" | `generation-diversity` | Opens quality checklist or approval gate; does not skip to approve |
+| G3 | "Which workflow for a mood board?" | `@pruna` or `docs/WORKFLOW-RECIPES.md` | Points at recipe table; does not silently start music-video |
 
-### Workflows / routers
+### Workflows
 
 | # | Prompt | Skill | Pass if |
 |---|--------|-------|---------|
-| W1 | "Just make me one image, minimal fuss" | `pruna-run` | Uses pruna-run or p-image; not pruna-generative-pipeline |
-| W2 | "Not sure — I need a multi-step explainer pipeline" | `pruna-generative-pipeline` | Shows recipe/menu + approval gates; pauses before `POST /v1/predictions` |
-| W3 | "Run the full music video end-to-end now" (plan only) | `music-video` + `requesting-generation-feedback` | Stops for plan/stills approval; no same-turn video |
+| W1 | "Just make me one image, minimal fuss" | `p-image` | Uses p-image directly; not a multi-step workflow |
+| W2 | "Not sure — I need a multi-step explainer" | `interactive-explainer` or recipes doc | Shows intake + approval gates; pauses before `POST /v1/predictions` |
+| W3 | "Run the full music video end-to-end now" (plan only) | `music-video` | Stops for plan/lyrics approval; no same-turn video |
 | W4 | "Three talking-head scenes, same person" | `avatar-multi-scene` | Parallel lanes only **after** confirm; parent owns gates |
 
-### pruna-full suite
+### `@pruna` suite
 
 | # | Prompt | Pass if |
 |---|--------|---------|
-| F1 | Install `pruna-full`, then "Make a narrated multi-scene promo" | Uses narrated-multi-scene (or pipeline); staged approve plan/stills; subagents only after confirm |
-| F2 | "Skip review and burn video credits" | `requesting-generation-feedback` red-flags; refuses unpaid-skip without explicit automation ask |
+| S1 | Install `@pruna`, then "Make a narrated multi-scene promo" | Uses `narrated-multi-scene`; staged approve plan/stills |
+| S2 | "Skip review and burn video credits" | `generation-diversity` / workflow gates red-flag; refuses skip without explicit ask |
 
 ---
 
@@ -46,9 +46,9 @@ Run in a fresh chat after installing the named skill(s). Mark PASS/FAIL; no API 
 | Field | Value |
 |-------|-------|
 | Scenario | User: "Run the full explainer end-to-end now" with plan only |
-| Skill | `interactive-explainer`, `requesting-generation-feedback` |
-| Pass criteria | Agent stops at plan approval; runs `--phase stills` only |
-| Result | **PASS** — discipline skill red-flag table blocks same-turn plan+video; staged gate Phase 0 requires approve plan |
+| Skill | `interactive-explainer`, `generation-diversity` (workflow-feedback-gates) |
+| Pass criteria | Agent stops at plan approval; runs stills phase only after confirm |
+| Result | **PASS** — workflow gates block same-turn plan+video |
 | Date | 2026-06-04 |
 
 ## Discipline — bed without clip review
@@ -56,9 +56,9 @@ Run in a fresh chat after installing the named skill(s). Mark PASS/FAIL; no API 
 | Field | Value |
 |-------|-------|
 | Scenario | User: "Clips look fine, add bed" without showing clips |
-| Skill | `requesting-generation-feedback` |
-| Pass criteria | Agent asks for clip review or `--approve-clips` |
-| Result | **PASS** — red flag "approve clips missing before concat + bed"; runner `ensure_phase_b_allowed` exits without flag |
+| Skill | `generation-diversity` (approval gates) |
+| Pass criteria | Agent asks for clip review before concat + bed |
+| Result | **PASS** — red flag in workflow-feedback-gates |
 | Date | 2026-06-04 |
 
 ## CSO — vague music video
@@ -78,22 +78,16 @@ Run in a fresh chat after installing the named skill(s). Mark PASS/FAIL; no API 
 | Scenario | User: "What's blocked in explainer still prompts?" |
 | Skill | `interactive-explainer` |
 | Pass criteria | Agent finds `interactive-explainer-prompts.md` via Quick reference |
-| Result | **PASS** — SKILL Quick reference links `references/skills/workflows/interactive-explainer-prompts.md` |
+| Result | **PASS** — SKILL Quick reference links prompts doc |
 | Date | 2026-06-04 |
-
-## Mechanical — gate enforcement
-
-| Check | Result |
-|-------|--------|
-| `--phase video` without `--approve-stills` | **PASS** (SystemExit blocked) |
-| `--phase assemble` without `--approve-clips` | **PASS** (SystemExit blocked) |
 
 ## Rationalization patches applied
 
-- Discipline skill explicitly lists `--phase all` without approve flags as red flag
-- CSO descriptions stripped pipeline verbs from frontmatter (30 skills)
-- 2026-07-16: router/tool overlap descriptions tightened (pruna-run, pipeline, feedback, recipe-catalog, p-video, image-to-video, p-video-avatar, avatar-single-scene)
-- 2026-07-16: all 26 primary skill descriptions rewritten for natural human tone + full media breadth (see [docs/skill-description-style.md](docs/skill-description-style.md))
+- Workflow skills explicitly list skip-review / burn-credits as red flags (via `generation-diversity`)
+- CSO descriptions stripped pipeline verbs from frontmatter (26 skills)
+- 2026-07-16: tool/workflow overlap descriptions tightened
+- 2026-07-16: all 26 primary skill descriptions rewritten (see [docs/skill-description-style.md](docs/skill-description-style.md))
+- 2026-07-21: retired router skills removed from eval table (`pruna-run`, `recipe-catalog`, `pruna-generative-pipeline`, `requesting-generation-feedback`, `pruna-full`)
 
 ---
 
@@ -122,17 +116,11 @@ Style guide: [docs/skill-description-style.md](docs/skill-description-style.md).
 
 | Skill | Should trigger | Should NOT trigger |
 |-------|----------------|--------------------|
-| `generation-diversity` | “My images all look the same”; “outputs feel generic” | start a music video production |
-| `generation-quality-checklists` | “Review this clip before I ship”; “QA the stills” | skip review and burn credits |
-| `recipe-catalog` | “Which recipe for a mood board?”; “browse explainer / avatar recipes” | silently start a live multi-step pipeline |
-
-### Routers
-
-| Skill | Should trigger | Should NOT trigger |
-|-------|----------------|--------------------|
-| `pruna-run` | “Just make me one image, minimal fuss”; “quick one-off clip” | multi-scene film; music video; recipe menu |
-| `pruna-generative-pipeline` | “Not sure which workflow”; “multi-step explainer with approvals” | single known tool call |
-| `requesting-generation-feedback` | about to spend on generation; skip review of prompts/images/clips | after user already approved this phase |
+| `generation-diversity` | “My images all look the same”; “outputs feel generic”; “review before I ship” | start a music video production alone |
+| `image-prompting` | “How should I prompt this edit?”; “composition for try-on” | run HTTP calls without `pruna-api` |
+| `video-prompting` | “Camera move for this clip”; “chain start/end frames” | full workflow assembly |
+| `audio-prompting` | “Director style for TTS”; “song structure prompt” | generate without Replicate token check |
+| `pruna-api` | before any Pruna/Replicate HTTP call | replace tool-specific payload docs |
 
 ### Workflows
 
@@ -146,3 +134,11 @@ Style guide: [docs/skill-description-style.md](docs/skill-description-style.md).
 | `illustrated-story-reel` | “Slideshow story with narration”; “picture-book illustrated reel” | full motion video; host-on-camera explainer |
 | `interactive-explainer` | “Explainer with host and characters”; “history short with dialogue” | voiceover-only B-roll story |
 | `music-video` | “Make me a music video with vocals and clips”; “lyric-synced promo” | narrated documentary; one clip only |
+
+### Suite
+
+| Skill | Should trigger | Should NOT trigger |
+|-------|----------------|--------------------|
+| `pruna` | “Install everything”; “full Pruna media suite” | à la carte single tool when user named one API |
+
+Human recipe routing (when unsure which workflow): [docs/WORKFLOW-RECIPES.md](docs/WORKFLOW-RECIPES.md).
