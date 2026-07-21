@@ -1,0 +1,19 @@
+{
+  "scripts": {
+    "core": [],
+    "shared": []
+  },
+  "references": [
+    "pruna-api.md",
+    "api-credentials.md",
+    "agent-safety.md",
+    "p-video-quality-checklist.md",
+    "prompt-dramaturgy.md",
+    "camera-lighting-vocabulary.md",
+    "physics-safe-motion.md",
+    "clip-chaining.md",
+    "audio-in-video-prompting.md",
+    "scene-anchor-triple.md",
+    "scene-anchor-pair.md"
+  ]
+}

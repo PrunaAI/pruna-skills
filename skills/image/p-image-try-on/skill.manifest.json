@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "core": [],
+    "shared": []
+  },
+  "references": [
+    "pruna-api.md",
+    "api-credentials.md",
+    "p-image-try-on-quality-checklist.md",
+    "p-image-try-on-prompting.md",
+    "realistic-persona-showcase.md",
+    "realistic-persona-example-prompt.md",
+    "visual-variety-bible.md"
+  ]
+}

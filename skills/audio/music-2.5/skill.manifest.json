@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "core": [],
+    "shared": []
+  },
+  "references": [
+    "replicate-api.md",
+    "api-credentials.md",
+    "music-and-bed-prompting.md"
+  ]
+}

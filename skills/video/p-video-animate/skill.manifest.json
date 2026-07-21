@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "core": [],
+    "shared": []
+  },
+  "references": [
+    "pruna-api.md",
+    "api-credentials.md",
+    "p-video-animate-quality-checklist.md",
+    "p-video-animate-prompting.md"
+  ]
+}
