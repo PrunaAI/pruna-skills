@@ -1,0 +1,19 @@
+{
+  "references": [
+    "interactive-explainer-scenes.md",
+    "interactive-explainer-motion.md",
+    "interactive-explainer-prompts.md"
+  ],
+  "templates": [
+    "explainer-plan.template.json"
+  ],
+  "generation_phases": {
+    "default": "stills",
+    "phases": [
+      "stills",
+      "tts",
+      "video",
+      "assemble"
+    ]
+  }
+}

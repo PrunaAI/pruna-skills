@@ -1,4 +1,11 @@
 {
+  "guides": [
+    "generation-diversity",
+    "image-prompting",
+    "video-prompting",
+    "audio-prompting",
+    "pruna-api"
+  ],
   "tools": {
     "image": ["p-image", "p-image-edit", "p-image-upscale", "p-image-try-on"],
     "video": ["p-video", "p-video-avatar", "p-video-animate", "p-video-replace"],
@@ -14,5 +21,5 @@
     "music-video",
     "illustrated-story-reel"
   ],
-  "suite": ["pruna-full"]
+  "suite": ["pruna"]
 }

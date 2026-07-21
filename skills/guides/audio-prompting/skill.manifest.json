@@ -1,0 +1,7 @@
+{
+  "references": [
+    "tts-style-prompting.md",
+    "music-and-bed-prompting.md",
+    "audio-post-production.md"
+  ]
+}

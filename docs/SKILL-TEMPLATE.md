@@ -1,4 +1,4 @@
-# Skill template (Pruna tools + workflows)
+# Skill template (guides + tools + workflows)
 
 Adapted from [agentskills.io/specification](https://agentskills.io/specification).
 
@@ -6,19 +6,19 @@ Adapted from [agentskills.io/specification](https://agentskills.io/specification
 
 | Type | Location | API calls? |
 |------|----------|------------|
-| Tool | `tools/{image,video,audio}/<name>/` | Yes — one model operation |
-| Workflow | `workflows/<name>/` | Yes — orchestrates tools |
-
-**Policies:** Diversity, seed ritual, core QA, and (for workflows) staged gates are **injected at bundle time** from [references/policies/](../references/policies/). Do not duplicate them in `skill.manifest.json` — list only model-specific references.
+| Guide | `skills/guides/<name>/` | No — craft / HTTP patterns |
+| Tool | `skills/{image,video,audio}/<name>/` | Yes — one model operation |
+| Workflow | `skills/workflows/<name>/` | Yes — agent orchestrates tools |
+| Suite | `skills/suite/pruna/` | Meta — depends on all others |
 
 ## Layout
 
 ```
-{name}/                     # folder name MUST match frontmatter `name`
+{name}/
 ├── SKILL.md
-├── skill.manifest.json     # references, scripts, tool_skills (workflows only)
-├── README-INSTALL.md       # install one-liners
-└── scripts/                # workflow CLIs (optional)
+├── skill.manifest.json     # local references only (no scripts / tool_skills)
+├── references/             # craft owned by this skill (guides / workflows)
+└── templates/              # workflow plan JSON (optional)
 ```
 
 ## Frontmatter
@@ -26,7 +26,7 @@ Adapted from [agentskills.io/specification](https://agentskills.io/specification
 ```yaml
 ---
 name: {folder-name}
-description: Use when {triggers only — NO workflow summary}
+description: Use when {triggers only}
 license: MIT
 metadata:
   version: "0.0.2"
@@ -34,33 +34,32 @@ metadata:
 ---
 ```
 
-Workflow skills: declare dependencies in `skill.manifest.json` → `tool_skills` (not frontmatter).
+## Cross-skill references (no SKILL.md hyperlinks)
 
-## Setup (tools and workflows)
+Never link to another skill with `[p-image](../p-image/SKILL.md)`. Name the skill with backticks (`` `p-image` ``) and, in overview sections, use a **Skill | Description | Install** table.
 
-Link [api-setup.md](api-setup.md). Every bundled skill gets a **Shared generation policy** section automatically.
+Descriptions come from each skill’s frontmatter `description:` (the “use when” line). Bundle regenerates tables via `.maintainer/write_skill_cross_refs.py`.
 
-## Related skills
+| Section | Contents |
+|---------|----------|
+| **## Prerequisites** | Overview table of required skills (guides for tools; tools for workflows) |
+| **## Pruna tools** / **## Related** / **## When NOT to use** | Same table shape — description = when to use that skill |
+| Inline prose | `` `skill-name` `` only |
 
-Tools:
+Example row:
 
-```bash
-npx skills add PrunaAI/pruna-skills@p-image -y
-```
+| Skill | Description | Install |
+|-------|-------------|---------|
+| `p-image` | Use when someone wants a fast AI image — … | `npx skills add PrunaAI/pruna-skills@p-image -y` |
 
-Workflows — prefer plugin install (includes tool deps):
+Or install everything once: `npx skills add PrunaAI/pruna-skills@pruna -y`.
 
-```bash
-npx plugins add PrunaAI/pruna-skills
-# pick music-video
-```
+## Body focus
 
-Human recipe routing: [WORKFLOW-RECIPES.md](WORKFLOW-RECIPES.md).
-
-## Body structure
-
-See [agentskills.io](https://agentskills.io/skill-creation/best-practices). Focus SKILL bodies on model payloads, workflow phases, and manifests — not restating global policy.
+- Guides: when to use, works with, before generating reading order.
+- Tools: HTTP payloads, fields, Pruna-only caveats — not restating guide craft.
+- Workflows: phases, approval gates, curl/ffmpeg — agent is the runner.
 
 ## Canonical map
 
-Add new skill names to [`.maintainer/skills.catalog.json`](../.maintainer/skills.catalog.json) under `tools` or `workflows`.
+[`.maintainer/skills.catalog.json`](../.maintainer/skills.catalog.json) — `guides`, `tools`, `workflows`, `suite`.

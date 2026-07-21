@@ -1,0 +1,184 @@
+{
+  "version": "1.0.6",
+  "package": "pruna-skills",
+  "repository": "https://github.com/PrunaAI/pruna-skills",
+  "gitTag": "skills-v1.0.6",
+  "skills": [
+    {
+      "name": "generation-diversity",
+      "skillPath": "skills/guides/generation-diversity",
+      "clawhubSkill": "@pruna-ai/generation-diversity",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@generation-diversity -y"
+    },
+    {
+      "name": "image-prompting",
+      "skillPath": "skills/guides/image-prompting",
+      "clawhubSkill": "@pruna-ai/image-prompting",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@image-prompting -y"
+    },
+    {
+      "name": "video-prompting",
+      "skillPath": "skills/guides/video-prompting",
+      "clawhubSkill": "@pruna-ai/video-prompting",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@video-prompting -y"
+    },
+    {
+      "name": "audio-prompting",
+      "skillPath": "skills/guides/audio-prompting",
+      "clawhubSkill": "@pruna-ai/audio-prompting",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@audio-prompting -y"
+    },
+    {
+      "name": "pruna-api",
+      "skillPath": "skills/guides/pruna-api",
+      "clawhubSkill": "@pruna-ai/pruna-api",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@pruna-api -y"
+    },
+    {
+      "name": "p-image",
+      "skillPath": "skills/image/p-image",
+      "clawhubSkill": "@pruna-ai/p-image",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@p-image -y"
+    },
+    {
+      "name": "p-image-edit",
+      "skillPath": "skills/image/p-image-edit",
+      "clawhubSkill": "@pruna-ai/p-image-edit",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@p-image-edit -y"
+    },
+    {
+      "name": "p-image-upscale",
+      "skillPath": "skills/image/p-image-upscale",
+      "clawhubSkill": "@pruna-ai/p-image-upscale",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@p-image-upscale -y"
+    },
+    {
+      "name": "p-image-try-on",
+      "skillPath": "skills/image/p-image-try-on",
+      "clawhubSkill": "@pruna-ai/p-image-try-on",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@p-image-try-on -y"
+    },
+    {
+      "name": "p-video",
+      "skillPath": "skills/video/p-video",
+      "clawhubSkill": "@pruna-ai/p-video",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@p-video -y"
+    },
+    {
+      "name": "p-video-avatar",
+      "skillPath": "skills/video/p-video-avatar",
+      "clawhubSkill": "@pruna-ai/p-video-avatar",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@p-video-avatar -y"
+    },
+    {
+      "name": "p-video-animate",
+      "skillPath": "skills/video/p-video-animate",
+      "clawhubSkill": "@pruna-ai/p-video-animate",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@p-video-animate -y"
+    },
+    {
+      "name": "p-video-replace",
+      "skillPath": "skills/video/p-video-replace",
+      "clawhubSkill": "@pruna-ai/p-video-replace",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@p-video-replace -y"
+    },
+    {
+      "name": "gemini-3.1-flash-tts",
+      "skillPath": "skills/audio/gemini-3.1-flash-tts",
+      "clawhubSkill": "@pruna-ai/gemini-3-1-flash-tts",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@gemini-3.1-flash-tts -y"
+    },
+    {
+      "name": "music-2.5",
+      "skillPath": "skills/audio/music-2.5",
+      "clawhubSkill": "@pruna-ai/music-2-5",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@music-2.5 -y"
+    },
+    {
+      "name": "stable-audio-2.5",
+      "skillPath": "skills/audio/stable-audio-2.5",
+      "clawhubSkill": "@pruna-ai/stable-audio-2-5",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@stable-audio-2.5 -y"
+    },
+    {
+      "name": "whisperx",
+      "skillPath": "skills/audio/whisperx",
+      "clawhubSkill": "@pruna-ai/whisperx",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@whisperx -y"
+    },
+    {
+      "name": "image-to-video",
+      "skillPath": "skills/workflows/image-to-video",
+      "clawhubSkill": "@pruna-ai/image-to-video",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@image-to-video -y"
+    },
+    {
+      "name": "narrated-multi-scene",
+      "skillPath": "skills/workflows/narrated-multi-scene",
+      "clawhubSkill": "@pruna-ai/narrated-multi-scene",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@narrated-multi-scene -y"
+    },
+    {
+      "name": "visual-transition-reel",
+      "skillPath": "skills/workflows/visual-transition-reel",
+      "clawhubSkill": "@pruna-ai/visual-transition-reel",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@visual-transition-reel -y"
+    },
+    {
+      "name": "avatar-single-scene",
+      "skillPath": "skills/workflows/avatar-single-scene",
+      "clawhubSkill": "@pruna-ai/avatar-single-scene",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@avatar-single-scene -y"
+    },
+    {
+      "name": "avatar-multi-scene",
+      "skillPath": "skills/workflows/avatar-multi-scene",
+      "clawhubSkill": "@pruna-ai/avatar-multi-scene",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@avatar-multi-scene -y"
+    },
+    {
+      "name": "interactive-explainer",
+      "skillPath": "skills/workflows/interactive-explainer",
+      "clawhubSkill": "@pruna-ai/interactive-explainer",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@interactive-explainer -y"
+    },
+    {
+      "name": "music-video",
+      "skillPath": "skills/workflows/music-video",
+      "clawhubSkill": "@pruna-ai/music-video",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@music-video -y"
+    },
+    {
+      "name": "illustrated-story-reel",
+      "skillPath": "skills/workflows/illustrated-story-reel",
+      "clawhubSkill": "@pruna-ai/illustrated-story-reel",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@illustrated-story-reel -y"
+    },
+    {
+      "name": "pruna",
+      "skillPath": "skills/suite/pruna",
+      "clawhubSkill": "@pruna-ai/pruna",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@pruna -y"
+    }
+  ],
+  "registries": {
+    "github": {
+      "method": "git tag + push",
+      "tag": "skills-v1.0.6",
+      "note": "No upload API \u2014 consumers install from GitHub paths after push"
+    },
+    "npx": {
+      "method": "npx skills add (GitHub source)",
+      "listAll": "npx skills add PrunaAI/pruna-skills -l",
+      "installSkill": "npx skills add PrunaAI/pruna-skills@<name> -y",
+      "recommended": "npx skills add PrunaAI/pruna-skills@pruna -y",
+      "skillsSh": "https://skills.sh \u2014 listing via install telemetry after first install"
+    },
+    "clawhubSkills": {
+      "method": "clawhub skill publish",
+      "owner": "pruna-ai",
+      "install": "clawhub install @pruna-ai/<slug>",
+      "publish": "./.maintainer/release/publish_all_skills.sh --execute --target clawhub"
+    }
+  }
+}

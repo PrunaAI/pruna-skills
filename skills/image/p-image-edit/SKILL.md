@@ -4,14 +4,34 @@ description: Use when someone wants to edit an existing photo — change outfits
 license: MIT
 metadata:
   version: "1.0.6"
+  package: pruna-skills
   pruna_model: p-image-edit
 ---
 
-# p-image-edit (Pruna)
+## Prerequisites
 
-Premium edit and multi-image composition. Full parameters: [p-image-edit model docs](https://docs.api.pruna.ai/guides/models/p-image-edit).
+Install and load these skills before generating (skip if already in context via `@pruna`):
 
-Shared HTTP patterns: [pruna-api.md](references/policies/pruna-api.md) (upload, [poll](#poll), [download](#download))
+| Skill | Description | Install |
+| --- | --- | --- |
+| `generation-diversity` | Use when writing any generative prompt — ritual seed, explicit structure, scenario axes, and quality gates before paid API calls. | `npx skills add PrunaAI/pruna-skills@generation-diversity -y` |
+| `image-prompting` | Use when crafting still-image prompts for any generative model — composition, identity sheets, edits, try-on, and photoreal personas. | `npx skills add PrunaAI/pruna-skills@image-prompting -y` |
+| `video-prompting` | Use when crafting video or motion prompts for any generative model — dramaturgy, camera, physics-safe motion, frame anchors, and clip chaining. | `npx skills add PrunaAI/pruna-skills@video-prompting -y` |
+| `pruna-api` | Use before any Pruna or Replicate HTTP call — credentials, upload/poll/download, parallel batches, and agent safety. | `npx skills add PrunaAI/pruna-skills@pruna-api -y` |
+
+Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
+
+Follow each skill's **Before generating** / craft sections — do not restate guide content here.
+
+## When NOT to use
+
+Use a different skill instead:
+
+| Skill | Description | Install |
+| --- | --- | --- |
+| `p-image` | Use when someone wants a fast AI image — product shots, hero visuals, mood boards, or draft photos from a text prompt. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
+| `p-image-try-on` | Use when someone wants virtual try-on — dress a person in clothes from reference photos for fashion or ecommerce. | `npx skills add PrunaAI/pruna-skills@p-image-try-on -y` |
+| `p-image-upscale` | Use when someone wants to upscale or sharpen an existing image for print, large crops, or higher-quality delivery. | `npx skills add PrunaAI/pruna-skills@p-image-upscale -y` |
 
 ## HTTP (curl)
 
@@ -41,39 +61,11 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-Poll and download: [pruna-api.md](references/policies/pruna-api.md#poll).
+Poll and download: follow `pruna-api`.
 
-## Before generating
+Complete the random seed ritual from `generation-diversity` before writing prompts — **do not** pass the ritual string as API `seed`. Optional `seed` only when the user requests reproducibility.
 
-1. **[Generation diversity](references/policies/generation-diversity.md)** — ritual seed + axis rotation when the job accepts `seed` or you need a logged `run_id`.
-2. **[Prompt golden rules](../../../references/image/prompt-golden-rules.md)** — surgical positive edits; quote on-image text; no banned filler.
-3. **[p-image-edit prompting](../../../references/image/p-image-edit-prompting.md)** — change/keep formula, OPENING/CLOSING stills, identity lock, turbo.
-4. Confirm **`prompt`**, which **reference files** to upload (1–5), **`aspect_ratio`**, and **`turbo`** on/off with the user. Run [p-image-edit-quality-checklist.md](../../../references/image/p-image-edit-quality-checklist.md) on outputs.
-
-**Identity continuity:** edit from a locked hero or [character turnaround sheet](../../../references/image/character-turnaround-sheet.md) — change pose/wardrobe/background only; keep face and medium locked.
-
-**Avatar pipelines:** edit from the locked **upscaled** hero URL. Chain: **`p-image-edit` → `p-image-upscale` → slop gate → `p-video-avatar`**. Never pass raw edit URLs to video models. See [avatar-multi-scene](../../../workflows/avatar-multi-scene/SKILL.md).
-
-**Multi-scene narrated films:** generate **start still** (`edit_prompt`) and **end still** (`last_frame_edit_prompt`) per scene for the [scene anchor triple](../../../references/video/scene-anchor-triple.md). Run all scene edits **in parallel** after the hero anchor exists ([parallel-execution.md](references/policies/parallel-execution.md)). See [narrated-multi-scene](../../../workflows/narrated-multi-scene/SKILL.md).
-
-**Visual transition reels:** same start/end still pattern for the [scene anchor pair](../../../references/video/scene-anchor-pair.md) — see [visual-transition-reel](../../../workflows/visual-transition-reel/SKILL.md).
-
-## Prerequisites
-
-Upload each reference to `POST https://api.pruna.ai/v1/files` (multipart `content=@file`). Use each file’s `urls.get` value in `input.images`.
-
-## Required input
-
-- `prompt` (string)
-- `images` (array of 1–5 URLs, typically `https://api.pruna.ai/v1/files/{id}`)
-
-## Common optional fields
-
-- `aspect_ratio`: `match_input_image`, `1:1`, `16:9`, `9:16`, etc.
-- `turbo` (boolean, default true; turn off for harder edits)
-- `seed`, `disable_safety_checker`
-
-## Example: synchronous single-image edit
+### Create (sync — quick test only)
 
 ```bash
 curl -X POST 'https://api.pruna.ai/v1/predictions' \
@@ -90,12 +82,33 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
+## Before generating
+
+1. Complete Prerequisites guide reading order.
+2. Confirm **`prompt`**, which **reference files** to upload (1–5), **`aspect_ratio`**, and **`turbo`** on/off with the user.
+3. **Pruna note:** turn **`turbo` off** for harder edits. Avatar pipelines: edit from the locked **upscaled** hero URL, then upscale again before video — never pass raw edit URLs to video models.
+
+## Required input
+
+- `prompt` (string)
+- `images` (array of 1–5 URLs, typically `https://api.pruna.ai/v1/files/{id}`)
+
+## Common optional fields
+
+- `aspect_ratio`: `match_input_image`, `1:1`, `16:9`, `9:16`, etc.
+- `turbo` (boolean, default true; turn off for harder edits)
+- `seed`, `disable_safety_checker`
+
 ## Typical next steps
 
-- Upscale for delivery: [p-image-upscale](../p-image-upscale/SKILL.md)
-- Motion: [p-video](../../video/p-video/SKILL.md) with [scene anchor pair](../../../references/video/scene-anchor-pair.md), [scene anchor triple](../../../references/video/scene-anchor-triple.md), or [p-video-avatar](../../video/p-video-avatar/SKILL.md)
-- Pipeline: [pruna-generative-pipeline](../../../docs/WORKFLOW-RECIPES.md)
+Common follow-ons after this skill:
 
-## Related workflow
+| Skill | Description | Install |
+| --- | --- | --- |
+| `p-image-upscale` | Use when someone wants to upscale or sharpen an existing image for print, large crops, or higher-quality delivery. | `npx skills add PrunaAI/pruna-skills@p-image-upscale -y` |
+| `p-video` | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
+| `p-video-avatar` | Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo. | `npx skills add PrunaAI/pruna-skills@p-video-avatar -y` |
+| `avatar-multi-scene` | Use when someone wants the same person hosting several clips — multi-segment UGC, comparison reels, or mixed speaking and animated scenes with continuity. | `npx skills add PrunaAI/pruna-skills@avatar-multi-scene -y` |
+| `narrated-multi-scene` | Use when someone wants a multi-part story with voiceover — episodic B-roll, chaptered promo, or several linked video scenes without on-camera dialogue. | `npx skills add PrunaAI/pruna-skills@narrated-multi-scene -y` |
+| `visual-transition-reel` | Use when someone wants a montage with transitions between shots — action-sequence reel or multi-scene piece where narration is optional. | `npx skills add PrunaAI/pruna-skills@visual-transition-reel -y` |
 
-Multi-scene avatar + animate reels: [avatar-multi-scene](../../../workflows/avatar-multi-scene/SKILL.md) — phased curl or local slider script (not in this tool skill).

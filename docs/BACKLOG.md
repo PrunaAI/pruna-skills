@@ -20,8 +20,8 @@ Listing is install-telemetry-driven (no submit API). **2026-07-16:** `https://sk
 
 ```bash
 npx skills add PrunaAI/pruna-skills@p-image -y
-npx plugins add PrunaAI/pruna-skills          # interactive → music-video
-# or: npx plugins add PrunaAI/pruna-skills -y  # installs ALL 27
+npx skills add PrunaAI/pruna-skills@pruna -y          # interactive → music-video
+# or: npx skills add PrunaAI/pruna-skills@pruna -y -y  # installs ALL 27
 ```
 
 ## Eval prompts

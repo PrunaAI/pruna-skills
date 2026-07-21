@@ -51,10 +51,12 @@ def table(title: str, rows: list[tuple[str, str, str]]) -> str:
 
 
 def build_body() -> str:
-    tools_image = collect(REPO / "tools" / "image")
-    tools_video = collect(REPO / "tools" / "video")
-    tools_audio = collect(REPO / "tools" / "audio")
-    workflows = collect(REPO / "workflows")
+    guides = collect(REPO / "skills" / "guides")
+    tools_image = collect(REPO / "skills" / "image")
+    tools_video = collect(REPO / "skills" / "video")
+    tools_audio = collect(REPO / "skills" / "audio")
+    workflows = collect(REPO / "skills" / "workflows")
+    suite = collect(REPO / "skills" / "suite")
 
     return "\n".join(
         [
@@ -66,6 +68,8 @@ def build_body() -> str:
             "",
             "## Available Skills",
             "",
+            table("Suite", suite),
+            table("Guides (vendor-neutral craft)", guides),
             table("Tools — image (Pruna API)", tools_image),
             table("Tools — video (Pruna API)", tools_video),
             table("Tools — audio (Replicate)", tools_audio),

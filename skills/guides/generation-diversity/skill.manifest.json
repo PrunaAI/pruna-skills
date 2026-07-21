@@ -1,0 +1,7 @@
+{
+  "references": [
+    "generation-diversity.md",
+    "generation-quality-checklists.md",
+    "workflow-feedback-gates.md"
+  ]
+}

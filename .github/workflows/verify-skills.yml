@@ -3,14 +3,23 @@ name: Verify skills
 on:
   pull_request:
     paths:
-      - "tools/**"
-      - "workflows/**"
-      - "references/**"
+      - "skills/**"
       - ".maintainer/**"
       - "VERSION"
       - "skills.sh.json"
-      - "plugins/**"
       - ".claude-plugin/**"
+      - "Makefile"
+      - ".github/workflows/verify-skills.yml"
+  push:
+    branches: [main]
+    paths:
+      - "skills/**"
+      - ".maintainer/**"
+      - "VERSION"
+      - "skills.sh.json"
+      - ".claude-plugin/**"
+      - "Makefile"
+      - ".github/workflows/verify-skills.yml"
 
 jobs:
   verify:
@@ -22,5 +31,8 @@ jobs:
         with:
           node-version: "22"
 
+      - name: Verify skill layout
+        run: make verify
+
       - name: Validate release
-        run: ./.maintainer/validate_release.sh
+        run: ./.maintainer/validate_release.sh --skip-verify

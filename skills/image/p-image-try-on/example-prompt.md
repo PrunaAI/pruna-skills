@@ -1,10 +1,10 @@
 # p-image-try-on — example prompts
 
-**Before every job:** [random seed ritual](references/policies/random-seed-ritual.md).
+**Before every job:** [random seed ritual](../../guides/generation-diversity/references/generation-diversity.md#random-seed-ritual-mandatory-before-every-generation).
 
-Try-on scenario briefs and Replicate reference links. **Cross-model persona + avatar examples:** [realistic-persona-example-prompt.md](references/policies/realistic-persona-example-prompt.md).
+Try-on scenario briefs and Replicate reference links. **Cross-model persona + avatar examples:** [realistic-persona-example-prompt.md](../../guides/image-prompting/references/realistic-persona-example-prompt.md).
 
-Starter plates aligned with [p-image-try-on-quality-checklist.md](../../references/image/p-image-try-on-quality-checklist.md) and [realistic-persona-showcase.md](references/policies/realistic-persona-showcase.md).
+Starter plates aligned with [p-image-try-on-quality-checklist.md](../../guides/image-prompting/references/p-image-try-on-quality-checklist.md) and [realistic-persona-showcase.md](../../guides/image-prompting/references/realistic-persona-showcase.md).
 
 ## Canonical reference outputs
 
@@ -43,7 +43,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-Run the slop gate on the person plate before step 2. Run [p-image-try-on-quality-checklist.md](../../references/image/p-image-try-on-quality-checklist.md) on the output.
+Run the slop gate on the person plate before step 2. Run [p-image-try-on-quality-checklist.md](../../guides/image-prompting/references/p-image-try-on-quality-checklist.md) on the output.
 
 ## Scenario briefs
 
@@ -93,4 +93,4 @@ When publishing a set, avoid five identical “white studio + plain tee” rows:
 | 4 | Woman, East Asian | Open asphalt | Patchwork stack |
 | 5 | Woman, ambiguous | Golden-hour field | Pleated blouse |
 
-See [visual-variety-bible.md](references/policies/visual-variety-bible.md) for cast ledger fields.
+See [generation-diversity.md#visual-variety](../../guides/generation-diversity/references/generation-diversity.md#visual-variety) for cast ledger fields.

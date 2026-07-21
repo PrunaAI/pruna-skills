@@ -1,12 +1,3 @@
 {
-  "scripts": {
-    "core": [],
-    "shared": []
-  },
-  "references": [
-    "replicate-api.md",
-    "api-credentials.md",
-    "audio-post-production.md",
-    "music-and-bed-prompting.md"
-  ]
+  "references": []
 }

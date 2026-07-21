@@ -1,12 +1,3 @@
 {
-  "scripts": {
-    "core": [],
-    "shared": []
-  },
-  "references": [
-    "pruna-api.md",
-    "api-credentials.md",
-    "p-image-upscale-quality-checklist.md",
-    "p-image-upscale-guidance.md"
-  ]
+  "references": []
 }

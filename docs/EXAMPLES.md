@@ -2,7 +2,7 @@
 
 Real prompts and outputs from the Pruna API — hosted on the [`PrunaAI/pruna-skills` Hugging Face dataset](https://huggingface.co/datasets/PrunaAI/pruna-skills) (`examples/`). Each PNG or MP4 has a matching `.meta.json` with the exact prompt and model (audio/JSON sidecars where noted). Example binaries are **not** in git; pull locally with `make download-doc-examples-hf` or regenerate with `make doc-examples`.
 
-**Ask your agent** lines are natural-language requests that load that tool or workflow. Model prompts are what hit the API. Open **Prompts & inputs** on each card to expand — outputs (images, clips, audio) stay visible.
+Examples assume **`@pruna`** is installed (or the listed skill plus its **Prerequisites**). See [README Quickstart](../README.md#quickstart). Each section is one skill. **Ask your agent** lines are natural-language requests that load that tool or workflow. Model prompts are what hit the API. Open **Prompts & inputs** on each card to expand — outputs (images, clips, audio) stay visible.
 
 **GitHub / markdown viewers:** MP4 and MP3 do not inline-play from Hugging Face on github.com. Video sections show a **GIF preview** (click through for the full clip with audio). Audio sections link to the MP3 on the dataset.
 
@@ -14,7 +14,7 @@ Publish to Hugging Face and refresh markdown URLs: `make sync-doc-examples-hf` (
 
 Images use max P-API resolution (1440px edge); videos use final **1080p @ 24fps** (720p for some motion-transfer demos).
 
-The [README quickstart](../README.md#quickstart) walks through the **drummer try-on → performance clip** chain (`music-video-garage-drummer*` + `p-image-try-on-drummer` on the dataset).
+The [README quickstart](../README.md#quickstart) walks through three examples: the **drummer try-on → performance** chain, the **monarch still → edit → clip** chain, and the **illustrated story reel** workflow.
 
 ## Coverage
 
@@ -23,42 +23,31 @@ The [README quickstart](../README.md#quickstart) walks through the **drummer try
 | Skill | Example asset | Section |
 |-------|---------------|---------|
 | **Tools** | | |
-| `p-image` | `p-image-brass-hummingbird.png` | [below](#single-tool--p-image) |
-| `p-image-edit` | `chain-monarch-02-end.png` | [below](#single-tool--p-image-edit) |
-| `p-image-upscale` | `p-image-upscale-hummingbird.png` | [below](#single-tool--p-image-upscale) |
-| `p-image-try-on` | `p-image-try-on-drummer.png` | [below](#single-tool--p-image-try-on) |
-| `p-video` | monarch chain + aurora clip (see [p-video](#single-tool--p-video)) | [chains](#chain--monarch-on-lavender) |
-| `p-video-avatar` | `music-video-garage-drummer-clip.mp4` | [below](#single-tool--p-video-avatar) |
-| `p-video-animate` | `p-video-animate-monarch.mp4` | [below](#single-tool--p-video-animate) |
-| `p-video-replace` | `p-video-replace-jacket.mp4` | [below](#single-tool--p-video-replace) |
-| `gemini-3.1-flash-tts` | `illustrated-library-whale-narration.mp3` | [below](#single-tool--gemini-31-flash-tts) |
-| `music-2.5` | `music-video-garage-drummer-song.mp3` | [below](#single-tool--music-25) |
-| `stable-audio-2.5` | `stable-audio-library-bed.mp3` | [below](#single-tool--stable-audio-25) |
-| `whisperx` | `whisperx-drummer-song.json` | [below](#single-tool--whisperx) |
+| `p-image` | `p-image-brass-hummingbird.png` | [example](#single-tool--p-image) |
+| `p-image-edit` | `chain-monarch-02-end.png` | [example](#single-tool--p-image-edit) |
+| `p-image-upscale` | `p-image-upscale-hummingbird.png` | [example](#single-tool--p-image-upscale) |
+| `p-image-try-on` | `p-image-try-on-drummer.png` | [example](#single-tool--p-image-try-on) |
+| `p-video` | `chain-monarch-clip.mp4` + aurora clip | [example](#single-tool--p-video) |
+| `p-video-avatar` | `music-video-garage-drummer-clip.mp4` | [example](#single-tool--p-video-avatar) |
+| `p-video-animate` | `p-video-animate-monarch.mp4` | [example](#single-tool--p-video-animate) |
+| `p-video-replace` | `p-video-replace-jacket.mp4` | [example](#single-tool--p-video-replace) |
+| `gemini-3.1-flash-tts` | `illustrated-library-whale-narration.mp3` | [example](#single-tool--gemini-31-flash-tts) |
+| `music-2.5` | `music-video-garage-drummer-song.mp3` | [example](#single-tool--music-25) |
+| `stable-audio-2.5` | `stable-audio-library-bed.mp3` | [example](#single-tool--stable-audio-25) |
+| `whisperx` | `whisperx-drummer-song.json` | [example](#single-tool--whisperx) |
 | **Workflows** | | |
-| `image-to-video` | `image-to-video-aurora-*` | [below](#workflow--image-to-video) |
-| `visual-transition-reel` | `chain-monarch-*` | [monarch chain](#chain--monarch-on-lavender) |
-| `narrated-multi-scene` | `narrated-multi-scene-demo.mp4` (2 scenes) | [below](#workflow--narrated-multi-scene) |
-| `avatar-single-scene` | `music-video-garage-drummer-clip.mp4` | [below](#workflow--avatar-single-scene) |
-| `avatar-multi-scene` | `avatar-multi-scene-demo.meta.json` (2 clips, same still) | [below](#workflow--avatar-multi-scene) |
-| `interactive-explainer` | drummer + whale components | [below](#workflow--interactive-explainer) |
-| `music-video` | `music-video-garage-drummer-*` | [below](#workflow--music-video) |
-| `illustrated-story-reel` | `illustrated-library-whale-*` | [below](#workflow--illustrated-story-reel) |
+| `image-to-video` | `image-to-video-aurora-*` | [example](#workflow--image-to-video) |
+| `visual-transition-reel` | `chain-monarch-*` | [example](#chain--monarch-on-lavender) |
+| `narrated-multi-scene` | `narrated-multi-scene-demo.mp4` (2 scenes) | [example](#workflow--narrated-multi-scene) |
+| `avatar-single-scene` | `music-video-garage-drummer-clip.mp4` | [example](#workflow--avatar-single-scene) |
+| `avatar-multi-scene` | `avatar-multi-scene-demo.meta.json` (2 clips, same still) | [example](#workflow--avatar-multi-scene) |
+| `interactive-explainer` | drummer + whale components | [example](#workflow--interactive-explainer) |
+| `music-video` | `music-video-garage-drummer-*` | [example](#workflow--music-video) |
+| `illustrated-story-reel` | `illustrated-library-whale-*` | [example](#workflow--illustrated-story-reel) |
 
 ## Install
 
-
-
-```bash
-export PRUNA_API_KEY="your_key"   # see [api-setup.md](api-setup.md)
-
-npx skills add PrunaAI/pruna-skills@p-image -y          # one tool
-npx plugins add PrunaAI/pruna-skills                    # workflow or pruna-full
-npx skills add PrunaAI/pruna-skills -l
-npx plugins discover PrunaAI/pruna-skills
-```
-
-**All 20 skills at once:** `npx plugins add PrunaAI/pruna-skills` → pick **`pruna-full`**.
+See [README Quickstart](../README.md#quickstart) — recommended: `npx skills add PrunaAI/pruna-skills@pruna -y`. À la carte: `npx skills add PrunaAI/pruna-skills@<name> -y`.
 
 ---
 
@@ -239,7 +228,7 @@ npx skills add PrunaAI/pruna-skills@p-video-avatar -y
 
 > Animate the monarch still (wings closed) using the wing-open motion from our monarch clip — same butterfly, same framing.
 
-Motion transfer needs **matched framing and pose**: appearance from the still, choreography from the template ([pairing gates](../references/video/p-video-animate-prompting.md)).
+Motion transfer needs **matched framing and pose**: appearance from the still, choreography from the template ([pairing gates](../skills/guides/video-prompting/references/p-video-animate-prompting.md)).
 
 | Input | Asset |
 |-------|-------|
@@ -271,7 +260,7 @@ npx skills add PrunaAI/pruna-skills@p-video-animate -y
 
 > In this garage drummer clip, swap only her jacket for the red band tour jacket from the reference — keep face, performance, and audio.
 
-**Clothing-only** replace works better than identity swap on lip-sync performance clips ([replace prompting](../references/video/p-video-replace-prompting.md)).
+**Clothing-only** replace works better than identity swap on lip-sync performance clips ([replace prompting](../skills/guides/video-prompting/references/p-video-replace-prompting.md)).
 
 | Input | Asset |
 |-------|-------|
@@ -412,10 +401,15 @@ Also demonstrates **`visual-transition-reel`** (start/end plates + motion).
 </details>
 
 ```bash
-npx plugins add PrunaAI/pruna-skills   # pick visual-transition-reel
+npx skills add PrunaAI/pruna-skills@p-image -y
+npx skills add PrunaAI/pruna-skills@p-image-edit -y
+npx skills add PrunaAI/pruna-skills@p-video -y
+# or workflow: npx skills add PrunaAI/pruna-skills@visual-transition-reel -y
 ```
 
 ---
+
+# Workflows
 
 ## Workflow — `image-to-video`
 
@@ -437,7 +431,8 @@ npx plugins add PrunaAI/pruna-skills   # pick visual-transition-reel
 </details>
 
 ```bash
-npx plugins add PrunaAI/pruna-skills   # pick image-to-video
+npx skills add PrunaAI/pruna-skills@image-to-video -y
+# or: npx skills add PrunaAI/pruna-skills@pruna -y
 ```
 
 ---
@@ -462,7 +457,8 @@ Same assets as the [monarch chain](#chain--monarch-on-lavender) — hero still �
 </details>
 
 ```bash
-npx plugins add PrunaAI/pruna-skills   # pick visual-transition-reel
+npx skills add PrunaAI/pruna-skills@visual-transition-reel -y
+# or: npx skills add PrunaAI/pruna-skills@pruna -y
 ```
 
 ---
@@ -482,7 +478,7 @@ npx plugins add PrunaAI/pruna-skills   # pick visual-transition-reel
 
 > Two-scene nature documentary — monarch on lavender, then aurora over a frozen lake — each beat with its own narration and start/end plates, concatenated.
 
-Each scene is one **scene anchor triple** (`p-video` with `image` + `last_frame_image` + uploaded TTS). Assembly is local ffmpeg concat ([workflow SKILL](../workflows/narrated-multi-scene/SKILL.md)).
+Each scene is one **scene anchor triple** (`p-video` with `image` + `last_frame_image` + uploaded TTS). Assembly is local ffmpeg concat (`narrated-multi-scene`).
 
 | Scene | Stills | Narration |
 |-------|--------|-----------|
@@ -494,7 +490,8 @@ Per-scene clips: `narrated-multi-scene-01-monarch.mp4`, `narrated-multi-scene-02
 </details>
 
 ```bash
-npx plugins add PrunaAI/pruna-skills   # pick narrated-multi-scene
+npx skills add PrunaAI/pruna-skills@narrated-multi-scene -y
+# or: npx skills add PrunaAI/pruna-skills@pruna -y
 ```
 
 ---
@@ -519,7 +516,8 @@ Same performance clip as [music-video](#workflow--music-video) / [`p-video-avata
 </details>
 
 ```bash
-npx plugins add PrunaAI/pruna-skills   # pick avatar-single-scene
+npx skills add PrunaAI/pruna-skills@avatar-single-scene -y
+# or: npx skills add PrunaAI/pruna-skills@pruna -y
 ```
 
 ---
@@ -555,7 +553,8 @@ Sidecar: [`avatar-multi-scene-demo.meta.json`](https://huggingface.co/datasets/P
 </details>
 
 ```bash
-npx plugins add PrunaAI/pruna-skills   # pick avatar-multi-scene
+npx skills add PrunaAI/pruna-skills@avatar-multi-scene -y
+# or: npx skills add PrunaAI/pruna-skills@pruna -y
 ```
 
 ---
@@ -587,7 +586,8 @@ npx plugins add PrunaAI/pruna-skills   # pick avatar-multi-scene
 </details>
 
 ```bash
-npx plugins add PrunaAI/pruna-skills   # pick interactive-explainer
+npx skills add PrunaAI/pruna-skills@interactive-explainer -y
+# or: npx skills add PrunaAI/pruna-skills@pruna -y
 ```
 
 ---
@@ -614,7 +614,8 @@ Pipeline: lyrics → `music-2.5` → slice → try-on still → `p-video-avatar`
 </details>
 
 ```bash
-npx plugins add PrunaAI/pruna-skills   # pick music-video
+npx skills add PrunaAI/pruna-skills@music-video -y
+# or: npx skills add PrunaAI/pruna-skills@pruna -y
 ```
 
 ---
@@ -640,10 +641,11 @@ npx plugins add PrunaAI/pruna-skills   # pick music-video
 
 > Narration: *[warmly] In a paper-cut library deep below the city, a blue whale swims between the shelves — chasing stories printed on fluttering pages.*
 
-Ken Burns (budget) path uses the same still + [`stable-audio-library-bed.mp3`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/stable-audio-library-bed.mp3) or narration-only assembly — see [illustrated-story-reel](../workflows/illustrated-story-reel/SKILL.md).
+Ken Burns (budget) path uses the same still + [`stable-audio-library-bed.mp3`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/stable-audio-library-bed.mp3) or narration-only assembly — see `illustrated-story-reel`.
 
 </details>
 
 ```bash
-npx plugins add PrunaAI/pruna-skills   # pick illustrated-story-reel
+npx skills add PrunaAI/pruna-skills@illustrated-story-reel -y
+# or: npx skills add PrunaAI/pruna-skills@pruna -y
 ```

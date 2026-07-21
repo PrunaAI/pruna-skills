@@ -1,0 +1,57 @@
+---
+name: image-prompting
+description: Use when crafting still-image prompts for any generative model — composition, identity sheets, edits, try-on, and photoreal personas.
+license: MIT
+metadata:
+  version: "1.0.6"
+  package: pruna-skills
+---
+
+# Image prompting
+
+Vendor-neutral craft for **still-image** generation and editing. Works with Pruna `p-image` family, Flux, Midjourney, Ideogram, Stable Diffusion, and similar APIs.
+
+## Install
+
+| Skill | Description | Install |
+| --- | --- | --- |
+| `image-prompting` | Use when crafting still-image prompts for any generative model — composition, identity sheets, edits, try-on, and photoreal personas. | `npx skills add PrunaAI/pruna-skills@image-prompting -y` |
+| `generation-diversity` | Use when writing any generative prompt — ritual seed, explicit structure, scenario axes, and quality gates before paid API calls. | `npx skills add PrunaAI/pruna-skills@generation-diversity -y` |
+
+## When to use
+
+- Writing text-to-image prompts
+- Building character identity / turnaround sheets
+- Surgical edits (change/keep discipline)
+- Virtual try-on garment prompts
+- Photoreal or stylized persona plates for avatars
+
+## Works with
+
+Pruna `p-image` / `p-image-edit` / `p-image-try-on` / `p-image-upscale`, Flux, Midjourney, Ideogram, SDXL, and other still models.
+
+## Before generating
+
+1. Follow `generation-diversity` first.
+2. **[Prompt golden rules](./references/prompt-golden-rules.md)** — positive framing, no banned filler, params outside the prompt string.
+3. Same character across shots → [character-turnaround-sheet.md](./references/character-turnaround-sheet.md).
+4. Edits → [p-image-edit-prompting.md](./references/p-image-edit-prompting.md).
+5. Try-on → [p-image-try-on-prompting.md](./references/p-image-try-on-prompting.md).
+6. Upscale params → [p-image-upscale-guidance.md](./references/p-image-upscale-guidance.md).
+7. Photoreal personas → [realistic-persona-showcase.md](./references/realistic-persona-showcase.md) · [realistic-persona-example-prompt.md](./references/realistic-persona-example-prompt.md).
+8. Validate with the matching `*-quality-checklist.md` in `./references/`.
+
+## Pruna tools
+
+Matching install for every model named above. Pick what you need:
+
+| Skill | Description | Install |
+| --- | --- | --- |
+| `p-image` | Use when someone wants a fast AI image — product shots, hero visuals, mood boards, or draft photos from a text prompt. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
+| `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
+| `p-image-try-on` | Use when someone wants virtual try-on — dress a person in clothes from reference photos for fashion or ecommerce. | `npx skills add PrunaAI/pruna-skills@p-image-try-on -y` |
+| `p-image-upscale` | Use when someone wants to upscale or sharpen an existing image for print, large crops, or higher-quality delivery. | `npx skills add PrunaAI/pruna-skills@p-image-upscale -y` |
+| `pruna-api` | Use before any Pruna or Replicate HTTP call — credentials, upload/poll/download, parallel batches, and agent safety. | `npx skills add PrunaAI/pruna-skills@pruna-api -y` |
+
+Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
+

@@ -1,18 +1,3 @@
 {
-  "scripts": {
-    "core": [],
-    "shared": []
-  },
-  "references": [
-    "pruna-api.md",
-    "api-credentials.md",
-    "agent-safety.md",
-    "p-video-avatar-quality-checklist.md",
-    "p-video-avatar-prompting.md",
-    "camera-lighting-vocabulary.md",
-    "physics-safe-motion.md",
-    "realistic-persona-showcase.md",
-    "realistic-persona-example-prompt.md",
-    "scene-anchor-triple.md"
-  ]
+  "references": []
 }

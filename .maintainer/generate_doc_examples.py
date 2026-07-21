@@ -19,11 +19,9 @@ OUT = ROOT / "docs" / "assets" / "examples"
 API = "https://api.pruna.ai/v1/predictions"
 FILES = "https://api.pruna.ai/v1/files"
 
-STORY_SCRIPTS = ROOT / "workflows" / "illustrated-story-reel" / "scripts"
-SHARED_SCRIPTS = ROOT / "workflows" / "_shared" / "scripts"
-for _p in (STORY_SCRIPTS, SHARED_SCRIPTS):
-    if str(_p) not in sys.path:
-        sys.path.insert(0, str(_p))
+DOC_EXAMPLES = ROOT / ".maintainer" / "doc_examples"
+if str(DOC_EXAMPLES) not in sys.path:
+    sys.path.insert(0, str(DOC_EXAMPLES))
 
 from assemble_slideshow import concat_clips_with_audio, mux_audio, probe_duration, render_still_segment  # noqa: E402
 from replicate_api import (  # noqa: E402

@@ -4,24 +4,24 @@ description: Use when someone wants light instrumental background music — an a
 license: MIT
 metadata:
   version: "1.0.6"
+  package: pruna-skills
   provider: replicate
   replicate_model: stability-ai/stable-audio-2.5
 ---
 
-# Stable Audio 2.5 (Replicate)
+## Prerequisites
 
-Text-to-music for **instrumental background beds** on launch reels. Not a Pruna P-model — runs on [Replicate](https://replicate.com/stability-ai/stable-audio-2.5).
+Install and load these skills before generating (skip if already in context via `@pruna`):
 
-**Mix helper (repo):** [`launch_background_music.py`](../../../workflows/_shared/scripts/launch_background_music.py) — probes video length, generates bed, mixes under VO with ffmpeg.
+| Skill | Description | Install |
+| --- | --- | --- |
+| `generation-diversity` | Use when writing any generative prompt — ritual seed, explicit structure, scenario axes, and quality gates before paid API calls. | `npx skills add PrunaAI/pruna-skills@generation-diversity -y` |
+| `audio-prompting` | Use when crafting TTS, music, or bed prompts for any generative audio model — director style, song structure, and post-production layering. | `npx skills add PrunaAI/pruna-skills@audio-prompting -y` |
+| `pruna-api` | Use before any Pruna or Replicate HTTP call — credentials, upload/poll/download, parallel batches, and agent safety. | `npx skills add PrunaAI/pruna-skills@pruna-api -y` |
 
-## When to use
+Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 
-| Goal | Use this |
-|------|----------|
-| Light instrumental under a concat launch reel | Yes — after final assembly |
-| Under **embedded narration** from scene anchor triple | Yes — mix quiet bed after concat — [audio-post-production.md](../../../references/audio/audio-post-production.md) |
-| Replace avatar VO | No — bed mixes **under** existing dialogue |
-| Pruna-native audio | No — use [`p-video`](../../video/p-video/SKILL.md) audio input instead |
+Follow each skill's **Before generating** / craft sections — do not restate guide content here.
 
 ## Environment
 
@@ -29,23 +29,9 @@ Text-to-music for **instrumental background beds** on launch reels. Not a Pruna 
 export REPLICATE_API_TOKEN=r8_...
 ```
 
-Requires **`ffmpeg`** and **`ffprobe`** on PATH for mix step.
-
-## Model input (Replicate)
-
-| Field | Notes |
-|-------|-------|
-| `prompt` | **Required.** Style tags work well — e.g. *Instrumental light electronic pop, soft groove, mellow synth pads, no vocals, 94 BPM*. Craft: [music-and-bed-prompting.md](../../../references/audio/music-and-bed-prompting.md). |
-| `duration` | Seconds, 1–190 (match or slightly exceed reel length) |
-| `steps` | 4–8 (default 8) |
-| `cfg_scale` | 1–25 (default 1) |
-| `seed` | Optional integer for reproducibility |
-
-Output: single **MP3** URL.
+Requires **`ffmpeg`** and **`ffprobe`** on PATH for the mix step.
 
 ## HTTP (curl)
-
-### Create prediction
 
 ```bash
 curl -s -X POST \
@@ -64,39 +50,29 @@ curl -s -X POST \
 
 Poll `urls.get` until `status` is `succeeded`; download `output` MP3.
 
-## Launch reel integration
+## Before generating
 
-### Plan JSON (`background_music`)
+1. Complete Prerequisites guide reading order.
+2. Confirm **`prompt`**, **`duration`** (match or slightly exceed reel length), and mix **`volume`** (~0.08–0.15 under VO).
+3. **Model notes:** lead with **Instrumental** and **no vocals**. Duration 1–190s. Prefer understated beds (BPM ~88–98 for tech launch reels) so music does not compete with dialogue.
 
-```json
-"background_music": {
-  "enabled": true,
-  "prompt": "Instrumental light electronic pop bed, soft groove and mellow synth pads, calm positive tech atmosphere, understated background music, no vocals, 94 BPM",
-  "volume": 0.12,
-  "output_name": "skills_library_announcement_with_music.mp4"
-}
-```
+## Required input
 
-### Post-concat bed on any MP4
+- `prompt` (string)
 
-```bash
-python3 workflows/_shared/scripts/launch_background_music.py \
-  --video output/my_reel/final.mp4 \
-  --volume 0.12
-```
+## Common optional fields
 
-## Prompt tips (launch beds)
+- `duration` — seconds, 1–190
+- `steps` — 4–8 (default 8)
+- `cfg_scale` — 1–25 (default 1)
+- `seed` — optional integer
 
-- Lead with **Instrumental** and **no vocals**
-- Name mood: light, calm, positive, soft groove, mellow — keep *understated* and *background music* so beds sit under VO
-- Optional BPM (**88–98** for tech launch reels; default script uses **94**)
-- Avoid *energetic*, *driving*, or very high BPM — beds should support dialogue, not compete with it
-- Avoid lyrics, song title, or artist name triggers
-- Scene-specific beds (restaurant, jungle, boutique): name the setting but keep groove soft and BPM in the high 80s–mid 90s
+## Typical next steps
 
-## Related
+Common follow-ons after this skill:
 
-- [audio-post-production.md](../../../references/audio/audio-post-production.md) — narration + bed layering
-- [gemini-3.1-flash-tts](../gemini-3.1-flash-tts/SKILL.md) — narration voiceover
-- [visual-transition-reel](../../../workflows/visual-transition-reel/SKILL.md) — concat + optional bed assembly
-- [replicate-api.md](references/policies/replicate-api.md) — shared Replicate patterns
+| Skill | Description | Install |
+| --- | --- | --- |
+| `gemini-3.1-flash-tts` | Use when someone needs spoken narration or voiceover — explainer tracks, documentary lines, or voice to pair with generated video. | `npx skills add PrunaAI/pruna-skills@gemini-3.1-flash-tts -y` |
+| `visual-transition-reel` | Use when someone wants a montage with transitions between shots — action-sequence reel or multi-scene piece where narration is optional. | `npx skills add PrunaAI/pruna-skills@visual-transition-reel -y` |
+

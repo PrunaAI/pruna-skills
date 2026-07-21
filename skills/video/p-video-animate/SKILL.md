@@ -4,89 +4,47 @@ description: Use when someone wants a photo to move like another video — motio
 license: MIT
 metadata:
   version: "1.0.6"
+  package: pruna-skills
   pruna_model: p-video-animate
 ---
 
-# p-video-animate (Pruna)
+## Prerequisites
 
-**P-Video-Animate** animates a single image using the motion, timing, and camera movement from a given video.
+Install and load these skills before generating (skip if already in context via `@pruna`):
 
-**User question this answers:** *How can I animate this picture with some motion?*
+| Skill | Description | Install |
+| --- | --- | --- |
+| `generation-diversity` | Use when writing any generative prompt — ritual seed, explicit structure, scenario axes, and quality gates before paid API calls. | `npx skills add PrunaAI/pruna-skills@generation-diversity -y` |
+| `video-prompting` | Use when crafting video or motion prompts for any generative model — dramaturgy, camera, physics-safe motion, frame anchors, and clip chaining. | `npx skills add PrunaAI/pruna-skills@video-prompting -y` |
+| `pruna-api` | Use before any Pruna or Replicate HTTP call — credentials, upload/poll/download, parallel batches, and agent safety. | `npx skills add PrunaAI/pruna-skills@pruna-api -y` |
 
-Given a reference input image and video, the model generates a new video using **(1)** the style of the reference image, and **(2)** preserving the original motion, acting, timing, camera movement, and scene structure of the reference video.
+Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 
-Also on Replicate: [prunaai/p-video-animate](https://replicate.com/prunaai/p-video-animate). Full P-API parameters: [p-video-animate model docs](https://docs.api.pruna.ai/guides/models/p-video-animate) · operational guide (Runware host): [animating images from video](https://runware.ai/docs/models/prunaai-p-video-animate/guides/animating-images-from-video)
+Follow each skill's **Before generating** / craft sections — do not restate guide content here.
 
-Shared HTTP patterns: [pruna-api.md](references/policies/pruna-api.md)
-
-## p-video-animate vs p-video-replace
+## Skill boundary
 
 | | **p-video-animate** (this skill) | **p-video-replace** |
 |---|----------------------------------|---------------------|
-| **User question** | *How can I animate this picture with some motion?* | *How can I replace this person in this video?* |
-| **Inputs** | One **`image`** + motion-template **`video`** | Source **`video`** + **`images`** (1–4 identity refs in **one** call) |
-| **Job** | Still performs using copied motion | People in footage swapped for reference identities |
+| **User question** | *Animate this picture with some motion?* | *Replace this person in this video?* |
+| **Inputs** | One **`image`** + motion-template **`video`** | Source **`video`** + **`images`** (1–4) |
+| **Job** | Still performs using copied motion | People/props in footage swapped for refs |
 
-**Use [p-video-replace](../p-video-replace/SKILL.md)** for in-place identity swap on real clips. **Use this skill** for motion-transfer showcases, persona variants, and slider before/after demos.
+**Use `p-video-replace`** for in-place identity swap. **Use this skill** for motion-transfer showcases and persona variants.
 
-## Key features
+## When NOT to use
 
-- Top visual quality
-- Most efficient inference
-  - Speed: **5.24s generation time per 1s video**
-  - Price: **$0.03 and $0.06 per 1s of 720p and 1080p video**
+Use a different skill instead:
 
-## Key examples
+| Skill | Description | Install |
+| --- | --- | --- |
+| `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
+| `p-video-replace` | Use when someone wants to swap a person, outfit, or product inside existing footage while keeping the camera move and audio. | `npx skills add PrunaAI/pruna-skills@p-video-replace -y` |
+| `p-video-avatar` | Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo. | `npx skills add PrunaAI/pruna-skills@p-video-avatar -y` |
 
-- **UGC ad variations** — Reuse winning video motions with different creator, customer, or persona images at large scale.
-- **Viral meme remixes** — Turn trending clips into new animated image-based meme formats quickly.
-- **Movie scene recasting** — Animate user-uploaded avatars, selfies, or character images using reusable motion templates.
-- **Game cinematic variations** — Animate user-uploaded avatars, selfies, or character images using reusable motion templates.
+## HTTP (curl)
 
-## Before generating
-
-1. **[Generation diversity](references/policies/generation-diversity.md)** — ritual seed + axis rotation; pass as `seed` when set.
-2. **[p-video-animate prompting](../../../references/video/p-video-animate-prompting.md)** — pairing gates + when to use `instruction_prompt`.
-3. Confirm with the user:
-
-- **`video`** URL — motion/audio source (upload `.mp4` to `/v1/files` first)
-- **`image`** URL — subject to animate (upload jpg/jpeg/png/webp first)
-- **`resolution`**: `720p` or `1080p`
-- **`target_fps`**: `original`, `24`, or `48`
-- Optional **`instruction_prompt`** — one specific behavior beat, or leave blank
-- Optional **`save_audio`**, **`seed`**, **`disable_safety_checker`**
-
-Run [p-video-animate-quality-checklist.md](../../../references/video/p-video-animate-quality-checklist.md) on inputs and outputs.
-
-**Batch runs:** when several image+video pairs are independent, create **all** predictions in one parallel async batch, then batch-poll. See [parallel-execution.md](references/policies/parallel-execution.md).
-
-## Making motion transfer work
-
-Full pairing + `instruction_prompt` cookbook: [p-video-animate-prompting.md](../../../references/video/p-video-animate-prompting.md).
-
-**Appearance from image, motion from video.** Match framing, pose, and limb visibility to the template’s first frame before paying for a render. Repose with **`p-image-edit`** when close but not exact. Leave **`instruction_prompt`** blank unless you need one concrete end beat.
-
-**Wrong tool:** object removal, background replacement, or in-place identity swap → **`p-image-edit`** / **`p-video-replace`**.
-
-Runware field map: `referenceImages[0]` → `image`, `referenceVideos[0]` → `video`, `positivePrompt` → `instruction_prompt`, `settings.preserveAudio` → `save_audio`.
-
-Mixed-reel context: [animate-beats.md](../../../workflows/avatar-multi-scene/animate-beats.md).
-
-## Required input
-
-- `video` (string URL): source RGB video (`.mp4`); motion and audio source
-- `image` (string URL): reference subject to animate
-
-## Common optional fields
-
-- `resolution`: `720p` (default) or `1080p`
-- `target_fps`: `original` (default), `24`, or `48`
-- `instruction_prompt` (string): extra guidance on how the subject should follow source motion
-- `save_audio` (boolean, default `true`)
-- `seed` (integer)
-- `disable_safety_checker` (boolean, default `false`)
-
-## Example: upload source assets
+### Upload source assets
 
 ```bash
 curl -X POST "https://api.pruna.ai/v1/files" \
@@ -98,11 +56,9 @@ curl -X POST "https://api.pruna.ai/v1/files" \
   -F "content=@/path/to/reference-image.png"
 ```
 
-Use each response `urls.get` (or `https://api.pruna.ai/v1/files/{id}`) in `input.video` and `input.image`.
+Use each response `urls.get` in `input.video` and `input.image`.
 
-## Example: async (recommended)
-
-Omit `Try-Sync`. Output duration follows the source video.
+### Create (async — recommended)
 
 ```bash
 curl -X POST 'https://api.pruna.ai/v1/predictions' \
@@ -120,9 +76,11 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-Poll and download: [pruna-api.md](references/policies/pruna-api.md#poll).
+Poll and download: follow `pruna-api`. Output duration follows the source video.
 
-## Example: sync (single quick test only)
+Complete the random seed ritual from `generation-diversity` before writing prompts.
+
+### Create (sync — quick test only)
 
 ```bash
 curl -X POST 'https://api.pruna.ai/v1/predictions' \
@@ -138,14 +96,33 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
+## Before generating
+
+1. Complete Prerequisites guide reading order.
+2. Confirm **`video`** (motion/audio source), **`image`** (subject), **`resolution`**, **`target_fps`**, and optional **`instruction_prompt`**.
+3. **Pruna notes:** appearance from **image**, motion from **video**. Match framing/pose/limb visibility to the template’s first frame; repose with `p-image-edit` when close but not exact. Leave **`instruction_prompt`** blank unless you need one concrete end beat. Runware map: `referenceImages[0]` → `image`, `referenceVideos[0]` → `video`, `positivePrompt` → `instruction_prompt`, `settings.preserveAudio` → `save_audio`.
+
+## Required input
+
+- `video` (string URL): source RGB `.mp4`
+- `image` (string URL): reference subject to animate
+
+## Common optional fields
+
+- `resolution`: `720p` (default) or `1080p`
+- `target_fps`: `original` (default), `24`, or `48`
+- `instruction_prompt` (string)
+- `save_audio` (boolean, default `true`)
+- `seed`, `disable_safety_checker`
+
 ## Typical next steps
 
-- Generate or edit reference subjects: [p-image](../../image/p-image/SKILL.md), [p-image-edit](../../image/p-image-edit/SKILL.md)
-- Replace people in existing footage (not motion transfer): [p-video-replace](../p-video-replace/SKILL.md)
-- Talking-head clips (script-driven, not motion transfer): [p-video-avatar](../p-video-avatar/SKILL.md)
-- Pipeline hub: [pruna-generative-pipeline](../../../docs/WORKFLOW-RECIPES.md)
-- Multi-scene motion transfer + slider demos: [avatar-multi-scene](../../../workflows/avatar-multi-scene/SKILL.md) (`animate` rows)
+Common follow-ons after this skill:
 
-## Related workflow
+| Skill | Description | Install |
+| --- | --- | --- |
+| `p-image` | Use when someone wants a fast AI image — product shots, hero visuals, mood boards, or draft photos from a text prompt. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
+| `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
+| `p-video-replace` | Use when someone wants to swap a person, outfit, or product inside existing footage while keeping the camera move and audio. | `npx skills add PrunaAI/pruna-skills@p-video-replace -y` |
+| `avatar-multi-scene` | Use when someone wants the same person hosting several clips — multi-segment UGC, comparison reels, or mixed speaking and animated scenes with continuity. | `npx skills add PrunaAI/pruna-skills@avatar-multi-scene -y` |
 
-Animate slider reels: [`generate_video_comparison.py`](../../../workflows/_shared/scripts/generate_video_comparison.py) + [avatar-multi-scene](../../../workflows/avatar-multi-scene/SKILL.md) `animate` rows.

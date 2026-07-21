@@ -1,0 +1,12 @@
+{
+  "references": [],
+  "templates": [],
+  "generation_phases": {
+    "default": "stills",
+    "phases": [
+      "stills",
+      "video",
+      "render"
+    ]
+  }
+}

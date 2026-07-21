@@ -8,7 +8,7 @@ Skills + scripts + API keys remain the portable path for Cursor and cross-provid
 |-----------|--------------|-------|
 | Official Pruna MCP server exists | Single `.mcp.json` in **one** pilot plugin (`p-image` or `pruna-run`) | `plugins/<name>/.mcp.json` |
 | Measured under-trigger on workflows | Claude activation hooks (Scott Spence pattern) | one workflow plugin only |
-| Product wants a selectable "Pruna Studio" agent | One `agents/*.agent.md` under `pruna-full` | after eval shows need |
+| Product wants a selectable "Pruna Studio" agent | One `agents/*.agent.md` under `pruna` | after eval shows need |
 
 ## Explicit non-goals
 

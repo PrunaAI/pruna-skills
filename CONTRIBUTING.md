@@ -4,44 +4,45 @@
 
 | You want to… | Edit here | Then run |
 |--------------|-----------|----------|
-| Model API usage | `tools/<modality>/<skill>/SKILL.md` | `make bundle-skill SKILL=<name>` |
-| Workflow steps | `workflows/<skill>/SKILL.md` | `make bundle-skill SKILL=<name>` |
-| Shared generation policy | `references/policies/` | `make bundle` (auto-injected; do **not** list in manifests) |
-| Model-specific QA / API docs | `references/{shared,image,video,audio,workflows}/` | List basename in `skill.manifest.json` `references`, then `make bundle` |
-| What ships in an install | `<skill>/skill.manifest.json` | `make bundle-skill SKILL=<name>` |
-| Package version | `VERSION` | `make bundle` (syncs versions) |
+| Model API usage | `skills/{image,video,audio}/<skill>/SKILL.md` | `make bundle` |
+| Prompting craft | `skills/guides/<name>/references/` + guide `SKILL.md` | `make bundle` |
+| Workflow steps | `skills/workflows/<skill>/SKILL.md` | `make bundle` |
+| Workflow-local craft | `skills/workflows/<skill>/references/` | List basename in manifest, then `make bundle` |
+| Package version | `VERSION` | `make bundle` |
 | Skill name list | `.maintainer/skills.catalog.json` | `make bundle` |
 
-**Do not edit `plugins/`** — it is generated. Pre-commit rebuilds when `tools/`, `workflows/`, or `references/` change.
+Cross-skill reuse: **Prerequisites** + `npx skills add …@other` — do not duplicate craft files.
 
 ## Skill types
 
 | Type | Path | Purpose |
 |------|------|---------|
-| **Tool** | `tools/{image,video,audio}/<name>/` | One model API per skill |
-| **Workflow** | `workflows/<name>/` | End-to-end production; `tool_skills` in manifest |
+| **Guide** | `skills/guides/<name>/` | Craft or Pruna HTTP |
+| **Tool** | `skills/{image,video,audio}/<name>/` | One API; Prerequisites → guides |
+| **Workflow** | `skills/workflows/<name>/` | Playbook; Prerequisites → tools |
+| **Suite** | `skills/suite/pruna/` | Umbrella |
 
-Policy injection (diversity, QA, gates) is automatic at bundle time — do not author separate guide skills for it.
+No Python runners. No top-level `references/` or `plugins/`.
 
-Authoring conventions: [SKILL-TEMPLATE.md](docs/SKILL-TEMPLATE.md). Recipe routing for humans: [WORKFLOW-RECIPES.md](docs/WORKFLOW-RECIPES.md). Publish runbook: [PUBLISHING.md](docs/PUBLISHING.md).
+Authoring: [SKILL-TEMPLATE.md](docs/SKILL-TEMPLATE.md). Recipes: [WORKFLOW-RECIPES.md](docs/WORKFLOW-RECIPES.md). Publish: [PUBLISHING.md](docs/PUBLISHING.md).
 
 ## Pull request checklist
 
-1. `SKILL.md` frontmatter `name` matches the folder name ([Agent Skills spec](https://agentskills.io/specification)).
-2. Skill-specific references listed by basename in `skill.manifest.json` (never policy files — injection owns those); workflow deps in `tool_skills`.
-3. If adding a skill, add its name to [`.maintainer/skills.catalog.json`](.maintainer/skills.catalog.json).
-4. `make bundle` and commit updated `plugins/`, `skills.sh.json`, `docs/SKILL-CATALOG.md`.
-5. `make validate` for skills you touched.
-6. No API keys, tokens, or generated media in the commit.
+1. Frontmatter `name` matches folder name.
+2. Tools/workflows have **## Prerequisites** with `npx skills add` lines; guides have **## Install**.
+3. Guide descriptions stay vendor-neutral (except `pruna-api`).
+4. New skills registered in `.maintainer/skills.catalog.json`.
+5. `make bundle` and commit catalog / `skills.sh.json` / marketplace.
+6. `make validate`.
+7. No API keys or generated media in the commit.
 
-## Makefile shortcuts
+## Makefile
 
 ```bash
-make bundle              # rebuild plugins/
-make bundle-skill SKILL=p-image   # same + assert that skill exists in plugins/
-make verify              # check plugins/ is current + policy injection
-make validate            # verify + skills-ref + clawhub + install smoke
-make smoke               # install smoke only
+make bundle              # versions + catalog + marketplace
+make bundle-skill SKILL=p-image
+make verify              # layout checks
+make validate            # verify + skills-ref + smoke
+make smoke
 make publish             # ClawHub dry-run
-make release             # prints release usage
 ```

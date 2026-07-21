@@ -78,7 +78,7 @@ Run in a fresh chat after installing the named skill(s). Mark PASS/FAIL; no API 
 | Scenario | User: "What's blocked in explainer still prompts?" |
 | Skill | `interactive-explainer` |
 | Pass criteria | Agent finds `interactive-explainer-prompts.md` via Quick reference |
-| Result | **PASS** — SKILL Quick reference links `references/workflows/interactive-explainer-prompts.md` |
+| Result | **PASS** — SKILL Quick reference links `references/skills/workflows/interactive-explainer-prompts.md` |
 | Date | 2026-06-04 |
 
 ## Mechanical — gate enforcement

@@ -24,7 +24,7 @@ def read_name(skill_md: Path) -> str | None:
 
 def discover_skills() -> set[str]:
     names: set[str] = set()
-    for base in (REPO / "tools", REPO / "workflows"):
+    for base in (REPO / "skills",):
         if not base.is_dir():
             continue
         for skill_md in base.rglob("SKILL.md"):
@@ -38,11 +38,13 @@ def discover_skills() -> set[str]:
 def build_payload() -> dict:
     catalog = load_catalog()
     found = discover_skills()
+    guides = catalog.get("guides", [])
     image = catalog["tools"]["image"]
     video = catalog["tools"]["video"]
     audio = catalog["tools"]["audio"]
     workflows = catalog["workflows"]
-    listed = image + video + audio + workflows
+    suite = catalog.get("suite", [])
+    listed = guides + image + video + audio + workflows + suite
     missing = [n for n in listed if n not in found]
     if missing:
         print(f"warn: catalog lists skills not in source tree: {missing}", file=sys.stderr)
@@ -51,6 +53,16 @@ def build_payload() -> dict:
         "$schema": SCHEMA,
         "notGrouped": "bottom",
         "groupings": [
+            {
+                "title": "Suite",
+                "description": "Install everything at once.",
+                "skills": [n for n in suite if n in found],
+            },
+            {
+                "title": "Guides",
+                "description": "Vendor-neutral prompting and API craft.",
+                "skills": [n for n in guides if n in found],
+            },
             {
                 "title": "Image Tools",
                 "description": "Generate and edit images with Pruna API models.",
@@ -68,7 +80,7 @@ def build_payload() -> dict:
             },
             {
                 "title": "Workflows",
-                "description": "Multi-step production pipelines for explainers, music videos, and reels.",
+                "description": "Multi-step production playbooks for explainers, music videos, and reels.",
                 "skills": [n for n in workflows if n in found],
             },
         ],

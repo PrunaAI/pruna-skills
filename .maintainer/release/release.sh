@@ -21,11 +21,11 @@ if [[ "${EXECUTE}" -eq 0 ]]; then
   echo "  git add -A && git commit -m \"[release] skills v${VERSION}\""
   echo "  git tag ${TAG} && git push origin main && git push origin ${TAG}"
   echo "  ./.maintainer/release/create_github_release.sh ${VERSION}"
-  echo "  ./.maintainer/release/publish_all_skills.sh --execute --target clawhub,clawhub-plugins,index"
+  echo "  ./.maintainer/release/publish_all_skills.sh --execute --target clawhub,index"
   exit 0
 fi
 
-./.maintainer/release/publish_all_skills.sh --execute --target clawhub,clawhub-plugins,index
+./.maintainer/release/publish_all_skills.sh --execute --target clawhub,index
 echo ""
 echo "Published. Tag, push, and GitHub Release if not done by CI:"
 echo "  git tag ${TAG} && git push origin ${TAG}"

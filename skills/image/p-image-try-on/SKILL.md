@@ -4,20 +4,32 @@ description: Use when someone wants virtual try-on — dress a person in clothes
 license: MIT
 metadata:
   version: "1.0.6"
+  package: pruna-skills
   pruna_model: p-image-try-on
 ---
 
-# p-image-try-on (Pruna)
+## Prerequisites
 
-Virtually fit one or more garments onto a person's photo. **Rate limit:** 500 requests/minute · **Category:** Image Editing.
+Install and load these skills before generating (skip if already in context via `@pruna`):
 
-The model's strength is **garment-only editing** — identity, pose, hair, background, and scene props stay intact. That supports **editorial fashion**, **complex prints / patchwork**, and **multi-garment stacks**, not just simple flat-lay tee swaps.
+| Skill | Description | Install |
+| --- | --- | --- |
+| `generation-diversity` | Use when writing any generative prompt — ritual seed, explicit structure, scenario axes, and quality gates before paid API calls. | `npx skills add PrunaAI/pruna-skills@generation-diversity -y` |
+| `image-prompting` | Use when crafting still-image prompts for any generative model — composition, identity sheets, edits, try-on, and photoreal personas. | `npx skills add PrunaAI/pruna-skills@image-prompting -y` |
+| `pruna-api` | Use before any Pruna or Replicate HTTP call — credentials, upload/poll/download, parallel batches, and agent safety. | `npx skills add PrunaAI/pruna-skills@pruna-api -y` |
 
-Canonical API reference: [p-image-try-on model docs](https://docs.api.pruna.ai/guides/models/p-image-try-on) · operational guide (Runware host): [virtual try-on](https://runware.ai/docs/models/prunaai-p-image-try-on/guides/virtual-try-on)
+Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 
-**Showcase quality bar:** [realistic-persona-showcase.md](references/policies/realistic-persona-showcase.md) · try-on checklist: [p-image-try-on-quality-checklist.md](../../../references/image/p-image-try-on-quality-checklist.md) · examples: [example-prompt.md](./example-prompt.md)
+Follow each skill's **Before generating** / craft sections — do not restate guide content here.
 
-Shared HTTP patterns: [pruna-api.md](references/policies/pruna-api.md) (upload, [poll](#poll), [download](#download))
+## When NOT to use
+
+Use a different skill instead:
+
+| Skill | Description | Install |
+| --- | --- | --- |
+| `p-image` | Use when someone wants a fast AI image — product shots, hero visuals, mood boards, or draft photos from a text prompt. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
+| `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
 
 ## Pricing
 
@@ -30,36 +42,49 @@ Example: 3 garments → $0.015 + 2 × $0.008 = **$0.031**.
 
 ## Request shape
 
-One **`person_image`**, one **`garment_images[]` entry per piece** (up to 11), optional **`reference_pose`**. The model auto-classifies each garment — **array order does not matter** and you do not tag hat vs shoe. No composite garment image required; mixed categories (headwear + top + shoes + bag) belong in **one call**.
+One **`person_image`**, one **`garment_images[]` entry per piece** (up to 11), optional **`reference_pose`**. The model auto-classifies each garment — **array order does not matter**. Mixed categories belong in **one call**.
 
 - **`prompt`** — only when a reference shows multiple garments or is worn on-model; clean flat-lays need no prompt.
 - **`preserve_input_size: true`** (default) — output dimensions follow the **person** image.
 
-Runware field map (same model, different host): `person` → `person_image`, `garment` → `garment_images[]`, `pose` → `reference_pose`, `positivePrompt` → `prompt`, `settings.turbo` → `turbo`.
+Runware field map: `person` → `person_image`, `garment` → `garment_images[]`, `pose` → `reference_pose`, `positivePrompt` → `prompt`, `settings.turbo` → `turbo`.
 
 ## HTTP (curl)
 
-Follow the [official quickstart](https://docs.api.pruna.ai/guides/models/p-image-try-on#quickstart): upload files, then call `POST /v1/predictions` with `Model: p-image-try-on`.
-
-### Start with uploading your images
+### Upload images
 
 ```bash
-# Upload person photo
 curl -X POST "https://api.pruna.ai/v1/files" \
   -H "apikey: ${PRUNA_API_KEY}" \
   -F "content=@/path/to/person.jpg"
 
-# Upload garment image (repeat for each garment file)
 curl -X POST "https://api.pruna.ai/v1/files" \
   -H "apikey: ${PRUNA_API_KEY}" \
   -F "content=@/path/to/garment.png"
 ```
 
-Use `-F` (form) with `@` to upload from disk. Use each response `urls.get` in `input.person_image` and `input.garment_images[]`.
+Use each response `urls.get` in `input.person_image` and `input.garment_images[]`. Optional: `reference_pose`.
 
-Optional uploads for extended fields: `reference_pose` (pose reference person image).
+### Create (async — recommended)
 
-### Try On (Synchronous)
+```bash
+curl -X POST 'https://api.pruna.ai/v1/predictions' \
+  -H 'Content-Type: application/json' \
+  -H "apikey: ${PRUNA_API_KEY}" \
+  -H 'Model: p-image-try-on' \
+  -d '{
+    "input": {
+      "person_image": "https://api.pruna.ai/v1/files/PERSON_FILE_ID",
+      "garment_images": ["https://api.pruna.ai/v1/files/GARMENT_FILE_ID"]
+    }
+  }'
+```
+
+Poll and download: follow `pruna-api`.
+
+Complete the random seed ritual from `generation-diversity` before writing prompts — **do not** pass the ritual string as API `seed`.
+
+### Create (sync — quick test only)
 
 ```bash
 curl -X POST 'https://api.pruna.ai/v1/predictions' \
@@ -75,131 +100,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-### Try On (Asynchronous)
-
-Omit `Try-Sync` for production reliability; poll until `succeeded`:
-
-```bash
-curl -X POST 'https://api.pruna.ai/v1/predictions' \
-  -H 'Content-Type: application/json' \
-  -H "apikey: ${PRUNA_API_KEY}" \
-  -H 'Model: p-image-try-on' \
-  -d '{
-    "input": {
-      "person_image": "https://api.pruna.ai/v1/files/PERSON_FILE_ID",
-      "garment_images": ["https://api.pruna.ai/v1/files/GARMENT_FILE_ID"]
-    }
-  }'
-```
-
-Poll and download: [pruna-api.md](references/policies/pruna-api.md#poll).
-
-## Parameters
-
-Tables follow the [official model page](https://docs.api.pruna.ai/guides/models/p-image-try-on#parameters). Extended fields (`turbo`, `reference_pose`, `prompt`) are listed below.
-
-### Required
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `person_image` | string | Image URL of the person to edit |
-| `garment_images` | array of string | Up to **11** garment refs; **≤6** for reliable finals, **7–8** often lands all pieces, **9–11** may drop the last item(s); extra URLs beyond 11 are ignored |
-
-### Optional
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `seed` | integer | — | Random seed. Leave blank for a random seed. |
-| `output_format` | string | `jpg` | Format of the saved output image (`webp`, `jpg`, `png`). |
-| `output_quality` | integer | `95` | Quality for jpg/webp outputs from 0 to 100. |
-| `preserve_input_size` | boolean | `true` | Output matches **person_image** dimensions (model resizes internally). |
-
-### Extended optional fields
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `turbo` | boolean | `false` | Faster multi-garment pass (~2.5–3.5 s); see [Turbo mode](#turbo-mode) |
-| `reference_pose` | string | — | Optional person image URL; output pose matches this reference |
-| `prompt` | string | — | **EXPERIMENTAL.** For non-flatlay garment images; names which garment to use from which image, e.g. `"the green t-shirt from image 1 and the trousers from image 2"` |
-
-## Before generating
-
-1. **[Generation diversity](references/policies/generation-diversity.md)** — random seed ritual (SSoT) + axis rotation before each try-on job (reuse approved hero plate URL when dressing an approved plate).
-2. **[p-image-try-on prompting](../../../references/image/p-image-try-on-prompting.md)** — when to omit vs set experimental `prompt`; disambiguation patterns.
-3. Confirm with the user:
-
-- **`person_image`** — person photo with clear visibility of the body region to dress
-- **`garment_images`** — up to **11** refs (**≤6** finals; **7–8** reliable; one item per body spot — see [Multi-garment limits](#multi-garment-limits))
-- **`turbo`**, **`reference_pose`**, **`prompt`** when relevant (see sections below)
-- **`seed`**, **`output_format`**, **`output_quality`**, **`preserve_input_size`** when delivery format matters
-
-Run [p-image-try-on-quality-checklist.md](../../../references/image/p-image-try-on-quality-checklist.md) on outputs before downstream steps.
-
-## Production quality (not basic demos)
-
-**Upstream person plate:** try-on fidelity is capped by **`person_image`**. Follow [realistic-persona-showcase.md](references/policies/realistic-persona-showcase.md) for photoreal **`p-image`** plates — not generic catalog mannequins. Garment tiers: see **Showcase tiers** below and [p-image-try-on-quality-checklist.md](../../../references/image/p-image-try-on-quality-checklist.md).
-
-**Showcase tiers to plan for:**
-
-| Tier | Example capability |
-|------|-------------------|
-| Editorial still | Artistic prints, color-block sleeves, seated lifestyle poses |
-| Complex garments | Collaged / patchwork suits, fine pleats, multi-panel streetwear |
-| In-scene accessories | Hats, logo tees, glasses — mirror/street compositions preserved |
-| Multi-garment stack | Jacket + tee + pants + hat + shoes in one pass (normal mode; plan ≤6 for finals) |
-
-**Anti-slop:** avoid white-background-only demos, mushy AI person plates, turbo-only finals on complex stacks, and repeating one default face across examples. Rotate cast and settings per [visual-variety-bible.md](references/policies/visual-variety-bible.md).
-
-**Replicate playground:** diversify pinned examples on [p-image-try-on](https://replicate.com/prunaai/p-image-try-on) per [realistic-persona-showcase.md](references/policies/realistic-persona-showcase.md).
-
-## Garment inputs
-
-The model accepts a broader range of garment images than flat-lay packshots alone:
-
-| Input type | Notes |
-|------------|--------|
-| **Flat-lay / packshot** | Best default; no `prompt` needed |
-| **On-model / lifestyle** | Supported; use `prompt` to identify the garment |
-| **Multi-garment in one image** | Supported; use `prompt` to pick which items to apply |
-
-When a garment image shows multiple items or the garment is worn by someone else, set **`prompt`** to disambiguate (EXPERIMENTAL).
-
-## Multi-garment limits
-
-| Rule | Guidance |
-|------|----------|
-| **One item per body spot** | Socks + shoes on the feet → expect **one** winner (usually shoes). Send socks alone if you need them. |
-| **Reliable count** | **≤6** for delivery assets; **7–8** usually lands; **9–11** treat extras as bonus — last pieces not guaranteed. |
-| **Restyling** | Fix person + base garments; swap **one** `garment_images[]` URL and rerun for variant tops (catalog A/B). |
-
-**Person image:** full-body or three-quarter works best — the model needs the body region to dress. Tight crops can artifact.
-
-## Garment categories
-
-The model auto-classifies each garment image. Misclassified or unsupported refs may be **skipped** (run can still succeed) — **omit** known-bad types from `garment_images[]` rather than hoping they drop.
-
-**Works well:** tops and shirts; sweaters, hoodies, and blazers; pants, jeans, shorts, and skirts; dresses, jumpsuits, and rompers; jackets and coats; underwear and swimwear; **footwear** (shoes, boots, sandals, socks — person photo must show feet); **headwear** (hats, caps, beanies, sunglasses, eyeglasses); **neckwear** (scarves, ties, necklaces); **bags** (handbags, totes, backpacks); **select jewelry** (watches, bracelets, rings, earrings).
-
-**Omit from request:** gloves and mittens; arm warmers; handheld props (phones, wallets, umbrellas, cups, keychains); pocket squares, suspenders, and brooches.
-
-## Turbo mode
-
-Turbo applies multiple garment edits in **one larger edit** instead of processing garments separately.
-
-| | Normal (default) | Turbo (`turbo: true`) |
-|--|------------------|------------------------|
-| **Speed** | Scales with garment count | ~**2.5–3.5 s** regardless of garment count |
-| **Quality** | Highest fidelity | May be slightly lower; some garments may not apply correctly |
-| **Pricing** | Per-garment table above | **Same** pricing |
-| **Best for** | Final assets, **5+ garments** | Previews, batch catalogs, speed-critical flows (**~4 pieces** sweet spot) |
-
-**Guidance:**
-
-- Turbo is **disabled by default** — enable explicitly when the user prioritizes latency.
-- Same price as normal; works with `reference_pose`, `prompt`, etc.
-- Pruna docs: **not recommended above ~4 garments** in turbo — use normal mode for larger stacks and final delivery.
-
-## Example: extended input (turbo + pose + prompt)
+### Extended input (turbo + pose + prompt)
 
 ```bash
 curl -X POST 'https://api.pruna.ai/v1/predictions' \
@@ -223,9 +124,32 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
+## Before generating
+
+1. Complete Prerequisites guide reading order.
+2. Confirm **`person_image`**, **`garment_images`** (≤6 for finals; 7–8 usually lands; 9–11 may drop last items), and optional **`turbo`** / **`reference_pose`** / **`prompt`**.
+3. **Pruna notes:** one item per body spot (socks + shoes → usually shoes win). **`turbo`** (~2.5–3.5 s) is off by default — not recommended above ~4 garments for finals. Full-body or three-quarter person crops work best. Omit gloves, mittens, handheld props, pocket squares, suspenders, brooches from `garment_images[]`.
+
+## Required input
+
+- `person_image` (string URL)
+- `garment_images` (array of string URLs, up to **11**)
+
+## Common optional fields
+
+- `seed`, `output_format` (`webp` / `jpg` / `png`, default `jpg`), `output_quality` (0–100, default 95)
+- `preserve_input_size` (boolean, default `true`)
+- `turbo` (boolean, default `false`)
+- `reference_pose` (person image URL)
+- `prompt` (EXPERIMENTAL — disambiguate non-flatlay / multi-garment refs)
+
 ## Typical next steps
 
-- **Restyle one piece:** keep `person_image` + unchanged garments; swap a single `garment_images[]` URL per variant.
-- Upscale for delivery: [p-image-upscale](../p-image-upscale/SKILL.md)
-- Animate try-on still: [p-video](../../video/p-video/SKILL.md) (I2V) or [p-video-avatar](../../video/p-video-avatar/SKILL.md)
-- Ecommerce pack workflows: [pruna-generative-pipeline](../../../docs/WORKFLOW-RECIPES.md) recipe K
+Common follow-ons after this skill:
+
+| Skill | Description | Install |
+| --- | --- | --- |
+| `p-image-upscale` | Use when someone wants to upscale or sharpen an existing image for print, large crops, or higher-quality delivery. | `npx skills add PrunaAI/pruna-skills@p-image-upscale -y` |
+| `p-video` | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
+| `p-video-avatar` | Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo. | `npx skills add PrunaAI/pruna-skills@p-video-avatar -y` |
+

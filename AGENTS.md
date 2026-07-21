@@ -4,45 +4,48 @@ Generative media skills for the [Pruna AI API](https://docs.api.pruna.ai/guides/
 
 ## How this works
 
-A **skill** is a playbook your agent loads for one job. A **plugin** is the install package — workflow plugins also bring their tool deps.
+See [README.md](README.md) for the user-facing glossary.
 
-- **Tools** — one paid API call → `npx skills`
-- **Workflows** — finished deliverables (multi-step) → prefer `npx plugins`
+| Type | Role |
+|------|------|
+| **Guide** | Vendor-neutral craft (`image-prompting`, `video-prompting`, `audio-prompting`, `generation-diversity`) or Pruna HTTP (`pruna-api`) |
+| **Tool** | One paid API call (`p-image`, `p-video`, …) |
+| **Workflow** | Multi-step deliverable — agent is the runner (curl + ffmpeg) |
+| **Suite** | `pruna` — install everything |
 
-Shared diversity, QA, and approval rules ship inside every bundled skill via [references/policies/](references/policies/) (injected at bundle time). Humans picking recipes: [docs/WORKFLOW-RECIPES.md](docs/WORKFLOW-RECIPES.md).
+Tools list guide deps under **Prerequisites** with `npx skills add`. Workflows list **tools** only (guides come via tools). Do not copy craft between skills — install the other skill.
 
-GitHub is the source of truth. [skills.sh](https://skills.sh) discovers via install telemetry. ClawHub is optional for OpenClaw. Claude marketplace is the in-repo catalog. Full onboarding: [README.md](README.md).
+Humans picking recipes: [docs/WORKFLOW-RECIPES.md](docs/WORKFLOW-RECIPES.md). Catalog: [docs/SKILL-CATALOG.md](docs/SKILL-CATALOG.md).
 
 ## Install
 
 ```bash
 export PRUNA_API_KEY="…" # see docs/api-setup.md
 
-npx skills add PrunaAI/pruna-skills@p-image -y
-npx plugins add PrunaAI/pruna-skills
-# pick music-video or pruna-full from the list
+npx skills add PrunaAI/pruna-skills@pruna -y
 ```
 
 ```bash
+npx skills add PrunaAI/pruna-skills@p-image -y   # one tool (+ install its Prerequisites guides)
 npx skills add PrunaAI/pruna-skills -l
-npx plugins discover PrunaAI/pruna-skills
 ```
 
-**Team default:** try `@p-image`, then pick `music-video`, then `pruna-full` if you want everything. Open [docs/SKILL-CATALOG.md](docs/SKILL-CATALOG.md) only for the full catalog.
+**Team default:** **`pruna`** once, then start a new chat.
 
 ## Layout
 
 | Path | Role |
 |------|------|
-| `tools/` `workflows/` | Author here |
-| `references/` | Shared library — **not installable**. [`policies/`](references/policies/) auto-injected; other folders copied when listed in manifests |
-| `plugins/` | Generated install bundles — do not edit |
-| `.maintainer/skills.catalog.json` | Skill name source of truth (12 tools + 8 workflows) |
-| `docs/SKILL-CATALOG.md` | Generated full catalog (do not edit) |
+| `skills/guides/` | Craft SSoT (edit markdown under each guide’s `references/`) |
+| `skills/{image,video,audio}/` | Tool skills |
+| `skills/workflows/` | Workflow playbooks |
+| `skills/suite/pruna/` | Umbrella |
+| `docs/` | Human docs only |
+| `.maintainer/skills.catalog.json` | Skill name source of truth |
 
 ## Safety
 
-Review skills before use in untrusted repos: [references/shared/agent-safety.md](references/shared/agent-safety.md).
+[skills/guides/pruna-api/references/agent-safety.md](skills/guides/pruna-api/references/agent-safety.md)
 
 ## Maintainers
 

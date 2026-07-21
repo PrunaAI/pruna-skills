@@ -1,20 +1,18 @@
 #!/usr/bin/env bash
-# Single validate entrypoint: bundle freshness → skills-ref → clawhub → install smoke.
-# Usage: make validate   or   ./.maintainer/validate_release.sh [--skip-verify] [--skip-clawhub] [--skip-smoke]
+# Single validate entrypoint: layout → skills-ref → install smoke.
+# Usage: make validate   or   ./.maintainer/validate_release.sh [--skip-verify] [--skip-smoke]
 set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "${REPO_ROOT}"
 
 SKIP_VERIFY=0
-SKIP_CLAWHUB=0
 SKIP_SMOKE=0
 for arg in "$@"; do
   case "$arg" in
     --skip-verify) SKIP_VERIFY=1 ;;
-    --skip-clawhub) SKIP_CLAWHUB=1 ;;
     --skip-smoke) SKIP_SMOKE=1 ;;
     -h|--help)
-      echo "Usage: $0 [--skip-verify] [--skip-clawhub] [--skip-smoke]"
+      echo "Usage: $0 [--skip-verify] [--skip-smoke]"
       exit 0
       ;;
   esac
@@ -32,13 +30,6 @@ python3 .maintainer/write_skills_sh_json.py --check
 
 echo "==> validate_all_skills (skills-ref)"
 python3 .maintainer/validate_all_skills.py
-
-if [[ "${SKIP_CLAWHUB}" -eq 0 ]]; then
-  echo "==> validate_clawhub_plugins"
-  ./.maintainer/validate_clawhub_plugins.sh
-else
-  echo "==> skip clawhub"
-fi
 
 if [[ "${SKIP_SMOKE}" -eq 0 ]]; then
   echo "==> smoke_install"

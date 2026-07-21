@@ -1,0 +1,15 @@
+{
+  "references": [
+    "prompt-golden-rules.md",
+    "character-turnaround-sheet.md",
+    "p-image-edit-prompting.md",
+    "p-image-try-on-prompting.md",
+    "p-image-upscale-guidance.md",
+    "p-image-quality-checklist.md",
+    "p-image-edit-quality-checklist.md",
+    "p-image-try-on-quality-checklist.md",
+    "p-image-upscale-quality-checklist.md",
+    "realistic-persona-showcase.md",
+    "realistic-persona-example-prompt.md"
+  ]
+}

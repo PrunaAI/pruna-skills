@@ -4,14 +4,35 @@ description: Use when someone wants to upscale or sharpen an existing image for 
 license: MIT
 metadata:
   version: "1.0.6"
+  package: pruna-skills
   pruna_model: p-image-upscale
 ---
 
-# p-image-upscale (Pruna)
+## Prerequisites
 
-AI upscaling with configurable target resolution. Full parameters: [p-image-upscale model docs](https://docs.api.pruna.ai/guides/models/p-image-upscale).
+Install and load these skills before generating (skip if already in context via `@pruna`):
 
-Shared HTTP patterns: [pruna-api.md](references/policies/pruna-api.md) (upload, [poll](#poll), [download](#download))
+| Skill | Description | Install |
+| --- | --- | --- |
+| `generation-diversity` | Use when writing any generative prompt — ritual seed, explicit structure, scenario axes, and quality gates before paid API calls. | `npx skills add PrunaAI/pruna-skills@generation-diversity -y` |
+| `image-prompting` | Use when crafting still-image prompts for any generative model — composition, identity sheets, edits, try-on, and photoreal personas. | `npx skills add PrunaAI/pruna-skills@image-prompting -y` |
+| `pruna-api` | Use before any Pruna or Replicate HTTP call — credentials, upload/poll/download, parallel batches, and agent safety. | `npx skills add PrunaAI/pruna-skills@pruna-api -y` |
+
+Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
+
+Follow each skill's **Before generating** / craft sections — do not restate guide content here.
+
+## When NOT to use
+
+Use a different skill instead:
+
+| Skill | Description | Install |
+| --- | --- | --- |
+| `p-image` | Use when someone wants a fast AI image — product shots, hero visuals, mood boards, or draft photos from a text prompt. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
+| `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
+| `avatar-multi-scene` | Use when someone wants the same person hosting several clips — multi-segment UGC, comparison reels, or mixed speaking and animated scenes with continuity. | `npx skills add PrunaAI/pruna-skills@avatar-multi-scene -y` |
+| `p-video-animate` | Use when someone wants a photo to move like another video — motion transfer, dance remixes, or performance variations from a template clip. | `npx skills add PrunaAI/pruna-skills@p-video-animate -y` |
+| `p-video-replace` | Use when someone wants to swap a person, outfit, or product inside existing footage while keeping the camera move and audio. | `npx skills add PrunaAI/pruna-skills@p-video-replace -y` |
 
 ## HTTP (curl)
 
@@ -42,43 +63,9 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-Poll and download: [pruna-api.md](references/policies/pruna-api.md#poll).
+Poll and download: follow `pruna-api`.
 
-## Before generating
-
-1. **[Generation diversity](references/policies/generation-diversity.md)** — ritual seed + axis rotation (optional API `seed` if supported).
-2. **[p-image-upscale guidance](../../../references/image/p-image-upscale-guidance.md)** — source must already pass slop gate; choose `target` / enhance flags for destination.
-3. Confirm **`target`** MP (1–**128**), **`enhance_details`** / **`enhance_realism`**, and **`output_format`** with the user so upscale matches destination. Validate outputs with [p-image-upscale-quality-checklist.md](../../../references/image/p-image-upscale-quality-checklist.md).
-
-## When to upscale
-
-| Use case | Typical `target` MP | Notes |
-|----------|---------------------|--------|
-| Print / billboard / extreme crop | **8–128** | Confirm cost/latency with user |
-| Mood board / packshot enlargement | **4–16** | Optional in [pruna-generative-pipeline](../../../docs/WORKFLOW-RECIPES.md) recipes A/B/C |
-| Before/after slider video | [`generate_upscale_comparison.py`](../../../workflows/_shared/scripts/generate_upscale_comparison.py) | Not used in avatar or motion-transfer pipelines |
-
-**Video workflows** ([avatar-multi-scene](../../../workflows/avatar-multi-scene/SKILL.md), [p-video-animate](../../../tools/video/p-video-animate/SKILL.md), [p-video-replace](../../../tools/video/p-video-replace/SKILL.md)) feed **`p-image`** / **`p-image-edit`** outputs directly into video models after the slop gate—do **not** add an upscale step unless the user explicitly asks for print-scale stills.
-
-Recommended defaults: `enhance_details: true`, `enhance_realism: false`. Use `enhance_realism: true` only when the source is already photoreal and you need extra skin texture—it can add waxy artifacts on synthetic edits.
-
-## Prerequisites
-
-`image` must be a reachable URL (upload via `POST /v1/files` first if needed).
-
-## Required input
-
-- `image` (string URL)
-
-## Common optional fields
-
-- `target`: integer megapixels **1–128** (default 4). Model upscales toward this output size; confirm current limits on [p-image-upscale model docs](https://docs.api.pruna.ai/guides/models/p-image-upscale).
-- `output_format`: `jpg`, `png`, `webp`
-- `output_quality`: 0–100 (not used for PNG)
-- `enhance_details`, `enhance_realism` (booleans; realism can drift more from source)
-- `disable_safety_checker`
-
-## Example: synchronous
+### Create (sync — quick test only)
 
 ```bash
 curl -X POST 'https://api.pruna.ai/v1/predictions' \
@@ -97,12 +84,30 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
+## Before generating
+
+1. Complete Prerequisites guide reading order.
+2. Confirm **`target`** MP (1–**128**), **`enhance_details`** / **`enhance_realism`**, and **`output_format`** with the user.
+3. **Pruna note:** defaults — `enhance_details: true`, `enhance_realism: false`. Use `enhance_realism: true` only on already-photoreal sources; it can add waxy artifacts on synthetic edits. Source must already pass the slop gate.
+
+## Required input
+
+- `image` (string URL)
+
+## Common optional fields
+
+- `target`: integer megapixels **1–128** (default 4). Confirm current limits on [p-image-upscale model docs](https://docs.api.pruna.ai/guides/models/p-image-upscale).
+- `output_format`: `jpg`, `png`, `webp`
+- `output_quality`: 0–100 (not used for PNG)
+- `enhance_details`, `enhance_realism` (booleans; realism can drift more from source)
+- `disable_safety_checker`
+
 ## Typical next steps
 
-- Further edit: upscaled URL → [p-image-edit](../p-image-edit/SKILL.md) for layout or copy-safe tweaks.
-- **Before/after demo:** zoom + slider from any still pair → [`generate_upscale_comparison.py`](../../../workflows/_shared/scripts/generate_upscale_comparison.py).
-- Avatar / motion video (no upscale): [avatar-multi-scene](../../../workflows/avatar-multi-scene/SKILL.md).
+Common follow-ons after this skill:
 
-## Related workflow
+| Skill | Description | Install |
+| --- | --- | --- |
+| `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
+| `avatar-multi-scene` | Use when someone wants the same person hosting several clips — multi-segment UGC, comparison reels, or mixed speaking and animated scenes with continuity. | `npx skills add PrunaAI/pruna-skills@avatar-multi-scene -y` |
 
-Upscale comparison reels: [`generate_upscale_comparison.py`](../../../workflows/_shared/scripts/generate_upscale_comparison.py).

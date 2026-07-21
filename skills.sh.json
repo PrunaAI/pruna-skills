@@ -3,6 +3,24 @@
   "notGrouped": "bottom",
   "groupings": [
     {
+      "title": "Suite",
+      "description": "Install everything at once.",
+      "skills": [
+        "pruna"
+      ]
+    },
+    {
+      "title": "Guides",
+      "description": "Vendor-neutral prompting and API craft.",
+      "skills": [
+        "generation-diversity",
+        "image-prompting",
+        "video-prompting",
+        "audio-prompting",
+        "pruna-api"
+      ]
+    },
+    {
       "title": "Image Tools",
       "description": "Generate and edit images with Pruna API models.",
       "skills": [
@@ -34,7 +52,7 @@
     },
     {
       "title": "Workflows",
-      "description": "Multi-step production pipelines for explainers, music videos, and reels.",
+      "description": "Multi-step production playbooks for explainers, music videos, and reels.",
       "skills": [
         "image-to-video",
         "narrated-multi-scene",

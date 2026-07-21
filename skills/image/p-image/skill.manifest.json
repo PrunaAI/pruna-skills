@@ -1,15 +1,3 @@
 {
-  "scripts": {
-    "core": [],
-    "shared": []
-  },
-  "references": [
-    "pruna-api.md",
-    "api-credentials.md",
-    "p-image-quality-checklist.md",
-    "prompt-golden-rules.md",
-    "character-turnaround-sheet.md",
-    "realistic-persona-showcase.md",
-    "realistic-persona-example-prompt.md"
-  ]
+  "references": []
 }

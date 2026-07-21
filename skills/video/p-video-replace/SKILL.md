@@ -4,115 +4,47 @@ description: Use when someone wants to swap a person, outfit, or product inside 
 license: MIT
 metadata:
   version: "1.0.6"
+  package: pruna-skills
   pruna_model: p-video-replace
 ---
 
-# p-video-replace (Pruna)
+## Prerequisites
 
-**P-Video-Replace** takes a source RGB video and one or more reference images, then swaps **characters**, **clothing**, **objects/props**, or a **combination** into the scene while preserving the original motion, acting, timing, camera movement, and scene structure.
+Install and load these skills before generating (skip if already in context via `@pruna`):
 
-Given a source video and reference images plus a clear **`instruction_prompt`**, the model places referenced identities into the video — not only face swap.
+| Skill | Description | Install |
+| --- | --- | --- |
+| `generation-diversity` | Use when writing any generative prompt — ritual seed, explicit structure, scenario axes, and quality gates before paid API calls. | `npx skills add PrunaAI/pruna-skills@generation-diversity -y` |
+| `video-prompting` | Use when crafting video or motion prompts for any generative model — dramaturgy, camera, physics-safe motion, frame anchors, and clip chaining. | `npx skills add PrunaAI/pruna-skills@video-prompting -y` |
+| `pruna-api` | Use before any Pruna or Replicate HTTP call — credentials, upload/poll/download, parallel batches, and agent safety. | `npx skills add PrunaAI/pruna-skills@pruna-api -y` |
 
-Full P-API parameters: [p-video-replace model docs](https://docs.api.pruna.ai/guides/models/p-video-replace) · operational guides (Runware host): [product & wardrobe](https://runware.ai/docs/models/prunaai-p-video-replace/guides/product-and-wardrobe-variations) · [recasting scenes](https://runware.ai/docs/models/prunaai-p-video-replace/guides/recasting-iconic-film-scenes)
+Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 
-Shared HTTP patterns: [pruna-api.md](references/policies/pruna-api.md)
+Follow each skill's **Before generating** / craft sections — do not restate guide content here.
 
-## p-video-replace vs p-video-animate
-
-Pick the model from what the user is trying to do — these are different jobs.
+## Skill boundary
 
 | | **p-video-replace** | **p-video-animate** |
 |---|---------------------|---------------------|
-| **User question** | *How can I replace this person in this video?* | *How can I animate this picture with some motion?* |
+| **User question** | *Replace this person in this video?* | *Animate this picture with some motion?* |
 | **Goal** | Swap identity **into** existing footage | Drive a **still** with motion from another clip |
-| **Source video** | The **final scene** (actors, audio, environment stay) | A **motion template** (acting, camera, timing only) |
-| **Reference images** | **`images`** — **1 to 4** URLs in **one** call (multiple people) | **`image`** — **one** subject per call |
-| **Output look** | Same video structure; new face/body from references | New video styled like the still, following template motion |
+| **Source video** | The **final scene** | A **motion template** only |
+| **Reference images** | **`images`** — **1 to 4** in **one** call | **`image`** — **one** subject per call |
 
-**Use p-video-replace** when the user has real footage and wants to swap **people**, **clothing/outfits**, **products/props**, or a **mix** in one call (recast, UGC refresh, wardrobe change, shelf SKU swap, in-hand product). Map each reference slot in `instruction_prompt`.
+**Use `p-video-animate`** when the user has a still and wants it to **perform** from a separate template video.
 
-**Use [p-video-animate](../p-video-animate/SKILL.md)** when the user has a portrait or character still and wants it to **perform** using motion copied from a separate template video (meme remix, motion-transfer slider, persona variants).
+## When NOT to use
 
-## Key features
+Use a different skill instead:
 
-- Top visual quality; preserves source motion, timing, camera path, and audio
-- **Multiple reference images in one request** — up to **4** images (multi-person, multi-SKU, or mixed slots)
-- Efficient inference: **~3.58s generation per 1s of video** (directional; varies by settings)
-- Pricing: **$0.03/s** (720p), **$0.06/s** (1080p) of output video
+| Skill | Description | Install |
+| --- | --- | --- |
+| `p-video-animate` | Use when someone wants a photo to move like another video — motion transfer, dance remixes, or performance variations from a template clip. | `npx skills add PrunaAI/pruna-skills@p-video-animate -y` |
+| `p-video-avatar` | Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo. | `npx skills add PrunaAI/pruna-skills@p-video-avatar -y` |
 
-## What you can replace
+## HTTP (curl)
 
-| Swap type | Reference still shows | `instruction_prompt` must |
-|-----------|----------------------|---------------------------|
-| **Character** | New person / cast | Name who in the **source** is replaced; keep motion and scene |
-| **Clothing** | Outfit on similar pose | **Replace only garments**; keep face, body motion, background |
-| **Object / product** | Hero packshot or prop | **Replace only the object** (bottle, bag, shelf SKU); keep hands and camera |
-| **Mixed** | 1–4 refs for people + props + wardrobe | Map **each** image index to a specific slot in the source |
-
-**Anti-pattern:** Generic lines like *"Replace the person in the video"* without naming **what** in the source and **what** from each reference. Identity comes from **`images`**; correct **slot mapping** comes from **`instruction_prompt`**.
-
-**Localized swap pattern:** name the **specific source element** to replace, list everything to **preserve**, close with *"Only the [X] should change; everything else stays as the source."* — required for clothing-only and object-only jobs.
-
-**Multi-reference replace reels:** Prefer **`multi_job`** (one image per API call) with per-reference prompts; default **`p-video-avatar`** sources (product in hand, desk prop, solo talking head). Anti-patterns: [visual-variety-bible.md](references/policies/visual-variety-bible.md#prompt-patterns).
-
-## Before generating
-
-1. **[Generation diversity](references/policies/generation-diversity.md)** — ritual seed + axis rotation; pass as `seed` when set.
-2. **[p-video-replace prompting](../../../references/video/p-video-replace-prompting.md)** — swap intent, slot-mapping formula, preserve-list, good/bad examples.
-3. Confirm with the user:
-
-- **`video`** URL — source RGB `.mp4` (motion + audio source; upload to `/v1/files` first)
-- **`images`** — **1–4** identity reference URLs (upload each image first)
-- **`resolution`**: `720p` or `1080p`
-- **`target_fps`**: `original`, `24`, or `48`
-- **`instruction_prompt`** — map each source slot to reference cues; preserve camera/audio/background
-- **Swap intent** — character vs clothing-only vs object vs mixed
-- Optional **`save_audio`**, **`seed`**, **`disable_safety_checker`**
-
-Run [p-video-replace-quality-checklist.md](../../../references/video/p-video-replace-quality-checklist.md) on inputs and outputs.
-
-**Batch runs:** when several independent source videos each need replacement, create **all** predictions in one parallel async batch, then batch-poll. See [parallel-execution.md](references/policies/parallel-execution.md). Fan out variants at **`720p`** for review; re-run approved rows at **`1080p`**.
-
-## Making replacement work
-
-Full cookbook: [p-video-replace-prompting.md](../../../references/video/p-video-replace-prompting.md).
-
-**Two inputs matter:** (1) **`images`** — replacement look; (2) **`instruction_prompt`** — which source element each image replaces. Use the slot-mapping formula (name source → map ref → preserve-list → “only X changes”). Prefer bare packshots for object/clothing refs; match framing to the source slot.
-
-Minimal example:
-
-```text
-Replace the olive-green t-shirt the woman is wearing with the white oxford from the reference.
-Preserve her face, hair, gestures, speech, studio, lighting, camera, and audio.
-Only the top she is wearing should change; everything else stays as the source.
-```
-
-Prepare references with **`p-image`** / **`p-image-edit`** when the user only has loose photos.
-
-## Limits
-
-- **Vague targets** — *"replace the product"* forces the model to guess; name the object and its location in the source.
-- **Tiny on-screen targets** — product held far from camera or corner stickers → swap quality drops; target must occupy enough of the frame.
-- **Pixel-perfect preservation** — background logos, jersey numbers, barcodes that must stay frame-identical → use inpainting with a mask, not replace.
-- Replace lifts the reference **into the scene** — small label text or patterns may drift between runs.
-
-Runware field map: `inputs.video` → `video`, `referenceImages` → `images`, `positivePrompt` → `instruction_prompt`.
-
-## Required input
-
-- `video` (string URL): source RGB video (`.mp4`); motion and audio source
-- `images` (array of 1–4 string URLs): identity reference image(s) to place into the video
-
-## Common optional fields
-
-- `resolution`: `720p` (default) or `1080p`
-- `target_fps`: `original` (default), `24`, or `48`
-- `instruction_prompt` (string): how to place people from the reference images into the scene
-- `save_audio` (boolean, default `true`)
-- `seed` (integer)
-- `disable_safety_checker` (boolean, default `false`)
-
-## Example: upload source assets
+### Upload source assets
 
 ```bash
 curl -X POST "https://api.pruna.ai/v1/files" \
@@ -128,11 +60,9 @@ curl -X POST "https://api.pruna.ai/v1/files" \
   -F "content=@/path/to/reference-person-b.png"
 ```
 
-Use each response `urls.get` (or `https://api.pruna.ai/v1/files/{id}`) in `input.video` and `input.images`.
+Use each response `urls.get` in `input.video` and `input.images`.
 
-## Example: async (recommended) — two people, one call
-
-Omit `Try-Sync`. Output duration follows the source video.
+### Create (async — recommended)
 
 ```bash
 curl -X POST 'https://api.pruna.ai/v1/predictions' \
@@ -153,9 +83,11 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-Poll and download: [pruna-api.md](references/policies/pruna-api.md#poll).
+Poll and download: follow `pruna-api`. Output duration follows the source video.
 
-## Example: sync (single quick test only)
+Complete the random seed ritual from `generation-diversity` before writing prompts.
+
+### Create (sync — quick test only)
 
 ```bash
 curl -X POST 'https://api.pruna.ai/v1/predictions' \
@@ -173,14 +105,32 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
+## Before generating
+
+1. Complete Prerequisites guide reading order.
+2. Confirm **`video`**, **`images`** (1–4), **`resolution`**, **`target_fps`**, **`instruction_prompt`**, and swap intent (character / clothing-only / object / mixed).
+3. **Pruna notes:** identity comes from **`images`**; slot mapping from **`instruction_prompt`** (name source element → map each ref → preserve-list → “only X changes”). Vague targets and tiny on-screen objects drop quality. Runware map: `inputs.video` → `video`, `referenceImages` → `images`, `positivePrompt` → `instruction_prompt`.
+
+## Required input
+
+- `video` (string URL): source RGB `.mp4`
+- `images` (array of 1–4 string URLs): identity reference(s)
+
+## Common optional fields
+
+- `resolution`: `720p` (default) or `1080p`
+- `target_fps`: `original` (default), `24`, or `48`
+- `instruction_prompt` (string)
+- `save_audio` (boolean, default `true`)
+- `seed`, `disable_safety_checker`
+
 ## Typical next steps
 
-- Motion-transfer from a still (different model): [p-video-animate](../p-video-animate/SKILL.md)
-- Generate or edit reference portraits: [p-image](../../image/p-image/SKILL.md), [p-image-edit](../../image/p-image-edit/SKILL.md)
-- New talking-head clip from script (not in-place replacement): [p-video-avatar](../p-video-avatar/SKILL.md)
-- Multi-scene slider demos: [`generate_video_comparison.py`](../../../workflows/_shared/scripts/generate_video_comparison.py)
-- Pipeline hub: [pruna-generative-pipeline](../../../docs/WORKFLOW-RECIPES.md)
+Common follow-ons after this skill:
 
-## Related workflow
+| Skill | Description | Install |
+| --- | --- | --- |
+| `p-video-animate` | Use when someone wants a photo to move like another video — motion transfer, dance remixes, or performance variations from a template clip. | `npx skills add PrunaAI/pruna-skills@p-video-animate -y` |
+| `p-image` | Use when someone wants a fast AI image — product shots, hero visuals, mood boards, or draft photos from a text prompt. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
+| `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
 
-Slider comparison reels: [`generate_video_comparison.py`](../../../workflows/_shared/scripts/generate_video_comparison.py) + [pruna-generative-pipeline](../../../docs/WORKFLOW-RECIPES.md) recipe N.

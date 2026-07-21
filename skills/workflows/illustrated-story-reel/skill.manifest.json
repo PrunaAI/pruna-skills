@@ -1,0 +1,23 @@
+{
+  "references": [
+    "illustrated-story-reel-prompts.md",
+    "illustrated-story-reel-p-video-motion.md",
+    "illustrated-story-reel-gates.md",
+    "illustrated-story-reel-api.md",
+    "illustrated-story-reel-quality.md"
+  ],
+  "templates": [
+    "story-plan.template.json",
+    "story-plan.landscape.template.json"
+  ],
+  "generation_phases": {
+    "default": "stills",
+    "phases": [
+      "stills",
+      "tts",
+      "music",
+      "video",
+      "assemble"
+    ]
+  }
+}

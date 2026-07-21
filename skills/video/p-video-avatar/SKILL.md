@@ -4,16 +4,34 @@ description: Use when someone wants a person on camera speaking a script — lip
 license: MIT
 metadata:
   version: "1.0.6"
+  package: pruna-skills
   pruna_model: p-video-avatar
 ---
 
-# p-video-avatar (Pruna)
+## Prerequisites
 
-Talking-head video from one image plus **either** `voice_script` **or** `audio` (if both, audio wins). Full parameters: [P-Video-Avatar (Pruna docs)](https://docs.pruna.ai/en/stable/docs_pruna_endpoints/performance_models/p-video-avatar.html).
+Install and load these skills before generating (skip if already in context via `@pruna`):
 
-**Prompt craft:** [p-video-avatar-prompting.md](../../../references/video/p-video-avatar-prompting.md) · personas: [realistic-persona-showcase.md](references/policies/realistic-persona-showcase.md) · examples: [example-prompt.md](references/policies/realistic-persona-example-prompt.md)
+| Skill | Description | Install |
+| --- | --- | --- |
+| `generation-diversity` | Use when writing any generative prompt — ritual seed, explicit structure, scenario axes, and quality gates before paid API calls. | `npx skills add PrunaAI/pruna-skills@generation-diversity -y` |
+| `video-prompting` | Use when crafting video or motion prompts for any generative model — dramaturgy, camera, physics-safe motion, frame anchors, and clip chaining. | `npx skills add PrunaAI/pruna-skills@video-prompting -y` |
+| `image-prompting` | Use when crafting still-image prompts for any generative model — composition, identity sheets, edits, try-on, and photoreal personas. | `npx skills add PrunaAI/pruna-skills@image-prompting -y` |
+| `pruna-api` | Use before any Pruna or Replicate HTTP call — credentials, upload/poll/download, parallel batches, and agent safety. | `npx skills add PrunaAI/pruna-skills@pruna-api -y` |
 
-Shared HTTP patterns: [pruna-api.md](references/policies/pruna-api.md) (upload, [poll](#poll), [download](#download))
+Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
+
+Follow each skill's **Before generating** / craft sections — do not restate guide content here.
+
+## When NOT to use
+
+Use a different skill instead:
+
+| Skill | Description | Install |
+| --- | --- | --- |
+| `p-video` | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
+| `p-video-animate` | Use when someone wants a photo to move like another video — motion transfer, dance remixes, or performance variations from a template clip. | `npx skills add PrunaAI/pruna-skills@p-video-animate -y` |
+| `p-video-replace` | Use when someone wants to swap a person, outfit, or product inside existing footage while keeping the camera move and audio. | `npx skills add PrunaAI/pruna-skills@p-video-replace -y` |
 
 ## HTTP (curl)
 
@@ -28,105 +46,6 @@ curl -X POST "https://api.pruna.ai/v1/files" \
 Use `urls.get` as `input.image`.
 
 ### Create (async — recommended)
-
-See **Example: async** below. Poll and download: [pruna-api.md](references/policies/pruna-api.md#poll).
-
-## Before generating
-
-**Data handling:** follow [agent-safety.md](references/policies/agent-safety.md) before any upload or `POST /v1/predictions` — media leaves the local environment; confirm output paths; never put API keys in prompts or subagent briefs.
-
-1. **[Generation diversity](references/policies/generation-diversity.md)** first.
-2. **[p-video-avatar prompting](../../../references/video/p-video-avatar-prompting.md)** — three-layer stack, field hygiene, no OPEN/MID/CLOSE; camera/physics: [camera-lighting-vocabulary.md](../../../references/video/camera-lighting-vocabulary.md) · [physics-safe-motion.md](../../../references/video/physics-safe-motion.md).
-3. Follow [avatar-single-scene](../../../workflows/avatar-single-scene/SKILL.md) or [avatar-multi-scene](../../../workflows/avatar-multi-scene/SKILL.md): natural human **`voice_script`**, short **`voice_prompt`**, unique per-scene **`video_prompt`**, locked hero plate URL, one fixed **`voice`** per recurring character, confirm **`voice_language`** with the user, **explicit user confirmation** before any **`POST /v1/predictions`**.
-
-When calling the model directly for a small experiment: **random seed ritual (SSoT)** first, then confirm **`image`** URL, **`voice_script`**, **`voice`** / **`voice_language`**, **`voice_prompt`**, **`video_prompt`**, and **`resolution`**. Run [p-video-avatar-quality-checklist.md](../../../references/video/p-video-avatar-quality-checklist.md) on stills and outputs.
-
-## Dynamic realistic personas (production)
-
-A believable avatar needs **three layers** — not a static face on the default motion prompt:
-
-1. **Slop-gated still** — from **`p-image`** / **`p-image-edit`** / optional **`p-image-try-on`**; **any medium** (photoreal, cel anime, clay, CG 3D) with mouth visible; diverse cast, angle, and setting per [realistic-persona-showcase.md](references/policies/realistic-persona-showcase.md)
-2. **Human voice** — natural **`voice_script`** + short realistic **`voice_prompt`** (never brochure copy in either field)
-3. **Unique motion per clip** — distinct **`video_prompt`** per scene (angle, gesture, glance, handheld vs dolly). **Do not** ship multi-scene reels where every row uses `medium close-up, gentle dolly push-in`
-
-**Stylized hosts (anime, clay, 3D):** same mouth-visibility gate; match **`voice_prompt`** and **`video_prompt`** energy to the style (*anime*: slightly more expressive motion; *documentary*: restrained). Cross-style reels need **separate hero stills per `visual_style_tag`** — do not edit photoreal into anime from one anchor.
-
-**Upstream plate quality caps avatar quality.** Regenerate mushy or synthetic stills before avatar. For fashion UGC: photoreal **`p-image`** → **`p-image-try-on`** → slop gate → avatar with same approved plate URL.
-
-Multi-scene: pair each clip’s **`video_prompt`** with a matching **`p-image-edit`** still (background/angle delta only). See [avatar-multi-scene/prompt-templates.md](../../../workflows/avatar-multi-scene/prompt-templates.md) scene table.
-
-**Multi-scene:** after confirmation, create **all** avatar jobs **in parallel** (async, no `Try-Sync`); batch-poll. Prefer **one subagent per clip** — see [parallel-execution.md](references/policies/parallel-execution.md).
-
-## Realistic human voice (defaults for social / founder content)
-
-| Field | Guidance |
-|-------|----------|
-| **`voice_script`** | Speakable copy: contractions, short sentences, light fillers (*"Hey —"*, *"right?"*). Avoid brochure language. |
-| **`voice_prompt`** | How they *sound*: *"Natural conversational tone like a founder on LinkedIn, relaxed pacing, real pauses, honest not salesy."* Never paste product names or script lines here. |
-| **`video_prompt`** | **Unique per clip** — angle, push-in, gesture, setting motion, glance beats. Never copy one string across a multi-scene reel. Default `The person is talking.` is quick-test only. |
-| **`seed`** | Optional API reproducibility only — pass **`api_seed`** when user locks an integer. Ritual string is **not** passed to API. |
-
-**Motion-template use case (for `p-video-animate` beats):** When this model generates a **source motion video**, prompts must explicitly request **speaking** — `clear lip movement`, explain gestures, `speaks directly to camera`. Motion-source stills need `mouth clearly visible ready to speak`. See [animate-beats.md](../../../workflows/avatar-multi-scene/animate-beats.md).
-
-Templates and good/bad pairs: [avatar-multi-scene/prompt-templates.md](../../../workflows/avatar-multi-scene/prompt-templates.md).
-
-## Field names (JSON)
-
-Pruna P-API uses **snake_case** in `input`: `voice_script`, `video_prompt`, `voice_prompt`, `voice_language`. Some other products use camelCase; map accordingly.
-
-## Required input
-
-- `image` (string URL to jpg/jpeg/png/webp)
-
-Plus **one of**:
-
-- `voice_script` + optional `voice`, `voice_prompt`, `voice_language`, `video_prompt`, `resolution`, or
-- `audio` (URL to flac/mp3/wav)
-
-## Common optional fields
-
-- `voice` (default `Zephyr (Female)`); see model doc for full voice list
-- `resolution`: `720p` (default) or `1080p`
-- `video_prompt` (default `The person is talking.`)
-- `voice_prompt` (style / tone; keep short—can leak into performance if too verbose)
-- `seed`, `disable_safety_filter`, `disable_prompt_upsampling`
-- `negative_prompt` + `negative_prompt_strength` — **experimental** text/overlay suppression (see below)
-
-## Negative prompt (suppress on-screen text)
-
-Pruna exposes **experimental** negative prompting on `p-video-avatar` to reduce burned-in subtitles, captions, and other text artifacts — especially when the start frame came from a still that tempted the model toward labels or signage.
-
-| Field | Default | Rule |
-|-------|---------|------|
-| `negative_prompt` | `""` | Comma-separated elements to **suppress** — not things you want in frame |
-| `negative_prompt_strength` | `0` | **Both** must be set: non-empty prompt **and** strength **> 0**, or the API ignores them |
-
-**Starter `negative_prompt` (text triggers):**
-
-```text
-subtitles, captions, on-screen text, burned-in text, watermark, logo, typography, letters, words, readable signage, UI overlay, lower third, chyron, title card, price tag, packaging label, menu text
-```
-
-Start `negative_prompt_strength` around **0.3–0.4** and tune per asset. Higher values can drift identity, motion, or background — increase gradually.
-
-**Still-side prevention (primary):** positive-only still lines (`plain unmarked walls`, `unprinted props`) — never `no text` or `avoid signage` in creative prompts. `negative_prompt` on the API is a **suppression token list** (nouns), not creative wording. Use it as a safety net, not a substitute for clean stills.
-
-**Workflow plans:** interactive-explainer runner applies defaults from `plan.defaults.avatar_negative_prompt` / `avatar_negative_prompt_strength`, with optional per-scene overrides (`negative_prompt`, `negative_prompt_strength`). Helper: [`p_video_avatar_payload.py`](../../../workflows/_shared/scripts/p_video_avatar_payload.py).
-
-**Disable for a scene:** set `"negative_prompt_strength": 0` on that scene row.
-
-```json
-"defaults": {
-  "avatar_negative_prompt": "subtitles, captions, on-screen text, watermark, logo, typography, letters, words",
-  "avatar_negative_prompt_strength": 0.35
-}
-```
-
-## Example: async (recommended — use for all production)
-
-Omit `Try-Sync`. For multiple clips, **create all jobs in parallel**, then batch-poll every `get_url`. See [parallel-execution.md](references/policies/parallel-execution.md).
-
-Complete the [random seed ritual](references/policies/random-seed-ritual.md) (SSoT) before writing prompts. Omit `seed` from API `input` unless the user supplied **`api_seed`**.
 
 ```bash
 curl -X POST 'https://api.pruna.ai/v1/predictions' \
@@ -148,9 +67,13 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-`voice_language` in examples is illustrative — confirm locale with the user ([agent-safety.md](references/policies/agent-safety.md)).
+Poll and download: follow `pruna-api`.
 
-## Example: sync (single quick test only)
+Complete the random seed ritual from `generation-diversity` before writing prompts — omit `seed` unless the user supplied **`api_seed`**. Confirm `voice_language` with the user.
+
+For multiple clips: create **all** jobs in parallel (async, no `Try-Sync`), then batch-poll.
+
+### Create (sync — quick test only)
 
 ```bash
 curl -X POST 'https://api.pruna.ai/v1/predictions' \
@@ -161,19 +84,19 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   -d '{
     "input": {
       "image": "https://api.pruna.ai/v1/files/FILE_ID",
-      "voice_script": "Hey — so we shipped something I've wanted for a while. Sub-second images, video in seconds, and it actually feels usable in a real workflow.",
+      "voice_script": "Hey — so we shipped something I've wanted for a while.",
       "voice": "Puck (Male)",
       "voice_language": "English (US)",
-      "voice_prompt": "Natural conversational tone — like a founder on LinkedIn, relaxed pacing, real pauses, honest not salesy.",
+      "voice_prompt": "Natural conversational tone — relaxed pacing, real pauses.",
       "resolution": "720p",
-      "video_prompt": "Medium close-up speaking directly to lens, subtle push-in, natural head motion, warm confident energy"
+      "video_prompt": "Medium close-up speaking directly to lens, subtle push-in"
     }
   }'
 ```
 
-## Example: uploaded narration (scene anchor triple — avatar variant)
+### Uploaded narration (audio wins over voice_script)
 
-Generate [Gemini TTS](../../audio/gemini-3.1-flash-tts/SKILL.md) → upload to `/v1/files`. Pass as `input.audio` with portrait `image` (and optional `last_frame_image` when the beat has a known end pose). Duration follows audio. See [scene-anchor-triple.md](../../../references/video/scene-anchor-triple.md).
+Generate `gemini-3.1-flash-tts` → upload to `/v1/files`. Pass as `input.audio` with portrait `image` (optional `last_frame_image`).
 
 ```bash
 curl -X POST 'https://api.pruna.ai/v1/predictions' \
@@ -191,14 +114,19 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-If both `audio` and `voice_script` are set, **audio wins**.
+## Before generating
 
-## Typical next steps
+1. Complete Prerequisites guide reading order.
+2. Confirm **`image`** URL, **`voice_script`** (or **`audio`**), **`voice`** / **`voice_language`**, **`voice_prompt`**, **`video_prompt`**, and **`resolution`**. Explicit user confirmation before any paid call.
+3. **Pruna notes:** P-API uses **snake_case** (`voice_script`, `video_prompt`, …). Mouth must be visible on the plate. Unique **`video_prompt`** per clip — do not reuse one string across a multi-scene reel. Default `The person is talking.` is quick-test only.
 
-- One-scene avatar workflow: [avatar-single-scene](../../../workflows/avatar-single-scene/SKILL.md)
-- Multi-scene avatar workflow: [avatar-multi-scene](../../../workflows/avatar-multi-scene/SKILL.md)
-- Pipeline: [pruna-generative-pipeline](../../../docs/WORKFLOW-RECIPES.md)
+### Negative prompt (experimental — suppress on-screen text)
 
-## Related workflow
+| Field | Default | Rule |
+|-------|---------|------|
+| `negative_prompt` | `""` | Comma-separated elements to **suppress** |
+| `negative_prompt_strength` | `0` | Both must be set: non-empty prompt **and** strength **> 0** |
 
-Avatar + animate reels: [avatar-multi-scene](../../../workflows/avatar-multi-scene/SKILL.md) — slider script: [`generate_video_comparison.py`](../../../workflows/_shared/scripts/generate_video_comparison.py).
+Starter: `subtitles, captions, on-screen text, burned-in text, watermark, logo, typography, letters, words`. Start strength around **0.3–0.4**. Helper: `avatar-single-scene`
+- Multi-scene: `avatar-multi-scene`
+- Slider demos: [ffmpeg hstack slider (see workflow SKILL) curl/ffmpeg (no shared scripts))

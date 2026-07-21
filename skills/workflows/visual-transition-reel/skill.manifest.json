@@ -1,0 +1,14 @@
+{
+  "references": [],
+  "templates": [
+    "transition-plan.template.json"
+  ],
+  "generation_phases": {
+    "default": "stills",
+    "phases": [
+      "stills",
+      "video",
+      "assemble"
+    ]
+  }
+}

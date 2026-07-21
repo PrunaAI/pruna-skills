@@ -4,21 +4,32 @@ description: Use when someone wants a fast AI image — product shots, hero visu
 license: MIT
 metadata:
   version: "1.0.6"
+  package: pruna-skills
   pruna_model: p-image
 ---
 
-# p-image (Pruna)
+## Prerequisites
 
-**Good quality, extremely fast** text-to-image via Pruna P-API. Full parameters: [p-image model docs](https://docs.api.pruna.ai/guides/models/p-image).
+Install and load these skills before generating (skip if already in context via `@pruna`):
+
+| Skill | Description | Install |
+| --- | --- | --- |
+| `generation-diversity` | Use when writing any generative prompt — ritual seed, explicit structure, scenario axes, and quality gates before paid API calls. | `npx skills add PrunaAI/pruna-skills@generation-diversity -y` |
+| `image-prompting` | Use when crafting still-image prompts for any generative model — composition, identity sheets, edits, try-on, and photoreal personas. | `npx skills add PrunaAI/pruna-skills@image-prompting -y` |
+| `pruna-api` | Use before any Pruna or Replicate HTTP call — credentials, upload/poll/download, parallel batches, and agent safety. | `npx skills add PrunaAI/pruna-skills@pruna-api -y` |
+
+Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
+
+Follow each skill's **Before generating** / craft sections — do not restate guide content here.
 
 ## When NOT to use
 
-- Editing an existing image → [p-image-edit](../p-image-edit/SKILL.md)
-- Virtual try-on on a person plate → [p-image-try-on](../p-image-try-on/SKILL.md)
+Use a different skill instead:
 
-**Prompt craft:** [prompt-golden-rules.md](../../../references/image/prompt-golden-rules.md) · identity sheets: [character-turnaround-sheet.md](../../../references/image/character-turnaround-sheet.md) · personas: [realistic-persona-showcase.md](references/policies/realistic-persona-showcase.md) · examples: [example-prompt.md](references/policies/realistic-persona-example-prompt.md)
-
-Shared HTTP patterns: [pruna-api.md](references/policies/pruna-api.md) (upload, [poll](#poll), [download](#download))
+| Skill | Description | Install |
+| --- | --- | --- |
+| `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
+| `p-image-try-on` | Use when someone wants virtual try-on — dress a person in clothes from reference photos for fashion or ecommerce. | `npx skills add PrunaAI/pruna-skills@p-image-try-on -y` |
 
 ## HTTP (curl)
 
@@ -37,9 +48,9 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-Poll and download: [pruna-api.md](references/policies/pruna-api.md#poll).
+Poll and download: follow `pruna-api`.
 
-Complete the [random seed ritual](references/policies/random-seed-ritual.md) (SSoT) before writing prompts — **do not** pass the ritual string as API `seed`. Optional `api_seed` only when the user requests reproducibility.
+Complete the random seed ritual from `generation-diversity` before writing prompts — **do not** pass the ritual string as API `seed`. Optional `api_seed` only when the user requests reproducibility.
 
 ### Create (sync — quick test only)
 
@@ -54,28 +65,9 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 
 ## Before generating
 
-1. **[Generation diversity](references/policies/generation-diversity.md)** — ritual seed (SSoT) + [explicit prompt structure](references/policies/generation-diversity.md#explicit-prompt-structure-required).
-2. **[Prompt golden rules](../../../references/image/prompt-golden-rules.md)** — positive framing, no banned filler, params outside the prompt. **`p-image` has no prompt upsampling** — follow [text hygiene](references/policies/generation-diversity.md#text--typography-by-model).
-3. **Same character across shots?** Build a [turnaround sheet](../../../references/image/character-turnaround-sheet.md) before scene stills.
-4. Confirm **`prompt`** and **`aspect_ratio`** with the user. **Multi-example batches:** different **`aspect_ratio`** per still. Run [p-image-quality-checklist.md](../../../references/image/p-image-quality-checklist.md) on outputs before downstream steps.
-
-## Production quality — photoreal personas
-
-Default demos often look **AI sloppy** (generic white background, plastic skin, same face). For **`p-video-avatar`**, **`p-image-try-on`**, or public playground examples, art-direct plates explicitly:
-
-| Goal | Prompt discipline |
-|------|-------------------|
-| **Photoreal** | `documentary portrait, natural skin pores, not CGI, not illustration` |
-| **Stylized / anime** | Named `visual_style_tag` — cinematic cel, cyberpunk anime, clay, CG 3D; mouth visible for avatars |
-| **Diverse cast** | Specific age, ethnicity, archetype — rotate across example sets |
-| **Dynamic worlds** | Named setting + lighting + **camera angle** — not one template repeated |
-| **Scenario matrix** | Plan medium × angle × setting × **aspect_ratio** per row before generating |
-| **Avatar-ready** | Face large; **mouth clearly visible**; hands away from mouth |
-| **Try-on-ready** | Full-body or region coverage for garment type (feet for shoes, etc.) |
-
-Full scenario generation (photographic styles, anime sub-styles, camera ladder, 8-slot matrix): [realistic-persona-showcase.md](references/policies/realistic-persona-showcase.md). Variety planning: [visual-variety-bible.md](references/policies/visual-variety-bible.md).
-
-Lock **hero plate URL** at hero generation when the same identity continues to **`p-image-edit`**, **`p-image-try-on`**, or **`p-video-avatar`**.
+1. Complete Prerequisites guide reading order.
+2. Confirm **`prompt`** and **`aspect_ratio`** with the user. Multi-example batches: different **`aspect_ratio`** per still.
+3. **Pruna note:** `p-image` has **no prompt upsampling** — keep prompts concrete. Avoid dense readable typography.
 
 ## Required input
 
@@ -86,25 +78,16 @@ Lock **hero plate URL** at hero generation when the same identity continues to *
 - `aspect_ratio`: `1:1`, `16:9`, `9:16`, `4:3`, `3:4`, `3:2`, `2:3`, `custom` (with `width` / `height` multiples of 16, 256–1440)
 - `seed`, `lora_weights`, `lora_scale`, `hf_api_token`, `disable_safety_checker`
 
-**No prompt upsampling** on this model — keep prompts concrete per [generation-diversity](references/policies/generation-diversity.md#text--typography-by-model). Avoid dense readable typography; prefer scenes without copy.
-
-## Example: synchronous
-
-(See **Create (sync)** above.)
-
-## Example: asynchronous (batch / multi-panel)
-
-Omit `Try-Sync`. For N panels with no shared dependency, **POST all jobs in parallel**, then poll every `get_url`. See [parallel-execution.md](references/policies/parallel-execution.md).
-
 ## Typical next steps
 
-- Refine or composite: [p-image-edit](../p-image-edit/SKILL.md)
-- Virtual try-on on a photoreal person plate: [p-image-try-on](../p-image-try-on/SKILL.md) — see [realistic-persona-showcase.md](references/policies/realistic-persona-showcase.md)
-- Upscale output: [p-image-upscale](../p-image-upscale/SKILL.md)
-- Animate still: [p-video](../../video/p-video/SKILL.md) — prefer [scene anchor triple](../../../references/video/scene-anchor-triple.md) (`image` + `last_frame_image` + `audio`) for narrated beats; or [p-video-avatar](../../video/p-video-avatar/SKILL.md) for talking head
-- Scripted workflows (intake first): [avatar-single-scene](../../../workflows/avatar-single-scene/SKILL.md), [avatar-multi-scene](../../../workflows/avatar-multi-scene/SKILL.md)
-- Full pipeline: [pruna-generative-pipeline](../../../docs/WORKFLOW-RECIPES.md)
+Common follow-ons after this skill:
 
-## Related workflow
+| Skill | Description | Install |
+| --- | --- | --- |
+| `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
+| `p-image-try-on` | Use when someone wants virtual try-on — dress a person in clothes from reference photos for fashion or ecommerce. | `npx skills add PrunaAI/pruna-skills@p-image-try-on -y` |
+| `p-image-upscale` | Use when someone wants to upscale or sharpen an existing image for print, large crops, or higher-quality delivery. | `npx skills add PrunaAI/pruna-skills@p-image-upscale -y` |
+| `p-video` | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
+| `avatar-single-scene` | Use when someone wants one polished host-on-camera beat — a speaking person with intake and approval gates before generation. | `npx skills add PrunaAI/pruna-skills@avatar-single-scene -y` |
+| `avatar-multi-scene` | Use when someone wants the same person hosting several clips — multi-segment UGC, comparison reels, or mixed speaking and animated scenes with continuity. | `npx skills add PrunaAI/pruna-skills@avatar-multi-scene -y` |
 
-Avatar + animate reels: [avatar-multi-scene](../../../workflows/avatar-multi-scene/SKILL.md) — bundled scripts live in workflow skills, not here.

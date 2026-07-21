@@ -10,11 +10,15 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-idx = json.loads((REPO / "plugins/publish-index.json").read_text())
+idx_path = REPO / ".maintainer" / "publish-index.json"
+if not idx_path.is_file():
+    print("missing .maintainer/publish-index.json — run make bundle", file=sys.stderr)
+    sys.exit(1)
+idx = json.loads(idx_path.read_text())
 failed = 0
 for s in idx.get("skills", []):
     name = s["name"]
-    path = REPO / f"plugins/{name}/skills/{name}"
+    path = REPO / s["skillPath"]
     r = subprocess.run(
         ["npx", "--yes", "skills-ref", "validate", str(path)],
         capture_output=True,
@@ -22,11 +26,9 @@ for s in idx.get("skills", []):
     )
     err = (r.stderr or "") + (r.stdout or "")
     if r.returncode != 0:
-        # ponytail: skills-ref has no --allow-field depends yet; Pruna workflows need it
         if "Unexpected fields in frontmatter: depends" in err:
             print(f"OK {name} (depends: — skills-ref limitation)")
             continue
-        # ponytail: skills-ref rejects dots in names; Replicate model skills keep semver-style names
         if "contains invalid characters" in err and re.search(r"[.]", name):
             print(f"OK {name} (dotted name — skills-ref limitation)")
             continue

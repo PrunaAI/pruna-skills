@@ -1,38 +1,8 @@
 #!/usr/bin/env bash
-# Fail if plugins/ differs from a fresh bundle (sources + manifests are stale).
+# Verify skills-only layout: no references/, no plugins/, no scripts, Prerequisites present.
 set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "${REPO_ROOT}"
-
-if [[ ! -d plugins ]]; then
-  echo "plugins/ missing — run ./.maintainer/bundle_all_skills.sh" >&2
-  exit 1
-fi
-
-SNAPSHOT=$(mktemp -d)
-trap 'rm -rf "$SNAPSHOT"' EXIT
-cp -a plugins "$SNAPSHOT/before"
-if [[ -f .claude-plugin/marketplace.json ]]; then
-  cp .claude-plugin/marketplace.json "$SNAPSHOT/marketplace.before"
-fi
-
-./.maintainer/bundle_all_skills.sh >/dev/null
-
-if diff -rq "$SNAPSHOT/before" plugins >/dev/null 2>&1; then
-  echo "plugin bundles match sources (plugins/ is current)"
-else
-  echo "plugins/ is stale — run ./.maintainer/bundle_all_skills.sh and commit:" >&2
-  diff -rq "$SNAPSHOT/before" plugins >&2 || true
-  exit 1
-fi
-
-if [[ -f "$SNAPSHOT/marketplace.before" ]]; then
-  if ! diff -q "$SNAPSHOT/marketplace.before" .claude-plugin/marketplace.json >/dev/null 2>&1; then
-    echo ".claude-plugin/marketplace.json is stale — run ./.maintainer/bundle_all_skills.sh and commit" >&2
-    diff -u "$SNAPSHOT/marketplace.before" .claude-plugin/marketplace.json >&2 || true
-    exit 1
-  fi
-fi
 
 python3 - <<'PY'
 import json
@@ -41,164 +11,143 @@ import sys
 from pathlib import Path
 
 repo = Path(".")
-plugins_root = repo / "plugins"
-marketplace_path = repo / ".claude-plugin" / "marketplace.json"
-SUITE_PLUGIN = "pruna-full"
-double_paren_re = re.compile(r"\]\(\(")
+sys.path.insert(0, str(repo / ".maintainer"))
+from skill_catalog import all_primary_skills, load_catalog
+
 bad: list[str] = []
 
-if not marketplace_path.is_file():
-    bad.append(f"missing {marketplace_path}")
+if (repo / "references").is_dir():
+    bad.append("references/ still present — craft lives under skills/ only")
 
-plugin_dirs = sorted(
-    p for p in plugins_root.iterdir()
-    if p.is_dir() and not p.name.startswith("_") and p.name != "publish-index.json"
-)
+plugins = repo / "plugins"
+if plugins.is_dir():
+    entries = [p for p in plugins.iterdir() if not p.name.startswith(".")]
+    if entries:
+        bad.append(f"plugins/ still present ({len(entries)} entries)")
 
-for plugin_dir in plugin_dirs:
-    name = plugin_dir.name
-    manifest_dir = plugin_dir / ".claude-plugin"
-    manifest = manifest_dir / "plugin.json"
-    primary = plugin_dir / "skills" / name / "SKILL.md"
+for scripts_dir in (repo / "skills" / "workflows").rglob("scripts"):
+    if scripts_dir.is_dir() and any(scripts_dir.iterdir()):
+        bad.append(f"workflow scripts still present: {scripts_dir}")
 
-    if not manifest.is_file():
-        bad.append(f"{plugin_dir}: missing .claude-plugin/plugin.json")
-    else:
-        extra = [p.name for p in manifest_dir.iterdir() if p.name != "plugin.json"]
-        if extra:
-            bad.append(f"{manifest_dir}: unexpected files {extra!r} (only plugin.json allowed)")
-
-    for clawhub_file in ("openclaw.plugin.json", "package.json", "openclaw-entry.mjs"):
-        if not (plugin_dir / clawhub_file).is_file():
-            bad.append(f"{plugin_dir}: missing {clawhub_file} (ClawHub bundle-plugin publish)")
-
-    # OpenClaw package validation: package-openclaw-entry-missing + package-plugin-api-compat-missing
-    # https://docs.openclaw.ai/clawhub/plugin-validation-fixes#package-openclaw-entry-missing
-    # https://docs.openclaw.ai/clawhub/plugin-validation-fixes#package-plugin-api-compat-missing
-    pkg_path = plugin_dir / "package.json"
-    if pkg_path.is_file():
-        pkg = json.loads(pkg_path.read_text())
-        oc = pkg.get("openclaw") or {}
-        exts = oc.get("extensions") or oc.get("runtimeExtensions") or []
-        if not exts:
-            bad.append(
-                f"{pkg_path}: openclaw.extensions (or runtimeExtensions) missing — "
-                "package-openclaw-entry-missing"
-            )
-        else:
-            for rel in exts:
-                entry_file = plugin_dir / str(rel).lstrip("./")
-                if not entry_file.is_file():
-                    bad.append(f"{pkg_path}: entrypoint missing on disk: {rel}")
-        compat = (oc.get("compat") or {}).get("pluginApi")
-        if not compat:
-            bad.append(
-                f"{pkg_path}: openclaw.compat.pluginApi missing — "
-                "package-plugin-api-compat-missing"
-            )
-        files = pkg.get("files") or []
-        for required in ("openclaw-entry.mjs", "openclaw.plugin.json", "package.json"):
-            # package.json itself is always packed; files[] must include the entry + manifest
-            if required == "package.json":
-                continue
-            if required not in files and f"./{required}" not in files:
-                bad.append(f"{pkg_path}: files[] must include {required} for npm pack")
-
-    if not primary.is_file():
-        if name == SUITE_PLUGIN:
-            skills_dir = plugin_dir / "skills"
-            if not skills_dir.is_dir() or not any(skills_dir.iterdir()):
-                bad.append(f"{plugin_dir}: suite plugin has empty skills/")
-        else:
-            bad.append(f"{plugin_dir}: missing skills/{name}/SKILL.md")
-
-    if name != SUITE_PLUGIN:
-        manifest_json = plugin_dir / "skills" / name / "skill.manifest.json"
-        if manifest_json.is_file():
-            deps = json.loads(manifest_json.read_text()).get("tool_skills") or []
-            for dep in deps:
-                dep_skill = plugin_dir / "skills" / dep / "SKILL.md"
-                if not dep_skill.is_file():
-                    bad.append(f"{plugin_dir}: tool_skills missing embedded skill {dep}")
-
-        primary_dir = plugin_dir / "skills" / name
-        if primary_dir.is_dir():
-            for md in sorted(primary_dir.rglob("*.md")):
-                if double_paren_re.search(md.read_text()):
-                    bad.append(f"{md}: malformed link (](()")
-            skill_md = primary_dir / "SKILL.md"
-            if skill_md.exists():
-                for target in re.findall(r"\]\((\./[^)#]+)\)", skill_md.read_text()):
-                    if not (skill_md.parent / target).resolve().exists():
-                        bad.append(f"{skill_md}: missing -> {target}")
-
-if marketplace_path.is_file():
-    marketplace = json.loads(marketplace_path.read_text())
-    entries = marketplace.get("plugins") or []
-    seen = {p["name"]: p for p in entries}
-    for plugin_dir in plugin_dirs:
-        name = plugin_dir.name
-        if name not in seen:
-            bad.append(f"marketplace.json missing plugin entry for {name}")
-            continue
-        source = seen[name].get("source", "")
-        expected = f"./{name}"
-        if source not in (expected, name):
-            bad.append(f"marketplace.json: {name} source={source!r}, expected {expected!r}")
-    plugin_root = (marketplace.get("metadata") or {}).get("pluginRoot", ".")
-    root_dir = (repo / plugin_root.lstrip("./")) if plugin_root not in (".", "./") else repo
-    for entry in entries:
-        src = entry.get("source", "").lstrip("./")
-        if not (root_dir / src).is_dir():
-            bad.append(f"marketplace.json: source {entry.get('source')!r} does not exist")
-
-POLICY_MARKER = "<!-- shared-generation-policy -->"
-TOOL_POLICIES = {
-    "random-seed-ritual.md",
-    "generation-diversity.md",
-    "generation-quality-checklists.md",
-}
-WORKFLOW_POLICIES = TOOL_POLICIES | {
-    "staged-generation-gate.md",
-    "approval-red-flags.md",
-    "workflow-feedback-gates.md",
-    "parallel-execution.md",
-}
 RETIRED = {
-    "generation-diversity",
-    "generation-quality-checklists",
+    "pruna-full",
     "recipe-catalog",
     "requesting-generation-feedback",
     "pruna-generative-pipeline",
     "pruna-run",
 }
 
-for plugin_dir in plugin_dirs:
-    name = plugin_dir.name
+catalog = load_catalog()
+if "pruna-full" in catalog.get("suite", []):
+    bad.append("catalog suite still lists pruna-full — should be pruna")
+
+for name in all_primary_skills():
     if name in RETIRED:
-        bad.append(f"retired plugin still present: {name}")
+        bad.append(f"retired skill still in catalog: {name}")
         continue
-    primary_dir = plugin_dir / "skills" / name
-    if name == SUITE_PLUGIN or not primary_dir.is_dir():
+    skill_dir = None
+    for base in (
+        repo / "skills" / "guides",
+        repo / "skills" / "image",
+        repo / "skills" / "video",
+        repo / "skills" / "audio",
+        repo / "skills" / "suite",
+        repo / "skills" / "workflows",
+    ):
+        cand = base / name
+        if (cand / "SKILL.md").is_file():
+            skill_dir = cand
+            break
+    if not skill_dir:
+        bad.append(f"catalog skill missing source: {name}")
         continue
-    skill_md = primary_dir / "SKILL.md"
-    manifest_path = primary_dir / "skill.manifest.json"
-    if not skill_md.is_file():
-        continue
-    manifest = json.loads(manifest_path.read_text()) if manifest_path.is_file() else {}
-    is_workflow = bool(manifest.get("tool_skills"))
-    required = WORKFLOW_POLICIES if is_workflow else TOOL_POLICIES
-    if POLICY_MARKER not in skill_md.read_text():
-        bad.append(f"{skill_md}: missing policy marker {POLICY_MARKER!r}")
-    refs_dir = primary_dir / "references"
-    for policy in sorted(required):
-        if not (refs_dir / policy).is_file():
-            bad.append(f"{primary_dir}: missing injected policy {policy}")
+    skill_md = skill_dir / "SKILL.md"
+    text = skill_md.read_text()
+    if name != "pruna" and "## Prerequisites" not in text:
+        if skill_dir.parent.name == "guides" or name == "pruna":
+            if "## Install" not in text:
+                bad.append(f"{skill_md}: missing ## Install")
+        else:
+            bad.append(f"{skill_md}: missing ## Prerequisites")
+    if skill_dir.parent.name == "guides" and name != "pruna-api":
+        m = re.search(r"^description:\s*(.+)$", text, re.M)
+        if m and re.match(r'(?i)["\']?pruna\b', m.group(1).strip()):
+            bad.append(f"{skill_md}: guide description should not lead with Pruna")
+
+    # Guides: every catalog skill named in prose must have npx skills add …@name
+    if skill_dir.parent.name == "guides":
+        from skill_catalog import tools, guides, workflows, suite_skills
+
+        installable = set(tools()) | set(guides()) | set(workflows()) | set(suite_skills())
+        installable.discard(name)
+        mentioned = set(re.findall(r"`([a-z0-9][a-z0-9.-]*)`", text))
+        # also backtick-free tool names in Works with lines: p-video / p-image-edit
+        mentioned |= set(re.findall(r"\b(p-(?:image|video)(?:-[a-z0-9]+)*)\b", text))
+        mentioned |= set(
+            re.findall(
+                r"\b(gemini-3\.1-flash-tts|music-2\.5|stable-audio-2\.5|whisperx|pruna-api|generation-diversity|image-prompting|video-prompting|audio-prompting)\b",
+                text,
+            )
+        )
+        for other in sorted(mentioned & installable):
+            if f"@{other}" not in text and f"pruna-skills@{other}" not in text:
+                bad.append(
+                    f"{skill_md}: mentions `{other}` but missing "
+                    f"`npx skills add PrunaAI/pruna-skills@{other}`"
+                )
+
+    manifest_path = skill_dir / "skill.manifest.json"
+    if manifest_path.is_file():
+        manifest = json.loads(manifest_path.read_text())
+        if "scripts" in manifest:
+            bad.append(f"{manifest_path}: scripts key retired")
+        if "tool_skills" in manifest:
+            bad.append(f"{manifest_path}: tool_skills key retired")
+        for ref in manifest.get("references", []):
+            ref_path = skill_dir / "references" / Path(ref).name
+            if not ref_path.is_file():
+                bad.append(f"{skill_dir}: missing reference {ref}")
+
+    if "<!-- shared-generation-policy -->" in text:
+        bad.append(f"{skill_md}: leftover policy injection marker")
+
+# Ban stale patterns under skills/ and key docs
+skip_names = {"CHANGELOG.md", "BACKLOG.md", "SKILL-TEST-LOG.md"}
+scan_roots = [repo / "skills", repo / "docs", repo / "AGENTS.md", repo / "CONTRIBUTING.md", repo / "README.md"]
+for root in scan_roots:
+    paths = [root] if root.is_file() else list(root.rglob("*.md"))
+    for path in paths:
+        if not path.is_file() or path.name in skip_names:
+            continue
+        # Allow local skill references/ folders (./references/foo.md beside SKILL.md)
+        body = path.read_text()
+        for i, line in enumerate(body.splitlines(), 1):
+            if "run_from_plan" in line or "_shared/scripts" in line:
+                bad.append(f"{path}:{i}: stale script reference")
+            if "npx plugins add" in line:
+                bad.append(f"{path}:{i}: plugins CLI retired")
+            if re.search(r"(?<!\./)(?<![a-zA-Z])/references/(policies|shared|image|video|audio|workflows)/", line):
+                bad.append(f"{path}:{i}: top-level references/ path")
+            if re.search(r"\]\([^)]*SKILL\.md\)", line):
+                # Cross-skill hyperlinks only under skills/ — same-package ./SKILL.md ok;
+                # docs/SKILL-CATALOG.md keeps GitHub browse links.
+                if "skills" not in path.parts:
+                    continue
+                if re.search(r"\]\(\./SKILL\.md\)", line) or re.search(r"\]\(\.\./SKILL\.md\)", line):
+                    continue
+                bad.append(f"{path}:{i}: cross-skill SKILL.md hyperlink — use `skill-name` + overview table")
 
 if bad:
-    print("Plugin bundle checks failed:", file=sys.stderr)
-    print("\n".join(bad), file=sys.stderr)
+    # Dedupe
+    seen = []
+    for b in bad:
+        if b not in seen:
+            seen.append(b)
+    print("Skill layout checks failed:", file=sys.stderr)
+    print("\n".join(seen[:80]), file=sys.stderr)
+    if len(seen) > 80:
+        print(f"... and {len(seen) - 80} more", file=sys.stderr)
     sys.exit(1)
 
-print(f"Plugin layout OK ({len(plugin_dirs)} plugins)")
+print(f"Skill layout OK ({len(all_primary_skills())} catalog skills)")
 PY

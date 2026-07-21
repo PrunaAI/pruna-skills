@@ -1,0 +1,18 @@
+{
+  "references": [
+    "prompt-dramaturgy.md",
+    "camera-lighting-vocabulary.md",
+    "physics-safe-motion.md",
+    "clip-chaining.md",
+    "audio-in-video-prompting.md",
+    "scene-anchor-pair.md",
+    "scene-anchor-triple.md",
+    "p-video-quality-checklist.md",
+    "p-video-avatar-prompting.md",
+    "p-video-avatar-quality-checklist.md",
+    "p-video-animate-prompting.md",
+    "p-video-animate-quality-checklist.md",
+    "p-video-replace-prompting.md",
+    "p-video-replace-quality-checklist.md"
+  ]
+}
