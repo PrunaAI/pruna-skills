@@ -22,12 +22,17 @@ Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 
 Follow each skill's **Before generating** / craft sections — do not restate guide content here.
 
+## Agent habit
+
+In the **first reply**, name `` `whisperx` `` in backticks, confirm `REPLICATE_API_TOKEN` (or stop with signup links from `pruna-api`), then ask for required inputs. Redirect when **When NOT to use** fits better.
+
 ## When NOT to use
 
 Use a different skill instead:
 
 | Skill | Description | Install |
 | --- | --- | --- |
+| `music-2.5` | Use when someone wants an original AI song with vocals — sung lyrics, a style prompt track, or source audio for a music video. | `npx skills add PrunaAI/pruna-skills@music-2.5 -y` |
 | `gemini-3.1-flash-tts` | Use when someone needs spoken narration or voiceover — explainer tracks, documentary lines, or voice to pair with generated video. | `npx skills add PrunaAI/pruna-skills@gemini-3.1-flash-tts -y` |
 
 ## Environment
@@ -57,7 +62,7 @@ In a music-video workflow, run this skill during the **align** phase — see `mu
 ## Before generating
 
 1. Complete Prerequisites guide reading order.
-2. Confirm **`audio_file`** (HTTPS URL — helpers upload local files), **`language`**, and **`align_output: true`** for cut alignment.
+2. Confirm **`audio_file`** (HTTPS URL — helpers upload local files), **`language`**, and **`align_output: true`** for **word-level** cut alignment. When listing inputs, name **`REPLICATE_API_TOKEN`** (Replicate — not `PRUNA_API_KEY`).
 3. **Model notes:** set **`initial_prompt`** to the first lyric lines for better rap/sung recognition. Optional **`diarization`** for multi-voice battles.
 
 ## Required input

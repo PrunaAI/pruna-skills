@@ -23,6 +23,10 @@ Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 
 Follow each skill's **Before generating** / craft sections — do not restate guide content here.
 
+## Agent habit
+
+In the **first reply**, name `` `music-2.5` `` in backticks, confirm `REPLICATE_API_TOKEN` (or stop with signup links from `pruna-api`), then ask for required inputs. Redirect when **When NOT to use** fits better.
+
 ## When NOT to use
 
 Use a different skill instead:
@@ -63,7 +67,7 @@ Poll `urls.get` until `status` is `succeeded`; download `output`.
 ## Before generating
 
 1. Complete Prerequisites guide reading order.
-2. Confirm **`lyrics`** (with structure tags) and optional style **`prompt`**.
+2. Confirm **`lyrics`** (with structure tags) and optional style **`prompt`**. When listing required fields, name **`REPLICATE_API_TOKEN`** (Replicate — not `PRUNA_API_KEY`).
 3. **Model notes:** structure tags on their own lines — `[Intro]` `[Verse]` `[Pre Chorus]` `[Chorus]` `[Hook]` `[Bridge]` `[Solo]` `[Inst]` `[Build Up]` `[Drop]` `[Interlude]` `[Break]` `[Transition]` `[Outro]`. `\n` = line break (also a safe video cut boundary); `\n\n` = pause. Max ~5 minutes per generation. English and Mandarin have strongest pronunciation. Data is sent to MiniMax via Replicate — see their [privacy policy](https://www.minimax.io/platform/protocol/privacy-policy).
 
 ## Required input

@@ -24,6 +24,10 @@ Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 
 Follow each skill's **Before generating** / craft sections — do not restate guide content here.
 
+## Workflow habit
+
+In **every reply**, name `` `music-video` `` in backticks (including intake Q&A). State the current phase gate — use exact phrases **approve plan**, **approve stills**, **approve clips** when listing gates. Do **not** same-turn plan + paid video. Skip-review / burn-credits → follow `generation-diversity` **Red flags**.
+
 ## Quick reference
 
 | Resource | Path |
@@ -86,6 +90,8 @@ Record in the plan: `ritual_seed`, `cast` / `character_sheet`, approved **`hero_
 | **E — Assembly** | ffmpeg | free | After **approve clips** |
 
 Default first paid stop: **song**.
+
+After **`music-2.5`** delivers the track, run **`whisperx`** (`align_output: true`) before batching **`p-video`** / **`p-video-avatar`** clips — do not skip alignment when lyric-synced cuts matter.
 
 ```text
 Lyrics + music.prompt → song → align → stills → video clips → music_video.mp4

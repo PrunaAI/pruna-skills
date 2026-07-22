@@ -24,6 +24,10 @@ Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 
 Follow each skill's **Before generating** / craft sections — do not restate guide content here.
 
+## Agent habit
+
+In the **first reply**, name `` `gemini-3.1-flash-tts` `` in backticks, confirm `REPLICATE_API_TOKEN` (or stop with signup links from `pruna-api`), then ask for required inputs. Redirect when **When NOT to use** fits better.
+
 ## When NOT to use
 
 Use a different skill instead:
@@ -64,7 +68,7 @@ Poll `urls.get` until `status` is `succeeded`; download `output` (audio URL). Sh
 ## Before generating
 
 1. Complete Prerequisites guide reading order.
-2. Confirm **`text`**, **`voice`**, **`prompt`**, and **`language_code`** with the user.
+2. Confirm **`text`**, **`voice`**, **`prompt`**, and **`language_code`** with the user. **`text`**, **`prompt`**, and inline `[tags]` must **align** — same emotional direction (see `audio-prompting` tts-style-prompting). When listing fields, name **`REPLICATE_API_TOKEN`** (Replicate — not `PRUNA_API_KEY`).
 3. **Model notes:** combined `text` + `prompt` ≤ ~8,000 bytes; output capped ~655s. When TTS feeds **`p-video`** as `input.audio`, keep each line **≤ ~19s** (`ffprobe`) — P-API clips audio at **20s**. Common voices: `Kore`, `Aoede`, `Sulafat`, `Achird`, `Charon`, `Puck`, `Vindemiatrix` — full list on the [Replicate readme](https://replicate.com/google/gemini-3.1-flash-tts/readme).
 
 ## Required input

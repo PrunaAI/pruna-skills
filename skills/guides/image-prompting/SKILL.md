@@ -30,9 +30,24 @@ Vendor-neutral craft for **still-image** generation and editing. Works with Prun
 
 Pruna `p-image` / `p-image-edit` / `p-image-try-on` / `p-image-upscale`, Flux, Midjourney, Ideogram, SDXL, and other still models.
 
+## When NOT to use
+
+Use a different skill instead:
+
+| Skill | Description | Install |
+| --- | --- | --- |
+| `video-prompting` | Use when crafting video or motion prompts for any generative model — dramaturgy, camera, physics-safe motion, frame anchors, and clip chaining. | `npx skills add PrunaAI/pruna-skills@video-prompting -y` |
+| `audio-prompting` | Use when crafting TTS, music, or bed prompts for any generative audio model — director style, song structure, and post-production layering. | `npx skills add PrunaAI/pruna-skills@audio-prompting -y` |
+| `pruna-api` | Use before any Pruna or Replicate HTTP call — credentials, upload/poll/download, parallel batches, and agent safety. | `npx skills add PrunaAI/pruna-skills@pruna-api -y` |
+| `p-image` | Use when someone wants a fast AI image — product shots, hero visuals, mood boards, or draft photos from a text prompt. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
+
+## Guide habit
+
+In the **first reply**, name `` `image-prompting` `` in backticks. For Pruna still calls, cite the reading order: `generation-diversity` (ritual + **still-image prompt flow** reference) → golden rules → model-specific reference below.
+
 ## Before generating
 
-1. Follow `generation-diversity` first.
+1. Follow `generation-diversity` first — for `p-image` / `p-image-edit`, run **still-image prompt flow** (brief lock → ritual → draft → fidelity check).
 2. **[Prompt golden rules](./references/prompt-golden-rules.md)** — positive framing, no banned filler, params outside the prompt string.
 3. Same character across shots → [character-turnaround-sheet.md](./references/character-turnaround-sheet.md).
 4. Edits → [p-image-edit-prompting.md](./references/p-image-edit-prompting.md).
@@ -40,6 +55,8 @@ Pruna `p-image` / `p-image-edit` / `p-image-try-on` / `p-image-upscale`, Flux, M
 6. Upscale params → [p-image-upscale-guidance.md](./references/p-image-upscale-guidance.md).
 7. Photoreal personas → [realistic-persona-showcase.md](./references/realistic-persona-showcase.md) · [realistic-persona-example-prompt.md](./references/realistic-persona-example-prompt.md).
 8. Validate with the matching `*-quality-checklist.md` in `./references/`.
+
+Complex edits and multi-ref composition: see **Worked example — three-reference composite** in [p-image-edit-prompting.md](./references/p-image-edit-prompting.md).
 
 ## Pruna tools
 

@@ -22,6 +22,27 @@ Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 
 Follow each skill's **Before generating** / craft sections — do not restate guide content here.
 
+## Agent habit
+
+In the **first reply**, name `` `p-image` `` in backticks, confirm `PRUNA_API_KEY` is set (or stop with signup links from `pruna-api`), then ask for prompt / aspect ratio. When drafting the prompt, follow **Prompt craft (dynamic + faithful)** — do not paste skill examples.
+
+## Prompt craft (dynamic + faithful)
+
+Every `input.prompt` must be **fresh and specific**, and must **keep the user's request**. Diversity never overrides the brief.
+
+| Do | Don't |
+| --- | --- |
+| Run the `generation-diversity` random seed ritual; state it; rotate ≥2 free axes (camera, lighting, setting texture, render category) | Copy curl examples from this skill (`otter DJ`, `corgi cowboy`, …) or reuse a prior session's prompt |
+| Lock user-required facts first (subject, product, brand cues, must-keep props, readable text if asked) | Swap the subject for a “cooler” scene that ignores the request |
+| Expand with concrete nouns, frozen action, materials, placement (`image-prompting` golden rules) | Vague mood-only strings (`cool product vibe, neon`) |
+| Show the drafted prompt + `aspect_ratio` before `POST` when the user has not locked wording | Silent regen with a different subject than approved |
+
+**Fidelity check (before pay):** if you remove the user’s named subject/product/setting from the prompt, the job is wrong — rewrite. Free axes only fill what the brief left open.
+
+When showing a drafted prompt, still name `` `p-image` `` (guides help craft; this tool owns the call).
+
+**Pruna note:** `p-image` has **no prompt upsampling** — concrete language is the whole craft. Avoid dense readable typography unless the user explicitly asked for copy on a surface.
+
 ## When NOT to use
 
 Use a different skill instead:
@@ -63,11 +84,21 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   -d '{"input":{"prompt":"Corgi cowboy lassoing a runaway taco truck through Monument Valley dust storm, pulp western poster energy, dynamic diagonal composition","aspect_ratio":"16:9"}}'
 ```
 
-## Before generating
+## Generation flow
 
-1. Complete Prerequisites guide reading order.
-2. Confirm **`prompt`** and **`aspect_ratio`** with the user. Multi-example batches: different **`aspect_ratio`** per still.
-3. **Pruna note:** `p-image` has **no prompt upsampling** — keep prompts concrete. Avoid dense readable typography.
+Follow `generation-diversity` **still-image prompt flow** every time:
+
+1. **Lock brief** — user subject, product, format, any copy-on-surface.
+2. **Ritual seed** — fresh string; derive free axes (camera, lighting, `render_category_tag`, **`aspect_ratio`** when unset).
+3. **Draft explicit prompt** — **Prompt craft (dynamic + faithful)** + `image-prompting` golden rules; **fidelity check** before pay.
+4. **Confirm** — show `prompt` + `aspect_ratio` unless wording is locked.
+5. **POST** — async curl below; poll via `pruna-api`; run `p-image` quality checklist before upscale/video.
+
+**Aspect ratio:** pass `aspect_ratio` in `input`; if output dimensions do not match (e.g. asked `16:9`, got portrait), retry once with explicit `horizontal wide` / `vertical` wording in the prompt.
+
+**Mood board / batch:** new ritual per independent still; different **`aspect_ratio`** per panel when format not locked.
+
+**Hero approved → tweak:** hand off to `p-image-edit` on the hero URL — do not text-to-image re-roll the same subject.
 
 ## Required input
 

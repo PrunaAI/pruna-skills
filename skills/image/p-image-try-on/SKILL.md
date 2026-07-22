@@ -22,6 +22,23 @@ Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 
 Follow each skill's **Before generating** / craft sections — do not restate guide content here.
 
+## Agent habit
+
+In the **first reply**, name `` `p-image-try-on` `` in backticks, confirm `PRUNA_API_KEY`, then ask for `person_image` + `garment_images`. When refs need disambiguation, draft with **Prompt craft (dynamic + faithful)** — do not paste skill examples. Redirect background-only / no-garment jobs to `p-image-edit`.
+
+## Prompt craft (dynamic + faithful)
+
+Identity and garments come from **`person_image`** + **`garment_images[]`**. Optional **`prompt`** only **disambiguates refs** — it does not invent a new person or outfit.
+
+| Do | Don't |
+| --- | --- |
+| Lock **`person_image`** and every **`garment_images[]`** URL first; omit **`prompt`** on clean flat-lays | Describe a new scene, model, or garment the user did not supply |
+| When refs are ambiguous: `the green t-shirt from image 1 and the trousers from image 2` (`image-prompting` try-on craft) | Mood-only prompts (`fashion editorial vibe`) or copy this skill's extended example when refs differ |
+| Ritual seed before drafting disambiguation wording; vary phrasing when multiple valid mappings exist | Use **`prompt`** for background swaps — redirect to `p-image-edit` |
+| Show **`prompt`** (if needed) before `POST` when refs are ambiguous | Silent try-on that changes pose, face, or garments beyond the brief |
+
+**Fidelity check (before pay):** output must still be the user's person in the user's garment(s). If **`prompt`** could apply to a different ref set, rewrite the disambiguation.
+
 ## When NOT to use
 
 Use a different skill instead:
@@ -126,8 +143,8 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 
 ## Before generating
 
-1. Complete Prerequisites guide reading order.
-2. Confirm **`person_image`**, **`garment_images`** (≤6 for finals; 7–8 usually lands; 9–11 may drop last items), and optional **`turbo`** / **`reference_pose`** / **`prompt`**.
+1. Complete Prerequisites guide reading order (`generation-diversity` → `image-prompting` try-on craft).
+2. Ritual seed → draft optional **dynamic + faithful** disambiguation **`prompt`** (section above) → confirm **`person_image`**, **`garment_images`** (≤6 for finals; 7–8 usually lands; 9–11 may drop last items), and optional **`turbo`** / **`reference_pose`** / **`prompt`**.
 3. **Pruna notes:** one item per body spot (socks + shoes → usually shoes win). **`turbo`** (~2.5–3.5 s) is off by default — not recommended above ~4 garments for finals. Full-body or three-quarter person crops work best. Omit gloves, mittens, handheld props, pocket squares, suspenders, brooches from `garment_images[]`.
 
 ## Required input

@@ -31,6 +31,22 @@ Vendor-neutral craft for **short video / motion** generation. Works with Pruna `
 
 Pruna `p-video` / `p-video-avatar` / `p-video-animate` / `p-video-replace`, Runway Gen-3, Kling, Luma Dream Machine, Veo, and other video models.
 
+## When NOT to use
+
+Use a different skill instead:
+
+| Skill | Description | Install |
+| --- | --- | --- |
+| `image-prompting` | Use when crafting still-image prompts for any generative model — composition, identity sheets, edits, try-on, and photoreal personas. | `npx skills add PrunaAI/pruna-skills@image-prompting -y` |
+| `audio-prompting` | Use when crafting TTS, music, or bed prompts for any generative audio model — director style, song structure, and post-production layering. | `npx skills add PrunaAI/pruna-skills@audio-prompting -y` |
+| `music-video` | Use when someone wants a full music video — original song or vocals, performance clips, B-roll, and lyric-synced edits. | `npx skills add PrunaAI/pruna-skills@music-video -y` |
+| `narrated-multi-scene` | Use when someone wants a multi-part story with voiceover — episodic B-roll, chaptered promo, or several linked video scenes without on-camera dialogue. | `npx skills add PrunaAI/pruna-skills@narrated-multi-scene -y` |
+| `p-video` | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
+
+## Guide habit
+
+In the **first reply**, name `` `video-prompting` `` in backticks. For `p-video` motion lines, cite OPEN/MID/CLOSE dramaturgy and **Worked example — product B-roll** in [prompt-dramaturgy.md](./references/prompt-dramaturgy.md). Audio-led clips: **≤ ~19s** TTS before embed — see [audio-in-video-prompting.md](./references/audio-in-video-prompting.md).
+
 ## Before generating
 
 1. Follow `generation-diversity` first.
@@ -46,6 +62,8 @@ Pruna `p-video` / `p-video-avatar` / `p-video-animate` / `p-video-replace`, Runw
    - [p-video-animate-prompting.md](./references/p-video-animate-prompting.md)
    - [p-video-replace-prompting.md](./references/p-video-replace-prompting.md)
 4. Validate with the matching `*-quality-checklist.md` in `./references/`.
+
+Product B-roll and OPEN/MID/CLOSE samples: **Worked example — product B-roll** in [prompt-dramaturgy.md](./references/prompt-dramaturgy.md).
 
 ## Pruna tools
 

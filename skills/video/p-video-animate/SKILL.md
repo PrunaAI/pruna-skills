@@ -22,6 +22,23 @@ Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 
 Follow each skill's **Before generating** / craft sections — do not restate guide content here.
 
+## Agent habit
+
+In the **first reply**, name `` `p-video-animate` `` in backticks, confirm `PRUNA_API_KEY` (or stop with signup links from `pruna-api`), then ask for required inputs. When drafting optional **`instruction_prompt`**, follow **Prompt craft (dynamic + faithful)** — do not paste skill examples. Redirect when **When NOT to use** fits better.
+
+## Prompt craft (dynamic + faithful)
+
+Appearance comes from **`image`**; motion from **`video`**. Optional **`instruction_prompt`** is **surgical** — one concrete end beat or pose fix, not a new scene.
+
+| Do | Don't |
+| --- | --- |
+| Ritual seed before drafting; leave **`instruction_prompt`** blank when refs already align | Copy this skill's generic sample (`Animate the reference subject using the motion from the source video`) when the user named a specific beat |
+| Lock the user's subject (from image) and motion source (from video); match framing/pose to the template's first frame | Invent a different performance or swap the subject |
+| When needed, one concrete **`instruction_prompt`** beat (`hold landing pose on final frame`, `match arm raise at 0:03`) | Mood-only rewrites or vague `make it dance better` |
+| Show **`instruction_prompt`** (if any) before `POST` when not locked | Silent regen that changes identity or ignores the template motion |
+
+**Fidelity check (before pay):** still the user's still + template video. Repose with `p-image-edit` when close but not exact — do not compensate with a vague prompt.
+
 ## Skill boundary
 
 | | **p-video-animate** (this skill) | **p-video-replace** |
@@ -98,8 +115,8 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 
 ## Before generating
 
-1. Complete Prerequisites guide reading order.
-2. Confirm **`video`** (motion/audio source), **`image`** (subject), **`resolution`**, **`target_fps`**, and optional **`instruction_prompt`**.
+1. Complete Prerequisites guide reading order (`generation-diversity` → `video-prompting`).
+2. Ritual seed → draft optional **dynamic + faithful** **`instruction_prompt`** (section above) → confirm **`video`** (motion/audio source), **`image`** (subject), **`resolution`**, **`target_fps`**, and **`instruction_prompt`**.
 3. **Pruna notes:** appearance from **image**, motion from **video**. Match framing/pose/limb visibility to the template’s first frame; repose with `p-image-edit` when close but not exact. Leave **`instruction_prompt`** blank unless you need one concrete end beat. Runware map: `referenceImages[0]` → `image`, `referenceVideos[0]` → `video`, `positivePrompt` → `instruction_prompt`, `settings.preserveAudio` → `save_audio`.
 
 ## Required input

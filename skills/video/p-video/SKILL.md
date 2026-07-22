@@ -23,6 +23,26 @@ Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 
 Follow each skill's **Before generating** / craft sections — do not restate guide content here.
 
+## Agent habit
+
+In the **first reply**, name `` `p-video` `` in backticks, confirm `PRUNA_API_KEY` (or stop with signup links from `pruna-api`), then ask for required inputs. When drafting motion prompts, follow **Prompt craft (dynamic + faithful)** — do not paste skill examples. Redirect when **When NOT to use** fits better.
+
+## Prompt craft (dynamic + faithful)
+
+Every `input.prompt` must be **fresh and specific**, and must **match the user's beat**. Diversity never overrides the brief.
+
+| Do | Don't |
+| --- | --- |
+| Run the `generation-diversity` random seed ritual; state it; rotate ≥2 free axes (camera move, lighting shift, texture, pacing) when the brief allows | Copy curl examples from this skill (`rain-slick street`, `dog tosses plush`, …) or reuse a prior session's prompt |
+| Lock user-required facts first (subject, action beat, OPEN/MID/CLOSE when frame-anchored, narration sync when `audio` is set) | Swap the subject or motion for a “cooler” clip that ignores the request |
+| Structure with `video-prompting` dramaturgy — one frozen action per beat, physics-safe motion, camera grammar | Vague mood-only strings (`cinematic vibe, neon energy`) |
+| When `audio` is set, motion and pacing must **match the narration beat** | Drift to unrelated action while VO plays |
+| Show the drafted prompt + mode fields before `POST` when the user has not locked wording | Silent regen with a different subject or beat than approved |
+
+**Fidelity check (before pay):** if you remove the user's named subject/action/setting from the prompt, the job is wrong — rewrite. Free axes only fill what the brief left open.
+
+When showing a drafted prompt, still name `` `p-video` `` (guides help craft; this tool owns the call).
+
 ## Skill boundary
 
 This skill = **one `p-video` prediction** per invocation.
@@ -121,8 +141,8 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 
 ## Before generating
 
-1. Complete Prerequisites guide reading order.
-2. Confirm **mode** (T2V / I2V / frame pair / audio), **`duration`** (unless audio-driven), **`resolution`**, **`fps`**, **`draft`**, and **`prompt`** with the user.
+1. Complete Prerequisites guide reading order (`generation-diversity` → `video-prompting`).
+2. Ritual seed → draft a **dynamic + faithful** motion prompt (section above) → confirm **mode** (T2V / I2V / frame pair / audio), **`duration`** (unless audio-driven), **`resolution`**, **`fps`**, **`draft`**, and **`prompt`** with the user.
 3. **Pruna notes:** when `image` is set, `aspect_ratio` is ignored. With `audio`, omit `duration` and set **`save_audio: true`** to keep narration. Prefer uploaded VO over post-mux. If the request is multi-scene — **stop** (see Skill boundary).
 
 ## Required input

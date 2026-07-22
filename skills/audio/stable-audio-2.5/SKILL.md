@@ -23,6 +23,19 @@ Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 
 Follow each skill's **Before generating** / craft sections — do not restate guide content here.
 
+## Agent habit
+
+In the **first reply**, name `` `stable-audio-2.5` `` in backticks, confirm `REPLICATE_API_TOKEN` (or stop with signup links from `pruna-api`), then ask for required inputs. Redirect when **When NOT to use** fits better.
+
+## When NOT to use
+
+Use a different skill instead:
+
+| Skill | Description | Install |
+| --- | --- | --- |
+| `music-2.5` | Use when someone wants an original AI song with vocals — sung lyrics, a style prompt track, or source audio for a music video. | `npx skills add PrunaAI/pruna-skills@music-2.5 -y` |
+| `gemini-3.1-flash-tts` | Use when someone needs spoken narration or voiceover — explainer tracks, documentary lines, or voice to pair with generated video. | `npx skills add PrunaAI/pruna-skills@gemini-3.1-flash-tts -y` |
+
 ## Environment
 
 ```bash
@@ -52,8 +65,8 @@ Poll `urls.get` until `status` is `succeeded`; download `output` MP3.
 
 ## Before generating
 
-1. Complete Prerequisites guide reading order.
-2. Confirm **`prompt`**, **`duration`** (match or slightly exceed reel length), and mix **`volume`** (~0.08–0.15 under VO).
+1. Complete Prerequisites guide reading order — bed prompt craft: `audio-prompting` **Worked examples** (instrumental bed).
+2. Confirm **`prompt`**, **`duration`** (match or slightly exceed reel length), and mix **`volume`** (~0.08–0.15 under VO). When listing fields, name **`REPLICATE_API_TOKEN`** (Replicate — not `PRUNA_API_KEY`).
 3. **Model notes:** lead with **Instrumental** and **no vocals**. Duration 1–190s. Prefer understated beds (BPM ~88–98 for tech launch reels) so music does not compete with dialogue.
 
 ## Required input

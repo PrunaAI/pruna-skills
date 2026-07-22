@@ -22,6 +22,29 @@ Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 
 Follow each skill's **Before generating** / craft sections — do not restate guide content here.
 
+## Workflow habit
+
+In **every reply**, name `` `visual-transition-reel` `` in backticks. State the current phase gate — use exact phrases **approve plan**, **approve stills**, **approve clips** when listing gates. Do **not** same-turn plan + paid video. Skip-review / burn-credits → follow `generation-diversity` **Red flags**.
+
+## Skill boundary
+
+Montage with **transitions between composed video clips** — not a picture-book slideshow.
+
+**Redirect before intake:**
+
+- Picture-book / illustrated slideshow / Ken Burns story with narration → `` `illustrated-story-reel` ``
+- Cinematic multi-scene B-roll chapters (full `p-video` scenes) → `` `narrated-multi-scene` ``
+
+## When NOT to use
+
+Use a different skill instead:
+
+| Skill | Description | Install |
+| --- | --- | --- |
+| `illustrated-story-reel` | Use when someone wants a slideshow story with narration or music — picture-book illustrated frames with Ken Burns or gentle p-video motion. | `npx skills add PrunaAI/pruna-skills@illustrated-story-reel -y` |
+| `narrated-multi-scene` | Use when someone wants a multi-part story with voiceover — episodic B-roll, chaptered promo, or several linked video scenes without on-camera dialogue. | `npx skills add PrunaAI/pruna-skills@narrated-multi-scene -y` |
+| `interactive-explainer` | Use when someone wants an educational explainer with a host and characters — history or science shorts with dialogue, not voiceover-only B-roll. | `npx skills add PrunaAI/pruna-skills@interactive-explainer -y` |
+
 ## Feedback gates (required)
 
 | Phase | What to show | Proceed when |
@@ -46,6 +69,10 @@ Follow each skill's **Before generating** / craft sections — do not restate gu
 | **Assembly** | Concat order; chain crossfade (~0.12–0.15s) vs hard cut (0)? Target total duration? |
 
 Ask follow-ups until every scene row has enough to build `input` without guessing.
+
+### Anchor pairs + `video-prompting`
+
+Start/end stills and transition motion use **`video-prompting`** scene-anchor pairs — physically **reachable** end states; **same subject** in both plates (identity preserved). Craft OPEN/MID/CLOSE in transition prompts; still OPENING/CLOSING prefixes on `p-image-edit` plates per `image-prompting`.
 
 ### Scene table (template)
 

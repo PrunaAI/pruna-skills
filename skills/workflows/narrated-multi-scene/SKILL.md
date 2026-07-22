@@ -23,6 +23,10 @@ Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 
 Follow each skill's **Before generating** / craft sections — do not restate guide content here.
 
+## Workflow habit
+
+In **every reply**, name `` `narrated-multi-scene` `` in backticks. State phase gates using exact phrases **approve plan**, **approve stills**, **approve clips** (user types these to proceed). Do **not** same-turn plan + paid video. Skip-review / burn-credits → follow `generation-diversity` **Red flags**.
+
 ## Feedback gates (required)
 
 | Phase | What to show | Proceed when |

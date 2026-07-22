@@ -28,11 +28,27 @@ Vendor-neutral playbook for **diverse, explicit prompts** and output QA. Apply b
 
 Any generative model. Pruna tools (`p-image`, `p-video`, …) and third-party APIs alike.
 
+## Guide habit
+
+In the **first reply**, name `` `generation-diversity` `` in backticks. For still-image jobs (`p-image`, `p-image-edit`), point agents at **[Still-image prompt flow](./references/still-image-prompt-flow.md)** — brief lock → ritual → axes → explicit prompt → fidelity check. **Mood boards:** new ritual per independent panel; user-locked brand hex / subject stays locked on every panel.
+
 ## Before generating
 
 1. **[Generation diversity](./references/generation-diversity.md)** — random seed ritual (SSoT), explicit prompt structure, rotate ≥2 scenario axes per session.
-2. **[Quality checklists](./references/generation-quality-checklists.md)** — open outputs and judge pass/fail before the next paid step.
-3. **Workflows:** [workflow-feedback-gates.md](./references/workflow-feedback-gates.md) — pause at plan / stills / clips before paid video.
+2. **Still images (`p-image` family):** **[still-image-prompt-flow.md](./references/still-image-prompt-flow.md)** — generation flow, edit flow, mood-board rules, hero → edit handoff. Pair with `image-prompting` golden rules and edit craft.
+3. **[Quality checklists](./references/generation-quality-checklists.md)** — open outputs and judge pass/fail before the next paid step.
+4. **Workflows:** [workflow-feedback-gates.md](./references/workflow-feedback-gates.md) — pause at plan / stills / clips before paid video.
+
+## Red flags
+
+Stop and ask (or show assets) before the next paid step if any of these are true:
+
+| Red flag | Required action |
+| --- | --- |
+| User says skip review / burn video credits / run everything now | Refuse same-turn plan+video; require **approve plan** (then stills/clips) unless they explicitly ask for automation |
+| Using `--yes-skip-*-gate` without the user requesting automation | Confirm explicitly before bypassing gates |
+| Outputs not opened / checklist not run | Open the file; run the matching quality checklist before the next `POST` |
+| Ritual seed skipped or copied from docs | Fresh random seed ritual first; do **not** pass the ritual string as API `seed` |
 
 ## Related skills
 
@@ -45,6 +61,7 @@ Install related skills when the job needs them:
 | `audio-prompting` | Use when crafting TTS, music, or bed prompts for any generative audio model — director style, song structure, and post-production layering. | `npx skills add PrunaAI/pruna-skills@audio-prompting -y` |
 | `pruna-api` | Use before any Pruna or Replicate HTTP call — credentials, upload/poll/download, parallel batches, and agent safety. | `npx skills add PrunaAI/pruna-skills@pruna-api -y` |
 | `p-image` | Use when someone wants a fast AI image — product shots, hero visuals, mood boards, or draft photos from a text prompt. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
+| `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
 | `p-video` | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 
 Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`

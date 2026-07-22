@@ -50,3 +50,28 @@ Do not paste VO into avatar `voice_prompt`.
 - [ ] `prompt` / `text` / tags aligned  
 - [ ] Length probed for `p-video`  
 - [ ] Voice + language recorded in manifest for regen consistency
+
+## Worked example — explainer narration (aligned channels)
+
+User lock: documentary explainer, **measured** pace, ~45s script, will feed `p-video` Mode B.
+
+**`prompt`** (director style):
+
+```text
+Natural documentary host, measured pacing, clear consonants, calm authority, empathetic, no radio-ad hype
+```
+
+**`text`** (spoken words + inline tags):
+
+```text
+[warm] Most teams treat diversity as a checkbox.
+[pause] But the ritual seed is what breaks repetition before you ever hit generate.
+[emphasis] Lock the brief first — then rotate free axes.
+[measured] Same subject, fresh camera and light, every panel.
+```
+
+**Alignment check:** tags match the calm documentary `prompt` — no `[shout]` hype against a gentle director line.
+
+**Duration gate:** 45s exceeds single **~19s** `p-video` audio-led cap → split into **three** scene rows (~15s each) or shorten copy; probe with `ffprobe` after TTS. Never plan one 45s embed clip.
+
+**Avatar redirect:** on-camera host speaking to lens → `p-video-avatar` `voice_script` + `voice_prompt` — do **not** paste this TTS `prompt` into avatar fields.

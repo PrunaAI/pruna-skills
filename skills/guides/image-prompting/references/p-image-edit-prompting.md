@@ -69,6 +69,18 @@ Max 5 images on `p-image-edit`.
 
 If the still is ~80% right, edit surgically. Re-rolling from text drifts identity and wastes the approved plate.
 
+## Worked example — three-reference composite
+
+User lock: face from portrait ref, navy blazer from product flat-lay, cafe interior from location still. Keep face identical.
+
+```text
+Use face and hair from image 1. Outfit from image 2 (navy blazer, white tee). Place subject seated at the window table from image 3.
+Match warm afternoon lighting to image 3. Keep face identical to image 1; same woman, do not change age or species.
+Change nothing except outfit and background — keep pose from image 1.
+```
+
+`turbo: false` — hard multi-ref composite. Upload all three via `POST /v1/files` before `POST /v1/predictions`.
+
 ## Good / bad
 
 **Good**

@@ -23,6 +23,10 @@ Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 
 Follow each skill's **Before generating** / craft sections — do not restate guide content here.
 
+## Workflow habit
+
+In **every reply**, name `` `image-to-video` `` in backticks. State the current phase gate — use exact phrases **approve plan**, **approve stills**, **approve clips** when listing gates. Do **not** same-turn plan + paid video. Skip-review / burn-credits → follow `generation-diversity` **Red flags**.
+
 ## Skill boundary
 
 Exactly **one scene / one `p-video` job**. No subagents, no concat across scenes, no multi-scene manifest ownership.
@@ -40,7 +44,7 @@ If the user wants a multi-scene film → hand off to `narrated-multi-scene` or `
 | **0 — Plan** | Mode, motion prompt, frame plan | **approve plan** |
 | **A — Stills** | Start + end stills | **approve stills** |
 | **A2 — TTS** | Narration MP3 (triple mode) — listen | Line OK (`ffprobe` ≤ ~19s) |
-| **B — Video** | `p-video` clip | User accepts |
+| **B — Video** | `p-video` clip | **approve clips** |
 | **D — Bed** | Optional post-mux bed | User accepts |
 
 ## Intake: ask before generating
@@ -59,6 +63,8 @@ If the user wants a multi-scene film → hand off to `narrated-multi-scene` or `
 | **Delivery** | Async (production); `Try-Sync: true` only for quick tests |
 
 ## How the agent runs this
+
+**Order (narrated triple — user supplies stills + script):** **approve plan** → build/review stills → **approve stills** → Gemini TTS + `ffprobe` (≤ ~19s) → upload audio → one `p-video` embed → **approve clips**. Do **not** batch `p-video` before still and TTS review.
 
 1. Confirm intake → present plan → wait for **approve plan**.
 2. Build start/end stills with curl (`pruna-api` upload/poll/download). Show stills → **approve stills**.

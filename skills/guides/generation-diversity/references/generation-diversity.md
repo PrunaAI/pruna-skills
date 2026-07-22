@@ -8,6 +8,7 @@ Use the **full** checklist here for every generation.
 
 - [Random seed ritual](#random-seed-ritual-mandatory-before-every-generation)
 - [Three steps (every job)](#three-steps-every-job)
+- [Still-image prompt flow](./still-image-prompt-flow.md) — `p-image` / `p-image-edit` agent pipeline (brief lock → ritual → POST)
 - [Explicit prompt structure](#explicit-prompt-structure-required)
 - [Text & typography by model](#text--typography-by-model)
 - [SSoT axis derivation](#ssot-axis-derivation-sum-mod)

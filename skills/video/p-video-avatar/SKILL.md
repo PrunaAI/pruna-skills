@@ -23,6 +23,34 @@ Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 
 Follow each skill's **Before generating** / craft sections — do not restate guide content here.
 
+## Agent habit
+
+In the **first reply**, name `` `p-video-avatar` `` in backticks, confirm `PRUNA_API_KEY` (or stop with signup links from `pruna-api`), then ask for required inputs. **Multiple talking-head scenes with the same person → redirect to `avatar-multi-scene`** (this skill is one clip only). Draft host motion with **Prompt craft (dynamic + faithful)** — do not paste skill examples.
+
+## Skill boundary
+
+This skill = **one `p-video-avatar` prediction** per invocation.
+
+**Out of scope (stop and redirect):**
+
+- Several host segments with continuity → `avatar-multi-scene`
+- Multi-scene assembly, concat, or parallel scene batches → workflow skills (`avatar-multi-scene`, `narrated-multi-scene`, …)
+- Silent B-roll / no talking head → `p-video`
+- Motion transfer from a template video → `p-video-animate`
+
+## Prompt craft (dynamic + faithful)
+
+`video_prompt` (and optional `voice_prompt`) must be **fresh per clip** and **faithful to the user's host beat**. Diversity applies to camera nuance and delivery wording — not to changing who speaks or what they say.
+
+| Do | Don't |
+| --- | --- |
+| Ritual seed from `generation-diversity` before drafting; unique `video_prompt` per clip in multi-scene work | Reuse one `video_prompt` string across a reel, or paste this skill's sample (`Medium close-up speaking directly to lens`) when the user asked for something else |
+| Lock portrait identity from `image`; match head motion and pacing to **`voice_script`** or uploaded **`audio`** | Invent a new persona, wardrobe, or script line the user did not approve |
+| Use `video-prompting` dramaturgy — one camera move, physics-safe head motion, mouth visible | Default `The person is talking.` for anything beyond a quick test |
+| Show `video_prompt` (+ script/voice fields) before `POST` when wording is not locked | Silent regen that changes tone, framing, or delivery from the brief |
+
+**Fidelity check (before pay):** the clip must still be the user's speaker, script/audio, and approved host beat. If mouth visibility or pacing drifts from the brief, rewrite.
+
 ## When NOT to use
 
 Use a different skill instead:
@@ -32,6 +60,8 @@ Use a different skill instead:
 | `p-video` | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 | `p-video-animate` | Use when someone wants a photo to move like another video — motion transfer, dance remixes, or performance variations from a template clip. | `npx skills add PrunaAI/pruna-skills@p-video-animate -y` |
 | `p-video-replace` | Use when someone wants to swap a person, outfit, or product inside existing footage while keeping the camera move and audio. | `npx skills add PrunaAI/pruna-skills@p-video-replace -y` |
+| `avatar-multi-scene` | Use when someone wants the same person hosting several clips — multi-segment UGC, comparison reels, or mixed speaking and animated scenes with continuity. | `npx skills add PrunaAI/pruna-skills@avatar-multi-scene -y` |
+| `avatar-single-scene` | Use when someone wants one polished host-on-camera beat — a speaking person with intake and approval gates before generation. | `npx skills add PrunaAI/pruna-skills@avatar-single-scene -y` |
 
 ## HTTP (curl)
 
@@ -116,8 +146,8 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 
 ## Before generating
 
-1. Complete Prerequisites guide reading order.
-2. Confirm **`image`** URL, **`voice_script`** (or **`audio`**), **`voice`** / **`voice_language`**, **`voice_prompt`**, **`video_prompt`**, and **`resolution`**. Explicit user confirmation before any paid call.
+1. Complete Prerequisites guide reading order (`generation-diversity` → `video-prompting`).
+2. Ritual seed → draft a **dynamic + faithful** `video_prompt` (section above) → confirm **`image`** URL, **`voice_script`** (or **`audio`**), **`voice`** / **`voice_language`**, **`voice_prompt`**, **`video_prompt`**, and **`resolution`**. Explicit user confirmation before any paid call.
 3. **Pruna notes:** P-API uses **snake_case** (`voice_script`, `video_prompt`, …). Mouth must be visible on the plate. Unique **`video_prompt`** per clip — do not reuse one string across a multi-scene reel. Default `The person is talking.` is quick-test only.
 
 ### Negative prompt (experimental — suppress on-screen text)
@@ -127,6 +157,14 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 | `negative_prompt` | `""` | Comma-separated elements to **suppress** |
 | `negative_prompt_strength` | `0` | Both must be set: non-empty prompt **and** strength **> 0** |
 
-Starter: `subtitles, captions, on-screen text, burned-in text, watermark, logo, typography, letters, words`. Start strength around **0.3–0.4**. See `avatar-single-scene`
-- Multi-scene: `avatar-multi-scene`
-- Slider demos: `avatar-multi-scene`
+Starter: `subtitles, captions, on-screen text, burned-in text, watermark, logo, typography, letters, words`. Start strength around **0.3–0.4**. See `avatar-single-scene` for gated host workflows.
+
+## Typical next steps
+
+Common follow-ons after this skill:
+
+| Skill | Description | Install |
+| --- | --- | --- |
+| `avatar-multi-scene` | Use when someone wants the same person hosting several clips — multi-segment UGC, comparison reels, or mixed speaking and animated scenes with continuity. | `npx skills add PrunaAI/pruna-skills@avatar-multi-scene -y` |
+| `avatar-single-scene` | Use when someone wants one polished host-on-camera beat — a speaking person with intake and approval gates before generation. | `npx skills add PrunaAI/pruna-skills@avatar-single-scene -y` |
+

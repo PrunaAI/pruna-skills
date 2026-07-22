@@ -22,6 +22,23 @@ Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 
 Follow each skill's **Before generating** / craft sections — do not restate guide content here.
 
+## Agent habit
+
+In the **first reply**, name `` `p-video-replace` `` in backticks, confirm `PRUNA_API_KEY` (or stop with signup links from `pruna-api`), then ask for required inputs. Draft swaps with **Prompt craft (dynamic + faithful)** — do not paste skill examples. Redirect when **When NOT to use** fits better.
+
+## Prompt craft (dynamic + faithful)
+
+**`instruction_prompt`** maps **source slots → reference images → preserve-list**. Change only what the user asked; keep camera, audio, and unmentioned elements identical.
+
+| Do | Don't |
+| --- | --- |
+| Formula: name source element → map each ref (`first reference`, `image 2`) → preserve-list (`walking pace`, `camera tracking`, `audio`) | Vague `replace the person` with no slot mapping |
+| Ritual seed before drafting; fresh wording for preserve clauses when the brief allows | Copy this skill's sample (`olive coat`, `navy jacket`) when the user described different targets |
+| Lock swap intent (character / clothing-only / object / mixed) from the user | Drop preserve-list and hope motion/audio hold |
+| Show **`instruction_prompt`** before `POST` when wording is not locked | Silent swap that changes background, cast, or unrequested regions |
+
+**Fidelity check (before pay):** every stated swap and every stated keep must appear in **`instruction_prompt`**. Do not “spice” extras when they asked for one identity swap.
+
 ## Skill boundary
 
 | | **p-video-replace** | **p-video-animate** |
@@ -107,8 +124,8 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 
 ## Before generating
 
-1. Complete Prerequisites guide reading order.
-2. Confirm **`video`**, **`images`** (1–4), **`resolution`**, **`target_fps`**, **`instruction_prompt`**, and swap intent (character / clothing-only / object / mixed).
+1. Complete Prerequisites guide reading order (`generation-diversity` → `video-prompting`).
+2. Ritual seed → draft a **dynamic + faithful** **`instruction_prompt`** (section above) → confirm **`video`**, **`images`** (1–4), **`resolution`**, **`target_fps`**, **`instruction_prompt`**, and swap intent (character / clothing-only / object / mixed).
 3. **Pruna notes:** identity comes from **`images`**; slot mapping from **`instruction_prompt`** (name source element → map each ref → preserve-list → “only X changes”). Vague targets and tiny on-screen objects drop quality. Runware map: `inputs.video` → `video`, `referenceImages` → `images`, `positivePrompt` → `instruction_prompt`.
 
 ## Required input

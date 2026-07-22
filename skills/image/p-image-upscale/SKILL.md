@@ -22,6 +22,10 @@ Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 
 Follow each skill's **Before generating** / craft sections — do not restate guide content here.
 
+## Agent habit
+
+In the **first reply**, name `` `p-image-upscale` `` in backticks, confirm `PRUNA_API_KEY`, then ask for the source image + `target` megapixels. Redirect text-to-image requests to `p-image`.
+
 ## When NOT to use
 
 Use a different skill instead:
@@ -89,6 +93,8 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 1. Complete Prerequisites guide reading order.
 2. Confirm **`target`** MP (1–**128**), **`enhance_details`** / **`enhance_realism`**, and **`output_format`** with the user.
 3. **Pruna note:** defaults — `enhance_details: true`, `enhance_realism: false`. Use `enhance_realism: true` only on already-photoreal sources; it can add waxy artifacts on synthetic edits. Source must already pass the slop gate.
+
+**Print pipeline:** `p-image` hero → optional **`p-image-edit`** → **`p-image-upscale`** on the approved plate (upscale **after** edits). Typical large-crop target: **8** megapixels — confirm `target` with user.
 
 ## Required input
 

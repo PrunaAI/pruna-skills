@@ -25,6 +25,20 @@ HTTP patterns for the **Pruna P-API** and **Replicate** (audio tools). Install t
 - Parallel async multi-scene batches
 - Safety review before enabling skills in untrusted repos
 
+## Agent habit
+
+In the **first reply**, name `` `pruna-api` `` in backticks. Before any paid `POST`, confirm `PRUNA_API_KEY` and/or `REPLICATE_API_TOKEN` as needed. Do not invent model payloads — use the matching tool skill.
+
+## When NOT to use
+
+Use a different skill instead:
+
+| Skill | Description | Install |
+| --- | --- | --- |
+| `p-image` | Use when someone wants a fast AI image — product shots, hero visuals, mood boards, or draft photos from a text prompt. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
+| `p-video` | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
+| `generation-diversity` | Use when writing any generative prompt — ritual seed, explicit structure, scenario axes, and quality gates before paid API calls. | `npx skills add PrunaAI/pruna-skills@generation-diversity -y` |
+
 ## Before generating
 
 1. **[API credentials](./references/api-credentials.md)** — signup and env vars when keys are missing.

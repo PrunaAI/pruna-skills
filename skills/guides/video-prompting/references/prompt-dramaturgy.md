@@ -54,6 +54,18 @@ MID: brass doors open; same bellhop walks forward in one shoulder-height track o
 CLOSE: he stops facing camera, city lights soft behind him — match end pose.
 ```
 
+## Worked example — product B-roll (espresso hero still)
+
+Brief lock: matte-black espresso machine, white marble bar, steam from portafilter. One primary move: slow push-in.
+
+```text
+OPEN: hold on matte-black espresso machine on white marble bar, soft window daylight, steam wisps from portafilter, shallow depth of field, product hero framing.
+MID: same machine, slow dolly push-in along the bar; steam curls upward; chrome portafilter catches a soft highlight; marble grain readable.
+CLOSE: settle on same machine centered in frame, steam still rising, bokeh cafe window behind — match end product angle.
+```
+
+Details Law audit: each beat names environment (marble bar, window light), micro-action (steam curls, push-in), motif (chrome highlight). No `cinematic masterpiece` filler.
+
 ## Pre-send audit
 
 - [ ] Each beat has environment + micro-action + motif  

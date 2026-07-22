@@ -23,9 +23,13 @@ Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 
 Follow each skill's **Before generating** / craft sections — do not restate guide content here.
 
+## Workflow habit
+
+In **every reply**, name `` `illustrated-story-reel` `` in backticks. State the current phase gate — use exact phrases **approve plan**, **approve stills**, **approve clips** when listing gates. Do **not** same-turn plan + paid video. Skip-review / burn-credits → follow `generation-diversity` **Red flags**.
+
 ## Overview
 
-One still per story beat. Hero anchor → **p-image-edit** per scene. Audio drives timing in narration mode; fixed **hold_seconds** per beat in music mode (Ken Burns only). Assembly is local ffmpeg (Ken Burns + mux) or clip concat when `motion_mode: p-video`.
+One still per story beat. Hero anchor → **p-image-edit** per scene. **Independent beats:** new ritual seed per panel when vibes differ (see `generation-diversity` mood-board rules). Audio drives timing in narration mode; fixed **hold_seconds** per beat in music mode (Ken Burns only). Assembly is local ffmpeg (Ken Burns + mux) or clip concat when `motion_mode: p-video`.
 
 ## When to Use
 
