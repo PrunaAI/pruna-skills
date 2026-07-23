@@ -542,6 +542,40 @@ def gen_chain_monarch(*, video_only: bool = False) -> None:
     )
 
 
+def gen_chain_sneaker(*, video_only: bool = False) -> None:
+    style = "clean product photography, soft window light, shallow depth of field, photoreal 9:16, no text"
+    open_prompt = (
+        "9:16 vertical product hero shot, single white running sneaker on light oak shelf, "
+        f"laces neatly tied, minimalist bedroom backdrop, {style}, single frame"
+    )
+    end_prompt = (
+        "Same sneaker same shelf same camera. Change only the shoe color to bright orange with "
+        f"white accent panels, keep laces shelf and background identical, {style}, single frame"
+    )
+    video_prompt = (
+        "OPEN: static product shot of white sneaker on oak shelf, hold two seconds. "
+        "MID: color shifts smoothly from white to bright orange as warm light sweeps across the shoe, "
+        "easy to read transformation. "
+        "CLOSE: hand enters from below and lifts sneaker off shelf, gentle natural motion."
+    )
+    if video_only:
+        open_path = OUT / "chain-sneaker-01-open.png"
+        end_path = OUT / "chain-sneaker-02-end.png"
+        if not open_path.exists() or not end_path.exists():
+            sys.exit("missing sneaker stills for video-only regen")
+        render_video("chain-sneaker-clip", video_prompt, open_path, end_path, duration=CHAIN_DURATION)
+        return
+
+    image_chain(
+        "chain-sneaker",
+        open_prompt,
+        end_prompt,
+        video_prompt,
+        aspect_ratio="9:16",
+        duration=CHAIN_DURATION,
+    )
+
+
 AURORA_IMAGE_PROMPT = (
     "16:9 wide landscape, aurora borealis rippling green and violet over frozen lake, "
     "tiny ice fishing huts with warm window glow, footprints in snow, crisp arctic night, single frame"
@@ -1175,7 +1209,7 @@ def main() -> None:
     parser.add_argument(
         "--only",
         help=(
-            "comma-separated keys: pruna-docs-vendor,chain-monarch,music-video-garage-drummer,"
+            "comma-separated keys: pruna-docs-vendor,chain-monarch,chain-sneaker,music-video-garage-drummer,"
             "illustrated-library-whale,image-to-video-aurora,missing-tools,sidecars,"
             "p-image-upscale,p-image-try-on-drummer,p-video-animate-monarch,"
             "p-video-replace-jacket,stable-audio-library-bed,whisperx-drummer-song,"
@@ -1238,6 +1272,8 @@ def main() -> None:
             gen_narrated_multi_scene_demo(missing_only=mo)
         if "chain-monarch" in keys:
             gen_chain_monarch(video_only=args.video_only)
+        if "chain-sneaker" in keys:
+            gen_chain_sneaker(video_only=args.video_only)
         if "music-video-garage-drummer" in keys:
             gen_music_video_drummer(video_only=args.video_only)
         if "illustrated-library-whale" in keys:

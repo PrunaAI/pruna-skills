@@ -120,10 +120,10 @@ def main() -> int:
             gif = OUT / mp4.replace(".mp4", ".gif")
             if not gif.is_file():
                 errors.append(f"EXAMPLES.md embed: missing preview gif for {mp4} (run make doc-example-previews)")
-            elif gif.stat().st_size > 2_500_000:
+            elif gif.stat().st_size > 15_000_000:
                 warnings.append(
                     f"EXAMPLES.md embed: {gif.name} is {gif.stat().st_size // 1024}K — "
-                    "may hit content-length limits; tighten preview settings"
+                    "very large for GitHub; consider tighter encode settings"
                 )
 
     for rel in AUDIO_MP4:

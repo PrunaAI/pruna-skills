@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build compact GIF previews for MP4s embedded in docs/EXAMPLES.md."""
+"""Build GIF previews for MP4s embedded in docs/EXAMPLES.md (full clip duration)."""
 
 from __future__ import annotations
 
@@ -17,12 +17,6 @@ MP4_IN_MD = re.compile(
     r"(?:examples/|assets/examples/)([a-z0-9][a-z0-9_-]*\.mp4)",
     re.IGNORECASE,
 )
-
-# ponytail: busy lip-sync clips need shorter previews to stay under ~1MB for GitHub
-PREVIEW_OVERRIDES: dict[str, dict[str, float | int]] = {
-    "p-video-replace-jacket.mp4": {"max_secs": 3.0, "fps": 8, "max_colors": 48},
-    "music-video-garage-drummer-clip.mp4": {"max_secs": 4.0, "fps": 10, "max_colors": 56},
-}
 
 
 def mp4s_in_examples_md() -> list[str]:
@@ -54,7 +48,6 @@ def make_gif(
     gif: Path,
     *,
     width: int,
-    max_secs: float,
     fps: int,
     max_colors: int,
     force: bool,
@@ -64,18 +57,16 @@ def make_gif(
             print(f"skip {gif.name} (up to date)")
             return False
 
-    duration = min(max_secs, probe_duration(mp4))
+    duration = probe_duration(mp4)
     vf = (
         f"fps={fps},scale={width}:-1:flags=lanczos,"
-        f"split[s0][s1];[s0]palettegen=max_colors={max_colors}[p];"
-        f"[s1][p]paletteuse=dither=bayer:bayer_scale=3"
+        f"split[s0][s1];[s0]palettegen=max_colors={max_colors}:stats_mode=full[p];"
+        f"[s1][p]paletteuse=dither=bayer:bayer_scale=2"
     )
     subprocess.run(
         [
             "ffmpeg",
             "-y",
-            "-t",
-            f"{duration:.3f}",
             "-i",
             str(mp4),
             "-an",
@@ -94,9 +85,8 @@ def make_gif(
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--width", type=int, default=320)
-    parser.add_argument("--max-secs", type=float, default=5.0)
-    parser.add_argument("--fps", type=int, default=10)
-    parser.add_argument("--max-colors", type=int, default=64)
+    parser.add_argument("--fps", type=int, default=8)
+    parser.add_argument("--max-colors", type=int, default=48)
     parser.add_argument("--force", action="store_true")
     parser.add_argument("mp4s", nargs="*", help="basenames (default: all mp4s referenced in EXAMPLES.md)")
     args = parser.parse_args()
@@ -111,20 +101,12 @@ def main() -> None:
         if not mp4.is_file():
             missing.append(name)
             continue
-        opts = {
-            "width": args.width,
-            "max_secs": args.max_secs,
-            "fps": args.fps,
-            "max_colors": args.max_colors,
-            **PREVIEW_OVERRIDES.get(name, {}),
-        }
         make_gif(
             mp4,
             OUT / f"{mp4.stem}.gif",
-            width=int(opts["width"]),
-            max_secs=float(opts["max_secs"]),
-            fps=int(opts["fps"]),
-            max_colors=int(opts["max_colors"]),
+            width=args.width,
+            fps=args.fps,
+            max_colors=args.max_colors,
             force=args.force,
         )
 

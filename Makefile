@@ -65,10 +65,9 @@ QUICKSTART_WIDTH ?= 280
 QUICKSTART_HEIGHT ?= 494
 QUICKSTART_VF = scale=$(QUICKSTART_WIDTH):$(QUICKSTART_HEIGHT):force_original_aspect_ratio=increase,crop=$(QUICKSTART_WIDTH):$(QUICKSTART_HEIGHT)
 # README thumbs write to readme-<stem>.* so full-res EXAMPLES assets stay intact
-README_EMBED_STILLS = music-video-garage-drummer p-image-try-on-drummer chain-monarch-01-open chain-monarch-02-end illustrated-library-whale
-README_EMBED_CLIPS = music-video-garage-drummer-clip chain-monarch-clip illustrated-library-whale-reel
-# GIF caps: short preview, tight palette (GitHub content-length)
-README_GIF_SECS ?= 3.5
+README_EMBED_STILLS = music-video-garage-drummer p-image-try-on-drummer chain-sneaker-01-open chain-sneaker-02-end illustrated-library-whale
+README_EMBED_CLIPS = music-video-garage-drummer-clip chain-sneaker-clip illustrated-library-whale-reel
+# GIF embeds: full clip duration, tight palette (GitHub content-length)
 README_GIF_FPS ?= 8
 README_GIF_COLORS ?= 48
 
@@ -80,8 +79,8 @@ readme-example-embeds:
 	done
 	@for c in $(README_EMBED_CLIPS); do \
 	  test -f docs/assets/examples/$$c.mp4 || (echo "missing docs/assets/examples/$$c.mp4" && exit 1); \
-	  ffmpeg -y -t $(README_GIF_SECS) -i docs/assets/examples/$$c.mp4 \
-	    -vf "fps=$(README_GIF_FPS),$(QUICKSTART_VF),split[s0][s1];[s0]palettegen=max_colors=$(README_GIF_COLORS)[p];[s1][p]paletteuse=dither=bayer:bayer_scale=3" \
+	  ffmpeg -y -i docs/assets/examples/$$c.mp4 \
+	    -vf "fps=$(README_GIF_FPS),$(QUICKSTART_VF),split[s0][s1];[s0]palettegen=max_colors=$(README_GIF_COLORS):stats_mode=full[p];[s1][p]paletteuse=dither=bayer:bayer_scale=2" \
 	    docs/assets/examples/readme-$$c.gif; \
 	done
 

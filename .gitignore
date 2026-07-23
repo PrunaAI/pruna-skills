@@ -227,10 +227,11 @@ plugins/*/reports/
 # Doc examples — canonical copy on HF dataset PrunaAI/pruna-skills (make download-doc-examples-hf)
 docs/assets/examples/*
 !docs/assets/examples/.gitkeep
-# README quickstart — GitHub embeds GIF/PNG from this repo (see make readme-example-embeds)
+# README quickstart — GitHub embeds from this repo (see make readme-example-embeds)
+!docs/assets/examples/readme-*.png
+!docs/assets/examples/readme-*.gif
 !docs/assets/examples/music-video-garage-drummer.png
 !docs/assets/examples/p-image-try-on-drummer.png
-!docs/assets/examples/music-video-garage-drummer-clip.gif
 # Vendored Pruna-docs examples — in git for GitHub + mirrored to HF via make sync-doc-examples-hf
 !docs/assets/examples/p-image-advanced.png
 !docs/assets/examples/p-image-advanced.meta.json
@@ -244,6 +245,3 @@ docs/assets/examples/*
 !docs/assets/examples/quickstart-knight-clip.mp4
 !docs/assets/examples/quickstart-knight-clip.meta.json
 !docs/assets/examples/quickstart-knight-clip.gif
-!docs/assets/examples/readme-chain-monarch-01-open.png
-!docs/assets/examples/readme-chain-monarch-02-end.png
-!docs/assets/examples/readme-chain-monarch-clip.gif
