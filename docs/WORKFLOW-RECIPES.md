@@ -14,7 +14,7 @@ For a single prompt with minimal intake — pick the shortest tool chain:
 | **i2v** | Motion from a still | `p-image` → `p-video` |
 | **avatar** | Talking head | `p-image` → `p-video-avatar` |
 
-For multi-scene plans with approval gates, use a workflow skill (`music-video`, `narrated-multi-scene`, …) via `npx skills add PrunaAI/pruna-skills@pruna -y`.
+For multi-scene plans with approval gates, use a workflow skill (`music-video`, `narrated-multi-scene`, …). Install the full suite first: `npx skills add PrunaAI/pruna-skills@pruna -y` — see [README Quickstart](../README.md#quickstart).
 
 ## Routing table (recipe → workflow)
 

@@ -62,7 +62,7 @@ def build_body() -> str:
             "",
             "# Pruna Skills — full catalog",
             "",
-            "Browse by type. Install commands: [skills/suite/pruna/SKILL.md](../skills/suite/pruna/SKILL.md). Quickstart: [README.md](../README.md).",
+            "Browse by type. Default install: **`/pruna`** — see [README Quickstart](../README.md#quickstart). Per-skill commands: [skills/suite/pruna/SKILL.md](../skills/suite/pruna/SKILL.md).",
             "",
             "## Available Skills",
             "",

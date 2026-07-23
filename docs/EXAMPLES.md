@@ -2,7 +2,7 @@
 
 Real prompts and outputs from the Pruna API — hosted on the [`PrunaAI/pruna-skills` Hugging Face dataset](https://huggingface.co/datasets/PrunaAI/pruna-skills) (`examples/`). **Vendored Pruna-docs examples** (knight i2v, P-Image advanced, edit demo, upscale pair) are also checked into [`docs/assets/examples/`](assets/examples/) so [EXAMPLES.md on GitHub](https://github.com/PrunaAI/pruna-skills/blob/main/docs/EXAMPLES.md) renders without a dataset sync. Each PNG or MP4 has a matching `.meta.json` with the exact prompt and model (audio/JSON sidecars where noted). Other example binaries are **not** in git; pull locally with `make download-doc-examples-hf` or regenerate with `make doc-examples`.
 
-Examples assume **`@pruna`** is installed (or the listed skill plus its **Prerequisites**). See [README Quickstart](../README.md#quickstart). Each section is one skill. **Ask your agent** lines are natural-language requests that load that tool or workflow. Model prompts are what hit the API. Open **Prompts & inputs** on each card to expand — outputs (images, clips, audio) stay visible.
+Examples assume the **`/pruna`** suite is installed (or the listed skill plus its guides). See [README Quickstart](../README.md#quickstart). Each section is one skill. **Ask your agent** lines are natural-language requests that load that tool or workflow. Model prompts are what hit the API. Open **Prompts & inputs** on each card to expand — outputs (images, clips, audio) stay visible.
 
 **GitHub / markdown viewers:** MP4 and MP3 do not inline-play from Hugging Face on github.com. Video sections show a **GIF preview** (click through for the full clip with audio). Audio sections link to the MP3 on the dataset.
 
@@ -45,7 +45,7 @@ The [README quickstart](../README.md#quickstart) walks through three examples: *
 
 ## Install
 
-See [README Quickstart](../README.md#quickstart) — recommended: `npx skills add PrunaAI/pruna-skills@pruna -y`. À la carte: `npx skills add PrunaAI/pruna-skills@<name> -y`.
+See [README Quickstart](../README.md#quickstart) — install `/pruna`: `npx skills add PrunaAI/pruna-skills@pruna -y`. One skill at a time: `npx skills add PrunaAI/pruna-skills@<name> -y`.
 
 ---
 

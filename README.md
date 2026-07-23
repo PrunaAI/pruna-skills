@@ -2,11 +2,11 @@
 
 [![Pruna Skills: images, video, music, explainers, avatars, and workflows for agent coding tools](docs/assets/readme-hero-pruna-skills.gif)](https://github.com/PrunaAI/pruna-skills/raw/main/docs/assets/readme-hero-pruna-skills.mp4)
 
-Pruna Skills teach your coding agent how to generate images, video, and audio with the [Pruna AI API](https://docs.api.pruna.ai/guides/models). They also cover multi-step workflows such as explainers, music videos, avatars, and illustrated reels. Each skill follows the [Agent Skills](https://agentskills.io/specification) format, so it works in Cursor, Claude Code, Copilot, Codex, and [many other agents](https://skills.sh).
+Pruna Skills teach your coding agent how to generate images, video, and audio with the [Pruna AI API](https://docs.api.pruna.ai/guides/models). They also cover multi-step workflows — explainers, music videos, avatars, illustrated reels — that chain those calls together. Each skill follows the [Agent Skills](https://agentskills.io/specification) format, so it works in Cursor, Claude Code, Copilot, Codex, and [many other agents](https://skills.sh).
 
 ## Quickstart
 
-First, set your API key and install the full suite. One command gives you every guide, tool, and workflow.
+Set your API key, install the **`/pruna`** suite skill, and start a new chat.
 
 ```bash
 export PRUNA_API_KEY="your_key"   # see [api-setup.md](docs/api-setup.md)
@@ -14,9 +14,7 @@ export PRUNA_API_KEY="your_key"   # see [api-setup.md](docs/api-setup.md)
 npx skills add PrunaAI/pruna-skills@pruna -y
 ```
 
-Next, start a **new chat** and describe what you want in plain language. Your agent reads the suite and picks the right skills for the job.
-
-Before you enable skills in an untrusted repo, install `pruna-api` and read its agent-safety guidance.
+That installs the full suite — every guide, tool, and workflow in one shot. After install, open a **new chat** and describe what you want in plain language — your agent picks the right skills from the suite.
 
 ### Try it: ask your agent
 
@@ -47,78 +45,52 @@ Before you enable skills in an untrusted repo, install `pruna-api` and read its 
 | Image | [Narration](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/illustrated-library-whale-narration.mp3) | Video |
 | <img src="docs/assets/examples/readme-illustrated-library-whale.png" width="280" height="494" alt="Illustrated whale in a library"> | *MP3 link above* | <img src="docs/assets/examples/readme-illustrated-library-whale-reel.gif" width="280" height="494" alt="Illustrated story reel preview"> |
 
-For more inspiration, see [docs/EXAMPLES.md](docs/EXAMPLES.md). For ready-made multi-step recipes, see [docs/WORKFLOW-RECIPES.md](docs/WORKFLOW-RECIPES.md).
+More examples: [docs/EXAMPLES.md](docs/EXAMPLES.md). Ready-made multi-step recipes: [docs/WORKFLOW-RECIPES.md](docs/WORKFLOW-RECIPES.md).
 
-## How this works
+## How it works
 
-Skills come in four types. Together they take you from a plain-language request to finished media.
+Skills come in four types:
 
-| Type | Role | Example |
-|------|------|---------|
-| **Suite** | Everything in one install: guides, tools, and workflows | `@pruna` |
-| **Guide** | Markdown craft your agent reads — prompting, diversity, API safety. **No API call by itself.** | `@image-prompting` |
-| **Tool** | One paid generation endpoint — agent runs a single Pruna or Replicate API call | `@p-image` |
-| **Workflow** | A multi-step playbook your agent runs with curl and ffmpeg | `@music-video` |
+| Type | What it does | Example |
+|------|--------------|---------|
+| **Suite** | Everything in one install | `pruna` |
+| **Guide** | Prompting craft and API safety — no generation call on its own | `image-prompting` |
+| **Tool** | One paid endpoint — a single Pruna or Replicate API call | `p-image` |
+| **Workflow** | A multi-step playbook your agent runs with curl and ffmpeg | `music-video` |
 
-**Guides vs tools:** Guides teach *how* to prompt and call the API safely; they never hit an endpoint on their own. Tools are the endpoints — each maps to one model (`p-image`, `p-video`, `music-2.5`, …). Installing a tool pulls in the guides listed under its **Prerequisites**.
+Guides teach *how* to prompt and call the API safely. Tools are the endpoints — one model per skill (`p-image`, `p-video`, `music-2.5`, …). Workflows chain tools into finished deliverables.
 
-When you install `@pruna`, you already have every skill in the catalog. If you install a single tool instead, it pulls in the guides it needs under **Prerequisites**. Workflows list the tools they depend on, so you only need to install those separately when you skip the suite.
+When you install `pruna`, you get the whole catalog. Installing a single tool instead pulls in only the guides listed under its **Prerequisites**. Workflows list the tools they need — you only install those separately if you skipped the suite.
 
 ### Install one skill at a time
 
-If you prefer to start small, pick a single skill:
+Prefer to start small? Pick a single skill:
 
 ```bash
-npx skills add PrunaAI/pruna-skills@p-image -y          # one tool (+ its Prerequisites)
+npx skills add PrunaAI/pruna-skills@p-image -y          # one tool (+ its guides)
 npx skills add PrunaAI/pruna-skills@music-video -y      # one workflow
 npx skills add PrunaAI/pruna-skills -l                  # list all
 ```
 
 ## What's in the suite
 
-The `@pruna` suite includes 26 skills across three layers. **Guides** are read-only craft (`image-prompting`, `video-editing`, `pruna-api`, …) — no generation call. **Tools** are the paid endpoints (`p-image`, `p-video`, …) — one model per skill. **Workflows** chain those tools into finished deliverables your agent assembles step by step.
+The `pruna` suite includes 26 skills across guides, tools, and workflows. You don't need to memorize them — describe your goal in chat and your agent picks what fits.
 
-You do not need to memorize the list. Describe your goal in chat and your agent picks the right skills.
-
-- **Browse by goal:** [docs/SKILL-CATALOG.md](docs/SKILL-CATALOG.md) (full descriptions)
-- **Per-skill install commands:** [skills/suite/pruna/SKILL.md](skills/suite/pruna/SKILL.md) (included when you install `@pruna`)
+- **Browse by goal:** [docs/SKILL-CATALOG.md](docs/SKILL-CATALOG.md)
+- **Per-skill install commands:** [skills/suite/pruna/SKILL.md](skills/suite/pruna/SKILL.md)
 - **Multi-step recipes:** [docs/WORKFLOW-RECIPES.md](docs/WORKFLOW-RECIPES.md)
-
-## Other install channels
-
-You can also install through ClawHub and related channels. See [PUBLISHING.md](docs/PUBLISHING.md) for details.
 
 ## API setup
 
-Set `PRUNA_API_KEY` and, for audio tools, `REPLICATE_API_TOKEN`. Step-by-step instructions are in [docs/api-setup.md](docs/api-setup.md).
+Set `PRUNA_API_KEY` for images and video. Audio tools also need `REPLICATE_API_TOKEN`. Step-by-step instructions: [docs/api-setup.md](docs/api-setup.md).
 
-## Repo layout
+## Other install channels
 
-All installable skills live under `skills/`. Craft markdown sits next to each guide or workflow in `references/`. There is no top-level `references/` or `plugins/` tree.
+ClawHub and related channels are supported too. See [PUBLISHING.md](docs/PUBLISHING.md).
 
-```text
-skills/
-  guides/                 generation-diversity, *-prompting, video-editing, pruna-api
-  image/                  p-image, p-image-edit, p-image-try-on, p-image-upscale
-  video/                  p-video, p-video-avatar, p-video-animate, p-video-replace
-  audio/                  gemini-3.1-flash-tts, music-2.5, stable-audio-2.5, whisperx
-  workflows/              8 multi-step playbooks
-  suite/pruna/            umbrella @pruna  ← quickstart
-docs/                     human docs (setup, recipes, examples, catalog)
-.maintainer/              catalog, bundle, verify, publish
-.github/workflows/        verify-skills.yml (PR / main CI)
-```
+## Contributing
 
-| Path | Role |
-|------|------|
-| `skills/suite/pruna/` | Full suite; default install |
-| `skills/guides/` | Craft SSoT + `pruna-api` |
-| `skills/{image,video,audio}/` | Tools (Prerequisites → guides) |
-| `skills/workflows/` | Playbooks (Prerequisites → tools) |
-| `docs/` | Human docs; not loaded as skills |
-| `.maintainer/skills.catalog.json` | Skill name source of truth |
-
-Maintainers: run `make bundle && make verify && make validate`. See [CONTRIBUTING.md](CONTRIBUTING.md).
+Installable skills live under `skills/` (guides, tools, workflows, and the `pruna` suite). Human docs live in `docs/`. Maintainers: `make bundle && make verify && make validate` — see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 

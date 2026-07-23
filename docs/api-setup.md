@@ -1,6 +1,6 @@
 # API setup
 
-Skills that call paid APIs need credentials before generation.
+Skills that call paid APIs need credentials before generation. If you installed the **`/pruna`** suite, you already have the `pruna-api` skill for HTTP patterns and agent-safety guidance.
 
 ## Environment variables
 
@@ -16,7 +16,7 @@ export REPLICATE_API_TOKEN="r8_..."   # when using audio / song tools
 
 ## HTTP details
 
-Install `pruna-api` for curl patterns:
+The `pruna-api` skill covers curl patterns:
 
 - Pruna uses the **`apikey`** header (`pruna-api.md` in that skill)
 - Replicate uses **`Authorization: Bearer`** (`replicate-api.md` in that skill)

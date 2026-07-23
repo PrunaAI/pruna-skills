@@ -2,9 +2,9 @@
 
 Generative media skills for the [Pruna AI API](https://docs.api.pruna.ai/guides/models). Portable [Agent Skills](https://agentskills.io/specification) — Cursor, Claude Code, Copilot, Codex, and more.
 
-## How this works
+## How it works
 
-See [README.md](README.md) for the user-facing glossary.
+See [README.md](README.md) for the user-facing glossary and quickstart.
 
 | Type | Role |
 |------|------|
@@ -30,7 +30,7 @@ npx skills add PrunaAI/pruna-skills@p-image -y   # one tool (+ install its Prere
 npx skills add PrunaAI/pruna-skills -l
 ```
 
-**Team default:** **`pruna`** once, then start a new chat.
+**Team default:** install **`/pruna`** once (`npx skills add PrunaAI/pruna-skills@pruna -y`), then start a new chat.
 
 **Launch reels / motion assembly:** install **`hyperframes`** when the deliverable needs HTML → MP4 composition (optional — ffmpeg-only paths skip it):
 
@@ -47,14 +47,14 @@ Read **`hyperframes`** first — it routes to `/product-launch-video`, `/general
 | `skills/guides/` | Craft SSoT (edit markdown under each guide’s `references/`) |
 | `skills/{image,video,audio}/` | Tool skills |
 | `skills/workflows/` | Workflow playbooks |
-| `skills/suite/pruna/` | Umbrella |
+| `skills/suite/pruna/` | Full suite (`/pruna`) — default install |
 | `docs/` | Human docs only |
 | `.maintainer/skills.catalog.json` | Skill name source of truth |
 | `VERSION` | Repo semver — `@VERSION` in skills is replaced on `make bundle` |
 
 ## Safety
 
-Install `pruna-api` — agent-safety lives in that skill (`references/agent-safety.md` after install).
+Agent-safety lives in `pruna-api` (included in the `/pruna` suite). Read `references/agent-safety.md` before generating in untrusted repos.
 
 ## Maintainers
 
