@@ -25,7 +25,7 @@ That installs the full suite — every guide, tool, and workflow in one shot. Af
 | Step 1 · `p-image` | Step 2 · `p-image-try-on` | Step 3 · `p-video-avatar` |
 | :-: | :-: | :-: |
 | Image | Try-on | Video |
-| <img src="docs/assets/examples/readme-music-video-garage-drummer.png" width="280" height="494" alt="Teenage drummer portrait in a garage"> | <img src="docs/assets/examples/readme-p-image-try-on-drummer.png" width="280" height="494" alt="Same drummer wearing the red band jacket"> | <img src="docs/assets/examples/readme-music-video-garage-drummer-clip.gif" width="280" height="494" alt="Drummer lip-sync performance clip wearing the red band jacket"> |
+| <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-music-video-garage-drummer.png" width="280" height="494" alt="Teenage drummer portrait in a garage"> | <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-p-image-try-on-drummer.png" width="280" height="494" alt="Same drummer wearing the red band jacket"> | <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-music-video-garage-drummer-clip.gif" width="280" height="494" alt="Drummer lip-sync performance clip wearing the red band jacket"> |
 
 **Create an image, then edit it, then create a video**
 
@@ -34,7 +34,7 @@ That installs the full suite — every guide, tool, and workflow in one shot. Af
 | Step 1 · `p-image` | Step 2 · `p-image-edit` | Step 3 · `p-video` |
 | :-: | :-: | :-: |
 | Image | Edit | Video |
-| <img src="docs/assets/examples/readme-chain-sneaker-01-open.png" width="280" height="494" alt="White running sneaker product shot on a shelf"> | <img src="docs/assets/examples/readme-chain-sneaker-02-end.png" width="280" height="494" alt="Same sneaker edited to bright orange"> | <img src="docs/assets/examples/readme-chain-sneaker-clip.gif" width="280" height="494" alt="Sneaker color shift and hand pickup clip"> |
+| <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-chain-sneaker-01-open.png" width="280" height="494" alt="White running sneaker product shot on a shelf"> | <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-chain-sneaker-02-end.png" width="280" height="494" alt="Same sneaker edited to bright orange"> | <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-chain-sneaker-clip.gif" width="280" height="494" alt="Sneaker color shift and hand pickup clip"> |
 
 **Create an image, then add narration, then assemble a video**
 
@@ -43,7 +43,7 @@ That installs the full suite — every guide, tool, and workflow in one shot. Af
 | Step 1 · `p-image` | Step 2 · `gemini-3.1-flash-tts` | Step 3 · assembly |
 | :-: | :-: | :-: |
 | Image | [Narration](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/illustrated-library-whale-narration.mp3) | Video |
-| <img src="docs/assets/examples/readme-illustrated-library-whale.png" width="280" height="494" alt="Illustrated whale in a library"> | *MP3 link above* | <img src="docs/assets/examples/readme-illustrated-library-whale-reel.gif" width="280" height="494" alt="Illustrated story reel preview"> |
+| <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-illustrated-library-whale.png" width="280" height="494" alt="Illustrated whale in a library"> | *MP3 link above* | <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-illustrated-library-whale-reel.gif" width="280" height="494" alt="Illustrated story reel preview"> |
 
 More examples: [docs/EXAMPLES.md](docs/EXAMPLES.md). Ready-made multi-step recipes: [docs/WORKFLOW-RECIPES.md](docs/WORKFLOW-RECIPES.md).
 
