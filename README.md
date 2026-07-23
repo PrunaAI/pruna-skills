@@ -9,10 +9,12 @@ Pruna Skills teach your coding agent how to generate images, video, and audio wi
 Set your API key, install the **`/pruna`** suite skill, and start a new chat.
 
 ```bash
-export PRUNA_API_KEY="your_key"   # see [api-setup.md](docs/api-setup.md)
+export PRUNA_API_KEY="your_key"
 
 npx skills add PrunaAI/pruna-skills@pruna -y
 ```
+
+See [docs/api-setup.md](docs/api-setup.md) for key setup.
 
 That installs the full suite — every guide, tool, and workflow in one shot. After install, open a **new chat** and describe what you want in plain language — your agent picks the right skills from the suite.
 
@@ -90,7 +92,7 @@ ClawHub and related channels are supported too. See [PUBLISHING.md](docs/PUBLISH
 
 ## Contributing
 
-Installable skills live under `skills/` (guides, tools, workflows, and the `pruna` suite). Human docs live in `docs/`. Maintainers: `make bundle && make verify && make validate` — see [CONTRIBUTING.md](CONTRIBUTING.md).
+Installable skills live under `skills/` (guides, tools, workflows, and the `pruna` suite). Human docs live in `docs/`. Maintainers: `make bundle && make validate` — see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 

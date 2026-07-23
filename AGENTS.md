@@ -54,7 +54,7 @@ Read **`hyperframes`** first — it routes to `/product-launch-video`, `/general
 
 ## Safety
 
-Agent-safety lives in `pruna-api` (included in the `/pruna` suite). Read `references/agent-safety.md` before generating in untrusted repos.
+Agent-safety lives in `pruna-api` (included in the `/pruna` suite). Read `skills/guides/pruna-api/references/agent-safety.md` before generating in untrusted repos.
 
 ## Maintainers
 

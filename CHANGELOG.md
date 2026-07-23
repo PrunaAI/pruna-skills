@@ -4,6 +4,18 @@ All notable changes to Pruna Skills are documented here. Skill and plugin `metad
 
 ## [Unreleased]
 
+### Removed
+
+- Orphan tracked assets: `docs/assets/readme-hero-pruna-skills.png`, `docs/assets/examples/readme-chain-monarch-*` (README quickstart embeds superseded by sneaker/drummer/whale chains).
+
+### Changed
+
+- README: api-setup link outside code fence; maintainer command aligned to `make bundle && make validate`.
+- AGENTS: fix `agent-safety.md` path under `skills/guides/pruna-api/references/`.
+- `visual-transition-reel/example-prompt.md`: `output/visual-transition-reel/` (removed stale `output/core/`).
+- BACKLOG: trim completed description-audit section and duplicate install bootstrap.
+- `.gitignore`: `.DS_Store`, `docs/assets/examples/*.tmp`, `_preview/`.
+
 ## [1.0.7] — 2026-07-23
 
 GitHub tag: `skills-v1.0.7`

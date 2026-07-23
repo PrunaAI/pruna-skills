@@ -9,9 +9,9 @@ Build smooth multi-scene reels: **`p-image`** hero → **`p-image-edit`** start/
 ## Copy plan template
 
 ```bash
-mkdir -p output/core/visual-transition-reel/my-transitions/{stills,clips}
+mkdir -p output/visual-transition-reel/my-transitions/{stills,clips}
 cp skills/workflows/visual-transition-reel/templates/transition-plan.template.json \
-   output/core/visual-transition-reel/my-transitions/plan.json
+   output/visual-transition-reel/my-transitions/plan.json
 ```
 
 Edit scene `edit_prompt`, `last_frame_edit_prompt`, and `video_prompt` rows, then follow the phase table in `this skill` (agent runs curl + ffmpeg — no Python runner).
