@@ -17,6 +17,7 @@ Browse by type. Default install: **`/pruna`** — see [README Quickstart](../REA
 | Skill | Description |
 |-------|-------------|
 | [audio-prompting](https://github.com/PrunaAI/pruna-skills/tree/main/skills/guides/audio-prompting/SKILL.md) | Use when crafting TTS, music, or bed prompts for any generative audio model — director style, song structure, and pos… |
+| [branding](https://github.com/PrunaAI/pruna-skills/tree/main/skills/guides/branding/SKILL.md) | Use when applying official Pruna brand assets — logo selection, colors, and overlay rules for launches, social, and v… |
 | [generation-diversity](https://github.com/PrunaAI/pruna-skills/tree/main/skills/guides/generation-diversity/SKILL.md) | Use when writing any generative prompt — ritual seed, explicit structure, scenario axes, and quality gates before pai… |
 | [image-prompting](https://github.com/PrunaAI/pruna-skills/tree/main/skills/guides/image-prompting/SKILL.md) | Use when crafting still-image prompts for any generative model — composition, identity sheets, edits, try-on, and pho… |
 | [pruna-api](https://github.com/PrunaAI/pruna-skills/tree/main/skills/guides/pruna-api/SKILL.md) | Use before any Pruna or Replicate HTTP call — credentials, upload/poll/download, parallel batches, and agent safety. |

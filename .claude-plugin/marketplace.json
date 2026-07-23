@@ -28,6 +28,12 @@
       "source": "./skills/workflows/avatar-single-scene"
     },
     {
+      "name": "branding",
+      "description": "Use when applying official Pruna brand assets \u2014 logo selection, colors, and overlay rules for launches, social, and video.",
+      "version": "1.0.7",
+      "source": "./skills/guides/branding"
+    },
+    {
       "name": "gemini-3.1-flash-tts",
       "description": "Use when someone needs spoken narration or voiceover \u2014 explainer tracks, documentary lines, or voice to pair with generated video.",
       "version": "1.0.7",

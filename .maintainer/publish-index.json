@@ -35,6 +35,12 @@
       "npxInstall": "npx skills add PrunaAI/pruna-skills@video-editing -y"
     },
     {
+      "name": "branding",
+      "skillPath": "skills/guides/branding",
+      "clawhubSkill": "@pruna-ai/branding",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@branding -y"
+    },
+    {
       "name": "pruna-api",
       "skillPath": "skills/guides/pruna-api",
       "clawhubSkill": "@pruna-ai/pruna-api",

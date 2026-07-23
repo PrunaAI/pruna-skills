@@ -11,6 +11,7 @@ depends:
   - video-prompting
   - audio-prompting
   - video-editing
+  - branding
   - pruna-api
   - p-image
   - p-image-edit
@@ -57,6 +58,7 @@ After install, start a **new chat**. Your agent picks skills from the suite by n
 | `video-prompting` | Use when crafting video or motion prompts for any generative model — dramaturgy, camera, physics-safe motion, frame anchors, and clip chaining. | `npx skills add PrunaAI/pruna-skills@video-prompting -y` |
 | `audio-prompting` | Use when crafting TTS, music, or bed prompts for any generative audio model — director style, song structure, and post-production layering. | `npx skills add PrunaAI/pruna-skills@audio-prompting -y` |
 | `video-editing` | Use when assembling or polishing already-rendered clips with ffmpeg — concat, crossfades, burned captions and subtitles, text/logo overlays, before/after sliders, background music beds, platform export — or when composing a multi-layer HTML combination video with Hyperframes. Not for AI video generation, prompt craft, or model-based video edits. | `npx skills add PrunaAI/pruna-skills@video-editing -y` |
+| `branding` | Use when applying official Pruna brand assets — logo selection, colors, and overlay rules for launches, social, and video. | `npx skills add PrunaAI/pruna-skills@branding -y` |
 | `pruna-api` | Use before any Pruna or Replicate HTTP call — credentials, upload/poll/download, parallel batches, and agent safety. | `npx skills add PrunaAI/pruna-skills@pruna-api -y` |
 
 ### Tools
