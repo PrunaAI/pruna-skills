@@ -3,7 +3,7 @@ name: gemini-3.1-flash-tts
 description: Use when someone needs spoken narration or voiceover — explainer tracks, documentary lines, or voice to pair with generated video.
 license: MIT
 metadata:
-  version: "@VERSION"
+  version: "1.0.7"
   package: pruna-skills
   provider: replicate
   replicate_model: google/gemini-3.1-flash-tts

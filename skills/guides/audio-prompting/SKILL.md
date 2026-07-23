@@ -3,7 +3,7 @@ name: audio-prompting
 description: Use when crafting TTS, music, or bed prompts for any generative audio model — director style, song structure, and post-production layering.
 license: MIT
 metadata:
-  version: "@VERSION"
+  version: "1.0.7"
   package: pruna-skills
 ---
 

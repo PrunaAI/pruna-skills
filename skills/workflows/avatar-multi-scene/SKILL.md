@@ -3,7 +3,7 @@ name: avatar-multi-scene
 description: Use when someone wants the same person hosting several clips — multi-segment UGC, comparison reels, or mixed speaking and animated scenes with continuity.
 license: MIT
 metadata:
-  version: "@VERSION"
+  version: "1.0.7"
   package: pruna-skills
 ---
 

@@ -3,7 +3,7 @@ name: video-prompting
 description: Use when crafting video or motion prompts for any generative model — dramaturgy, camera, physics-safe motion, frame anchors, and clip chaining.
 license: MIT
 metadata:
-  version: "@VERSION"
+  version: "1.0.7"
   package: pruna-skills
 ---
 

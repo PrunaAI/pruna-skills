@@ -19,7 +19,6 @@ done <<<"$STAGED"
 if [[ "${NEEDS_BUNDLE}" -eq 1 ]]; then
   echo "Regenerating catalog …"
   ./.maintainer/bundle_all_skills.sh
-  python3 .maintainer/sync_skill_versions.py --placeholders
   git add skills/ skills.sh.json docs/SKILL-CATALOG.md .maintainer/publish-index.json .claude-plugin/marketplace.json README.md AGENTS.md 2>/dev/null || true
 fi
 

@@ -3,7 +3,7 @@ name: pruna
 description: Use when installing the full Pruna generative media suite — all guides, tools, and workflows in one package.
 license: MIT
 metadata:
-  version: "@VERSION"
+  version: "1.0.7"
   package: pruna-skills
 depends:
   - generation-diversity

@@ -3,7 +3,7 @@ name: image-prompting
 description: Use when crafting still-image prompts for any generative model — composition, identity sheets, edits, try-on, and photoreal personas.
 license: MIT
 metadata:
-  version: "@VERSION"
+  version: "1.0.7"
   package: pruna-skills
 ---
 

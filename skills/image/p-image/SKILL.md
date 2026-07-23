@@ -3,7 +3,7 @@ name: p-image
 description: Use when someone wants a fast AI image — product shots, hero visuals, mood boards, or draft photos from a text prompt.
 license: MIT
 metadata:
-  version: "@VERSION"
+  version: "1.0.7"
   package: pruna-skills
   pruna_model: p-image
 ---
