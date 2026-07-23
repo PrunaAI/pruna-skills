@@ -231,6 +231,7 @@ docs/assets/examples/*
 !docs/assets/examples/music-video-garage-drummer.png
 !docs/assets/examples/p-image-try-on-drummer.png
 !docs/assets/examples/music-video-garage-drummer-clip.gif
-!docs/assets/examples/readme-quickstart-knight-still.png
-!docs/assets/examples/readme-p-image-edit-demo.png
-!docs/assets/examples/readme-quickstart-knight-clip.gif
+# README quickstart row 2 (monarch chain) — also on HF; knight i2v assets live on HF only (make sync-doc-examples-hf)
+!docs/assets/examples/readme-chain-monarch-01-open.png
+!docs/assets/examples/readme-chain-monarch-02-end.png
+!docs/assets/examples/readme-chain-monarch-clip.gif

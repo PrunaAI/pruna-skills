@@ -14,7 +14,7 @@ Publish to Hugging Face and refresh markdown URLs: `make sync-doc-examples-hf` (
 
 Images use max P-API resolution (1440px edge); videos use final **1080p @ 24fps** (720p for some motion-transfer demos).
 
-The [README quickstart](../README.md#quickstart) walks through three examples: **create an image, then try on clothes, then create a video**; **create an image, then edit it, then create a video**; and **create an image, then add narration, then assemble a video**.
+The [README quickstart](../README.md#quickstart) walks through three examples: **create an image, then try on clothes, then create a video**; **create an image, then edit it, then create a video** (monarch chain — [below](#chain--monarch-on-lavender-p-image--p-image-edit--p-video)); and **create an image, then add narration, then assemble a video**.
 
 ## Coverage
 

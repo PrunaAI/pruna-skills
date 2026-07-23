@@ -31,12 +31,12 @@ Before you enable skills in an untrusted repo, install `pruna-api` and read its 
 
 **Create an image, then edit it, then create a video**
 
-> Create a photoreal knight in a medieval village. See how P-Image-Edit refines stills. Animate the knight walking through the village and entering the castle gate — same pattern as [Pruna's image-to-video guide](https://docs.pruna.ai/en/stable/docs_pruna_endpoints/performance_models/workflows/image_to_video.html).
+> Make a short clip of a monarch butterfly on lavender — start with wings closed, edit to wings open, then animate a slow wing spread.
 
 | Step 1 · `p-image` | Step 2 · `p-image-edit` | Step 3 · `p-video` |
 | :-: | :-: | :-: |
 | Image | Edit | Video |
-| <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-quickstart-knight-still.png" width="280" height="494" alt="Knight still in a medieval village"> | <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-p-image-edit-demo.png" width="280" height="494" alt="P-Image-Edit example from Pruna docs"> | <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-quickstart-knight-clip.gif" width="280" height="494" alt="Knight walks through village into castle gate"> |
+| <img src="docs/assets/examples/readme-chain-monarch-01-open.png" width="280" height="494" alt="Monarch butterfly on lavender, wings closed"> | <img src="docs/assets/examples/readme-chain-monarch-02-end.png" width="280" height="494" alt="Same butterfly with wings open"> | <img src="docs/assets/examples/readme-chain-monarch-clip.gif" width="280" height="494" alt="Monarch slowly spreading its wings"> |
 
 **Create an image, then add narration, then assemble a video**
 
