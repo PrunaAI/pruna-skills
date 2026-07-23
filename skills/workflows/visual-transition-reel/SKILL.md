@@ -3,7 +3,7 @@ name: visual-transition-reel
 description: Use when someone wants a montage with transitions between shots — action-sequence reel or multi-scene piece where narration is optional.
 license: MIT
 metadata:
-  version: "1.0.6"
+  version: "@VERSION"
   package: pruna-skills
 ---
 
@@ -205,4 +205,5 @@ Related skills:
 | --- | --- | --- |
 | `image-to-video` | Use when someone wants one short film beat from images — a narrated scene, story moment, or cinematic B-roll with optional voiceover. | `npx skills add PrunaAI/pruna-skills@image-to-video -y` |
 | `narrated-multi-scene` | Use when someone wants a multi-part story with voiceover — episodic B-roll, chaptered promo, or several linked video scenes without on-camera dialogue. | `npx skills add PrunaAI/pruna-skills@narrated-multi-scene -y` |
+| `video-editing` | Use when assembling or polishing already-rendered clips with ffmpeg — concat, crossfades, burned captions and subtitles, text/logo overlays, before/after sliders, background music beds, platform export — or when composing a multi-layer HTML combination video with Hyperframes. Not for AI video generation, prompt craft, or model-based video edits. | `npx skills add PrunaAI/pruna-skills@video-editing -y` |
 

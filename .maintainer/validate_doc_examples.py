@@ -18,13 +18,16 @@ MP4_IN_MD = re.compile(
     re.IGNORECASE,
 )
 
-# Required paths per skill (file must exist under OUT)
 REQUIRED: dict[str, list[str]] = {
-    "p-image": ["p-image-brass-hummingbird.png", "p-image-brass-hummingbird.meta.json"],
-    "p-image-edit": ["chain-monarch-02-end.png", "chain-monarch-02-end.meta.json"],
-    "p-image-upscale": ["p-image-upscale-hummingbird.png", "p-image-upscale-hummingbird.meta.json"],
+    "p-image": ["p-image-advanced.png", "p-image-advanced.meta.json"],
+    "p-image-edit": ["p-image-edit-demo.png", "p-image-edit-demo.meta.json"],
+    "p-image-upscale": ["p-image-upscale-advanced.png", "p-image-upscale-advanced.meta.json"],
     "p-image-try-on": ["p-image-try-on-drummer.png", "p-image-try-on-garage-jacket.png"],
-    "p-video": ["chain-monarch-clip.mp4", "image-to-video-aurora-clip.mp4"],
+    "p-video": [
+        "chain-monarch-clip.mp4",
+        "image-to-video-knight-clip.mp4",
+        "quickstart-knight-clip.mp4",
+    ],
     "p-video-avatar": ["music-video-garage-drummer-clip.mp4"],
     "p-video-animate": ["p-video-animate-monarch.mp4", "chain-monarch-animate-template.mp4"],
     "p-video-replace": ["p-video-replace-jacket.mp4", "p-video-replace-source.mp4"],
@@ -32,8 +35,12 @@ REQUIRED: dict[str, list[str]] = {
     "music-2.5": ["music-video-garage-drummer-song.mp3", "music-video-garage-drummer-song.meta.json"],
     "stable-audio-2.5": ["stable-audio-library-bed.mp3", "stable-audio-library-bed.meta.json"],
     "whisperx": ["whisperx-drummer-song.json", "whisperx-drummer-song.meta.json"],
-    "image-to-video": ["image-to-video-aurora-still.png", "image-to-video-aurora-clip.mp4"],
-    "visual-transition-reel": ["chain-monarch-01-open.png", "chain-monarch-02-end.png", "chain-monarch-clip.mp4"],
+    "image-to-video": ["image-to-video-knight-still.png", "image-to-video-knight-clip.mp4"],
+    "visual-transition-reel": [
+        "chain-monarch-01-open.png",
+        "chain-monarch-02-end.png",
+        "chain-monarch-clip.mp4",
+    ],
     "narrated-multi-scene": [
         "narrated-multi-scene-demo.mp4",
         "narrated-multi-scene-demo.meta.json",
@@ -58,7 +65,6 @@ REQUIRED: dict[str, list[str]] = {
     ],
 }
 
-# MP4s that must carry an audio stream
 AUDIO_MP4 = {
     "music-video-garage-drummer-clip.mp4",
     "illustrated-library-whale-reel.mp4",
@@ -141,12 +147,10 @@ def main() -> int:
         if words < 5:
             errors.append(f"whisperx: expected word timestamps, got {words} words")
 
-    src = OUT / "p-image-brass-hummingbird.png"
-    up = OUT / "p-image-upscale-hummingbird.png"
-    if src.exists() and up.exists():
-        # ponytail: compare file size as cheap upscale signal
-        if up.stat().st_size <= src.stat().st_size:
-            warnings.append("p-image-upscale: output not larger than source — verify upscale ran")
+    src = OUT / "p-image-upscale-source.png"
+    up = OUT / "p-image-upscale-advanced.png"
+    if src.exists() and up.exists() and up.stat().st_size <= src.stat().st_size:
+        warnings.append("p-image-upscale: output not larger than source — verify upscale ran")
 
     ams = OUT / "avatar-multi-scene-demo.meta.json"
     if ams.exists():

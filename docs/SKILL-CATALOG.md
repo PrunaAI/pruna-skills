@@ -20,6 +20,7 @@ Browse by type. Install commands: [skills/suite/pruna/SKILL.md](../skills/suite/
 | [generation-diversity](https://github.com/PrunaAI/pruna-skills/tree/main/skills/guides/generation-diversity/SKILL.md) | Use when writing any generative prompt — ritual seed, explicit structure, scenario axes, and quality gates before pai… |
 | [image-prompting](https://github.com/PrunaAI/pruna-skills/tree/main/skills/guides/image-prompting/SKILL.md) | Use when crafting still-image prompts for any generative model — composition, identity sheets, edits, try-on, and pho… |
 | [pruna-api](https://github.com/PrunaAI/pruna-skills/tree/main/skills/guides/pruna-api/SKILL.md) | Use before any Pruna or Replicate HTTP call — credentials, upload/poll/download, parallel batches, and agent safety. |
+| [video-editing](https://github.com/PrunaAI/pruna-skills/tree/main/skills/guides/video-editing/SKILL.md) | Use when assembling or polishing already-rendered clips with ffmpeg — concat, crossfades, burned captions and subtitl… |
 | [video-prompting](https://github.com/PrunaAI/pruna-skills/tree/main/skills/guides/video-prompting/SKILL.md) | Use when crafting video or motion prompts for any generative model — dramaturgy, camera, physics-safe motion, frame a… |
 
 ### Tools — image (Pruna API)
@@ -47,7 +48,7 @@ Browse by type. Install commands: [skills/suite/pruna/SKILL.md](../skills/suite/
 | [gemini-3.1-flash-tts](https://github.com/PrunaAI/pruna-skills/tree/main/skills/audio/gemini-3.1-flash-tts/SKILL.md) | Use when someone needs spoken narration or voiceover — explainer tracks, documentary lines, or voice to pair with gen… |
 | [music-2.5](https://github.com/PrunaAI/pruna-skills/tree/main/skills/audio/music-2.5/SKILL.md) | Use when someone wants an original AI song with vocals — sung lyrics, a style prompt track, or source audio for a mus… |
 | [stable-audio-2.5](https://github.com/PrunaAI/pruna-skills/tree/main/skills/audio/stable-audio-2.5/SKILL.md) | Use when someone wants light instrumental background music — an ambient bed under dialogue or underscore for reels an… |
-| [whisperx](https://github.com/PrunaAI/pruna-skills/tree/main/skills/audio/whisperx/SKILL.md) | Use when someone needs word-level lyric timestamps or cut-safe line boundaries before editing music-video clips. |
+| [whisperx](https://github.com/PrunaAI/pruna-skills/tree/main/skills/audio/whisperx/SKILL.md) | Use when someone needs word-level timestamps from audio — lyric alignment, cut-safe line boundaries, or caption sourc… |
 
 ### Workflows
 

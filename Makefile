@@ -1,4 +1,7 @@
-.PHONY: bundle bundle-skill verify validate validate-doc-examples publish release skills-sh readme smoke upload-doc-examples-hf download-doc-examples-hf doc-examples-urls sync-doc-examples-hf format-examples-md embed-examples-md doc-example-previews readme-example-embeds readme-quickstart-embeds
+.PHONY: bundle bundle-skill verify validate validate-doc-examples publish release skills-sh readme smoke upload-doc-examples-hf download-doc-examples-hf doc-examples-urls sync-doc-examples-hf format-examples-md embed-examples-md doc-example-previews readme-example-embeds readme-quickstart-embeds install-companion-skills sync-versions
+
+sync-versions:
+	python3 .maintainer/sync_skill_versions.py
 
 bundle:
 	./.maintainer/bundle_all_skills.sh
@@ -16,6 +19,9 @@ validate:
 
 smoke:
 	./.maintainer/smoke_install.sh
+
+install-companion-skills:
+	./.maintainer/install_companion_skills.sh
 
 publish:
 	./.maintainer/release/publish_all_skills.sh
@@ -59,8 +65,8 @@ QUICKSTART_WIDTH ?= 280
 QUICKSTART_HEIGHT ?= 494
 QUICKSTART_VF = scale=$(QUICKSTART_WIDTH):$(QUICKSTART_HEIGHT):force_original_aspect_ratio=increase,crop=$(QUICKSTART_WIDTH):$(QUICKSTART_HEIGHT)
 # README thumbs write to readme-<stem>.* so full-res EXAMPLES assets stay intact
-README_EMBED_STILLS = music-video-garage-drummer p-image-try-on-drummer quickstart-panda-01-open quickstart-panda-02-end illustrated-library-whale
-README_EMBED_CLIPS = music-video-garage-drummer-clip quickstart-panda-clip illustrated-library-whale-reel
+README_EMBED_STILLS = music-video-garage-drummer p-image-try-on-drummer quickstart-knight-still p-image-edit-demo illustrated-library-whale
+README_EMBED_CLIPS = music-video-garage-drummer-clip quickstart-knight-clip illustrated-library-whale-reel
 # GIF caps: short preview, tight palette (GitHub content-length)
 README_GIF_SECS ?= 3.5
 README_GIF_FPS ?= 8

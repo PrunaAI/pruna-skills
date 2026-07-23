@@ -25,8 +25,10 @@ Each file under `examples/` matches a skill demo in [docs/EXAMPLES.md](https://g
 
 ```text
 examples/
-  p-image-brass-hummingbird.png
-  p-image-brass-hummingbird.meta.json
+  p-image-advanced.png
+  p-image-advanced.meta.json
+  quickstart-knight-still.png
+  quickstart-knight-clip.mp4
   chain-monarch-clip.mp4
   …
 ```
@@ -37,12 +39,12 @@ From the skills repo:
 
 ```bash
 make download-doc-examples-hf   # pull checked-in examples from HF (no API)
-make doc-examples               # regenerate via Pruna API
-make upload-doc-examples-hf
-make doc-examples-urls
+python3 .maintainer/generate_doc_examples.py --only pruna-docs-vendor
+make doc-examples               # regenerate API-backed examples
+make sync-doc-examples-hf       # upload + refresh EXAMPLES.md HF URLs
 ```
 
-Requires `PRUNA_API_KEY` for generation and a Hugging Face token with write access to `PrunaAI/pruna-skills`.
+Requires `PRUNA_API_KEY` for API generation and a Hugging Face token with write access to `PrunaAI/pruna-skills`.
 
 ## Direct URL
 

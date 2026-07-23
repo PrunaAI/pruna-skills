@@ -1,6 +1,6 @@
 # Publishing skills
 
-Skills live under [`skills/`](../skills/) (guides, tools, workflows, suite). There is no top-level `references/` or `plugins/` tree. Version is repo [VERSION](../VERSION), synced into every `SKILL.md` `metadata.version`.
+Skills live under [`skills/`](../skills/) (guides, tools, workflows, suite). There is no top-level `references/` or `plugins/` tree. Version is repo [VERSION](../VERSION), injected into every skill via the `@VERSION` placeholder (`make bundle` / `sync_skill_versions.py`).
 
 **Version alignment:** ClawHub skill versions and the GitHub release tag **`skills-v<VERSION>`** must match [VERSION](../VERSION). Record release notes in [CHANGELOG.md](../CHANGELOG.md) before tagging.
 

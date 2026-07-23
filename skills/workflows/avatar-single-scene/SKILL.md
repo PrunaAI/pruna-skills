@@ -3,7 +3,7 @@ name: avatar-single-scene
 description: Use when someone wants one polished host-on-camera beat — a speaking person with intake and approval gates before generation.
 license: MIT
 metadata:
-  version: "1.0.6"
+  version: "@VERSION"
   package: pruna-skills
 ---
 
@@ -95,4 +95,5 @@ Related skills:
 | Skill | Description | Install |
 | --- | --- | --- |
 | `avatar-multi-scene` | Use when someone wants the same person hosting several clips — multi-segment UGC, comparison reels, or mixed speaking and animated scenes with continuity. | `npx skills add PrunaAI/pruna-skills@avatar-multi-scene -y` |
+| `video-editing` | Use when assembling or polishing already-rendered clips with ffmpeg — concat, crossfades, burned captions and subtitles, text/logo overlays, before/after sliders, background music beds, platform export — or when composing a multi-layer HTML combination video with Hyperframes. Not for AI video generation, prompt craft, or model-based video edits. | `npx skills add PrunaAI/pruna-skills@video-editing -y` |
 

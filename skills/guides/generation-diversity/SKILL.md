@@ -3,7 +3,7 @@ name: generation-diversity
 description: Use when writing any generative prompt — ritual seed, explicit structure, scenario axes, and quality gates before paid API calls.
 license: MIT
 metadata:
-  version: "1.0.6"
+  version: "@VERSION"
   package: pruna-skills
 ---
 

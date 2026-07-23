@@ -25,6 +25,7 @@ if str(DOC_EXAMPLES) not in sys.path:
     sys.path.insert(0, str(DOC_EXAMPLES))
 
 from assemble_slideshow import concat_clips_with_audio, mux_audio, probe_duration, render_still_segment  # noqa: E402
+from vendor_pruna_docs import vendor_pruna_docs  # noqa: E402
 from replicate_api import (  # noqa: E402
     download_url,
     require_replicate_token,
@@ -502,53 +503,20 @@ def save_image(name: str, prompt: str, aspect_ratio: str) -> Path:
     return save_png(name, "p-image", prompt, inp, predict("p-image", inp))
 
 
-def gen_quickstart_panda(*, video_only: bool = False) -> None:
-    panda_open = (
-        "9:16 whimsical photoreal portrait, fluffy red panda in a tiny apron pulling latte art "
-        "in a sunlit Kyoto café, steam curls, ceramic cups, warm wood interior, mouth not "
-        "obscured, charming and detailed, no text"
-    )
-    end_prompt = (
-        "Same red panda barista character and face, inside a Mars habitat room with a large "
-        "panoramic window showing red desert outside, small Earth visible in the sky, olive "
-        "flight suit with helmet off, keep fur colors and facial features identical, cinematic "
-        "sci-fi interior lighting, not inside a glass jar, no text"
-    )
-    video_prompt = (
-        "OPEN: locked eye-level camera, gentle steam rise, two second hold. "
-        "MID: same red panda stays centered and same scale, extremely smooth slow dissolve — café walls and "
-        "tables fade gradually into deep starfield over six seconds, no hard cuts, no pops, no morphing away the subject. "
-        "CLOSE: ease gently into Mars habitat by the window, same panda in flight suit, subtle dust outside, calm settle."
-    )
-    if video_only:
-        open_path = OUT / "quickstart-panda-01-open.png"
-        end_path = OUT / "quickstart-panda-02-end.png"
-        if not open_path.exists() or not end_path.exists():
-            sys.exit("missing quickstart panda stills for video-only regen")
-        render_video("quickstart-panda-clip", video_prompt, open_path, end_path, duration=CHAIN_DURATION)
-        return
-
-    panda_path = save_image("quickstart-panda-01-open", panda_open, "9:16")
-    image_chain(
-        "quickstart-panda",
-        open_prompt=panda_open,
-        open_path=panda_path,
-        end_prompt=end_prompt,
-        video_prompt=video_prompt,
-        aspect_ratio="9:16",
-        duration=CHAIN_DURATION,
-    )
+def gen_pruna_docs_vendor() -> None:
+    """Download official Pruna doc showcase media — no API generation."""
+    vendor_pruna_docs(OUT)
 
 
 def gen_chain_monarch(*, video_only: bool = False) -> None:
     style = "soft purple garden bokeh, morning dew, photoreal cinematic 16:9"
     open_prompt = (
         "16:9 macro still, monarch butterfly perched on lavender stem, wings closed upright "
-        f"showing orange edge only, dew drops, {style}, no text"
+        f"showing orange edge only, dew drops, {style}, single frame"
     )
     end_prompt = (
         "Same butterfly same lavender same camera. Wings open wide displaying full orange and "
-        f"black pattern, same dew and bokeh, keep composition identical, {style}, no text"
+        f"black pattern, same dew and bokeh, keep composition identical, {style}, single frame"
     )
     video_prompt = (
         "OPEN: static macro on monarch with wings closed on lavender, dew sparkling, hold two seconds. "
@@ -571,6 +539,25 @@ def gen_chain_monarch(*, video_only: bool = False) -> None:
         video_prompt,
         aspect_ratio="16:9",
         duration=CHAIN_DURATION,
+    )
+
+
+AURORA_IMAGE_PROMPT = (
+    "16:9 wide landscape, aurora borealis rippling green and violet over frozen lake, "
+    "tiny ice fishing huts with warm window glow, footprints in snow, crisp arctic night, single frame"
+)
+AURORA_VIDEO_PROMPT = (
+    "Slow gentle pan across aurora curtains, soft snow flurries, hut windows glow warmly"
+)
+
+
+def gen_image_to_video_aurora(*, video_only: bool = False) -> None:
+    image_to_video(
+        "image-to-video-aurora",
+        image_prompt=AURORA_IMAGE_PROMPT,
+        video_prompt=AURORA_VIDEO_PROMPT,
+        duration=CLIP_DURATION,
+        regen_video_only=video_only,
     )
 
 
@@ -748,7 +735,7 @@ NMS_SCENE2_NARRATION = (
 NMS_SCENE2_NARRATION_STYLE = "Calm documentary narrator, quiet awe, unhurried pace."
 AURORA_END_PROMPT = (
     "Same 16:9 frozen lake aurora vista, aurora curtains ripple higher and brighter toward zenith, "
-    "soft snow flurries drift, ice fishing huts glow warmer, identical composition, no text"
+    "soft snow flurries drift, ice fishing huts glow warmer, identical composition, single frame"
 )
 NMS_SCENE2_VIDEO = (
     "OPEN: hold wide on aurora over frozen lake, huts glowing, static camera. "
@@ -790,37 +777,11 @@ def ensure_sidecars(*, missing_only: bool = True) -> None:
             )
 
 
-def gen_p_image_upscale_hummingbird(*, missing_only: bool = False) -> None:
-    out = OUT / "p-image-upscale-hummingbird.png"
+def gen_p_image_upscale(*, missing_only: bool = False) -> None:
+    out = OUT / "p-image-upscale-advanced.png"
     if skip_if_exists(out, missing_only=missing_only):
         return
-    src = OUT / "p-image-brass-hummingbird.png"
-    if not src.exists():
-        save_image(
-            "p-image-brass-hummingbird",
-            (
-                "1:1 macro product photo, clockwork brass hummingbird frozen mid-flap inside a glass "
-                "terrarium, tiny gears visible, dew on glass, moody forest bokeh background, museum "
-                "exhibit lighting, no text"
-            ),
-            "1:1",
-        )
-        src = OUT / "p-image-brass-hummingbird.png"
-    wipe("p-image-upscale-hummingbird")
-    inp = {
-        "image": upload_file(src),
-        "target": 8,
-        "enhance_details": True,
-        "output_format": "png",
-    }
-    meta_inp = {**inp, "image": src.name}
-    save_png(
-        "p-image-upscale-hummingbird",
-        "p-image-upscale",
-        "Upscale brass hummingbird for print delivery",
-        meta_inp,
-        predict("p-image-upscale", inp, sync=False, max_polls=120, poll_secs=4),
-    )
+    gen_pruna_docs_vendor()
 
 
 def gen_p_image_try_on_drummer(*, missing_only: bool = False) -> None:
@@ -866,7 +827,6 @@ def gen_p_video_animate_monarch(*, missing_only: bool = False) -> None:
     motion = trim_video(motion_src, 5.0, OUT / "chain-monarch-animate-template.mp4")
     for p in (out, OUT / "p-video-animate-monarch.meta.json"):
         p.unlink(missing_ok=True)
-    # Same subject + framing as template; motion already describes wing opening — leave instruction blank.
     video_inp = {
         "image": upload_file(image),
         "video": upload_file(motion),
@@ -1031,7 +991,7 @@ def gen_narrated_multi_scene_demo(*, missing_only: bool = False) -> None:
     if not aurora_start.exists():
         sys.exit("need image-to-video-aurora-still.png for narrated-multi-scene scene 2")
 
-    _remove_stale(("narrated-multi-scene-monarch",))
+    _remove_stale(("narrated-multi-scene-01-wokflare", "narrated-multi-scene-02-subway"))
 
     narration1 = OUT / "narrated-multi-scene-01-monarch-narration.mp3"
     run_replicate_tts(MONARCH_NARRATION, narration1, style_prompt=MONARCH_NARRATION_STYLE)
@@ -1185,7 +1145,7 @@ def gen_avatar_multi_scene_demo(*, missing_only: bool = False) -> None:
 
 def gen_missing_tools(*, missing_only: bool = True) -> None:
     ensure_sidecars(missing_only=missing_only)
-    gen_p_image_upscale_hummingbird(missing_only=missing_only)
+    gen_p_image_upscale(missing_only=missing_only)
     gen_p_image_try_on_drummer(missing_only=missing_only)
     gen_p_video_animate_monarch(missing_only=missing_only)
     gen_p_video_replace_jacket(missing_only=missing_only)
@@ -1201,27 +1161,9 @@ def gen_all() -> None:
         if path.suffix in {".png", ".mp4", ".json"}:
             path.unlink()
 
-    gen_quickstart_panda()
-    save_image(
-        "p-image-brass-hummingbird",
-        (
-            "1:1 macro product photo, clockwork brass hummingbird frozen mid-flap inside a glass "
-            "terrarium, tiny gears visible, dew on glass, moody forest bokeh background, museum "
-            "exhibit lighting, no text"
-        ),
-        "1:1",
-    )
+    gen_pruna_docs_vendor()
     gen_chain_monarch()
-    image_to_video(
-        "image-to-video-aurora",
-        image_prompt=(
-            "16:9 wide landscape, aurora borealis rippling green and violet over frozen lake, "
-            "tiny ice fishing huts with warm window glow, footprints in snow, crisp arctic night, "
-            "no text"
-        ),
-        video_prompt="Slow gentle pan across aurora curtains, soft snow flurries, hut windows glow warmly",
-        duration=CLIP_DURATION,
-    )
+    gen_image_to_video_aurora()
     gen_music_video_drummer()
     gen_illustrated_library_whale()
     gen_missing_tools(missing_only=False)
@@ -1233,9 +1175,9 @@ def main() -> None:
     parser.add_argument(
         "--only",
         help=(
-            "comma-separated keys: quickstart-panda,chain-monarch,music-video-garage-drummer,"
+            "comma-separated keys: pruna-docs-vendor,chain-monarch,music-video-garage-drummer,"
             "illustrated-library-whale,image-to-video-aurora,missing-tools,sidecars,"
-            "p-image-upscale-hummingbird,p-image-try-on-drummer,p-video-animate-monarch,"
+            "p-image-upscale,p-image-try-on-drummer,p-video-animate-monarch,"
             "p-video-replace-jacket,stable-audio-library-bed,whisperx-drummer-song,"
             "narrated-multi-scene-demo,avatar-multi-scene-demo"
         ),
@@ -1276,8 +1218,10 @@ def main() -> None:
             gen_missing_tools(missing_only=mo)
         if "sidecars" in keys:
             ensure_sidecars(missing_only=mo)
-        if "p-image-upscale-hummingbird" in keys:
-            gen_p_image_upscale_hummingbird(missing_only=mo)
+        if "pruna-docs-vendor" in keys:
+            gen_pruna_docs_vendor()
+        if "p-image-upscale" in keys:
+            gen_p_image_upscale(missing_only=mo)
         if "p-image-try-on-drummer" in keys:
             gen_p_image_try_on_drummer(missing_only=mo)
         if "p-video-animate-monarch" in keys:
@@ -1292,8 +1236,6 @@ def main() -> None:
             gen_avatar_multi_scene_demo(missing_only=mo)
         if "narrated-multi-scene-demo" in keys:
             gen_narrated_multi_scene_demo(missing_only=mo)
-        if "quickstart-panda" in keys:
-            gen_quickstart_panda(video_only=args.video_only)
         if "chain-monarch" in keys:
             gen_chain_monarch(video_only=args.video_only)
         if "music-video-garage-drummer" in keys:
@@ -1301,13 +1243,7 @@ def main() -> None:
         if "illustrated-library-whale" in keys:
             gen_illustrated_library_whale(video_only=args.video_only, assemble_only=args.assemble_only)
         if "image-to-video-aurora" in keys:
-            image_to_video(
-                "image-to-video-aurora",
-                image_prompt="unused",
-                video_prompt="Slow gentle pan across aurora curtains, soft snow flurries, hut windows glow warmly",
-                duration=CLIP_DURATION,
-                regen_video_only=args.video_only,
-            )
+            gen_image_to_video_aurora(video_only=args.video_only)
 
     pngs = len(list(OUT.glob("*.png")))
     mp4s = len(list(OUT.glob("*.mp4")))

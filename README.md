@@ -31,12 +31,12 @@ Before you enable skills in an untrusted repo, install `pruna-api` and read its 
 
 **Create an image, then edit it, then create a video**
 
-> Create a whimsical portrait of a red panda barista making latte art in a sunlit Kyoto café. Edit the scene so the same panda stands inside a Mars habitat, looking out at the red desert with Earth in the sky. Then animate a short clip where the panda sets down the cup, walks toward the window, and the café transitions into the Mars view.
+> Create a photoreal knight in a medieval village. See how P-Image-Edit refines stills. Animate the knight walking through the village and entering the castle gate — same pattern as [Pruna's image-to-video guide](https://docs.pruna.ai/en/stable/docs_pruna_endpoints/performance_models/workflows/image_to_video.html).
 
 | Step 1 · `p-image` | Step 2 · `p-image-edit` | Step 3 · `p-video` |
 | :-: | :-: | :-: |
 | Image | Edit | Video |
-| <img src="docs/assets/examples/readme-quickstart-panda-01-open.png" width="280" height="494" alt="Red panda barista making latte art in a Kyoto café"> | <img src="docs/assets/examples/readme-quickstart-panda-02-end.png" width="280" height="494" alt="Same red panda inside a Mars habitat"> | <img src="docs/assets/examples/readme-quickstart-panda-clip.gif" width="280" height="494" alt="Red panda walks through café as scene transitions to Mars habitat"> |
+| <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-quickstart-knight-still.png" width="280" height="494" alt="Knight still in a medieval village"> | <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-p-image-edit-demo.png" width="280" height="494" alt="P-Image-Edit example from Pruna docs"> | <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-quickstart-knight-clip.gif" width="280" height="494" alt="Knight walks through village into castle gate"> |
 
 **Create an image, then add narration, then assemble a video**
 
@@ -76,7 +76,7 @@ npx skills add PrunaAI/pruna-skills -l                  # list all
 
 ## What's in the suite
 
-The `@pruna` suite includes 25 skills across three layers. **Guides** are read-only craft (`image-prompting`, `pruna-api`, …) — no generation call. **Tools** are the paid endpoints (`p-image`, `p-video`, …) — one model per skill. **Workflows** chain those tools into finished deliverables your agent assembles step by step.
+The `@pruna` suite includes 26 skills across three layers. **Guides** are read-only craft (`image-prompting`, `video-editing`, `pruna-api`, …) — no generation call. **Tools** are the paid endpoints (`p-image`, `p-video`, …) — one model per skill. **Workflows** chain those tools into finished deliverables your agent assembles step by step.
 
 You do not need to memorize the list. Describe your goal in chat and your agent picks the right skills.
 
@@ -98,7 +98,7 @@ All installable skills live under `skills/`. Craft markdown sits next to each gu
 
 ```text
 skills/
-  guides/                 generation-diversity, *-prompting, pruna-api
+  guides/                 generation-diversity, *-prompting, video-editing, pruna-api
   image/                  p-image, p-image-edit, p-image-try-on, p-image-upscale
   video/                  p-video, p-video-avatar, p-video-animate, p-video-replace
   audio/                  gemini-3.1-flash-tts, music-2.5, stable-audio-2.5, whisperx

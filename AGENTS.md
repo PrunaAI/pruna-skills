@@ -8,7 +8,7 @@ See [README.md](README.md) for the user-facing glossary.
 
 | Type | Role |
 |------|------|
-| **Guide** | Vendor-neutral craft (`image-prompting`, `video-prompting`, `audio-prompting`, `generation-diversity`) or Pruna HTTP (`pruna-api`) |
+| **Guide** | Vendor-neutral craft (`image-prompting`, `video-prompting`, `audio-prompting`, `video-editing`, `generation-diversity`) or Pruna HTTP (`pruna-api`) |
 | **Tool** | One paid API call (`p-image`, `p-video`, …) |
 | **Workflow** | Multi-step deliverable — agent is the runner (curl + ffmpeg) |
 | **Suite** | `pruna` — install everything |
@@ -32,6 +32,15 @@ npx skills add PrunaAI/pruna-skills -l
 
 **Team default:** **`pruna`** once, then start a new chat.
 
+**Launch reels / motion assembly:** install [HyperFrames](https://github.com/heygen-com/hyperframes) companion skills (project-local):
+
+```bash
+./.maintainer/install_companion_skills.sh
+# or: make install-companion-skills
+```
+
+Read **`hyperframes`** first — it routes to `/product-launch-video`, `/general-video`, etc. Pruna skills generate media; HyperFrames assembles HTML → MP4 (each launch uses a local `hyperframes/` subfolder in your project workspace).
+
 ## Layout
 
 | Path | Role |
@@ -42,6 +51,7 @@ npx skills add PrunaAI/pruna-skills -l
 | `skills/suite/pruna/` | Umbrella |
 | `docs/` | Human docs only |
 | `.maintainer/skills.catalog.json` | Skill name source of truth |
+| `VERSION` | Repo semver — `@VERSION` in skills is replaced on `make bundle` |
 
 ## Safety
 

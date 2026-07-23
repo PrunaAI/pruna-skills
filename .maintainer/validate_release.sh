@@ -18,6 +18,10 @@ for arg in "$@"; do
   esac
 done
 
+echo "==> sync_skill_versions"
+python3 .maintainer/sync_skill_versions.py
+python3 .maintainer/sync_skill_versions.py --check
+
 if [[ "${SKIP_VERIFY}" -eq 0 ]]; then
   echo "==> verify_skill_bundles"
   ./.maintainer/verify_skill_bundles.sh

@@ -2,7 +2,7 @@
 
 When a user describes an end product but not which workflow fits, use this document. Agents normally pick tools and workflows from skill frontmatter descriptions; humans use this when unsure.
 
-**Policies:** Install `generation-diversity` for approval gates and workflow-feedback gates. Confirm plan before any `POST /v1/predictions`. The agent is the runner (curl + ffmpeg) — no Python scripts.
+**Policies:** Install `generation-diversity` for approval gates and workflow-feedback gates. Confirm plan before any `POST /v1/predictions`. The agent is the runner (curl + ffmpeg) — no Python scripts. Shared ffmpeg assembly craft (concat, captions, bed mix, export): **`video-editing`**.
 
 ## Quick one-off routing
 

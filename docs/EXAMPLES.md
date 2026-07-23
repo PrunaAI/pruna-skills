@@ -23,11 +23,11 @@ The [README quickstart](../README.md#quickstart) walks through three examples: *
 | Skill | Example asset | Section |
 |-------|---------------|---------|
 | **Tools** | | |
-| `p-image` | `p-image-brass-hummingbird.png` | [example](#single-tool--p-image) |
-| `p-image-edit` | `chain-monarch-02-end.png` | [example](#single-tool--p-image-edit) |
-| `p-image-upscale` | `p-image-upscale-hummingbird.png` | [example](#single-tool--p-image-upscale) |
+| `p-image` | `p-image-advanced.png` + `quickstart-knight-still.png` | [example](#single-tool--p-image) |
+| `p-image-edit` | `p-image-edit-demo.png` + `chain-monarch-02-end.png` | [example](#single-tool--p-image-edit) |
+| `p-image-upscale` | `p-image-upscale-advanced.png` | [example](#single-tool--p-image-upscale) |
 | `p-image-try-on` | `p-image-try-on-drummer.png` | [example](#single-tool--p-image-try-on) |
-| `p-video` | `chain-monarch-clip.mp4` + aurora clip | [example](#single-tool--p-video) |
+| `p-video` | `quickstart-knight-clip.mp4` + monarch + knight clips | [example](#single-tool--p-video) |
 | `p-video-avatar` | `music-video-garage-drummer-clip.mp4` | [example](#single-tool--p-video-avatar) |
 | `p-video-animate` | `p-video-animate-monarch.mp4` | [example](#single-tool--p-video-animate) |
 | `p-video-replace` | `p-video-replace-jacket.mp4` | [example](#single-tool--p-video-replace) |
@@ -36,7 +36,7 @@ The [README quickstart](../README.md#quickstart) walks through three examples: *
 | `stable-audio-2.5` | `stable-audio-library-bed.mp3` | [example](#single-tool--stable-audio-25) |
 | `whisperx` | `whisperx-drummer-song.json` | [example](#single-tool--whisperx) |
 | **Workflows** | | |
-| `image-to-video` | `image-to-video-aurora-*` | [example](#workflow--image-to-video) |
+| `image-to-video` | `image-to-video-knight-*` | [example](#workflow--image-to-video) |
 | `visual-transition-reel` | `chain-monarch-*` | [example](#chain--monarch-on-lavender) |
 | `narrated-multi-scene` | `narrated-multi-scene-demo.mp4` (2 scenes) | [example](#workflow--narrated-multi-scene) |
 | `avatar-single-scene` | `music-video-garage-drummer-clip.mp4` | [example](#workflow--avatar-single-scene) |
@@ -57,18 +57,18 @@ See [README Quickstart](../README.md#quickstart) — recommended: `npx skills ad
 
 **Output**
 
-![brass hummingbird terrarium](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/p-image-brass-hummingbird.png)
+![P-Image advanced example](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/p-image-advanced.png)
 
 <details>
 <summary>Prompts & inputs</summary>
 
 **Ask your agent**
 
-> Generate a 1:1 museum-style product photo of a clockwork brass hummingbird in a glass terrarium.
+> Generate a high-quality still using P-Image — same showcase style as the [Pruna endpoints docs](https://docs.pruna.ai/en/stable/docs_pruna_endpoints/index.html).
 
 **Model prompt**
 
-> 1:1 macro product photo, clockwork brass hummingbird frozen mid-flap inside a glass terrarium, tiny gears visible, dew on glass, moody forest bokeh background, museum exhibit lighting, no text
+> Advanced P-Image example from Pruna documentation (`p_image_advanced`).
 
 </details>
 
@@ -82,20 +82,16 @@ npx skills add PrunaAI/pruna-skills@p-image -y
 
 **Output**
 
-![monarch wings open](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-02-end.png)
+![P-Image-Edit demo](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/p-image-edit-demo.png)
 
 <details>
 <summary>Prompts & inputs</summary>
 
 **Ask your agent**
 
-> Edit this monarch-on-lavender still so the wings are open wide — same stem and camera.
+> Edit a still with P-Image-Edit — multi-image editing showcase from [Pruna docs](https://docs.pruna.ai/en/stable/docs_pruna_endpoints/index.html).
 
-Reuses the opening plate from the [monarch chain](#chain--monarch-on-lavender).
-
-**Model prompt**
-
-> Same butterfly same lavender same camera. Wings open wide displaying full orange and black pattern, same dew and bokeh, keep composition identical…
+For a start/end plate chain, see the [monarch chain](#chain--monarch-on-lavender).
 
 </details>
 
@@ -109,16 +105,16 @@ npx skills add PrunaAI/pruna-skills@p-image-edit -y
 
 **Output**
 
-![upscaled hummingbird](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/p-image-upscale-hummingbird.png)
+![upscaled advanced still](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/p-image-upscale-advanced.png)
 
 <details>
 <summary>Prompts & inputs</summary>
 
 **Ask your agent**
 
-> Upscale the brass hummingbird product shot for print — more detail, 8 megapixel target.
+> Upscale the P-Image advanced still for print polish — same before/after pair as [Pruna docs](https://docs.pruna.ai/en/stable/docs_pruna_endpoints/index.html).
 
-Upscaled from [`p-image-brass-hummingbird.png`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/p-image-brass-hummingbird.png) (`target: 8`, `enhance_details: true`).
+Source: [`p-image-upscale-source.png`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/p-image-upscale-source.png)
 
 </details>
 
@@ -157,9 +153,9 @@ npx skills add PrunaAI/pruna-skills@p-image-try-on -y
 
 | Still → clip | Start/end plates | Narration-led (Mode B) |
 |--------------|------------------|------------------------|
-| [![image to video aurora clip preview](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/image-to-video-aurora-clip.gif)](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/image-to-video-aurora-clip.mp4)
+| [![image to video knight clip preview](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/image-to-video-knight-clip.gif)](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/image-to-video-knight-clip.mp4)
 
-*Preview (mute). [Full clip with audio →](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/image-to-video-aurora-clip.mp4)* | [![chain monarch clip preview](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-clip.gif)](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-clip.mp4)
+*Preview (mute). [Full clip with audio →](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/image-to-video-knight-clip.mp4)* | [![chain monarch clip preview](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-clip.gif)](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-clip.mp4)
 
 *Preview (mute). [Full clip with audio →](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-clip.mp4)* | [![illustrated library whale reel preview](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/illustrated-library-whale-reel.gif)](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/illustrated-library-whale-reel.mp4)
 
@@ -174,7 +170,7 @@ npx skills add PrunaAI/pruna-skills@p-image-try-on -y
 
 | Pattern | Example | Key inputs |
 |---------|---------|------------|
-| **Still → clip** (duration) | [`image-to-video-aurora-clip.mp4`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/image-to-video-aurora-clip.mp4) | `image` + `prompt` + `duration` |
+| **Still → clip** (duration) | [`image-to-video-knight-clip.mp4`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/image-to-video-knight-clip.mp4) · [`quickstart-knight-clip.mp4`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-knight-clip.mp4) | `image` + `prompt` + `duration` |
 | **Start/end plates** | [`chain-monarch-clip.mp4`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-clip.mp4) | `image` + `last_frame_image` + `duration` |
 | **Narration-led** (Mode B) | [`illustrated-library-whale-reel.mp4`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/illustrated-library-whale-reel.mp4) | `image` + `audio` + `save_audio: true` — **omit `duration`** |
 
@@ -228,14 +224,10 @@ npx skills add PrunaAI/pruna-skills@p-video-avatar -y
 
 > Animate the monarch still (wings closed) using the wing-open motion from our monarch clip — same butterfly, same framing.
 
-Motion transfer needs **matched framing and pose**: appearance from the still, choreography from the template (pairing gates in `video-prompting`).
-
 | Input | Asset |
 |-------|-------|
-| Still (`image`) | [`chain-monarch-01-open.png`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-01-open.png) — wings closed |
-| Motion template (`video`) | 5s trim — [`chain-monarch-animate-template.mp4`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-animate-template.mp4) (from [`chain-monarch-clip.mp4`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-clip.mp4)) |
-
-No `instruction_prompt` — source motion already opens the wings.
+| Still (`image`) | [`chain-monarch-01-open.png`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-01-open.png) |
+| Motion template (`video`) | [`chain-monarch-animate-template.mp4`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-animate-template.mp4) |
 
 </details>
 
@@ -386,14 +378,6 @@ npx skills add PrunaAI/pruna-skills@whisperx -y
 
 > Make a short clip of a monarch butterfly on lavender — start with wings closed, edit to wings open, then animate a slow wing spread.
 
-Also demonstrates **`visual-transition-reel`** (start/end plates + motion).
-
-| Step | Model | Prompt |
-|------|-------|--------|
-| 1 | `p-image` | Monarch on lavender, **wings closed**… |
-| 2 | `p-image-edit` | Same stem — **wings open wide**… |
-| 3 | `p-video` | Static camera → wings open slowly → one gentle flutter |
-
 | Opening image | Edited end image |
 |---------------|------------------|
 | ![wings closed](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-01-open.png) | ![wings open](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-02-end.png) |
@@ -401,10 +385,44 @@ Also demonstrates **`visual-transition-reel`** (start/end plates + motion).
 </details>
 
 ```bash
+npx skills add PrunaAI/pruna-skills@visual-transition-reel -y
+```
+
+---
+
+## Chain — knight image-to-video (`p-image` → `p-video`)
+
+README [quickstart](../README.md#quickstart) example — official [P-Video knight demo](https://docs.pruna.ai/en/stable/docs_pruna_endpoints/performance_models/p-video.html): one still, one motion prompt, no end plate.
+
+**Output**
+
+[![quickstart knight clip preview](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-knight-clip.gif)](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-knight-clip.mp4)
+
+*Preview (mute). [Full clip →](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-knight-clip.mp4)*
+
+<details>
+<summary>Prompts & inputs</summary>
+
+**Ask your agent**
+
+> Create a photoreal knight in a medieval village. Animate the knight walking through the village and entering the castle gate.
+
+| Step | Model | Prompt |
+|------|-------|--------|
+| 1 | `p-image` | Knight standing in medieval village near castle gates… |
+| 2 | `p-video` | Knight walking through village, then entering castle gates |
+
+| Still | Clip |
+|-------|------|
+| ![knight still](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/quickstart-knight-still.png) | *see preview above* |
+
+Same assets as [image-to-video workflow](#workflow--image-to-video).
+
+</details>
+
+```bash
 npx skills add PrunaAI/pruna-skills@p-image -y
-npx skills add PrunaAI/pruna-skills@p-image-edit -y
 npx skills add PrunaAI/pruna-skills@p-video -y
-# or workflow: npx skills add PrunaAI/pruna-skills@visual-transition-reel -y
 ```
 
 ---
@@ -415,18 +433,18 @@ npx skills add PrunaAI/pruna-skills@p-video -y
 
 **Output**
 
-[![image to video aurora clip preview](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/image-to-video-aurora-clip.gif)](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/image-to-video-aurora-clip.mp4)
+[![image to video knight clip preview](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/image-to-video-knight-clip.gif)](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/image-to-video-knight-clip.mp4)
 
-*Preview (mute). [Full clip with audio →](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/image-to-video-aurora-clip.mp4)*
+*Preview (mute). [Full clip →](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/image-to-video-knight-clip.mp4)*
 
 <details>
 <summary>Prompts & inputs</summary>
 
 **Ask your agent**
 
-> Turn a still of the northern lights over a frozen lake into a short pan clip with drifting snow.
+> Turn the knight village still into a short clip — same walk-and-enter prompt as [Pruna's image-to-video guide](https://docs.pruna.ai/en/stable/docs_pruna_endpoints/performance_models/workflows/image_to_video.html).
 
-![aurora still](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/image-to-video-aurora-still.png)
+![knight still](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/image-to-video-knight-still.png)
 
 </details>
 

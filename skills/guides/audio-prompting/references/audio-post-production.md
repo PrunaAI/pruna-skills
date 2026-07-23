@@ -31,7 +31,7 @@ When narration, TTS, or a timed audio slice is available **before** video render
 | Full song with sung vocals | Music 2.5 track | `music-2.5` |
 | Speaking on-camera character | Portrait + script / audio | `p-video-avatar` |
 
-**Env:** Pruna calls need `PRUNA_API_KEY`; Replicate audio tools need `REPLICATE_API_TOKEN`. Assembly steps need **`ffmpeg`** / **`ffprobe`**. Credentials: `pruna-api`.
+**Env:** Pruna calls need `PRUNA_API_KEY`; Replicate audio tools need `REPLICATE_API_TOKEN`. Assembly steps need **`ffmpeg`** / **`ffprobe`**. Credentials: `pruna-api`. Shared ffmpeg recipes (concat, captions, bed mix, export): **`video-editing`**.
 
 ## Layering matrix
 
@@ -71,10 +71,12 @@ Phase 3 — p-video I2V without audio → concat → mux TTS in ffmpeg
 
 ```text
 Phase 1 — p-video-avatar or replace reel → concat
-Phase 2 — Stable Audio bed via stable-audio-2.5 + ffmpeg bed mix (bed under VO, not replacing it)
+Phase 2 — Stable Audio bed via stable-audio-2.5 + ffmpeg bed mix (bed under VO, not replacing it) — mix recipe in `video-editing`
 ```
 
 ## ffmpeg mixing (conceptual)
+
+Full mix commands and default launch bed level (~**0.20** under clear promo speech; ~0.08–0.12 under soft narration): install **`video-editing`**.
 
 **Narration onto silent concat** (single VO file):
 
@@ -110,7 +112,7 @@ Ask before generating paid audio or video:
 | **Narration scope** | Per-scene lines vs one continuous VO track? |
 | **Music / bed** | None, instrumental bed only (`stable-audio-2.5`), or full song (`music-2.5`)? |
 | **Sync strategy** | **Preferred:** TTS → Pruna upload → **`p-video` / `p-video-avatar` with `audio`** (clip length = audio). Post-mux only as fallback. |
-| **Levels** | Bed volume target (default ~0.12 under avatar VO; ~0.08–0.12 under Gemini narration)? |
+| **Levels** | Bed volume: default ~**0.20** under launch/promo speech; ~0.08–0.12 under avatar VO or soft Gemini narration — mix recipe in `video-editing` |
 
 ## Manifest fields
 
@@ -139,3 +141,4 @@ Ask before generating paid audio or video:
 | `music-video` | Full song + lyric-synced video |
 | `p-video` / `p-video-avatar` | Video API calls that consume uploaded audio |
 | `gemini-3.1-flash-tts` / `stable-audio-2.5` / `music-2.5` | Paid audio generation |
+| `video-editing` | ffmpeg assembly, caption burn-in, bed mix under finished video |

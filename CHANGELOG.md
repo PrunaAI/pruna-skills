@@ -4,11 +4,25 @@ All notable changes to Pruna Skills are documented here. Skill and plugin `metad
 
 ## [Unreleased]
 
+## [1.0.7] — 2026-07-23
+
+GitHub tag: `skills-v1.0.7`
+
+### Added
+
+- **`video-editing` guide** — ffmpeg assembly craft: concat, transitions, caption burn-in (whisperx → ASS → libass; stable phrase bar + word accent), overlays, comparison sliders, background music beds, export presets, and HyperFrames combination pattern.
+- **Companion HyperFrames skills** — `.maintainer/install_companion_skills.sh` and `make install-companion-skills` for project-local motion assembly (see [AGENTS.md](AGENTS.md)).
+
 ### Changed
 
+- **`video-editing` captions** — default launch style is stable phrase bar + text-only purple word accent (no flicker, no double box); movie timing limits and SRT centisecond parsing documented in [captions.md](skills/guides/video-editing/references/captions.md).
+- **Version injection** — all skills use `@VERSION` in frontmatter; [`.maintainer/sync_skill_versions.py`](.maintainer/sync_skill_versions.py) injects repo [`VERSION`](VERSION) on `make bundle` / release (`make sync-versions`, `--check`, `--placeholders`).
+- **Doc examples refresh:** README quickstart and tool demos use vendored [Pruna endpoints](https://docs.pruna.ai/en/stable/docs_pruna_endpoints/index.html) media (knight image-to-video, `p-image-advanced`, edit demo, upscale pair). Obsolete bloom/panda/wokflare/rooftop/subway/otter/hummingbird assets removed. Vendor via `python3 .maintainer/generate_doc_examples.py --only pruna-docs-vendor`.
+- Cross-refs to `video-editing` on workflows, video/audio tools, and prompting guides; `whisperx` / `audio-prompting` point at post-render caption path.
 - README: dedupe suite tables; link to [docs/SKILL-CATALOG.md](docs/SKILL-CATALOG.md) and [skills/suite/pruna/SKILL.md](skills/suite/pruna/SKILL.md) instead.
 - Workflow example paths: `output/<workflow>/…` (removed stale `output/verticals/`).
 - [docs/SKILL-TEST-LOG.md](docs/SKILL-TEST-LOG.md) and [docs/agents-mcp-gate.md](docs/agents-mcp-gate.md) updated for skills-only layout (`@pruna` suite, no router skills).
+- Catalog: **6 guides + 12 tools + 8 workflows + `@pruna` suite** (26 installable skills).
 
 ### Removed
 

@@ -1,0 +1,12 @@
+{
+  "references": [
+    "assembly-concat.md",
+    "transitions.md",
+    "captions.md",
+    "overlays.md",
+    "comparison-sliders.md",
+    "background-music.md",
+    "combination-hyperframes.md",
+    "export-presets.md"
+  ]
+}

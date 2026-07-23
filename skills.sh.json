@@ -17,6 +17,7 @@
         "image-prompting",
         "video-prompting",
         "audio-prompting",
+        "video-editing",
         "pruna-api"
       ]
     },

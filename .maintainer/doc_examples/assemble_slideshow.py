@@ -359,6 +359,11 @@ def assemble_from_plan(plan_path: Path, out_dir: Path, *, output_name: str = "st
     return final
 
 
+def concat_clips_with_audio(clips: list[Path], out: Path) -> Path:
+    """ponytail: hard-cut concat; clips already carry narration audio."""
+    return concat_segments_simple(clips, out)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--plan", type=Path, required=True)
