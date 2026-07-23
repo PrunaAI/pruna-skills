@@ -1,8 +1,6 @@
 # Pruna Skills
 
-<video src="https://github.com/PrunaAI/pruna-skills/raw/main/docs/assets/readme-hero-pruna-skills.mp4" controls poster="docs/assets/readme-hero-pruna-skills.png" width="100%">
-  Pruna Skills: images, video, music, explainers, avatars, and workflows for agent coding tools
-</video>
+[![Pruna Skills: images, video, music, explainers, avatars, and workflows for agent coding tools](docs/assets/readme-hero-pruna-skills.gif)](https://github.com/PrunaAI/pruna-skills/raw/main/docs/assets/readme-hero-pruna-skills.mp4)
 
 Pruna Skills teach your coding agent how to generate images, video, and audio with the [Pruna AI API](https://docs.api.pruna.ai/guides/models). They also cover multi-step workflows such as explainers, music videos, avatars, and illustrated reels. Each skill follows the [Agent Skills](https://agentskills.io/specification) format, so it works in Cursor, Claude Code, Copilot, Codex, and [many other agents](https://skills.sh).
 
