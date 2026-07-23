@@ -231,7 +231,19 @@ docs/assets/examples/*
 !docs/assets/examples/music-video-garage-drummer.png
 !docs/assets/examples/p-image-try-on-drummer.png
 !docs/assets/examples/music-video-garage-drummer-clip.gif
-# README quickstart row 2 (monarch chain) — also on HF; knight i2v assets live on HF only (make sync-doc-examples-hf)
+# Vendored Pruna-docs examples — in git for GitHub + mirrored to HF via make sync-doc-examples-hf
+!docs/assets/examples/p-image-advanced.png
+!docs/assets/examples/p-image-advanced.meta.json
+!docs/assets/examples/p-image-edit-demo.png
+!docs/assets/examples/p-image-edit-demo.meta.json
+!docs/assets/examples/p-image-upscale-advanced.png
+!docs/assets/examples/p-image-upscale-advanced.meta.json
+!docs/assets/examples/p-image-upscale-source.png
+!docs/assets/examples/quickstart-knight-still.png
+!docs/assets/examples/quickstart-knight-still.meta.json
+!docs/assets/examples/quickstart-knight-clip.mp4
+!docs/assets/examples/quickstart-knight-clip.meta.json
+!docs/assets/examples/quickstart-knight-clip.gif
 !docs/assets/examples/readme-chain-monarch-01-open.png
 !docs/assets/examples/readme-chain-monarch-02-end.png
 !docs/assets/examples/readme-chain-monarch-clip.gif

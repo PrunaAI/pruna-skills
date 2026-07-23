@@ -1,0 +1,8 @@
+{
+  "model": "p-image",
+  "tool": "p-image",
+  "prompt": "A photorealistic image of a knight standing in a medieval village near the entrance of castle gates, detailed surroundings, natural lighting, realistic textures",
+  "aspect_ratio": "16:9",
+  "source": "pruna-docs",
+  "source_url": "https://docs.pruna.ai/en/stable/docs_pruna_endpoints/performance_models/p-video.html"
+}

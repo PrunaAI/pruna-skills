@@ -1,0 +1,10 @@
+{
+  "model": "p-image-upscale",
+  "tool": "p-image-upscale",
+  "prompt": "Upscale P-Image advanced example for print polish.",
+  "image": "p-image-upscale-source.png",
+  "target": 8,
+  "enhance_details": true,
+  "source": "pruna-docs",
+  "source_url": "https://docs.pruna.ai/en/stable/docs_pruna_endpoints/index.html"
+}

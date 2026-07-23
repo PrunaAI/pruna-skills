@@ -13,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 EXAMPLES = ROOT / "docs" / "EXAMPLES.md"
 OUT = ROOT / "docs" / "assets" / "examples"
 
-from doc_examples_hf import hf_url, rewrite_markdown  # noqa: E402
+from doc_examples_hf import example_media_url, hf_url, rewrite_markdown  # noqa: E402
 
 HF_MP4 = re.compile(
     r'https://huggingface\.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/([a-z0-9_-]+\.mp4)'
@@ -24,10 +24,25 @@ VIDEO_TAG = re.compile(
 AUDIO_TAG = re.compile(
     r'<audio\s+src="(https://huggingface\.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/[a-z0-9_-]+\.(?:mp3|wav))"\s+controls\s*></audio>'
 )
+# Multiline table rows broken by *Preview* lines between | cells
+BROKEN_TABLE_PREVIEW = re.compile(
+    r"(\| \[![^\]]+\]\([^\)]+\))\(\s*(https://huggingface\.co[^\)]+\.mp4)\)\s*\n\n"
+    r"\*Preview \(mute\)\. \[Full clip(?: with audio)? →\]\([^\)]+\)\* \|",
+    re.MULTILINE,
+)
 
 
 def _alt(name: str) -> str:
     return name.replace("-", " ").removesuffix(".mp4").removesuffix(".mp3")
+
+
+def _in_table_row(text: str, pos: int) -> bool:
+    line_start = text.rfind("\n", 0, pos) + 1
+    line_end = text.find("\n", pos)
+    if line_end < 0:
+        line_end = len(text)
+    line = text[line_start:line_end]
+    return line.lstrip().startswith("|")
 
 
 def gif_preview_cell(mp4_url: str, *, compact: bool) -> str:
@@ -36,7 +51,7 @@ def gif_preview_cell(mp4_url: str, *, compact: bool) -> str:
         return mp4_url
     base = name.group(1)
     gif_name = base.replace(".mp4", ".gif")
-    gif_url = hf_url(gif_name)
+    gif_url = example_media_url(gif_name)
     alt = _alt(base)
     cell = f"[![{alt}]({gif_url})]({mp4_url})"
     if compact:
@@ -66,13 +81,22 @@ def whisperx_sample() -> str:
     return snippet
 
 
+def repair_table_previews(text: str) -> str:
+    """Collapse preview caption lines back into single-line table cells."""
+
+    def fix(match: re.Match[str]) -> str:
+        return f"{match.group(1)}({match.group(2)}) |"
+
+    return BROKEN_TABLE_PREVIEW.sub(fix, text)
+
+
 def embed(text: str) -> str:
     def sub_video(match: re.Match[str]) -> str:
         url = match.group(1)
-        # table cells stay one line
-        compact = match.string[max(0, match.start() - 1) : match.start()] == "|"
+        compact = _in_table_row(match.string, match.start())
         return gif_preview_cell(url, compact=compact)
 
+    text = repair_table_previews(text)
     text = VIDEO_TAG.sub(sub_video, text)
 
     def sub_audio(match: re.Match[str]) -> str:
@@ -82,7 +106,6 @@ def embed(text: str) -> str:
 
     text = AUDIO_TAG.sub(sub_audio, text)
 
-    # whisperx: add inline sample when sidecar exists
     wx_url = hf_url("whisperx-drummer-song.json")
     sample = whisperx_sample()
     if sample and wx_url in text and "Word sample:" not in text:

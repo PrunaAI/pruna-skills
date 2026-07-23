@@ -1,0 +1,7 @@
+{
+  "model": "p-image-edit",
+  "tool": "p-image-edit",
+  "prompt": "State-of-the-art multi-image edit example from Pruna P-Image-Edit documentation.",
+  "source": "pruna-docs",
+  "source_url": "https://docs.pruna.ai/en/stable/docs_pruna_endpoints/index.html"
+}

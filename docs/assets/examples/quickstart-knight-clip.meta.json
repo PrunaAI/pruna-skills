@@ -1,0 +1,10 @@
+{
+  "model": "p-video",
+  "tool": "p-video",
+  "prompt": "A photorealistic shot of a knight walking through a medieval village, then entering a castle gates",
+  "image": "quickstart-knight-still.png",
+  "duration": 10,
+  "resolution": "1080p",
+  "source": "pruna-docs",
+  "source_url": "https://docs.pruna.ai/en/stable/docs_pruna_endpoints/performance_models/p-video.html"
+}

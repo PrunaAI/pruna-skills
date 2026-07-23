@@ -1,0 +1,7 @@
+{
+  "model": "p-image",
+  "tool": "p-image",
+  "prompt": "Advanced P-Image example from Pruna documentation.",
+  "source": "pruna-docs",
+  "source_url": "https://docs.pruna.ai/en/stable/docs_pruna_endpoints/index.html"
+}

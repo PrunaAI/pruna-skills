@@ -25,7 +25,6 @@ REQUIRED: dict[str, list[str]] = {
     "p-image-try-on": ["p-image-try-on-drummer.png", "p-image-try-on-garage-jacket.png"],
     "p-video": [
         "chain-monarch-clip.mp4",
-        "image-to-video-knight-clip.mp4",
         "quickstart-knight-clip.mp4",
     ],
     "p-video-avatar": ["music-video-garage-drummer-clip.mp4"],
@@ -35,7 +34,7 @@ REQUIRED: dict[str, list[str]] = {
     "music-2.5": ["music-video-garage-drummer-song.mp3", "music-video-garage-drummer-song.meta.json"],
     "stable-audio-2.5": ["stable-audio-library-bed.mp3", "stable-audio-library-bed.meta.json"],
     "whisperx": ["whisperx-drummer-song.json", "whisperx-drummer-song.meta.json"],
-    "image-to-video": ["image-to-video-knight-still.png", "image-to-video-knight-clip.mp4"],
+    "image-to-video": ["quickstart-knight-still.png", "quickstart-knight-clip.mp4"],
     "visual-transition-reel": [
         "chain-monarch-01-open.png",
         "chain-monarch-02-end.png",
@@ -106,6 +105,15 @@ def main() -> int:
             p = OUT / rel
             if not p.exists():
                 errors.append(f"{skill}: missing {rel}")
+
+    try:
+        from doc_examples_hf import GIT_VENDORED
+    except ImportError:
+        GIT_VENDORED = frozenset()
+    for rel in sorted(GIT_VENDORED):
+        p = OUT / rel
+        if not p.is_file():
+            errors.append(f"git-vendored: missing {rel}")
 
     if EXAMPLES.is_file():
         for mp4 in sorted(set(MP4_IN_MD.findall(EXAMPLES.read_text(encoding="utf-8")))):
