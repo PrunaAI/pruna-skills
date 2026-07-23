@@ -11,13 +11,15 @@ GitHub tag: `skills-v1.0.7`
 ### Added
 
 - **`video-editing` guide** — ffmpeg assembly craft: concat, transitions, caption burn-in (whisperx → ASS → libass; stable phrase bar + word accent), overlays, comparison sliders, background music beds, export presets, and HyperFrames combination pattern.
-- **Companion HyperFrames skills** — `.maintainer/install_companion_skills.sh` and `make install-companion-skills` for project-local motion assembly (see [AGENTS.md](AGENTS.md)).
+- **HyperFrames optional companion** — `npx skills add heygen-com/hyperframes@hyperframes -y` documented in `video-editing` (same install pattern as workflow prerequisites); `make install-companion-skills` for maintainers.
+- **Product sneaker edit chain** — README quickstart + `docs/EXAMPLES.md` + `gen_chain_sneaker` doc example (`p-image` → `p-image-edit` → `p-video`).
+- **README hero launch reel** — full-duration GIF (≤10 MB for GitHub) linked to MP4 with VO and music.
 
 ### Changed
 
 - **`video-editing` captions** — default launch style is stable phrase bar + text-only purple word accent (no flicker, no double box); movie timing limits and SRT centisecond parsing documented in [captions.md](skills/guides/video-editing/references/captions.md).
 - **Version injection** — all skills use `@VERSION` in frontmatter; [`.maintainer/sync_skill_versions.py`](.maintainer/sync_skill_versions.py) injects repo [`VERSION`](VERSION) on `make bundle` / release (`make sync-versions`, `--check`, `--placeholders`).
-- **Doc examples refresh:** README quickstart and tool demos use vendored [Pruna endpoints](https://docs.pruna.ai/en/stable/docs_pruna_endpoints/index.html) media (knight image-to-video, `p-image-advanced`, edit demo, upscale pair). Obsolete bloom/panda/wokflare/rooftop/subway/otter/hummingbird assets removed. Vendor via `python3 .maintainer/generate_doc_examples.py --only pruna-docs-vendor`.
+- **Doc examples refresh:** README quickstart embeds use in-repo GIF/PNG paths; full-duration GIF previews (`make readme-example-embeds`, `generate_example_previews.py`). Monarch chain kept for `p-video-animate` and narrated-multi-scene; sneaker chain is the primary edit-chain demo.
 - Cross-refs to `video-editing` on workflows, video/audio tools, and prompting guides; `whisperx` / `audio-prompting` point at post-render caption path.
 - README: dedupe suite tables; link to [docs/SKILL-CATALOG.md](docs/SKILL-CATALOG.md) and [skills/suite/pruna/SKILL.md](skills/suite/pruna/SKILL.md) instead.
 - Workflow example paths: `output/<workflow>/…` (removed stale `output/verticals/`).

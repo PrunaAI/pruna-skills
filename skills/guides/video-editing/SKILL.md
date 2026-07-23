@@ -70,7 +70,7 @@ Bed **prompts** and embed-vs-post policy: `audio-prompting`.
 
 ## Combination videos (Hyperframes)
 
-When the deliverable needs **designed frames** — chat UI mocks, kinetic type, multi-panel grids, product montages — install [Hyperframes](https://github.com/heygen-com/hyperframes) (companion install: `./.maintainer/install_companion_skills.sh`) and follow [combination-hyperframes.md](./references/combination-hyperframes.md).
+When the deliverable needs **designed frames** — chat UI mocks, kinetic type, multi-panel grids, product montages — install **`hyperframes`** (optional external — see [Related skills](#optional--combination-videos-external) below) and follow [combination-hyperframes.md](./references/combination-hyperframes.md).
 
 **Pattern:** HyperFrames render (motion + VO, no burned captions) → post-render ffmpeg (whisperx → phrase-bar + word-accent burn → optional bed mux → export). See [captions.md](./references/captions.md) for caption craft.
 

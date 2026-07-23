@@ -14,7 +14,7 @@ Publish to Hugging Face and refresh markdown URLs: `make sync-doc-examples-hf` (
 
 Images use max P-API resolution (1440px edge); videos use final **1080p @ 24fps** (720p for some motion-transfer demos).
 
-The [README quickstart](../README.md#quickstart) walks through three examples: **create an image, then try on clothes, then create a video**; **create an image, then edit it, then create a video** (monarch chain — [below](#chain--monarch-on-lavender-p-image--p-image-edit--p-video)); and **create an image, then add narration, then assemble a video**.
+The [README quickstart](../README.md#quickstart) walks through three examples: **create an image, then try on clothes, then create a video**; **create an image, then edit it, then create a video** (product sneaker chain — [below](#chain--product-sneaker-p-image--p-image-edit--p-video)); and **create an image, then add narration, then assemble a video**.
 
 ## Coverage
 
@@ -22,10 +22,10 @@ The [README quickstart](../README.md#quickstart) walks through three examples: *
 |-------|---------------|---------|
 | **Tools** | | |
 | `p-image` | `p-image-advanced.png` + `quickstart-knight-still.png` | [example](#single-tool--p-image) |
-| `p-image-edit` | `p-image-edit-demo.png` + `chain-monarch-02-end.png` | [example](#single-tool--p-image-edit) |
+| `p-image-edit` | `p-image-edit-demo.png` + `chain-sneaker-02-end.png` | [example](#single-tool--p-image-edit) |
 | `p-image-upscale` | `p-image-upscale-advanced.png` | [example](#single-tool--p-image-upscale) |
 | `p-image-try-on` | `p-image-try-on-drummer.png` | [example](#single-tool--p-image-try-on) |
-| `p-video` | `quickstart-knight-clip.mp4` + monarch + knight clips | [example](#single-tool--p-video) |
+| `p-video` | `quickstart-knight-clip.mp4` + sneaker + knight clips | [example](#single-tool--p-video) |
 | `p-video-avatar` | `music-video-garage-drummer-clip.mp4` | [example](#single-tool--p-video-avatar) |
 | `p-video-animate` | `p-video-animate-monarch.mp4` | [example](#single-tool--p-video-animate) |
 | `p-video-replace` | `p-video-replace-jacket.mp4` | [example](#single-tool--p-video-replace) |
@@ -35,7 +35,7 @@ The [README quickstart](../README.md#quickstart) walks through three examples: *
 | `whisperx` | `whisperx-drummer-song.json` | [example](#single-tool--whisperx) |
 | **Workflows** | | |
 | `image-to-video` | `quickstart-knight-*` | [example](#workflow--image-to-video) |
-| `visual-transition-reel` | `chain-monarch-*` | [example](#chain--monarch-on-lavender-p-image--p-image-edit--p-video) |
+| `visual-transition-reel` | `chain-sneaker-*` | [example](#chain--product-sneaker-p-image--p-image-edit--p-video) |
 | `narrated-multi-scene` | `narrated-multi-scene-demo.mp4` (2 scenes) | [example](#workflow--narrated-multi-scene) |
 | `avatar-single-scene` | `music-video-garage-drummer-clip.mp4` | [example](#workflow--avatar-single-scene) |
 | `avatar-multi-scene` | `avatar-multi-scene-demo.meta.json` (2 clips, same still) | [example](#workflow--avatar-multi-scene) |
@@ -89,7 +89,7 @@ npx skills add PrunaAI/pruna-skills@p-image -y
 
 > Edit a still with P-Image-Edit — multi-image editing showcase from [Pruna docs](https://docs.pruna.ai/en/stable/docs_pruna_endpoints/index.html).
 
-For a start/end plate chain, see the [monarch chain](#chain--monarch-on-lavender-p-image--p-image-edit--p-video).
+For a start/end plate chain, see the [product sneaker chain](#chain--product-sneaker-p-image--p-image-edit--p-video).
 
 </details>
 
@@ -152,7 +152,7 @@ npx skills add PrunaAI/pruna-skills@p-image-try-on -y
 | Pattern | Preview (click for full clip with audio) |
 |---------|------------------------------------------|
 | Still → clip | [![image to video knight clip](assets/examples/quickstart-knight-clip.gif)](assets/examples/quickstart-knight-clip.mp4) |
-| Start/end plates | [![chain monarch clip](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-clip.gif)](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-clip.mp4) |
+| Start/end plates | [![chain sneaker clip](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-sneaker-clip.gif)](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-sneaker-clip.mp4) |
 | Narration-led (Mode B) | [![illustrated library whale reel](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/illustrated-library-whale-reel.gif)](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/illustrated-library-whale-reel.mp4) |
 
 *Previews are mute GIFs.*
@@ -167,7 +167,7 @@ npx skills add PrunaAI/pruna-skills@p-image-try-on -y
 | Pattern | Example | Key inputs |
 |---------|---------|------------|
 | **Still → clip** (duration) | [`quickstart-knight-clip.mp4`](assets/examples/quickstart-knight-clip.mp4) | `image` + `prompt` + `duration` |
-| **Start/end plates** | [`chain-monarch-clip.mp4`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-clip.mp4) | `image` + `last_frame_image` + `duration` |
+| **Start/end plates** | [`chain-sneaker-clip.mp4`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-sneaker-clip.mp4) | `image` + `last_frame_image` + `duration` |
 | **Narration-led** (Mode B) | [`illustrated-library-whale-reel.mp4`](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/illustrated-library-whale-reel.mp4) | `image` + `audio` + `save_audio: true` — **omit `duration`** |
 
 </details>
@@ -359,7 +359,36 @@ npx skills add PrunaAI/pruna-skills@whisperx -y
 
 # Chains (multi-tool)
 
+## Chain — product sneaker (`p-image` → `p-image-edit` → `p-video`)
+
+**Output**
+
+[![chain sneaker clip preview](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-sneaker-clip.gif)](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-sneaker-clip.mp4)
+
+*Preview (mute). [Full clip with audio →](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-sneaker-clip.mp4)*
+
+<details>
+<summary>Prompts & inputs</summary>
+
+**Ask your agent**
+
+> Create a product photo of a white running sneaker on a shelf. Edit it to the same shoe in bright orange. Animate a color shift, then a hand picking it up.
+
+| Opening image | Edited end image |
+|---------------|------------------|
+| ![white sneaker](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-sneaker-01-open.png) | ![orange sneaker](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-sneaker-02-end.png) |
+
+</details>
+
+```bash
+npx skills add PrunaAI/pruna-skills@visual-transition-reel -y
+```
+
+---
+
 ## Chain — monarch on lavender (`p-image` → `p-image-edit` → `p-video`)
+
+Legacy nature macro — still used by [`p-video-animate`](#single-tool--p-video-animate) and [narrated-multi-scene scene 1](#workflow--narrated-multi-scene).
 
 **Output**
 
@@ -381,7 +410,9 @@ npx skills add PrunaAI/pruna-skills@whisperx -y
 </details>
 
 ```bash
-npx skills add PrunaAI/pruna-skills@visual-transition-reel -y
+npx skills add PrunaAI/pruna-skills@p-image -y
+npx skills add PrunaAI/pruna-skills@p-image-edit -y
+npx skills add PrunaAI/pruna-skills@p-video -y
 ```
 
 ---
@@ -455,18 +486,18 @@ npx skills add PrunaAI/pruna-skills@image-to-video -y
 
 **Output**
 
-[![chain monarch clip preview](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-clip.gif)](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-clip.mp4)
+[![chain sneaker clip preview](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-sneaker-clip.gif)](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-sneaker-clip.mp4)
 
-*Preview (mute). [Full clip with audio →](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-clip.mp4)*
+*Preview (mute). [Full clip with audio →](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-sneaker-clip.mp4)*
 
 <details>
 <summary>Prompts & inputs</summary>
 
-Same assets as the [monarch chain](#chain--monarch-on-lavender-p-image--p-image-edit--p-video) — hero still → edit end plate → `p-video` between composed frames.
+Same assets as the [product sneaker chain](#chain--product-sneaker-p-image--p-image-edit--p-video) — hero still → edit end plate → `p-video` between composed frames.
 
 | Opening image | Edited end image |
 |---------------|------------------|
-| ![wings closed](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-01-open.png) | ![wings open](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-monarch-02-end.png) |
+| ![white sneaker](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-sneaker-01-open.png) | ![orange sneaker](https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/chain-sneaker-02-end.png) |
 
 </details>
 

@@ -24,7 +24,7 @@ REQUIRED: dict[str, list[str]] = {
     "p-image-upscale": ["p-image-upscale-advanced.png", "p-image-upscale-advanced.meta.json"],
     "p-image-try-on": ["p-image-try-on-drummer.png", "p-image-try-on-garage-jacket.png"],
     "p-video": [
-        "chain-monarch-clip.mp4",
+        "chain-sneaker-clip.mp4",
         "quickstart-knight-clip.mp4",
     ],
     "p-video-avatar": ["music-video-garage-drummer-clip.mp4"],
@@ -36,9 +36,9 @@ REQUIRED: dict[str, list[str]] = {
     "whisperx": ["whisperx-drummer-song.json", "whisperx-drummer-song.meta.json"],
     "image-to-video": ["quickstart-knight-still.png", "quickstart-knight-clip.mp4"],
     "visual-transition-reel": [
-        "chain-monarch-01-open.png",
-        "chain-monarch-02-end.png",
-        "chain-monarch-clip.mp4",
+        "chain-sneaker-01-open.png",
+        "chain-sneaker-02-end.png",
+        "chain-sneaker-clip.mp4",
     ],
     "narrated-multi-scene": [
         "narrated-multi-scene-demo.mp4",

@@ -13,7 +13,7 @@ See [README.md](README.md) for the user-facing glossary.
 | **Workflow** | Multi-step deliverable — agent is the runner (curl + ffmpeg) |
 | **Suite** | `pruna` — install everything |
 
-Tools list guide deps under **Prerequisites** with `npx skills add`. Workflows list **tools** only (guides come via tools). Do not copy craft between skills — install the other skill.
+Tools list guide deps under **Prerequisites** with `npx skills add`. Workflows list **tools** only (guides come via tools). **Optional external companions** (e.g. HyperFrames for HTML → MP4 launch reels) install the same way but are not in `@pruna` — see `video-editing` and its `combination-hyperframes` reference. Do not copy craft between skills — install the other skill.
 
 Humans picking recipes: [docs/WORKFLOW-RECIPES.md](docs/WORKFLOW-RECIPES.md). Catalog: [docs/SKILL-CATALOG.md](docs/SKILL-CATALOG.md).
 
@@ -32,14 +32,13 @@ npx skills add PrunaAI/pruna-skills -l
 
 **Team default:** **`pruna`** once, then start a new chat.
 
-**Launch reels / motion assembly:** install [HyperFrames](https://github.com/heygen-com/hyperframes) companion skills (project-local):
+**Launch reels / motion assembly:** install **`hyperframes`** when the deliverable needs HTML → MP4 composition (optional — ffmpeg-only paths skip it):
 
 ```bash
-./.maintainer/install_companion_skills.sh
-# or: make install-companion-skills
+npx skills add heygen-com/hyperframes@hyperframes -y
 ```
 
-Read **`hyperframes`** first — it routes to `/product-launch-video`, `/general-video`, etc. Pruna skills generate media; HyperFrames assembles HTML → MP4 (each launch uses a local `hyperframes/` subfolder in your project workspace).
+Read **`hyperframes`** first — it routes to `/product-launch-video`, `/general-video`, etc. Pruna skills generate media; HyperFrames assembles HTML → MP4 (each launch uses a local `hyperframes/` subfolder in your project workspace). Maintainers: `make install-companion-skills` copies the full bundle into gitignored `.agents/skills/`.
 
 ## Layout
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Companion Agent Skills for this repo (HyperFrames — launch reels, motion assembly).
-# Project-local install → .agents/skills/ (gitignored; re-run after clone).
+# Maintainer convenience: copy full HyperFrames skill bundle into gitignored .agents/skills/
+# User-facing install (same as workflows): npx skills add heygen-com/hyperframes@hyperframes -y
 set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "${REPO_ROOT}"

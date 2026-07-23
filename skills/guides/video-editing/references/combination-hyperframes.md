@@ -80,21 +80,17 @@ Reuse existing demo media where possible — do not regenerate every tile for a 
 
 ## 3. Install HyperFrames skills (agents)
 
-**In this repo**, install companion skills project-local (gitignored):
+Optional — only for combination / launch-reel deliverables. Not in `@pruna`. Install and load before composing (skip if already in context):
 
-```bash
-./.maintainer/install_companion_skills.sh
-# or: make install-companion-skills
-```
+| Skill | Description | Install |
+| --- | --- | --- |
+| `hyperframes` | Entry point for HTML → MP4 composition — routes to product-launch-video, general-video, and related workflows. | `npx skills add heygen-com/hyperframes@hyperframes -y` |
 
-Elsewhere:
+Full HyperFrames bundle (all domain skills): `npx skills add heygen-com/hyperframes --full-depth -y`
 
-```bash
-npx hyperframes skills update
-# or: npx skills add heygen-com/hyperframes --full-depth
-```
+Read **`hyperframes`** first — it routes to `/product-launch-video`, `/general-video`, etc., and installs owning workflows on demand (same idea as a Pruna workflow pulling its tool prerequisites).
 
-Read **`/hyperframes`** first — it routes to `/product-launch-video`, `/general-video`, etc. Use **`--full-depth`** so agents get current `main`.
+**Maintainers** of this repo: `make install-companion-skills` copies the full bundle into gitignored `.agents/skills/`.
 
 ---
 
@@ -222,7 +218,7 @@ cp hyperframes/renders/hyperframes_*.mp4 ../render.mp4
 | `data-duration` ≠ VO + tail | Measure narration; add hold on last frame |
 | Stale SRT with wrong comma decimals | Regenerate cues from whisperx JSON |
 | Default ffmpeg for ASS burn | Install **ffmpeg-full** (libass) |
-| Copy HyperFrames docs into Pruna skills | Install [heygen-com/hyperframes](https://github.com/heygen-com/hyperframes) skills |
+| Copy HyperFrames docs into Pruna skills | `npx skills add heygen-com/hyperframes@hyperframes -y` |
 
 ---
 
