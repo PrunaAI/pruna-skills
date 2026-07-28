@@ -3,7 +3,7 @@ name: p-video-avatar
 description: Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo.
 license: MIT
 metadata:
-  version: "1.0.7"
+  version: "1.0.8"
   package: pruna-skills
   pruna_model: p-video-avatar
 ---
@@ -25,7 +25,7 @@ Follow each skill's **Before generating** / craft sections — do not restate gu
 
 ## Agent habit
 
-In the **first reply**, name `` `p-video-avatar` `` in backticks, confirm `PRUNA_API_KEY` (or stop with signup links from `pruna-api`), then ask for required inputs. **Multiple talking-head scenes with the same person → redirect to `avatar-multi-scene`** (this skill is one clip only). Draft host motion with **Prompt craft (dynamic + faithful)** — do not paste skill examples.
+In the **first reply**, name `` `p-video-avatar` `` in backticks, confirm `PRUNA_API_KEY` (or stop with signup links from `pruna-api`), then ask for required inputs. Open intake → **`generation-diversity`** clarification intake before the first `POST`. **Multiple talking-head scenes with the same person → redirect to `avatar-multi-scene`** (this skill is one clip only). Draft host motion with **Prompt craft (dynamic + faithful)** — do not paste skill examples.
 
 ## Skill boundary
 

@@ -3,7 +3,7 @@ name: narrated-multi-scene
 description: Use when someone wants a multi-part story with voiceover — episodic B-roll, chaptered promo, or several linked video scenes without on-camera dialogue.
 license: MIT
 metadata:
-  version: "1.0.7"
+  version: "1.0.8"
   package: pruna-skills
 ---
 
@@ -41,12 +41,16 @@ Execute phases with parallel curl batches — **never** batch `p-video` before s
 
 ## Intake: ask before generating
 
+Open intake → **`generation-diversity`** clarification intake.
+
 **Do not** start scene 1 until the **whole** scene plan exists in writing (manifest or table):
 
 | Topic | Questions |
 |-------|-----------|
 | **Story** | Order of scenes (1…N)? What changes between scenes (location, time, emotion)? |
-| **Per scene *i*** | Primary `prompt`? **First frame** (`image`), **last frame** (`last_frame_image`), **narration** (`audio` URL)? `resolution` / `fps` / `draft`? |
+| **Media source** | Per scene: **generate** stills/TTS with Pruna tools vs **upload** user frames or VO? |
+| **Format** | Global `aspect_ratio`; default video **`720p` / `1080p`** and `fps` for triple scenes? |
+| **Per scene *i*** | Primary `prompt`? **First frame** (`image`), **last frame** (`last_frame_image`), **narration** (`audio` URL)? Scene-level `resolution` / `fps` / `draft` overrides? |
 | **Continuity** | Per scene: **`chain_from_previous`** only when motion continues (same moment/location). Otherwise composed OPENING still + hard cut. End stills via `p-image-edit`; extract last frame when chaining. |
 | **Audio** | **Scene anchor triple (preferred):** TTS → upload → **`p-video`** with `image` + `last_frame_image` + **`audio`** (omit `duration`; `save_audio: true`). **Each scene line ≤ ~19s** — P-API caps audio-led clips at **20s**. Optional **Stable Audio** bed in post only. |
 | **Visual style** | Locked `style_bible`? **One specific subject/location per still**? Avoid unrelated branding unless the brief asks for it |

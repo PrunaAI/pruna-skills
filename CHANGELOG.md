@@ -4,17 +4,31 @@ All notable changes to Pruna Skills are documented here. Skill and plugin `metad
 
 ## [Unreleased]
 
-### Removed
+## [1.0.8] — 2026-07-28
 
-- Orphan tracked assets: `docs/assets/readme-hero-pruna-skills.png`, `docs/assets/examples/readme-chain-monarch-*` (README quickstart embeds superseded by sneaker/drummer/whale chains).
+GitHub tag: `skills-v1.0.8`
+
+### Added
+
+- **`generation-diversity` clarification intake** — library-wide SSoT for generate vs existing media, palette, narration/VO, music, captions, aspect ratio, resolution, structure, and workflow approval gates (`references/clarification-intake.md`).
+- **`branding` guide** — official Pruna logo kit and usage locks for agent-generated assets.
+- **`video-editing` references** — motion composition craft, narrated showcase, and social use-case reel patterns.
 
 ### Changed
 
+- **AGENTS.md** — Clarification (library-wide) table: guides/tools, workflows, HyperFrames, and `pruna-api` behavior before paid calls.
+- **Workflows and suite** — cross-link clarification intake and workflow **Intake: ask before generating** tables across avatar, narrated, music, illustrated, and transition reels.
+- **`video-editing`** — expanded routing to new references; captions and HyperFrames combination notes updated.
+- **`pruna-api` agent-safety** — clarification deferral before upload/generation.
+- README: Hugging Face–hosted example assets; installation and maintainer docs tightened.
 - README: api-setup link outside code fence; maintainer command aligned to `make bundle && make validate`.
-- AGENTS: fix `agent-safety.md` path under `skills/guides/pruna-api/references/`.
 - `visual-transition-reel/example-prompt.md`: `output/visual-transition-reel/` (removed stale `output/core/`).
 - BACKLOG: trim completed description-audit section and duplicate install bootstrap.
 - `.gitignore`: `.DS_Store`, `docs/assets/examples/*.tmp`, `_preview/`.
+
+### Removed
+
+- Orphan tracked assets: `docs/assets/readme-hero-pruna-skills.png`, `docs/assets/examples/readme-chain-monarch-*` (README quickstart embeds superseded by sneaker/drummer/whale chains).
 
 ## [1.0.7] — 2026-07-23
 

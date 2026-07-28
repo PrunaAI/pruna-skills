@@ -3,7 +3,7 @@ name: avatar-multi-scene
 description: Use when someone wants the same person hosting several clips — multi-segment UGC, comparison reels, or mixed speaking and animated scenes with continuity.
 license: MIT
 metadata:
-  version: "1.0.7"
+  version: "1.0.8"
   package: pruna-skills
 ---
 
@@ -66,6 +66,8 @@ Follow this skill in **plain language** when talking to the person requesting th
 
 ## Intake: ask before generating
 
+Open intake → **`generation-diversity`** clarification intake.
+
 **Do not** call `POST /v1/predictions` until the user has answered and you have recorded the answers (use defaults only if the user explicitly opts in):
 
 | Topic | Questions |
@@ -74,6 +76,7 @@ Follow this skill in **plain language** when talking to the person requesting th
 | **Scope** | How many speaking scenes or beats? Approximate total runtime after assembly? |
 | **Cast** | Who speaks, in what order? One character throughout or multiple? |
 | **Look** | Aspect for stills and feel (`9:16` / `16:9`)? Avatar output `720p` or `1080p`? |
+| **Media source** | **Generate** hero plates with `p-image` / edits vs **upload-only** references; user-owned motion templates for animate beats? |
 | **Voice** | For **each named character**, pick **one** Pruna `voice` and `voice_language` and **reuse it in every scene** that character speaks. Any words that must be pronounced exactly (names, acronyms)? |
 | **Style** | Agreed **style bible** line for all image prompts? |
 | **Character sheet** | Per speaker: age range, wardrobe baseline, hair, skin/realism level, personality adjectives—record before hero generation (see **Character sheet** below). |

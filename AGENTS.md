@@ -15,6 +15,19 @@ See [README.md](README.md) for the user-facing glossary and quickstart.
 
 Tools list guide deps under **Prerequisites** with `npx skills add`. Workflows list **tools** only (guides come via tools). **Optional external companions** (e.g. HyperFrames for HTML → MP4 launch reels) install the same way but are not in `@pruna` — see `video-editing` and its `combination-hyperframes` reference. Do not copy craft between skills — install the other skill.
 
+## Clarification (library-wide)
+
+Before the first paid API call, bulk generation, or long render, resolve open decisions that change cost or output. **SSoT:** open intake → `generation-diversity` clarification intake — generate vs existing media, palette, narration/VO, music, captions, aspect ratio, resolution (720p/1080p, canvas, megapixels), structure, and workflow approval gates.
+
+| Skill type | Behavior |
+|------------|----------|
+| **Guides / tools** | Defer to clarification intake when the brief is silent; craft skills clarify creative locks before drafting prompts. |
+| **Workflows** | Run the workflow **Intake: ask before generating** table, then cross-check universal topics in clarification intake. |
+| **HyperFrames** (optional) | Fresh jobs: intent interview → `BRIEF.md`. Edits/resume: `hyperframes` clarification-before-build reference. |
+| **pruna-api** | Credentials + `pruna-api` agent-safety reference before upload. |
+
+Waivers (“use your judgment”, “surprise me”) count as answers — state assumptions in the plan and proceed.
+
 Humans picking recipes: [docs/WORKFLOW-RECIPES.md](docs/WORKFLOW-RECIPES.md). Catalog: [docs/SKILL-CATALOG.md](docs/SKILL-CATALOG.md).
 
 ## Install

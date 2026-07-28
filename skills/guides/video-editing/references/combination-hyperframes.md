@@ -4,6 +4,8 @@ Optional path for **designed multi-layer videos** — chat UI mocks, kinetic typ
 
 **External project:** [heygen-com/hyperframes](https://github.com/heygen-com/hyperframes) — install their agent skills; do not copy Hyperframes craft into Pruna skills.
 
+Before building: resolve open decisions via **`generation-diversity`** clarification intake and, when HyperFrames is installed, **`hyperframes`** clarification-before-build reference (generate vs existing assets, palette, VO, music, captions, canvas 720/1080).
+
 ## When to use Hyperframes
 
 - Product or feature promo with designed frames and UI chrome
@@ -43,14 +45,16 @@ optional: amix bed under captioned render      →  final.mp4       (see backgro
 
 ## 1. Spec before pixels
 
-Write a short spec (acts, target duration, VO lines, on-screen beats) **before** authoring HTML:
+Write a short spec (acts, target duration, VO lines, on-screen beats) **before** authoring HTML. For **design language, act patterns, instructional beats, and motion habits** (vendor-neutral, open on layout), read [motion-composition-craft.md](./motion-composition-craft.md).
+
+Example skeleton (adapt act count and labels to the brief):
 
 | Act | Time (example) | Visual | VO |
 |-----|----------------|--------|-----|
 | Hook | 0–5s | Title + hero visual | Opening line |
-| Demo | 5–20s | Product flow / UI mock | What it does |
-| Proof | 20–35s | Examples or grid | Breadth / use cases |
-| CTA | 35–45s | Logo + link / command | Close |
+| Explain or demo | 5–20s | Steps, flow, or UI mock | What to do / how it works |
+| Evidence | 20–35s | Examples or grid | Proof or samples |
+| Close | 35–45s | Logo + link / command | One clear action |
 
 Lock root **`data-duration`** to **actual narration length + tail** — not the first draft estimate. Mismatch causes black frames, cut-off VO, or misaligned captions.
 
@@ -75,6 +79,8 @@ Generate VO **before** scene timing so `data-start` / `data-duration` match real
 ```
 
 Reuse existing demo media where possible — do not regenerate every tile for a promo reel.
+
+Portrait **workflow demo** reels: suggested act order, full-length output clip, optional intro, CTA, bar, and logo. See [social-usecase-reel.md](./social-usecase-reel.md) for structure; visuals there are example proposals only.
 
 ---
 
@@ -109,13 +115,13 @@ Use **`class="clip"`** with `data-start`, `data-duration`, `data-track-index` on
 | `0` | Background |
 | `1–N` | Scenes (hook → CTA) |
 | `10–11` | Narration (+ optional bed audio) |
-| higher | Overlays — **not** social captions (see §6) |
+| higher | Overlays — **not** social captions (see §6); brand **logo** watermark (full timeline, track ~95) |
 
 Scenes are full-bleed `<div class="scene clip">` blocks; nested `<video class="clip">` for demo tiles.
 
 Register seek-safe motion on `window.__timelines["main"]` (GSAP `paused: true`). Prefer **step eases** for typing and **clip-path reveals** for UI — deterministic on seek/render.
 
-Carry one visual system (background, accent, fonts) through CSS; match caption accent colour in post-render ASS if using word highlight (see [captions.md](./captions.md)).
+When you adopt a look, **consistency** helps: carry the same background, accent, and fonts through CSS for the composition. Match caption accent colour in post-render ASS if using word highlight (see [captions.md](./captions.md)). Token choices themselves come from the brief or brand guide, not this doc.
 
 ---
 
@@ -219,6 +225,8 @@ cp hyperframes/renders/hyperframes_*.mp4 ../render.mp4
 | Stale SRT with wrong comma decimals | Regenerate cues from whisperx JSON |
 | Default ffmpeg for ASS burn | Install **ffmpeg-full** (libass) |
 | Copy HyperFrames docs into Pruna skills | `npx skills add heygen-com/hyperframes@hyperframes -y` |
+| Clone another reel’s scene order for a different brief | Re-spec using [motion-composition-craft.md](./motion-composition-craft.md) |
+| Truncate demo `<video>` with short `data-duration` | Probe file; set duration to full clip ([social-usecase-reel.md](./social-usecase-reel.md)) |
 
 ---
 

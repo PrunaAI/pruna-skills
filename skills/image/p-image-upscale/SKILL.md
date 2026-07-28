@@ -3,7 +3,7 @@ name: p-image-upscale
 description: Use when someone wants to upscale or sharpen an existing image for print, large crops, or higher-quality delivery.
 license: MIT
 metadata:
-  version: "1.0.7"
+  version: "1.0.8"
   package: pruna-skills
   pruna_model: p-image-upscale
 ---
@@ -24,7 +24,7 @@ Follow each skill's **Before generating** / craft sections — do not restate gu
 
 ## Agent habit
 
-In the **first reply**, name `` `p-image-upscale` `` in backticks, confirm `PRUNA_API_KEY`, then ask for the source image + `target` megapixels. Redirect text-to-image requests to `p-image`.
+In the **first reply**, name `` `p-image-upscale` `` in backticks, confirm `PRUNA_API_KEY`, then ask for the source image + `target` megapixels (open intake → **`generation-diversity`** clarification intake if output size is unclear). Redirect text-to-image requests to `p-image`.
 
 ## When NOT to use
 

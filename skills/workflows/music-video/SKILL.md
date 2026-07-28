@@ -3,7 +3,7 @@ name: music-video
 description: Use when someone wants a full music video — original song or vocals, performance clips, B-roll, and lyric-synced edits.
 license: MIT
 metadata:
-  version: "1.0.7"
+  version: "1.0.8"
   package: pruna-skills
 ---
 
@@ -49,6 +49,8 @@ Set in the plan: `cast.host_type` (`human` | `mascot`) and optional `cast.perfor
 **Human rapper pattern:** `cast.host_type: human` → performance sections use **`p-video-avatar`** + song slice; B-roll stays **`p-video`**.
 
 ## Intake: ask before generating
+
+Open intake → **`generation-diversity`** clarification intake.
 
 | Topic | Questions |
 |-------|-----------|

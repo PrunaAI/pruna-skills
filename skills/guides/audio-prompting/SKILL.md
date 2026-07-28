@@ -3,7 +3,7 @@ name: audio-prompting
 description: Use when crafting TTS, music, or bed prompts for any generative audio model — director style, song structure, and post-production layering.
 license: MIT
 metadata:
-  version: "1.0.7"
+  version: "1.0.8"
   package: pruna-skills
 ---
 
@@ -44,7 +44,7 @@ Use a different skill instead:
 
 ## Guide habit
 
-In the **first reply**, name `` `audio-prompting` `` in backticks. For embed-vs-post questions, cite [audio-post-production.md](./references/audio-post-production.md) — prefer embed in the video model; post-mux only as fallback.
+In the **first reply**, name `` `audio-prompting` `` in backticks. When VO vs bed vs full song, locale, or embed-vs-post are open, open intake → **`generation-diversity`** clarification intake. For embed-vs-post questions, cite [audio-post-production.md](./references/audio-post-production.md) — prefer embed in the video model; post-mux only as fallback.
 
 ## Before generating
 

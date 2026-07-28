@@ -3,7 +3,7 @@ name: pruna-api
 description: Use before any Pruna or Replicate HTTP call — credentials, upload/poll/download, parallel batches, and agent safety.
 license: MIT
 metadata:
-  version: "1.0.7"
+  version: "1.0.8"
   package: pruna-skills
 ---
 
@@ -27,7 +27,7 @@ HTTP patterns for the **Pruna P-API** and **Replicate** (audio tools). Install t
 
 ## Agent habit
 
-In the **first reply**, name `` `pruna-api` `` in backticks. Before any paid `POST`, confirm `PRUNA_API_KEY` and/or `REPLICATE_API_TOKEN` as needed. Do not invent model payloads — use the matching tool skill.
+In the **first reply**, name `` `pruna-api` `` in backticks. Before any paid `POST`, confirm `PRUNA_API_KEY` and/or `REPLICATE_API_TOKEN` as needed. If media path, voice, or brand is still open, open intake → **`generation-diversity`** clarification intake before upload. Do not invent model payloads — use the matching tool skill.
 
 ## When NOT to use
 

@@ -3,7 +3,7 @@ name: p-image-edit
 description: Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits.
 license: MIT
 metadata:
-  version: "1.0.7"
+  version: "1.0.8"
   package: pruna-skills
   pruna_model: p-image-edit
 ---
@@ -25,7 +25,7 @@ Follow each skill's **Before generating** / craft sections — do not restate gu
 
 ## Agent habit
 
-In the **first reply**, name `` `p-image-edit` `` in backticks, confirm `PRUNA_API_KEY`, then ask for the source photo (and edit brief). Draft edits with **Prompt craft (dynamic + faithful)**. Redirect to `p-image-try-on` when the job is garment fit from packshots.
+In the **first reply**, name `` `p-image-edit` `` in backticks, confirm `PRUNA_API_KEY`, then ask for the source photo (and edit brief). Open intake → **`generation-diversity`** clarification intake when needed. Draft edits with **Prompt craft (dynamic + faithful)**. Redirect to `p-image-try-on` when the job is garment fit from packshots.
 
 ## Prompt craft (dynamic + faithful)
 

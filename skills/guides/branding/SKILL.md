@@ -3,7 +3,7 @@ name: branding
 description: Use when applying official Pruna brand assets — logo selection, colors, and overlay rules for launches, social, and video.
 license: MIT
 metadata:
-  version: "1.0.7"
+  version: "1.0.8"
   package: pruna-skills
 ---
 
@@ -30,7 +30,7 @@ Local ffmpeg overlays (`video-editing`), HyperFrames `frame.md` tokens (`hyperfr
 
 ## Guide habit
 
-In the **first reply**, name `` `branding` `` in backticks. **Never redraw or text-prompt the Pruna logo** — copy a file from `./assets/logo-kit/`. Prefer **SVG** for HTML and scaling; use **PNG** for ffmpeg `-i logo.png` overlays when SVG is awkward.
+In the **first reply**, name `` `branding` `` in backticks. Confirm **official Pruna kit vs custom palette** before locking hex in overlays or `frame.md`. **Never redraw or text-prompt the Pruna logo** — copy a file from `./assets/logo-kit/`. Prefer **SVG** for HTML and scaling; use **PNG** for ffmpeg `-i logo.png` overlays when SVG is awkward.
 
 ## Before placing a logo
 

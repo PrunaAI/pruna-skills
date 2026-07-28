@@ -3,7 +3,7 @@ name: image-to-video
 description: Use when someone wants one short film beat from images — a narrated scene, story moment, or cinematic B-roll with optional voiceover.
 license: MIT
 metadata:
-  version: "1.0.7"
+  version: "1.0.8"
   package: pruna-skills
 ---
 
@@ -49,11 +49,14 @@ If the user wants a multi-scene film → hand off to `narrated-multi-scene` or `
 
 ## Intake: ask before generating
 
+Open intake → **`generation-diversity`** clarification intake.
+
 **Do not** call `POST /v1/predictions` until these are answered and logged:
 
 | Topic | Questions |
 |-------|-----------|
 | **Mode** | **`triple`** (`image` + `last_frame_image` + `audio` — preferred for narrated beats) · **`pair`** (start + end still + `duration`) · T2V · I2V · I2V+last · audio-only (no frames) |
+| **Media source** | **Generate** start/end stills (`p-image` / `p-image-edit`) vs **upload** user photos for frames? |
 | **Creative** | Motion `prompt` only — what happens between first and last frame? One paragraph max. |
 | **Frames** | Start still (upload or `p-image-edit`)? End still (`last_frame_edit_prompt`)? Stay single-scene — if the user wants a longer **`frame_chain` / multi-scene** project, stop and switch to `narrated-multi-scene` or `visual-transition-reel`. |
 | **Audio** | `gemini-3.1-flash-tts` → upload → **`input.audio`** (preferred). Optional `stable-audio-2.5` bed **after** render. Post-mux is fallback only — `audio-prompting`. |

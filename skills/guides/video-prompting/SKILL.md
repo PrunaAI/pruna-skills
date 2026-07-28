@@ -3,7 +3,7 @@ name: video-prompting
 description: Use when crafting video or motion prompts for any generative model — dramaturgy, camera, physics-safe motion, frame anchors, and clip chaining.
 license: MIT
 metadata:
-  version: "1.0.7"
+  version: "1.0.8"
   package: pruna-skills
 ---
 
@@ -46,7 +46,7 @@ Use a different skill instead:
 
 ## Guide habit
 
-In the **first reply**, name `` `video-prompting` `` in backticks. For `p-video` motion lines, cite OPEN/MID/CLOSE dramaturgy and **Worked example — product B-roll** in [prompt-dramaturgy.md](./references/prompt-dramaturgy.md). Audio-led clips: **≤ ~19s** TTS before embed — see [audio-in-video-prompting.md](./references/audio-in-video-prompting.md).
+In the **first reply**, name `` `video-prompting` `` in backticks. When aspect, resolution, duration, or embed-vs-post audio are open, open intake → **`generation-diversity`** clarification intake. For `p-video` motion lines, cite OPEN/MID/CLOSE dramaturgy and **Worked example — product B-roll** in [prompt-dramaturgy.md](./references/prompt-dramaturgy.md). Audio-led clips: **≤ ~19s** TTS before embed — see [audio-in-video-prompting.md](./references/audio-in-video-prompting.md).
 
 ## Before generating
 

@@ -3,7 +3,7 @@ name: gemini-3.1-flash-tts
 description: Use when someone needs spoken narration or voiceover — explainer tracks, documentary lines, or voice to pair with generated video.
 license: MIT
 metadata:
-  version: "1.0.7"
+  version: "1.0.8"
   package: pruna-skills
   provider: replicate
   replicate_model: google/gemini-3.1-flash-tts
@@ -26,7 +26,7 @@ Follow each skill's **Before generating** / craft sections — do not restate gu
 
 ## Agent habit
 
-In the **first reply**, name `` `gemini-3.1-flash-tts` `` in backticks, confirm `REPLICATE_API_TOKEN` (or stop with signup links from `pruna-api`), then ask for required inputs. Redirect when **When NOT to use** fits better.
+In the **first reply**, name `` `gemini-3.1-flash-tts` `` in backticks, confirm `REPLICATE_API_TOKEN` (or stop with signup links from `pruna-api`), then ask for required inputs. Open intake → **`generation-diversity`** clarification intake (locale, voice, script) before the first `POST`. Redirect when **When NOT to use** fits better.
 
 ## When NOT to use
 

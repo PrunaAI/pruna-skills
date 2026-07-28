@@ -3,7 +3,7 @@ name: illustrated-story-reel
 description: Use when someone wants a slideshow story with narration or music — picture-book illustrated frames with Ken Burns or gentle p-video motion.
 license: MIT
 metadata:
-  version: "1.0.7"
+  version: "1.0.8"
   package: pruna-skills
 ---
 
@@ -81,9 +81,11 @@ Default first stop: **stills**.
 
 ## Intake — ask before generating
 
+Open intake → **`generation-diversity`** clarification intake.
+
 **First questions (required):**
 
-1. **Delivery shape** — vertical reel (**9:16**), horizontal slideshow (**16:9**), or square (**1:1**)?
+1. **Delivery shape** — vertical reel (**9:16**), horizontal slideshow (**16:9**), or square (**1:1**)? Target **720p vs 1080p** if export size matters?
 2. **Audio** — **narration** (voiceover per beat) or **music** (instrumental bed / user track)?
 3. **Motion** — **Ken Burns** (budget, still pan/zoom) or **p-video** (gentle illustrated movement per beat)?
 

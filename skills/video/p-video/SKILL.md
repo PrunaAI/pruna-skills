@@ -3,7 +3,7 @@ name: p-video
 description: Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts.
 license: MIT
 metadata:
-  version: "1.0.7"
+  version: "1.0.8"
   package: pruna-skills
   pruna_model: p-video
 ---
@@ -25,7 +25,7 @@ Follow each skill's **Before generating** / craft sections — do not restate gu
 
 ## Agent habit
 
-In the **first reply**, name `` `p-video` `` in backticks, confirm `PRUNA_API_KEY` (or stop with signup links from `pruna-api`), then ask for required inputs. When drafting motion prompts, follow **Prompt craft (dynamic + faithful)** — do not paste skill examples. Redirect when **When NOT to use** fits better.
+In the **first reply**, name `` `p-video` `` in backticks, confirm `PRUNA_API_KEY` (or stop with signup links from `pruna-api`), then ask for required inputs. Open intake → **`generation-diversity`** clarification intake before the first `POST`. When drafting motion prompts, follow **Prompt craft (dynamic + faithful)** — do not paste skill examples. Redirect when **When NOT to use** fits better.
 
 ## Prompt craft (dynamic + faithful)
 

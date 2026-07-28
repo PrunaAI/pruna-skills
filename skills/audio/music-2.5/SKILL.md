@@ -3,7 +3,7 @@ name: music-2.5
 description: Use when someone wants an original AI song with vocals — sung lyrics, a style prompt track, or source audio for a music video.
 license: MIT
 metadata:
-  version: "1.0.7"
+  version: "1.0.8"
   package: pruna-skills
   provider: replicate
   replicate_model: minimax/music-2.5
@@ -25,7 +25,7 @@ Follow each skill's **Before generating** / craft sections — do not restate gu
 
 ## Agent habit
 
-In the **first reply**, name `` `music-2.5` `` in backticks, confirm `REPLICATE_API_TOKEN` (or stop with signup links from `pruna-api`), then ask for required inputs. Redirect when **When NOT to use** fits better.
+In the **first reply**, name `` `music-2.5` `` in backticks, confirm `REPLICATE_API_TOKEN` (or stop with signup links from `pruna-api`), then ask for required inputs. Open intake → **`generation-diversity`** clarification intake before the first `POST`. Redirect when **When NOT to use** fits better.
 
 ## When NOT to use
 

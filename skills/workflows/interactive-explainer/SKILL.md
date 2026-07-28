@@ -3,7 +3,7 @@ name: interactive-explainer
 description: Use when someone wants an educational explainer with a host and characters — history or science shorts with dialogue, not voiceover-only B-roll.
 license: MIT
 metadata:
-  version: "1.0.7"
+  version: "1.0.8"
   package: pruna-skills
 ---
 
@@ -79,9 +79,13 @@ Write **`video_prompt`** as `OPEN:` → `MID:` (attention hook) → `CLOSE:` (se
 
 ## Intake: ask before generating
 
+Open intake → **`generation-diversity`** clarification intake.
+
 | Topic | Questions |
 |-------|-----------|
 | **Topic** | What should the viewer learn? Key facts or story beats? |
+| **Media source** | **Generate** all stills/avatars with Pruna vs **upload** cast photos, locations, or reference plates? |
+| **Format** | Delivery **`9:16` / `16:9`**; avatar and `p-video` output **`720p` / `1080p`**? |
 | **Audience** | Kids, general public, enthusiast? Sets tone and vocabulary |
 | **Flavor** | History? Science? Nature? How-it-works? Illustrated? |
 | **Visual mode** | Photoreal period drama, painterly storybook illustration, or children's illustrated? (one for whole film) |

@@ -3,7 +3,7 @@ name: p-image
 description: Use when someone wants a fast AI image — product shots, hero visuals, mood boards, or draft photos from a text prompt.
 license: MIT
 metadata:
-  version: "1.0.7"
+  version: "1.0.8"
   package: pruna-skills
   pruna_model: p-image
 ---
@@ -24,7 +24,7 @@ Follow each skill's **Before generating** / craft sections — do not restate gu
 
 ## Agent habit
 
-In the **first reply**, name `` `p-image` `` in backticks, confirm `PRUNA_API_KEY` is set (or stop with signup links from `pruna-api`), then ask for prompt / aspect ratio. When drafting the prompt, follow **Prompt craft (dynamic + faithful)** — do not paste skill examples.
+In the **first reply**, name `` `p-image` `` in backticks, confirm `PRUNA_API_KEY` is set (or stop with signup links from `pruna-api`), then ask for prompt / aspect ratio (open intake → **`generation-diversity`** clarification intake). When drafting the prompt, follow **Prompt craft (dynamic + faithful)** — do not paste skill examples.
 
 ## Prompt craft (dynamic + faithful)
 

@@ -1,8 +1,8 @@
 {
-  "version": "1.0.7",
+  "version": "1.0.8",
   "package": "pruna-skills",
   "repository": "https://github.com/PrunaAI/pruna-skills",
-  "gitTag": "skills-v1.0.7",
+  "gitTag": "skills-v1.0.8",
   "skills": [
     {
       "name": "generation-diversity",
@@ -176,7 +176,7 @@
   "registries": {
     "github": {
       "method": "git tag + push",
-      "tag": "skills-v1.0.7",
+      "tag": "skills-v1.0.8",
       "note": "No upload API \u2014 consumers install from GitHub paths after push"
     },
     "npx": {

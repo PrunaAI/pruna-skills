@@ -3,7 +3,7 @@ name: image-prompting
 description: Use when crafting still-image prompts for any generative model — composition, identity sheets, edits, try-on, and photoreal personas.
 license: MIT
 metadata:
-  version: "1.0.7"
+  version: "1.0.8"
   package: pruna-skills
 ---
 
@@ -43,7 +43,7 @@ Use a different skill instead:
 
 ## Guide habit
 
-In the **first reply**, name `` `image-prompting` `` in backticks. For Pruna still calls, cite the reading order: `generation-diversity` (ritual + **still-image prompt flow** reference) → golden rules → model-specific reference below.
+In the **first reply**, name `` `image-prompting` `` in backticks. When aspect, resolution, or media source are open, open intake → **`generation-diversity`** clarification intake. For Pruna still calls, cite the reading order: `generation-diversity` (ritual + **still-image prompt flow** reference) → golden rules → model-specific reference below.
 
 ## Before generating
 

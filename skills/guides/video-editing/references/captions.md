@@ -13,9 +13,11 @@ Burn readable captions onto finished video, or mux soft subtitles. **Alignment**
 
 Install `whisperx` + `pruna-api` before step 2. Follow that skill's HTTP phase table — do not restate payloads here.
 
-## Default style — phrase bar + word accent (launch reels)
+## Default style — phrase bar + word accent (high-energy promo)
 
-A **stable phrase line** on layer 0; the **spoken word** tints **purple** (`#F6369B`) on layer 1. One black bar per cue — no second box on the accent.
+Common for **short promo reels** where one spoken word highlights in brand colour. Not mandatory for every deliverable — see [simple phrase](#alternate-style--simple-phrase-landscape-explainers-multi-act-showcases) and line-block below.
+
+A **stable phrase line** on layer 0; the **spoken word** tints an **accent colour** (example purple `#F6369B`) on layer 1. One black bar per cue — no second box on the accent.
 
 | Layer | Style | Visual |
 |-------|-------|--------|
@@ -45,7 +47,7 @@ Shared tokens:
 
 - **Launch size** — `Fontsize` **34**, `Bold=1`, bottom-center (`Alignment=2`), `MarginV` **56**
 - **Min whisper token** — **0.18s**
-- **Single line** — max **42 characters** per cue for launch reels (no `\N` breaks)
+- Single line — max **42 characters** per cue for tight promo reels (no `\N` breaks); relax for simple phrase / line-block
 
 ### Movie / broadcast timing (apply when grouping cues)
 
@@ -141,6 +143,19 @@ cd captions_dir
 ## Alternate style — word-only pop (one word at a time)
 
 When the phrase bar feels too busy, show **one word per cue** with only the outer black box. One `Dialogue` line per word with `{\fad(80,80)}`.
+
+## Alternate style — simple phrase (landscape explainers, multi-act showcases)
+
+When karaoke word-accent is too heavy — narrated explainers, recap-style reels, bottom-third safe area without a full-width bar:
+
+- One **phrase per whisperx segment** (or grouped segment), white text, dark outline or soft shadow
+- **Bottom center**, `Alignment=2`, scale `Fontsize` and `MarginV` to resolution (e.g. 28–40px on 1080p, `MarginV` 48–72)
+- **No per-word layer** — single `Dialogue` line per cue, optional `{\fad(80,0)}` on cue in only
+- Same timing limits as line-block: min **0.83s**, max **~6s** per cue, wrap near **42–48** characters
+
+Burn with **`ass=`** and **ffmpeg-full** like other styles. Use **`initial_prompt`** on whisperx when the script is known (TTS or fixed VO) for cleaner alignment.
+
+This is equivalent in pipeline to line-block; only styling differs. Word-accent and phrase-bar remain valid for high-energy promo.
 
 ## Alternate style — line-block (fallback)
 

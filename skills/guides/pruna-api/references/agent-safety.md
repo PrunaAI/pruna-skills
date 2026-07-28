@@ -26,6 +26,10 @@ Downloads (`curl -o …`, runners writing under an output dir) **create or overw
 - Confirm **`voice_language`** (and voice preset) with the user before avatar/TTS jobs.
 - Examples that use `English (US)` are **illustrative only** — not a silent default override of user locale.
 
+## Creative and media decisions
+
+Before the first upload or paid call, resolve decisions that change cost or output when the user has not already answered: **generate vs use existing** media, brand/palette, narration vs text-only, music bed vs silent, aspect/duration/**resolution (720p/1080p, canvas, MP)**, and workflow **approval gates**. Shared checklist: open intake → **`generation-diversity`** clarification intake.
+
 ## Related
 
 - [api-credentials.md](./api-credentials.md) — signup + header rules

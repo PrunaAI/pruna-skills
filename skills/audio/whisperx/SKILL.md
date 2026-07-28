@@ -3,7 +3,7 @@ name: whisperx
 description: Use when someone needs word-level timestamps from audio — lyric alignment, cut-safe line boundaries, or caption source timing before burn-in with video-editing.
 license: MIT
 metadata:
-  version: "1.0.7"
+  version: "1.0.8"
   package: pruna-skills
   provider: replicate
   replicate_model: victor-upmeet/whisperx
@@ -24,7 +24,7 @@ Follow each skill's **Before generating** / craft sections — do not restate gu
 
 ## Agent habit
 
-In the **first reply**, name `` `whisperx` `` in backticks, confirm `REPLICATE_API_TOKEN` (or stop with signup links from `pruna-api`), then ask for required inputs. Redirect when **When NOT to use** fits better.
+In the **first reply**, name `` `whisperx` `` in backticks, confirm `REPLICATE_API_TOKEN` (or stop with signup links from `pruna-api`), then ask for required inputs. Open intake → **`generation-diversity`** clarification intake before the first `POST`. Redirect when **When NOT to use** fits better.
 
 ## When NOT to use
 

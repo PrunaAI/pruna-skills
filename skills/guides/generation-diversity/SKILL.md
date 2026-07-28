@@ -3,7 +3,7 @@ name: generation-diversity
 description: Use when writing any generative prompt — ritual seed, explicit structure, scenario axes, and quality gates before paid API calls.
 license: MIT
 metadata:
-  version: "1.0.7"
+  version: "1.0.8"
   package: pruna-skills
 ---
 
@@ -30,10 +30,11 @@ Any generative model. Pruna tools (`p-image`, `p-video`, …) and third-party AP
 
 ## Guide habit
 
-In the **first reply**, name `` `generation-diversity` `` in backticks. For still-image jobs (`p-image`, `p-image-edit`), point agents at **[Still-image prompt flow](./references/still-image-prompt-flow.md)** — brief lock → ritual → axes → explicit prompt → fidelity check. **Mood boards:** new ritual per independent panel; user-locked brand hex / subject stays locked on every panel.
+In the **first reply**, name `` `generation-diversity` `` in backticks. When the brief leaves media source, brand, audio, structure, resolution, or approval unclear, **[ask before spending](./references/clarification-intake.md)** — every tool and workflow defers here for shared intake topics. For still-image jobs (`p-image`, `p-image-edit`), point agents at **[Still-image prompt flow](./references/still-image-prompt-flow.md)** — brief lock → ritual → axes → explicit prompt → fidelity check. **Mood boards:** new ritual per independent panel; user-locked brand hex / subject stays locked on every panel.
 
 ## Before generating
 
+0. **[Clarification intake](./references/clarification-intake.md)** — generate vs existing assets, colors, narration/VO, music, captions, aspect/resolution (720p/1080p, canvas, MP), structure, approval (unless the user waived or already locked answers).
 1. **[Generation diversity](./references/generation-diversity.md)** — random seed ritual (SSoT), explicit prompt structure, rotate ≥2 scenario axes per session.
 2. **Still images (`p-image` family):** **[still-image-prompt-flow.md](./references/still-image-prompt-flow.md)** — generation flow, edit flow, mood-board rules, hero → edit handoff. Pair with `image-prompting` golden rules and edit craft.
 3. **[Quality checklists](./references/generation-quality-checklists.md)** — open outputs and judge pass/fail before the next paid step.
