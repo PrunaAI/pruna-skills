@@ -65,9 +65,15 @@ Clarify **creative locks** before drafting prompts: identity continuity, camera/
 
 Confirm **files on disk**, ffmpeg available, and whether missing pieces should be **generated** (redirect to tools) or **skipped**. For multi-act HTML combos, clarify structure, caption timing source, and bed/narration like the universal table.
 
-### `branding`
+### Brand / visual identity
 
-Official kit vs custom; never redraw trademark logos from text prompts.
+When logos, colors, or on-image type might matter, ask before generating:
+
+- **Colors:** reference image, named swatches, or custom hex values?
+- **Logo / wordmark:** file the user will supply, none, or text-only labels in the frame?
+- **Look:** light vs dark, photoreal vs stylized (see universal **Brand / look** row)
+
+Do not invent palette or logo details when the user did not specify them. When they supplied official assets, use those files — do not redraw trademarks from a text prompt alone.
 
 ### Workflows
 

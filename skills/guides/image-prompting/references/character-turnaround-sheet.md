@@ -80,7 +80,7 @@ same [character name], identical face and costume, do not change species or age
 | Story background on the sheet | Locks the character into one location |
 | Vague “consistent character” with no views | Model invents a new face per shot |
 | Same expression labeled three ways | No usable performance range |
-| Regenerating hero from text each scene | Identity drift |
+| Regenerating the photo each scene | Identity drift |
 | Mixing photoreal sheet with anime scene stills | Medium break mid-pipeline |
 
 ## Related

@@ -16,20 +16,20 @@ Browse by type. Default install: **`/pruna`** — see [README Quickstart](../REA
 
 | Skill | Description |
 |-------|-------------|
-| [audio-prompting](https://github.com/PrunaAI/pruna-skills/tree/main/skills/guides/audio-prompting/SKILL.md) | Use when crafting TTS, music, or bed prompts for any generative audio model — director style, song structure, and pos… |
-| [branding](https://github.com/PrunaAI/pruna-skills/tree/main/skills/guides/branding/SKILL.md) | Use when applying official Pruna brand assets — logo selection, colors, and overlay rules for launches, social, and v… |
-| [generation-diversity](https://github.com/PrunaAI/pruna-skills/tree/main/skills/guides/generation-diversity/SKILL.md) | Use when writing any generative prompt — ritual seed, explicit structure, scenario axes, and quality gates before pai… |
-| [image-prompting](https://github.com/PrunaAI/pruna-skills/tree/main/skills/guides/image-prompting/SKILL.md) | Use when crafting still-image prompts for any generative model — composition, identity sheets, edits, try-on, and pho… |
+| [audio-prompting](https://github.com/PrunaAI/pruna-skills/tree/main/skills/guides/audio-prompting/SKILL.md) | Use when crafting TTS, music, or bed prompts for any generative audio model — director style, song structure, and post-production layering. |
+| [generation-diversity](https://github.com/PrunaAI/pruna-skills/tree/main/skills/guides/generation-diversity/SKILL.md) | Use when writing any generative prompt — ritual seed, explicit structure, scenario axes, and quality gates before paid API calls. |
+| [image-prompting](https://github.com/PrunaAI/pruna-skills/tree/main/skills/guides/image-prompting/SKILL.md) | Use when crafting still-image prompts for any generative model — composition, identity sheets, edits, try-on, and photoreal personas. |
 | [pruna-api](https://github.com/PrunaAI/pruna-skills/tree/main/skills/guides/pruna-api/SKILL.md) | Use before any Pruna or Replicate HTTP call — credentials, upload/poll/download, parallel batches, and agent safety. |
-| [video-editing](https://github.com/PrunaAI/pruna-skills/tree/main/skills/guides/video-editing/SKILL.md) | Use when assembling or polishing already-rendered clips with ffmpeg — concat, crossfades, burned captions and subtitl… |
-| [video-prompting](https://github.com/PrunaAI/pruna-skills/tree/main/skills/guides/video-prompting/SKILL.md) | Use when crafting video or motion prompts for any generative model — dramaturgy, camera, physics-safe motion, frame a… |
+| [video-editing](https://github.com/PrunaAI/pruna-skills/tree/main/skills/guides/video-editing/SKILL.md) | Use when assembling or polishing already-rendered clips with ffmpeg — concat, crossfades, burned captions and subtitles, text/logo overlays, before/after sliders, background music beds, platform export — or when composing a multi-layer HTML combination video with Hyperframes. Not for AI video generation, prompt craft, or model-based video edits. |
+| [video-prompting](https://github.com/PrunaAI/pruna-skills/tree/main/skills/guides/video-prompting/SKILL.md) | Use when crafting video or motion prompts for any generative model — dramaturgy, camera, physics-safe motion, frame anchors, and clip chaining. |
 
 ### Tools — image (Pruna API)
 
 | Skill | Description |
 |-------|-------------|
-| [p-image](https://github.com/PrunaAI/pruna-skills/tree/main/skills/image/p-image/SKILL.md) | Use when someone wants a fast AI image — product shots, hero visuals, mood boards, or draft photos from a text prompt. |
-| [p-image-edit](https://github.com/PrunaAI/pruna-skills/tree/main/skills/image/p-image-edit/SKILL.md) | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or a… |
+| [p-image](https://github.com/PrunaAI/pruna-skills/tree/main/skills/image/p-image/SKILL.md) | Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed. |
+| [p-image-edit](https://github.com/PrunaAI/pruna-skills/tree/main/skills/image/p-image-edit/SKILL.md) | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. |
+| [p-image-ideogram](https://github.com/PrunaAI/pruna-skills/tree/main/skills/image/p-image-ideogram/SKILL.md) | Use when photo generation needs more control — photoreal results, text in the image, or structured JSON with hex colors and bounding boxes. Simpler photo generation, edits, and video use other skills in the suite. |
 | [p-image-try-on](https://github.com/PrunaAI/pruna-skills/tree/main/skills/image/p-image-try-on/SKILL.md) | Use when someone wants virtual try-on — dress a person in clothes from reference photos for fashion or ecommerce. |
 | [p-image-upscale](https://github.com/PrunaAI/pruna-skills/tree/main/skills/image/p-image-upscale/SKILL.md) | Use when someone wants to upscale or sharpen an existing image for print, large crops, or higher-quality delivery. |
 
@@ -37,29 +37,29 @@ Browse by type. Default install: **`/pruna`** — see [README Quickstart](../REA
 
 | Skill | Description |
 |-------|-------------|
-| [p-video](https://github.com/PrunaAI/pruna-skills/tree/main/skills/video/p-video/SKILL.md) | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motio… |
-| [p-video-animate](https://github.com/PrunaAI/pruna-skills/tree/main/skills/video/p-video-animate/SKILL.md) | Use when someone wants a photo to move like another video — motion transfer, dance remixes, or performance variations… |
-| [p-video-avatar](https://github.com/PrunaAI/pruna-skills/tree/main/skills/video/p-video-avatar/SKILL.md) | Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from … |
-| [p-video-replace](https://github.com/PrunaAI/pruna-skills/tree/main/skills/video/p-video-replace/SKILL.md) | Use when someone wants to swap a person, outfit, or product inside existing footage while keeping the camera move and… |
+| [p-video](https://github.com/PrunaAI/pruna-skills/tree/main/skills/video/p-video/SKILL.md) | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. |
+| [p-video-animate](https://github.com/PrunaAI/pruna-skills/tree/main/skills/video/p-video-animate/SKILL.md) | Use when someone wants a photo to move like another video — motion transfer, dance remixes, or performance variations from a template clip. |
+| [p-video-avatar](https://github.com/PrunaAI/pruna-skills/tree/main/skills/video/p-video-avatar/SKILL.md) | Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo. |
+| [p-video-replace](https://github.com/PrunaAI/pruna-skills/tree/main/skills/video/p-video-replace/SKILL.md) | Use when someone wants to swap a person, outfit, or product inside existing footage while keeping the camera move and audio. |
 
 ### Tools — audio (Replicate)
 
 | Skill | Description |
 |-------|-------------|
-| [gemini-3.1-flash-tts](https://github.com/PrunaAI/pruna-skills/tree/main/skills/audio/gemini-3.1-flash-tts/SKILL.md) | Use when someone needs spoken narration or voiceover — explainer tracks, documentary lines, or voice to pair with gen… |
-| [music-2.5](https://github.com/PrunaAI/pruna-skills/tree/main/skills/audio/music-2.5/SKILL.md) | Use when someone wants an original AI song with vocals — sung lyrics, a style prompt track, or source audio for a mus… |
-| [stable-audio-2.5](https://github.com/PrunaAI/pruna-skills/tree/main/skills/audio/stable-audio-2.5/SKILL.md) | Use when someone wants light instrumental background music — an ambient bed under dialogue or underscore for reels an… |
-| [whisperx](https://github.com/PrunaAI/pruna-skills/tree/main/skills/audio/whisperx/SKILL.md) | Use when someone needs word-level timestamps from audio — lyric alignment, cut-safe line boundaries, or caption sourc… |
+| [gemini-3.1-flash-tts](https://github.com/PrunaAI/pruna-skills/tree/main/skills/audio/gemini-3.1-flash-tts/SKILL.md) | Use when someone needs spoken narration or voiceover — explainer tracks, documentary lines, or voice to pair with generated video. |
+| [music-2.5](https://github.com/PrunaAI/pruna-skills/tree/main/skills/audio/music-2.5/SKILL.md) | Use when someone wants an original AI song with vocals — sung lyrics, a style prompt track, or source audio for a music video. |
+| [stable-audio-2.5](https://github.com/PrunaAI/pruna-skills/tree/main/skills/audio/stable-audio-2.5/SKILL.md) | Use when someone wants light instrumental background music — an ambient bed under dialogue or underscore for reels and explainers. |
+| [whisperx](https://github.com/PrunaAI/pruna-skills/tree/main/skills/audio/whisperx/SKILL.md) | Use when someone needs word-level timestamps from audio — lyric alignment, cut-safe line boundaries, or caption source timing before burn-in with video-editing. |
 
 ### Workflows
 
 | Skill | Description |
 |-------|-------------|
-| [avatar-multi-scene](https://github.com/PrunaAI/pruna-skills/tree/main/skills/workflows/avatar-multi-scene/SKILL.md) | Use when someone wants the same person hosting several clips — multi-segment UGC, comparison reels, or mixed speaking… |
-| [avatar-single-scene](https://github.com/PrunaAI/pruna-skills/tree/main/skills/workflows/avatar-single-scene/SKILL.md) | Use when someone wants one polished host-on-camera beat — a speaking person with intake and approval gates before gen… |
-| [illustrated-story-reel](https://github.com/PrunaAI/pruna-skills/tree/main/skills/workflows/illustrated-story-reel/SKILL.md) | Use when someone wants a slideshow story with narration or music — picture-book illustrated frames with Ken Burns or … |
-| [image-to-video](https://github.com/PrunaAI/pruna-skills/tree/main/skills/workflows/image-to-video/SKILL.md) | Use when someone wants one short film beat from images — a narrated scene, story moment, or cinematic B-roll with opt… |
-| [interactive-explainer](https://github.com/PrunaAI/pruna-skills/tree/main/skills/workflows/interactive-explainer/SKILL.md) | Use when someone wants an educational explainer with a host and characters — history or science shorts with dialogue,… |
+| [avatar-multi-scene](https://github.com/PrunaAI/pruna-skills/tree/main/skills/workflows/avatar-multi-scene/SKILL.md) | Use when someone wants the same person hosting several clips — multi-segment UGC, comparison reels, or mixed speaking and animated scenes with continuity. |
+| [avatar-single-scene](https://github.com/PrunaAI/pruna-skills/tree/main/skills/workflows/avatar-single-scene/SKILL.md) | Use when someone wants one polished host-on-camera beat — a speaking person with intake and approval gates before generation. |
+| [illustrated-story-reel](https://github.com/PrunaAI/pruna-skills/tree/main/skills/workflows/illustrated-story-reel/SKILL.md) | Use when someone wants a slideshow story with narration or music — picture-book illustrated frames with Ken Burns or gentle p-video motion. |
+| [image-to-video](https://github.com/PrunaAI/pruna-skills/tree/main/skills/workflows/image-to-video/SKILL.md) | Use when someone wants one short film beat from images — a narrated scene, story moment, or cinematic B-roll with optional voiceover. |
+| [interactive-explainer](https://github.com/PrunaAI/pruna-skills/tree/main/skills/workflows/interactive-explainer/SKILL.md) | Use when someone wants an educational explainer with a host and characters — history or science shorts with dialogue, not voiceover-only B-roll. |
 | [music-video](https://github.com/PrunaAI/pruna-skills/tree/main/skills/workflows/music-video/SKILL.md) | Use when someone wants a full music video — original song or vocals, performance clips, B-roll, and lyric-synced edits. |
-| [narrated-multi-scene](https://github.com/PrunaAI/pruna-skills/tree/main/skills/workflows/narrated-multi-scene/SKILL.md) | Use when someone wants a multi-part story with voiceover — episodic B-roll, chaptered promo, or several linked video … |
-| [visual-transition-reel](https://github.com/PrunaAI/pruna-skills/tree/main/skills/workflows/visual-transition-reel/SKILL.md) | Use when someone wants a montage with transitions between shots — action-sequence reel or multi-scene piece where nar… |
+| [narrated-multi-scene](https://github.com/PrunaAI/pruna-skills/tree/main/skills/workflows/narrated-multi-scene/SKILL.md) | Use when someone wants a multi-part story with voiceover — episodic B-roll, chaptered promo, or several linked video scenes without on-camera dialogue. |
+| [visual-transition-reel](https://github.com/PrunaAI/pruna-skills/tree/main/skills/workflows/visual-transition-reel/SKILL.md) | Use when someone wants a montage with transitions between shots — action-sequence reel or multi-scene piece where narration is optional. |

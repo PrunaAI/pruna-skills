@@ -4,6 +4,19 @@ All notable changes to Pruna Skills are documented here. Skill and plugin `metad
 
 ## [Unreleased]
 
+## [1.0.9] — 2026-08-04
+
+GitHub tag: `skills-v1.0.9`
+
+### Added
+
+- **`p-image-ideogram` tool** — high-fidelity text-to-image via Pruna `p-image-ideogram`: thinking levels, 1K/2K output, photoreal heroes, legible typography, GTM layouts, and structured JSON prompts with hex colors and bounding boxes.
+
+### Changed
+
+- **`p-image`** — repositioned as the cheap/fast draft path; routes hero, typography, and structured still work to `p-image-ideogram`.
+- **`image-prompting`**, **`generation-diversity`**, **`pruna-api`**, suite, and related image/video tools — default T2I routing, install tables, and still-image prompt flow updated for `p-image-ideogram`.
+
 ## [1.0.8] — 2026-07-28
 
 GitHub tag: `skills-v1.0.8`

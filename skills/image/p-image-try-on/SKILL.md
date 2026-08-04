@@ -3,7 +3,7 @@ name: p-image-try-on
 description: Use when someone wants virtual try-on — dress a person in clothes from reference photos for fashion or ecommerce.
 license: MIT
 metadata:
-  version: "1.0.8"
+  version: "1.0.9"
   package: pruna-skills
   pruna_model: p-image-try-on
 ---
@@ -45,7 +45,7 @@ Use a different skill instead:
 
 | Skill | Description | Install |
 | --- | --- | --- |
-| `p-image` | Use when someone wants a fast AI image — product shots, hero visuals, mood boards, or draft photos from a text prompt. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
+| `p-image` | Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
 | `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
 
 ## Pricing

@@ -18,7 +18,6 @@
         "video-prompting",
         "audio-prompting",
         "video-editing",
-        "branding",
         "pruna-api"
       ]
     },
@@ -27,6 +26,7 @@
       "description": "Generate and edit images with Pruna API models.",
       "skills": [
         "p-image",
+        "p-image-ideogram",
         "p-image-edit",
         "p-image-upscale",
         "p-image-try-on"

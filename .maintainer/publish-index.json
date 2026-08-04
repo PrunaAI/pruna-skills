@@ -1,8 +1,8 @@
 {
-  "version": "1.0.8",
+  "version": "1.0.9",
   "package": "pruna-skills",
   "repository": "https://github.com/PrunaAI/pruna-skills",
-  "gitTag": "skills-v1.0.8",
+  "gitTag": "skills-v1.0.9",
   "skills": [
     {
       "name": "generation-diversity",
@@ -35,12 +35,6 @@
       "npxInstall": "npx skills add PrunaAI/pruna-skills@video-editing -y"
     },
     {
-      "name": "branding",
-      "skillPath": "skills/guides/branding",
-      "clawhubSkill": "@pruna-ai/branding",
-      "npxInstall": "npx skills add PrunaAI/pruna-skills@branding -y"
-    },
-    {
       "name": "pruna-api",
       "skillPath": "skills/guides/pruna-api",
       "clawhubSkill": "@pruna-ai/pruna-api",
@@ -51,6 +45,12 @@
       "skillPath": "skills/image/p-image",
       "clawhubSkill": "@pruna-ai/p-image",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@p-image -y"
+    },
+    {
+      "name": "p-image-ideogram",
+      "skillPath": "skills/image/p-image-ideogram",
+      "clawhubSkill": "@pruna-ai/p-image-ideogram",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@p-image-ideogram -y"
     },
     {
       "name": "p-image-edit",
@@ -176,7 +176,7 @@
   "registries": {
     "github": {
       "method": "git tag + push",
-      "tag": "skills-v1.0.8",
+      "tag": "skills-v1.0.9",
       "note": "No upload API \u2014 consumers install from GitHub paths after push"
     },
     "npx": {

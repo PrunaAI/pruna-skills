@@ -1,9 +1,9 @@
 ---
 name: p-image
-description: Use when someone wants a fast AI image — product shots, hero visuals, mood boards, or draft photos from a text prompt.
+description: Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed.
 license: MIT
 metadata:
-  version: "1.0.8"
+  version: "1.0.9"
   package: pruna-skills
   pruna_model: p-image
 ---
@@ -23,6 +23,8 @@ Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 Follow each skill's **Before generating** / craft sections — do not restate guide content here.
 
 ## Agent habit
+
+**Routing:** Use `` `p-image` `` for **simple, quick** photo generation from a short prompt. When photo generation needs **more control** (text in the image, structured JSON with hex/bbox, high-detail photoreal), use `` `p-image-ideogram` `` (defaults **`thinking: high`**, **`prompt_upsampling: true`**; **`low`** + **`prompt_upsampling: false`** + explicit prompt for a faster pass on the same model). For edits or video, use `` `p-image-edit` `` or `` `p-video` `` — not a new photo generation re-roll.
 
 In the **first reply**, name `` `p-image` `` in backticks, confirm `PRUNA_API_KEY` is set (or stop with signup links from `pruna-api`), then ask for prompt / aspect ratio (open intake → **`generation-diversity`** clarification intake). When drafting the prompt, follow **Prompt craft (dynamic + faithful)** — do not paste skill examples.
 
@@ -49,6 +51,7 @@ Use a different skill instead:
 
 | Skill | Description | Install |
 | --- | --- | --- |
+| `p-image-ideogram` | Use when photo generation needs more control — photoreal results, text in the image, or structured JSON with hex colors and bounding boxes. Simpler photo generation, edits, and video use other skills in the suite. | `npx skills add PrunaAI/pruna-skills@p-image-ideogram -y` |
 | `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
 | `p-image-try-on` | Use when someone wants virtual try-on — dress a person in clothes from reference photos for fashion or ecommerce. | `npx skills add PrunaAI/pruna-skills@p-image-try-on -y` |
 
@@ -98,7 +101,7 @@ Follow `generation-diversity` **still-image prompt flow** every time:
 
 **Mood board / batch:** new ritual per independent still; different **`aspect_ratio`** per panel when format not locked.
 
-**Hero approved → tweak:** hand off to `p-image-edit` on the hero URL — do not text-to-image re-roll the same subject.
+**Photo approved → edit:** hand off to `p-image-edit` on the output URL — do not run photo generation again for the same subject.
 
 ## Required input
 

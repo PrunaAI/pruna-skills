@@ -80,7 +80,7 @@ Style lock: [2-4 sentences: medium, line quality, palette, lighting, camera era]
 Same character as reference: [identity anchors: species, age, outfit, iconic props].
 ```
 
-## p-image: new still from text (when you lack a photo reference)
+## p-image: new photo generation (when you lack a photo reference)
 
 ```text
 [Style bible]

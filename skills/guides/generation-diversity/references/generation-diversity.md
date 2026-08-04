@@ -147,9 +147,10 @@ pulp western poster energy, dynamic diagonal composition
 
 | Model | Prompt upsampling | Typography in prompt |
 |-------|-------------------|----------------------|
-| **`p-image`** | **No** effective prompt upsampling | **Avoid** dense readable-type requests unless user explicitly wants `text_rendering`. Short prompts; skip `readable`, `legible`, `headline`, multi-sign lists — they drift to gibberish. Collage triggers still apply: `interactive-explainer` (`flat lay`, `grid`, `collage`, …). |
+| **`p-image-ideogram`** | **`thinking: high`** + **`prompt_upsampling: true`** by default; **`false`** for JSON or locked text | **Controlled photo generation** — in-image text, hex/JSON/bbox, high-detail photoreal. Speed path: **`thinking: low`**, **`prompt_upsampling: false`**, nuanced explicit prompt. |
+| **`p-image`** | **No** effective prompt upsampling | **Simple, quick** photo generation from a short prompt. Avoid dense in-image text — route to **`p-image-ideogram`**. Collage triggers still apply: `interactive-explainer` (`flat lay`, `grid`, `collage`, …). |
 
-**`p-image` text hygiene:** prefer scenes without copy. If a screen appears: `monitor soft colorful blur glow only` — not legible UI unless the user explicitly asked for readable text (then simplify the brief or drop copy).
+**`p-image` text hygiene:** prefer scenes without copy. If a screen appears: `monitor soft colorful blur glow only` — not legible UI unless the user explicitly asked for readable text (route to **`p-image-ideogram`** or simplify the brief).
 
 **Channel split (quotes vs tags):**
 
@@ -157,7 +158,7 @@ pulp western poster energy, dynamic diagonal composition
 - **Native clip dialogue:** `p-video` Mode A only (`[subject] says "[LINE]"` + mouth + gesture) → `video-prompting` — not `p-image`
 - **`[tags]`:** Gemini TTS `text` performance only — not still typography, not `p-video` motion prompt → `audio-prompting`
 
-**Collage triggers (all T2I models):** still avoid `flat lay`, `packshot`, `grid`, `collage`, `montage`, `contact sheet`, `split`, `before and after` — use `single frame`, `one camera angle` instead. Full table: `interactive-explainer`.
+**Collage triggers (photo generation models):** still avoid `flat lay`, `packshot`, `grid`, `collage`, `montage`, `contact sheet`, `split`, `before and after` — use `single frame`, `one camera angle` instead. Full table: `interactive-explainer`.
 
 ## SSoT axis derivation (sum-mod)
 
