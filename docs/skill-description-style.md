@@ -25,7 +25,7 @@ Keep routing boundaries in the **SKILL body**, not the frontmatter. Unsure which
 
 **Too narrow / internal**
 
-> Use when the user wants the fastest text-to-image stills…
+> Use when the user wants the fastest photo generation stills…
 
 **Natural**
 

@@ -20,7 +20,7 @@ Vendor-neutral craft for **still-image** generation and editing. Works with Prun
 
 ## When to use
 
-- Writing text-to-image prompts
+- Writing photo generation prompts
 - Building character identity / turnaround sheets
 - Surgical edits (change/keep discipline)
 - Virtual try-on garment prompts
@@ -28,7 +28,7 @@ Vendor-neutral craft for **still-image** generation and editing. Works with Prun
 
 ## Works with
 
-Pruna `p-image-ideogram` (default T2I), `p-image` (cheap/fast drafts), `p-image-edit` / `p-image-try-on` / `p-image-upscale`, Flux, Midjourney, Ideogram, SDXL, and other still models.
+Pruna `p-image` (simple quick photos), `p-image-ideogram` (controlled photo generation — text, JSON, hex/bbox), `p-image-edit` / `p-image-try-on` / `p-image-upscale`, Flux, Midjourney, Ideogram, SDXL, and other still models.
 
 ## When NOT to use
 
@@ -39,7 +39,7 @@ Use a different skill instead:
 | `video-prompting` | Use when crafting video or motion prompts for any generative model — dramaturgy, camera, physics-safe motion, frame anchors, and clip chaining. | `npx skills add PrunaAI/pruna-skills@video-prompting -y` |
 | `audio-prompting` | Use when crafting TTS, music, or bed prompts for any generative audio model — director style, song structure, and post-production layering. | `npx skills add PrunaAI/pruna-skills@audio-prompting -y` |
 | `pruna-api` | Use before any Pruna or Replicate HTTP call — credentials, upload/poll/download, parallel batches, and agent safety. | `npx skills add PrunaAI/pruna-skills@pruna-api -y` |
-| `p-image` | Use when someone explicitly wants the fastest, cheapest text-to-image drafts — mood boards, bulk panels, or quick iterations — not the default hero or typography path. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
+| `p-image` | Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
 
 ## Guide habit
 
@@ -64,8 +64,8 @@ Matching install for every model named above. Pick what you need:
 
 | Skill | Description | Install |
 | --- | --- | --- |
-| `p-image-ideogram` | Use when someone wants a high-fidelity still from text — photoreal heroes, legible typography, GTM layouts, or structured prompts with hex colors — not the cheapest draft path. | `npx skills add PrunaAI/pruna-skills@p-image-ideogram -y` |
-| `p-image` | Use when someone explicitly wants the fastest, cheapest text-to-image drafts — mood boards, bulk panels, or quick iterations — not the default hero or typography path. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
+| `p-image-ideogram` | Use when photo generation needs more control — photoreal results, text in the image, or structured JSON with hex colors and bounding boxes. Simpler photo generation, edits, and video use other skills in the suite. | `npx skills add PrunaAI/pruna-skills@p-image-ideogram -y` |
+| `p-image` | Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
 | `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
 | `p-image-try-on` | Use when someone wants virtual try-on — dress a person in clothes from reference photos for fashion or ecommerce. | `npx skills add PrunaAI/pruna-skills@p-image-try-on -y` |
 | `p-image-upscale` | Use when someone wants to upscale or sharpen an existing image for print, large crops, or higher-quality delivery. | `npx skills add PrunaAI/pruna-skills@p-image-upscale -y` |

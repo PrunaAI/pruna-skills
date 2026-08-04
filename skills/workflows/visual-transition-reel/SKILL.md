@@ -13,7 +13,7 @@ Install and load these skills before generating (skip if already in context via 
 
 | Skill | Description | Install |
 | --- | --- | --- |
-| `p-image` | Use when someone explicitly wants the fastest, cheapest text-to-image drafts — mood boards, bulk panels, or quick iterations — not the default hero or typography path. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
+| `p-image` | Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
 | `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
 | `p-video` | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 | `stable-audio-2.5` | Use when someone wants light instrumental background music — an ambient bed under dialogue or underscore for reels and explainers. | `npx skills add PrunaAI/pruna-skills@stable-audio-2.5 -y` |
@@ -103,7 +103,7 @@ Start/end stills and transition motion use **`video-prompting`** scene-anchor pa
 
 ### Phase 0 — Hero (`p-image`)
 
-One approved anchor still when generating from text:
+One approved anchor photo when generating a new image:
 
 1. **`p-image`** with `hero_prompt` + `style_bible` + ritual seed from `generation-diversity`
 2. Slop gate — approve before branching edits

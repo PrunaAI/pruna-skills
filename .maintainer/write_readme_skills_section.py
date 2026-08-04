@@ -31,8 +31,7 @@ def collect(base: Path) -> list[tuple[str, str, str]]:
         fm = read_frontmatter(skill_md)
         name = fm.get("name") or skill_md.parent.name
         desc = fm.get("description", "")
-        if len(desc) > 120:
-            desc = desc[:117] + "…"
+        desc = desc.replace("|", "\\|")
         rel = skill_md.parent.relative_to(REPO).as_posix()
         rows.append((name, desc, f"{GITHUB}/{rel}/SKILL.md"))
     return rows

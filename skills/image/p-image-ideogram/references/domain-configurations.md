@@ -1,6 +1,6 @@
 # Domain configurations (verticals & job type)
 
-Use with **`p-image-ideogram`** when a **`vertical-*`** workflow (or any brief) implies a job type. **SSoT for knobs:** `thinking`, `image_size`, prompt form (natural language vs Ideogram JSON), and batch discipline. Always **`prompt_upsampling: false`** unless the user wants expansion or the brief is too sparse to run without it.
+Use with **`p-image-ideogram`** when a **`vertical-*`** workflow (or any brief) implies a job type. **SSoT for knobs:** `thinking`, `image_size`, prompt form (natural language vs Ideogram JSON), and batch discipline. **Agent default:** **`thinking: high`**, **`prompt_upsampling: true`**. Set **`prompt_upsampling: false`** for JSON prompts, locked on-image copy, or verbatim wording.
 
 **Before POST:** list exact on-image strings in the plan; pick the profile below; show prompt + knobs unless the user locked wording.
 
@@ -17,7 +17,7 @@ Use with **`p-image-ideogram`** when a **`vertical-*`** workflow (or any brief) 
 
 **Batch:** for **type-heavy**, **type-structured**, and **type-micro**, run **≥4 parallel seeds** (async), pick one winner visually. **photoreal-standard** may use 1–4 seeds when the hero gates downstream edits.
 
-**Upsampling:** stay **`false`** for JSON prompts and for any brief with locked copy. Consider **`true`** only when the user wants the model to expand a one-line mood brief and there is **no** on-image text requirement.
+**Upsampling:** default **`true`** for NL prompts. Stay **`false`** for JSON prompts and for any brief with locked copy.
 
 ## Complexity ladder (quick pick)
 
@@ -28,7 +28,7 @@ Use with **`p-image-ideogram`** when a **`vertical-*`** workflow (or any brief) 
 
 ## By vertical skill
 
-Rows apply to **`p-image-ideogram`** T2I steps in that vertical. Use-case `#` matches that vertical skill's `references/use-cases.md` table.
+Rows apply to **`p-image-ideogram`** photo-generation steps in that vertical. Use-case `#` matches that vertical skill's `references/use-cases.md` table.
 
 ### `vertical-marketing-ugc`
 
@@ -54,7 +54,7 @@ Rows apply to **`p-image-ideogram`** T2I steps in that vertical. Use-case `#` ma
 | Use case # | Job | Profile | Notes |
 | --- | --- | --- | --- |
 | 4 | Dimensioned sketch / spec still | **type-micro** | Dimension lines + SKU; JSON for label elements |
-| 8 | Missing packshot T2I | **photoreal-standard** | No spec overlay |
+| 8 | Missing packshot (generate photo) | **photoreal-standard** | No spec overlay |
 
 ### `vertical-beauty-cosmetics`
 
@@ -84,13 +84,13 @@ Rows apply to **`p-image-ideogram`** T2I steps in that vertical. Use-case `#` ma
 
 | Use case # | Job | Profile | Notes |
 | --- | --- | --- | --- |
-| 5 | Missing angle / twilight fill | **photoreal-standard** | Rarely type; do not add listing copy in T2I |
+| 5 | Missing angle / twilight fill | **photoreal-standard** | Rarely type; do not add listing copy in generated photos |
 
 ### `vertical-hi-tech-electronics`
 
 | Use case # | Job | Profile | Notes |
 | --- | --- | --- | --- |
-| (gap T2I) | Packshot / lifestyle fill when edit cannot source | **photoreal-standard** | Port labels or UI chrome → **type-heavy**; prefer **`p-image-edit`** for screen cleanup |
+| (gap — generate photo) | Packshot / lifestyle fill when edit cannot source | **photoreal-standard** | Port labels or UI chrome → **type-heavy**; prefer **`p-image-edit`** for screen cleanup |
 
 ## Example `input` shapes (conceptual)
 

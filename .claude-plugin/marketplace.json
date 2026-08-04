@@ -28,12 +28,6 @@
       "source": "./skills/workflows/avatar-single-scene"
     },
     {
-      "name": "branding",
-      "description": "Use when applying official Pruna brand assets \u2014 logo selection, colors, and overlay rules for launches, social, and video.",
-      "version": "1.0.9",
-      "source": "./skills/guides/branding"
-    },
-    {
       "name": "gemini-3.1-flash-tts",
       "description": "Use when someone needs spoken narration or voiceover \u2014 explainer tracks, documentary lines, or voice to pair with generated video.",
       "version": "1.0.9",
@@ -89,7 +83,7 @@
     },
     {
       "name": "p-image",
-      "description": "Use when someone explicitly wants the fastest, cheapest text-to-image drafts \u2014 mood boards, bulk panels, or quick iterations \u2014 not the default hero or typography path.",
+      "description": "Use when someone explicitly wants the fastest, cheapest photo generation \u2014 mood boards, bulk panels, or quick iterations \u2014 not when controlled photoreal or in-image text is needed.",
       "version": "1.0.9",
       "source": "./skills/image/p-image"
     },
@@ -101,7 +95,7 @@
     },
     {
       "name": "p-image-ideogram",
-      "description": "Use when someone wants a high-fidelity still from text \u2014 photoreal heroes, legible typography, GTM layouts, or structured prompts with hex colors \u2014 not the cheapest draft path.",
+      "description": "Use when photo generation needs more control \u2014 photoreal results, text in the image, or structured JSON with hex colors and bounding boxes. Simpler photo generation, edits, and video use other skills in the suite.",
       "version": "1.0.9",
       "source": "./skills/image/p-image-ideogram"
     },

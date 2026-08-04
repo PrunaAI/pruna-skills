@@ -22,7 +22,7 @@ Append when the person/product must survive the edit:
 same [subject], identical face/uniform, do not remove the person, do not change species or age
 ```
 
-Prefer editing a locked hero or turnaround plate over text-to-image re-rolls.
+Prefer editing a locked photo or turnaround plate over running photo generation again.
 
 ## Typography edits
 
@@ -67,7 +67,7 @@ Max 5 images on `p-image-edit`.
 
 ## Edit, don't re-roll
 
-If the still is ~80% right, edit surgically. Re-rolling from text drifts identity and wastes the approved plate.
+If the still is ~80% right, edit surgically. Regenerating the photo drifts identity and wastes the approved plate.
 
 ## Worked example — three-reference composite
 

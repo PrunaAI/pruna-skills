@@ -1,16 +1,16 @@
 # Still-image prompt flow (`p-image` family)
 
-Agent playbook for **text-to-image** (`p-image`) and **surgical edit** (`p-image-edit`). Full ritual, axes, and explicit structure live in [generation-diversity.md](./generation-diversity.md). Still craft (golden rules, change/keep, checklists) lives in `image-prompting` — this doc is the **pipeline glue** only.
+Agent playbook for **photo generation** (`p-image`, `p-image-ideogram`) and **surgical edit** (`p-image-edit`). Full ritual, axes, and explicit structure live in [generation-diversity.md](./generation-diversity.md). Still craft (golden rules, change/keep, checklists) lives in `image-prompting` — this doc is the **pipeline glue** only.
 
 ## When to use
 
 | Job | Tool | Start here |
 |-----|------|------------|
-| New still from text (default) | `p-image-ideogram` | `p-image-ideogram` skill + [Generation flow](#generation-flow-p-image) (same pipeline; different model knobs) |
-| New still from text (cheap / fast / bulk drafts) | `p-image` | [Generation flow](#generation-flow-p-image) |
+| New photo generation | `p-image-ideogram` when photo generation needs control (text, JSON, hex/bbox, photoreal detail); else `p-image` | `p-image-ideogram` or `p-image` skill + [Generation flow](#generation-flow-p-image) |
+| New photo generation (cheap / fast / bulk) | `p-image` | [Generation flow](#generation-flow-p-image) |
 | Change existing photo | `p-image-edit` | [Edit flow](#edit-flow-p-image-edit) |
 | Mood board / multi-panel batch | `p-image-ideogram` (×N) unless user asked cheap/fast → `p-image` | [Batch / mood board](#batch--mood-board) |
-| Hero → tweak → upscale → video | `p-image-ideogram` or `p-image` → `p-image-edit` → … | [Hero → edit handoff](#hero--edit-handoff) |
+| Photo → edit → upscale → video | `p-image-ideogram` or `p-image` → `p-image-edit` → … | [Photo → edit handoff](#photo--edit-handoff) |
 
 **Not this path:** virtual try-on → `p-image-try-on`; sharpen only → `p-image-upscale`.
 
@@ -85,15 +85,15 @@ Independent panels (playground grid, demo batch, mood board):
 
 - **New ritual string per panel** — one ritual for the whole board is wrong.
 - **Different `aspect_ratio` per panel** when format not locked — derive from each panel’s ritual ([aspect ratio](./generation-diversity.md#aspect-ratio-multi-example-sets)).
-- **Same character arc** — opposite rule: one hero plate URL, lock cast; vary only setting/angle per scene ([when not to maximize diversity](./generation-diversity.md#when-not-to-maximize-diversity)).
+- **Same character arc** — opposite rule: one approved photo URL, lock cast; vary only setting/angle per scene ([when not to maximize diversity](./generation-diversity.md#when-not-to-maximize-diversity)).
 
-## Hero → edit handoff
+## Photo → edit handoff
 
 | Step | Action |
 |------|--------|
-| Hero approved | Save `urls.get` from `p-image` output — lock as hero plate |
-| Surgical tweak | `p-image-edit` from hero URL — never text-to-image re-roll for “same person, new background” |
-| Avatar / video | Edit from **upscaled** hero when pipeline requires; upscale again after edit before `p-video*` |
+| Photo approved | Save `urls.get` from `p-image` or `p-image-ideogram` output — lock as the edit source |
+| Surgical tweak | `p-image-edit` from that URL — never run photo generation again for “same person, new background” |
+| Video | Edit from **upscaled** photo when the pipeline requires; upscale again after edit before `p-video*` |
 
 Redirect to `p-image` only when the user wants a **new** subject or scene from scratch.
 
@@ -103,6 +103,6 @@ Redirect to `p-image` only when the user wants a **new** subject or scene from s
 |-------|--------|
 | Copy otter/corgi curl examples from SKILL.md | Fresh ritual + brief-faithful prompt |
 | `cool product vibe, neon` | Named product, materials, action, setting, camera |
-| Regen new face for “change background” | `p-image-edit` on locked hero URL |
+| Regen new face for “change background” | `p-image-edit` on locked photo URL |
 | One ritual for 4 mood-board tiles | Ritual per independent still |
 | Edit prompt without keep clauses | Explicit `Keep … identical` for every user lock |
