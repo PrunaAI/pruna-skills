@@ -6,10 +6,11 @@ Agent playbook for **text-to-image** (`p-image`) and **surgical edit** (`p-image
 
 | Job | Tool | Start here |
 |-----|------|------------|
-| New still from text | `p-image` | [Generation flow](#generation-flow-p-image) |
+| New still from text (default) | `p-image-ideogram` | `p-image-ideogram` skill + [Generation flow](#generation-flow-p-image) (same pipeline; different model knobs) |
+| New still from text (cheap / fast / bulk drafts) | `p-image` | [Generation flow](#generation-flow-p-image) |
 | Change existing photo | `p-image-edit` | [Edit flow](#edit-flow-p-image-edit) |
-| Mood board / multi-panel batch | `p-image` (×N) | [Batch / mood board](#batch--mood-board) |
-| Hero → tweak → upscale → video | `p-image` → `p-image-edit` → … | [Hero → edit handoff](#hero--edit-handoff) |
+| Mood board / multi-panel batch | `p-image-ideogram` (×N) unless user asked cheap/fast → `p-image` | [Batch / mood board](#batch--mood-board) |
+| Hero → tweak → upscale → video | `p-image-ideogram` or `p-image` → `p-image-edit` → … | [Hero → edit handoff](#hero--edit-handoff) |
 
 **Not this path:** virtual try-on → `p-image-try-on`; sharpen only → `p-image-upscale`.
 

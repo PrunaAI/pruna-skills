@@ -9,7 +9,7 @@
     "pruna-api"
   ],
   "tools": {
-    "image": ["p-image", "p-image-edit", "p-image-upscale", "p-image-try-on"],
+    "image": ["p-image", "p-image-ideogram", "p-image-edit", "p-image-upscale", "p-image-try-on"],
     "video": ["p-video", "p-video-avatar", "p-video-animate", "p-video-replace"],
     "audio": ["gemini-3.1-flash-tts", "music-2.5", "stable-audio-2.5", "whisperx"]
   },

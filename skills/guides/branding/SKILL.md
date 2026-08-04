@@ -3,7 +3,7 @@ name: branding
 description: Use when applying official Pruna brand assets — logo selection, colors, and overlay rules for launches, social, and video.
 license: MIT
 metadata:
-  version: "1.0.8"
+  version: "1.0.9"
   package: pruna-skills
 ---
 

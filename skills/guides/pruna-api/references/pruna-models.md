@@ -8,7 +8,8 @@ Pricing and limits change; confirm on the official page: [Available models](http
 
 | Model ID | Type | Tool skill | QA checklist (install guide) |
 |----------|------|------------|------------------------------|
-| `p-image` | Text-to-image (good quality, extremely fast) | `p-image` | `p-image-quality-checklist.md` in `image-prompting` |
+| `p-image` | Text-to-image (good quality, extremely fast; use when user asks cheap/fast) | `p-image` | `p-image-quality-checklist.md` in `image-prompting` |
+| `p-image-ideogram` | Text-to-image (photoreal, typography, 1K/2K, thinking levels; default T2I when speed/cost not prioritized) | `p-image-ideogram` | `p-image-quality-checklist.md` in `image-prompting` |
 | `p-image-edit` | Image edit / compose (1–5 images) | `p-image-edit` | `p-image-edit-quality-checklist.md` in `image-prompting` |
 | `p-image-upscale` | Upscale (target MP 1–128, optional enhance) | `p-image-upscale` | `p-image-upscale-quality-checklist.md` in `image-prompting` |
 | `p-image-try-on` | Virtual try-on (person + up to 11 garments, ≤6 finals / 7–8 reliable; optional pose ref, turbo ~4) | `p-image-try-on` | `p-image-try-on-quality-checklist.md` in `image-prompting` |

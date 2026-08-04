@@ -147,9 +147,10 @@ pulp western poster energy, dynamic diagonal composition
 
 | Model | Prompt upsampling | Typography in prompt |
 |-------|-------------------|----------------------|
-| **`p-image`** | **No** effective prompt upsampling | **Avoid** dense readable-type requests unless user explicitly wants `text_rendering`. Short prompts; skip `readable`, `legible`, `headline`, multi-sign lists — they drift to gibberish. Collage triggers still apply: `interactive-explainer` (`flat lay`, `grid`, `collage`, …). |
+| **`p-image-ideogram`** | Optional (`prompt_upsampling`; **prefer `false`** unless brief is sparse) | **Default T2I** for readable type, hex colors, JSON-style control blocks, and panel layouts. List exact strings + surfaces; use `thinking: high` + `image_size: 2K` when legibility is critical. |
+| **`p-image`** | **No** effective prompt upsampling | **Avoid** dense readable-type requests unless user explicitly wants `text_rendering`. Short prompts; skip `readable`, `legible`, `headline`, multi-sign lists — they drift to gibberish. Use when user asked **cheap / fast** or bulk draft throughput. Collage triggers still apply: `interactive-explainer` (`flat lay`, `grid`, `collage`, …). |
 
-**`p-image` text hygiene:** prefer scenes without copy. If a screen appears: `monitor soft colorful blur glow only` — not legible UI unless the user explicitly asked for readable text (then simplify the brief or drop copy).
+**`p-image` text hygiene:** prefer scenes without copy. If a screen appears: `monitor soft colorful blur glow only` — not legible UI unless the user explicitly asked for readable text (route to **`p-image-ideogram`** or simplify the brief).
 
 **Channel split (quotes vs tags):**
 

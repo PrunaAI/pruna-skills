@@ -28,8 +28,9 @@ Browse by type. Default install: **`/pruna`** — see [README Quickstart](../REA
 
 | Skill | Description |
 |-------|-------------|
-| [p-image](https://github.com/PrunaAI/pruna-skills/tree/main/skills/image/p-image/SKILL.md) | Use when someone wants a fast AI image — product shots, hero visuals, mood boards, or draft photos from a text prompt. |
+| [p-image](https://github.com/PrunaAI/pruna-skills/tree/main/skills/image/p-image/SKILL.md) | Use when someone explicitly wants the fastest, cheapest text-to-image drafts — mood boards, bulk panels, or quick ite… |
 | [p-image-edit](https://github.com/PrunaAI/pruna-skills/tree/main/skills/image/p-image-edit/SKILL.md) | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or a… |
+| [p-image-ideogram](https://github.com/PrunaAI/pruna-skills/tree/main/skills/image/p-image-ideogram/SKILL.md) | Use when someone wants a high-fidelity still from text — photoreal heroes, legible typography, GTM layouts, or struct… |
 | [p-image-try-on](https://github.com/PrunaAI/pruna-skills/tree/main/skills/image/p-image-try-on/SKILL.md) | Use when someone wants virtual try-on — dress a person in clothes from reference photos for fashion or ecommerce. |
 | [p-image-upscale](https://github.com/PrunaAI/pruna-skills/tree/main/skills/image/p-image-upscale/SKILL.md) | Use when someone wants to upscale or sharpen an existing image for print, large crops, or higher-quality delivery. |
 
