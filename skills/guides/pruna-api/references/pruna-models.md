@@ -14,6 +14,7 @@ Pricing and limits change; confirm on the official page: [Available models](http
 | `p-image-upscale` | Upscale (target MP 1–128, optional enhance) | `p-image-upscale` | `p-image-upscale-quality-checklist.md` in `image-prompting` |
 | `p-image-try-on` | Virtual try-on (person + up to 11 garments, ≤6 finals / 7–8 reliable; optional pose ref, turbo ~4) | `p-image-try-on` | `p-image-try-on-quality-checklist.md` in `image-prompting` |
 | `p-video` | Text / image / audio video; **first frame** (`image`) + **last frame** (`last_frame_image`) chaining | `p-video` | `p-video-quality-checklist.md` in `video-prompting` |
+| `p-video-edit` | Instruction video edit (source ≤15s, up to 4 refs, draft preview mode) | `p-video-edit` | `p-video-edit-quality-checklist.md` in `video-prompting` |
 | `p-video-avatar` | Talking avatar from portrait + script or audio | `p-video-avatar` | `p-video-avatar-quality-checklist.md` in `video-prompting` |
 | `p-video-animate` | Animate a still using source video motion (motion transfer) | `p-video-animate` | `p-video-animate-quality-checklist.md` in `video-prompting` |
 | `p-video-replace` | Replace people in source video using 1–4 identity images | `p-video-replace` | `p-video-replace-quality-checklist.md` in `video-prompting` |

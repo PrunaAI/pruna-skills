@@ -37,6 +37,7 @@
       "description": "Generate and edit video with Pruna API models.",
       "skills": [
         "p-video",
+        "p-video-edit",
         "p-video-avatar",
         "p-video-animate",
         "p-video-replace"

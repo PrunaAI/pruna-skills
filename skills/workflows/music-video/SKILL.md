@@ -3,7 +3,7 @@ name: music-video
 description: Use when someone wants a full music video — original song or vocals, performance clips, B-roll, and lyric-synced edits.
 license: MIT
 metadata:
-  version: "1.0.9"
+  version: "1.0.10"
   package: pruna-skills
 ---
 

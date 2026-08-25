@@ -3,7 +3,7 @@ name: p-image-upscale
 description: Use when someone wants to upscale or sharpen an existing image for print, large crops, or higher-quality delivery.
 license: MIT
 metadata:
-  version: "1.0.9"
+  version: "1.0.10"
   package: pruna-skills
   pruna_model: p-image-upscale
 ---

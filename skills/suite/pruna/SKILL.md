@@ -3,7 +3,7 @@ name: pruna
 description: Use when installing the full Pruna generative media suite — all guides, tools, and workflows in one package.
 license: MIT
 metadata:
-  version: "1.0.9"
+  version: "1.0.10"
   package: pruna-skills
 depends:
   - generation-diversity
@@ -18,6 +18,7 @@ depends:
   - p-image-upscale
   - p-image-try-on
   - p-video
+  - p-video-edit
   - p-video-avatar
   - p-video-animate
   - p-video-replace
@@ -70,6 +71,7 @@ After install, start a **new chat**. Your agent picks skills from the suite by n
 | `p-image-upscale` | Use when someone wants to upscale or sharpen an existing image for print, large crops, or higher-quality delivery. | `npx skills add PrunaAI/pruna-skills@p-image-upscale -y` |
 | `p-image-try-on` | Use when someone wants virtual try-on — dress a person in clothes from reference photos for fashion or ecommerce. | `npx skills add PrunaAI/pruna-skills@p-image-try-on -y` |
 | `p-video` | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
+| `p-video-edit` | Use when someone wants to change what is inside an existing video — colors, materials, objects, on-screen text, lighting, or the setting — while keeping the camera move, timing, and performance. | `npx skills add PrunaAI/pruna-skills@p-video-edit -y` |
 | `p-video-avatar` | Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo. | `npx skills add PrunaAI/pruna-skills@p-video-avatar -y` |
 | `p-video-animate` | Use when someone wants a photo to move like another video — motion transfer, dance remixes, or performance variations from a template clip. | `npx skills add PrunaAI/pruna-skills@p-video-animate -y` |
 | `p-video-replace` | Use when someone wants to swap a person, outfit, or product inside existing footage while keeping the camera move and audio. | `npx skills add PrunaAI/pruna-skills@p-video-replace -y` |

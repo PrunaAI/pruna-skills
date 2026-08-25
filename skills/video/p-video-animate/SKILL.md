@@ -3,7 +3,7 @@ name: p-video-animate
 description: Use when someone wants a photo to move like another video — motion transfer, dance remixes, or performance variations from a template clip.
 license: MIT
 metadata:
-  version: "1.0.9"
+  version: "1.0.10"
   package: pruna-skills
   pruna_model: p-video-animate
 ---
@@ -47,7 +47,7 @@ Appearance comes from **`image`**; motion from **`video`**. Optional **`instruct
 | **Inputs** | One **`image`** + motion-template **`video`** | Source **`video`** + **`images`** (1–4) |
 | **Job** | Still performs using copied motion | People/props in footage swapped for refs |
 
-**Use `p-video-replace`** for in-place identity swap. **Use this skill** for motion-transfer showcases and persona variants.
+**Use `p-video-replace`** for in-place identity swap, **`p-video-edit`** for any other change inside existing footage (colorway, material, object, text, environment, lighting). **Use this skill** for motion-transfer showcases and persona variants.
 
 ## When NOT to use
 
@@ -57,6 +57,7 @@ Use a different skill instead:
 | --- | --- | --- |
 | `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
 | `p-video-replace` | Use when someone wants to swap a person, outfit, or product inside existing footage while keeping the camera move and audio. | `npx skills add PrunaAI/pruna-skills@p-video-replace -y` |
+| `p-video-edit` | Use when someone wants to change what is inside an existing video — colors, materials, objects, on-screen text, lighting, or the setting — while keeping the camera move, timing, and performance. | `npx skills add PrunaAI/pruna-skills@p-video-edit -y` |
 | `p-video-avatar` | Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo. | `npx skills add PrunaAI/pruna-skills@p-video-avatar -y` |
 
 ## HTTP (curl)

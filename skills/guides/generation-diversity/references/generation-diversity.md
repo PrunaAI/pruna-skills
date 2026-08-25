@@ -246,11 +246,13 @@ Plate-driven tags: `animate_hero_still` · `camera_move_on_plate` · `environmen
 
 Match motion to what the **still** already shows — do not contradict the plate.
 
-### Video edit — `p-video-replace` (and edit-style video)
+### Video edit — `p-video-edit` (instruction edits) and `p-video-replace` (identity swap)
 
 Source: [Arena video edit](https://arena.ai/leaderboard/video-edit)
 
 Edit tags: `face_recast` · `wardrobe_swap` · `accessory_swap` · `background_replace` · `object_in_hand_swap` · `style_transfer_on_subject`
+
+`p-video-edit` tags: `colorway_variant` · `material_swap` · `object_removal` · `text_removal` · `environment_restyle` · `relight_scene` · `sku_from_reference` — one principal change per run, so spread variants across **jobs**, not across one prompt.
 
 Same-gender / identity rules for talking-head beats still apply — see [Cast diversity](#cast-diversity) below.
 
@@ -403,6 +405,7 @@ Match prompt framing to ratio (e.g. `16:9 horizontal wide shot`, `9:16 vertical 
 | **`p-video-avatar`** | `video_prompt` + still world per scene; lock voice per character |
 | **`p-video-animate`** | persona still style/setting per slider ref |
 | **`p-video-replace`** | video-edit tag + full cast spread on showcase reels |
+| **`p-video-edit`** | one edit tag per job; vary source clip, target element, and preserve-list wording across rows |
 
 ## When **not** to maximize diversity
 
@@ -737,6 +740,7 @@ Public examples across **`p-image`**, **`p-image-try-on`**, and **`p-video-avata
 | Workflow | Variety emphasis |
 |----------|-------------------|
 | `p-image-try-on` | Editorial plates + complex garment refs; preservation checklist; diversity across playground set |
+| `p-video-edit` | One principal change per job; colorway / material / cleanup ladders as separate rows off one master clip |
 | `p-video-replace` | Scene 1 **persona ladder** + per-scene distinct `still_edit` backgrounds; optional **light bed** after concat |
 | `p-video-animate` | 3–4 **style tags** per animate slider row |
 | `avatar-multi-scene` | Every avatar row: new `setting_tag` + `camera_tag` via `p-image-edit` |

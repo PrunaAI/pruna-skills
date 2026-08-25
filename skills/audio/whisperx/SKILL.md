@@ -3,7 +3,7 @@ name: whisperx
 description: Use when someone needs word-level timestamps from audio — lyric alignment, cut-safe line boundaries, or caption source timing before burn-in with video-editing.
 license: MIT
 metadata:
-  version: "1.0.9"
+  version: "1.0.10"
   package: pruna-skills
   provider: replicate
   replicate_model: victor-upmeet/whisperx

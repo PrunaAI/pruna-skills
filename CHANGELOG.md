@@ -4,6 +4,20 @@ All notable changes to Pruna Skills are documented here. Skill and plugin `metad
 
 ## [Unreleased]
 
+## [1.0.10] — 2026-08-25
+
+GitHub tag: `skills-v1.0.10`
+
+### Added
+
+- **`p-video-edit` tool** — instruction-based video-to-video editing via Pruna `p-video-edit`: one source clip (≤15s) plus one edit prompt for colorways, materials, object add/remove, on-screen text, environment restyle, and relighting, with up to 4 optional reference stills and a cheap `draft` preview pass.
+- **`video-prompting` references** — `p-video-edit-prompting.md` (edit families, change + preserve formula, draft-then-final loop) and `p-video-edit-quality-checklist.md`.
+
+### Changed
+
+- **`p-video`**, **`p-video-replace`**, **`p-video-animate`**, **`video-editing`**, **`video-prompting`** — routing copy: `p-video-edit` is the default for any instruction edit on existing footage; `p-video-replace` stays scoped to identity swaps driven by 1–4 identity stills.
+- **`generation-diversity`**, **`pruna-api`** — model index, diversity tags, and checklist match map cover `p-video-edit`.
+
 ## [1.0.9] — 2026-08-04
 
 GitHub tag: `skills-v1.0.9`

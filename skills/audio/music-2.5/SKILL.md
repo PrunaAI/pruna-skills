@@ -3,7 +3,7 @@ name: music-2.5
 description: Use when someone wants an original AI song with vocals — sung lyrics, a style prompt track, or source audio for a music video.
 license: MIT
 metadata:
-  version: "1.0.9"
+  version: "1.0.10"
   package: pruna-skills
   provider: replicate
   replicate_model: minimax/music-2.5
