@@ -13,6 +13,7 @@ Use with **`p-image-ideogram`** when a **`vertical-*`** workflow (or any brief) 
 | **type-heavy** | `high` | `2K` | NL | Headlines, titles, CTAs, shade names — **every string literal in the prompt** |
 | **type-structured** | `high` | `2K` | [JSON caption](./ideogram-json-prompting.md) | Multi-zone layouts, brand hex, repeated panels, exact placement |
 | **type-micro** | `high` | `2K` | JSON preferred | Many small labels (dimensions, SKUs, shade grid, spec callouts) |
+| **type-premium** | `very high` | `2K` | NL or JSON | Maximum quality — complex hero compositions with multiple text elements, intricate layouts, or flagship creative where cost is secondary to output quality; ~2× cost of `high` |
 | **draft-explore** | `low` | `1K` | NL | Internal exploration only — user asked cheap/fast → prefer **`p-image`** instead |
 
 **Batch:** for **type-heavy**, **type-structured**, and **type-micro**, run **≥4 parallel seeds** (async), pick one winner visually. **photoreal-standard** may use 1–4 seeds when the hero gates downstream edits.
@@ -25,6 +26,7 @@ Use with **`p-image-ideogram`** when a **`vertical-*`** workflow (or any brief) 
 2. **One headline or title** → **type-heavy**.
 3. **Several strings or one brand hex** → **type-heavy** or **type-structured** (JSON if layout must repeat).
 4. **Spec sheet / ad board / dimension overlay** → **type-micro** or **type-structured** (JSON).
+5. **Flagship creative / complex multi-element composition** → **type-premium** (when absolute best quality justifies ~2× cost).
 
 ## By vertical skill
 
