@@ -30,6 +30,8 @@ In the **first reply**, name `` `p-image-ideogram` `` in backticks, confirm `PRU
 
 **Agent defaults (override API defaults):** send **`thinking: "high"`**, **`prompt_upsampling: true`**, and **`image_size: "1K"`** unless a profile in [domain-configurations.md](./references/domain-configurations.md) says otherwise. Use **`image_size: "2K"`** for dense in-image text, multi-panel layouts, and large output. Set **`prompt_upsampling: false`** when text is locked (JSON prompts, exact strings) or the user wants verbatim prompts only.
 
+**Premium path:** when the user requests maximum quality or the composition is highly complex (many text elements, intricate multi-panel layouts, detailed structured scenes), send **`thinking: "very high"`** + **`image_size: "2K"`**. Costs ~2× `high` ($0.033/1K, $0.066/2K) — confirm with the user before using unless they explicitly asked for top quality.
+
 **Speed path (same model):** when the scene is simpler but you still want ideogram (or need a faster pass on this model), send **`thinking: "low"`**, **`prompt_upsampling: false`**, and a **nuanced, explicit prompt** you fully draft — upsampling stays off because the prompt already carries the detail. Faster than the default **`high`** + upsampling path. For the simplest quick photo drafts, route to **`p-image`** instead.
 
 When the job comes from a **`vertical-*`** workflow (or another multi-step production with spec copy or covers), pick **`thinking`**, **`image_size`**, and NL vs JSON from [domain-configurations.md](./references/domain-configurations.md) for that vertical and use-case `#` — do not use one global knob set for every industry.
@@ -39,7 +41,7 @@ When the job comes from a **`vertical-*`** workflow (or another multi-step produ
 | | `` `p-image-ideogram` `` | `` `p-image` `` |
 | --- | --- | --- |
 | **When** | **More control** — text in the image, JSON layout, hex/`bbox`, detailed photoreal photos | **Simple, quick** photo generation from a short prompt |
-| **Quality** | Strong photorealism and typography; four **`thinking`** levels; **1K / 2K** | Good quality, extremely fast; no prompt upsampling |
+| **Quality** | Strong photorealism and typography; five **`thinking`** levels (`very low` to `very high`); **1K / 2K** | Good quality, extremely fast; no prompt upsampling |
 | **Prompt upsampling** | **`true` by default** (`high` path); **`false`** on speed path or locked copy / JSON | None — concrete language is the whole craft |
 | **Knob default** | **`thinking: high`** + **`prompt_upsampling: true`** | Single fast pass — no thinking/upsampling knobs |
 | **Structured layout** | Ideogram 4.0 **JSON caption** in `prompt` (hex, `bbox`, `"text"` elements) — see [ideogram-json-prompting.md](./references/ideogram-json-prompting.md) | Avoid dense readable type |
@@ -70,8 +72,7 @@ Every `input.prompt` must be **fresh and specific**, and must **keep the user's 
 | **`low`** | **Speed path** — pair with **`prompt_upsampling: false`** and a nuanced explicit prompt; faster than the default when the scene is simpler but ideogram is still the right model |
 | **`medium`** | Middle ground when **`high`** is heavier than needed but the prompt is not fully self-contained |
 | **`high`** | **Default agent choice** — text in the image, multi-panel layouts, editorial portraits; pair with **`image_size: "2K"`** when legibility or large output matters |
-
-Do not send invalid values (e.g. `"very high"` has returned **422** on some deployments). Stick to **`very low`**, **`low`**, **`medium`**, **`high`**.
+| **`very high`** | **Maximum quality** — complex compositions with multiple text elements, intricate layouts, or when the absolute best output justifies the ~2× cost over `high`; pair with **`image_size: "2K"`** for best results |
 
 ## When NOT to use
 
@@ -124,7 +125,7 @@ Follow `generation-diversity` **still-image prompt flow** every time:
 
 1. **Lock the request** — subject, product, format, any text on the image.
 2. **Ritual seed** — fresh string; derive free axes (camera, lighting, `render_category_tag`, **`aspect_ratio`** when unset).
-3. **Pick knobs** — [domain-configurations.md](./references/domain-configurations.md) profile for the vertical/use case, else default **`thinking: high`**, **`image_size: 1K`**, **`prompt_upsampling: true`**; or **speed path** — **`thinking: low`**, **`prompt_upsampling: false`**, nuanced explicit prompt; raise **`image_size`** to **`2K`** for dense in-image text or multi-panel layouts; set **`prompt_upsampling: false`** for locked text or JSON.
+3. **Pick knobs** — [domain-configurations.md](./references/domain-configurations.md) profile for the vertical/use case, else default **`thinking: high`**, **`image_size: 1K`**, **`prompt_upsampling: true`**; or **speed path** — **`thinking: low`**, **`prompt_upsampling: false`**, nuanced explicit prompt; or **premium path** — **`thinking: "very high"`**, **`image_size: "2K"`** for maximum quality on complex compositions; raise **`image_size`** to **`2K`** for dense in-image text or multi-panel layouts; set **`prompt_upsampling: false`** for locked text or JSON.
 4. **Draft explicit prompt** — **Prompt craft** + `image-prompting` golden rules; **fidelity check** before pay.
 5. **Confirm** — show `prompt` + knobs unless wording is locked.
 6. **POST** — async curl below; poll via `pruna-api`; run `p-image` quality checklist in `image-prompting` before upscale/video.
@@ -143,7 +144,7 @@ Follow `generation-diversity` **still-image prompt flow** every time:
 
 ## Common optional fields
 
-- `thinking`: `very low`, `low`, `medium`, `high` — **default `high`**; **`low`** + **`prompt_upsampling: false`** + explicit prompt for the speed path
+- `thinking`: `very low`, `low`, `medium`, `high`, `very high` — **default `high`**; **`low`** + **`prompt_upsampling: false`** + explicit prompt for the speed path; **`very high`** for maximum quality on complex compositions
 - `image_size`: `1K`, `2K` (ignored when `aspect_ratio` is `custom`)
 - `prompt_upsampling`: boolean — **default `true`** with **`thinking: high`**; **`false`** on speed path, locked copy, JSON prompts, or verbatim wording
 - `aspect_ratio`: `1:1`, `16:9`, `9:16`, `4:3`, `3:4`, `3:2`, `2:3`, `custom` (with `width` / `height` up to 2560, multiples of 16)
