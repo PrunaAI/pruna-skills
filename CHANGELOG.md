@@ -4,6 +4,19 @@ All notable changes to Pruna Skills are documented here. Skill and plugin `metad
 
 ## [Unreleased]
 
+## [1.0.10] — 2026-08-27
+
+GitHub tag: `skills-v1.0.10`
+
+### Added
+
+- **`p-image-ideogram` `thinking: "very high"`** — premium path for maximum quality on complex compositions (`very high` + `image_size: "2K"`); ~2× cost of `high` ($0.033/1K, $0.066/2K).
+- **`type-premium` domain profile** — flagship creative / multi-element heroes in [domain-configurations.md](skills/image/p-image-ideogram/references/domain-configurations.md).
+
+### Changed
+
+- **`p-image-ideogram`** — five thinking levels (`very low` … `very high`); removed stale 422 warning that blocked `"very high"`; agent defaults, generation flow, and optional fields document the premium path.
+
 ## [1.0.9] — 2026-08-04
 
 GitHub tag: `skills-v1.0.9`
