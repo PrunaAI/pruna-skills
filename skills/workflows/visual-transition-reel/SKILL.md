@@ -3,7 +3,7 @@ name: visual-transition-reel
 description: Use when someone wants a montage with transitions between shots — action-sequence reel or multi-scene piece where narration is optional.
 license: MIT
 metadata:
-  version: "1.0.9"
+  version: "1.0.10"
   package: pruna-skills
 ---
 
