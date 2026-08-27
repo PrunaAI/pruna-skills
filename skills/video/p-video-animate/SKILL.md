@@ -3,7 +3,7 @@ name: p-video-animate
 description: Use when someone wants a photo to move like another video — motion transfer, dance remixes, or performance variations from a template clip.
 license: MIT
 metadata:
-  version: "1.0.9"
+  version: "1.0.10"
   package: pruna-skills
   pruna_model: p-video-animate
 ---

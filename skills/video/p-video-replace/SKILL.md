@@ -3,7 +3,7 @@ name: p-video-replace
 description: Use when someone wants to swap a person, outfit, or product inside existing footage while keeping the camera move and audio.
 license: MIT
 metadata:
-  version: "1.0.9"
+  version: "1.0.10"
   package: pruna-skills
   pruna_model: p-video-replace
 ---

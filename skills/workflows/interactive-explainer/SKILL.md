@@ -3,7 +3,7 @@ name: interactive-explainer
 description: Use when someone wants an educational explainer with a host and characters — history or science shorts with dialogue, not voiceover-only B-roll.
 license: MIT
 metadata:
-  version: "1.0.9"
+  version: "1.0.10"
   package: pruna-skills
 ---
 

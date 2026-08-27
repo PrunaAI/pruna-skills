@@ -3,7 +3,7 @@ name: stable-audio-2.5
 description: Use when someone wants light instrumental background music — an ambient bed under dialogue or underscore for reels and explainers.
 license: MIT
 metadata:
-  version: "1.0.9"
+  version: "1.0.10"
   package: pruna-skills
   provider: replicate
   replicate_model: stability-ai/stable-audio-2.5
