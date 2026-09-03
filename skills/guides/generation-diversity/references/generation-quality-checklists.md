@@ -31,6 +31,7 @@ Maintenance rule: keep tool/workflow mapping only in this file to avoid link dri
 | `p-video-avatar` | `video-prompting` | `p-video-avatar-quality-checklist.md` · persona: `realistic-persona-showcase.md` in `image-prompting` | `avatar-single-scene`, `avatar-multi-scene`, `interactive-explainer` |
 | `p-video-animate` | `video-prompting` | `p-video-animate-quality-checklist.md` | `avatar-multi-scene` |
 | `p-video-replace` | `video-prompting` | `p-video-replace-quality-checklist.md` | `p-video-replace`, `avatar-multi-scene` |
+| `p-video-edit` | `video-prompting` | `p-video-edit-quality-checklist.md` | `p-video-edit` |
 | `music-2.5` + MV assembly | `music-video` | `music-video-quality-checklist.md` | `music-video` |
 
 ## Core checklist (all models)
@@ -57,6 +58,7 @@ Install the guide/workflow, then open the checklist file inside it:
 | `p-video-avatar` | `video-prompting` | `p-video-avatar-quality-checklist.md` |
 | `p-video-animate` | `video-prompting` | `p-video-animate-quality-checklist.md` |
 | `p-video-replace` | `video-prompting` | `p-video-replace-quality-checklist.md` |
+| `p-video-edit` | `video-prompting` | `p-video-edit-quality-checklist.md` |
 | music video | `music-video` | `music-video-quality-checklist.md` |
 
 ## Visual variety
@@ -72,7 +74,7 @@ Human-in-the-loop phases for multi-step workflows. **Video and replace jobs are 
 | **0 — Plan** | none | free | Present scene table, cast, scripts, `style_bible`; explicit **approve plan / go** |
 | **A — Stills** | `p-image`, `p-image-edit` | low | Show hero + start/end plates; run checklists; **approve stills** |
 | **A2 — Audio prep** | Gemini TTS, Music 2.5, WhisperX align | low–medium | **Listen / read** narration or song; fix copy before video |
-| **B — Video** | `p-video`, `p-video-avatar`, `p-video-animate`, `p-video-replace` | **high** | Only after Phase A approval; **approve clips** before assembly |
+| **B — Video** | `p-video`, `p-video-avatar`, `p-video-animate`, `p-video-replace`, `p-video-edit` | **high** | Only after Phase A approval; **approve clips** before assembly |
 | **C — Assembly** | local ffmpeg concat / slider scripts | free | Review concat (embedded VO); compare MP4s before final mux |
 | **D — Final audio** | Stable Audio bed, bed mix, full-song mux | low | Only after Phase B clip approval |
 

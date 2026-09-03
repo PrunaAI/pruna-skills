@@ -80,8 +80,8 @@ Character continuity = approved plate URL + cast descriptor — **not** the ritu
 
 ### Example (internal plan / optional user-visible)
 
-Manifest: `"ritual_seed": "k7Qm2xP9"`. Derived: aspect_ratio 16:9, camera_tag fish-eye, render_category_tag cartoon_anime_fantasy.  
-Prompt: Disco ball reflections on an otter DJ scratching vinyl at a packed 1970s roller rink, fish-eye lens, glitter confetti mid-air, funky energy.  
+Manifest: `"ritual_seed": "k7Qm2xP9"`. Derived: aspect_ratio 16:9, camera_tag fish-eye, render_category_tag cartoon_anime_fantasy.
+Prompt: Disco ball reflections on an otter DJ scratching vinyl at a packed 1970s roller rink, fish-eye lens, glitter confetti mid-air, funky energy.
 …then curl / runner **without** `"seed"` in `input`.
 
 ### Manifest snippet
@@ -246,11 +246,13 @@ Plate-driven tags: `animate_hero_still` · `camera_move_on_plate` · `environmen
 
 Match motion to what the **still** already shows — do not contradict the plate.
 
-### Video edit — `p-video-replace` (and edit-style video)
+### Video edit — `p-video-replace` / `p-video-edit`
 
 Source: [Arena video edit](https://arena.ai/leaderboard/video-edit)
 
-Edit tags: `face_recast` · `wardrobe_swap` · `accessory_swap` · `background_replace` · `object_in_hand_swap` · `style_transfer_on_subject`
+Edit tags: `face_recast` · `wardrobe_swap` · `accessory_swap` · `background_replace` · `object_in_hand_swap` · `style_transfer_on_subject` · `attribute_recolor` · `object_remove` · `environment_restyle` · `relight` · `on_screen_text`
+
+**`p-video-replace`:** character swap from required refs. **`p-video-edit`:** one principal instruction change per run — lock the keep-list; do not invent a new scene.
 
 Same-gender / identity rules for talking-head beats still apply — see [Cast diversity](#cast-diversity) below.
 
@@ -403,6 +405,7 @@ Match prompt framing to ratio (e.g. `16:9 horizontal wide shot`, `9:16 vertical 
 | **`p-video-avatar`** | `video_prompt` + still world per scene; lock voice per character |
 | **`p-video-animate`** | persona still style/setting per slider ref |
 | **`p-video-replace`** | video-edit tag + full cast spread on showcase reels |
+| **`p-video-edit`** | video-edit tag + one-change lock (keep camera / motion / unmentioned subjects) |
 
 ## When **not** to maximize diversity
 
@@ -436,7 +439,7 @@ Match prompt framing to ratio (e.g. `16:9 horizontal wide shot`, `9:16 vertical 
 
 ## Visual variety
 
-Use this whenever you plan **`p-image`**, **`p-image-edit`**, **`p-video-avatar`**, **`p-video-animate`**, or **`p-video-replace`** rows. Run the **Variety checklist** at the bottom before the first API call.
+Use this whenever you plan **`p-image`**, **`p-image-edit`**, **`p-video-avatar`**, **`p-video-animate`**, **`p-video-replace`**, or **`p-video-edit`** rows. Run the **Variety checklist** at the bottom before the first API call.
 
 ### Goal
 
@@ -455,11 +458,11 @@ Showcase and multi-scene work should feel **art-directed**, not like the same ta
 
 Every still prompt should feel **art-directed and thumb-stopping**, not generic stock. Build in order:
 
-1. **Style + subject** — who they are + one statement wardrobe piece  
-2. **World** — 2–3 concrete environment cues (city bokeh, mirror panels, miniature teal lamp, twin moons)  
-3. **Lighting name** — in **`p-image` / reference stills**: bright environment (sunny window, cheerful daylight, golden afternoon). **Avoid** ring light, studio lighting, key/rim/gel light **wording** in still prompts — those belong in plan `lighting_tag` + `video_prompt`, not `p-image`.  
-4. **Shot framing** — in still prompts: slight angle from the side, wide shot, slight high angle — **not** “facing camera”, “three-quarter”, or “3/4”. Record angle in plan `camera_tag`.  
-5. **`swap_visual_bible`** (plan) — amplify contrast on persona-ladder refs  
+1. **Style + subject** — who they are + one statement wardrobe piece
+2. **World** — 2–3 concrete environment cues (city bokeh, mirror panels, miniature teal lamp, twin moons)
+3. **Lighting name** — in **`p-image` / reference stills**: bright environment (sunny window, cheerful daylight, golden afternoon). **Avoid** ring light, studio lighting, key/rim/gel light **wording** in still prompts — those belong in plan `lighting_tag` + `video_prompt`, not `p-image`.
+4. **Shot framing** — in still prompts: slight angle from the side, wide shot, slight high angle — **not** “facing camera”, “three-quarter”, or “3/4”. Record angle in plan `camera_tag`.
+5. **`swap_visual_bible`** (plan) — amplify contrast on persona-ladder refs
 
 **Anti-pattern:** flat “neutral wall, soft natural light” on **every row in a scene** — especially UGC/install beats with three grey-wall refs. **Fix:** distinct location family per ref (loft · rooftop · cafe · LED studio) + named gel rim + varied **`camera_tag`** (low angle, side angle, slight high angle).
 
@@ -494,16 +497,16 @@ Scene 3 already stacks texture beats (fur, holo, pearl/gold); reuse that pattern
 
 ### Composition & depth
 
-- **Shallow DOF** + gel reflections (single-subject neon boutique) or city window bokeh (studio) — separates subject from background  
-- **Foreground anchor** — mug, **closed hardcover notebook**, tumbler at chest gives replace sliders a readable swap target  
-- **Single subject one frame** — always; negative space on one side reads cleaner in inset thumbnails  
+- **Shallow DOF** + gel reflections (single-subject neon boutique) or city window bokeh (studio) — separates subject from background
+- **Foreground anchor** — mug, **closed hardcover notebook**, tumbler at chest gives replace sliders a readable swap target
+- **Single subject one frame** — always; negative space on one side reads cleaner in inset thumbnails
 
 ### Age & profession spread
 
 Not every scene needs “tech founder early 30s.” Rotate:
 
-- Gen-Z UGC creator · mid-30s creative director · late-20s advocate · **40s+ expert/trainer** for one VO row  
-- Archetypes beyond tech: stylist, chef, fitness creator, museum docent — when the narrative allows  
+- Gen-Z UGC creator · mid-30s creative director · late-20s advocate · **40s+ expert/trainer** for one VO row
+- Archetypes beyond tech: stylist, chef, fitness creator, museum docent — when the narrative allows
 
 ### Camera & motion (reel-level)
 
@@ -526,9 +529,9 @@ Long persona ladders (7–9 refs) need tighter **`slider_seconds`** (1.25–1.5)
 
 ### Quality gates before Phase B
 
-- Ref still readable at **256px wide** (identity + accent color)  
-- Adjacent refs differ in **medium + palette + setting**, not just hair color  
-- `instruction_prompt` colors/materials **match** reference prompt (lime crew ≠ forest green; copper ≠ silver)  
+- Ref still readable at **256px wide** (identity + accent color)
+- Adjacent refs differ in **medium + palette + setting**, not just hair color
+- `instruction_prompt` colors/materials **match** reference prompt (lime crew ≠ forest green; copper ≠ silver)
 - Source `video_prompt` props **match** `still_edit` (no mug glance if no mug in plate)
 
 ## Cast diversity
@@ -738,6 +741,7 @@ Public examples across **`p-image`**, **`p-image-try-on`**, and **`p-video-avata
 |----------|-------------------|
 | `p-image-try-on` | Editorial plates + complex garment refs; preservation checklist; diversity across playground set |
 | `p-video-replace` | Scene 1 **persona ladder** + per-scene distinct `still_edit` backgrounds; optional **light bed** after concat |
+| `p-video-edit` | One-change lock + video-edit tag; keep camera/motion; optional refs mapped in `prompt` |
 | `p-video-animate` | 3–4 **style tags** per animate slider row |
 | `avatar-multi-scene` | Every avatar row: new `setting_tag` + `camera_tag` via `p-image-edit` |
 | WORKFLOW-RECIPES | Intake must capture variety plan before recipe execution |

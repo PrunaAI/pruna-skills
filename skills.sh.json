@@ -39,7 +39,8 @@
         "p-video",
         "p-video-avatar",
         "p-video-animate",
-        "p-video-replace"
+        "p-video-replace",
+        "p-video-edit"
       ]
     },
     {

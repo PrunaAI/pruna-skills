@@ -41,14 +41,15 @@ In the **first reply**, name `` `p-video-replace` `` in backticks, confirm `PRUN
 
 ## Skill boundary
 
-| | **p-video-replace** | **p-video-animate** |
-|---|---------------------|---------------------|
-| **User question** | *Replace this person in this video?* | *Animate this picture with some motion?* |
-| **Goal** | Swap identity **into** existing footage | Drive a **still** with motion from another clip |
-| **Source video** | The **final scene** | A **motion template** only |
-| **Reference images** | **`images`** — **1 to 4** in **one** call | **`image`** — **one** subject per call |
+| | **p-video-replace** | **p-video-edit** | **p-video-animate** |
+|---|---------------------|------------------|---------------------|
+| **User question** | *Replace this person in this video?* | *Change the color / environment / object / text / lighting in this clip?* | *Animate this picture with some motion?* |
+| **Goal** | Swap identity **into** existing footage | Instruction edit of the **source clip** | Drive a **still** with motion from another clip |
+| **Source video** | The **final scene** | The **scene to edit** (≤15s) | A **motion template** only |
+| **Reference images** | Required **`images`** — **1 to 4** | Optional **`images`** — **0 to 4** | **`image`** — **one** subject per call |
+| **Prompt field** | **`instruction_prompt`** | **`prompt`** | Optional **`instruction_prompt`** |
 
-**Use `p-video-animate`** when the user has a still and wants it to **perform** from a separate template video.
+**Use `p-video-edit`** for prompt-driven attribute, environment, object, text, or lighting edits. **Use `p-video-animate`** when the user has a still and wants it to **perform** from a separate template video.
 
 ## When NOT to use
 
@@ -56,6 +57,7 @@ Use a different skill instead:
 
 | Skill | Description | Install |
 | --- | --- | --- |
+| `p-video-edit` | Use when someone wants to edit an existing video with a text instruction — recolor, restyle, remove or add objects, change environment or lighting, update on-screen text, or apply optional reference-guided product and accessory edits. Not for a new clip from scratch or ffmpeg assembly. | `npx skills add PrunaAI/pruna-skills@p-video-edit -y` |
 | `p-video-animate` | Use when someone wants a photo to move like another video — motion transfer, dance remixes, or performance variations from a template clip. | `npx skills add PrunaAI/pruna-skills@p-video-animate -y` |
 | `p-video-avatar` | Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo. | `npx skills add PrunaAI/pruna-skills@p-video-avatar -y` |
 

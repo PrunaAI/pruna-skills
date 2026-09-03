@@ -40,6 +40,7 @@ Browse by type. Default install: **`/pruna`** — see [README Quickstart](../REA
 | [p-video](https://github.com/PrunaAI/pruna-skills/tree/main/skills/video/p-video/SKILL.md) | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. |
 | [p-video-animate](https://github.com/PrunaAI/pruna-skills/tree/main/skills/video/p-video-animate/SKILL.md) | Use when someone wants a photo to move like another video — motion transfer, dance remixes, or performance variations from a template clip. |
 | [p-video-avatar](https://github.com/PrunaAI/pruna-skills/tree/main/skills/video/p-video-avatar/SKILL.md) | Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo. |
+| [p-video-edit](https://github.com/PrunaAI/pruna-skills/tree/main/skills/video/p-video-edit/SKILL.md) | Use when someone wants to edit an existing video with a text instruction — recolor, restyle, remove or add objects, change environment or lighting, update on-screen text, or apply optional reference-guided product and accessory edits. Not for a new clip from scratch or ffmpeg assembly. |
 | [p-video-replace](https://github.com/PrunaAI/pruna-skills/tree/main/skills/video/p-video-replace/SKILL.md) | Use when someone wants to swap a person, outfit, or product inside existing footage while keeping the camera move and audio. |
 
 ### Tools — audio (Replicate)

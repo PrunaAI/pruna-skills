@@ -25,11 +25,11 @@ Vendor-neutral craft for **short video / motion** generation. Works with Pruna `
 - Camera and lighting vocabulary in motion lines
 - Physics-safe subject motion
 - Multi-clip continuity / clip chaining
-- Talking-head, motion-transfer, or slot-replace instruction prompts
+- Talking-head, motion-transfer, slot-replace, or instruction-based video-edit prompts
 
 ## Works with
 
-Pruna `p-video` / `p-video-avatar` / `p-video-animate` / `p-video-replace`, Runway Gen-3, Kling, Luma Dream Machine, Veo, and other video models.
+Pruna `p-video` / `p-video-avatar` / `p-video-animate` / `p-video-replace` / `p-video-edit`, Runway Gen-3, Kling, Luma Dream Machine, Veo, and other video models.
 
 ## When NOT to use
 
@@ -62,6 +62,7 @@ In the **first reply**, name `` `video-prompting` `` in backticks. When aspect, 
    - [p-video-avatar-prompting.md](./references/p-video-avatar-prompting.md)
    - [p-video-animate-prompting.md](./references/p-video-animate-prompting.md)
    - [p-video-replace-prompting.md](./references/p-video-replace-prompting.md)
+   - [p-video-edit-prompting.md](./references/p-video-edit-prompting.md)
 4. Validate with the matching `*-quality-checklist.md` in `./references/`.
 
 Product B-roll and OPEN/MID/CLOSE samples: **Worked example — product B-roll** in [prompt-dramaturgy.md](./references/prompt-dramaturgy.md).
@@ -76,6 +77,7 @@ Matching install for every model named above. Pick what you need:
 | `p-video-avatar` | Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo. | `npx skills add PrunaAI/pruna-skills@p-video-avatar -y` |
 | `p-video-animate` | Use when someone wants a photo to move like another video — motion transfer, dance remixes, or performance variations from a template clip. | `npx skills add PrunaAI/pruna-skills@p-video-animate -y` |
 | `p-video-replace` | Use when someone wants to swap a person, outfit, or product inside existing footage while keeping the camera move and audio. | `npx skills add PrunaAI/pruna-skills@p-video-replace -y` |
+| `p-video-edit` | Use when someone wants to edit an existing video with a text instruction — recolor, restyle, remove or add objects, change environment or lighting, update on-screen text, or apply optional reference-guided product and accessory edits. Not for a new clip from scratch or ffmpeg assembly. | `npx skills add PrunaAI/pruna-skills@p-video-edit -y` |
 | `pruna-api` | Use before any Pruna or Replicate HTTP call — credentials, upload/poll/download, parallel batches, and agent safety. | `npx skills add PrunaAI/pruna-skills@pruna-api -y` |
 
 Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`

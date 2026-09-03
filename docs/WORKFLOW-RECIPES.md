@@ -10,9 +10,9 @@ For a single prompt with minimal intake — pick the shortest tool chain:
 
 | Route | When | Chain |
 |-------|------|-------|
-| **image** | Still only | `p-image` |
-| **i2v** | Motion from a still | `p-image` → `p-video` |
-| **avatar** | Talking head | `p-image` → `p-video-avatar` |
+| **image** | Still only | `p-image-ideogram` |
+| **i2v** | Motion from a still | `p-image-ideogram` → `p-video` |
+| **avatar** | Talking head | `p-image-ideogram` → `p-video-avatar` |
 
 For multi-scene plans with approval gates, use a workflow skill (`music-video`, `narrated-multi-scene`, …). Install the full suite first: `npx skills add PrunaAI/pruna-skills@pruna -y` — see [README Quickstart](../README.md#quickstart).
 
@@ -36,8 +36,9 @@ For multi-scene plans with approval gates, use a workflow skill (`music-video`, 
 | R — Educational explainer | Narrator + character dialogue | avatar triples | `interactive-explainer` |
 | S — Illustrated story reel | Still story + VO or music | Ken Burns slideshow | `illustrated-story-reel` |
 | T — Virtual try-on launch | Fashion vertical showcase | `p-image-try-on` + motion | `p-image-try-on` |
+| U — Prompt-driven video edit | Recolor, restyle, remove/add, env, text, lighting | `p-video-edit` | `p-video-edit` |
 
-## Recipe details (A–T)
+## Recipe details (A–U)
 
 ## Recipe A — Style-locked mood board (same-style stills)
 
@@ -204,6 +205,17 @@ For **full narrated story films**, use Recipe **P** (scene anchor triple in `vid
 
 **Steps:** `p-image-try-on` + persona craft in `image-prompting` + `p-video-avatar` — phased gates in `generation-diversity`.
 
+## Recipe U — Prompt-driven video edit
+
+**Shine:** One source clip (≤15s) + a surgical text instruction — colorways, environment variants, object add/remove, on-screen text, or lighting — without reshooting. Optional 1–4 reference images for product/accessory match.
+
+**Intake:** Source video path; one principal change; keep-list (camera, motion, unmentioned subjects); optional refs; draft vs standard; keep audio?
+
+**Steps**
+
+1. Tool chain: upload source (and optional refs) → draft **`prompt`** from `video-prompting` (`p-video-edit-prompting`) → **`p-video-edit`**.
+2. Preview with `draft: true` when iterating; final with `draft: false`. Identity/slot swap from required refs → **Recipe N** (`p-video-replace`). Concat / captions / sliders → `video-editing`.
+
 ## More ideas (map to recipes)
 
 | Idea | Map |
@@ -220,6 +232,7 @@ For **full narrated story films**, use Recipe **P** (scene anchor triple in `vid
 | Episodic mascot channel | **G** + `avatar-multi-scene` |
 | Motion swap / recast demo reel | **M** |
 | Replace cast or products in footage | **N** |
+| Recolor / restyle / text edit existing footage | **U** |
 | Narrated multi-scene story | **P** |
 | Illustrated still story (VO or music, no video) | **S** |
 | Virtual try-on launch reel (fashion verticals) | **T** |
