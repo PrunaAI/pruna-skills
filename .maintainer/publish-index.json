@@ -1,8 +1,8 @@
 {
-  "version": "1.0.10",
+  "version": "1.0.11",
   "package": "pruna-skills",
   "repository": "https://github.com/PrunaAI/pruna-skills",
-  "gitTag": "skills-v1.0.10",
+  "gitTag": "skills-v1.0.11",
   "skills": [
     {
       "name": "generation-diversity",
@@ -95,6 +95,12 @@
       "npxInstall": "npx skills add PrunaAI/pruna-skills@p-video-replace -y"
     },
     {
+      "name": "p-video-edit",
+      "skillPath": "skills/video/p-video-edit",
+      "clawhubSkill": "@pruna-ai/p-video-edit",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@p-video-edit -y"
+    },
+    {
       "name": "gemini-3.1-flash-tts",
       "skillPath": "skills/audio/gemini-3.1-flash-tts",
       "clawhubSkill": "@pruna-ai/gemini-3-1-flash-tts",
@@ -176,7 +182,7 @@
   "registries": {
     "github": {
       "method": "git tag + push",
-      "tag": "skills-v1.0.10",
+      "tag": "skills-v1.0.11",
       "note": "No upload API \u2014 consumers install from GitHub paths after push"
     },
     "npx": {

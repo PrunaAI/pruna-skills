@@ -3,7 +3,7 @@ name: p-video-avatar
 description: Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo.
 license: MIT
 metadata:
-  version: "1.0.10"
+  version: "1.0.11"
   package: pruna-skills
   pruna_model: p-video-avatar
 ---
@@ -127,7 +127,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 
 ### Uploaded narration (audio wins over voice_script)
 
-Generate `gemini-3.1-flash-tts` → upload to `/v1/files`. Pass as `input.audio` with portrait `image` (optional `last_frame_image`).
+Generate `gemini-3.1-flash-tts` → upload to `/v1/files`. Pass as `input.audio` with portrait `image`. If both `audio` and `voice_script` are set, `audio` wins.
 
 ```bash
 curl -X POST 'https://api.pruna.ai/v1/predictions' \
@@ -136,8 +136,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   -H 'Model: p-video-avatar' \
   -d '{
     "input": {
-      "image": "https://api.pruna.ai/v1/files/PORTRAIT_START",
-      "last_frame_image": "https://api.pruna.ai/v1/files/PORTRAIT_END",
+      "image": "https://api.pruna.ai/v1/files/PORTRAIT_ID",
       "audio": "https://api.pruna.ai/v1/files/NARRATION_ID",
       "resolution": "720p",
       "video_prompt": "Medium close-up, natural head motion matching narration"
