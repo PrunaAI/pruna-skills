@@ -8,6 +8,10 @@ All notable changes to Pruna Skills are documented here. Skill and plugin `metad
 
 - **`p-video-edit` tool** — instruction-based video-to-video via Pruna `p-video-edit`: source clip (≤15s) + surgical `prompt`, optional 1–4 reference images, draft/standard billing per output second.
 
+### Changed
+
+- **`p-video-avatar`** — dropped `last_frame_image` from the audio-driven payload.
+
 ## [1.0.10] — 2026-08-27
 
 GitHub tag: `skills-v1.0.10`
