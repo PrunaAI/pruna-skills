@@ -1,24 +1,22 @@
 ---
-
-## name: p-video-edit
+name: p-video-edit
 description: Use when someone wants to edit an existing video with a text instruction — recolor, restyle, remove or add objects, change environment or lighting, update on-screen text, or apply optional reference-guided product and accessory edits. Not for a new clip from scratch or ffmpeg assembly.
 license: MIT
 metadata:
   version: "1.0.10"
   package: pruna-skills
   pruna_model: p-video-edit
+---
 
 ## Prerequisites
 
 Install and load these skills before generating (skip if already in context via `@pruna`):
 
-
-| Skill                  | Description                                                                                                                                     | Install                                                       |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| `generation-diversity` | Use when writing any generative prompt — ritual seed, explicit structure, scenario axes, and quality gates before paid API calls.               | `npx skills add PrunaAI/pruna-skills@generation-diversity -y` |
-| `video-prompting`      | Use when crafting video or motion prompts for any generative model — dramaturgy, camera, physics-safe motion, frame anchors, and clip chaining. | `npx skills add PrunaAI/pruna-skills@video-prompting -y`      |
-| `pruna-api`            | Use before any Pruna or Replicate HTTP call — credentials, upload/poll/download, parallel batches, and agent safety.                            | `npx skills add PrunaAI/pruna-skills@pruna-api -y`            |
-
+| Skill | Description | Install |
+| --- | --- | --- |
+| `generation-diversity` | Use when writing any generative prompt — ritual seed, explicit structure, scenario axes, and quality gates before paid API calls. | `npx skills add PrunaAI/pruna-skills@generation-diversity -y` |
+| `video-prompting` | Use when crafting video or motion prompts for any generative model — dramaturgy, camera, physics-safe motion, frame anchors, and clip chaining. | `npx skills add PrunaAI/pruna-skills@video-prompting -y` |
+| `pruna-api` | Use before any Pruna or Replicate HTTP call — credentials, upload/poll/download, parallel batches, and agent safety. | `npx skills add PrunaAI/pruna-skills@pruna-api -y` |
 
 Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 
@@ -26,12 +24,11 @@ Follow each skill's **Before generating** / craft sections — do not restate gu
 
 ## Agent habit
 
-In the **first reply**, name ``p-video-edit`` in backticks, confirm `PRUNA_API_KEY` (or stop with signup links from `pruna-api`), then ask for the source video (max **15s**) and edit brief. Open intake → `generation-diversity` clarification intake before the first `POST`. Draft edits with **Prompt craft (dynamic + faithful)** — do not paste skill examples. Redirect when **When NOT to use** fits better.
+In the **first reply**, name `` `p-video-edit` `` in backticks, confirm `PRUNA_API_KEY` (or stop with signup links from `pruna-api`), then ask for the source video (max **15s**) and edit brief. Open intake → `generation-diversity` clarification intake before the first `POST`. Draft edits with **Prompt craft (dynamic + faithful)** — do not paste skill examples. Redirect when **When NOT to use** fits better.
 
 ## Prompt craft (dynamic + faithful)
 
 `prompt` is **surgical** and **request-locked**. One principal change per run. Describe the desired final state, then name what must stay unchanged. Change only what the user asked; keep camera, motion, audio, and unmentioned elements identical.
-
 
 | Do                                                                                                   | Don't                                                                            |
 | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
@@ -41,13 +38,11 @@ In the **first reply**, name ``p-video-edit`` in backticks, confirm `PRUNA_API_K
 | Point at refs when used: `add the accessory from the first reference`                                | Vague `use the reference` with no source slot                                    |
 | Show `prompt` before `POST` when wording is not locked                                               | Silent edit that changes camera, cast, or unrequested regions                    |
 
-
 **Fidelity check (before pay):** the prompt must still satisfy the user’s change **and** every stated keep. Do not “spice” extras when they asked for one attribute or environment edit.
 
 **Weak jobs (avoid or warn):** a brand-new scene/plot; adding an object with its own independent motion (especially a new in-hand shape); changing camera angle, camera motion, or zoom.
 
 ## Skill boundary
-
 
 |                      | **p-video-edit**                                                          | **p-video-replace**                     |
 | -------------------- | ------------------------------------------------------------------------- | --------------------------------------- |
@@ -56,27 +51,20 @@ In the **first reply**, name ``p-video-edit`` in backticks, confirm `PRUNA_API_K
 | **Reference images** | Optional `images` — **0 to 4**                                            | Required `images` — **1 to 4**          |
 | **Prompt field**     | `prompt`                                                                  | `instruction_prompt`                    |
 
-
 **Use** `p-video-replace` when the job is a character swap from required reference stills. **Use this skill** for prompt-driven attribute, environment, object, text, or lighting edits.
 
 ## When NOT to use
 
 Use a different skill instead:
 
-
-| Skill             | Description                                                                                                                                                                                                                                                                                                                                                 | Install                                                  |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| `p-video`         | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts.                                                                                                                                                                            | `npx skills add PrunaAI/pruna-skills@p-video -y`         |
-| `p-video-replace` | Use when someone wants to swap a character inside existing footage while keeping the camera move and audio.                                                                                                                                                                                                                                                    | `npx skills add PrunaAI/pruna-skills@p-video-replace -y` |
-| `p-video-animate` | Use when someone wants a photo to move like another video — motion transfer, dance remixes, or performance variations from a template clip.                                                                                                                                                                                                                 | `npx skills add PrunaAI/pruna-skills@p-video-animate -y` |
-| `video-editing`   | Use when assembling or polishing already-rendered clips with ffmpeg — concat, crossfades, burned captions and subtitles, text/logo overlays, before/after sliders, background music beds, platform export — or when composing a multi-layer HTML combination video with Hyperframes. Not for AI video generation, prompt craft, or model-based video edits. | `npx skills add PrunaAI/pruna-skills@video-editing -y`   |
-
-
-
+| Skill | Description | Install |
+| --- | --- | --- |
+| `p-video` | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
+| `p-video-replace` | Use when someone wants to swap a person, outfit, or product inside existing footage while keeping the camera move and audio. | `npx skills add PrunaAI/pruna-skills@p-video-replace -y` |
+| `p-video-animate` | Use when someone wants a photo to move like another video — motion transfer, dance remixes, or performance variations from a template clip. | `npx skills add PrunaAI/pruna-skills@p-video-animate -y` |
+| `video-editing` | Use when assembling or polishing already-rendered clips with ffmpeg — concat, crossfades, burned captions and subtitles, text/logo overlays, before/after sliders, background music beds, platform export — or when composing a multi-layer HTML combination video with Hyperframes. Not for AI video generation, prompt craft, or model-based video edits. | `npx skills add PrunaAI/pruna-skills@video-editing -y` |
 
 ## HTTP (curl)
-
-
 
 ### Upload source video
 
@@ -134,22 +122,16 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
   }'
 ```
 
-
-
 ## Before generating
 
 1. Complete Prerequisites guide reading order (`generation-diversity` → `video-prompting`).
 2. Ritual seed → draft a **dynamic + faithful** `prompt` (section above) → confirm `video` (≤15s), `prompt`, optional `images` (0–4), `draft`, `save_audio`, and edit intent (attribute / remove / add / environment / relight / text / reference-guided).
 3. **Pruna notes:** one principal change per run. Identity or product match comes from optional `images`; the edit instruction lives in `prompt`. Vague targets and brand-new scenes drop quality. Do not send a `task` field — it is not in the public API.
 
-
-
 ## Required input
 
 - `video` (string URL): source video to edit. Maximum length: 15 seconds
 - `prompt` (string): text instruction describing the edit
-
-
 
 ## Common optional fields
 
@@ -159,17 +141,13 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 - `save_audio` (boolean, default `true`)
 - `seed` (integer): set only for reproducible reruns
 
-
-
 ## Typical next steps
 
 Common follow-ons after this skill:
 
-
-| Skill             | Description                                                                                                                                                                                                                                                                                                                                                 | Install                                                  |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| `p-video-replace` | Use when someone wants to swap a character inside existing footage while keeping the camera move and audio.                                                                                                                                                                                                                                                 | `npx skills add PrunaAI/pruna-skills@p-video-replace -y` |
-| `p-image-edit`    | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits.                                                                                                                                                                                                              | `npx skills add PrunaAI/pruna-skills@p-image-edit -y`    |
-| `video-editing`   | Use when assembling or polishing already-rendered clips with ffmpeg — concat, crossfades, burned captions and subtitles, text/logo overlays, before/after sliders, background music beds, platform export — or when composing a multi-layer HTML combination video with Hyperframes. Not for AI video generation, prompt craft, or model-based video edits. | `npx skills add PrunaAI/pruna-skills@video-editing -y`   |
-
+| Skill | Description | Install |
+| --- | --- | --- |
+| `p-video-replace` | Use when someone wants to swap a person, outfit, or product inside existing footage while keeping the camera move and audio. | `npx skills add PrunaAI/pruna-skills@p-video-replace -y` |
+| `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
+| `video-editing` | Use when assembling or polishing already-rendered clips with ffmpeg — concat, crossfades, burned captions and subtitles, text/logo overlays, before/after sliders, background music beds, platform export — or when composing a multi-layer HTML combination video with Hyperframes. Not for AI video generation, prompt craft, or model-based video edits. | `npx skills add PrunaAI/pruna-skills@video-editing -y` |
 
