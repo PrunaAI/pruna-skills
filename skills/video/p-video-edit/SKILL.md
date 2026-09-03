@@ -3,7 +3,7 @@ name: p-video-edit
 description: Use when someone wants to edit an existing video with a text instruction — recolor, restyle, remove or add objects, change environment or lighting, update on-screen text, or apply optional reference-guided product and accessory edits. Not for a new clip from scratch or ffmpeg assembly.
 license: MIT
 metadata:
-  version: "1.0.10"
+  version: "1.0.11"
   package: pruna-skills
   pruna_model: p-video-edit
 ---

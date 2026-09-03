@@ -3,7 +3,7 @@ name: pruna-api
 description: Use before any Pruna or Replicate HTTP call — credentials, upload/poll/download, parallel batches, and agent safety.
 license: MIT
 metadata:
-  version: "1.0.10"
+  version: "1.0.11"
   package: pruna-skills
 ---
 
