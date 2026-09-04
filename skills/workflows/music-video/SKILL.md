@@ -15,6 +15,7 @@ Install and load these skills before generating (skip if already in context via 
 | --- | --- | --- |
 | `music-2.5` | Use when someone wants an original AI song with vocals — sung lyrics, a style prompt track, or source audio for a music video. | `npx skills add PrunaAI/pruna-skills@music-2.5 -y` |
 | `whisperx` | Use when someone needs word-level timestamps from audio — lyric alignment, cut-safe line boundaries, or caption source timing before burn-in with video-editing. | `npx skills add PrunaAI/pruna-skills@whisperx -y` |
+| `p-image-ideogram` | Use when photo generation needs more control — photoreal results, text in the image, or structured JSON with hex colors and bounding boxes. Simpler photo generation, edits, and video use other skills in the suite. | `npx skills add PrunaAI/pruna-skills@p-image-ideogram -y` |
 | `p-image` | Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
 | `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
 | `p-video-2` | Use when someone wants the best-quality short clip from text, images, or audio — polished B-roll, start/end frame animation, or a motion shot with stronger lip-sync. Not for full multi-scene films or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
@@ -73,7 +74,7 @@ Ask whether performance beats should read as **one singer** or whether **recasts
 
 | Intent | Stills | Video | Anti-pattern |
 |--------|--------|-------|--------------|
-| **Same singer throughout** | One approved **hero** via `p-image` (locked plate URL) → every performance still via **`p-image-edit`** off that URL | Reuse hero plate + `cast_descriptor` on all **`p-video-avatar`** jobs; distinct **`video_prompt`** per cut | Fresh unrelated **`p-image`** text prompt per line — faces drift |
+| **Same singer throughout** | One approved **hero** via `p-image-ideogram` (locked plate URL) → every performance still via **`p-image-edit`** off that URL | Reuse hero plate + `cast_descriptor` on all **`p-video-avatar`** jobs; distinct **`video_prompt`** per cut | Fresh unrelated **`p-image`** text prompt per line — faces drift |
 | **Same singer, new locations** | Hero + edits per beat — vary **`setting_tag`**, **`camera_tag`**, **`lighting_tag`** | Same plate lock; distinct **`video_prompt`** per cut | Grey-wall repeat or identical framing on consecutive performance lines |
 | **Deliberate recasts** | Only on **broll** beats, labeled guest rows, or when the user explicitly asks | N/A for lip-sync rows | Random new face mid-chorus without user approval |
 | **Mascot / stylized host** | One approved mascot still → **`p-image-edit`** for pose/setting | **`p-video-2`** + song **`audio`** slice | **`p-video-avatar`** on non-human stills |
@@ -88,7 +89,7 @@ Record in the plan: `ritual_seed`, `cast` / `character_sheet`, approved **`hero_
 | **A — Song** | `music-2.5` | medium | User approves MP3 |
 | **B — Cut structure** | agent writes `cut_manifest.json` | free | Cut list matches lyric lines |
 | **B2 — Cut timings** | `whisperx` | low | Review alignment stats |
-| **C — Stills** | `p-image` / `p-image-edit` | low | **approve stills** |
+| **C — Stills** | `p-image-ideogram` / `p-image-edit` | low | **approve stills** |
 | **D — Clips** | `p-video-avatar`, `p-video-2` | **high** | After still approval |
 | **E — Assembly** | ffmpeg | free | After **approve clips** |
 
@@ -117,13 +118,13 @@ ffmpeg -y -ss START -to END -i song.mp3 -c copy slices/01_2.mp3
 6. Parallel performance + B-roll video jobs (upload each slice) → **approve clips**.
 7. Trim clips to cut lengths, concat, mux **full song** as audio.
 
-## Step 4 — Stills (`p-image` / `p-image-edit`)
+## Step 4 — Stills (`p-image-ideogram` / `p-image-edit`)
 
 One approved still per segment.
 
 **When continuity is intended (default for one singer):**
 
-1. Generate and gate **one hero** performance still with **`p-image`** + ritual seed (`generation-diversity`); lock hero plate URL.
+1. Generate and gate **one hero** performance still with **`p-image-ideogram`** + ritual seed (`generation-diversity`); lock hero plate URL. Use **`p-image`** only for a cheap draft.
 2. Store the approved URL as **`hero_still`** in the plan.
 3. Every later performance still = **`p-image-edit`** from **`hero_still`** — *"Using attached reference as identity; change only: [angle], [setting], [expression]."*
 4. Run the slop gate on hero and each edit before Phase D.

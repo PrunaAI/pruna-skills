@@ -27,7 +27,7 @@ QA: [p-image-upscale-quality-checklist.md](./p-image-upscale-quality-checklist.m
 
 | Workflow | Upscale? |
 |----------|----------|
-| Avatar / motion-transfer / replace | **No** unless user asks for print-scale stills — feed approved `p-image` / edit URLs after slop gate |
+| Avatar / motion-transfer / replace | **No** unless user asks for print-scale stills — feed approved `p-image-ideogram` / `p-image` / edit URLs after slop gate |
 | Print, billboard, extreme crop | **Yes** — confirm `target` |
 | Before/after slider demos | Optional helper scripts — not a creative step |
 

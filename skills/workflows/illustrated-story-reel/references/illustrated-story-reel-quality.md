@@ -18,7 +18,7 @@ Agent vision review for **illustrated-story-reel** stills, audio, and optional p
 
 After each still, open the file and review:
 
-- **Hero + beats (`p-image`, `p-image-edit`):** `image-prompting` and `image-prompting` — skip avatar handoff rows.
+- **Hero + beats (`p-image` / `p-image-ideogram`, `p-image-edit`):** `image-prompting` — skip avatar handoff rows.
 - **Narration (`gemini-3.1-flash-tts`):** pace, tone, line clarity per beat; probe ≤ ~19s before p-video.
 - **Music bed (`stable-audio-2.5`):** instrumental, no vocals unless brief asks; level appropriate under stills.
 - **Motion clips (`p-video`, when `motion_mode: p-video`):** style matches still; gentle illustrated drift; no photoreal morph; audio sync; no VO transcript leaked into motion.

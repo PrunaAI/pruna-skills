@@ -94,7 +94,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 2. Confirm **`target`** MP (1–**128**), **`enhance_details`** / **`enhance_realism`**, and **`output_format`** with the user.
 3. **Pruna note:** defaults — `enhance_details: true`, `enhance_realism: false`. Use `enhance_realism: true` only on already-photoreal sources; it can add waxy artifacts on synthetic edits. Source must already pass the slop gate.
 
-**Print pipeline:** `p-image` hero → optional **`p-image-edit`** → **`p-image-upscale`** on the approved plate (upscale **after** edits). Typical large-crop target: **8** megapixels — confirm `target` with user.
+**Print pipeline:** `p-image-ideogram` hero → optional **`p-image-edit`** → **`p-image-upscale`** on the approved plate (upscale **after** edits). Typical large-crop target: **8** megapixels — confirm `target` with user.
 
 ## Required input
 

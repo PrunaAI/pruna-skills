@@ -41,7 +41,7 @@ The sections below apply when the user explicitly requested a **multi-scene film
 
 **Explainer motion & format:** dynamic `OPEN:` / `MID:` / `CLOSE:` `video_prompt` per scene; default **`720p`** + **`24` fps** — see `interactive-explainer`.
 
-**Visual style for explainers:** keep a single `style_bible` on every `p-image` / `p-image-edit` / `p-video` prompt.
+**Visual style for explainers:** keep a single `style_bible` on every `p-image-ideogram` / `p-image` / `p-image-edit` / `p-video-2` prompt.
 
 ### Parallel stills / video across scenes
 

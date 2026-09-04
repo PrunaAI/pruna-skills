@@ -24,7 +24,7 @@ Follow each skill's **Before generating** / craft sections — do not restate gu
 
 ## Agent habit
 
-**Route by complexity:** Use `` `p-image-ideogram` `` when **photo generation** needs more control — readable text in the image, structured JSON, hex/`bbox` placement, or high-detail photoreal shots. Use `` `p-image` `` for **simple, quick** photo generation. Use `` `p-image-edit` `` to change an existing photo; use `` `p-video` `` (or `` `p-video-animate` `` from a still) for motion.
+**Route by complexity:** Use `` `p-image-ideogram` `` when **photo generation** needs more control — readable text in the image, structured JSON, hex/`bbox` placement, or high-detail photoreal shots. Use `` `p-image` `` for **simple, quick** photo generation. Use `` `p-image-edit` `` to change an existing photo; use `` `p-video-2` `` (`` `p-video-animate` `` from a still) for motion.
 
 In the **first reply**, name `` `p-image-ideogram` `` in backticks, confirm `PRUNA_API_KEY` is set (or stop with signup links from `pruna-api`), then ask for prompt / aspect ratio / any copy-on-surface (open intake → **`generation-diversity`** clarification intake). When drafting the prompt, follow **Prompt craft** below — do not paste skill examples.
 

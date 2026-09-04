@@ -13,6 +13,7 @@ Install and load these skills before generating (skip if already in context via 
 
 | Skill | Description | Install |
 | --- | --- | --- |
+| `p-image-ideogram` | Use when photo generation needs more control — photoreal results, text in the image, or structured JSON with hex colors and bounding boxes. Simpler photo generation, edits, and video use other skills in the suite. | `npx skills add PrunaAI/pruna-skills@p-image-ideogram -y` |
 | `p-image` | Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
 | `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
 | `p-video-2` | Use when someone wants the best-quality short clip from text, images, or audio — polished B-roll, start/end frame animation, or a motion shot with stronger lip-sync. Not for full multi-scene films or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
@@ -72,7 +73,7 @@ Default first stop: **stills**.
 
 | Item | Value |
 |------|--------|
-| Models | **p-image**, **p-image-edit**, optional motion (`p-video-2` quality / `p-video` simpler), Gemini TTS, Stable Audio 2.5 |
+| Models | **p-image** (or **p-image-ideogram** for text / tighter style), **p-image-edit**, optional motion (`p-video-2` quality / `p-video` simpler), Gemini TTS, Stable Audio 2.5 |
 | Plan field | `audio_mode`: `"narration"` \| `"music"` |
 | Motion | `defaults.motion_mode`: `"ken_burns"` \| `"p-video"` (narration mode only) |
 | Aspect | `defaults.aspect_ratio`: `"9:16"` \| `"16:9"` \| `"1:1"` |
@@ -139,7 +140,7 @@ ffprobe -v error -show_entries format=duration -of csv=p=0 audio/narration_01.mp
 
 ### Stills
 
-Hero `p-image` → parallel `p-image-edit` per beat (`edit_prompt`). Chain edits from previous still when `chain_from_previous: true`.
+Hero `p-image` (`p-image-ideogram` if frames need readable text or tighter style) → parallel `p-image-edit` per beat (`edit_prompt`). Chain edits from previous still when `chain_from_previous: true`.
 
 ### Audio
 

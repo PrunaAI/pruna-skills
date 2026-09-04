@@ -28,11 +28,11 @@ Each scene row supplies **two Pruna file URLs** (from `POST /v1/files`) plus a m
 
 **Do not** set `duration` when `audio` is also present — use [scene-anchor-triple.md](./scene-anchor-triple.md) instead.
 
-## Stills phase (`p-image` + `p-image-edit`)
+## Stills phase (`p-image-ideogram` / `p-image` + `p-image-edit`)
 
 | Still | Source | Plan field |
 |-------|--------|------------|
-| **Hero** (optional) | `p-image` text prompt | `hero_prompt` |
+| **Hero** (optional) | `p-image-ideogram` text prompt (`p-image` for a cheap draft) | `hero_prompt` |
 | **Start** | Hero + `p-image-edit` `edit_prompt` | `edit_prompt` |
 | **End** | Start still + `p-image-edit` `last_frame_edit_prompt` | `last_frame_edit_prompt` |
 

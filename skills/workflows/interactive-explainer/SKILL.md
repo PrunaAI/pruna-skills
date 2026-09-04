@@ -13,6 +13,7 @@ Install and load these skills before generating (skip if already in context via 
 
 | Skill | Description | Install |
 | --- | --- | --- |
+| `p-image-ideogram` | Use when photo generation needs more control — photoreal results, text in the image, or structured JSON with hex colors and bounding boxes. Simpler photo generation, edits, and video use other skills in the suite. | `npx skills add PrunaAI/pruna-skills@p-image-ideogram -y` |
 | `p-image` | Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
 | `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
 | `p-video-2` | Use when someone wants the best-quality short clip from text, images, or audio — polished B-roll, start/end frame animation, or a motion shot with stronger lip-sync. Not for full multi-scene films or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
@@ -152,7 +153,7 @@ Default if omitted: **`narrator`**.
 
 | Phase | Action |
 |-------|--------|
-| **0** | `p-image` hero (+ optional `_cast_*` anchor stills from `anchor_still_prompt`) |
+| **0** | `p-image-ideogram` hero (+ optional `_cast_*` anchor stills from `anchor_still_prompt`; `p-image` for a cheap draft) |
 | **1** | Parallel `p-image-edit` start stills (all scenes) |
 | **2** | Parallel end stills (**narrator** only) |
 | **A2** | Parallel Gemini TTS (**narrator** only) |

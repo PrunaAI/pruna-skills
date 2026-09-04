@@ -13,6 +13,7 @@ Install and load these skills before generating (skip if already in context via 
 
 | Skill | Description | Install |
 | --- | --- | --- |
+| `p-image-ideogram` | Use when photo generation needs more control — photoreal results, text in the image, or structured JSON with hex colors and bounding boxes. Simpler photo generation, edits, and video use other skills in the suite. | `npx skills add PrunaAI/pruna-skills@p-image-ideogram -y` |
 | `p-image` | Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
 | `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
 | `p-video-2` | Use when someone wants the best-quality short clip from text, images, or audio — polished B-roll, start/end frame animation, or a motion shot with stronger lip-sync. Not for full multi-scene films or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
@@ -66,7 +67,7 @@ Open intake → **`generation-diversity`** clarification intake.
 | **Story** | Scene order (1…N)? What changes between beats (location, time, emotion)? |
 | **Per scene *i*** | **Start still** (`edit_prompt` or upload)? **End still** (`last_frame_edit_prompt`)? **Transition `video_prompt`** (OPEN/MID/CLOSE motion)? `duration_seconds`? |
 | **Continuity** | Per scene: **`chain_from_previous`** only when motion continues. Otherwise composed OPENING still + hard cut. |
-| **Stills source** | Generate via **`p-image`** hero + **`p-image-edit`**, or user-supplied photo pairs? |
+| **Stills source** | Generate via **`p-image-ideogram`** hero + **`p-image-edit`** (`p-image` for a cheap draft), or user-supplied photo pairs? |
 | **Format** | `aspect_ratio`; transition clips **`720p` / `1080p`**? |
 | **Global** | `style_bible`? `ritual_seed`? `frame_chain_mode` (`extract_last_frame` vs `parallel_vignettes`)? |
 | **Audio** | Native SFX only (default), optional `stable-audio-2.5` bed in post, or upgrade to triple + TTS? |
@@ -102,11 +103,11 @@ Start/end stills and transition motion use **`video-prompting`** scene-anchor pa
 
 ## Workflow (after intake)
 
-### Phase 0 — Hero (`p-image`)
+### Phase 0 — Hero (`p-image-ideogram`)
 
 One approved anchor photo when generating a new image:
 
-1. **`p-image`** with `hero_prompt` + `style_bible` + ritual seed from `generation-diversity`
+1. **`p-image-ideogram`** with `hero_prompt` + `style_bible` + ritual seed from `generation-diversity` (`p-image` for a cheap draft)
 2. Slop gate — approve before branching edits
 
 Skip when every scene uses **uploaded** start/end images.

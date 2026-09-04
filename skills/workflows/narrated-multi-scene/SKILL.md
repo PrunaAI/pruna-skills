@@ -13,6 +13,7 @@ Install and load these skills before generating (skip if already in context via 
 
 | Skill | Description | Install |
 | --- | --- | --- |
+| `p-image-ideogram` | Use when photo generation needs more control — photoreal results, text in the image, or structured JSON with hex colors and bounding boxes. Simpler photo generation, edits, and video use other skills in the suite. | `npx skills add PrunaAI/pruna-skills@p-image-ideogram -y` |
 | `p-image` | Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
 | `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
 | `p-video-2` | Use when someone wants the best-quality short clip from text, images, or audio — polished B-roll, start/end frame animation, or a motion shot with stronger lip-sync. Not for full multi-scene films or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
@@ -82,7 +83,7 @@ Ask follow-ups until every scene row has enough to build `input` without guessin
 
 ### Phase 0 — Stills (parallel when independent)
 
-1. **Hero anchor** — one approved `p-image` or upload.
+1. **Hero anchor** — one approved `p-image-ideogram` or upload (`p-image` for a cheap draft).
 2. **`p-image-edit`** per scene — **start still** (`edit_prompt`) from hero; **end still** (`last_frame_edit_prompt`) from start still. Parallel after hero exists.
 3. **Frame chain (selective):** set `chain_from_previous: true` only when scene *i* continues directly from *i−1*. Use composed start still + hard cut for new beats.
 

@@ -11,6 +11,7 @@ All notable changes to Pruna Skills are documented here. Skill and plugin `metad
 ### Changed
 
 - **Clip routing** — `p-video-2` is the quality path (polished clips, lip-sync, native audio). `p-video` stays for simpler / quicker videos.
+- **Still routing** — production heroes, photoreal portraits, and mood boards default to `p-image-ideogram`. `p-image` stays for cheap / fast drafts.
 - **Cinematic workflows** (`image-to-video`, `narrated-multi-scene`, `visual-transition-reel`, `interactive-explainer` narrator, `music-video` B-roll, `illustrated-story-reel` motion) — default prediction model is `p-video-2`.
 
 ## [1.0.11] — 2026-09-03

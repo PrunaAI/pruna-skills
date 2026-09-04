@@ -8,7 +8,7 @@ Credentials: `pruna-api`
 
 - Base: `https://api.pruna.ai/v1/predictions`
 - Upload: `https://api.pruna.ai/v1/files`
-- Header: `apikey: ${PRUNA_API_KEY}`, `Model: p-image` | `p-image-edit` | `p-video-2` | `p-video`
+- Header: `apikey: ${PRUNA_API_KEY}`, `Model: p-image` | `p-image-ideogram` | `p-image-edit` | `p-video-2` | `p-video`
 - Body: `{ "input": { ... } }`
 - Sync (`Try-Sync: true`) is acceptable for hero stills; async + poll for p-video clips.
 
@@ -16,7 +16,8 @@ Credentials: `pruna-api`
 
 | Model | Use |
 |-------|-----|
-| `p-image` | Hero anchor still |
+| `p-image` | Hero anchor still (default for illustrated frames) |
+| `p-image-ideogram` | Hero when frames need readable text or tighter style control |
 | `p-image-edit` | Per-beat still from hero or chained prior plate |
 | `p-video-2` | Optional Mode B clip (quality): still + narration (`save_audio: true`, omit `duration`) |
 | `p-video` | Same Mode B payload for simpler / quicker clips |

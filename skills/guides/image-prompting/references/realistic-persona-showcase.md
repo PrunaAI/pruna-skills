@@ -24,7 +24,7 @@ Current public examples often read as **AI sloppy** or **too simplistic**: same 
 **Before any step:** `generation-diversity` (ritual seed + axis rotation) · random seed ritual (`generation-diversity`)
 
 ```text
-p-image (hero plate)     → slop gate → identity anchor (plate URL + cast descriptor)
+p-image-ideogram (hero plate)     → slop gate → identity anchor (plate URL + cast descriptor)
     ↓ optional
 p-image-edit / try-on    → slop gate → dressed or reposed still
     ↓ optional
@@ -35,10 +35,10 @@ p-video-avatar           → per-scene unique video_prompt + natural voice_scrip
 
 | Deliverable | Minimum path |
 |-------------|--------------|
-| Photoreal still only | **`p-image`** (+ **`p-image-edit`** variants) |
-| Dressed model still | **`p-image`** → **`p-image-try-on`** |
-| Talking-head clip | **`p-image`** hero → slop gate → **`p-video-avatar`** |
-| Fashion UGC ad | **`p-image`** → try-on → slop gate → **`p-video-avatar`** |
+| Photoreal still only | **`p-image-ideogram`** (+ **`p-image-edit`** variants) |
+| Dressed model still | **`p-image-ideogram`** → **`p-image-try-on`** |
+| Talking-head clip | **`p-image-ideogram`** hero → slop gate → **`p-video-avatar`** |
+| Fashion UGC ad | **`p-image-ideogram`** → try-on → slop gate → **`p-video-avatar`** |
 | Multi-scene host | Hero → **`p-image-edit`** per scene (parallel) → batch **`p-video-avatar`** |
 
 ## Shared anti-patterns
@@ -195,7 +195,7 @@ Stylized hosts can lip-sync when:
 3. **`voice_prompt`** matches archetype (*“warm anime protagonist delivery”* vs *“documentary narrator calm”*)
 4. **Hero plate URL** locked per character across clips in the same style
 
-For **cross-style multi-scene reels** (photoreal → anime → clay): treat each style as a **new row** with its own hero still — do not expect one photoreal hero to **`p-image-edit`** into anime; generate a fresh **`p-image`** per `visual_style_tag`.
+For **cross-style multi-scene reels** (photoreal → anime → clay): treat each style as a **new row** with its own hero still — do not expect one photoreal hero to **`p-image-edit`** into anime; generate a fresh **`p-image-ideogram`** per `visual_style_tag` (`p-image` for a cheap draft).
 
 ## `p-image` — persona & scenario plates
 

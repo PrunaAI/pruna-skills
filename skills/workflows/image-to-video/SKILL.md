@@ -13,6 +13,7 @@ Install and load these skills before generating (skip if already in context via 
 
 | Skill | Description | Install |
 | --- | --- | --- |
+| `p-image-ideogram` | Use when photo generation needs more control — photoreal results, text in the image, or structured JSON with hex colors and bounding boxes. Simpler photo generation, edits, and video use other skills in the suite. | `npx skills add PrunaAI/pruna-skills@p-image-ideogram -y` |
 | `p-image` | Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
 | `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
 | `p-video-2` | Use when someone wants the best-quality short clip from text, images, or audio — polished B-roll, start/end frame animation, or a motion shot with stronger lip-sync. Not for full multi-scene films or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
@@ -57,7 +58,7 @@ Open intake → **`generation-diversity`** clarification intake.
 | Topic | Questions |
 |-------|-----------|
 | **Mode** | **`triple`** (`image` + `last_frame_image` + `audio` — preferred for narrated beats) · **`pair`** (start + end still + `duration`) · T2V · I2V · I2V+last · audio-only (no frames) |
-| **Media source** | **Generate** start/end stills (`p-image` / `p-image-edit`) vs **upload** user photos for frames? |
+| **Media source** | **Generate** start/end stills (`p-image-ideogram` / `p-image-edit`, or `p-image` for a cheap draft) vs **upload** user photos for frames? |
 | **Creative** | Motion `prompt` only — what happens between first and last frame? One paragraph max. |
 | **Frames** | Start still (upload or `p-image-edit`)? End still (`last_frame_edit_prompt`)? Stay single-scene — if the user wants a longer **`frame_chain` / multi-scene** project, stop and switch to `narrated-multi-scene` or `visual-transition-reel`. |
 | **Audio** | `gemini-3.1-flash-tts` → upload → **`input.audio`** (preferred). Optional `stable-audio-2.5` bed **after** render. Post-mux is fallback only — `audio-prompting`. |
@@ -86,7 +87,7 @@ ffprobe -v error -show_entries format=duration -of csv=p=0 narration.mp3
 
 ### Preferred — scene anchor triple
 
-1. **Start still** — upload or **`p-image`** / **`p-image-edit`**
+1. **Start still** — upload or **`p-image-ideogram`** / **`p-image-edit`** (`p-image` for a cheap draft)
 2. **End still** — **`p-image-edit`** from start still + `last_frame_edit_prompt`
 3. **Narration** — Gemini TTS → `ffprobe` (**≤ ~19s**) → upload to `/v1/files`
 4. **`p-video-2`** — `image` + `last_frame_image` + **`audio`** + motion `prompt`; omit `duration`; `save_audio: true`; async poll

@@ -11,6 +11,7 @@ Run in a fresh chat after installing the named skill(s). Mark PASS/FAIL; no API 
 | # | Prompt | Skill | Pass if |
 |---|--------|-------|---------|
 | T1 | "Generate a product hero still with p-image" | `p-image` | Loads p-image; asks/checks `PRUNA_API_KEY`; does not invent multi-scene film |
+| T1b | "Generate a photoreal product hero with readable label text" | `p-image-ideogram` | Uses p-image-ideogram (not p-image); asks/checks `PRUNA_API_KEY` |
 | T2 | "Make a simple B-roll clip from this still" | `p-video` | Uses p-video (not avatar / music-video / narrated-multi-scene) |
 | T2b | "Make a polished high-quality B-roll clip from this still" | `p-video-2` | Uses p-video-2 (not p-video / avatar / multi-scene workflows) |
 | T3 | "Lip-sync this portrait saying hello" | `p-video-avatar` | Uses p-video-avatar; does not expand to avatar-multi-scene |
@@ -100,7 +101,8 @@ Style guide: [docs/skill-description-style.md](docs/skill-description-style.md).
 
 | Skill | Should trigger | Should NOT trigger |
 |-------|----------------|--------------------|
-| `p-image` | “Generate an image from text”; “product hero shot”; “mood board images” | edit an existing photo; virtual try-on |
+| `p-image` | “Quick cheap image from text”; “fast mood-board drafts” | photoreal hero; readable in-image text; edit an existing photo; virtual try-on |
+| `p-image-ideogram` | “Photoreal product hero”; “poster with readable type”; “controlled still with hex/bbox” | cheapest/fastest draft; edit an existing photo |
 | `p-image-edit` | “Change the outfit in this photo”; “swap the background”; “compose from these refs” | brand-new image from scratch only |
 | `p-image-try-on` | “Dress this model in that jacket”; “virtual try-on for ecommerce” | generic photo edit without garment fit |
 | `p-image-upscale` | “Upscale this JPEG for print”; “make this sharper / higher res” | generate a new image from a prompt |

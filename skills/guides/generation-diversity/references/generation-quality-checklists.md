@@ -23,7 +23,8 @@ Maintenance rule: keep tool/workflow mapping only in this file to avoid link dri
 
 | Tool/model | Guide / workflow | Checklist file (inside that skill) | Common workflows |
 |------------|------------------|------------------------------------|------------------|
-| `p-image` | `image-prompting` | `p-image-quality-checklist.md` · persona: `realistic-persona-showcase.md` | `image-to-video`, `narrated-multi-scene` |
+| `p-image-ideogram` | `image-prompting` | `p-image-quality-checklist.md` · persona: `realistic-persona-showcase.md` | `image-to-video`, `narrated-multi-scene`, `avatar-multi-scene` |
+| `p-image` | `image-prompting` | `p-image-quality-checklist.md` · persona: `realistic-persona-showcase.md` | same workflows on cheap / fast drafts |
 | `p-image-edit` | `image-prompting` | `p-image-edit-quality-checklist.md` | `avatar-single-scene`, `avatar-multi-scene` |
 | `p-image-upscale` | `image-prompting` | `p-image-upscale-quality-checklist.md` | `image-to-video`, `narrated-multi-scene` |
 | `p-image-try-on` | `image-prompting` | `p-image-try-on-quality-checklist.md` · persona: `realistic-persona-showcase.md` | `p-image-try-on` |
@@ -51,6 +52,7 @@ Install the guide/workflow, then open the checklist file inside it:
 
 | Tool | Skill | File |
 |------|-------|------|
+| `p-image-ideogram` | `image-prompting` | `p-image-quality-checklist.md` |
 | `p-image` | `image-prompting` | `p-image-quality-checklist.md` |
 | `p-image-edit` | `image-prompting` | `p-image-edit-quality-checklist.md` |
 | `p-image-upscale` | `image-prompting` | `p-image-upscale-quality-checklist.md` |
@@ -74,7 +76,7 @@ Human-in-the-loop phases for multi-step workflows. **Video and replace jobs are 
 | Phase | Models | Cost | User interaction |
 |-------|--------|------|------------------|
 | **0 — Plan** | none | free | Present scene table, cast, scripts, `style_bible`; explicit **approve plan / go** |
-| **A — Stills** | `p-image`, `p-image-edit` | low | Show hero + start/end plates; run checklists; **approve stills** |
+| **A — Stills** | `p-image-ideogram`, `p-image`, `p-image-edit` | low | Show hero + start/end plates; run checklists; **approve stills** |
 | **A2 — Audio prep** | Gemini TTS, Music 2.5, WhisperX align | low–medium | **Listen / read** narration or song; fix copy before video |
 | **B — Video** | `p-video-2`, `p-video`, `p-video-avatar`, `p-video-animate`, `p-video-replace`, `p-video-edit` | **high** | Only after Phase A approval; **approve clips** before assembly |
 | **C — Assembly** | local ffmpeg concat / slider scripts | free | Review concat (embedded VO); compare MP4s before final mux |

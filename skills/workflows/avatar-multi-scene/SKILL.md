@@ -13,6 +13,7 @@ Install and load these skills before generating (skip if already in context via 
 
 | Skill | Description | Install |
 | --- | --- | --- |
+| `p-image-ideogram` | Use when photo generation needs more control — photoreal results, text in the image, or structured JSON with hex colors and bounding boxes. Simpler photo generation, edits, and video use other skills in the suite. | `npx skills add PrunaAI/pruna-skills@p-image-ideogram -y` |
 | `p-image` | Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
 | `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
 | `p-video-avatar` | Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo. | `npx skills add PrunaAI/pruna-skills@p-video-avatar -y` |
@@ -37,7 +38,7 @@ Produce a **coherent multi-scene** piece stitched later with **ffmpeg** (Pruna d
 
 Mix types in one announcement reel—e.g. avatar hook → animate slider demo → avatar CTA.
 
-Visual continuity comes from **Pruna `p-image` / `p-image-edit`** on uploaded references.
+Visual continuity comes from **Pruna `p-image-ideogram` / `p-image-edit`** on uploaded references (`p-image` for cheap drafts).
 
 Follow this skill in **plain language** when talking to the person requesting the video. Use **natural, speakable copy** in every `voice_script`.
 
@@ -76,7 +77,7 @@ Open intake → **`generation-diversity`** clarification intake.
 | **Scope** | How many speaking scenes or beats? Approximate total runtime after assembly? |
 | **Cast** | Who speaks, in what order? One character throughout or multiple? |
 | **Look** | Aspect for stills and feel (`9:16` / `16:9`)? Avatar output `720p` or `1080p`? |
-| **Media source** | **Generate** hero plates with `p-image` / edits vs **upload-only** references; user-owned motion templates for animate beats? |
+| **Media source** | **Generate** hero plates with `p-image-ideogram` / edits vs **upload-only** references; user-owned motion templates for animate beats? |
 | **Voice** | For **each named character**, pick **one** Pruna `voice` and `voice_language` and **reuse it in every scene** that character speaks. Any words that must be pronounced exactly (names, acronyms)? |
 | **Style** | Agreed **style bible** line for all image prompts? |
 | **Character sheet** | Per speaker: age range, wardrobe baseline, hair, skin/realism level, personality adjectives—record before hero generation (see **Character sheet** below). |
@@ -164,7 +165,7 @@ Good/bad pairs: **[prompt-templates.md](./prompt-templates.md)**.
 
 For **each** recurring character:
 
-1. Land **one** approved **source** still via **`p-image`** or upload. Run the slop gate on the hero before sign-off. Treat the approved file URL as the **identity anchor**.
+1. Land **one** approved **source** still via **`p-image-ideogram`** or upload (`p-image` for a cheap draft). Run the slop gate on the hero before sign-off. Treat the approved file URL as the **identity anchor**.
 2. **Every** later look—including a new background, emotion, prop, or **style variation**—should be produced with **`p-image-edit`** from **that same source URL**, plus the shared style bible and a short delta (“change only: …”).
 3. **Each new scene** still starts from the same character source so faces stay one continuous role across the arc.
 
@@ -180,7 +181,7 @@ After intake is complete:
 
 Once the user confirms:
 
-1. Upload refs → hero `p-image` → parallel per-scene `p-image-edit` → slop gates → **approve stills**.
+1. Upload refs → hero `p-image-ideogram` → parallel per-scene `p-image-edit` → slop gates → **approve stills**.
 2. Parallel **`p-video-avatar`** (avatar rows) and **`p-video-animate`** (animate rows) via curl batches (`pruna-api`).
 3. For each animate row, build a **slider / comparison** MP4 with ffmpeg (below).
 4. ffmpeg concat in scene order → optional bed → **approve** final.
@@ -193,7 +194,7 @@ Prefer one parallel lane per independent scene after the hero exists. Parent own
 2. Run the **slop gate** on every hero and scene still **before** any avatar job.
 
 ```text
-Hero:     p-image (or upload) → slop gate → approve anchor
+Hero:     p-image-ideogram (or upload) → slop gate → approve anchor
 Scene N:  p-image-edit(anchor) → slop gate → p-video-avatar
 ```
 
@@ -202,7 +203,7 @@ Scene N:  p-image-edit(anchor) → slop gate → p-video-avatar
 | Step | Model | Skill |
 |------|--------|--------|
 | Upload binaries | `POST /v1/files` | `pruna-api` |
-| Style-locked stills | `p-image`, `p-image-edit` | `p-image`, `p-image-edit` |
+| Style-locked stills | `p-image-ideogram`, `p-image-edit` | `p-image-ideogram`, `p-image-edit` |
 | Talking clips | `p-video-avatar` | `p-video-avatar` |
 | Motion transfer | **`p-video-animate`** | `p-video-animate` |
 | Slider comparison | ffmpeg (below) | local |
@@ -213,7 +214,7 @@ Use **`PRUNA_API_KEY`** and the **`apikey`** header on every call. **Async + par
 
 | Phase | Parallel? |
 |-------|-----------|
-| Hero `p-image` → gate | Sequential |
+| Hero `p-image-ideogram` → gate | Sequential |
 | Per-scene `p-image-edit` | **Yes** — all scenes |
 | Slop gate | **Yes** — review in parallel |
 | `p-video-avatar` | **Yes** — all avatar rows |
@@ -240,7 +241,7 @@ Or present both clips and let the user’s editor build a wipe slider. Paths can
 | Step | Action |
 |------|--------|
 | 1–3 | Intake → speakable script → **confirmation gate** (no API until approve) |
-| 4–5 | Upload refs → **`p-image` hero** per character → slop gate |
+| 4–5 | Upload refs → **`p-image-ideogram` hero** per character → slop gate |
 | 6–7 | Parallel **`p-image-edit`** scene stills → slop gate each |
 | 8 | Parallel **`p-video-avatar`** (cast ledger voices, unique `video_prompt` per scene) |
 | 9 | Parallel **`p-video-animate`** + ffmpeg sliders — [animate-beats.md](./animate-beats.md) |

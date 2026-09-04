@@ -8,7 +8,7 @@ Use the **full** checklist here for every generation.
 
 - [Random seed ritual](#random-seed-ritual-mandatory-before-every-generation)
 - [Three steps (every job)](#three-steps-every-job)
-- [Still-image prompt flow](./still-image-prompt-flow.md) — `p-image` / `p-image-edit` agent pipeline (brief lock → ritual → POST)
+- [Still-image prompt flow](./still-image-prompt-flow.md) — `p-image-ideogram` / `p-image` / `p-image-edit` agent pipeline (brief lock → ritual → POST)
 - [Explicit prompt structure](#explicit-prompt-structure-required)
 - [Text & typography by model](#text--typography-by-model)
 - [SSoT axis derivation](#ssot-axis-derivation-sum-mod)
@@ -198,7 +198,7 @@ Rotate **`render_category_tag`** (and log it) so diversity batches cover more th
 
 **Random seed ritual still applies** to every generation in [step 1](#three-steps-every-job); categories describe *what* to vary, not *when* to pick `seed`.
 
-### Text-to-image — `p-image`
+### Text-to-image — `p-image-ideogram` / `p-image`
 
 Sources: [Arena text-to-image](https://arena.ai/leaderboard/text-to-image) · [AA text-to-image](https://artificialanalysis.ai/image/leaderboard/text-to-image)
 
@@ -397,6 +397,7 @@ Match prompt framing to ratio (e.g. `16:9 horizontal wide shot`, `9:16 vertical 
 
 | Model | Besides ritual seed, always vary |
 |-------|-----------------------------------|
+| **`p-image-ideogram`** | same axes as `p-image` — photoreal / text / JSON control path |
 | **`p-image`** | cast/creature + objects + action + setting + camera + **`render_category_tag`** + **aspect_ratio**; [explicit structure](#explicit-prompt-structure-required); [text hygiene](#text--typography-by-model) (no upsampling) |
 | **`p-image-edit`** | edit tag + setting/angle delta; same identity URL |
 | **`p-image-try-on`** | person plate world + garment complexity; preserve scene |
@@ -440,7 +441,7 @@ Match prompt framing to ratio (e.g. `16:9 horizontal wide shot`, `9:16 vertical 
 
 ## Visual variety
 
-Use this whenever you plan **`p-image`**, **`p-image-edit`**, **`p-video-2`**, **`p-video`**, **`p-video-avatar`**, **`p-video-animate`**, **`p-video-replace`**, or **`p-video-edit`** rows. Run the **Variety checklist** at the bottom before the first API call.
+Use this whenever you plan **`p-image-ideogram`**, **`p-image`**, **`p-image-edit`**, **`p-video-2`**, **`p-video`**, **`p-video-avatar`**, **`p-video-animate`**, **`p-video-replace`**, or **`p-video-edit`** rows. Run the **Variety checklist** at the bottom before the first API call.
 
 ### Goal
 
@@ -728,7 +729,7 @@ Public examples across **`p-image`**, **`p-image-try-on`**, and **`p-video-avata
 | Rule | Guidance |
 |------|----------|
 | **Unified bar** | this document · `image-prompting`
-| **Person plate** | Photoreal **`p-image`** editorial prompts → slop gate |
+| **Person plate** | Photoreal **`p-image-ideogram`** editorial prompts → slop gate |
 | **Try-on** | Garment tiers + preservation — `image-prompting` |
 | **Avatar motion** | Unique **`video_prompt`** per clip; natural **`voice_script`** |
 | **Cast** | Diversity ledger — gender, age, ethnicity spread |

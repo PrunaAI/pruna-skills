@@ -20,13 +20,13 @@ For multi-scene plans with approval gates, use a workflow skill (`music-video`, 
 
 | Recipe | You get | Primary models | Workflow skill |
 |--------|---------|----------------|----------------|
-| A — Style-locked mood board | N stills, same world | `p-image` → optional `p-image-edit` | (tool chain) |
-| B — Hero + variants | One anchor + edits | `p-image` → `p-image-edit` | (tool chain) |
+| A — Style-locked mood board | N stills, same world | `p-image-ideogram` → optional `p-image-edit` (`p-image` if cheap/fast) | (tool chain) |
+| B — Hero + variants | One anchor + edits | `p-image-ideogram` → `p-image-edit` | (tool chain) |
 | C — Print / pixel rescue | Higher-res master | `p-image-upscale` → optional `p-image-edit` | (tool chain) |
 | D — Animate a plate | One motion clip from a still | still → `p-video-2` (I2V) | `image-to-video` |
 | E — Audio-led cut | Video length follows VO/music | upload `audio` → `p-video-2` | `image-to-video` |
 | F — Draft → final video | Cheap preview then hi-fi | `p-video-2` draft then final | `narrated-multi-scene` |
-| G — Talking head | Portrait + speech | `p-image` → `p-video-avatar` | `avatar-single-scene` or `avatar-multi-scene` |
+| G — Talking head | Portrait + speech | `p-image-ideogram` → `p-video-avatar` | `avatar-single-scene` or `avatar-multi-scene` |
 | H — Social hook stack | Short vertical beats | Several `p-video-2` and/or avatars | avatar / narrated workflows |
 | M — Motion-transfer showcase | Same motion, new subject | `p-video-animate` | `avatar-multi-scene` |
 | N — In-video replacement | Swap subjects in footage | `p-video-replace` | `p-video-replace` |
@@ -49,11 +49,11 @@ For multi-scene plans with approval gates, use a workflow skill (`music-video`, 
 **Steps**
 
 1. Write the **style bible** once (palette, line, era, lens).
-2. Run **`p-image`** N times with the bible in every `prompt`, same `aspect_ratio`; vary only the beat (emotion, prop, angle). **Start all N jobs in parallel** (async). New ritual string per independent panel unless user locks **`api_seed`**.
+2. Run **`p-image-ideogram`** N times with the bible in every `prompt`, same `aspect_ratio`; vary only the beat (emotion, prop, angle). Use **`p-image`** only if the user asked cheap/fast. **Start all N jobs in parallel** (async). New ritual string per independent panel unless user locks **`api_seed`**.
 3. If a panel drifts, **`p-image-edit`** that panel using the best prior panel as reference + “match reference style; change only: …”.
 4. Optional **`p-image-upscale`** on selects for large boards or print.
 
-**Refs:** `p-image`, `p-image-edit`, `p-image-upscale`
+**Refs:** `p-image-ideogram`, `p-image`, `p-image-edit`, `p-image-upscale`
 
 ## Recipe B — Hero frame + controlled variants
 
@@ -63,7 +63,7 @@ For multi-scene plans with approval gates, use a workflow skill (`music-video`, 
 
 **Steps**
 
-1. **`p-image`** or upload → one **hero** URL.
+1. **`p-image-ideogram`** or upload → one **hero** URL (`p-image` only for a cheap draft).
 2. **`p-image-edit`** per variant: hero in `images[]`, prompt lists only deltas.
 3. Optional **`p-image-upscale`** per hero use case.
 
@@ -86,7 +86,7 @@ For multi-scene plans with approval gates, use a workflow skill (`music-video`, 
 
 **Steps**
 
-1. Ensure still exists (upload or **`p-image`**).
+1. Ensure still exists (upload or **`p-image-ideogram`**; **`p-image`** for a cheap draft).
 2. Optional **`p-image-edit`** for end still when chaining scenes.
 3. **`p-video-2`** with `image` + motion `prompt`; add `last_frame_image` for controlled arc. Full intake: `image-to-video`.
 
@@ -121,7 +121,7 @@ For **full narrated story films**, use Recipe **P** (scene anchor triple in `vid
 **Steps**
 
 1. Build **character sheet** and **scene table** — see `avatar-multi-scene`.
-2. Hero: **`p-image`** (photoreal, SSoT ritual in `generation-diversity`) → slop gate; lock plate URL.
+2. Hero: **`p-image-ideogram`** (photoreal, SSoT ritual in `generation-diversity`) → slop gate; lock plate URL. **`p-image`** only for a cheap draft.
 3. Per scene: **`p-image-edit`** → slop gate — **parallel across scenes** after hero anchor is approved.
 4. Hand off to `avatar-single-scene` or `avatar-multi-scene` for **`p-video-avatar`** batch.
 
@@ -157,7 +157,7 @@ For **full narrated story films**, use Recipe **P** (scene anchor triple in `vid
 **Steps**
 
 1. Full workflow: `p-video-replace` + visual variety from `generation-diversity` — sliders via ffmpeg hstack slider (see `avatar-multi-scene`).
-2. **`p-image`** references → optional **`p-image-edit`** → **`p-video-replace`** → sliders → concat ± bed.
+2. **`p-image-ideogram`** references (`p-image` for cheap drafts) → optional **`p-image-edit`** → **`p-video-replace`** → sliders → concat ± bed.
 
 ## Recipe O — AI music video
 
@@ -174,7 +174,7 @@ For **full narrated story films**, use Recipe **P** (scene anchor triple in `vid
 **Steps**
 
 1. Full workflow: `narrated-multi-scene` — scene anchor triple in `video-prompting`.
-2. Hero → parallel **`p-image-edit`** start + end stills → parallel Gemini TTS → probe each MP3 (≤ ~19s) → parallel **`p-video-2`** triple payloads (`p-video` for simpler clips).
+2. Hero via **`p-image-ideogram`** → parallel **`p-image-edit`** start + end stills → parallel Gemini TTS → probe each MP3 (≤ ~19s) → parallel **`p-video-2`** triple payloads (`p-video` for simpler clips).
 3. Concat embedded VO → optional bed — layering in `audio-prompting`.
 
 ## Recipe Q — Visual transition reel
@@ -195,7 +195,7 @@ For **full narrated story films**, use Recipe **P** (scene anchor triple in `vid
 
 **Intake:** Narration vs music? Aspect ratio and platform (Reels vs YouTube/presentations)?
 
-**Steps:** `illustrated-story-reel` — `p-image` hero → `p-image-edit` beats → Gemini TTS per beat **or** Stable Audio / user track → ffmpeg assemble.
+**Steps:** `illustrated-story-reel` — `p-image` hero (`p-image-ideogram` if frames need readable text or tighter style) → `p-image-edit` beats → Gemini TTS per beat **or** Stable Audio / user track → ffmpeg assemble.
 
 ## Recipe T — Virtual try-on launch reel
 
