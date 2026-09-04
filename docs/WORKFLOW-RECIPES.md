@@ -2,7 +2,7 @@
 
 When a user describes an end product but not which workflow fits, use this document. Agents normally pick tools and workflows from skill frontmatter descriptions; humans use this when unsure.
 
-**Policies:** Install `generation-diversity` for approval gates and workflow-feedback gates. Confirm plan before any `POST /v1/predictions`. The agent is the runner (curl + ffmpeg) — no Python scripts. Shared ffmpeg assembly craft (concat, captions, bed mix, export): **`video-editing`**.
+**Policies:** Install `generation-diversity` for approval gates and workflow-feedback gates. Confirm plan before any `POST /v1/predictions`. The agent is the runner (curl + ffmpeg) — no Python scripts. Shared ffmpeg assembly craft (concat, captions, bed mix, export): **`video-editing`**. Clip generation: **`p-video-2`** for best quality; **`p-video`** for simpler / quicker videos.
 
 ## Quick one-off routing
 
@@ -11,7 +11,7 @@ For a single prompt with minimal intake — pick the shortest tool chain:
 | Route | When | Chain |
 |-------|------|-------|
 | **image** | Still only | `p-image-ideogram` |
-| **i2v** | Motion from a still | `p-image-ideogram` → `p-video-2` |
+| **i2v** | Motion from a still | `p-image-ideogram` → `p-video-2` (quality) or `p-video` (simpler) |
 | **avatar** | Talking head | `p-image-ideogram` → `p-video-avatar` |
 
 For multi-scene plans with approval gates, use a workflow skill (`music-video`, `narrated-multi-scene`, …). Install the full suite first: `npx skills add PrunaAI/pruna-skills@pruna -y` — see [README Quickstart](../README.md#quickstart).
@@ -163,7 +163,7 @@ For **full narrated story films**, use Recipe **P** (scene anchor triple in `vid
 
 **Shine:** Full song + lyric-synced video.
 
-**Steps:** `music-video` — lyrics → Music 2.5 → align → stills → `p-video-avatar` / `p-video` → assembly.
+**Steps:** `music-video` — lyrics → Music 2.5 → align → stills → `p-video-avatar` / `p-video-2` (B-roll quality) → assembly.
 
 ## Recipe P — Narrated story film (scene anchor triple)
 
@@ -174,7 +174,7 @@ For **full narrated story films**, use Recipe **P** (scene anchor triple in `vid
 **Steps**
 
 1. Full workflow: `narrated-multi-scene` — scene anchor triple in `video-prompting`.
-2. Hero → parallel **`p-image-edit`** start + end stills → parallel Gemini TTS → probe each MP3 (≤ ~19s) → parallel **`p-video`** triple payloads.
+2. Hero → parallel **`p-image-edit`** start + end stills → parallel Gemini TTS → probe each MP3 (≤ ~19s) → parallel **`p-video-2`** triple payloads (`p-video` for simpler clips).
 3. Concat embedded VO → optional bed — layering in `audio-prompting`.
 
 ## Recipe Q — Visual transition reel

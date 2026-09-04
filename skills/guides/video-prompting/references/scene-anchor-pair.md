@@ -1,6 +1,6 @@
 # Scene anchor pair (visual transitions)
 
-Canonical pattern for **smooth visual transitions** with Pruna **`p-video-2`** (preferred) or **`p-video`**: two stills bracket motion; a **`prompt`** describes what happens **between** them. No narration required.
+Canonical pattern for **smooth visual transitions** with Pruna **`p-video-2`** (quality) or **`p-video`** (simpler): two stills bracket motion; a **`prompt`** describes what happens **between** them. No narration required.
 
 Related: [scene-anchor-triple.md](./scene-anchor-triple.md) (pair + audio) · [prompt-dramaturgy.md](./prompt-dramaturgy.md) · [physics-safe-motion.md](./physics-safe-motion.md) · [clip-chaining.md](./clip-chaining.md) · `p-video-2` · `p-video` · `p-image` · `p-image-edit`
 
@@ -197,5 +197,5 @@ Upgrade a pair scene to triple by adding TTS → upload → `audio` and removing
 
 - `visual-transition-reel` — primary workflow
 - `image-to-video` — one pair beat
-- `p-video-2` — API reference (visual transition mode; `p-video` if the user named the original)
+- `p-video-2` — API reference (visual transition, quality path; `p-video` for simpler clips)
 - Workflow runner: agent follows `visual-transition-reel` (curl + ffmpeg)

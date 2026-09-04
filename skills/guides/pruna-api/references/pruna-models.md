@@ -13,8 +13,8 @@ Pricing and limits change; confirm on the official page: [Available models](http
 | `p-image-edit` | Image edit / compose (1–5 images) | `p-image-edit` | `p-image-edit-quality-checklist.md` in `image-prompting` |
 | `p-image-upscale` | Upscale (target MP 1–128, optional enhance) | `p-image-upscale` | `p-image-upscale-quality-checklist.md` in `image-prompting` |
 | `p-image-try-on` | Virtual try-on (person + up to 11 garments, ≤6 finals / 7–8 reliable; optional pose ref, turbo ~4) | `p-image-try-on` | `p-image-try-on-quality-checklist.md` in `image-prompting` |
-| `p-video-2` | Default text / image / audio video (quality successor); **first frame** (`image`) + **last frame** (`last_frame_image`); omit `duration` to let the model choose length | `p-video-2` | `p-video-2-quality-checklist.md` in `video-prompting` |
-| `p-video` | Original text / image / audio video; same payload as `p-video-2` — use only when the user names this model | `p-video` | `p-video-quality-checklist.md` in `video-prompting` |
+| `p-video-2` | Best-quality text / image / audio video; **first frame** (`image`) + **last frame** (`last_frame_image`); omit `duration` to let the model choose length | `p-video-2` | `p-video-2-quality-checklist.md` in `video-prompting` |
+| `p-video` | Simpler / quicker text / image / audio video; same payload as `p-video-2` | `p-video` | `p-video-quality-checklist.md` in `video-prompting` |
 | `p-video-avatar` | Talking avatar from portrait + script or audio | `p-video-avatar` | `p-video-avatar-quality-checklist.md` in `video-prompting` |
 | `p-video-animate` | Animate a still using source video motion (motion transfer) | `p-video-animate` | `p-video-animate-quality-checklist.md` in `video-prompting` |
 | `p-video-replace` | Replace people in source video using 1–4 identity images | `p-video-replace` | `p-video-replace-quality-checklist.md` in `video-prompting` |

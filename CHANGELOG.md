@@ -10,7 +10,7 @@ All notable changes to Pruna Skills are documented here. Skill and plugin `metad
 
 ### Changed
 
-- **Default clip routing** — new generation jobs prefer `p-video-2`. `p-video` stays installed as the original-model fallback when the user names it.
+- **Clip routing** — `p-video-2` is the quality path (polished clips, lip-sync, native audio). `p-video` stays for simpler / quicker videos.
 - **Cinematic workflows** (`image-to-video`, `narrated-multi-scene`, `visual-transition-reel`, `interactive-explainer` narrator, `music-video` B-roll, `illustrated-story-reel` motion) — default prediction model is `p-video-2`.
 
 ## [1.0.11] — 2026-09-03

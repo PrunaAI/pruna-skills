@@ -1,6 +1,6 @@
 # Illustrated story reel — API reference (scoped)
 
-APIs used by **illustrated-story-reel**. Optional **`p-video`** when `motion_mode: p-video`.
+APIs used by **illustrated-story-reel**. Optional motion when `motion_mode: p-video` — **`p-video-2`** (quality) or **`p-video`** (simpler).
 
 Credentials: `pruna-api`
 
@@ -8,7 +8,7 @@ Credentials: `pruna-api`
 
 - Base: `https://api.pruna.ai/v1/predictions`
 - Upload: `https://api.pruna.ai/v1/files`
-- Header: `apikey: ${PRUNA_API_KEY}`, `Model: p-image` | `p-image-edit` | `p-video`
+- Header: `apikey: ${PRUNA_API_KEY}`, `Model: p-image` | `p-image-edit` | `p-video-2` | `p-video`
 - Body: `{ "input": { ... } }`
 - Sync (`Try-Sync: true`) is acceptable for hero stills; async + poll for p-video clips.
 
@@ -18,9 +18,10 @@ Credentials: `pruna-api`
 |-------|-----|
 | `p-image` | Hero anchor still |
 | `p-image-edit` | Per-beat still from hero or chained prior plate |
-| `p-video` | Optional Mode B clip: still + narration (`save_audio: true`, omit `duration`) |
+| `p-video-2` | Optional Mode B clip (quality): still + narration (`save_audio: true`, omit `duration`) |
+| `p-video` | Same Mode B payload for simpler / quicker clips |
 
-HTTP patterns and upload/poll/download: `pruna-api`. p-video payload fields: `p-video` skill.
+HTTP patterns and upload/poll/download: `pruna-api`. Motion payload fields: `p-video-2` / `p-video` skills.
 
 ## Replicate (audio)
 

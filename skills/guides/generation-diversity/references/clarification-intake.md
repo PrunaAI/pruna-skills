@@ -46,7 +46,7 @@ Ask when the brief does not already answer these:
 
 ## By skill type
 
-### Tools (`p-image`, `p-video`, TTS, beds, …)
+### Tools (`p-image`, `p-video-2`, `p-video`, TTS, beds, …)
 
 Minimum before first `POST`:
 

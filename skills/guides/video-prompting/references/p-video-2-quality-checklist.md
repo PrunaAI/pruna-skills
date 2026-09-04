@@ -6,7 +6,7 @@ Shared motion / frame-anchor items: also run [p-video-quality-checklist.md](./p-
 
 ## Applies to
 
-See the canonical mapping in `generation-diversity`. Default clip generator for `image-to-video`, `narrated-multi-scene`, `visual-transition-reel`, and B-roll rows.
+See the canonical mapping in `generation-diversity`. Quality path for `image-to-video`, `narrated-multi-scene`, `visual-transition-reel`, and B-roll rows. Use `p-video` for simpler / quicker clips.
 
 ## Quality vs `p-video`
 

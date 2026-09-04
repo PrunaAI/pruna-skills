@@ -28,7 +28,7 @@ Maintenance rule: keep tool/workflow mapping only in this file to avoid link dri
 | `p-image-upscale` | `image-prompting` | `p-image-upscale-quality-checklist.md` | `image-to-video`, `narrated-multi-scene` |
 | `p-image-try-on` | `image-prompting` | `p-image-try-on-quality-checklist.md` · persona: `realistic-persona-showcase.md` | `p-image-try-on` |
 | `p-video-2` | `video-prompting` | `p-video-2-quality-checklist.md` | `image-to-video`, `narrated-multi-scene`, `interactive-explainer`, `visual-transition-reel` |
-| `p-video` | `video-prompting` | `p-video-quality-checklist.md` | same workflows when the user asked for the original model |
+| `p-video` | `video-prompting` | `p-video-quality-checklist.md` | same workflows on simpler / quicker clips |
 | `p-video-avatar` | `video-prompting` | `p-video-avatar-quality-checklist.md` · persona: `realistic-persona-showcase.md` in `image-prompting` | `avatar-single-scene`, `avatar-multi-scene`, `interactive-explainer` |
 | `p-video-animate` | `video-prompting` | `p-video-animate-quality-checklist.md` | `avatar-multi-scene` |
 | `p-video-replace` | `video-prompting` | `p-video-replace-quality-checklist.md` | `p-video-replace`, `avatar-multi-scene` |

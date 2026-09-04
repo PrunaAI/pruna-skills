@@ -26,7 +26,7 @@ Use the same header on delivery URLs when downloading bytes.
 All generative calls use:
 
 - `POST /v1/predictions`
-- Headers: `Content-Type: application/json`, `apikey`, **`Model: <model-id>`** (for example `p-image`, `p-image-edit`, `p-image-try-on`, `p-video`, `p-video-avatar`, `p-video-animate`, `p-video-replace`, `p-image-upscale`)
+- Headers: `Content-Type: application/json`, `apikey`, **`Model: <model-id>`** (for example `p-image`, `p-image-edit`, `p-image-try-on`, `p-video-2`, `p-video`, `p-video-avatar`, `p-video-animate`, `p-video-replace`, `p-image-upscale`)
 - JSON body: `{ "input": { ... } }` where `input` fields match the model page (see each skill).
 
 ## Sync vs async
@@ -50,7 +50,7 @@ When several predictions **do not depend on each other's outputs**, create them 
 | **Subagents for lanes** | One subagent per independent scene/lane when 2+ scenes; parent owns manifest and assembly. |
 | **Sync only for probes** | `Try-Sync: true` is OK for a **single** quick image test — not for video or batch runs. |
 
-Typical multi-scene avatar phases: plan → hero `p-image` → parallel scene `p-image-edit` → parallel `p-video-avatar` → assembly. Narrated films: parallel Gemini TTS per scene after scripts approved, then parallel `p-video` when all anchor triple URLs exist.
+Typical multi-scene avatar phases: plan → hero `p-image` → parallel scene `p-image-edit` → parallel `p-video-avatar` → assembly. Narrated films: parallel Gemini TTS per scene after scripts approved, then parallel `p-video-2` (quality) or `p-video` (simpler) when all anchor triple URLs exist.
 
 Example shape (conceptual):
 
@@ -66,7 +66,7 @@ wait
 # Then poll all get_url values until none are pending
 ```
 
-## Scene anchor triple (multi-scene `p-video`)
+## Scene anchor triple (multi-scene `p-video-2` / `p-video`)
 
 Narrated story films pass three uploads per scene — **`image`**, **`last_frame_image`**, **`audio`** — in one prediction. Omit `duration` when `audio` is set.
 

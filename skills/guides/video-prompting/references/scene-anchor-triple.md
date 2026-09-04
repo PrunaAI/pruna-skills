@@ -1,6 +1,6 @@
 # Scene anchor triple (single narrated beat → multi-scene extension)
 
-Canonical payload pattern for **one narrated `p-video-2` prediction** (or `p-video` if the user named the original): three uploaded anchors (`image`, `last_frame_image`, `audio`) plus a motion **`prompt`**. Use this for a **single story beat** first (`image-to-video`, `p-video-2`).
+Canonical payload pattern for **one narrated `p-video-2` prediction** (or `p-video` for a simpler clip): three uploaded anchors (`image`, `last_frame_image`, `audio`) plus a motion **`prompt`**. Use this for a **single story beat** first (`image-to-video`, `p-video-2`).
 
 **Multi-scene extension** (`frame_chain`, concat, parallel batches, plan JSON with many rows) belongs only in `narrated-multi-scene` — do not treat this doc as permission for single-clip skills to orchestrate full films.
 
