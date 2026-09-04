@@ -4,6 +4,15 @@ All notable changes to Pruna Skills are documented here. Skill and plugin `metad
 
 ## [Unreleased]
 
+### Added
+
+- **`p-video-2` tool** — quality-focused successor to `p-video` with the same text / image / audio payload: stronger lip-sync, native audio, optional model-chosen duration, draft/full billing per returned second.
+
+### Changed
+
+- **Default clip routing** — new generation jobs prefer `p-video-2`. `p-video` stays installed as the original-model fallback when the user names it.
+- **Cinematic workflows** (`image-to-video`, `narrated-multi-scene`, `visual-transition-reel`, `interactive-explainer` narrator, `music-video` B-roll, `illustrated-story-reel` motion) — default prediction model is `p-video-2`.
+
 ## [1.0.11] — 2026-09-03
 
 GitHub tag: `skills-v1.0.11`

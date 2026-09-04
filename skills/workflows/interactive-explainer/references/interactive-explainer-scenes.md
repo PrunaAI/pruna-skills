@@ -10,12 +10,12 @@ Pure narration over B-roll feels like a lecture. **Interaction** — host poses 
 
 | Beat type | Model | Audio | Stills |
 |-----------|-------|-------|--------|
-| **`narrator`** | `p-video` | Gemini TTS → `input.audio` | start + end (`p-image-edit`) |
+| **`narrator`** | `p-video-2` | Gemini TTS → `input.audio` | start + end (`p-image-edit`) |
 | **`character`** | `p-video-avatar` | native `voice_script` | start only (mouth visible) |
 
 Both use **`p-image`** hero + **`p-image-edit`** under one **`style_bible`**.
 
-**Format defaults:** `720p`, `24` fps (narrator `p-video`); motion: [interactive-explainer-motion.md](./interactive-explainer-motion.md) — dynamic OPEN/MID/CLOSE, physics-safe.
+**Format defaults:** `720p`, `24` fps (narrator `p-video-2`); motion: [interactive-explainer-motion.md](./interactive-explainer-motion.md) — dynamic OPEN/MID/CLOSE, physics-safe.
 
 ## Subject flavors
 
@@ -35,7 +35,7 @@ Pick **one** flavor per film. Swap examples in prompts — the scene machinery i
 |-----------|--------|
 | Character / narrator ratio | **≥ 1 character beat per 2 narrator beats** (roughly 35–50% character) |
 | Scene order | Alternate when possible: narrator → character → narrator → … |
-| Narrator line length | **≤ ~19s** TTS (P-API 20s **audio-led `p-video`** cap) — see `video-prompting` |
+| Narrator line length | **≤ ~19s** TTS (P-API 20s **audio-led `p-video-2`** cap) — see `video-prompting` |
 | Character line length | Reply length as needed (often 2–4 sentences); **`p-video-avatar` may exceed 20s** — clip follows `voice_script` |
 
 ## Narrator beat (`type: "narrator"`)

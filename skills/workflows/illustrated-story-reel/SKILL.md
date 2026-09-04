@@ -15,7 +15,8 @@ Install and load these skills before generating (skip if already in context via 
 | --- | --- | --- |
 | `p-image` | Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
 | `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
-| `p-video` | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
+| `p-video-2` | Use when someone wants one short video clip from text, images, or audio — B-roll, start/end frame animation, or a motion shot. Not for full multi-scene films or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
+| `p-video` | Use when someone explicitly wants the original Pruna video model for a short clip — B-roll or start/end frame animation — instead of the newer quality default. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 | `gemini-3.1-flash-tts` | Use when someone needs spoken narration or voiceover — explainer tracks, documentary lines, or voice to pair with generated video. | `npx skills add PrunaAI/pruna-skills@gemini-3.1-flash-tts -y` |
 | `stable-audio-2.5` | Use when someone wants light instrumental background music — an ambient bed under dialogue or underscore for reels and explainers. | `npx skills add PrunaAI/pruna-skills@stable-audio-2.5 -y` |
 
@@ -124,7 +125,7 @@ Do not start generation until the beat table is written and **audio_mode** + **m
 1. Copy a plan template → fill beat table → **approve plan**.
 2. Hero → parallel `p-image-edit` stills (`pruna-api`) → **approve stills**.
 3. Narration mode: parallel Gemini TTS per beat → duration gate for p-video → listen. Music mode: Stable Audio or user track → listen → **approve audio**.
-4. `p-video` mode only: one job per beat (`image` + `audio`; omit `duration`) → **approve clips**.
+4. `p-video-2` mode only: one job per beat (`image` + `audio`; omit `duration`) → **approve clips**.
 5. Assemble with ffmpeg (Ken Burns pan/zoom + mux, or concat p-video clips).
 
 **Duration gate (p-video / long TTS):**
@@ -147,7 +148,7 @@ Hero `p-image` → parallel `p-image-edit` per beat (`edit_prompt`). Chain edits
 
 ### Motion + assemble
 
-**Ken Burns (budget):** for each still, render a short pan/zoom clip, then concat and mux narration or bed. Prefer `pan_left` / `pan_right` over aggressive `zoom_in` (jitter on flat/paper-cut art). Upscale (e.g. ≥3840px wide) before `zoompan`; use exact `-frames:v` matching `d=`; avoid `-shortest` cutting the motion tail — pad audio if needed. Do **not** call `p-video` to fix Ken Burns tremor.
+**Ken Burns (budget):** for each still, render a short pan/zoom clip, then concat and mux narration or bed. Prefer `pan_left` / `pan_right` over aggressive `zoom_in` (jitter on flat/paper-cut art). Upscale (e.g. ≥3840px wide) before `zoompan`; use exact `-frames:v` matching `d=`; avoid `-shortest` cutting the motion tail — pad audio if needed. Do **not** call `p-video-2` to fix Ken Burns tremor.
 
 Conceptual pan (adapt duration / size to aspect):
 
@@ -196,6 +197,6 @@ Related skills:
 | `visual-transition-reel` | Use when someone wants a montage with transitions between shots — action-sequence reel or multi-scene piece where narration is optional. | `npx skills add PrunaAI/pruna-skills@visual-transition-reel -y` |
 | `p-image` | Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
 | `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
-| `p-video` | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
+| `p-video` | Use when someone explicitly wants the original Pruna video model for a short clip — B-roll or start/end frame animation — instead of the newer quality default. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 | `video-editing` | Use when assembling or polishing already-rendered clips with ffmpeg — concat, crossfades, burned captions and subtitles, text/logo overlays, before/after sliders, background music beds, platform export — or when composing a multi-layer HTML combination video with Hyperframes. Not for AI video generation, prompt craft, or model-based video edits. | `npx skills add PrunaAI/pruna-skills@video-editing -y` |
 

@@ -36,7 +36,8 @@ Use a different skill instead:
 | Skill | Description | Install |
 | --- | --- | --- |
 | `p-image` | Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
-| `p-video` | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
+| `p-video-2` | Use when someone wants one short video clip from text, images, or audio — B-roll, start/end frame animation, or a motion shot. Not for full multi-scene films or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
+| `p-video` | Use when someone explicitly wants the original Pruna video model for a short clip — B-roll or start/end frame animation — instead of the newer quality default. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 | `generation-diversity` | Use when writing any generative prompt — ritual seed, explicit structure, scenario axes, and quality gates before paid API calls. | `npx skills add PrunaAI/pruna-skills@generation-diversity -y` |
 | `video-editing` | Use when assembling or polishing already-rendered clips with ffmpeg — concat, crossfades, burned captions and subtitles, text/logo overlays, before/after sliders, background music beds, platform export — or when composing a multi-layer HTML combination video with Hyperframes. Not for AI video generation, prompt craft, or model-based video edits. | `npx skills add PrunaAI/pruna-skills@video-editing -y` |
 
@@ -55,7 +56,8 @@ Install related skills when the job needs them:
 | Skill | Description | Install |
 | --- | --- | --- |
 | `p-image` | Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
-| `p-video` | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
+| `p-video-2` | Use when someone wants one short video clip from text, images, or audio — B-roll, start/end frame animation, or a motion shot. Not for full multi-scene films or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
+| `p-video` | Use when someone explicitly wants the original Pruna video model for a short clip — B-roll or start/end frame animation — instead of the newer quality default. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 
 Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 

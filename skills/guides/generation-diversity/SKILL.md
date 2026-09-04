@@ -26,7 +26,7 @@ Vendor-neutral playbook for **diverse, explicit prompts** and output QA. Apply b
 
 ## Works with
 
-Any generative model. Pruna tools (`p-image`, `p-video`, …) and third-party APIs alike.
+Any generative model. Pruna tools (`p-image`, `p-video-2`, `p-video`, …) and third-party APIs alike.
 
 ## Guide habit
 
@@ -63,7 +63,8 @@ Install related skills when the job needs them:
 | `pruna-api` | Use before any Pruna or Replicate HTTP call — credentials, upload/poll/download, parallel batches, and agent safety. | `npx skills add PrunaAI/pruna-skills@pruna-api -y` |
 | `p-image` | Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
 | `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
-| `p-video` | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
+| `p-video-2` | Use when someone wants one short video clip from text, images, or audio — B-roll, start/end frame animation, or a motion shot. Not for full multi-scene films or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
+| `p-video` | Use when someone explicitly wants the original Pruna video model for a short clip — B-roll or start/end frame animation — instead of the newer quality default. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 
 Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 

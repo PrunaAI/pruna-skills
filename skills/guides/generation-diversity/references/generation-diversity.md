@@ -155,7 +155,7 @@ pulp western poster energy, dynamic diagonal composition
 **Channel split (quotes vs tags):**
 
 - **`text_spec` (stills):** `"[exact string]"` + `[surface]` + `[placement]` → `image-prompting` §5
-- **Native clip dialogue:** `p-video` Mode A only (`[subject] says "[LINE]"` + mouth + gesture) → `video-prompting` — not `p-image`
+- **Native clip dialogue:** `p-video-2` (or `p-video` if the user named the original) Mode A only (`[subject] says "[LINE]"` + mouth + gesture) → `video-prompting` — not `p-image`
 - **`[tags]`:** Gemini TTS `text` performance only — not still typography, not `p-video` motion prompt → `audio-prompting`
 
 **Collage triggers (photo generation models):** still avoid `flat lay`, `packshot`, `grid`, `collage`, `montage`, `contact sheet`, `split`, `before and after` — use `single frame`, `one camera angle` instead. Full table: `interactive-explainer`.
@@ -184,7 +184,7 @@ render_tag    ← render_tags[ sum(codes(ritual_seed[4:8])) % len(render_tags) ]
 | **Setting** | unique `setting_tag` — specific room/street/venue/era, not repeat adjacent rows | stills + video plates |
 | **Camera** | `camera_tag` — rotate across [framing ladder](#framing--camera); never default MC facing lens | stills, `video_prompt` |
 | **Lighting** | `lighting_tag` — golden hour · neon · overcast · practical | stills, video mood |
-| **Motion** | unique `video_prompt` per clip | `p-video`, `p-video-avatar`, animate |
+| **Motion** | unique `video_prompt` per clip | `p-video-2`, `p-video`, `p-video-avatar`, animate |
 | **Voice** | natural `voice_script`; one `voice` preset per character | avatar, TTS-led video |
 | **Seed** | new ritual string per **independent** job; reuse only on same-brief slop retry | all generation skills |
 | **Aspect ratio** | different `aspect_ratio` per independent still in a batch — see [below](#aspect-ratio-multi-example-sets) | `p-image`, `p-image-edit` |
@@ -230,7 +230,7 @@ Edit diversity tags: `background_swap` · `relight` · `wardrobe_on_plate` · `p
 
 Vary **instruction** and **what changes** while identity URL stays fixed on character arcs.
 
-### Text-to-video — `p-video`
+### Text-to-video — `p-video-2` (preferred) / `p-video`
 
 Sources: [Arena text-to-video](https://arena.ai/leaderboard/text-to-video) · [AA text-to-video](https://artificialanalysis.ai/video/leaderboard/text-to-video)
 
@@ -238,7 +238,7 @@ Motion/scene tags: `character_performance` · `landscape_broll` · `urban_street
 
 Rotate `video_prompt` grammar, start plate world, and `camera_tag` per clip.
 
-### Image-to-video — `p-video` (+ plate upload)
+### Image-to-video — `p-video-2` (preferred) / `p-video` (+ plate upload)
 
 Sources: [Arena image-to-video](https://arena.ai/leaderboard/image-to-video) · [AA image-to-video](https://artificialanalysis.ai/video/leaderboard/image-to-video)
 
@@ -401,7 +401,8 @@ Match prompt framing to ratio (e.g. `16:9 horizontal wide shot`, `9:16 vertical 
 | **`p-image-edit`** | edit tag + setting/angle delta; same identity URL |
 | **`p-image-try-on`** | person plate world + garment complexity; preserve scene |
 | **`p-image-upscale`** | N/A on prompt — diversify **source** stills |
-| **`p-video`** | motion/scene tag + `video_prompt`; differ start plates per scene |
+| **`p-video-2`** | motion/scene tag + `video_prompt`; differ start plates per scene (default clip model) |
+| **`p-video`** | same as `p-video-2` when the user asked for the original model |
 | **`p-video-avatar`** | `video_prompt` + still world per scene; lock voice per character |
 | **`p-video-animate`** | persona still style/setting per slider ref |
 | **`p-video-replace`** | video-edit tag + full cast spread on showcase reels |
@@ -439,7 +440,7 @@ Match prompt framing to ratio (e.g. `16:9 horizontal wide shot`, `9:16 vertical 
 
 ## Visual variety
 
-Use this whenever you plan **`p-image`**, **`p-image-edit`**, **`p-video-avatar`**, **`p-video-animate`**, **`p-video-replace`**, or **`p-video-edit`** rows. Run the **Variety checklist** at the bottom before the first API call.
+Use this whenever you plan **`p-image`**, **`p-image-edit`**, **`p-video-2`**, **`p-video`**, **`p-video-avatar`**, **`p-video-animate`**, **`p-video-replace`**, or **`p-video-edit`** rows. Run the **Variety checklist** at the bottom before the first API call.
 
 ### Goal
 

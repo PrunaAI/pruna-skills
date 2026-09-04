@@ -1,10 +1,10 @@
 # Scene anchor triple (single narrated beat → multi-scene extension)
 
-Canonical payload pattern for **one narrated `p-video` prediction**: three uploaded anchors (`image`, `last_frame_image`, `audio`) plus a motion **`prompt`**. Use this for a **single story beat** first (`image-to-video`, `p-video`).
+Canonical payload pattern for **one narrated `p-video-2` prediction** (or `p-video` if the user named the original): three uploaded anchors (`image`, `last_frame_image`, `audio`) plus a motion **`prompt`**. Use this for a **single story beat** first (`image-to-video`, `p-video-2`).
 
 **Multi-scene extension** (`frame_chain`, concat, parallel batches, plan JSON with many rows) belongs only in `narrated-multi-scene` — do not treat this doc as permission for single-clip skills to orchestrate full films.
 
-Related: [scene-anchor-pair.md](./scene-anchor-pair.md) (visual-only) · `audio-prompting` · [audio-in-video-prompting.md](./audio-in-video-prompting.md) · [prompt-dramaturgy.md](./prompt-dramaturgy.md) · [clip-chaining.md](./clip-chaining.md) · `p-video`
+Related: [scene-anchor-pair.md](./scene-anchor-pair.md) (visual-only) · `audio-prompting` · [audio-in-video-prompting.md](./audio-in-video-prompting.md) · [prompt-dramaturgy.md](./prompt-dramaturgy.md) · [clip-chaining.md](./clip-chaining.md) · `p-video-2` · `p-video`
 
 ## The triple (one prediction)
 
@@ -18,19 +18,19 @@ Each beat supplies **three Pruna file URLs** (from `POST /v1/files`) plus a moti
 
 **Omit `duration`** when `audio` is set. Optional **`save_audio`: true** keeps narration on the output clip.
 
-When audio is provided, **always** upload and pass it to `p-video` at render time. Do not generate silent clips and mux narration in ffmpeg afterward.
+When audio is provided, **always** upload and pass it to `p-video-2` at render time. Do not generate silent clips and mux narration in ffmpeg afterward.
 
 **20-second ceiling:** audio-led clips cannot run longer than P-API `duration` max (**20s**). Write TTS to **≤ ~19s** (probe with `ffprobe` after Gemini). Truncated VO with “audio passed” usually means the line was too long, not that `input.audio` was missing. See `gemini-3.1-flash-tts` (or `music-2.5` slice for music videos)
 2. Download MP3/WAV
 3. Upload to `/v1/files` → use `urls.get` as `input.audio`
 
-**Do not** post-mux narration over silent `p-video` clips unless re-render is impossible — truncated VO is a common failure mode.
+**Do not** post-mux narration over silent `p-video-2` clips unless re-render is impossible — truncated VO is a common failure mode.
 
 ## Video phase (one beat)
 
 When start URL, end URL, and audio URL exist:
 
-- **`POST /v1/predictions`** with `Model: p-video` — one async job
+- **`POST /v1/predictions`** with `Model: p-video-2` — one async job
 - Poll `get_url` until done
 
 ## Multi-scene extension (narrated-multi-scene only)

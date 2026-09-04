@@ -71,7 +71,7 @@ See `whisperx` and `this skill`.
 |---------|-------------------|-----|
 | `[Verse]` / `[Pre Chorus]` | Alternate **performance** / **broll** per line | Variety without breaking lip sync |
 | `[Chorus]` | **performance** (whole section) | Hook stays on singer |
-| `[Inst]` / `[Solo]` / `[Break]` | **broll** | No lip sync — cinematic `p-video` |
+| `[Inst]` / `[Solo]` / `[Break]` | **broll** | No lip sync — cinematic `p-video-2` |
 | `[Intro]` / `[Outro]` | **broll** or short performance | Mood setting |
 
 Override any cut in the plan with explicit `"beat_type": "performance" | "broll"`.
@@ -92,8 +92,8 @@ Override any cut in the plan with explicit `"beat_type": "performance" | "broll"
 | `beat_type` | Model | Audio input |
 |-------------|-------|-------------|
 | **performance** (human host) | `p-video-avatar` | Song slice → `input.audio` |
-| **performance** (mascot / stylized) | `p-video` | Song slice → `input.audio` — **not** avatar (humanizes non-human stills) |
-| **broll** | `p-video` | Same slice or `duration` from cut map |
+| **performance** (mascot / stylized) | `p-video-2` | Song slice → `input.audio` — **not** avatar (humanizes non-human stills) |
+| **broll** | `p-video-2` | Same slice or `duration` from cut map |
 
 **Performance stills:** when the user wants one singer throughout, land **one hero** with `p-image` + random seed ritual (`generation-diversity`), then **`p-image-edit`** every performance frame off that URL — mouth visible, statement wardrobe, varied setting per chorus pass. Only mint a fresh identity with unrelated `p-image` prompts when recasts are deliberate (usually B-roll only).
 
@@ -123,5 +123,6 @@ Intro (broll, wide) → Verse line (performance, medium) → Verse line (broll, 
 
 - `music-2.5`
 - `p-video-avatar`
+- `p-video-2`
 - `p-video`
 - `whisperx`

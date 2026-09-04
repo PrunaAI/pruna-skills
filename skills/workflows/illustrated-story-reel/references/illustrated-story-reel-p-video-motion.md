@@ -1,6 +1,6 @@
 # Illustrated story reel — p-video motion (Mode B)
 
-Optional **illustrated movement** per beat: upload the beat still + Gemini TTS narration to **`p-video`** (Mode B). Clip length follows audio — **omit `duration`**, set **`save_audio: true`**.
+Optional **illustrated movement** per beat: upload the beat still + Gemini TTS narration to **`p-video-2`** (Mode B). Clip length follows audio — **omit `duration`**, set **`save_audio: true`**. Plan flag stays `motion_mode: "p-video"`.
 
 Ken Burns (ffmpeg only) remains the **budget** path — prefer `pan_left` / `pan_right` and follow **Motion + assemble** in `illustrated-story-reel`.
 
@@ -9,7 +9,7 @@ Ken Burns (ffmpeg only) remains the **budget** path — prefer `pan_left` / `pan
 | Path | Cost | Motion |
 |------|------|--------|
 | **`ken_burns`** (default) | images + TTS only | Slow pan/zoom on still |
-| **`p-video`** | + one video API call per beat | Books flutter, whale drifts, gentle illustrated drift |
+| **`p-video`** (`p-video-2` API) | + one video API call per beat | Books flutter, whale drifts, gentle illustrated drift |
 
 Set `defaults.motion_mode` or per-scene `motion_mode`: `"ken_burns"` \| `"p-video"`.
 
@@ -42,7 +42,7 @@ Rules (full ref: `video-prompting`):
 
 ## API payload
 
-Use Build the `p-video` payload (see `p-video` skill):
+Use Build the `p-video-2` payload (see `p-video-2` skill):
 
 ```python
 build_p_video_payload(
@@ -62,7 +62,7 @@ Do **not** post-mux narration over a silent clip — long lines truncate.
 
 1. Stills → approve
 2. TTS per beat → approve audio
-3. `p-video` per beat (narration as `audio`) → approve clips
+3. `p-video-2` per beat (narration as `audio`) → approve clips
 4. ffmpeg concat
 
 Ken Burns path skips video generation; assemble muxes narration over ffmpeg Ken Burns segments. See `illustrated-story-reel`.

@@ -27,7 +27,8 @@ Maintenance rule: keep tool/workflow mapping only in this file to avoid link dri
 | `p-image-edit` | `image-prompting` | `p-image-edit-quality-checklist.md` | `avatar-single-scene`, `avatar-multi-scene` |
 | `p-image-upscale` | `image-prompting` | `p-image-upscale-quality-checklist.md` | `image-to-video`, `narrated-multi-scene` |
 | `p-image-try-on` | `image-prompting` | `p-image-try-on-quality-checklist.md` · persona: `realistic-persona-showcase.md` | `p-image-try-on` |
-| `p-video` | `video-prompting` | `p-video-quality-checklist.md` | `image-to-video`, `narrated-multi-scene`, `interactive-explainer`, `visual-transition-reel` |
+| `p-video-2` | `video-prompting` | `p-video-2-quality-checklist.md` | `image-to-video`, `narrated-multi-scene`, `interactive-explainer`, `visual-transition-reel` |
+| `p-video` | `video-prompting` | `p-video-quality-checklist.md` | same workflows when the user asked for the original model |
 | `p-video-avatar` | `video-prompting` | `p-video-avatar-quality-checklist.md` · persona: `realistic-persona-showcase.md` in `image-prompting` | `avatar-single-scene`, `avatar-multi-scene`, `interactive-explainer` |
 | `p-video-animate` | `video-prompting` | `p-video-animate-quality-checklist.md` | `avatar-multi-scene` |
 | `p-video-replace` | `video-prompting` | `p-video-replace-quality-checklist.md` | `p-video-replace`, `avatar-multi-scene` |
@@ -54,6 +55,7 @@ Install the guide/workflow, then open the checklist file inside it:
 | `p-image-edit` | `image-prompting` | `p-image-edit-quality-checklist.md` |
 | `p-image-upscale` | `image-prompting` | `p-image-upscale-quality-checklist.md` |
 | `p-image-try-on` | `image-prompting` | `p-image-try-on-quality-checklist.md` |
+| `p-video-2` | `video-prompting` | `p-video-2-quality-checklist.md` |
 | `p-video` | `video-prompting` | `p-video-quality-checklist.md` |
 | `p-video-avatar` | `video-prompting` | `p-video-avatar-quality-checklist.md` |
 | `p-video-animate` | `video-prompting` | `p-video-animate-quality-checklist.md` |
@@ -74,7 +76,7 @@ Human-in-the-loop phases for multi-step workflows. **Video and replace jobs are 
 | **0 — Plan** | none | free | Present scene table, cast, scripts, `style_bible`; explicit **approve plan / go** |
 | **A — Stills** | `p-image`, `p-image-edit` | low | Show hero + start/end plates; run checklists; **approve stills** |
 | **A2 — Audio prep** | Gemini TTS, Music 2.5, WhisperX align | low–medium | **Listen / read** narration or song; fix copy before video |
-| **B — Video** | `p-video`, `p-video-avatar`, `p-video-animate`, `p-video-replace`, `p-video-edit` | **high** | Only after Phase A approval; **approve clips** before assembly |
+| **B — Video** | `p-video-2`, `p-video`, `p-video-avatar`, `p-video-animate`, `p-video-replace`, `p-video-edit` | **high** | Only after Phase A approval; **approve clips** before assembly |
 | **C — Assembly** | local ffmpeg concat / slider scripts | free | Review concat (embedded VO); compare MP4s before final mux |
 | **D — Final audio** | Stable Audio bed, bed mix, full-song mux | low | Only after Phase B clip approval |
 
@@ -101,4 +103,4 @@ Runner `--approve-*` flags and per-workflow commands: [workflow-feedback-gates.m
 For multi-scene projects, run these checks per scene and add a final continuity pass
 (style, character identity, voice, and pacing consistency across scenes).
 
-**Narrated cinematic B-roll:** validate scene anchor triple (`video-prompting`) inputs before `p-video` — start still, end still, uploaded narration URL per row.
+**Narrated cinematic B-roll:** validate scene anchor triple (`video-prompting`) inputs before `p-video-2` — start still, end still, uploaded narration URL per row.

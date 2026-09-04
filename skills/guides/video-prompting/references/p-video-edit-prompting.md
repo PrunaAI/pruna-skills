@@ -37,7 +37,7 @@ Change only [specific thing]. Preserve [geometry / motion / camera / lighting / 
 - Adding an object with its own independent motion — especially a new in-hand shape
 - Changing camera angle, camera motion, or zoom
 
-Split those into a new `p-video` generation, or keep the camera locked and edit only appearance.
+Split those into a new `p-video-2` generation, or keep the camera locked and edit only appearance.
 
 ## Patterns (rewrite for the brief — do not paste as the user's prompt)
 

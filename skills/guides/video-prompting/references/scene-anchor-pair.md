@@ -1,8 +1,8 @@
 # Scene anchor pair (visual transitions)
 
-Canonical pattern for **smooth visual transitions** with Pruna **`p-video`**: two stills bracket motion; a **`prompt`** describes what happens **between** them. No narration required.
+Canonical pattern for **smooth visual transitions** with Pruna **`p-video-2`** (preferred) or **`p-video`**: two stills bracket motion; a **`prompt`** describes what happens **between** them. No narration required.
 
-Related: [scene-anchor-triple.md](./scene-anchor-triple.md) (pair + audio) · [prompt-dramaturgy.md](./prompt-dramaturgy.md) · [physics-safe-motion.md](./physics-safe-motion.md) · [clip-chaining.md](./clip-chaining.md) · `p-video` · `p-image` · `p-image-edit`
+Related: [scene-anchor-triple.md](./scene-anchor-triple.md) (pair + audio) · [prompt-dramaturgy.md](./prompt-dramaturgy.md) · [physics-safe-motion.md](./physics-safe-motion.md) · [clip-chaining.md](./clip-chaining.md) · `p-video-2` · `p-video` · `p-image` · `p-image-edit`
 
 ## The pair
 
@@ -79,7 +79,7 @@ OPEN: elevator interior. MID: doors close. CLOSE: bellhop suddenly on rooftop.
 
 ### Exiting a container (elevator, doorway, vehicle)
 
-When a character **leaves** a space, do **not** pair interior and exterior shots with different cameras. `p-video` morphs pixels between plates — it will often **close the container with the subject inside**, then **open it with the subject already outside**.
+When a character **leaves** a space, do **not** pair interior and exterior shots with different cameras. `p-video-2` morphs pixels between plates — it will often **close the container with the subject inside**, then **open it with the subject already outside**.
 
 | Bad pairing | Why it breaks |
 |-----------|----------------|
@@ -103,11 +103,11 @@ CLOSE: stands in front of open elevator, match end pose.
 
 After **all** start and end URLs exist for every scene row:
 
-- **`POST /v1/predictions`** with `Model: p-video` — **parallel** when scenes are independent
+- **`POST /v1/predictions`** with `Model: p-video-2` — **parallel** when scenes are independent
 - **`video_prompt`** uses OPEN → MID → CLOSE structure (motion only) — see [Video phase — physical transitions](#video-phase--physical-transitions)
 - Optional **`draft: true`** on the full chain for cheap motion approval, then rerun finals at **1080p**, **`draft: false`**, **8–10s** for character beats
 
-- Pass `duration`; omit `audio` (visual-only). Payload fields: `p-video` skill.
+- Pass `duration`; omit `audio` (visual-only). Payload fields: `p-video-2` skill.
 
 ## Frame chain (multi-scene continuity)
 
@@ -197,5 +197,5 @@ Upgrade a pair scene to triple by adding TTS → upload → `audio` and removing
 
 - `visual-transition-reel` — primary workflow
 - `image-to-video` — one pair beat
-- `p-video` — API reference (visual transition mode)
+- `p-video-2` — API reference (visual transition mode; `p-video` if the user named the original)
 - Workflow runner: agent follows `visual-transition-reel` (curl + ffmpeg)

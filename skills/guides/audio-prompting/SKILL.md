@@ -59,7 +59,7 @@ Original tracks with sung vocals → **`music-2.5`**, not Stable Audio. In the *
 
 ## Layered explainer audio
 
-VO + bed: TTS (`gemini-3.1-flash-tts`) for narration; Stable Audio for **instrumental** underscore only. When asked embed vs post: prefer **embed** in `p-video`; **post-mux** / **assembly** mix under VO is fallback only — [audio-post-production.md](./references/audio-post-production.md).
+VO + bed: TTS (`gemini-3.1-flash-tts`) for narration; Stable Audio for **instrumental** underscore only. When asked embed vs post: prefer **embed** in `p-video-2`; **post-mux** / **assembly** mix under VO is fallback only — [audio-post-production.md](./references/audio-post-production.md).
 
 ## Related skills
 
@@ -81,7 +81,8 @@ Matching install for every model named above. Pick what you need:
 | `music-2.5` | Use when someone wants an original AI song with vocals — sung lyrics, a style prompt track, or source audio for a music video. | `npx skills add PrunaAI/pruna-skills@music-2.5 -y` |
 | `stable-audio-2.5` | Use when someone wants light instrumental background music — an ambient bed under dialogue or underscore for reels and explainers. | `npx skills add PrunaAI/pruna-skills@stable-audio-2.5 -y` |
 | `whisperx` | Use when someone needs word-level timestamps from audio — lyric alignment, cut-safe line boundaries, or caption source timing before burn-in with video-editing. | `npx skills add PrunaAI/pruna-skills@whisperx -y` |
-| `p-video` | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
+| `p-video-2` | Use when someone wants one short video clip from text, images, or audio — B-roll, start/end frame animation, or a motion shot. Not for full multi-scene films or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
+| `p-video` | Use when someone explicitly wants the original Pruna video model for a short clip — B-roll or start/end frame animation — instead of the newer quality default. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 
 Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 

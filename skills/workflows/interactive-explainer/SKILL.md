@@ -15,7 +15,8 @@ Install and load these skills before generating (skip if already in context via 
 | --- | --- | --- |
 | `p-image` | Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
 | `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
-| `p-video` | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
+| `p-video-2` | Use when someone wants one short video clip from text, images, or audio — B-roll, start/end frame animation, or a motion shot. Not for full multi-scene films or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
+| `p-video` | Use when someone explicitly wants the original Pruna video model for a short clip — B-roll or start/end frame animation — instead of the newer quality default. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 | `p-video-avatar` | Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo. | `npx skills add PrunaAI/pruna-skills@p-video-avatar -y` |
 | `gemini-3.1-flash-tts` | Use when someone needs spoken narration or voiceover — explainer tracks, documentary lines, or voice to pair with generated video. | `npx skills add PrunaAI/pruna-skills@gemini-3.1-flash-tts -y` |
 | `stable-audio-2.5` | Use when someone wants light instrumental background music — an ambient bed under dialogue or underscore for reels and explainers. | `npx skills add PrunaAI/pruna-skills@stable-audio-2.5 -y` |
@@ -62,7 +63,7 @@ Every plan should set:
 }
 ```
 
-- **`p-video`** (narrator): uses `resolution` + `fps`
+- **`p-video-2`** (narrator): uses `resolution` + `fps`
 - **`p-video-avatar`** (character): uses `resolution` only
 
 ## Motion (dynamic, physics-safe)
@@ -85,7 +86,7 @@ Open intake → **`generation-diversity`** clarification intake.
 |-------|-----------|
 | **Topic** | What should the viewer learn? Key facts or story beats? |
 | **Media source** | **Generate** all stills/avatars with Pruna vs **upload** cast photos, locations, or reference plates? |
-| **Format** | Delivery **`9:16` / `16:9`**; avatar and `p-video` output **`720p` / `1080p`**? |
+| **Format** | Delivery **`9:16` / `16:9`**; avatar and `p-video-2` output **`720p` / `1080p`**? |
 | **Audience** | Kids, general public, enthusiast? Sets tone and vocabulary |
 | **Flavor** | History? Science? Nature? How-it-works? Illustrated? |
 | **Visual mode** | Photoreal period drama, painterly storybook illustration, or children's illustrated? (one for whole film) |
@@ -117,7 +118,7 @@ Draft the **full scene table** as a dialogue arc before any API calls. Confirm w
 |-------|--------|
 | **stills** | Hero + start/end stills (default first stop) |
 | **tts** | Narrator TTS only — after stills approval |
-| **video** | After TTS listen gate — `p-video` + `p-video-avatar` |
+| **video** | After TTS listen gate — `p-video-2` + `p-video-avatar` |
 | **assemble** | After clips approval — concat ± bed |
 
 ## Scene table (template)
@@ -134,7 +135,7 @@ Draft the **full scene table** as a dialogue arc before any API calls. Confirm w
 
 | `type` | Model | Stills | Audio |
 |--------|-------|--------|-------|
-| **`narrator`** | `p-video` | start + end via `p-image-edit` | TTS → upload → `input.audio`; omit `duration` |
+| **`narrator`** | `p-video-2` | start + end via `p-image-edit` | TTS → upload → `input.audio`; omit `duration` |
 | **`character`** | `p-video-avatar` | start only; **mouth visible** | `voice_script` + cast `voice` / `voice_prompt` |
 
 Default if omitted: **`narrator`**.
@@ -144,7 +145,7 @@ Default if omitted: **`narrator`**.
 1. Copy [templates/explainer-plan.template.json](./templates/explainer-plan.template.json) → fill cast + scene table → **approve plan**.
 2. Parallel stills curl (`pruna-api`) → **approve stills**.
 3. Parallel Gemini TTS (narrator rows) → duration gate → listen.
-4. Parallel `p-video` triples + `p-video-avatar` → **approve clips**.
+4. Parallel `p-video-2` triples + `p-video-avatar` → **approve clips**.
 5. ffmpeg concat ± crossfade → optional bed.
 
 ## Workflow
@@ -163,7 +164,7 @@ ffprobe -v error -show_entries format=duration -of csv=p=0 audio/narration_01.mp
 
 | Phase | Action |
 |-------|--------|
-| **B** | Parallel `p-video` triples + `p-video-avatar` (avatar may exceed 20s) |
+| **B** | Parallel `p-video-2` triples + `p-video-avatar` (avatar may exceed 20s) |
 | **C/D** | Concat ± `stable-audio-2.5` bed |
 
 **Character rows:** `persona_gender` + matching `character_descriptor`; `voice` from gender (`Zephyr` / `Puck`). Use `still_from` or `_cast_*` when hero is B-roll/objects. Avatar text suppression: [./references/interactive-explainer-prompts.md](./references/interactive-explainer-prompts.md).
