@@ -3,7 +3,7 @@ name: image-to-video
 description: Use when someone wants one short film beat from images — a narrated scene, story moment, or cinematic B-roll with optional voiceover.
 license: MIT
 metadata:
-  version: "1.0.11"
+  version: "1.0.12"
   package: pruna-skills
 ---
 
@@ -13,9 +13,11 @@ Install and load these skills before generating (skip if already in context via 
 
 | Skill | Description | Install |
 | --- | --- | --- |
+| `p-image-ideogram` | Use when photo generation needs more control — photoreal results, text in the image, or structured JSON with hex colors and bounding boxes. Simpler photo generation, edits, and video use other skills in the suite. | `npx skills add PrunaAI/pruna-skills@p-image-ideogram -y` |
 | `p-image` | Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
 | `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
-| `p-video` | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
+| `p-video-2` | Use when someone wants the best-quality short clip from text, images, or audio — polished B-roll, start/end frame animation, or a motion shot with stronger lip-sync. Not for full multi-scene films or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
+| `p-video` | Use when someone wants a simple short clip from text or images — quick B-roll, drafts, or start/end frame animation. Not when the brief needs the highest quality or tight lip-sync. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 | `gemini-3.1-flash-tts` | Use when someone needs spoken narration or voiceover — explainer tracks, documentary lines, or voice to pair with generated video. | `npx skills add PrunaAI/pruna-skills@gemini-3.1-flash-tts -y` |
 | `stable-audio-2.5` | Use when someone wants light instrumental background music — an ambient bed under dialogue or underscore for reels and explainers. | `npx skills add PrunaAI/pruna-skills@stable-audio-2.5 -y` |
 
@@ -29,7 +31,7 @@ In **every reply**, name `` `image-to-video` `` in backticks. State the current 
 
 ## Skill boundary
 
-Exactly **one scene / one `p-video` job**. No subagents, no concat across scenes, no multi-scene manifest ownership.
+Exactly **one scene / one `p-video-2` job** (or `p-video` for a simpler clip). No subagents, no concat across scenes, no multi-scene manifest ownership.
 
 If the user wants a multi-scene film → hand off to `narrated-multi-scene` or `visual-transition-reel`. Talking-head-only → `avatar-single-scene`.
 
@@ -44,7 +46,7 @@ If the user wants a multi-scene film → hand off to `narrated-multi-scene` or `
 | **0 — Plan** | Mode, motion prompt, frame plan | **approve plan** |
 | **A — Stills** | Start + end stills | **approve stills** |
 | **A2 — TTS** | Narration MP3 (triple mode) — listen | Line OK (`ffprobe` ≤ ~19s) |
-| **B — Video** | `p-video` clip | **approve clips** |
+| **B — Video** | `p-video-2` clip | **approve clips** |
 | **D — Bed** | Optional post-mux bed | User accepts |
 
 ## Intake: ask before generating
@@ -56,7 +58,7 @@ Open intake → **`generation-diversity`** clarification intake.
 | Topic | Questions |
 |-------|-----------|
 | **Mode** | **`triple`** (`image` + `last_frame_image` + `audio` — preferred for narrated beats) · **`pair`** (start + end still + `duration`) · T2V · I2V · I2V+last · audio-only (no frames) |
-| **Media source** | **Generate** start/end stills (`p-image` / `p-image-edit`) vs **upload** user photos for frames? |
+| **Media source** | **Generate** start/end stills (`p-image-ideogram` / `p-image-edit`, or `p-image` for a cheap draft) vs **upload** user photos for frames? |
 | **Creative** | Motion `prompt` only — what happens between first and last frame? One paragraph max. |
 | **Frames** | Start still (upload or `p-image-edit`)? End still (`last_frame_edit_prompt`)? Stay single-scene — if the user wants a longer **`frame_chain` / multi-scene** project, stop and switch to `narrated-multi-scene` or `visual-transition-reel`. |
 | **Audio** | `gemini-3.1-flash-tts` → upload → **`input.audio`** (preferred). Optional `stable-audio-2.5` bed **after** render. Post-mux is fallback only — `audio-prompting`. |
@@ -67,7 +69,7 @@ Open intake → **`generation-diversity`** clarification intake.
 
 ## How the agent runs this
 
-**Order (narrated triple — user supplies stills + script):** **approve plan** → build/review stills → **approve stills** → Gemini TTS + `ffprobe` (≤ ~19s) → upload audio → one `p-video` embed → **approve clips**. Do **not** batch `p-video` before still and TTS review.
+**Order (narrated triple — user supplies stills + script):** **approve plan** → build/review stills → **approve stills** → Gemini TTS + `ffprobe` (≤ ~19s) → upload audio → one `p-video-2` embed → **approve clips**. Do **not** batch `p-video-2` before still and TTS review.
 
 1. Confirm intake → present plan → wait for **approve plan**.
 2. Build start/end stills with curl (`pruna-api` upload/poll/download). Show stills → **approve stills**.
@@ -78,17 +80,17 @@ ffprobe -v error -show_entries format=duration -of csv=p=0 narration.mp3
 # must be ≤ ~19 (P-API audio-led max is 20s)
 ```
 
-4. One async `p-video` job (`image` + `last_frame_image` + `audio`; omit `duration`; `save_audio: true`). Poll → download.
+4. One async `p-video-2` job (`image` + `last_frame_image` + `audio`; omit `duration`; `save_audio: true`). Poll → download.
 5. Optional bed: mix `stable-audio-2.5` under embedded VO with ffmpeg (`amix`, bed ~0.08–0.15).
 
 ## Workflow (after intake)
 
 ### Preferred — scene anchor triple
 
-1. **Start still** — upload or **`p-image`** / **`p-image-edit`**
+1. **Start still** — upload or **`p-image-ideogram`** / **`p-image-edit`** (`p-image` for a cheap draft)
 2. **End still** — **`p-image-edit`** from start still + `last_frame_edit_prompt`
 3. **Narration** — Gemini TTS → `ffprobe` (**≤ ~19s**) → upload to `/v1/files`
-4. **`p-video`** — `image` + `last_frame_image` + **`audio`** + motion `prompt`; omit `duration`; `save_audio: true`; async poll
+4. **`p-video-2`** — `image` + `last_frame_image` + **`audio`** + motion `prompt`; omit `duration`; `save_audio: true`; async poll
 5. **Optional bed** — mix under embedded narration in post
 
 Craft: `video-prompting` (scene-anchor triple).

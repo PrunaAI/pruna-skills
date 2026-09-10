@@ -11,7 +11,9 @@ Run in a fresh chat after installing the named skill(s). Mark PASS/FAIL; no API 
 | # | Prompt | Skill | Pass if |
 |---|--------|-------|---------|
 | T1 | "Generate a product hero still with p-image" | `p-image` | Loads p-image; asks/checks `PRUNA_API_KEY`; does not invent multi-scene film |
-| T2 | "Make one B-roll clip from this still" | `p-video` | Uses p-video (not avatar / music-video / narrated-multi-scene) |
+| T1b | "Generate a photoreal product hero with readable label text" | `p-image-ideogram` | Uses p-image-ideogram (not p-image); asks/checks `PRUNA_API_KEY` |
+| T2 | "Make a simple B-roll clip from this still" | `p-video` | Uses p-video (not avatar / music-video / narrated-multi-scene) |
+| T2b | "Make a polished high-quality B-roll clip from this still" | `p-video-2` | Uses p-video-2 (not p-video / avatar / multi-scene workflows) |
 | T3 | "Lip-sync this portrait saying hello" | `p-video-avatar` | Uses p-video-avatar; does not expand to avatar-multi-scene |
 | T4 | "Upscale this JPEG for print" | `p-image-upscale` | Uses upscale only; no unrelated workflow |
 
@@ -99,11 +101,13 @@ Style guide: [docs/skill-description-style.md](docs/skill-description-style.md).
 
 | Skill | Should trigger | Should NOT trigger |
 |-------|----------------|--------------------|
-| `p-image` | “Generate an image from text”; “product hero shot”; “mood board images” | edit an existing photo; virtual try-on |
+| `p-image` | “Quick cheap image from text”; “fast mood-board drafts” | photoreal hero; readable in-image text; edit an existing photo; virtual try-on |
+| `p-image-ideogram` | “Photoreal product hero”; “poster with readable type”; “controlled still with hex/bbox” | cheapest/fastest draft; edit an existing photo |
 | `p-image-edit` | “Change the outfit in this photo”; “swap the background”; “compose from these refs” | brand-new image from scratch only |
 | `p-image-try-on` | “Dress this model in that jacket”; “virtual try-on for ecommerce” | generic photo edit without garment fit |
 | `p-image-upscale` | “Upscale this JPEG for print”; “make this sharper / higher res” | generate a new image from a prompt |
-| `p-video` | “One B-roll clip from this still”; “animate start to end frame” | full music video; multi-part narrated film; lip-synced host |
+| `p-video` | “Simple B-roll clip from this still”; “quick draft start-to-end animation” | polished / highest-quality clip; full music video; multi-part narrated film; lip-synced host |
+| `p-video-2` | “Polished high-quality B-roll”; “best-quality start-to-end animation”; “tight lip-sync in the scene” | talking-head-only host; full multi-scene film |
 | `p-video-avatar` | “Make this portrait speak this script”; “spokesperson on camera” | multi-segment host reel; sung music video |
 | `p-video-animate` | “Make this photo move like that dance video”; “motion transfer remix” | swap someone inside existing footage |
 | `p-video-replace` | “Replace the person in this clip”; “swap the product in the footage” | motion-transfer from a template dance |

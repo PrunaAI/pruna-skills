@@ -21,10 +21,10 @@ Output keeps **motion from the video**, **appearance from the image**.
 ## Animate row pipeline
 
 ```text
-Hero anchor (p-image)
+Hero anchor (p-image-ideogram)
   → motion-source still (p-image-edit)
   → motion template (p-video-avatar OR upload .mp4)
-  → persona still(s) (p-image or p-image-edit)
+  → persona still(s) (p-image-ideogram or p-image-edit)
   → p-video-animate (one job per persona)
   → optional slider compare MP4
 ```

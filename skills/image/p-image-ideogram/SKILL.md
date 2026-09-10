@@ -3,7 +3,7 @@ name: p-image-ideogram
 description: Use when photo generation needs more control — photoreal results, text in the image, or structured JSON with hex colors and bounding boxes. Simpler photo generation, edits, and video use other skills in the suite.
 license: MIT
 metadata:
-  version: "1.0.11"
+  version: "1.0.12"
   package: pruna-skills
   pruna_model: p-image-ideogram
 ---
@@ -24,7 +24,7 @@ Follow each skill's **Before generating** / craft sections — do not restate gu
 
 ## Agent habit
 
-**Route by complexity:** Use `` `p-image-ideogram` `` when **photo generation** needs more control — readable text in the image, structured JSON, hex/`bbox` placement, or high-detail photoreal shots. Use `` `p-image` `` for **simple, quick** photo generation. Use `` `p-image-edit` `` to change an existing photo; use `` `p-video` `` (or `` `p-video-animate` `` from a still) for motion.
+**Route by complexity:** Use `` `p-image-ideogram` `` when **photo generation** needs more control — readable text in the image, structured JSON, hex/`bbox` placement, or high-detail photoreal shots. Use `` `p-image` `` for **simple, quick** photo generation. Use `` `p-image-edit` `` to change an existing photo; use `` `p-video-2` `` (`` `p-video-animate` `` from a still) for motion.
 
 In the **first reply**, name `` `p-image-ideogram` `` in backticks, confirm `PRUNA_API_KEY` is set (or stop with signup links from `pruna-api`), then ask for prompt / aspect ratio / any copy-on-surface (open intake → **`generation-diversity`** clarification intake). When drafting the prompt, follow **Prompt craft** below — do not paste skill examples.
 
@@ -159,6 +159,6 @@ Common follow-ons after this skill:
 | `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
 | `p-image-try-on` | Use when someone wants virtual try-on — dress a person in clothes from reference photos for fashion or ecommerce. | `npx skills add PrunaAI/pruna-skills@p-image-try-on -y` |
 | `p-image-upscale` | Use when someone wants to upscale or sharpen an existing image for print, large crops, or higher-quality delivery. | `npx skills add PrunaAI/pruna-skills@p-image-upscale -y` |
-| `p-video` | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
+| `p-video` | Use when someone wants a simple short clip from text or images — quick B-roll, drafts, or start/end frame animation. Not when the brief needs the highest quality or tight lip-sync. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 | `p-video-avatar` | Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo. | `npx skills add PrunaAI/pruna-skills@p-video-avatar -y` |
 

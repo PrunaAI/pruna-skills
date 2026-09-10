@@ -27,14 +27,16 @@ Agent playbook for **photo generation** (`p-image`, `p-image-ideogram`) and **su
 
 **Fidelity check (before pay):** remove the user’s named subject/product/change from the prompt — if the job still “works,” the prompt is wrong. For edits, every stated **keep** must appear in the prompt string.
 
-## Generation flow (`p-image`)
+## Generation flow (`p-image-ideogram` / `p-image`)
+
+Pick the model first: **`p-image-ideogram`** when the still needs control (photoreal hero, readable text, JSON/hex/bbox); **`p-image`** for a simple cheap/fast draft.
 
 Run in order every time:
 
 1. **Lock the brief** — list user-required facts (subject, product, format, copy-on-surface if any). Ask if anything is missing.
 2. **Random seed ritual** — fresh string; state it in the turn when drafting; [sum-mod](./generation-diversity.md#ssot-axis-derivation-sum-mod) for free axes. **Do not** pass ritual string as API `seed`.
 3. **Derive axes** — rotate ≥2 free axes vs the previous still in session (`aspect_ratio`, `camera_tag`, `render_category_tag`, setting materials, …). See [by model (p-image)](./generation-diversity.md#by-model-minimum-diversity).
-4. **Draft explicit prompt** — name cast/creature, objects, frozen action, setting, camera/light, style tag. Follow [explicit prompt structure](./generation-diversity.md#explicit-prompt-structure-required) and `image-prompting` golden rules. **`p-image` has no upsampling** — concrete language is the whole craft.
+4. **Draft explicit prompt** — name cast/creature, objects, frozen action, setting, camera/light, style tag. Follow [explicit prompt structure](./generation-diversity.md#explicit-prompt-structure-required) and `image-prompting` golden rules. **`p-image` has no upsampling** — concrete language is the whole craft. **`p-image-ideogram`** defaults to upsampling on (`thinking: high`) unless copy/JSON is locked.
 5. **Fidelity check** — brief locks still present; no copied SKILL curl examples.
 6. **Confirm** — show `prompt` + `aspect_ratio` before `POST` unless user locked wording.
 7. **POST + checklist** — `pruna-api` poll/download; run `image-prompting` **p-image quality checklist** before upscale/video.
@@ -42,7 +44,7 @@ Run in order every time:
 ### Turn template (draft-only turn)
 
 ```text
-Tool: `p-image`
+Tool: `p-image-ideogram` or `p-image`
 Ritual seed: <fresh string>
 Brief locks: <user facts>
 Free axes: aspect_ratio <ratio>, camera <tag>, render <tag>, …
@@ -95,7 +97,7 @@ Independent panels (playground grid, demo batch, mood board):
 | Surgical tweak | `p-image-edit` from that URL — never run photo generation again for “same person, new background” |
 | Video | Edit from **upscaled** photo when the pipeline requires; upscale again after edit before `p-video*` |
 
-Redirect to `p-image` only when the user wants a **new** subject or scene from scratch.
+Redirect to `p-image-ideogram` (or `p-image` for a cheap draft) only when the user wants a **new** subject or scene from scratch.
 
 ## Anti-patterns
 

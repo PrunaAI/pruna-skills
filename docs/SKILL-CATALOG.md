@@ -37,7 +37,8 @@ Browse by type. Default install: **`/pruna`** — see [README Quickstart](../REA
 
 | Skill | Description |
 |-------|-------------|
-| [p-video](https://github.com/PrunaAI/pruna-skills/tree/main/skills/video/p-video/SKILL.md) | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. |
+| [p-video](https://github.com/PrunaAI/pruna-skills/tree/main/skills/video/p-video/SKILL.md) | Use when someone wants a simple short clip from text or images — quick B-roll, drafts, or start/end frame animation. Not when the brief needs the highest quality or tight lip-sync. |
+| [p-video-2](https://github.com/PrunaAI/pruna-skills/tree/main/skills/video/p-video-2/SKILL.md) | Use when someone wants the best-quality short clip from text, images, or audio — polished B-roll, start/end frame animation, or a motion shot with stronger lip-sync. Not for full multi-scene films or talking-head-only hosts. |
 | [p-video-animate](https://github.com/PrunaAI/pruna-skills/tree/main/skills/video/p-video-animate/SKILL.md) | Use when someone wants a photo to move like another video — motion transfer, dance remixes, or performance variations from a template clip. |
 | [p-video-avatar](https://github.com/PrunaAI/pruna-skills/tree/main/skills/video/p-video-avatar/SKILL.md) | Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo. |
 | [p-video-edit](https://github.com/PrunaAI/pruna-skills/tree/main/skills/video/p-video-edit/SKILL.md) | Use when someone wants to edit an existing video with a text instruction — recolor, restyle, remove or add objects, change environment or lighting, update on-screen text, or apply optional reference-guided product and accessory edits. Not for a new clip from scratch or ffmpeg assembly. |

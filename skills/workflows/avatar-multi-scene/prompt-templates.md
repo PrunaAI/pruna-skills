@@ -89,7 +89,7 @@ hands low in frame, face large and centered, mouth clearly visible for speech an
 neutral relaxed expression ready to speak.
 ```
 
-## p-image: photoreal hero (preferred for avatar pipelines)
+## p-image-ideogram: photoreal hero (preferred for avatar pipelines)
 
 ```text
 Photorealistic documentary portrait photograph of a real person, not CGI, not 3D render.

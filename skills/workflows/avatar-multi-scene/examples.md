@@ -5,7 +5,7 @@
 Proven pattern from production runs:
 
 1. **Character sheet** — photoreal founder, early 30s, locked **`seed`**, one **`voice`** preset.
-2. **Hero** — `p-image` (documentary photoreal) → slop gate → approve identity anchor.
+2. **Hero** — `p-image-ideogram` (documentary photoreal) → slop gate → approve identity anchor.
 3. **Per scene** — `p-image-edit` (from hero anchor; change **only** angle + background) → slop gate → `p-video-avatar`. **Run edits and avatar jobs in parallel batches** per phase once dependencies are met (pruna-api.md#parallel-async-multi-scene--batch (`pruna-api`)); use **one subagent per scene lane** when the host supports it.
 4. **Vary every scene** — e.g. dark close-up → mountain overlook → ISS cupola → desk window light → studio CTA. Never repeat the same office framing twice.
 5. **Natural voice** — contractions, conversational hooks; **`voice_prompt`** describes human delivery, not product copy.

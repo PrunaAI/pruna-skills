@@ -31,7 +31,7 @@ cp skills/workflows/music-video/templates/music-video-plan.template.json \
 1. Fill lyrics + `music.prompt` → **approve lyrics**
 2. Generate song (`music-2.5`) → **approve song**
 3. Build cut structure from lyric lines; align with `whisperx` → `cut_manifest.json`
-4. Stills (`p-image` / `p-image-edit`) → **approve stills** before video
+4. Stills (`p-image-ideogram` / `p-image-edit`) → **approve stills** before video
 5. Performance + B-roll clips → **approve clips**
 6. ffmpeg trim / concat / mux full song
 

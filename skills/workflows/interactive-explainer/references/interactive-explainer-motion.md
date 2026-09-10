@@ -1,6 +1,6 @@
 # Educational explainer motion (dynamic, physics-safe)
 
-Motion rules for **narrator** (`p-video`) and **character** (`p-video-avatar`) beats in `interactive-explainer`.
+Motion rules for **narrator** (`p-video-2`) and **character** (`p-video-avatar`) beats in `interactive-explainer`.
 
 **Shared SSoT for safe/trap tables:** `video-prompting`. This file specializes those rules for explainers (Tier B defaults + avatar continuous-take).
 
@@ -11,16 +11,16 @@ Related: `video-prompting` · `visual-transition-reel` · `video-prompting`
 | Field | Default |
 |-------|---------|
 | `defaults.resolution` | **`720p`** |
-| `defaults.fps` | **`24`** (narrator `p-video` only; avatar uses `resolution`) |
+| `defaults.fps` | **`24`** (narrator `p-video-2` only; avatar uses `resolution`) |
 | `defaults.aspect_ratio` | `16:9` |
 
 ## Goal
 
-Every scene should **move** — camera, light, atmosphere, or subject — so the viewer stays engaged. Motion must **bridge start still → end still** without relying on **physics-heavy** actions that `p-video` handles poorly.
+Every scene should **move** — camera, light, atmosphere, or subject — so the viewer stays engaged. Motion must **bridge start still → end still** without relying on **physics-heavy** actions that `p-video-2` handles poorly.
 
 ## Prompt shape
 
-### Narrator (`p-video`) — OPEN / MID / CLOSE required
+### Narrator (`p-video-2`) — OPEN / MID / CLOSE required
 
 Write **`video_prompt`** as three beats:
 
@@ -73,7 +73,7 @@ If the story needs action, **imply it** in the stills and use **camera move + re
 
 ## By scene type
 
-### Narrator (`p-video` + triple)
+### Narrator (`p-video-2` + triple)
 
 - Start/end stills define composition; **`video_prompt` sells the transition**
 - Prefer **one dominant camera move** in MID — not three unrelated motions
@@ -86,7 +86,7 @@ If the story needs action, **imply it** in the stills and use **camera move + re
 - Safe: `single continuous medium close-up, one very slow push-in, speaks directly to camera, no cuts`
 - Avoid: OPEN/MID/CLOSE beats, `candle flicker`, `expression shift`, `light shifts` (read as transitions)
 - Avoid: `gestures wildly`, `walks across room while talking`, `holds up document`
-- Clip length follows **`voice_script`** — no ~19s TTS cap (that limit is narrator `p-video` only)
+- Clip length follows **`voice_script`** — no ~19s TTS cap (that limit is narrator `p-video-2` only)
 
 ## Examples
 

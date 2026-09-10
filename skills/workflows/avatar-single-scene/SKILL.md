@@ -3,7 +3,7 @@ name: avatar-single-scene
 description: Use when someone wants one polished host-on-camera beat — a speaking person with intake and approval gates before generation.
 license: MIT
 metadata:
-  version: "1.0.11"
+  version: "1.0.12"
   package: pruna-skills
 ---
 
@@ -13,6 +13,7 @@ Install and load these skills before generating (skip if already in context via 
 
 | Skill | Description | Install |
 | --- | --- | --- |
+| `p-image-ideogram` | Use when photo generation needs more control — photoreal results, text in the image, or structured JSON with hex colors and bounding boxes. Simpler photo generation, edits, and video use other skills in the suite. | `npx skills add PrunaAI/pruna-skills@p-image-ideogram -y` |
 | `p-image` | Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
 | `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
 | `p-video-avatar` | Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo. | `npx skills add PrunaAI/pruna-skills@p-video-avatar -y` |
@@ -54,7 +55,7 @@ Open intake → **`generation-diversity`** clarification intake.
 | Topic | Questions |
 |-------|-----------|
 | **Goal** | What must this one clip communicate (single CTA, greeting, demo line)? |
-| **Media source** | **Upload-only** portrait vs **generate/refine** still with `p-image` / `p-image-edit` first? |
+| **Media source** | **Upload-only** portrait vs **generate/refine** still with `p-image-ideogram` / `p-image-edit` first (`p-image` for a cheap draft)? |
 | **Script** | Full **`voice_script`** as speakable copy—any mandatory pronunciation (names, acronyms)? |
 | **Voice** | Which Pruna **`voice`** and **`voice_language`**? Keep **`voice_prompt`** short (performance vibe only). |
 | **Look** | `9:16` / `16:9` still? Avatar **`resolution`** `720p` or `1080p`? |
@@ -85,7 +86,7 @@ Once confirmed:
 ## Workflow (after confirmation)
 
 1. **References** — Upload assets with `POST /v1/files`; collect Pruna file URLs.
-2. **Still (if needed)** — Build one talking-head frame with **`p-image`** and/or **`p-image-edit`**. Run the slop gate before avatar.
+2. **Still (if needed)** — Build one talking-head frame with **`p-image-ideogram`** and/or **`p-image-edit`** (`p-image` for a cheap draft). Run the slop gate before avatar.
 3. **Slop gate** — `generation-diversity` checklists; fix with image models until pass.
 4. **Avatar** — Call **`p-video-avatar`** with snake_case `input` (`image`, optional `last_frame_image`, **`voice_script`** *or* uploaded **`audio`**, `voice`, `voice_language`, **`voice_prompt`**, **`video_prompt`**, `resolution`, **`seed`**). Prefer uploaded **`audio`** from Gemini TTS when external narration quality matters. **Async only** (omit `Try-Sync`); poll to `succeeded`; download `generation_url`.
 5. **Manifest** — Store intake answers, URLs, prediction ids, prompts, retries, confirmed script snapshot.

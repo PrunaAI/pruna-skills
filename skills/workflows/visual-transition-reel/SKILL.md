@@ -3,7 +3,7 @@ name: visual-transition-reel
 description: Use when someone wants a montage with transitions between shots — action-sequence reel or multi-scene piece where narration is optional.
 license: MIT
 metadata:
-  version: "1.0.11"
+  version: "1.0.12"
   package: pruna-skills
 ---
 
@@ -13,9 +13,11 @@ Install and load these skills before generating (skip if already in context via 
 
 | Skill | Description | Install |
 | --- | --- | --- |
+| `p-image-ideogram` | Use when photo generation needs more control — photoreal results, text in the image, or structured JSON with hex colors and bounding boxes. Simpler photo generation, edits, and video use other skills in the suite. | `npx skills add PrunaAI/pruna-skills@p-image-ideogram -y` |
 | `p-image` | Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
 | `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
-| `p-video` | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
+| `p-video-2` | Use when someone wants the best-quality short clip from text, images, or audio — polished B-roll, start/end frame animation, or a motion shot with stronger lip-sync. Not for full multi-scene films or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
+| `p-video` | Use when someone wants a simple short clip from text or images — quick B-roll, drafts, or start/end frame animation. Not when the brief needs the highest quality or tight lip-sync. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 | `stable-audio-2.5` | Use when someone wants light instrumental background music — an ambient bed under dialogue or underscore for reels and explainers. | `npx skills add PrunaAI/pruna-skills@stable-audio-2.5 -y` |
 
 Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
@@ -33,7 +35,7 @@ Montage with **transitions between composed video clips** — not a picture-book
 **Redirect before intake:**
 
 - Picture-book / illustrated slideshow / Ken Burns story with narration → `` `illustrated-story-reel` ``
-- Cinematic multi-scene B-roll chapters (full `p-video` scenes) → `` `narrated-multi-scene` ``
+- Cinematic multi-scene B-roll chapters (full `p-video-2` scenes) → `` `narrated-multi-scene` ``
 
 ## When NOT to use
 
@@ -65,7 +67,7 @@ Open intake → **`generation-diversity`** clarification intake.
 | **Story** | Scene order (1…N)? What changes between beats (location, time, emotion)? |
 | **Per scene *i*** | **Start still** (`edit_prompt` or upload)? **End still** (`last_frame_edit_prompt`)? **Transition `video_prompt`** (OPEN/MID/CLOSE motion)? `duration_seconds`? |
 | **Continuity** | Per scene: **`chain_from_previous`** only when motion continues. Otherwise composed OPENING still + hard cut. |
-| **Stills source** | Generate via **`p-image`** hero + **`p-image-edit`**, or user-supplied photo pairs? |
+| **Stills source** | Generate via **`p-image-ideogram`** hero + **`p-image-edit`** (`p-image` for a cheap draft), or user-supplied photo pairs? |
 | **Format** | `aspect_ratio`; transition clips **`720p` / `1080p`**? |
 | **Global** | `style_bible`? `ritual_seed`? `frame_chain_mode` (`extract_last_frame` vs `parallel_vignettes`)? |
 | **Audio** | Native SFX only (default), optional `stable-audio-2.5` bed in post, or upgrade to triple + TTS? |
@@ -88,7 +90,7 @@ Start/end stills and transition motion use **`video-prompting`** scene-anchor pa
 
 1. Copy [templates/transition-plan.template.json](./templates/transition-plan.template.json) → fill from intake → **approve plan**.
 2. Hero → parallel start stills → parallel end stills → **approve stills**.
-3. Parallel (or sequential for extract-chain) `p-video` pair jobs → **approve clips**.
+3. Parallel (or sequential for extract-chain) `p-video-2` pair jobs (quality) or `p-video` for simpler clips → **approve clips**.
 4. ffmpeg concat ± per-join crossfade → optional bed.
 
 ## Generation phases
@@ -96,16 +98,16 @@ Start/end stills and transition motion use **`video-prompting`** scene-anchor pa
 | Phase | Action |
 |-------|--------|
 | **stills** | Hero + start/end PNGs (default first stop) |
-| **video** | After stills approval — `p-video` pairs |
+| **video** | After stills approval — `p-video-2` pairs |
 | **assemble** | After clips approval — concat ± bed |
 
 ## Workflow (after intake)
 
-### Phase 0 — Hero (`p-image`)
+### Phase 0 — Hero (`p-image-ideogram`)
 
 One approved anchor photo when generating a new image:
 
-1. **`p-image`** with `hero_prompt` + `style_bible` + ritual seed from `generation-diversity`
+1. **`p-image-ideogram`** with `hero_prompt` + `style_bible` + ritual seed from `generation-diversity` (`p-image` for a cheap draft)
 2. Slop gate — approve before branching edits
 
 Skip when every scene uses **uploaded** start/end images.
@@ -130,7 +132,7 @@ For each scene with `last_frame_edit_prompt`:
 
 Run all end stills **in parallel** once start stills exist.
 
-### Phase 3 — Video (`p-video`)
+### Phase 3 — Video (`p-video-2`)
 
 **Scene anchor pair** — one job per row (`duration` set, **no** `audio`):
 

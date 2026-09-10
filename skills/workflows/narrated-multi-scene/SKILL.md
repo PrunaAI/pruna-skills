@@ -3,7 +3,7 @@ name: narrated-multi-scene
 description: Use when someone wants a multi-part story with voiceover — episodic B-roll, chaptered promo, or several linked video scenes without on-camera dialogue.
 license: MIT
 metadata:
-  version: "1.0.11"
+  version: "1.0.12"
   package: pruna-skills
 ---
 
@@ -13,9 +13,11 @@ Install and load these skills before generating (skip if already in context via 
 
 | Skill | Description | Install |
 | --- | --- | --- |
+| `p-image-ideogram` | Use when photo generation needs more control — photoreal results, text in the image, or structured JSON with hex colors and bounding boxes. Simpler photo generation, edits, and video use other skills in the suite. | `npx skills add PrunaAI/pruna-skills@p-image-ideogram -y` |
 | `p-image` | Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
 | `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
-| `p-video` | Use when someone wants one short video clip from text or images — B-roll, start/end frame animation, or a quick motion shot. Not for full multi-scene films or lip-synced hosts. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
+| `p-video-2` | Use when someone wants the best-quality short clip from text, images, or audio — polished B-roll, start/end frame animation, or a motion shot with stronger lip-sync. Not for full multi-scene films or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
+| `p-video` | Use when someone wants a simple short clip from text or images — quick B-roll, drafts, or start/end frame animation. Not when the brief needs the highest quality or tight lip-sync. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 | `gemini-3.1-flash-tts` | Use when someone needs spoken narration or voiceover — explainer tracks, documentary lines, or voice to pair with generated video. | `npx skills add PrunaAI/pruna-skills@gemini-3.1-flash-tts -y` |
 | `stable-audio-2.5` | Use when someone wants light instrumental background music — an ambient bed under dialogue or underscore for reels and explainers. | `npx skills add PrunaAI/pruna-skills@stable-audio-2.5 -y` |
 
@@ -34,10 +36,10 @@ In **every reply**, name `` `narrated-multi-scene` `` in backticks. State phase 
 | **0 — Plan** | Scene table, narration lines, `style_bible` | **approve plan** |
 | **A — Stills** | Hero + start/end stills per scene | **approve stills** |
 | **A2 — TTS** | `audio/narration_*.mp3` per scene — listen | Lines OK (`ffprobe` ≤ ~19s) |
-| **B — Video** | `p-video` clips with embedded VO | **approve clips** |
+| **B — Video** | `p-video-2` clips with embedded VO | **approve clips** |
 | **D — Bed** | Optional Stable Audio under concat | User accepts |
 
-Execute phases with parallel curl batches — **never** batch `p-video` before still and TTS review.
+Execute phases with parallel curl batches — **never** batch `p-video-2` before still and TTS review. Quality path: `p-video-2`. Simpler clips: `p-video`.
 
 ## Intake: ask before generating
 
@@ -52,7 +54,7 @@ Open intake → **`generation-diversity`** clarification intake.
 | **Format** | Global `aspect_ratio`; default video **`720p` / `1080p`** and `fps` for triple scenes? |
 | **Per scene *i*** | Primary `prompt`? **First frame** (`image`), **last frame** (`last_frame_image`), **narration** (`audio` URL)? Scene-level `resolution` / `fps` / `draft` overrides? |
 | **Continuity** | Per scene: **`chain_from_previous`** only when motion continues (same moment/location). Otherwise composed OPENING still + hard cut. End stills via `p-image-edit`; extract last frame when chaining. |
-| **Audio** | **Scene anchor triple (preferred):** TTS → upload → **`p-video`** with `image` + `last_frame_image` + **`audio`** (omit `duration`; `save_audio: true`). **Each scene line ≤ ~19s** — P-API caps audio-led clips at **20s**. Optional **Stable Audio** bed in post only. |
+| **Audio** | **Scene anchor triple (preferred):** TTS → upload → **`p-video-2`** with `image` + `last_frame_image` + **`audio`** (omit `duration`; `save_audio: true`). **Each scene line ≤ ~19s** — P-API caps audio-led clips at **20s**. Optional **Stable Audio** bed in post only. |
 | **Visual style** | Locked `style_bible`? **One specific subject/location per still**? Avoid unrelated branding unless the brief asks for it |
 | **Global** | Default `aspect_ratio` for text-only scenes? Global `seed` policy? |
 | **Runtime** | Target total duration after assembly? |
@@ -74,14 +76,14 @@ Ask follow-ups until every scene row has enough to build `input` without guessin
 1. Write the scene table (or plan JSON) → **approve plan**.
 2. Hero → parallel `p-image-edit` start/end stills (`pruna-api` parallel batches) → **approve stills**.
 3. Parallel Gemini TTS → **duration gate** on every MP3 → upload → listen → proceed.
-4. Parallel `p-video` triples once all anchors ready → **approve clips**.
+4. Parallel `p-video-2` triples once all anchors ready → **approve clips**.
 5. ffmpeg concat (± crossfade) → optional bed.
 
 ## Workflow (after intake)
 
 ### Phase 0 — Stills (parallel when independent)
 
-1. **Hero anchor** — one approved `p-image` or upload.
+1. **Hero anchor** — one approved `p-image-ideogram` or upload (`p-image` for a cheap draft).
 2. **`p-image-edit`** per scene — **start still** (`edit_prompt`) from hero; **end still** (`last_frame_edit_prompt`) from start still. Parallel after hero exists.
 3. **Frame chain (selective):** set `chain_from_previous: true` only when scene *i* continues directly from *i−1*. Use composed start still + hard cut for new beats.
 
@@ -95,7 +97,7 @@ Ask follow-ups until every scene row has enough to build `input` without guessin
 ffprobe -v error -show_entries format=duration -of csv=p=0 audio/narration_01.mp3
 ```
 
-If any scene exceeds **~19s**, fix before `p-video` — output truncates at the **20s** API max even when `input.audio` is set.
+If any scene exceeds **~19s**, fix before `p-video-2` — output truncates at the **20s** API max even when `input.audio` is set.
 
 **If a line is too long (pick one or combine):**
 
@@ -107,7 +109,7 @@ If any scene exceeds **~19s**, fix before `p-video` — output truncates at the 
 
 ### Phase 2 — Video (parallel when all anchors ready)
 
-**Scene anchor triple** — one `p-video` job per row:
+**Scene anchor triple** — one `p-video-2` job per row:
 
 ```json
 {

@@ -35,7 +35,7 @@ Rules:
 
 ## Upstream plate caps quality
 
-Bad person plates → bad try-on. Fix with photoreal `p-image` (golden rules + persona showcase), then try-on, then optional upscale/avatar.
+Bad person plates → bad try-on. Fix with photoreal `p-image-ideogram` (golden rules + persona showcase), then try-on, then optional upscale/avatar.
 
 Anti-slop: no white-background-only demos, no mushy CGI faces, rotate cast/settings per generation-diversity.md#visual-variety (`generation-diversity`).
 

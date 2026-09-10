@@ -33,7 +33,7 @@ That installs the full suite — every guide, tool, and workflow in one shot. Af
 
 > Create a product photo of a white running sneaker on a shelf. Edit it to the same shoe in bright orange. Animate a color shift, then a hand picking it up.
 
-| Step 1 · `p-image` | Step 2 · `p-image-edit` | Step 3 · `p-video` |
+| Step 1 · `p-image` | Step 2 · `p-image-edit` | Step 3 · `p-video-2` |
 | :-: | :-: | :-: |
 | Image | Edit | Video |
 | <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-chain-sneaker-01-open.png" width="280" height="494" alt="White running sneaker product shot on a shelf"> | <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-chain-sneaker-02-end.png" width="280" height="494" alt="Same sneaker edited to bright orange"> | <img src="https://huggingface.co/datasets/PrunaAI/pruna-skills/resolve/main/examples/readme-chain-sneaker-clip.gif" width="280" height="494" alt="Sneaker color shift and hand pickup clip"> |
@@ -60,7 +60,7 @@ Skills come in four types:
 | **Tool** | One paid endpoint — a single Pruna or Replicate API call | `p-image` |
 | **Workflow** | A multi-step playbook your agent runs with curl and ffmpeg | `music-video` |
 
-Guides teach *how* to prompt and call the API safely. Tools are the endpoints — one model per skill (`p-image`, `p-video`, `music-2.5`, …). Workflows chain tools into finished deliverables.
+Guides teach *how* to prompt and call the API safely. Tools are the endpoints — one model per skill (`p-image`, `p-video-2`, `music-2.5`, …). Workflows chain tools into finished deliverables.
 
 When you install `pruna`, you get the whole catalog. Installing a single tool instead pulls in only the guides listed under its **Prerequisites**. Workflows list the tools they need — you only install those separately if you skipped the suite.
 

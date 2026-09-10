@@ -2,7 +2,7 @@
 
 When a user describes an end product but not which workflow fits, use this document. Agents normally pick tools and workflows from skill frontmatter descriptions; humans use this when unsure.
 
-**Policies:** Install `generation-diversity` for approval gates and workflow-feedback gates. Confirm plan before any `POST /v1/predictions`. The agent is the runner (curl + ffmpeg) — no Python scripts. Shared ffmpeg assembly craft (concat, captions, bed mix, export): **`video-editing`**.
+**Policies:** Install `generation-diversity` for approval gates and workflow-feedback gates. Confirm plan before any `POST /v1/predictions`. The agent is the runner (curl + ffmpeg) — no Python scripts. Shared ffmpeg assembly craft (concat, captions, bed mix, export): **`video-editing`**. Clip generation: **`p-video-2`** for best quality; **`p-video`** for simpler / quicker videos.
 
 ## Quick one-off routing
 
@@ -11,7 +11,7 @@ For a single prompt with minimal intake — pick the shortest tool chain:
 | Route | When | Chain |
 |-------|------|-------|
 | **image** | Still only | `p-image-ideogram` |
-| **i2v** | Motion from a still | `p-image-ideogram` → `p-video` |
+| **i2v** | Motion from a still | `p-image-ideogram` → `p-video-2` (quality) or `p-video` (simpler) |
 | **avatar** | Talking head | `p-image-ideogram` → `p-video-avatar` |
 
 For multi-scene plans with approval gates, use a workflow skill (`music-video`, `narrated-multi-scene`, …). Install the full suite first: `npx skills add PrunaAI/pruna-skills@pruna -y` — see [README Quickstart](../README.md#quickstart).
@@ -20,19 +20,19 @@ For multi-scene plans with approval gates, use a workflow skill (`music-video`, 
 
 | Recipe | You get | Primary models | Workflow skill |
 |--------|---------|----------------|----------------|
-| A — Style-locked mood board | N stills, same world | `p-image` → optional `p-image-edit` | (tool chain) |
-| B — Hero + variants | One anchor + edits | `p-image` → `p-image-edit` | (tool chain) |
+| A — Style-locked mood board | N stills, same world | `p-image-ideogram` → optional `p-image-edit` (`p-image` if cheap/fast) | (tool chain) |
+| B — Hero + variants | One anchor + edits | `p-image-ideogram` → `p-image-edit` | (tool chain) |
 | C — Print / pixel rescue | Higher-res master | `p-image-upscale` → optional `p-image-edit` | (tool chain) |
-| D — Animate a plate | One motion clip from a still | still → `p-video` (I2V) | `image-to-video` |
-| E — Audio-led cut | Video length follows VO/music | upload `audio` → `p-video` | `image-to-video` |
-| F — Draft → final video | Cheap preview then hi-fi | `p-video` draft then final | `narrated-multi-scene` |
-| G — Talking head | Portrait + speech | `p-image` → `p-video-avatar` | `avatar-single-scene` or `avatar-multi-scene` |
-| H — Social hook stack | Short vertical beats | Several `p-video` and/or avatars | avatar / narrated workflows |
+| D — Animate a plate | One motion clip from a still | still → `p-video-2` (I2V) | `image-to-video` |
+| E — Audio-led cut | Video length follows VO/music | upload `audio` → `p-video-2` | `image-to-video` |
+| F — Draft → final video | Cheap preview then hi-fi | `p-video-2` draft then final | `narrated-multi-scene` |
+| G — Talking head | Portrait + speech | `p-image-ideogram` → `p-video-avatar` | `avatar-single-scene` or `avatar-multi-scene` |
+| H — Social hook stack | Short vertical beats | Several `p-video-2` and/or avatars | avatar / narrated workflows |
 | M — Motion-transfer showcase | Same motion, new subject | `p-video-animate` | `avatar-multi-scene` |
 | N — In-video replacement | Swap subjects in footage | `p-video-replace` | `p-video-replace` |
 | O — AI music video | Full song + lyric-synced video | Music 2.5 → video | `music-video` |
 | P — Narrated story film | Multi-scene B-roll + VO | scene anchor triple | `narrated-multi-scene` |
-| Q — Visual transition reel | Motion between still pairs | start/end stills → `p-video` | `visual-transition-reel` |
+| Q — Visual transition reel | Motion between still pairs | start/end stills → `p-video-2` | `visual-transition-reel` |
 | R — Educational explainer | Narrator + character dialogue | avatar triples | `interactive-explainer` |
 | S — Illustrated story reel | Still story + VO or music | Ken Burns slideshow | `illustrated-story-reel` |
 | T — Virtual try-on launch | Fashion vertical showcase | `p-image-try-on` + motion | `p-image-try-on` |
@@ -49,11 +49,11 @@ For multi-scene plans with approval gates, use a workflow skill (`music-video`, 
 **Steps**
 
 1. Write the **style bible** once (palette, line, era, lens).
-2. Run **`p-image`** N times with the bible in every `prompt`, same `aspect_ratio`; vary only the beat (emotion, prop, angle). **Start all N jobs in parallel** (async). New ritual string per independent panel unless user locks **`api_seed`**.
+2. Run **`p-image-ideogram`** N times with the bible in every `prompt`, same `aspect_ratio`; vary only the beat (emotion, prop, angle). Use **`p-image`** only if the user asked cheap/fast. **Start all N jobs in parallel** (async). New ritual string per independent panel unless user locks **`api_seed`**.
 3. If a panel drifts, **`p-image-edit`** that panel using the best prior panel as reference + “match reference style; change only: …”.
 4. Optional **`p-image-upscale`** on selects for large boards or print.
 
-**Refs:** `p-image`, `p-image-edit`, `p-image-upscale`
+**Refs:** `p-image-ideogram`, `p-image`, `p-image-edit`, `p-image-upscale`
 
 ## Recipe B — Hero frame + controlled variants
 
@@ -63,7 +63,7 @@ For multi-scene plans with approval gates, use a workflow skill (`music-video`, 
 
 **Steps**
 
-1. **`p-image`** or upload → one **hero** URL.
+1. **`p-image-ideogram`** or upload → one **hero** URL (`p-image` only for a cheap draft).
 2. **`p-image-edit`** per variant: hero in `images[]`, prompt lists only deltas.
 3. Optional **`p-image-upscale`** per hero use case.
 
@@ -80,17 +80,17 @@ For multi-scene plans with approval gates, use a workflow skill (`music-video`, 
 
 ## Recipe D — Still → cinematic motion (I2V)
 
-**Shine:** Short camera grammar matches what **p-video** does well from a single plate. Add **`last_frame_image`** when the beat has a known end composition.
+**Shine:** Short camera grammar matches what **p-video-2** does well from a single plate. Add **`last_frame_image`** when the beat has a known end composition.
 
 **Intake:** Camera move, duration, `draft` for storyboard pass? End still for frame chain?
 
 **Steps**
 
-1. Ensure still exists (upload or **`p-image`**).
+1. Ensure still exists (upload or **`p-image-ideogram`**; **`p-image`** for a cheap draft).
 2. Optional **`p-image-edit`** for end still when chaining scenes.
-3. **`p-video`** with `image` + motion `prompt`; add `last_frame_image` for controlled arc. Full intake: `image-to-video`.
+3. **`p-video-2`** with `image` + motion `prompt`; add `last_frame_image` for controlled arc. Full intake: `image-to-video`.
 
-## Recipe E — Audio-conditioned `p-video` (single anchor)
+## Recipe E — Audio-conditioned `p-video-2` (single anchor)
 
 **Shine:** Duration tracks audio automatically—ideal for VO-first social cuts.
 
@@ -99,7 +99,7 @@ For multi-scene plans with approval gates, use a workflow skill (`music-video`, 
 **Steps**
 
 1. Generate or upload audio → `/v1/files`.
-2. **`p-video`** with `audio` + `prompt` (+ optional `image`, `last_frame_image`); omit `duration`.
+2. **`p-video-2`** with `audio` + `prompt` (+ optional `image`, `last_frame_image`); omit `duration`.
 
 For **full narrated story films**, use Recipe **P** (scene anchor triple in `video-prompting`) instead.
 
@@ -111,7 +111,7 @@ For **full narrated story films**, use Recipe **P** (scene anchor triple in `vid
 
 **Steps**
 
-1. **`p-video`** async with `draft: true` **for all scenes in parallel**; batch-poll until each preview is ready.
+1. **`p-video-2`** async with `draft: true` **for all scenes in parallel**; batch-poll until each preview is ready.
 2. After approval, rerun with **`draft: false`** (and same **`api_seed`** if user locked API reproducibility).
 
 ## Recipe G — Talking-head (delegated workflows)
@@ -121,7 +121,7 @@ For **full narrated story films**, use Recipe **P** (scene anchor triple in `vid
 **Steps**
 
 1. Build **character sheet** and **scene table** — see `avatar-multi-scene`.
-2. Hero: **`p-image`** (photoreal, SSoT ritual in `generation-diversity`) → slop gate; lock plate URL.
+2. Hero: **`p-image-ideogram`** (photoreal, SSoT ritual in `generation-diversity`) → slop gate; lock plate URL. **`p-image`** only for a cheap draft.
 3. Per scene: **`p-image-edit`** → slop gate — **parallel across scenes** after hero anchor is approved.
 4. Hand off to `avatar-single-scene` or `avatar-multi-scene` for **`p-video-avatar`** batch.
 
@@ -157,13 +157,13 @@ For **full narrated story films**, use Recipe **P** (scene anchor triple in `vid
 **Steps**
 
 1. Full workflow: `p-video-replace` + visual variety from `generation-diversity` — sliders via ffmpeg hstack slider (see `avatar-multi-scene`).
-2. **`p-image`** references → optional **`p-image-edit`** → **`p-video-replace`** → sliders → concat ± bed.
+2. **`p-image-ideogram`** references (`p-image` for cheap drafts) → optional **`p-image-edit`** → **`p-video-replace`** → sliders → concat ± bed.
 
 ## Recipe O — AI music video
 
 **Shine:** Full song + lyric-synced video.
 
-**Steps:** `music-video` — lyrics → Music 2.5 → align → stills → `p-video-avatar` / `p-video` → assembly.
+**Steps:** `music-video` — lyrics → Music 2.5 → align → stills → `p-video-avatar` / `p-video-2` (B-roll quality) → assembly.
 
 ## Recipe P — Narrated story film (scene anchor triple)
 
@@ -174,7 +174,7 @@ For **full narrated story films**, use Recipe **P** (scene anchor triple in `vid
 **Steps**
 
 1. Full workflow: `narrated-multi-scene` — scene anchor triple in `video-prompting`.
-2. Hero → parallel **`p-image-edit`** start + end stills → parallel Gemini TTS → probe each MP3 (≤ ~19s) → parallel **`p-video`** triple payloads.
+2. Hero via **`p-image-ideogram`** → parallel **`p-image-edit`** start + end stills → parallel Gemini TTS → probe each MP3 (≤ ~19s) → parallel **`p-video-2`** triple payloads (`p-video` for simpler clips).
 3. Concat embedded VO → optional bed — layering in `audio-prompting`.
 
 ## Recipe Q — Visual transition reel
@@ -195,7 +195,7 @@ For **full narrated story films**, use Recipe **P** (scene anchor triple in `vid
 
 **Intake:** Narration vs music? Aspect ratio and platform (Reels vs YouTube/presentations)?
 
-**Steps:** `illustrated-story-reel` — `p-image` hero → `p-image-edit` beats → Gemini TTS per beat **or** Stable Audio / user track → ffmpeg assemble.
+**Steps:** `illustrated-story-reel` — `p-image` hero (`p-image-ideogram` if frames need readable text or tighter style) → `p-image-edit` beats → Gemini TTS per beat **or** Stable Audio / user track → ffmpeg assemble.
 
 ## Recipe T — Virtual try-on launch reel
 
