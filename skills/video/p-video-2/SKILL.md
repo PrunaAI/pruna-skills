@@ -108,8 +108,8 @@ Billing is per **returned** second (not the requested `duration`). Rate limit: 2
 
 | Resolution | `draft=false` | `draft=true` |
 |------------|---------------|--------------|
-| 720p | $0.03 / s | $0.015 / s |
-| 1080p | $0.06 / s | $0.03 / s |
+| 720p | $0.025 / s | $0.015 / s |
+| 1080p | $0.05 / s | $0.03 / s |
 
 ### First / last frame (visual transition)
 
@@ -174,7 +174,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 
 1. Complete Prerequisites guide reading order (`generation-diversity` → `video-prompting`).
 2. Ritual seed → draft a **dynamic + faithful** motion prompt (section above) → confirm **mode** (T2V / I2V / frame pair / audio), **`duration`** (omit to let the model choose from the prompt, or when audio-driven), **`resolution`**, **`fps`**, **`draft`**, and **`prompt`** with the user.
-3. **Pruna notes:** when `image` is set, `aspect_ratio` is ignored. With `audio`, omit `duration` and keep **`save_audio: true`** (default) to keep narration. Prefer uploaded VO over post-mux. Iterate in **`draft: true`**, then final with `draft: false`. If the request is multi-scene — **stop** (see Skill boundary). Native 4K is not supported.
+3. **Pruna notes:** when `image` is set, `aspect_ratio` is ignored. With `audio`, omit `duration` and keep **`save_audio: true`** (default) to keep narration. For **on-camera speech**, lead with **T2V native speech** (`save_audio: true`, no imported `audio`) — pause / line / rest lip-sync is the quality jump vs `p-video`. Imported `audio` keeps a cleaner face; viseme lock is mixed — do not treat a muxed wav as the lip-sync demo. Iterate in **`draft: true`**, then final with `draft: false`. If the request is multi-scene — **stop** (see Skill boundary). Native 4K is not supported.
 
 ## Required input
 
@@ -191,7 +191,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 | `resolution` | `720p` (default) or `1080p` |
 | `fps` | `24` (default) or `48` |
 | `aspect_ratio` | When no `image`: `16:9` (default), `9:16`, `4:3`, `3:4`, `3:2`, `2:3`, `1:1` |
-| `draft` | `true` ≈ half-price preview; `false` (default) = final |
+| `draft` | `true` = cheaper, faster preview ($0.015/s 720p, $0.03/s 1080p); `false` (default) = final |
 | `save_audio` | Keep model-generated or uploaded audio on output (default `true`) |
 | `prompt_upsampling` | Enhance the prompt (default `true`) |
 | `seed`, `disable_safety_filter` | Reproducibility / client policy |

@@ -6,10 +6,10 @@ Prompt craft unique to `p-video-2` (quality-focused successor to `p-video`). Sha
 
 ## Strengths to write toward
 
-- Sharper subjects, backgrounds, and motion than `p-video`
-- Stronger **lip-sync** on dialogue and audio-conditioned singing
-- **Native audio** in the output (`save_audio` defaults true) — import a track or let the model generate sound
-- Strong **input-image consistency**; particularly good on **close-ups and foreground objects**
+- Sharper subjects, backgrounds, and motion than `p-video` — especially **close-ups and foreground objects**
+- Stronger **lip-sync on native speech** — T2V with `save_audio: true` and **no imported `audio`**: the model pauses, delivers the line, then rests, and the mouth follows. **Lead dialogue / lip-sync jobs here**
+- **Native audio** in the output (`save_audio` defaults true). Imported `audio` still works and keeps a **cleaner face / identity**; viseme lock vs `p-video` is mixed — do not lead lip-sync demos with a muxed wav
+- Stronger **identity / input-image consistency**
 - One endpoint: T2V + I2V + audio-conditioned
 
 ## Limits (do not fight them)
@@ -34,7 +34,13 @@ A sports car drifting through a neon-lit city at night, cinematic aerial shot, w
 The camera slowly pushes in. The person turns their head and smiles naturally. Soft studio lighting, shallow depth of field.
 ```
 
-**Audio-conditioned** — name the performer, lip-sync, and hold. One or two faces max.
+**Native speech (T2V, no `audio`)** — write the spoken line into the prompt. This is the lip-sync path.
+
+```text
+A woman faces the camera and says "I'll be there in five." She pauses, delivers the line, then rests. Natural mouth motion, soft window light, camera holds steady.
+```
+
+**Audio-conditioned** — name the performer and hold. One or two faces max. Use for singing / VO length, not as the primary lip-sync demo.
 
 ```text
 Close-up of a singer performing the uploaded track. Natural lip-sync, expressive face, stage lighting, camera holds steady on the performer.

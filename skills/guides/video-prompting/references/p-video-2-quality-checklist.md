@@ -18,7 +18,8 @@ See the canonical mapping in `generation-diversity`. Quality path for `image-to-
 
 When the prompt or `audio` implies speech or singing:
 
-- Mouth motion matches the track (no slack jaw or delayed consonants).
+- **Native speech (no imported `audio`):** mouth follows pause / line / rest — this is the quality bar vs `p-video`.
+- **Imported `audio`:** face/identity stays clean; do not fail the job solely because visemes are not tighter than `p-video`.
 - At most **two** speaking faces stay separable; reject crowded dialogue with 3+ talkers.
 - Talking-head-only jobs with no native scene audio should have used `p-video-avatar` instead.
 
