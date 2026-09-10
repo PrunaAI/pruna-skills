@@ -4,6 +4,10 @@ All notable changes to Pruna Skills are documented here. Skill and plugin `metad
 
 ## [Unreleased]
 
+## [1.0.12] — 2026-09-10
+
+GitHub tag: `skills-v1.0.12`
+
 ### Added
 
 - **`p-video-2` tool** — quality-focused successor to `p-video` with the same text / image / audio payload: stronger lip-sync, native audio, optional model-chosen duration, draft/full billing per returned second.
