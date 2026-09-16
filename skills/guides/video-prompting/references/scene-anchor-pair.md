@@ -1,8 +1,8 @@
 # Scene anchor pair (visual transitions)
 
-Canonical pattern for **smooth visual transitions** with Pruna **`p-video-2`** (quality) or **`p-video`** (simpler): two stills bracket motion; a **`prompt`** describes what happens **between** them. No narration required.
+Canonical pattern for **smooth visual transitions** with Pruna **`p-video-2-pro`** (cinematic generation, default) or **`p-video-2`** / **`p-video`** when 1080p, imported audio, or a cheaper draft is required: two stills bracket motion; a **`prompt`** describes what happens **between** them. No narration required.
 
-Related: [scene-anchor-triple.md](./scene-anchor-triple.md) (pair + audio) · [prompt-dramaturgy.md](./prompt-dramaturgy.md) · [physics-safe-motion.md](./physics-safe-motion.md) · [clip-chaining.md](./clip-chaining.md) · `p-video-2` · `p-video` · `p-image` · `p-image-edit`
+Related: [scene-anchor-triple.md](./scene-anchor-triple.md) (pair + audio) · [prompt-dramaturgy.md](./prompt-dramaturgy.md) · [physics-safe-motion.md](./physics-safe-motion.md) · [clip-chaining.md](./clip-chaining.md) · `p-video-2-pro` · `p-video-2` · `p-video` · `p-image` · `p-image-edit`
 
 ## The pair
 
@@ -13,20 +13,23 @@ Each scene row supplies **two Pruna file URLs** (from `POST /v1/files`) plus a m
 | **First frame** | `image` | Opening composition |
 | **Last frame** | `last_frame_image` | Closing composition the clip moves toward |
 | **Transition motion** | `prompt` | Camera + action between the two plates — not a description of the stills |
-| **Timing** | `duration` | 1–20s on P-API; prefer **8–10s** for character transitions, **5–8s** for simple camera moves |
+| **Timing** | `duration` | 5–15s on `p-video-2-pro` (prefer **8s** for character transitions, **5–8s** for simple camera moves); 1–20s on `p-video-2` |
 
 ```json
 {
   "prompt": "OPEN: hold wide. MID: slow crane down, neon signs flicker. CLOSE: settle on end pose.",
   "image": "https://api.pruna.ai/v1/files/START_ID",
   "last_frame_image": "https://api.pruna.ai/v1/files/END_ID",
-  "duration": 10,
-  "resolution": "720p",
-  "fps": 24
+  "duration": 8,
+  "resolution": "768p",
+  "mode": "speed",
+  "prompt_upsampler": "turbo"
 }
 ```
 
-**Do not** set `duration` when `audio` is also present — use [scene-anchor-triple.md](./scene-anchor-triple.md) instead.
+Default payload is **`p-video-2-pro`**. For `p-video-2` use `720p`/`1080p` and `fps` instead of `mode` / `prompt_upsampler`.
+
+**Do not** set `duration` when `audio` is also present — use [scene-anchor-triple.md](./scene-anchor-triple.md) and **`p-video-2`** (`p-video-2-pro` has no `audio` input).
 
 ## Stills phase (`p-image-ideogram` / `p-image` + `p-image-edit`)
 

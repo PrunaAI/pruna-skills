@@ -2,7 +2,7 @@
 
 Prompt craft unique to `p-video-2` (quality-focused successor to `p-video`). Shared dramaturgy, camera, and physics: [prompt-dramaturgy.md](./prompt-dramaturgy.md), [camera-lighting-vocabulary.md](./camera-lighting-vocabulary.md), [physics-safe-motion.md](./physics-safe-motion.md). Frame payloads: [scene-anchor-pair.md](./scene-anchor-pair.md) / [scene-anchor-triple.md](./scene-anchor-triple.md). QA: [p-video-2-quality-checklist.md](./p-video-2-quality-checklist.md).
 
-**Quality path.** Use `p-video-2` when the brief needs the best output. Use `p-video` for simpler, quicker clips.
+**1080p / imported-audio path.** Use `p-video-2` when the brief needs 1080p, a mixed track, or draft previews. Use `p-video-2-pro` for cinematic generation with generated audio. Use `p-video` for simpler, quicker clips.
 
 ## Strengths to write toward
 

@@ -6,7 +6,7 @@ Shared motion / frame-anchor items: also run [p-video-quality-checklist.md](./p-
 
 ## Applies to
 
-See the canonical mapping in `generation-diversity`. Quality path for `image-to-video`, `narrated-multi-scene`, `visual-transition-reel`, and B-roll rows. Use `p-video` for simpler / quicker clips.
+See the canonical mapping in `generation-diversity`. Audio-led / 1080p / draft path for `image-to-video`, `narrated-multi-scene`, `interactive-explainer`, and B-roll rows with imported audio. Visual-only cinematic pairs → `p-video-2-pro`. Use `p-video` for simpler / quicker clips.
 
 ## Quality vs `p-video`
 
