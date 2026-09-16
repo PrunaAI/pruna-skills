@@ -4,6 +4,15 @@ All notable changes to Pruna Skills are documented here. Skill and plugin `metad
 
 ## [Unreleased]
 
+### Added
+
+- **`p-video-2-pro` tool** — cinematic generation from text or first/last-frame stills at 480p/768p, 5–15s, generated audio, `mode` speed/quality, independent `prompt_upsampler`. No audio upload, draft flag, or 1080p.
+
+### Changed
+
+- **Clip routing** — `p-video-2-pro` is the cinematic generation path (T2V / I2V / frame pair with generated audio). `p-video-2` stays for 1080p, imported audio, and draft previews. `p-video` stays for simpler / quicker videos.
+- **Visual-only workflows** (`visual-transition-reel`, `image-to-video` without VO) default to `p-video-2-pro`. Audio-led cinematic workflows stay on `p-video-2`.
+
 ## [1.0.12] — 2026-09-10
 
 GitHub tag: `skills-v1.0.12`

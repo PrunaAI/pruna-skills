@@ -2,7 +2,7 @@
 
 When a user describes an end product but not which workflow fits, use this document. Agents normally pick tools and workflows from skill frontmatter descriptions; humans use this when unsure.
 
-**Policies:** Install `generation-diversity` for approval gates and workflow-feedback gates. Confirm plan before any `POST /v1/predictions`. The agent is the runner (curl + ffmpeg) — no Python scripts. Shared ffmpeg assembly craft (concat, captions, bed mix, export): **`video-editing`**. Clip generation: **`p-video-2`** for best quality; **`p-video`** for simpler / quicker videos.
+**Policies:** Install `generation-diversity` for approval gates and workflow-feedback gates. Confirm plan before any `POST /v1/predictions`. The agent is the runner (curl + ffmpeg) — no Python scripts. Shared ffmpeg assembly craft (concat, captions, bed mix, export): **`video-editing`**. Clip generation: **`p-video-2-pro`** for cinematic T2V / first-last-frame with generated audio; **`p-video-2`** for 1080p, imported audio, or draft; **`p-video`** for simpler / quicker videos.
 
 ## Quick one-off routing
 
@@ -11,7 +11,7 @@ For a single prompt with minimal intake — pick the shortest tool chain:
 | Route | When | Chain |
 |-------|------|-------|
 | **image** | Still only | `p-image-ideogram` |
-| **i2v** | Motion from a still | `p-image-ideogram` → `p-video-2` (quality) or `p-video` (simpler) |
+| **i2v** | Motion from a still | `p-image-ideogram` → `p-video-2-pro` (cinematic) or `p-video-2` (1080p / imported audio) or `p-video` (simpler) |
 | **avatar** | Talking head | `p-image-ideogram` → `p-video-avatar` |
 
 For multi-scene plans with approval gates, use a workflow skill (`music-video`, `narrated-multi-scene`, …). Install the full suite first: `npx skills add PrunaAI/pruna-skills@pruna -y` — see [README Quickstart](../README.md#quickstart).
@@ -23,7 +23,7 @@ For multi-scene plans with approval gates, use a workflow skill (`music-video`, 
 | A — Style-locked mood board | N stills, same world | `p-image-ideogram` → optional `p-image-edit` (`p-image` if cheap/fast) | (tool chain) |
 | B — Hero + variants | One anchor + edits | `p-image-ideogram` → `p-image-edit` | (tool chain) |
 | C — Print / pixel rescue | Higher-res master | `p-image-upscale` → optional `p-image-edit` | (tool chain) |
-| D — Animate a plate | One motion clip from a still | still → `p-video-2` (I2V) | `image-to-video` |
+| D — Animate a plate | One motion clip from a still | still → `p-video-2-pro` (I2V) | `image-to-video` |
 | E — Audio-led cut | Video length follows VO/music | upload `audio` → `p-video-2` | `image-to-video` |
 | F — Draft → final video | Cheap preview then hi-fi | `p-video-2` draft then final | `narrated-multi-scene` |
 | G — Talking head | Portrait + speech | `p-image-ideogram` → `p-video-avatar` | `avatar-single-scene` or `avatar-multi-scene` |
@@ -32,7 +32,7 @@ For multi-scene plans with approval gates, use a workflow skill (`music-video`, 
 | N — In-video replacement | Swap subjects in footage | `p-video-replace` | `p-video-replace` |
 | O — AI music video | Full song + lyric-synced video | Music 2.5 → video | `music-video` |
 | P — Narrated story film | Multi-scene B-roll + VO | scene anchor triple | `narrated-multi-scene` |
-| Q — Visual transition reel | Motion between still pairs | start/end stills → `p-video-2` | `visual-transition-reel` |
+| Q — Visual transition reel | Motion between still pairs | start/end stills → `p-video-2-pro` | `visual-transition-reel` |
 | R — Educational explainer | Narrator + character dialogue | avatar triples | `interactive-explainer` |
 | S — Illustrated story reel | Still story + VO or music | Ken Burns slideshow | `illustrated-story-reel` |
 | T — Virtual try-on launch | Fashion vertical showcase | `p-image-try-on` + motion | `p-image-try-on` |
@@ -80,15 +80,15 @@ For multi-scene plans with approval gates, use a workflow skill (`music-video`, 
 
 ## Recipe D — Still → cinematic motion (I2V)
 
-**Shine:** Short camera grammar matches what **p-video-2** does well from a single plate. Add **`last_frame_image`** when the beat has a known end composition.
+**Shine:** Short camera grammar matches what **p-video-2-pro** does well from a single plate. Add **`last_frame_image`** when the beat has a known end composition.
 
-**Intake:** Camera move, duration, `draft` for storyboard pass? End still for frame chain?
+**Intake:** Camera move, duration (5–15s), `mode` speed vs quality? End still for frame chain? 1080p or imported audio → Recipe E / `p-video-2`.
 
 **Steps**
 
 1. Ensure still exists (upload or **`p-image-ideogram`**; **`p-image`** for a cheap draft).
 2. Optional **`p-image-edit`** for end still when chaining scenes.
-3. **`p-video-2`** with `image` + motion `prompt`; add `last_frame_image` for controlled arc. Full intake: `image-to-video`.
+3. **`p-video-2-pro`** with `image` + motion `prompt` (write sound in the prompt); add `last_frame_image` for controlled arc. Full intake: `image-to-video`.
 
 ## Recipe E — Audio-conditioned `p-video-2` (single anchor)
 
@@ -179,7 +179,7 @@ For **full narrated story films**, use Recipe **P** (scene anchor triple in `vid
 
 ## Recipe Q — Visual transition reel
 
-**Shine:** Multi-scene motion between two stills per beat (no VO).
+**Shine:** Multi-scene motion between two stills per beat (no VO) — default **`p-video-2-pro`**.
 
 **Steps:** `visual-transition-reel` — scene anchor pair in `video-prompting`.
 

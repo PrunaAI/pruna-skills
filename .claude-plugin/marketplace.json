@@ -113,15 +113,21 @@
     },
     {
       "name": "p-video",
-      "description": "Use when someone wants a simple short clip from text or images \u2014 quick B-roll, drafts, or start/end frame animation. Not when the brief needs the highest quality or tight lip-sync.",
+      "description": "Use when someone wants a simple short clip from text or images \u2014 quick B-roll, drafts, or start/end frame animation. Not when the brief needs cinematic generation, highest quality, tight lip-sync, or imported audio at 1080p.",
       "version": "1.0.12",
       "source": "./skills/video/p-video"
     },
     {
       "name": "p-video-2",
-      "description": "Use when someone wants the best-quality short clip from text, images, or audio \u2014 polished B-roll, start/end frame animation, or a motion shot with stronger lip-sync. Not for full multi-scene films or talking-head-only hosts.",
+      "description": "Use when someone wants a polished short clip from text, images, or imported audio \u2014 1080p B-roll, start/end frame animation, or a motion shot with a mixed track. Not for cinematic generated-audio clips or talking-head-only hosts.",
       "version": "1.0.12",
       "source": "./skills/video/p-video-2"
+    },
+    {
+      "name": "p-video-2-pro",
+      "description": "Use when someone wants a cinematic clip from text or start/end frames \u2014 product ads, documentary shots, or dialogue with generated audio. Not for 1080p, imported audio tracks, or talking-head-only hosts.",
+      "version": "1.0.12",
+      "source": "./skills/video/p-video-2-pro"
     },
     {
       "name": "p-video-animate",

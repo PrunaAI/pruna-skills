@@ -26,7 +26,7 @@ Vendor-neutral playbook for **diverse, explicit prompts** and output QA. Apply b
 
 ## Works with
 
-Any generative model. Pruna tools (`p-image-ideogram`, `p-image`, `p-video-2`, `p-video`, …) and third-party APIs alike.
+Any generative model. Pruna tools (`p-image-ideogram`, `p-image`, `p-video-2-pro`, `p-video-2`, `p-video`, …) and third-party APIs alike.
 
 ## Guide habit
 
@@ -34,7 +34,7 @@ In the **first reply**, name `` `generation-diversity` `` in backticks. When the
 
 ## Before generating
 
-0. **[Clarification intake](./references/clarification-intake.md)** — generate vs existing assets, colors, narration/VO, music, captions, aspect/resolution (720p/1080p, canvas, MP), structure, approval (unless the user waived or already locked answers).
+0. **[Clarification intake](./references/clarification-intake.md)** — generate vs existing assets, colors, narration/VO, music, captions, aspect/resolution (480p/768p vs 720p/1080p, canvas, MP), structure, approval (unless the user waived or already locked answers).
 1. **[Generation diversity](./references/generation-diversity.md)** — random seed ritual (SSoT), explicit prompt structure, rotate ≥2 scenario axes per session.
 2. **Still images (`p-image` family):** **[still-image-prompt-flow.md](./references/still-image-prompt-flow.md)** — generation flow, edit flow, mood-board rules, hero → edit handoff. Pair with `image-prompting` golden rules and edit craft.
 3. **[Quality checklists](./references/generation-quality-checklists.md)** — open outputs and judge pass/fail before the next paid step.
@@ -64,8 +64,9 @@ Install related skills when the job needs them:
 | `p-image-ideogram` | Use when photo generation needs more control — photoreal results, text in the image, or structured JSON with hex colors and bounding boxes. Simpler photo generation, edits, and video use other skills in the suite. | `npx skills add PrunaAI/pruna-skills@p-image-ideogram -y` |
 | `p-image` | Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
 | `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
-| `p-video-2` | Use when someone wants the best-quality short clip from text, images, or audio — polished B-roll, start/end frame animation, or a motion shot with stronger lip-sync. Not for full multi-scene films or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
-| `p-video` | Use when someone wants a simple short clip from text or images — quick B-roll, drafts, or start/end frame animation. Not when the brief needs the highest quality or tight lip-sync. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
+| `p-video-2-pro` | Use when someone wants a cinematic clip from text or start/end frames — product ads, documentary shots, or dialogue with generated audio. Not for 1080p, imported audio tracks, or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2-pro -y` |
+| `p-video-2` | Use when someone wants a polished short clip from text, images, or imported audio — 1080p B-roll, start/end frame animation, or a motion shot with a mixed track. Not for cinematic generated-audio clips or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
+| `p-video` | Use when someone wants a simple short clip from text or images — quick B-roll, drafts, or start/end frame animation. Not when the brief needs cinematic generation, highest quality, tight lip-sync, or imported audio at 1080p. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 
 Or install the full suite once: `npx skills add PrunaAI/pruna-skills@pruna -y`
 

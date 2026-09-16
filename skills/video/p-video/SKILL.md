@@ -1,6 +1,6 @@
 ---
 name: p-video
-description: Use when someone wants a simple short clip from text or images — quick B-roll, drafts, or start/end frame animation. Not when the brief needs the highest quality or tight lip-sync.
+description: Use when someone wants a simple short clip from text or images — quick B-roll, drafts, or start/end frame animation. Not when the brief needs cinematic generation, highest quality, tight lip-sync, or imported audio at 1080p.
 license: MIT
 metadata:
   version: "1.0.12"
@@ -25,7 +25,7 @@ Follow each skill's **Before generating** / craft sections — do not restate gu
 
 ## Agent habit
 
-**Routing:** Use `` `p-video` `` for **simple, quick** clips — drafts, light B-roll, short motion. When the brief needs **best quality** (polished delivery, tight lip-sync, native audio, hero shots), use `` `p-video-2` ``.
+**Routing:** Use `` `p-video` `` for **simple, quick** clips — drafts, light B-roll, short motion. Cinematic generation with generated audio → `` `p-video-2-pro` ``. 1080p, imported audio, or draft previews → `` `p-video-2` ``.
 
 In the **first reply**, name `` `p-video` `` in backticks, confirm `PRUNA_API_KEY` (or stop with signup links from `pruna-api`), then ask for required inputs. Open intake → **`generation-diversity`** clarification intake before the first `POST`. When drafting motion prompts, follow **Prompt craft (dynamic + faithful)** — do not paste skill examples. Redirect when **When NOT to use** fits better.
 
@@ -54,7 +54,8 @@ This skill = **one `p-video` prediction** per invocation.
 - Multi-scene assembly, concat, subagent orchestration, or parallel scene batches
 - Motion transfer from a template video → `p-video-animate`
 - Talking-head-only / lip-sync host without native scene audio → `p-video-avatar`
-- Best-quality clip or tight in-scene lip-sync → `p-video-2`
+- Cinematic generation with generated audio → `p-video-2-pro`
+- 1080p, imported audio, or draft previews → `p-video-2`
 
 If the request exceeds one clip, **stop** and recommend: `image-to-video` (one narrated beat), `visual-transition-reel` (multi-scene visual), or `narrated-multi-scene` (multi-scene + VO).
 
@@ -64,7 +65,8 @@ Use a different skill instead:
 
 | Skill | Description | Install |
 | --- | --- | --- |
-| `p-video-2` | Use when someone wants the best-quality short clip from text, images, or audio — polished B-roll, start/end frame animation, or a motion shot with stronger lip-sync. Not for full multi-scene films or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
+| `p-video-2-pro` | Use when someone wants a cinematic clip from text or start/end frames — product ads, documentary shots, or dialogue with generated audio. Not for 1080p, imported audio tracks, or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2-pro -y` |
+| `p-video-2` | Use when someone wants a polished short clip from text, images, or imported audio — 1080p B-roll, start/end frame animation, or a motion shot with a mixed track. Not for cinematic generated-audio clips or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
 | `p-video-avatar` | Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo. | `npx skills add PrunaAI/pruna-skills@p-video-avatar -y` |
 | `p-video-animate` | Use when someone wants a photo to move like another video — motion transfer, dance remixes, or performance variations from a template clip. | `npx skills add PrunaAI/pruna-skills@p-video-animate -y` |
 | `p-video-replace` | Use when someone wants to swap a person, outfit, or product inside existing footage while keeping the camera move and audio. | `npx skills add PrunaAI/pruna-skills@p-video-replace -y` |
@@ -176,6 +178,7 @@ Related skills:
 
 | Skill | Description | Install |
 | --- | --- | --- |
+| `p-video-2-pro` | Use when someone wants a cinematic clip from text or start/end frames — product ads, documentary shots, or dialogue with generated audio. Not for 1080p, imported audio tracks, or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2-pro -y` |
 | `gemini-3.1-flash-tts` | Use when someone needs spoken narration or voiceover — explainer tracks, documentary lines, or voice to pair with generated video. | `npx skills add PrunaAI/pruna-skills@gemini-3.1-flash-tts -y` |
 | `image-to-video` | Use when someone wants one short film beat from images — a narrated scene, story moment, or cinematic B-roll with optional voiceover. | `npx skills add PrunaAI/pruna-skills@image-to-video -y` |
 | `visual-transition-reel` | Use when someone wants a montage with transitions between shots — action-sequence reel or multi-scene piece where narration is optional. | `npx skills add PrunaAI/pruna-skills@visual-transition-reel -y` |
