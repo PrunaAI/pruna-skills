@@ -3,7 +3,7 @@ name: p-video
 description: Use when someone wants a simple short clip from text or images — quick B-roll, drafts, or start/end frame animation. Not when the brief needs cinematic generation, highest quality, tight lip-sync, or imported audio at 1080p.
 license: MIT
 metadata:
-  version: "1.0.12"
+  version: "1.0.13"
   package: pruna-skills
   pruna_model: p-video
 ---

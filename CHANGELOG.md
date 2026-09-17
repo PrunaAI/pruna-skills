@@ -4,6 +4,10 @@ All notable changes to Pruna Skills are documented here. Skill and plugin `metad
 
 ## [Unreleased]
 
+## [1.0.13] — 2026-09-17
+
+GitHub tag: `skills-v1.0.13`
+
 ### Added
 
 - **`p-video-2-pro` tool** — cinematic generation from text or first/last-frame stills at 480p/768p, 5–15s, generated audio, `mode` speed/quality, independent `prompt_upsampler`. No audio upload, draft flag, or 1080p.
