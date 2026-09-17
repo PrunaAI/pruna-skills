@@ -49,7 +49,7 @@
 | Task | Keys required |
 |------|----------------|
 | `p-image`, `p-image-edit`, `p-image-upscale`, `p-image-try-on`, `p-image-ideogram` | `PRUNA_API_KEY` |
-| `p-video-2`, `p-video`, `p-video-avatar`, `p-video-animate`, `p-video-replace`, `p-video-edit` | `PRUNA_API_KEY` |
+| `p-video-2-pro`, `p-video-2`, `p-video`, `p-video-avatar`, `p-video-animate`, `p-video-replace`, `p-video-edit` | `PRUNA_API_KEY` |
 | Music 2.5 song generation | `REPLICATE_API_TOKEN` |
 | Gemini TTS narration | `REPLICATE_API_TOKEN` |
 | Stable Audio background bed | `REPLICATE_API_TOKEN` |

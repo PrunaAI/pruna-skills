@@ -1,11 +1,11 @@
 ---
-name: p-video-2
-description: Use when someone wants a polished short clip from text, images, or imported audio — 1080p B-roll, start/end frame animation, or a motion shot with a mixed track. Not for cinematic generated-audio clips or talking-head-only hosts.
+name: p-video-2-pro
+description: Use when someone wants a cinematic clip from text or start/end frames — product ads, documentary shots, or dialogue with generated audio. Not for 1080p, imported audio tracks, or talking-head-only hosts.
 license: MIT
 metadata:
   version: "1.0.13"
   package: pruna-skills
-  pruna_model: p-video-2
+  pruna_model: p-video-2-pro
 ---
 
 ## Prerequisites
@@ -25,39 +25,39 @@ Follow each skill's **Before generating** / craft sections — do not restate gu
 
 ## Agent habit
 
-**Routing:** `` `p-video-2` `` is the **1080p / imported-audio / draft** clip generator (text / image / audio). Use `` `p-video-2-pro` `` for **cinematic generation** with generated audio (480p / 768p, first/last frame, no audio upload). Use `` `p-video` `` for simpler, quicker clips. Talking-head-only (no native scene audio) → `` `p-video-avatar` ``. Instruction edit of existing footage → `` `p-video-edit` ``.
+**Routing:** `` `p-video-2-pro` `` is the **cinematic generation** clip (text / first frame / first+last frame) with **generated audio**. Use `` `p-video-2` `` when the brief needs **1080p**, **imported audio**, or **draft** previews. Use `` `p-video` `` for cheaper, faster drafts. Talking-head-only (no native scene audio) → `` `p-video-avatar` ``. Instruction edit of existing footage → `` `p-video-edit` ``.
 
-In the **first reply**, name `` `p-video-2` `` in backticks, confirm `PRUNA_API_KEY` (or stop with signup links from `pruna-api`), then ask for required inputs. Open intake → **`generation-diversity`** clarification intake before the first `POST`. When drafting motion prompts, follow **Prompt craft (dynamic + faithful)** and `video-prompting` (`p-video-2-prompting`) — do not paste skill examples. Redirect when **When NOT to use** fits better.
+In the **first reply**, name `` `p-video-2-pro` `` in backticks, confirm `PRUNA_API_KEY` (or stop with signup links from `pruna-api`), then ask for required inputs. Open intake → **`generation-diversity`** clarification intake before the first `POST`. When drafting motion prompts, follow **Prompt craft (dynamic + faithful)** and `video-prompting` (`p-video-2-pro-prompting`) — do not paste skill examples. Redirect when **When NOT to use** fits better.
 
 ## Prompt craft (dynamic + faithful)
 
-Every `input.prompt` must be **fresh and specific**, and must **match the user's beat**. Diversity never overrides the brief. Craft deltas vs `p-video`: `video-prompting` (`p-video-2-prompting`).
+Every `input.prompt` must be **fresh and specific**, and must **match the user's beat**. Diversity never overrides the brief. Craft deltas vs `p-video-2`: `video-prompting` (`p-video-2-pro-prompting`). Write **sound or dialogue into the prompt** — this model has no `audio` upload.
 
 | Do | Don't |
 | --- | --- |
 | Run the `generation-diversity` random seed ritual; state it; rotate ≥2 free axes (camera move, lighting shift, texture, pacing) when the brief allows | Copy curl examples from this skill (`sports car`, `person turns`, …) or reuse a prior session's prompt |
-| Lock user-required facts first (subject, action beat, OPEN/MID/CLOSE when frame-anchored, narration sync when `audio` is set) | Swap the subject or motion for a “cooler” clip that ignores the request |
-| Structure with `video-prompting` dramaturgy — one frozen action per beat, **stable** camera for I2V, physics-safe motion | Vague mood-only strings (`cinematic vibe, neon energy`) or extreme cinematic camera moves |
-| When `audio` is set, motion and pacing must **match the narration / performance beat**; keep speakers to **one or two** | Drift to unrelated action while VO plays, or crowd a clip with 3+ talking faces |
-| Show the drafted prompt + mode fields before `POST` when the user has not locked wording | Silent regen with a different subject or beat than approved |
+| Lock user-required facts first (subject, action, scene; OPEN/MID/CLOSE when frame-anchored; spoken line / SFX when audio is part of the brief) | Swap the subject or motion for a “cooler” clip that ignores the request |
+| Structure with `video-prompting` dramaturgy — subject + action + scene; add camera, lighting, style, and audio intent for locked-in finals | Vague mood-only strings (`cinematic vibe, neon energy`) or a silent prompt when the brief asked for speech or score |
+| Keep speakers to **one or two**; name the line in the prompt | Crowd a clip with 3+ talking faces, or send `audio` / `draft` / `fps` (not on this API) |
+| Show the drafted prompt + `mode` / `prompt_upsampler` / `duration` / `resolution` before `POST` when the user has not locked wording | Silent regen with a different subject or beat than approved |
 
 **Fidelity check (before pay):** if you remove the user's named subject/action/setting from the prompt, the job is wrong — rewrite. Free axes only fill what the brief left open.
 
-When showing a drafted prompt, still name `` `p-video-2` `` (guides help craft; this tool owns the call).
+When showing a drafted prompt, still name `` `p-video-2-pro` `` (guides help craft; this tool owns the call).
 
 ## Skill boundary
 
-This skill = **one `p-video-2` prediction** per invocation.
+This skill = **one `p-video-2-pro` prediction** per invocation.
 
 **Out of scope (do not execute from this skill):**
 
 - Multi-scene assembly, concat, subagent orchestration, or parallel scene batches
-- Cinematic generation with generated audio (no imported track) → `p-video-2-pro`
+- Imported audio / mixed VO / 1080p / draft previews → `p-video-2`
 - Motion transfer from a template video → `p-video-animate`
 - Talking-head-only / lip-sync host without native scene audio → `p-video-avatar`
 - Instruction edit of existing footage → `p-video-edit`
 
-If the request exceeds one clip, **stop** and recommend: `image-to-video` (one narrated beat), `visual-transition-reel` (multi-scene visual), or `narrated-multi-scene` (multi-scene + VO).
+If the request exceeds one clip, **stop** and recommend: `image-to-video` (one beat), `visual-transition-reel` (multi-scene visual), or `narrated-multi-scene` (multi-scene + uploaded VO — that path uses `p-video-2`).
 
 ## When NOT to use
 
@@ -65,7 +65,7 @@ Use a different skill instead:
 
 | Skill | Description | Install |
 | --- | --- | --- |
-| `p-video-2-pro` | Use when someone wants a cinematic clip from text or start/end frames — product ads, documentary shots, or dialogue with generated audio. Not for 1080p, imported audio tracks, or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2-pro -y` |
+| `p-video-2` | Use when someone wants a polished short clip from text, images, or imported audio — 1080p B-roll, start/end frame animation, or a motion shot with a mixed track. Not for cinematic generated-audio clips or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
 | `p-video` | Use when someone wants a simple short clip from text or images — quick B-roll, drafts, or start/end frame animation. Not when the brief needs cinematic generation, highest quality, tight lip-sync, or imported audio at 1080p. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 | `p-video-avatar` | Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo. | `npx skills add PrunaAI/pruna-skills@p-video-avatar -y` |
 | `p-video-animate` | Use when someone wants a photo to move like another video — motion transfer, dance remixes, or performance variations from a template clip. | `npx skills add PrunaAI/pruna-skills@p-video-animate -y` |
@@ -83,7 +83,7 @@ curl -X POST "https://api.pruna.ai/v1/files" \
   -F "content=@/path/to/first-frame.png"
 ```
 
-Pass `urls.get` as `input.image` (first frame) and/or `input.last_frame_image` (last frame). Upload TTS/music the same way for `input.audio`.
+Pass `urls.get` as `input.image` (first frame) and/or `input.last_frame_image` (last frame). **Do not** upload audio for this model.
 
 ### Create (async text-to-video — recommended)
 
@@ -91,12 +91,12 @@ Pass `urls.get` as `input.image` (first frame) and/or `input.last_frame_image` (
 curl -X POST 'https://api.pruna.ai/v1/predictions' \
   -H 'Content-Type: application/json' \
   -H "apikey: ${PRUNA_API_KEY}" \
-  -H 'Model: p-video-2' \
+  -H 'Model: p-video-2-pro' \
   -d '{
     "input": {
       "prompt": "A sports car drifting through a neon-lit city at night, cinematic aerial shot",
       "duration": 5,
-      "resolution": "720p",
+      "resolution": "768p",
       "aspect_ratio": "16:9"
     }
   }'
@@ -108,10 +108,27 @@ Complete the random seed ritual from `generation-diversity` before writing promp
 
 Billing is per **returned** second (not the requested `duration`). Rate limit: 250 requests per minute.
 
-| Resolution | `draft=false` | `draft=true` |
-|------------|---------------|--------------|
-| 720p | $0.025 / s | $0.015 / s |
-| 1080p | $0.05 / s | $0.03 / s |
+| Resolution | `mode=speed` | `mode=quality` |
+|------------|--------------|----------------|
+| 480p | $0.02 / s | $0.04 / s |
+| 768p | $0.035 / s | $0.075 / s |
+
+### Image-to-video (first frame)
+
+```bash
+curl -X POST 'https://api.pruna.ai/v1/predictions' \
+  -H 'Content-Type: application/json' \
+  -H "apikey: ${PRUNA_API_KEY}" \
+  -H 'Model: p-video-2-pro' \
+  -d '{
+    "input": {
+      "prompt": "The camera slowly pushes in, the person turns their head and smiles",
+      "image": "https://api.pruna.ai/v1/files/FIRST_ID",
+      "duration": 5,
+      "resolution": "768p"
+    }
+  }'
+```
 
 ### First / last frame (visual transition)
 
@@ -119,40 +136,21 @@ Billing is per **returned** second (not the requested `duration`). Rate limit: 2
 curl -X POST 'https://api.pruna.ai/v1/predictions' \
   -H 'Content-Type: application/json' \
   -H "apikey: ${PRUNA_API_KEY}" \
-  -H 'Model: p-video-2' \
+  -H 'Model: p-video-2-pro' \
   -d '{
     "input": {
-      "prompt": "OPEN: hold wide on wet alley, neon flicker. MID: slow dolly in, rain ticks on pavement. CLOSE: settle on end pose.",
+      "prompt": "Start on the still product hero. The camera holds, then a slow push-in as light moves across the metal. End exactly on the last-frame packshot, label readable, no extra props.",
       "image": "https://api.pruna.ai/v1/files/START_ID",
       "last_frame_image": "https://api.pruna.ai/v1/files/END_ID",
-      "duration": 5,
-      "resolution": "720p",
-      "fps": 24
+      "duration": 8,
+      "resolution": "768p",
+      "mode": "speed",
+      "prompt_upsampler": "turbo"
     }
   }'
 ```
 
-### Scene anchor triple (`image` + `last_frame_image` + `audio`)
-
-```bash
-curl -X POST 'https://api.pruna.ai/v1/predictions' \
-  -H 'Content-Type: application/json' \
-  -H "apikey: ${PRUNA_API_KEY}" \
-  -H 'Model: p-video-2' \
-  -d '{
-    "input": {
-      "prompt": "Close-up of a singer performing the uploaded track. Natural lip-sync, expressive face, stage lighting, camera holds steady on the performer.",
-      "image": "https://api.pruna.ai/v1/files/SCENE_START",
-      "last_frame_image": "https://api.pruna.ai/v1/files/SCENE_END",
-      "audio": "https://api.pruna.ai/v1/files/SCENE_NARRATION",
-      "resolution": "720p",
-      "fps": 24,
-      "save_audio": true
-    }
-  }'
-```
-
-**Omit `duration`** when `audio` is set. Clip length = min(audio length, **20s**) — keep TTS ≤ ~19s (`ffprobe` before render). Audio-conditioned jobs bill the **audio length**.
+There is **no scene-anchor triple** on this model (`audio` is not exposed). Uploaded VO / music → `p-video-2`.
 
 ### Create (sync — quick test only)
 
@@ -160,14 +158,14 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 curl -X POST 'https://api.pruna.ai/v1/predictions' \
   -H 'Content-Type: application/json' \
   -H "apikey: ${PRUNA_API_KEY}" \
-  -H 'Model: p-video-2' \
+  -H 'Model: p-video-2-pro' \
   -H 'Try-Sync: true' \
   -d '{
     "input": {
       "prompt": "A sports car drifting through a neon-lit city at night, cinematic aerial shot",
       "duration": 5,
-      "resolution": "720p",
-      "draft": true
+      "resolution": "480p",
+      "mode": "speed"
     }
   }'
 ```
@@ -175,8 +173,8 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 ## Before generating
 
 1. Complete Prerequisites guide reading order (`generation-diversity` → `video-prompting`).
-2. Ritual seed → draft a **dynamic + faithful** motion prompt (section above) → confirm **mode** (T2V / I2V / frame pair / audio), **`duration`** (omit to let the model choose from the prompt, or when audio-driven), **`resolution`**, **`fps`**, **`draft`**, and **`prompt`** with the user.
-3. **Pruna notes:** when `image` is set, `aspect_ratio` is ignored. With `audio`, omit `duration` and keep **`save_audio: true`** (default) to keep narration. For **on-camera speech**, lead with **T2V native speech** (`save_audio: true`, no imported `audio`) — pause / line / rest lip-sync is the quality jump vs `p-video`. Imported `audio` keeps a cleaner face; viseme lock is mixed — do not treat a muxed wav as the lip-sync demo. Iterate in **`draft: true`**, then final with `draft: false`. If the request is multi-scene — **stop** (see Skill boundary). Native 4K is not supported.
+2. Ritual seed → draft a **dynamic + faithful** motion prompt (section above) → confirm **mode** (T2V / I2V / frame pair), **`duration`** (5–15s, default 5), **`resolution`** (480p / 768p), **`mode`** (`speed` / `quality`), **`prompt_upsampler`**, and **`prompt`** with the user.
+3. **Pruna notes:** when `image` or `last_frame_image` is set, `aspect_ratio` is ignored (canvas follows the stills). Output is **24 fps** — do not send `fps`. Output includes **generated audio**; write sound or dialogue in the prompt. **Do not send** `audio`, `draft`, `save_audio`, or `prompt_upsampling`. Iterate in **`mode: speed`**, then final with `mode: quality` when fidelity matters. If the request is multi-scene — **stop** (see Skill boundary). Native 4K is not supported. 1080p / imported audio / draft → `p-video-2`.
 
 ## Required input
 
@@ -186,17 +184,16 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 
 | Field | Role |
 |-------|------|
-| `image` | First frame — I2V anchor; when set, `aspect_ratio` is ignored (`jpg`, `jpeg`, `png`, `webp`) |
-| `last_frame_image` | Optional end-state still |
-| `audio` | Audio-conditioned; duration follows audio (capped at **20s**); flac/mp3/wav |
-| `duration` | 1–20s; **leave empty** to let the model choose length from the prompt; ignored if `audio` set |
-| `resolution` | `720p` (default) or `1080p` |
-| `fps` | `24` (default) or `48` |
-| `aspect_ratio` | When no `image`: `16:9` (default), `9:16`, `4:3`, `3:4`, `3:2`, `2:3`, `1:1` |
-| `draft` | `true` = cheaper, faster preview ($0.015/s 720p, $0.03/s 1080p); `false` (default) = final |
-| `save_audio` | Keep model-generated or uploaded audio on output (default `true`) |
-| `prompt_upsampling` | Enhance the prompt (default `true`) |
-| `seed`, `disable_safety_filter` | Reproducibility / client policy |
+| `prompt_upsampler` | Expand the prompt before generation: `off`, `turbo` (default), or `max`. Independent of `mode` |
+| `image` | First-frame reference; when set, `aspect_ratio` is ignored (`jpg`, `jpeg`, `png`, `webp`) |
+| `last_frame_image` | Optional end-frame still |
+| `duration` | 5–15s (default **5**) |
+| `resolution` | `768p` (default) or `480p` |
+| `mode` | Generation recipe: `speed` (default, faster) or `quality` (slower) |
+| `aspect_ratio` | When no reference image: `16:9` (default), `9:16`, `4:3`, `3:4`, `3:2`, `2:3`, `1:1` |
+| `seed` | Integer for a reproducible rerun; omit for random |
+
+**Do not send:** `audio`, `draft`, `fps`, `save_audio`, `prompt_upsampling`.
 
 ## Related
 
@@ -204,7 +201,7 @@ Related skills:
 
 | Skill | Description | Install |
 | --- | --- | --- |
-| `p-video-2-pro` | Use when someone wants a cinematic clip from text or start/end frames — product ads, documentary shots, or dialogue with generated audio. Not for 1080p, imported audio tracks, or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2-pro -y` |
+| `p-video-2` | Use when someone wants a polished short clip from text, images, or imported audio — 1080p B-roll, start/end frame animation, or a motion shot with a mixed track. Not for cinematic generated-audio clips or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
 | `p-video` | Use when someone wants a simple short clip from text or images — quick B-roll, drafts, or start/end frame animation. Not when the brief needs cinematic generation, highest quality, tight lip-sync, or imported audio at 1080p. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 | `gemini-3.1-flash-tts` | Use when someone needs spoken narration or voiceover — explainer tracks, documentary lines, or voice to pair with generated video. | `npx skills add PrunaAI/pruna-skills@gemini-3.1-flash-tts -y` |
 | `image-to-video` | Use when someone wants one short film beat from images — a narrated scene, story moment, or cinematic B-roll with optional voiceover. | `npx skills add PrunaAI/pruna-skills@image-to-video -y` |

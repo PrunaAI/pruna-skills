@@ -17,7 +17,7 @@ Tools list guide deps under **Prerequisites** with `npx skills add`. Workflows l
 
 ## Clarification (library-wide)
 
-Before the first paid API call, bulk generation, or long render, resolve open decisions that change cost or output. **SSoT:** open intake → `generation-diversity` clarification intake — generate vs existing media, palette, narration/VO, music, captions, aspect ratio, resolution (720p/1080p, canvas, megapixels), structure, and workflow approval gates.
+Before the first paid API call, bulk generation, or long render, resolve open decisions that change cost or output. **SSoT:** open intake → `generation-diversity` clarification intake — generate vs existing media, palette, narration/VO, music, captions, aspect ratio, resolution (480p/768p vs 720p/1080p, canvas, megapixels), structure, and workflow approval gates.
 
 | Skill type | Behavior |
 |------------|----------|

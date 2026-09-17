@@ -1,8 +1,8 @@
 {
-  "version": "1.0.12",
+  "version": "1.0.13",
   "package": "pruna-skills",
   "repository": "https://github.com/PrunaAI/pruna-skills",
-  "gitTag": "skills-v1.0.12",
+  "gitTag": "skills-v1.0.13",
   "skills": [
     {
       "name": "generation-diversity",
@@ -69,6 +69,12 @@
       "skillPath": "skills/image/p-image-try-on",
       "clawhubSkill": "@pruna-ai/p-image-try-on",
       "npxInstall": "npx skills add PrunaAI/pruna-skills@p-image-try-on -y"
+    },
+    {
+      "name": "p-video-2-pro",
+      "skillPath": "skills/video/p-video-2-pro",
+      "clawhubSkill": "@pruna-ai/p-video-2-pro",
+      "npxInstall": "npx skills add PrunaAI/pruna-skills@p-video-2-pro -y"
     },
     {
       "name": "p-video-2",
@@ -188,7 +194,7 @@
   "registries": {
     "github": {
       "method": "git tag + push",
-      "tag": "skills-v1.0.12",
+      "tag": "skills-v1.0.13",
       "note": "No upload API \u2014 consumers install from GitHub paths after push"
     },
     "npx": {

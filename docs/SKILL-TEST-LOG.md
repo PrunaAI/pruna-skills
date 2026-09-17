@@ -13,7 +13,8 @@ Run in a fresh chat after installing the named skill(s). Mark PASS/FAIL; no API 
 | T1 | "Generate a product hero still with p-image" | `p-image` | Loads p-image; asks/checks `PRUNA_API_KEY`; does not invent multi-scene film |
 | T1b | "Generate a photoreal product hero with readable label text" | `p-image-ideogram` | Uses p-image-ideogram (not p-image); asks/checks `PRUNA_API_KEY` |
 | T2 | "Make a simple B-roll clip from this still" | `p-video` | Uses p-video (not avatar / music-video / narrated-multi-scene) |
-| T2b | "Make a polished high-quality B-roll clip from this still" | `p-video-2` | Uses p-video-2 (not p-video / avatar / multi-scene workflows) |
+| T2b | "Make a polished 1080p B-roll clip with this VO track" | `p-video-2` | Uses p-video-2 (not p-video-2-pro / p-video / avatar / multi-scene workflows) |
+| T2c | "Make an 8s cinematic product clip with generated audio" | `p-video-2-pro` | Uses p-video-2-pro (not p-video-2 / p-video / avatar / multi-scene workflows) |
 | T3 | "Lip-sync this portrait saying hello" | `p-video-avatar` | Uses p-video-avatar; does not expand to avatar-multi-scene |
 | T4 | "Upscale this JPEG for print" | `p-image-upscale` | Uses upscale only; no unrelated workflow |
 
