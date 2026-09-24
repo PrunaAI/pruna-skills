@@ -24,8 +24,10 @@ jobs:
           node-version: "22"
 
       - name: Set version and bundle
+        env:
+          RELEASE_VERSION: ${{ github.event.inputs.version }}
         run: |
-          echo "${{ github.event.inputs.version }}" > VERSION
+          echo "$RELEASE_VERSION" > VERSION
           python3 .maintainer/sync_skill_versions.py
           ./.maintainer/bundle_all_skills.sh
 
@@ -37,20 +39,23 @@ jobs:
 
       - name: Commit release artifacts
         if: github.event.inputs.dry_run == 'false'
+        env:
+          RELEASE_VERSION: ${{ github.event.inputs.version }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add VERSION skills/ .claude-plugin/ skills.sh.json docs/SKILL-CATALOG.md docs/WORKFLOW-RECIPES.md .maintainer/publish-index.json
-          git diff --staged --quiet || git commit -m "[release] skills v${{ github.event.inputs.version }}"
-          git tag "skills-v${{ github.event.inputs.version }}" || true
+          git diff --staged --quiet || git commit -m "[release] skills v$RELEASE_VERSION"
+          git tag "skills-v$RELEASE_VERSION" || true
           git push origin HEAD
-          git push origin "skills-v${{ github.event.inputs.version }}"
+          git push origin "skills-v$RELEASE_VERSION"
 
       - name: Create GitHub Release from CHANGELOG
         if: github.event.inputs.dry_run == 'false'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: ./.maintainer/release/create_github_release.sh "${{ github.event.inputs.version }}"
+          RELEASE_VERSION: ${{ github.event.inputs.version }}
+        run: ./.maintainer/release/create_github_release.sh "$RELEASE_VERSION"
 
       - name: Publish to ClawHub
         if: github.event.inputs.dry_run == 'false'
