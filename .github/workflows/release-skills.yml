@@ -11,6 +11,9 @@ on:
         type: boolean
         default: true
 
+permissions:
+  contents: read
+
 jobs:
   release:
     runs-on: ubuntu-latest

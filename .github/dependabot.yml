@@ -11,4 +11,4 @@ updates:
       minor-and-patch:
         patterns: ["*"]
         update-types: [minor, patch]
-    open-pull-requests-limit: 1000
+    open-pull-requests-limit: 50
