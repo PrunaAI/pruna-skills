@@ -4,6 +4,10 @@ All notable changes to Pruna Skills are documented here. Skill and plugin `metad
 
 ## [Unreleased]
 
+## [1.0.14] — 2026-09-29
+
+GitHub tag: `skills-v1.0.14`
+
 ### Changed
 
 - **`p-video-2-pro` `mode: cost`** — same quality as `speed`, but cheaper and slower ($0.01/s 480p, $0.025/s 768p). `mode` is now `cost`, `speed` (default), or `quality`.
