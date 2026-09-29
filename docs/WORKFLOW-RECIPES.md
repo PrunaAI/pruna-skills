@@ -82,7 +82,7 @@ For multi-scene plans with approval gates, use a workflow skill (`music-video`, 
 
 **Shine:** Short camera grammar matches what **p-video-2-pro** does well from a single plate. Add **`last_frame_image`** when the beat has a known end composition.
 
-**Intake:** Camera move, duration (5–15s), `mode` speed vs quality? End still for frame chain? 1080p or imported audio → Recipe E / `p-video-2`.
+**Intake:** Camera move, duration (5–15s), `mode` cost vs speed vs quality? End still for frame chain? 1080p or imported audio → Recipe E / `p-video-2`.
 
 **Steps**
 

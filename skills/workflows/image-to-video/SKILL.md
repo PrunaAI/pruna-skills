@@ -64,7 +64,7 @@ Open intake → **`generation-diversity`** clarification intake.
 | **Frames** | Start still (upload or `p-image-edit`)? End still (`last_frame_edit_prompt`)? Stay single-scene — if the user wants a longer **`frame_chain` / multi-scene** project, stop and switch to `narrated-multi-scene` or `visual-transition-reel`. |
 | **Audio** | Generated in-clip (`p-video-2-pro`, write sound in the prompt) vs `gemini-3.1-flash-tts` → upload → **`input.audio`** on **`p-video-2`**. Optional `stable-audio-2.5` bed **after** render. Post-mux is fallback only — `audio-prompting`. |
 | **Format** | Visual-only: **`768p`**, 24 fps, `duration` 5–15s (`p-video-2-pro`). Audio-led: default **`720p`**, **`24` fps**; `duration` only when **no** `audio`; override `resolution` / `fps` / `aspect_ratio` when user wants final delivery |
-| **Draft / recipe** | `p-video-2-pro`: `mode: speed` (iterate) or `quality` (final). `p-video-2`: `draft: true` for preview or `false` for final |
+| **Draft / recipe** | `p-video-2-pro`: `mode: cost` (same quality as speed, but cheaper and slower), `speed` (default, faster), or `quality` (final). `p-video-2`: `draft: true` for preview or `false` for final |
 | **Repro** | Fixed `seed`? |
 | **Delivery** | Async (production); `Try-Sync: true` only for quick tests |
 

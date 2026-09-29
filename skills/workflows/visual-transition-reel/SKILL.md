@@ -69,7 +69,7 @@ Open intake → **`generation-diversity`** clarification intake.
 | **Per scene *i*** | **Start still** (`edit_prompt` or upload)? **End still** (`last_frame_edit_prompt`)? **Transition `video_prompt`** (OPEN/MID/CLOSE motion)? `duration_seconds`? |
 | **Continuity** | Per scene: **`chain_from_previous`** only when motion continues. Otherwise composed OPENING still + hard cut. |
 | **Stills source** | Generate via **`p-image-ideogram`** hero + **`p-image-edit`** (`p-image` for a cheap draft), or user-supplied photo pairs? |
-| **Format** | `aspect_ratio`; transition clips **`480p` / `768p`** (`p-video-2-pro`) or **`720p` / `1080p`** (`p-video-2` if imported audio or 1080p is locked)? |
+| **Format** | `aspect_ratio`; transition clips **`480p` / `768p`** (`p-video-2-pro`) or **`720p` / `1080p`** (`p-video-2` if imported audio or 1080p is locked)? `p-video-2-pro` `mode`: `cost` (same quality as speed, but cheaper and slower), `speed` (default), or `quality`? |
 | **Global** | `style_bible`? `ritual_seed`? `frame_chain_mode` (`extract_last_frame` vs `parallel_vignettes`)? |
 | **Audio** | Native SFX only (default), optional `stable-audio-2.5` bed in post, or upgrade to triple + TTS? |
 | **Assembly** | Concat order; chain crossfade (~0.12–0.15s) vs hard cut (0)? Target total duration? |
@@ -135,7 +135,7 @@ Run all end stills **in parallel** once start stills exist.
 
 ### Phase 3 — Video (`p-video-2-pro`)
 
-**Scene anchor pair** — one job per row (`duration` 5–15s, **no** `audio`; generated audio comes from the prompt):
+**Scene anchor pair** — one job per row (`duration` 5–15s, **no** `audio`; generated audio comes from the prompt). Iterate `mode: cost` / `speed`; final `quality`:
 
 ```json
 {

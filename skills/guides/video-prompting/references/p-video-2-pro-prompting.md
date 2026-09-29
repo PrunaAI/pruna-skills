@@ -12,21 +12,21 @@ Prompt craft unique to `p-video-2-pro` (cinematic generation lane next to `p-vid
 - **Two-shot dialogue** with lip-sync — write the spoken line into the prompt
 - **First + last frame** as a first-class control
 - **Three-level prompt upsampler** (`off` / `turbo` / `max`), independent of `mode`
-- `mode: speed` vs `mode: quality` on the same prompt
+- `mode: cost` (same quality as `speed`, but cheaper and slower) vs `mode: speed` (default, faster) vs `mode: quality` on the same prompt
 - **Generated audio** already in the clip — write score, ambience, SFX, or dialogue in the prompt
 
 ## Limits (do not fight them)
 
 - **No audio import** — muxed VO / music belongs on `p-video-2`
 - Max **768p** and **15s** — not 1080p / 20s / 48 fps
-- **No draft mode** — `mode: speed` is the fast recipe; `quality` is slower
+- **No draft mode** — `mode: cost` is the same quality as `speed`, but cheaper and slower; `speed` is the faster default; `quality` is slower
 - Not an editor (`p-video-edit`) or talking-head avatar (`p-video-avatar`)
 - Native **4K** is not supported
 - **More than two speakers** — speaker separation degrades
 
 ## Fast pass vs locked-in
 
-**Fast pass** — subject + action + scene. Enough for first looks. Iterate in `mode: speed`.
+**Fast pass** — subject + action + scene. Enough for first looks. Iterate in `mode: cost` (price) or `mode: speed` (wall-clock).
 
 ```text
 A matte stainless pour-over kettle sits on a seamless light-gray studio sweep. Thin steam rises from the spout.
@@ -67,10 +67,10 @@ A woman faces the camera and says "I'll be there in five." She pauses, delivers 
 ## Duration, mode, upsampler
 
 - Set `duration` (5–15s; default **5**). Partner demos often use **8s** for locked-in cinematic beats.
-- `mode: speed` (default) for iteration; `mode: quality` for the slower, higher-fidelity recipe.
+- `mode: cost` when price is the priority (same quality as `speed`, but cheaper and slower); `mode: speed` (default) when generation time matters; `mode: quality` for the slower, higher-fidelity recipe.
 - `prompt_upsampler`: `off` when copy is already locked; `turbo` (default); `max` when the source prompt is short and the scene needs more described detail. Compare `off` vs `turbo` vs `max` on the **same `seed`** before scaling.
 - Defaults: `resolution: 768p`, `aspect_ratio: 16:9`, 24 fps, generated audio.
 
 ## Iterate
 
-There is no `draft` flag. Iterate in `mode: speed`, then final with `mode: quality` when fidelity matters. Do not send `audio`, `fps`, `save_audio`, or `prompt_upsampling`.
+There is no `draft` flag. Iterate in `mode: cost` (same quality as `speed`, but cheaper and slower) or `mode: speed` (faster); then final with `mode: quality` when fidelity matters. Do not send `audio`, `fps`, `save_audio`, or `prompt_upsampling`.

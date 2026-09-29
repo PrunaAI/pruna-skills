@@ -27,7 +27,7 @@ Each scene row supplies **two Pruna file URLs** (from `POST /v1/files`) plus a m
 }
 ```
 
-Default payload is **`p-video-2-pro`**. For `p-video-2` use `720p`/`1080p` and `fps` instead of `mode` / `prompt_upsampler`.
+Default payload is **`p-video-2-pro`**. `mode` is `cost` (same quality as `speed`, but cheaper and slower), `speed` (default), or `quality`. For `p-video-2` use `720p`/`1080p` and `fps` instead of `mode` / `prompt_upsampler`.
 
 **Do not** set `duration` when `audio` is also present — use [scene-anchor-triple.md](./scene-anchor-triple.md) and **`p-video-2`** (`p-video-2-pro` has no `audio` input).
 
