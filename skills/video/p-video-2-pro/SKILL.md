@@ -3,7 +3,7 @@ name: p-video-2-pro
 description: Use when someone wants a cinematic clip from text or start/end frames — product ads, documentary shots, or dialogue with generated audio. Not for 1080p, imported audio tracks, or talking-head-only hosts.
 license: MIT
 metadata:
-  version: "1.0.13"
+  version: "1.0.14"
   package: pruna-skills
   pruna_model: p-video-2-pro
 ---
