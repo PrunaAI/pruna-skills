@@ -3,7 +3,7 @@ name: p-video-2
 description: Use when someone wants a polished short clip from text, images, or imported audio — 1080p B-roll, start/end frame animation, or a motion shot with a mixed track. Not for cinematic generated-audio clips or talking-head-only hosts.
 license: MIT
 metadata:
-  version: "1.0.13"
+  version: "1.0.14"
   package: pruna-skills
   pruna_model: p-video-2
 ---

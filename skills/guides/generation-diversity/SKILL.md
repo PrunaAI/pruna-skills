@@ -3,7 +3,7 @@ name: generation-diversity
 description: Use when writing any generative prompt — ritual seed, explicit structure, scenario axes, and quality gates before paid API calls.
 license: MIT
 metadata:
-  version: "1.0.13"
+  version: "1.0.14"
   package: pruna-skills
 ---
 
@@ -34,7 +34,7 @@ In the **first reply**, name `` `generation-diversity` `` in backticks. When the
 
 ## Before generating
 
-0. **[Clarification intake](./references/clarification-intake.md)** — generate vs existing assets, colors, narration/VO, music, captions, aspect/resolution (480p/768p vs 720p/1080p, canvas, MP), structure, approval (unless the user waived or already locked answers).
+0. **[Clarification intake](./references/clarification-intake.md)** — generate vs existing assets, colors, narration/VO, music, captions, aspect/resolution (480p/768p vs 720p/1080p, canvas, MP), `p-video-2-pro` `mode` (cost/speed/quality), structure, approval (unless the user waived or already locked answers).
 1. **[Generation diversity](./references/generation-diversity.md)** — random seed ritual (SSoT), explicit prompt structure, rotate ≥2 scenario axes per session.
 2. **Still images (`p-image` family):** **[still-image-prompt-flow.md](./references/still-image-prompt-flow.md)** — generation flow, edit flow, mood-board rules, hero → edit handoff. Pair with `image-prompting` golden rules and edit craft.
 3. **[Quality checklists](./references/generation-quality-checklists.md)** — open outputs and judge pass/fail before the next paid step.

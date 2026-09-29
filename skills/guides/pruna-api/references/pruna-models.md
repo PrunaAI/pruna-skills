@@ -13,7 +13,7 @@ Pricing and limits change; confirm on the official page: [Available models](http
 | `p-image-edit` | Image edit / compose (1–5 images) | `p-image-edit` | `p-image-edit-quality-checklist.md` in `image-prompting` |
 | `p-image-upscale` | Upscale (target MP 1–128, optional enhance) | `p-image-upscale` | `p-image-upscale-quality-checklist.md` in `image-prompting` |
 | `p-image-try-on` | Virtual try-on (person + up to 11 garments, ≤6 finals / 7–8 reliable; optional pose ref, turbo ~4) | `p-image-try-on` | `p-image-try-on-quality-checklist.md` in `image-prompting` |
-| `p-video-2-pro` | Cinematic text / first-last-frame video with **generated audio** (no audio upload); 480p / 768p; 5–15s; `mode` speed/quality. Built on MiniMax H3. | `p-video-2-pro` | `p-video-2-pro-quality-checklist.md` in `video-prompting` |
+| `p-video-2-pro` | Cinematic text / first-last-frame video with **generated audio** (no audio upload); 480p / 768p; 5–15s; `mode` cost/speed/quality (`cost` = same quality as `speed`, but cheaper and slower). Built on MiniMax H3. | `p-video-2-pro` | `p-video-2-pro-quality-checklist.md` in `video-prompting` |
 | `p-video-2` | 1080p / imported-audio / draft video; **first frame** (`image`) + **last frame** (`last_frame_image`); omit `duration` to let the model choose length | `p-video-2` | `p-video-2-quality-checklist.md` in `video-prompting` |
 | `p-video` | Simpler / quicker text / image / audio video; same payload as `p-video-2` | `p-video` | `p-video-quality-checklist.md` in `video-prompting` |
 | `p-video-avatar` | Talking avatar from portrait + script or audio | `p-video-avatar` | `p-video-avatar-quality-checklist.md` in `video-prompting` |

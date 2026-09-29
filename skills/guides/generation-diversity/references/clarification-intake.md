@@ -37,7 +37,7 @@ Ask when the brief does not already answer these:
 | **Music / bed** | Silent · instrumental bed under VO · full song driving cuts · user-supplied track |
 | **Captions** | None · burned after render · embedded in composition · style (promo karaoke vs simple phrase) |
 | **Format** | Aspect ratio, duration target, destination (LinkedIn, TikTok, in-app, internal) |
-| **Resolution / canvas** | **Video:** 480p / 768p (`p-video-2-pro`) vs 720p vs 1080p vs 4K (and whether to upscale after gen). **HTML/composition:** export width×height (e.g. 1920×1080, 1080×1920). **Stills:** native aspect vs letterbox; target long edge or MP for upscale jobs |
+| **Resolution / canvas** | **Video:** 480p / 768p (`p-video-2-pro`) vs 720p vs 1080p vs 4K (and whether to upscale after gen). **`p-video-2-pro` recipe:** `mode` `cost` (same quality as `speed`, but cheaper and slower) vs `speed` (default, faster) vs `quality`. **HTML/composition:** export width×height (e.g. 1920×1080, 1080×1920). **Stills:** native aspect vs letterbox; target long edge or MP for upscale jobs |
 | **Frame rate** | 24 / 25 / 30 fps when the deliverable or platform cares (Reels often 30; cinematic often 24) |
 | **Structure** | Single clip vs multi-act / multi-scene; when vague, propose **two act orders** and let the user pick |
 | **Approval** | Phase gates (**approve plan** / stills / clips) vs one-shot automation |

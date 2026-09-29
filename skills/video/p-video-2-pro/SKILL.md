@@ -3,7 +3,7 @@ name: p-video-2-pro
 description: Use when someone wants a cinematic clip from text or start/end frames — product ads, documentary shots, or dialogue with generated audio. Not for 1080p, imported audio tracks, or talking-head-only hosts.
 license: MIT
 metadata:
-  version: "1.0.13"
+  version: "1.0.14"
   package: pruna-skills
   pruna_model: p-video-2-pro
 ---
@@ -108,10 +108,12 @@ Complete the random seed ritual from `generation-diversity` before writing promp
 
 Billing is per **returned** second (not the requested `duration`). Rate limit: 250 requests per minute.
 
-| Resolution | `mode=speed` | `mode=quality` |
-|------------|--------------|----------------|
-| 480p | $0.02 / s | $0.04 / s |
-| 768p | $0.035 / s | $0.075 / s |
+| Resolution | `mode=cost` | `mode=speed` (default) | `mode=quality` |
+|------------|-------------|------------------------|----------------|
+| 480p | $0.01 / s | $0.02 / s | $0.04 / s |
+| 768p | $0.025 / s | $0.035 / s | $0.075 / s |
+
+`cost` is the same output quality as `speed`, but cheaper and slower. `prompt_upsampler` does not change the price.
 
 ### Image-to-video (first frame)
 
@@ -165,7 +167,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
       "prompt": "A sports car drifting through a neon-lit city at night, cinematic aerial shot",
       "duration": 5,
       "resolution": "480p",
-      "mode": "speed"
+      "mode": "cost"
     }
   }'
 ```
@@ -173,8 +175,8 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 ## Before generating
 
 1. Complete Prerequisites guide reading order (`generation-diversity` → `video-prompting`).
-2. Ritual seed → draft a **dynamic + faithful** motion prompt (section above) → confirm **mode** (T2V / I2V / frame pair), **`duration`** (5–15s, default 5), **`resolution`** (480p / 768p), **`mode`** (`speed` / `quality`), **`prompt_upsampler`**, and **`prompt`** with the user.
-3. **Pruna notes:** when `image` or `last_frame_image` is set, `aspect_ratio` is ignored (canvas follows the stills). Output is **24 fps** — do not send `fps`. Output includes **generated audio**; write sound or dialogue in the prompt. **Do not send** `audio`, `draft`, `save_audio`, or `prompt_upsampling`. Iterate in **`mode: speed`**, then final with `mode: quality` when fidelity matters. If the request is multi-scene — **stop** (see Skill boundary). Native 4K is not supported. 1080p / imported audio / draft → `p-video-2`.
+2. Ritual seed → draft a **dynamic + faithful** motion prompt (section above) → confirm **mode** (T2V / I2V / frame pair), **`duration`** (5–15s, default 5), **`resolution`** (480p / 768p), **`mode`** (`cost` / `speed` / `quality`), **`prompt_upsampler`**, and **`prompt`** with the user.
+3. **Pruna notes:** when `image` or `last_frame_image` is set, `aspect_ratio` is ignored (canvas follows the stills). Output is **24 fps** — do not send `fps`. Output includes **generated audio**; write sound or dialogue in the prompt. **Do not send** `audio`, `draft`, `save_audio`, or `prompt_upsampling`. Iterate in **`mode: cost`** when price is the priority (same quality as `speed`, but cheaper and slower) or **`mode: speed`** when wall-clock time matters (default); then final with `mode: quality` when fidelity matters. If the request is multi-scene — **stop** (see Skill boundary). Native 4K is not supported. 1080p / imported audio / draft → `p-video-2`.
 
 ## Required input
 
@@ -189,7 +191,7 @@ curl -X POST 'https://api.pruna.ai/v1/predictions' \
 | `last_frame_image` | Optional end-frame still |
 | `duration` | 5–15s (default **5**) |
 | `resolution` | `768p` (default) or `480p` |
-| `mode` | Generation recipe: `speed` (default, faster) or `quality` (slower) |
+| `mode` | Generation recipe: `cost` (same quality as `speed`, but cheaper and slower), `speed` (default, faster), or `quality` (slower, higher-fidelity) |
 | `aspect_ratio` | When no reference image: `16:9` (default), `9:16`, `4:3`, `3:4`, `3:2`, `2:3`, `1:1` |
 | `seed` | Integer for a reproducible rerun; omit for random |
 

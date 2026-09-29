@@ -36,7 +36,8 @@ When the prompt implies speech or singing (there is **no imported `audio`**):
 - Runtime is in the **5–15s** window and matches the requested `duration` (default 5).
 - Output is **480p or 768p** as requested — not 720p / 1080p / 4K.
 - Output is **24 fps**.
-- When `mode: quality` was set, the clip should look tighter than a `mode: speed` preview of the same seed — if it does not, say so.
+- When `mode: cost` was set, treat visual quality as equivalent to `mode: speed` of the same seed — do not fail for looking like speed.
+- When `mode: quality` was set, the clip should look tighter than a `mode: speed` or `mode: cost` preview of the same seed — if it does not, say so.
 
 ## Scene anchors
 
