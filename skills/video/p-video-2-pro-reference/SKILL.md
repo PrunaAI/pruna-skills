@@ -3,7 +3,7 @@ name: p-video-2-pro-reference
 description: Use when someone wants one cinematic clip that locks a subject from references — a product still, character, clip, or voice — using image or video references plus optional audio kept as the soundtrack or used as guidance. Not for text-only generation, 1080p, or drafts.
 license: MIT
 metadata:
-  version: "1.0.14"
+  version: "1.0.15"
   package: pruna-skills
   pruna_model: p-video-2-pro-reference
 ---
