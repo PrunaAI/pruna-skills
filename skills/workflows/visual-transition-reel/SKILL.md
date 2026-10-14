@@ -17,6 +17,7 @@ Install and load these skills before generating (skip if already in context via 
 | `p-image` | Use when someone explicitly wants the fastest, cheapest photo generation — mood boards, bulk panels, or quick iterations — not when controlled photoreal or in-image text is needed. | `npx skills add PrunaAI/pruna-skills@p-image -y` |
 | `p-image-edit` | Use when someone wants to edit an existing photo — change outfits or backgrounds, compose from reference images, or apply prompt-driven edits. | `npx skills add PrunaAI/pruna-skills@p-image-edit -y` |
 | `p-video-2-pro` | Use when someone wants a cinematic clip from text or start/end frames — product ads, documentary shots, or dialogue with generated audio. Not for 1080p, imported audio tracks, or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2-pro -y` |
+| `p-video-2-pro-reference` | Use when someone wants one cinematic clip that locks a subject from references — a product still, character, clip, or voice — using image or video references plus optional audio kept as the soundtrack or used as guidance. Not for text-only generation, 1080p, or drafts. | `npx skills add PrunaAI/pruna-skills@p-video-2-pro-reference -y` |
 | `p-video-2` | Use when someone wants a polished short clip from text, images, or imported audio — 1080p B-roll, start/end frame animation, or a motion shot with a mixed track. Not for cinematic generated-audio clips or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
 | `p-video` | Use when someone wants a simple short clip from text or images — quick B-roll, drafts, or start/end frame animation. Not when the brief needs cinematic generation, highest quality, tight lip-sync, or imported audio at 1080p. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 | `stable-audio-2.5` | Use when someone wants light instrumental background music — an ambient bed under dialogue or underscore for reels and explainers. | `npx skills add PrunaAI/pruna-skills@stable-audio-2.5 -y` |
@@ -66,12 +67,13 @@ Open intake → **`generation-diversity`** clarification intake.
 | Topic | Questions |
 |-------|-----------|
 | **Story** | Scene order (1…N)? What changes between beats (location, time, emotion)? |
-| **Per scene *i*** | **Start still** (`edit_prompt` or upload)? **End still** (`last_frame_edit_prompt`)? **Transition `video_prompt`** (OPEN/MID/CLOSE motion)? `duration_seconds`? |
+| **Per scene *i*** | **Start still** (`edit_prompt` or upload)? **End still** (`last_frame_edit_prompt`)? **Transition `video_prompt`** (OPEN/MID/CLOSE motion)? `duration_seconds`? Is this a standard pair or should one or more imported assets condition the scene? |
+| **Reference map** | For each reference-conditioned row: source + one role per image/video/audio asset; count; each clip length and combined limits; competing-reference priority; soft first/last-keyframe expectation; upload approval; paid reference-input estimate. |
 | **Continuity** | Per scene: **`chain_from_previous`** only when motion continues. Otherwise composed OPENING still + hard cut. |
 | **Stills source** | Generate via **`p-image-ideogram`** hero + **`p-image-edit`** (`p-image` for a cheap draft), or user-supplied photo pairs? |
-| **Format** | `aspect_ratio`; transition clips **`480p` / `768p`** (`p-video-2-pro`) or **`720p` / `1080p`** (`p-video-2` if imported audio or 1080p is locked)? `p-video-2-pro` `mode`: `cost` (same quality as speed, but cheaper and slower), `speed` (default), or `quality`? |
+| **Format** | `aspect_ratio`; standard pairs **`480p` / `768p`** (`p-video-2-pro`), reference-conditioned scenes **`480p` / `768p`** (`p-video-2-pro-reference`), or **`720p` / `1080p`** (`p-video-2` if exact imported soundtrack, draft, or 1080p is locked)? `p-video-2-pro`: cost/speed/quality. Reference model: cost/speed only, no quality. |
 | **Global** | `style_bible`? `ritual_seed`? `frame_chain_mode` (`extract_last_frame` vs `parallel_vignettes`)? |
-| **Audio** | Native SFX only (default), optional `stable-audio-2.5` bed in post, or upgrade to triple + TTS? |
+| **Audio** | Generated SFX (`p-video-2-pro` or `p-video-2-pro-reference`), optional timing/performance audio reference (`p-video-2-pro-reference`), one kept track per scene (`p-video-2-pro-reference` with `keep_audio: true`), imported soundtrack at 1080p or via triple (`p-video-2`), optional post bed, or upgrade to triple + TTS? Without `keep_audio`, never claim reference audio equals the uploaded soundtrack. |
 | **Assembly** | Concat order; chain crossfade (~0.12–0.15s) vs hard cut (0)? Target total duration? |
 
 Ask follow-ups until every scene row has enough to build `input` without guessing.
@@ -91,7 +93,7 @@ Start/end stills and transition motion use **`video-prompting`** scene-anchor pa
 
 1. Copy [templates/transition-plan.template.json](./templates/transition-plan.template.json) → fill from intake → **approve plan**.
 2. Hero → parallel start stills → parallel end stills → **approve stills**.
-3. Parallel (or sequential for extract-chain) `p-video-2-pro` pair jobs (or `p-video-2` if 1080p / imported audio; `p-video` for simpler clips) → **approve clips**.
+3. Parallel (or sequential for extract-chain) `p-video-2-pro` standard pair jobs by default; use `p-video-2-pro-reference` for rows where imported image or video references should condition identity/style/motion/timing/performance, with optional audio guidance or a kept track (`keep_audio`), `p-video-2` for 1080p/draft/scene-anchor triple, or `p-video` for simpler clips → **approve clips**.
 4. ffmpeg concat ± per-join crossfade → optional bed.
 
 ## Generation phases
@@ -133,7 +135,7 @@ For each scene with `last_frame_edit_prompt`:
 
 Run all end stills **in parallel** once start stills exist.
 
-### Phase 3 — Video (`p-video-2-pro`)
+### Phase 3 — Video (`p-video-2-pro` default pair)
 
 **Scene anchor pair** — one job per row (`duration` 5–15s, **no** `audio`; generated audio comes from the prompt). Iterate `mode: cost` / `speed`; final `quality`:
 
@@ -150,6 +152,8 @@ Run all end stills **in parallel** once start stills exist.
 ```
 
 1080p, imported audio, or draft previews → `p-video-2` instead (720p/1080p, `fps`, optional `audio`).
+
+For a scene where imported image or video references should condition the result, use `p-video-2-pro-reference`: map one role to each image/video asset and any optional audio guidance, remove or prioritize competing references, and treat optional first/last frames as soft keyframes. Audio alone does not qualify the request. The clip carries generated audio; reference audio guides timing or performance unless `keep_audio: true` keeps exactly one uploaded track as the soundtrack. Use 480p/768p and cost/speed only; validate current limits and reference billing in the tool skill.
 
 | `frame_chain_mode` | Start frame when `chain_from_previous: true` | Render order |
 |--------------------|----------------------------------------------|--------------|
@@ -212,6 +216,7 @@ Related skills:
 
 | Skill | Description | Install |
 | --- | --- | --- |
+| `p-video-2-pro-reference` | Use when someone wants one cinematic clip that locks a subject from references — a product still, character, clip, or voice — using image or video references plus optional audio kept as the soundtrack or used as guidance. Not for text-only generation, 1080p, or drafts. | `npx skills add PrunaAI/pruna-skills@p-video-2-pro-reference -y` |
 | `image-to-video` | Use when someone wants one short film beat from images — a narrated scene, story moment, or cinematic B-roll with optional voiceover. | `npx skills add PrunaAI/pruna-skills@image-to-video -y` |
 | `narrated-multi-scene` | Use when someone wants a multi-part story with voiceover — episodic B-roll, chaptered promo, or several linked video scenes without on-camera dialogue. | `npx skills add PrunaAI/pruna-skills@narrated-multi-scene -y` |
 | `video-editing` | Use when assembling or polishing already-rendered clips with ffmpeg — concat, crossfades, burned captions and subtitles, text/logo overlays, before/after sliders, background music beds, platform export — or when composing a multi-layer HTML combination video with Hyperframes. Not for AI video generation, prompt craft, or model-based video edits. | `npx skills add PrunaAI/pruna-skills@video-editing -y` |

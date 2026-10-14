@@ -25,7 +25,7 @@ Follow each skill's **Before generating** / craft sections — do not restate gu
 
 ## Agent habit
 
-**Routing:** `` `p-video-2-pro` `` is the **cinematic generation** clip (text / first frame / first+last frame) with **generated audio**. Use `` `p-video-2` `` when the brief needs **1080p**, **imported audio**, or **draft** previews. Use `` `p-video` `` for cheaper, faster drafts. Talking-head-only (no native scene audio) → `` `p-video-avatar` ``. Instruction edit of existing footage → `` `p-video-edit` ``.
+**Routing:** `` `p-video-2-pro` `` is the **standard cinematic generation** clip (text / first frame / first+last frame) with **generated audio**. When imported image or video references should lock a subject or condition identity, style, motion, timing, or performance — or one uploaded audio track should be kept as the soundtrack (`keep_audio`) at 480p/768p — use `` `p-video-2-pro-reference` ``. Use `` `p-video-2` `` when the brief needs **1080p**, an **imported soundtrack**, or **draft** previews. Use `` `p-video` `` for cheaper, faster drafts. Talking-head-only (no native scene audio) → `` `p-video-avatar` ``. Instruction edit of existing footage → `` `p-video-edit` ``.
 
 In the **first reply**, name `` `p-video-2-pro` `` in backticks, confirm `PRUNA_API_KEY` (or stop with signup links from `pruna-api`), then ask for required inputs. Open intake → **`generation-diversity`** clarification intake before the first `POST`. When drafting motion prompts, follow **Prompt craft (dynamic + faithful)** and `video-prompting` (`p-video-2-pro-prompting`) — do not paste skill examples. Redirect when **When NOT to use** fits better.
 
@@ -52,6 +52,7 @@ This skill = **one `p-video-2-pro` prediction** per invocation.
 **Out of scope (do not execute from this skill):**
 
 - Multi-scene assembly, concat, subagent orchestration, or parallel scene batches
+- Imported image/video reference conditioning, with optional audio guidance or a kept soundtrack (`keep_audio`) → `p-video-2-pro-reference`
 - Imported audio / mixed VO / 1080p / draft previews → `p-video-2`
 - Motion transfer from a template video → `p-video-animate`
 - Talking-head-only / lip-sync host without native scene audio → `p-video-avatar`
@@ -65,6 +66,7 @@ Use a different skill instead:
 
 | Skill | Description | Install |
 | --- | --- | --- |
+| `p-video-2-pro-reference` | Use when someone wants one cinematic clip that locks a subject from references — a product still, character, clip, or voice — using image or video references plus optional audio kept as the soundtrack or used as guidance. Not for text-only generation, 1080p, or drafts. | `npx skills add PrunaAI/pruna-skills@p-video-2-pro-reference -y` |
 | `p-video-2` | Use when someone wants a polished short clip from text, images, or imported audio — 1080p B-roll, start/end frame animation, or a motion shot with a mixed track. Not for cinematic generated-audio clips or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
 | `p-video` | Use when someone wants a simple short clip from text or images — quick B-roll, drafts, or start/end frame animation. Not when the brief needs cinematic generation, highest quality, tight lip-sync, or imported audio at 1080p. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 | `p-video-avatar` | Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo. | `npx skills add PrunaAI/pruna-skills@p-video-avatar -y` |
@@ -203,6 +205,7 @@ Related skills:
 
 | Skill | Description | Install |
 | --- | --- | --- |
+| `p-video-2-pro-reference` | Use when someone wants one cinematic clip that locks a subject from references — a product still, character, clip, or voice — using image or video references plus optional audio kept as the soundtrack or used as guidance. Not for text-only generation, 1080p, or drafts. | `npx skills add PrunaAI/pruna-skills@p-video-2-pro-reference -y` |
 | `p-video-2` | Use when someone wants a polished short clip from text, images, or imported audio — 1080p B-roll, start/end frame animation, or a motion shot with a mixed track. Not for cinematic generated-audio clips or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
 | `p-video` | Use when someone wants a simple short clip from text or images — quick B-roll, drafts, or start/end frame animation. Not when the brief needs cinematic generation, highest quality, tight lip-sync, or imported audio at 1080p. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 | `gemini-3.1-flash-tts` | Use when someone needs spoken narration or voiceover — explainer tracks, documentary lines, or voice to pair with generated video. | `npx skills add PrunaAI/pruna-skills@gemini-3.1-flash-tts -y` |

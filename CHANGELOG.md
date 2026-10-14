@@ -4,6 +4,10 @@ All notable changes to Pruna Skills are documented here. Skill and plugin `metad
 
 ## [Unreleased]
 
+### Added
+
+- **`p-video-2-pro-reference` tool** — reference-to-video on MiniMax H3 Ref2V that locks a subject from image/video references plus optional audio, with generated sound, `keep_audio` to keep one uploaded track as the soundtrack, soft first/last keyframes, 480p/768p output, 5–15s duration, `cost` / `speed` modes only, and finished-run reference billing.
+
 ## [1.0.14] — 2026-09-29
 
 GitHub tag: `skills-v1.0.14`

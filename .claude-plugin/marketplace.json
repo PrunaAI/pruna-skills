@@ -130,6 +130,12 @@
       "source": "./skills/video/p-video-2-pro"
     },
     {
+      "name": "p-video-2-pro-reference",
+      "description": "Use when someone wants one cinematic clip that locks a subject from references \u2014 a product still, character, clip, or voice \u2014 using image or video references plus optional audio kept as the soundtrack or used as guidance. Not for text-only generation, 1080p, or drafts.",
+      "version": "1.0.14",
+      "source": "./skills/video/p-video-2-pro-reference"
+    },
+    {
       "name": "p-video-animate",
       "description": "Use when someone wants a photo to move like another video \u2014 motion transfer, dance remixes, or performance variations from a template clip.",
       "version": "1.0.14",
