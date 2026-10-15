@@ -14,6 +14,7 @@ Pricing and limits change; confirm on the official page: [Available models](http
 | `p-image-upscale` | Upscale (target MP 1–128, optional enhance) | `p-image-upscale` | `p-image-upscale-quality-checklist.md` in `image-prompting` |
 | `p-image-try-on` | Virtual try-on (person + up to 11 garments, ≤6 finals / 7–8 reliable; optional pose ref, turbo ~4) | `p-image-try-on` | `p-image-try-on-quality-checklist.md` in `image-prompting` |
 | `p-video-2-pro` | Cinematic text / first-last-frame video with **generated audio** (no audio upload); 480p / 768p; 5–15s; `mode` cost/speed/quality (`cost` = same quality as `speed`, but cheaper and slower). Built on MiniMax H3. | `p-video-2-pro` | `p-video-2-pro-quality-checklist.md` in `video-prompting` |
+| `p-video-2-pro-reference` | MiniMax H3 Ref2V cinematic video that locks a subject from imported image/video/audio references, with generated audio; prompt + image/video required; `keep_audio` keeps one uploaded track as the soundtrack; 480p / 768p; 5–15s; `mode` cost/speed only | `p-video-2-pro-reference` | Shared `p-video-2-pro-quality-checklist.md` in `video-prompting` |
 | `p-video-2` | 1080p / imported-audio / draft video; **first frame** (`image`) + **last frame** (`last_frame_image`); omit `duration` to let the model choose length | `p-video-2` | `p-video-2-quality-checklist.md` in `video-prompting` |
 | `p-video` | Simpler / quicker text / image / audio video; same payload as `p-video-2` | `p-video` | `p-video-quality-checklist.md` in `video-prompting` |
 | `p-video-avatar` | Talking avatar from portrait + script or audio | `p-video-avatar` | `p-video-avatar-quality-checklist.md` in `video-prompting` |
@@ -40,9 +41,9 @@ Documented on the same models page: `p-image-lora`, trainers, `flux-*`, `wan-*`,
 | Full suite install | `pruna` |
 | Single-scene avatar (`p-video-avatar`, intake first) | `avatar-single-scene` |
 | Multi-scene avatar (stills + `p-video-avatar` / animate rows) | `avatar-multi-scene` |
-| Single-scene cinematic (`p-video-2-pro` visual / `p-video-2` audio-led, intake first) | `image-to-video` |
+| Single-scene cinematic (`p-video-2-pro` standard text/frame/generated-audio; `p-video-2-pro-reference` imported-reference conditioning; `p-video-2` 1080p/draft/audio-led) | `image-to-video` |
 | Multi-scene cinematic (`p-video-2` + scene anchor triple) | `narrated-multi-scene` |
-| Multi-scene visual transitions (stills → `p-video-2-pro` pair) | `visual-transition-reel` |
+| Multi-scene visual transitions (`p-video-2-pro` standard pair; `p-video-2-pro-reference` when imported assets should condition a scene) | `visual-transition-reel` |
 | Educational explainer (narrator + character) | `interactive-explainer` |
 | Illustrated story reel (Ken Burns / gentle `p-video-2`) | `illustrated-story-reel` |
 | AI music video (lyrics → Music 2.5 → avatar + B-roll) | `music-video` |

@@ -1,6 +1,6 @@
 # Scene anchor pair (visual transitions)
 
-Canonical pattern for **smooth visual transitions** with Pruna **`p-video-2-pro`** (cinematic generation, default) or **`p-video-2`** / **`p-video`** when 1080p, imported audio, or a cheaper draft is required: two stills bracket motion; a **`prompt`** describes what happens **between** them. No narration required.
+Canonical pattern for **smooth visual transitions** with Pruna **`p-video-2-pro`** (cinematic generation, default) or **`p-video-2`** / **`p-video`** when 1080p, imported audio, or a cheaper draft is required: two stills bracket motion; a **`prompt`** describes what happens **between** them. No narration required. On `p-video-2-pro-reference`, `first_frame_image` / `last_frame_image` are **soft keyframes** within a broader reference set, not exact pair endpoints.
 
 Related: [scene-anchor-triple.md](./scene-anchor-triple.md) (pair + audio) · [prompt-dramaturgy.md](./prompt-dramaturgy.md) · [physics-safe-motion.md](./physics-safe-motion.md) · [clip-chaining.md](./clip-chaining.md) · `p-video-2-pro` · `p-video-2` · `p-video` · `p-image` · `p-image-edit`
 
@@ -28,6 +28,8 @@ Each scene row supplies **two Pruna file URLs** (from `POST /v1/files`) plus a m
 ```
 
 Default payload is **`p-video-2-pro`**. `mode` is `cost` (same quality as `speed`, but cheaper and slower), `speed` (default), or `quality`. For `p-video-2` use `720p`/`1080p` and `fps` instead of `mode` / `prompt_upsampler`.
+
+For `p-video-2-pro-reference`, keep the same reachable-state and OPEN/MID/CLOSE craft, but review the first/last images as directional opening/closing guidance. Use the tool’s singular `first_frame_image` / `last_frame_image` fields, count them toward its image limit, and use `cost` or `speed` only — never `quality`.
 
 **Do not** set `duration` when `audio` is also present — use [scene-anchor-triple.md](./scene-anchor-triple.md) and **`p-video-2`** (`p-video-2-pro` has no `audio` input).
 

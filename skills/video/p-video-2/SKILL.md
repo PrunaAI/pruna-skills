@@ -3,7 +3,7 @@ name: p-video-2
 description: Use when someone wants a polished short clip from text, images, or imported audio — 1080p B-roll, start/end frame animation, or a motion shot with a mixed track. Not for cinematic generated-audio clips or talking-head-only hosts.
 license: MIT
 metadata:
-  version: "1.0.14"
+  version: "1.0.15"
   package: pruna-skills
   pruna_model: p-video-2
 ---
@@ -25,7 +25,7 @@ Follow each skill's **Before generating** / craft sections — do not restate gu
 
 ## Agent habit
 
-**Routing:** `` `p-video-2` `` is the **1080p / imported-audio / draft** clip generator (text / image / audio). Use `` `p-video-2-pro` `` for **cinematic generation** with generated audio (480p / 768p, first/last frame, no audio upload). Use `` `p-video` `` for simpler, quicker clips. Talking-head-only (no native scene audio) → `` `p-video-avatar` ``. Instruction edit of existing footage → `` `p-video-edit` ``.
+**Routing:** `` `p-video-2` `` is the **1080p / imported-soundtrack / draft** clip generator (text / image / audio). Use `` `p-video-2-pro` `` for standard cinematic generation with generated audio (480p / 768p, first/last frame, no audio upload). When imported image or video references should lock a subject or condition identity/style/motion/timing/performance — with generated audio, audio guidance, or one kept track (`keep_audio`) at 480p/768p — use `` `p-video-2-pro-reference` ``. Use `` `p-video` `` for simpler, quicker clips. Talking-head-only (no native scene audio) → `` `p-video-avatar` ``. Instruction edit of existing footage → `` `p-video-edit` ``.
 
 In the **first reply**, name `` `p-video-2` `` in backticks, confirm `PRUNA_API_KEY` (or stop with signup links from `pruna-api`), then ask for required inputs. Open intake → **`generation-diversity`** clarification intake before the first `POST`. When drafting motion prompts, follow **Prompt craft (dynamic + faithful)** and `video-prompting` (`p-video-2-prompting`) — do not paste skill examples. Redirect when **When NOT to use** fits better.
 
@@ -65,6 +65,7 @@ Use a different skill instead:
 
 | Skill | Description | Install |
 | --- | --- | --- |
+| `p-video-2-pro-reference` | Use when someone wants one cinematic clip that locks a subject from references — a product still, character, clip, or voice — using image or video references plus optional audio kept as the soundtrack or used as guidance. Not for text-only generation, 1080p, or drafts. | `npx skills add PrunaAI/pruna-skills@p-video-2-pro-reference -y` |
 | `p-video-2-pro` | Use when someone wants a cinematic clip from text or start/end frames — product ads, documentary shots, or dialogue with generated audio. Not for 1080p, imported audio tracks, or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2-pro -y` |
 | `p-video` | Use when someone wants a simple short clip from text or images — quick B-roll, drafts, or start/end frame animation. Not when the brief needs cinematic generation, highest quality, tight lip-sync, or imported audio at 1080p. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 | `p-video-avatar` | Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo. | `npx skills add PrunaAI/pruna-skills@p-video-avatar -y` |
@@ -204,6 +205,7 @@ Related skills:
 
 | Skill | Description | Install |
 | --- | --- | --- |
+| `p-video-2-pro-reference` | Use when someone wants one cinematic clip that locks a subject from references — a product still, character, clip, or voice — using image or video references plus optional audio kept as the soundtrack or used as guidance. Not for text-only generation, 1080p, or drafts. | `npx skills add PrunaAI/pruna-skills@p-video-2-pro-reference -y` |
 | `p-video-2-pro` | Use when someone wants a cinematic clip from text or start/end frames — product ads, documentary shots, or dialogue with generated audio. Not for 1080p, imported audio tracks, or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2-pro -y` |
 | `p-video` | Use when someone wants a simple short clip from text or images — quick B-roll, drafts, or start/end frame animation. Not when the brief needs cinematic generation, highest quality, tight lip-sync, or imported audio at 1080p. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 | `gemini-3.1-flash-tts` | Use when someone needs spoken narration or voiceover — explainer tracks, documentary lines, or voice to pair with generated video. | `npx skills add PrunaAI/pruna-skills@gemini-3.1-flash-tts -y` |

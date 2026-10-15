@@ -19,7 +19,7 @@ Workflow skills with **`Intake: ask before generating`** tables are authoritativ
 
 Use when several topics are open at once; trim if the user already locked some:
 
-1. **Deliverable shape:** “Should I **generate** new visuals/audio, **use files you already have**, or **mix** (e.g. your logo + generated B-roll)? Any **aspect ratio** and **resolution** target (480p/768p for cinematic `p-video-2-pro`, 720p vs 1080p for `p-video-2`, 9:16 vs 16:9)?”
+1. **Deliverable shape:** “Should I **generate** new visuals/audio, **use files you already have**, or **mix** (e.g. your logo + generated B-roll)? Any **aspect ratio** and **resolution** target (480p/768p for cinematic pro models, 720p vs 1080p for `p-video-2`, 9:16 vs 16:9)? If using references, what should each image/video/audio asset control?”
 2. **Look and sound:** “**Brand palette** (named kit vs custom hex / reference image)? **Narration or VO** (none, TTS, lip-sync host, your upload)? **Music** (silent, bed under VO, full song)? **Captions** (none, burned after render, in-composition)?”
 3. **Structure and gates:** “Single clip or **multi-act** piece? If multi-act, I can propose **two orderings** — which direction? OK to pause for **approve plan** before paid video, or run end-to-end?”
 
@@ -32,12 +32,13 @@ Ask when the brief does not already answer these:
 | Topic | Clarify |
 | --- | --- |
 | **Media source** | Generate new assets (image/video/audio API) vs **use existing** files/URLs vs **mix** (e.g. user logo + generated B-roll) |
+| **Reference conditioning** | For `p-video-2-pro-reference`: source and **one role per image/video/audio reference**, count, each clip length and combined limits, image/video required (audio alone is insufficient), audio as guidance vs kept soundtrack (`keep_audio`, exactly one file) vs generated sound only, soft first/last-frame expectations, upload approval, and reference charges in the paid estimate |
 | **Brand / look** | Named brand kit vs ad-hoc palette (hex or reference), light vs dark, photoreal vs stylized |
 | **Narration / VO** | None · on-screen text only · **TTS/narration track** · **lip-sync host** · user-uploaded VO · music-only |
 | **Music / bed** | Silent · instrumental bed under VO · full song driving cuts · user-supplied track |
 | **Captions** | None · burned after render · embedded in composition · style (promo karaoke vs simple phrase) |
 | **Format** | Aspect ratio, duration target, destination (LinkedIn, TikTok, in-app, internal) |
-| **Resolution / canvas** | **Video:** 480p / 768p (`p-video-2-pro`) vs 720p vs 1080p vs 4K (and whether to upscale after gen). **`p-video-2-pro` recipe:** `mode` `cost` (same quality as `speed`, but cheaper and slower) vs `speed` (default, faster) vs `quality`. **HTML/composition:** export width×height (e.g. 1920×1080, 1080×1920). **Stills:** native aspect vs letterbox; target long edge or MP for upscale jobs |
+| **Resolution / canvas** | **Video:** 480p / 768p (pro models) vs 720p vs 1080p vs 4K (and whether to upscale after gen). **`p-video-2-pro` recipe:** `mode` `cost` (same quality as `speed`, but cheaper and slower) vs `speed` (default, faster) vs `quality`. **`p-video-2-pro-reference` recipe:** `cost` vs `speed` only — no `quality`; include output plus reference-input charges in approval. **HTML/composition:** export width×height (e.g. 1920×1080, 1080×1920). **Stills:** native aspect vs letterbox; target long edge or MP for upscale jobs |
 | **Frame rate** | 24 / 25 / 30 fps when the deliverable or platform cares (Reels often 30; cinematic often 24) |
 | **Structure** | Single clip vs multi-act / multi-scene; when vague, propose **two act orders** and let the user pick |
 | **Approval** | Phase gates (**approve plan** / stills / clips) vs one-shot automation |
@@ -46,7 +47,7 @@ Ask when the brief does not already answer these:
 
 ## By skill type
 
-### Tools (`p-image-ideogram`, `p-image`, `p-video-2-pro`, `p-video-2`, `p-video`, TTS, beds, …)
+### Tools (`p-image-ideogram`, `p-image`, `p-video-2-pro`, `p-video-2-pro-reference`, `p-video-2`, `p-video`, TTS, beds, …)
 
 Minimum before first `POST`:
 

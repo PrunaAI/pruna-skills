@@ -4,6 +4,21 @@ All notable changes to Pruna Skills are documented here. Skill and plugin `metad
 
 ## [Unreleased]
 
+## [1.0.15] — 2026-10-15
+
+GitHub tag: `skills-v1.0.15`
+
+### Added
+
+- **`p-video-2-pro-reference` tool** — reference-to-video on MiniMax H3 Ref2V that locks a subject from references (a product still, a character, a clip, or a voice). Prompt plus at least one image or video reference; up to 9 images, 3 videos, and 3 audio clips. Output has generated sound; `keep_audio` keeps one uploaded audio file as the soundtrack. Soft `first_frame_image` / `last_frame_image` keyframes, 480p/768p, 5–15s, 24 fps, `mode` `cost` / `speed` only (no `quality`). Billed from the finished run: output from $0.015/s (480p, cost), plus reference video, image, and audio charges.
+
+### Changed
+
+- **Clip routing** — reference-conditioned clips go to `p-video-2-pro-reference`; `p-video-2-pro` stays for text and first/last-frame generation; `p-video-2` stays for 1080p, draft previews, and the scene-anchor triple.
+- **`image-to-video` and `visual-transition-reel`** — new reference-conditioned mode / scene rows with a one-role-per-asset reference map, `keep_audio` choice, and soft-keyframe expectations. The transition-plan template includes a reference-conditioned example row.
+- **`video-prompting`** — `p-video-2-pro-prompting` gains a reference-conditioned lane section; `p-video-2-pro-quality-checklist` adds reference-fidelity and kept-soundtrack checks.
+- **`generation-diversity` clarification intake** — asks for reference roles, counts and limits, audio as guidance vs kept soundtrack, and reference charges before the first paid call.
+
 ## [1.0.14] — 2026-09-29
 
 GitHub tag: `skills-v1.0.14`

@@ -3,13 +3,13 @@ name: video-prompting
 description: Use when crafting video or motion prompts for any generative model — dramaturgy, camera, physics-safe motion, frame anchors, and clip chaining.
 license: MIT
 metadata:
-  version: "1.0.14"
+  version: "1.0.15"
   package: pruna-skills
 ---
 
 # Video prompting
 
-Vendor-neutral craft for **short video / motion** generation. Works with Pruna `p-video-2-pro` / `p-video-2` / `p-video` family, Runway, Kling, Luma, Veo, and similar APIs.
+Vendor-neutral craft for **short video / motion** generation. Works with Pruna `p-video-2-pro` / `p-video-2-pro-reference` / `p-video-2` / `p-video` family, Runway, Kling, Luma, Veo, and similar APIs.
 
 ## Install
 
@@ -29,7 +29,7 @@ Vendor-neutral craft for **short video / motion** generation. Works with Pruna `
 
 ## Works with
 
-Pruna `p-video-2-pro` / `p-video-2` / `p-video` / `p-video-avatar` / `p-video-animate` / `p-video-replace` / `p-video-edit`, Runway Gen-3, Kling, Luma Dream Machine, Veo, and other video models. Cinematic generation (generated audio, first/last frame): `p-video-2-pro`. 1080p / imported audio / draft: `p-video-2`. Cheaper, faster drafts: `p-video`.
+Pruna `p-video-2-pro` / `p-video-2-pro-reference` / `p-video-2` / `p-video` / `p-video-avatar` / `p-video-animate` / `p-video-replace` / `p-video-edit`, Runway Gen-3, Kling, Luma Dream Machine, Veo, and other video models. Standard cinematic text/frame generation with generated audio: `p-video-2-pro`. Imported image or video references that lock a subject or condition identity/style/motion/timing/performance, with generated audio, optional audio guidance, or one kept soundtrack (`keep_audio`): `p-video-2-pro-reference`. 1080p / draft or an imported soundtrack lane: `p-video-2`. Cheaper, faster drafts: `p-video`.
 
 ## When NOT to use
 
@@ -42,13 +42,14 @@ Use a different skill instead:
 | `music-video` | Use when someone wants a full music video — original song or vocals, performance clips, B-roll, and lyric-synced edits. | `npx skills add PrunaAI/pruna-skills@music-video -y` |
 | `narrated-multi-scene` | Use when someone wants a multi-part story with voiceover — episodic B-roll, chaptered promo, or several linked video scenes without on-camera dialogue. | `npx skills add PrunaAI/pruna-skills@narrated-multi-scene -y` |
 | `p-video-2-pro` | Use when someone wants a cinematic clip from text or start/end frames — product ads, documentary shots, or dialogue with generated audio. Not for 1080p, imported audio tracks, or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2-pro -y` |
+| `p-video-2-pro-reference` | Use when someone wants one cinematic clip that locks a subject from references — a product still, character, clip, or voice — using image or video references plus optional audio kept as the soundtrack or used as guidance. Not for text-only generation, 1080p, or drafts. | `npx skills add PrunaAI/pruna-skills@p-video-2-pro-reference -y` |
 | `p-video-2` | Use when someone wants a polished short clip from text, images, or imported audio — 1080p B-roll, start/end frame animation, or a motion shot with a mixed track. Not for cinematic generated-audio clips or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
 | `p-video` | Use when someone wants a simple short clip from text or images — quick B-roll, drafts, or start/end frame animation. Not when the brief needs cinematic generation, highest quality, tight lip-sync, or imported audio at 1080p. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 | `video-editing` | Use when assembling or polishing already-rendered clips with ffmpeg — concat, crossfades, burned captions and subtitles, text/logo overlays, before/after sliders, background music beds, platform export — or when composing a multi-layer HTML combination video with Hyperframes. Not for AI video generation, prompt craft, or model-based video edits. | `npx skills add PrunaAI/pruna-skills@video-editing -y` |
 
 ## Guide habit
 
-In the **first reply**, name `` `video-prompting` `` in backticks. When aspect, resolution, duration, or embed-vs-post audio are open, open intake → **`generation-diversity`** clarification intake. For `p-video-2-pro` / `p-video-2` / `p-video` motion lines, cite OPEN/MID/CLOSE dramaturgy and **Worked example — product B-roll** in [prompt-dramaturgy.md](./references/prompt-dramaturgy.md). Cinematic generation: `p-video-2-pro` (`p-video-2-pro-prompting`). 1080p / imported audio / draft: `p-video-2` (`p-video-2-prompting`). Cheaper drafts: `p-video`. Audio-led clips: **≤ ~19s** TTS before embed on `p-video-2` — see [audio-in-video-prompting.md](./references/audio-in-video-prompting.md).
+In the **first reply**, name `` `video-prompting` `` in backticks. When aspect, resolution, duration, or embed-vs-post audio are open, open intake → **`generation-diversity`** clarification intake. For `p-video-2-pro` / `p-video-2-pro-reference` / `p-video-2` / `p-video` motion lines, cite OPEN/MID/CLOSE dramaturgy and **Worked example — product B-roll** in [prompt-dramaturgy.md](./references/prompt-dramaturgy.md). Cinematic generation: `p-video-2-pro` (`p-video-2-pro-prompting`); the same craft plus its bounded reference section applies to `p-video-2-pro-reference`. 1080p / draft or single imported soundtrack: `p-video-2` (`p-video-2-prompting`). Cheaper drafts: `p-video`. Audio-led clips: **≤ ~19s** TTS before embed on `p-video-2` — see [audio-in-video-prompting.md](./references/audio-in-video-prompting.md).
 
 ## Before generating
 
@@ -78,6 +79,7 @@ Matching install for every model named above. Pick what you need:
 | Skill | Description | Install |
 | --- | --- | --- |
 | `p-video-2-pro` | Use when someone wants a cinematic clip from text or start/end frames — product ads, documentary shots, or dialogue with generated audio. Not for 1080p, imported audio tracks, or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2-pro -y` |
+| `p-video-2-pro-reference` | Use when someone wants one cinematic clip that locks a subject from references — a product still, character, clip, or voice — using image or video references plus optional audio kept as the soundtrack or used as guidance. Not for text-only generation, 1080p, or drafts. | `npx skills add PrunaAI/pruna-skills@p-video-2-pro-reference -y` |
 | `p-video-2` | Use when someone wants a polished short clip from text, images, or imported audio — 1080p B-roll, start/end frame animation, or a motion shot with a mixed track. Not for cinematic generated-audio clips or talking-head-only hosts. | `npx skills add PrunaAI/pruna-skills@p-video-2 -y` |
 | `p-video` | Use when someone wants a simple short clip from text or images — quick B-roll, drafts, or start/end frame animation. Not when the brief needs cinematic generation, highest quality, tight lip-sync, or imported audio at 1080p. | `npx skills add PrunaAI/pruna-skills@p-video -y` |
 | `p-video-avatar` | Use when someone wants a person on camera speaking a script — lip-synced host, spokesperson, or narrated avatar from a portrait photo. | `npx skills add PrunaAI/pruna-skills@p-video-avatar -y` |

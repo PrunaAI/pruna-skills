@@ -8,7 +8,9 @@
     "hard_cut_crossfade_seconds": 0
   },
   "defaults": {
-    "resolution": "720p",
+    "video_model": "p-video-2-pro",
+    "video_lane": "standard_pair",
+    "resolution": "768p",
     "fps": 24,
     "aspect_ratio": "16:9",
     "duration_seconds": 5
@@ -23,6 +25,8 @@
   "scenes": [
     {
       "id": "01_alley_wide",
+      "video_model": "p-video-2-pro",
+      "video_lane": "standard_pair",
       "chain_from_previous": false,
       "duration_seconds": 5,
       "edit_prompt": "OPENING: Wide alley, figure small in frame, neon kanji signs, rain-slick ground",
@@ -31,14 +35,32 @@
     },
     {
       "id": "02_stair_climb",
+      "video_model": "p-video-2-pro-reference",
+      "video_lane": "reference_conditioned",
       "chain_from_previous": true,
-      "duration_seconds": 4,
+      "duration_seconds": 5,
       "edit_prompt": "OPENING: Figure at base of fire escape stairs, looking up, neon spill from above",
       "last_frame_edit_prompt": "CLOSING: Same figure mid-climb, three steps up, hand on rail, city bokeh behind",
-      "video_prompt": "OPEN: pause at stair base. MID: figure mounts stairs with purpose. CLOSE: hold mid-climb end pose."
+      "video_prompt": "OPEN: pause at stair base. MID: figure mounts stairs with purpose. CLOSE: hold mid-climb end pose.",
+      "reference_assets": {
+        "image": [
+          {"source": "refs/subject.png", "role": "subject identity"}
+        ],
+        "video": [
+          {"source": "refs/stair-motion.mp4", "role": "movement rhythm"}
+        ],
+        "audio": [
+          {"source": "refs/footsteps.wav", "role": "timing and performance"}
+        ],
+        "keep_audio": false,
+        "first_frame_image": {"source": "stills/02_start.png", "role": "soft opening composition"},
+        "last_frame_image": {"source": "stills/02_end.png", "role": "soft closing composition"}
+      }
     },
     {
       "id": "03_rooftop",
+      "video_model": "p-video-2-pro",
+      "video_lane": "standard_pair",
       "chain_from_previous": false,
       "duration_seconds": 5,
       "edit_prompt": "OPENING: Rooftop edge, figure silhouetted against city sprawl, wind in coat",
